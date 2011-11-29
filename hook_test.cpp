@@ -1,3 +1,3 @@
 void BadFunction(int& a) {
-	a =0;
+	a = 0;
 }
