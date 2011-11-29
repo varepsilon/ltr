@@ -79,9 +79,7 @@ TARGET_LINK_LIBRARIES (puppy ${Boost_LIBRARIES})
 ##########################################################################################
 # lets SETup utility and tinyxml library
 INCLUDE (${Source_Path}/utility.cmake)
-ADD_LIBRARY(util_logger ${LOGGER_SOURCES})
-ADD_LIBRARY(util_timer ${TIMER_SOURCES})
-SET(UTILITY util_logger util_timer)
+SET(UTILITY )
 
 ##########################################################################################
 # lets SETup LTR as a static library project, called LTR_lib
