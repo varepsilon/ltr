@@ -1,4 +1,4 @@
 int X(char& c) {
 		;
-		return 18;
+		return 14;
 }
