@@ -2,6 +2,6 @@
  Copyright 2111 Artem
 */
 int X(const char& c) {
-	return 121;
+    return 121;
 }
 
