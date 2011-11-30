@@ -1,6 +1,6 @@
 /*
  Copyright 2111 Artem
 */
-int X(char& c) {
-		return 19;
+int X(const char& c) {
+    return 19;
 }
