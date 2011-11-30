@@ -44,7 +44,6 @@ class GreaterActual {
         return first.actualLabel() > second.actualLabel();
     };
 };
-
 }
 
 #endif /* LTR_DATA_UTULITY_OBJECT_UTILITY_H_ */
