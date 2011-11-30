@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace ltr
-{  
+namespace ltr {
 
   class IReporter {
   public:
@@ -13,6 +12,8 @@ namespace ltr
      * Instance's report. For example, report on completed work.
      */
     virtual std::string report() const = 0;
+	
+	virtual ~IReporter();
   };
 
 
