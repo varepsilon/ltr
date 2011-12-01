@@ -1,9 +1,7 @@
 // Copyright 2011 Yandex
 
-#pragma once
-
-// #ifndef LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
-// #define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
+#ifndef LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
+#define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -48,4 +46,4 @@ void FeatureConverter::apply(
 }
 }
 
-// #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
+#endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
