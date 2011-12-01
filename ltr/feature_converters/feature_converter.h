@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "ltr/data/object.h"
+#include "ltr/data/features_info.h"
 #include "ltr/data/data_set.h"
 
 namespace ltr {
@@ -19,11 +20,12 @@ class FeatureConverter {
     virtual FeatureInfo
     convertFeatureInfo(const FeatureInfo& oldFeatureInfo) = 0;
 
-    virtual void apply(const ltr::Object & argument, ltr::Object * value) = 0;
+    virtual void apply(const ltr::Object & argument, ltr::Object * value)
+    const = 0;
 
     template <typename TElement>
     void apply(const DataSet<TElement> & argument,
-            DataSet<TElement> * value);
+            DataSet<TElement> * value) const;
 };
 
 template <typename TElement>
