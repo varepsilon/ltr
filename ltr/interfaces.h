@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
-#pragma once
+
+#ifndef LTR_INTERFACES_H_
+#define LTR_INTERFACES_H_
 
 #include <string>
 #include <vector>
@@ -34,3 +36,5 @@ namespace ltr {
     std::string alias_;
   };
 };
+
+#endif  // LTR_INTERFACES_H_
