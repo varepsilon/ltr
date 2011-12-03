@@ -19,6 +19,8 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h)
 
 SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
+							
+SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h)
 
 
 # lets divide binaries in groups, for comfort navigation
@@ -28,7 +30,8 @@ SOURCE_GROUP(data\\utils FILES ${LTR_DATA_UTILS})
 SOURCE_GROUP(core FILES ${LTR_CORE})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERSCONTAINER})
+SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 
 
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_SCORERS} ${LTR_PARAMETERSCONTAINER})
+SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_SCORERS} ${LTR_PARAMETERSCONTAINER} ${LTR_MEASURES})
