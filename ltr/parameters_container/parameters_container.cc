@@ -89,7 +89,7 @@ namespace ltr {
     return parameters_;
   }
 
-  const ParametersContainer& Parameterized::parameters() const{
+  const ParametersContainer& Parameterized::parameters() const {
     return parameters_;
   }
 

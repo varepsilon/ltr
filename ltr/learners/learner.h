@@ -11,7 +11,7 @@
 #include "ltr/interfaces.h"
 #include "data/data_set.h"
 #include "scorers/scorer.h"
-//#include "feature_converters/feature_converter.h"
+// #include "feature_converters/feature_converter.h"
 #include "parameters_container/parameters_container.h"
 
 namespace ltr {
@@ -21,16 +21,17 @@ class Learner : public Reporter, public Aliaser, public Parameterized {
   public:
     typedef boost::shared_ptr<Learner> Ptr;
 
-	  TScorer::Ptr learn(const DataSet<TElement>& data,
-		  const TScorer& initial_scorer = TScorer()) const;
+    TScorer::Ptr learn(const DataSet<TElement>& data,
+      const TScorer& initial_scorer = TScorer()) const;
 
-	  // void addFeatureConverter(FeatureConverter::ConstPtr input_feature_converter);
+    // void addFeatureConverter(
+    //   FeatureConverter::ConstPtr input_feature_converter);
 
-	  virtual ~Learner();
+    virtual ~Learner();
 
   protected:
-	  virtual TScorer::Ptr learnImpl(const DataSet<TElement>& data,
-		  const TScorer& initial_scorer) const = 0;
+    virtual TScorer::Ptr learnImpl(const DataSet<TElement>& data,
+      const TScorer& initial_scorer) const = 0;
 
   private:
     // std::vector<FeatureConverter::Ptr> feature_converters_;
@@ -47,10 +48,10 @@ namespace ltr {
 
 template< class TElement, class TScorer >
 TScorer::Ptr Learner< TElement, TScorer >::learn(const DataSet<TElement>& data,
-	const TScorer& initial_scorer = TScorer()) const
-{
-    // apply feature converters
-    return learnImpl(data, initial_scorer);
+  const TScorer& initial_scorer = TScorer()) const {
+
+  // apply feature converters
+  return learnImpl(data, initial_scorer);
 }
 
 // old implementation, could be useful
@@ -73,5 +74,4 @@ void ILearner<TElement>::learn(const DataSet<TElement> & data) {
 }*/
 
 };
-
 #endif  // LTR_LEARNERS_LEARNER_H_

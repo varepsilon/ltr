@@ -51,18 +51,18 @@ namespace ltr {
 
   class Parameterized {
   public:
-	  ParametersContainer& parameters();
-	  const ParametersContainer& parameters() const;
-	  virtual void setDefaultParameters();
-	    /*
+    ParametersContainer& parameters();
+    const ParametersContainer& parameters() const;
+    virtual void setDefaultParameters();
+      /*
        * checks, if current parameters are valid.
        * If invalid parameters found - description is written in result. 
        * If no invalids - result will be empty
        */
-	  virtual std::string checkParameters() const;
-	  virtual ~Parameterized();
+    virtual std::string checkParameters() const;
+    virtual ~Parameterized();
   protected:
-	  ParametersContainer parameters_;
+    ParametersContainer parameters_;
   };
 };
 
