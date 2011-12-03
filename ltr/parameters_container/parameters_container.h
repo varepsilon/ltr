@@ -3,22 +3,17 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
-#include "boost/variant.hpp"
-
 #include <map>
 #include <string>
-#include <sstream>
+#include <vector>
 #include <stdexcept>
 
-using namespace std;
+#include <boost/variant.hpp>
+
 
 namespace ltr {
   class ParametersContainer {
   public:
-    /*
-     * Parse line to set new parameters' values.
-     * @param line - line for parsing
-     */
     void parse(const std::string& parameters);
 
     void setFloat(const std::string& name, float value);
@@ -29,18 +24,14 @@ namespace ltr {
     float getFloat(const std::string& name) const;
     bool getBool(const std::string& name) const;
 
-    void operator>> (std::string& parameters);
+    std::string getString() const;
 
-    /*
-     * copies parameters from another container
-     * @param parameters - container to copy parameters from
-     */
     void copyParameters(const ParametersContainer& parameters);
 
   protected:
     template<class T> T get(const std::string &name) const;
-    
-    typedef std::map<string, boost::variant<int, float, bool> > TMap;
+
+    typedef std::map<std::string, boost::variant<int, float, bool> > TMap;
     TMap params;
   };
 
@@ -48,13 +39,13 @@ namespace ltr {
   // Template realization
   template <class T>
   T ParametersContainer::get(const std::string &name) const {
-    if(params.find(name) == params.end()) {
-        throw logic_error(name + " no such parameter");
-	}
+    if (params.find(name) == params.end()) {
+        throw std::logic_error(name + " no such parameter");
+    }
     try {
-		return boost::get<T>(params.find(name)->second);
+        return boost::get<T>(params.find(name)->second);
     } catch(...) {
-        throw logic_error("parameter " + name + " has another type");
+        throw std::logic_error("parameter " + name + " has another type");
     }
   }
 };

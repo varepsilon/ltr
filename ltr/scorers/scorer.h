@@ -1,9 +1,9 @@
-#pragma once
+// Copyright 2011 Yandex
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
-#include <ltr/interfaces.h>
+#include "ltr/interfaces.h"
 
 using std::vector;
 
@@ -14,7 +14,7 @@ class Object;
 /**
  * Score objects (not pairs or lists!). Is output of all learners.
  */
-class Scorer : public IAliaser {
+class Scorer : public Aliaser {
     public:
     typedef boost::shared_ptr<Scorer> Ptr;
 

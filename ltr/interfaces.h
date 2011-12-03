@@ -8,32 +8,46 @@
 
 namespace ltr {
 
-  class IReporter {
+  class Reporter {
   public:
-    /**
-     * Instance's report. For example, report on completed work.
-     */
-    virtual std::string report() const = 0;
+    std::string report() const {
+        return report_;
+    }
 
-    virtual ~IReporter();
+    Reporter() {}
+    explicit Reporter(const std::string& input)
+        : report_(input) {}
+
+    void clearReport() {
+        report_.clear();
+    }
+
+    void appendReport(const std::string& input) {
+        report_.append(input);
+    }
+
+    void setReport(const std::string& input) {
+        report_ = input;
+    }
+
+
+  private:
+    std::string report_;
   };
 
 
-  class IAliaser {
+  class Aliaser {
   public:
-    /**
-     * Instance's alias.
-     */
+    
+    Aliaser(const std::string& input)
+        : alias_(input) {}
+
     std::string alias() const {
-      return alias_;
+        return alias_;
     };
 
-    void setAlias(const std::string& alias) {
-      alias_ = alias;
-    }
-
   private:
-    std::string alias_;
+    const std::string alias_;
   };
 };
 
