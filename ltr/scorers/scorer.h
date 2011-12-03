@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_SCORERS_SCORER_H_ 
-#define LTR_SCORERS_SCORER_H_ 
+#ifndef LTR_SCORERS_SCORER_H_
+#define LTR_SCORERS_SCORER_H_
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -41,12 +41,11 @@ class Scorer : public Aliaser {
      * @param tabbing - count of tabs should be pasted of beginning of each line of generated code
      * @param is_static - if true, qualifier 'static' must be set for generated class (used fo embedded classes)
      */
-    virtual std::string generateJavaCode(
-        const std::string& class_name, int tabbing = 0, bool is_static = false) const = 0;
+    virtual std::string generateJavaCode(const std::string& class_name,
+		int tabbing = 0, bool is_static = false) const = 0;
 
     virtual ~Scorer() {}
 };
-
 };
 
-#endif  // LTR_SCORERS_SCORER_H_ 
+#endif // LTR_SCORERS_SCORER_H_
