@@ -40,14 +40,30 @@ namespace ltr {
   template <class T>
   T ParametersContainer::get(const std::string &name) const {
     if (params.find(name) == params.end()) {
-        throw std::logic_error(name + " no such parameter");
+      throw std::logic_error(name + " no such parameter");
     }
     try {
-        return boost::get<T>(params.find(name)->second);
+      return boost::get<T>(params.find(name)->second);
     } catch(...) {
-        throw std::logic_error("parameter " + name + " has another type");
+      throw std::logic_error("parameter " + name + " has another type");
     }
   }
+
+  class Parameterized {
+  public:
+	  ParametersContainer& parameters();
+	  const ParametersContainer& parameters() const;
+	  virtual void setDefaultParameters();
+	    /*
+       * checks, if current parameters are valid.
+       * If invalid parameters found - description is written in result. 
+       * If no invalids - result will be empty
+       */
+	  virtual std::string checkParameters() const;
+	  virtual ~Parameterized();
+  protected:
+	  ParametersContainer parameters_;
+  };
 };
 
 #endif  // LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_

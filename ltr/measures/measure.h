@@ -14,6 +14,7 @@
 #include "data/object_pair.h"
 #include "data/data_set.h"
 #include "/interfaces.h"
+#include "parameters_container/parameters_container.h"
 
 using std::string;
 using std::logic_error;
@@ -28,7 +29,7 @@ using std::logic_error;
 namespace ltr {
 
   template <class TElement>
-  class Measure : public Aliaser {
+  class Measure : public Aliaser, public Parameterized {
   public:
     typedef boost::shared_ptr<Measure> Ptr;
 

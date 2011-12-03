@@ -22,6 +22,8 @@ SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_c
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h)
 
+SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h)
+
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})
@@ -31,7 +33,8 @@ SOURCE_GROUP(core FILES ${LTR_CORE})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERSCONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
+SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 
 
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_SCORERS} ${LTR_PARAMETERSCONTAINER} ${LTR_MEASURES})
+SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_SCORERS} ${LTR_PARAMETERSCONTAINER} ${LTR_MEASURES} ${LTR_LEARNERS})

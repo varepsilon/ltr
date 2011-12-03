@@ -82,4 +82,21 @@ namespace ltr {
         params[it->first] = it->second;
     }
   }
+
+
+
+  ParametersContainer& Parameterized::parameters() {
+    return parameters_;
+  }
+
+  const ParametersContainer& Parameterized::parameters() const{
+    return parameters_;
+  }
+
+  void Parameterized::setDefaultParameters() {
+  }
+
+  std::string Parameterized::checkParameters() const {
+    return "";
+  }
 };
