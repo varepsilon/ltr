@@ -3,12 +3,12 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
+#include <boost/variant.hpp>
+
 #include <map>
 #include <string>
 #include <vector>
 #include <stdexcept>
-
-#include <boost/variant.hpp>
 
 
 namespace ltr {
