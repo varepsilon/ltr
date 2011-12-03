@@ -42,10 +42,10 @@ class Scorer : public Aliaser {
      * @param is_static - if true, qualifier 'static' must be set for generated class (used fo embedded classes)
      */
     virtual std::string generateJavaCode(const std::string& class_name,
-		int tabbing = 0, bool is_static = false) const = 0;
+        int tabbing = 0, bool is_static = false) const = 0;
 
     virtual ~Scorer() {}
 };
 };
 
-#endif // LTR_SCORERS_SCORER_H_
+#endif  // LTR_SCORERS_SCORER_H_
