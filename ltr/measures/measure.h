@@ -1,10 +1,13 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_MEASURES_MEASURE_H_
+#define LTR_MEASURES_MEASURE_H_
+
 #pragma once
 
-#include <stdexcept>
-
 #include <boost/shared_ptr.hpp>
+#include <stdexcept>
+#include <string>
 
 #include "data/object.h"
 #include "data/object_list.h"
@@ -45,7 +48,7 @@ namespace ltr {
     * Returns sums of measures for all elements proportional to their weights.
     */
     double weightedAverage(const DataSet<TElement>& set) const;
-    
+
   protected:
     virtual double get_measure(const TElement& element) const = 0;
   };
@@ -55,8 +58,8 @@ namespace ltr {
   typedef Measure<ObjectList> ListwiseMeasure;
 };
 
-namespace ltr // template realizations
-{
+namespace ltr {  // template realizations
+
   template< class TElement>
   double Measure<TElement>::operator()(const TElement& element) const{
       if (element.size() == 0){
@@ -66,7 +69,7 @@ namespace ltr // template realizations
       try {
         measure = get_measure(element);
       }
-      catch (logic_error err) {
+      catch(logic_error err) {
         throw err;
       }
       if (measure < 0) {
@@ -74,10 +77,10 @@ namespace ltr // template realizations
       };
       return measure;
     };
-  
+
   template< class TElement>
   double Measure<TElement>::average(const DataSet<TElement>& set) const {
-    if(set.size() == 0) {
+    if (set.size() == 0) {
       throw logic_error(alias() + " measure gained empty set");
     }
 
@@ -85,14 +88,14 @@ namespace ltr // template realizations
     int query_proceed = 0;
 
     // #pragma omp parallel for schedule(dynamic)
-    for(int i = 0; i < int(set.size()); ++i) {
+    for (int i = 0; i < static_cast<int>(set.size()); ++i) {
       query_proceed += 1;
       double val;
       try {
         val = this->operator()(*set[i]);
       }
-      catch (logic_error err) {
-        LTR_LOG.warning() << "In Measure::average : " 
+      catch(logic_error err) {
+        LTR_LOG.warning() << "In Measure::average : "
           << err.what() << ".\n";
         val = 0.0;
         // #pragma omp critical
@@ -106,7 +109,7 @@ namespace ltr // template realizations
       }
     }
 
-    sum /= double(query_proceed);
+    sum /= static_cast<double>(query_proceed);
     return sum;
   }
 
@@ -142,3 +145,5 @@ namespace ltr // template realizations
     return sum / weights;
   }*/
 };
+
+#endif  // LTR_MEASURES_MEASURE_H_
