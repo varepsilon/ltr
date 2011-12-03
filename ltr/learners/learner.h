@@ -48,8 +48,7 @@ namespace ltr {
 
 template< class TElement, class TScorer >
 TScorer::Ptr Learner< TElement, TScorer >::learn(const DataSet<TElement>& data,
-  const TScorer& initial_scorer = TScorer()) const {
-
+    const TScorer& initial_scorer = TScorer()) const {
   // apply feature converters
   return learnImpl(data, initial_scorer);
 }
@@ -72,6 +71,5 @@ void ILearner<TElement>::learn(const DataSet<TElement> & data) {
 
     learnImpl(sourceData);
 }*/
-
 };
 #endif  // LTR_LEARNERS_LEARNER_H_
