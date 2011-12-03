@@ -13,7 +13,7 @@
 #include "data/object_list.h"
 #include "data/object_pair.h"
 #include "data/data_set.h"
-#include "interfaces.h"
+#include "/interfaces.h"
 
 using std::string;
 using std::logic_error;
@@ -61,8 +61,8 @@ namespace ltr {
 namespace ltr {  // template realizations
 
   template< class TElement>
-  double Measure<TElement>::operator()(const TElement& element) const{
-      if (element.size() == 0){
+  double Measure<TElement>::operator()(const TElement& element) const {
+      if (element.size() == 0) {
         throw logic_error(alias() + " gained empty list");
       }
       double measure;
