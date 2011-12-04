@@ -90,3 +90,6 @@ ADD_LIBRARY (ltr_lib STATIC ${LTR_ALL})
 TARGET_LINK_LIBRARIES (ltr_lib ${Boost_LIBRARIES} puppy ${UTILITY})
 
 INCLUDE_DIRECTORIES(${Source_Path}/ltr ${Source_Path})
+
+ADD_EXECUTABLE(test main.cpp)
+TARGET_LINK_LIBRARIES (test ltr_lib)

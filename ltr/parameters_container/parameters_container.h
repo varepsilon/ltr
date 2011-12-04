@@ -10,12 +10,9 @@
 #include <vector>
 #include <stdexcept>
 
-
 namespace ltr {
   class ParametersContainer {
   public:
-    void parse(const std::string& parameters);
-
     void setFloat(const std::string& name, float value);
     void setInt(const std::string& name, int value);
     void setBool(const std::string& name, bool value);
