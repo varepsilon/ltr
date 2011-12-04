@@ -19,6 +19,8 @@ class Object {
 
     const Features& features() const;
     Features& features();
+    int queryId() const;
+    void setQuieryId(int id);
 
     Object& operator<<(double feature);
 
@@ -48,6 +50,7 @@ class Object {
     private:
     boost::shared_ptr<Features> features_;
     double actual_label_;
+    int qid_;
     mutable double predicted_label_;
 };
 
