@@ -6,7 +6,7 @@ namespace ltr {
   template<> std::string Approach<ltr::Object>::name() {
     return POINTWISE;
   }
-  
+
   template<> std::string Approach<ltr::ObjectPair>::name() {
     return PAIRWISE;
   }
