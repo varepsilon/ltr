@@ -34,7 +34,7 @@ namespace ltr {
     java_code.
       append(tab_str).
         append("public ").
-        append(std::string(is_static ? "static " : "" ) + "class ").
+        append(std::string(is_static ? "static " : "") + "class ").
         append(class_name).
         append(" {\n").
       append(tab_str).

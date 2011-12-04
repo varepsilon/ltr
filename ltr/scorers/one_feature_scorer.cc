@@ -74,11 +74,12 @@ namespace ltr {
     java_code.
       append(tab_str).
         append("public ").
-        append(std::string(is_static ? "static " : "" ) + "class ").
+        append(std::string(is_static ? "static " : "") + "class ").
         append(class_name).
         append(" {\n").
       append(tab_str).
-        append("\tpublic static double score(Vector<Double> features) { return ").
+        append("\tpublic static double score").
+        append("(Vector<Double> features) { return ").
         append(boost::lexical_cast< std::string >(weight_)).
         append(" * features.get(").
         append(boost::lexical_cast< std::string >(index_)).

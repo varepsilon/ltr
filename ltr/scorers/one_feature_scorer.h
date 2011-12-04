@@ -1,10 +1,11 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_SCORERS_ONE_FEATURE_SCORER_H_ 
-#define LTR_SCORERS_ONE_FEATURE_SCORER_H_ 
+#ifndef LTR_SCORERS_ONE_FEATURE_SCORER_H_
+#define LTR_SCORERS_ONE_FEATURE_SCORER_H_
 
 #pragma once
 
+#include <string>
 #include "ltr/scorers/scorer.h"
 
 
@@ -57,4 +58,4 @@ namespace ltr {
   };
 };
 
-#endif  // LTR_SCORERS_ONE_FEATURE_SCORER_H_ 
+#endif  // LTR_SCORERS_ONE_FEATURE_SCORER_H_

@@ -2,7 +2,7 @@
 
 #ifndef LTR_SCORERS_FAKE_SCORER_H_
 #define LTR_SCORERS_FAKE_SCORER_H_
- 
+
 #pragma once
 
 #include <string>

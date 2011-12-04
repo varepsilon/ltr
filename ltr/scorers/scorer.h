@@ -23,7 +23,7 @@ class IScorer : public Aliaser, public IBriefer {
     public:
     typedef boost::shared_ptr<IScorer> Ptr;
 
-    IScorer(const std::string& alias) : Aliaser(alias) {
+    explicit IScorer(const std::string& alias) : Aliaser(alias) {
     }
 
     /**
