@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ltr/interfaces.h"
+#include "ltr/data/object.h"
 
 using std::vector;
 
@@ -18,9 +19,12 @@ class Object;
 /**
  * Score objects (not pairs or lists!). Is output of all learners.
  */
-class Scorer : public Aliaser {
+class IScorer : public Aliaser, public IBriefer {
     public:
-    typedef boost::shared_ptr<Scorer> Ptr;
+    typedef boost::shared_ptr<IScorer> Ptr;
+
+    IScorer(const std::string& alias) : Aliaser(alias) {
+    }
 
     /**
      * Returns object's score.
@@ -44,7 +48,7 @@ class Scorer : public Aliaser {
     virtual std::string generateJavaCode(const std::string& class_name,
         int tabbing = 0, bool is_static = false) const = 0;
 
-    virtual ~Scorer() {}
+    virtual ~IScorer() {}
 };
 };
 

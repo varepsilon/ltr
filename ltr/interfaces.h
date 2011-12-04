@@ -49,6 +49,11 @@ namespace ltr {
   private:
     const std::string alias_;
   };
+
+  class IBriefer {
+  public:
+    virtual std::string brief() const = 0;
+  };
 };
 
 #endif  // LTR_INTERFACES_H_
