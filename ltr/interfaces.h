@@ -55,6 +55,7 @@ namespace ltr {
   class IBriefer {
   public:
     virtual std::string brief() const = 0;
+    virtual ~IBriefer();
   };
 
   template <class TElement>
@@ -70,7 +71,6 @@ namespace ltr {
   template<> std::string Approach<ltr::Object>::name();
   template<> std::string Approach<ltr::ObjectPair>::name();
   template<> std::string Approach<ltr::ObjectList>::name();
-
 };
 
 #endif  // LTR_INTERFACES_H_

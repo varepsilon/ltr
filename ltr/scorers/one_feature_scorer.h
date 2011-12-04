@@ -1,17 +1,21 @@
+// Copyright 2011 Yandex
+
+#ifndef LTR_SCORERS_ONE_FEATURE_SCORER_H_ 
+#define LTR_SCORERS_ONE_FEATURE_SCORER_H_ 
+
 #pragma once
 
 #include "ltr/scorers/scorer.h"
 
 
-namespace ltr
-{
+namespace ltr {
   /**
    * Simple ranker. Represent single features multiplied by weight.
    */
   class OneFeatureScorer : public IScorer {
   public:
     typedef boost::shared_ptr< OneFeatureScorer > Ptr;
-    
+
     /**
      * constructor.
      * @param feature_index - index of used feature.
@@ -43,11 +47,14 @@ namespace ltr
 
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;
-    virtual std::string generateCppCode(const std::string& class_name, int tabbing) const;
-    virtual std::string generateJavaCode(const std::string& class_name, int tabbing, bool is_static) const;
+    virtual std::string generateCppCode
+      (const std::string& class_name, int tabbing) const;
+    virtual std::string generateJavaCode
+      (const std::string& class_name, int tabbing, bool is_static) const;
   private:
     size_t index_;
     double weight_;
   };
 };
 
+#endif  // LTR_SCORERS_ONE_FEATURE_SCORER_H_ 

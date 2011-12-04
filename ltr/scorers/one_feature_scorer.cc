@@ -1,10 +1,12 @@
-#include "one_feature_scorer.h"
+// Copyright 2011 Yandex
 
 #include <boost/lexical_cast.hpp>
 
-namespace ltr
-{
-  OneFeatureScorer::OneFeatureScorer(size_t feature_index, double feature_weight) :
+#include "scorers/one_feature_scorer.h"
+
+namespace ltr {
+  OneFeatureScorer::OneFeatureScorer
+    (size_t feature_index, double feature_weight) :
   index_(feature_index),
   weight_(feature_weight),
   IScorer("OneFeatureScorer") {
@@ -29,15 +31,16 @@ namespace ltr
   double OneFeatureScorer::operator()(const Object& obj) const {
     return weight_ * obj[1].features().at(index_);
   }
-  
+
   std::string OneFeatureScorer::brief() const {
-    std::string result = "takes feature " + boost::lexical_cast<std::string>(index_) +
+    std::string result = "takes feature " +
+      boost::lexical_cast<std::string>(index_) +
       " with weight " + boost::lexical_cast<std::string>(weight_);
     return result;
   }
 
-  std::string OneFeatureScorer::generateCppCode(const std::string& class_name, int tabbing) const
-  {
+  std::string OneFeatureScorer::generateCppCode
+      (const std::string& class_name, int tabbing) const {
     std::string hpp_code;
 
     std::string tab_str(tabbing, '\t');
@@ -50,7 +53,8 @@ namespace ltr
       append(tab_str).
         append("public:\n").
       append(tab_str).
-        append("\tstatic double score(const std::vector< double >& features) { return ").
+        append("\tstatic double score").
+        append("(const std::vector< double >& features) { return ").
         append(boost::lexical_cast< std::string >(weight_)).
         append(" * features[").
         append(boost::lexical_cast< std::string >(index_)).
@@ -61,12 +65,11 @@ namespace ltr
     return hpp_code;
   }
 
-  std::string OneFeatureScorer::generateJavaCode(const std::string& class_name, int tabbing, bool is_static) const
-  {
+  std::string OneFeatureScorer::generateJavaCode
+      (const std::string& class_name, int tabbing, bool is_static) const {
     std::string java_code;
 
     std::string tab_str(tabbing, '\t');
-
 
     java_code.
       append(tab_str).
