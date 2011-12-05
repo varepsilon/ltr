@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_DATA_UTULITY_OBJECT_UTILITY_H_
-#define LTR_DATA_UTULITY_OBJECT_UTILITY_H_
+#ifndef LTR_DATA_UTILITY_OBJECT_UTILITY_H_
+#define LTR_DATA_UTILITY_OBJECT_UTILITY_H_
 
 #include "ltr/utility/numerical.h"
 
@@ -46,4 +46,5 @@ class GreaterActual {
 };
 }
 
-#endif /* LTR_DATA_UTULITY_OBJECT_UTILITY_H_ */
+#endif  // LTR_DATA_UTILITY_OBJECT_UTILITY_H_
+
