@@ -29,8 +29,7 @@ namespace ltr {
       hpp_code.append(
         scorers_[i].scorer->generateCppCode(
         utility::GenerateLocalClassName(*(scorers_[i].scorer), i),
-        tabbing + 1)
-        );
+        tabbing + 1));
     }
 
     hpp_code.
@@ -81,8 +80,7 @@ namespace ltr {
         scorers_[i].scorer->generateJavaCode(
         utility::GenerateLocalClassName(*(scorers_[i].scorer), i),
         tabbing + 1,
-        true)
-        );
+        true));
     }
 
     java_code.
