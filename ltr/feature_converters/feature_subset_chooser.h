@@ -18,8 +18,8 @@ class FeatureSubsetChooser : public FeatureConverter {
     public:
     typedef boost::shared_ptr<FeatureSubsetChooser> Ptr;
 
-    explicit
-    FeatureSubsetChooser(const std::vector<size_t>& choosedFeaturesIndexes)
+    explicit FeatureSubsetChooser(
+            const std::vector<size_t>& choosedFeaturesIndexes)
         :choosedFeaturesIndexes_(choosedFeaturesIndexes) {}
 
     explicit FeatureSubsetChooser(const std::vector<bool>& choosedFeatures) {
