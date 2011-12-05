@@ -18,10 +18,11 @@ class FeatureSubsetChooser : public FeatureConverter {
     public:
     typedef boost::shared_ptr<FeatureSubsetChooser> Ptr;
 
-    explicit FeatureSubsetChooser(const vector<size_t>& choosedFeaturesIndexes)
+    explicit
+    FeatureSubsetChooser(const std::vector<size_t>& choosedFeaturesIndexes)
         :choosedFeaturesIndexes_(choosedFeaturesIndexes) {}
 
-    explicit FeatureSubsetChooser(const vector<bool>& choosedFeatures) {
+    explicit FeatureSubsetChooser(const std::vector<bool>& choosedFeatures) {
         for (size_t featureIdx = 0;
                 featureIdx < choosedFeatures.size();
                 ++featureIdx) {
@@ -31,12 +32,12 @@ class FeatureSubsetChooser : public FeatureConverter {
         }
     }
 
-    void
-    setChoosedFeaturesIndexes(const vector<size_t>& choosedFeaturesIndexes) {
+    void setChoosedFeaturesIndexes(
+            const std::vector<size_t>& choosedFeaturesIndexes) {
         choosedFeaturesIndexes_ = choosedFeaturesIndexes;
     }
 
-    const vector<size_t>& getChoosedFeaturesIndexes() const {
+    const std::vector<size_t>& getChoosedFeaturesIndexes() const {
         return choosedFeaturesIndexes_;
     }
 
@@ -50,7 +51,7 @@ class FeatureSubsetChooser : public FeatureConverter {
             ltr::Object* preprocessed_element);
 
     private:
-    vector<size_t> choosedFeaturesIndexes_;
+    std::vector<size_t> choosedFeaturesIndexes_;
 };
 }
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_H_
