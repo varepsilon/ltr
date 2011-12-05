@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include <string>
-
 #include <boost/lexical_cast.hpp>
+
+#include <string>
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/data/object.h"
