@@ -90,3 +90,15 @@ ADD_LIBRARY (ltr_lib STATIC ${LTR_ALL})
 TARGET_LINK_LIBRARIES (ltr_lib ${Boost_LIBRARIES} puppy ${UTILITY})
 
 INCLUDE_DIRECTORIES(${Source_Path}/ltr ${Source_Path})
+
+##########################################################################################
+# lets SETup Google Test
+INCLUDE (${Source_Path}/gtest.cmake NO_POLICY_SCOPE)
+# Google Test librariry. Leads to high warning level in entire solution. i don't know jet how to avoid it
+cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
+
+##########################################################################################
+# lets SETup our unit-tests for LTR (executed by Google Test)
+INCLUDE (${Source_Path}/utests.cmake NO_POLICY_SCOPE)
+ADD_EXECUTABLE (ltr_lib_test ${LTR_TEST_ALL})
+TARGET_LINK_LIBRARIES (ltr_lib_test ltr_lib gtest)

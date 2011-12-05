@@ -25,7 +25,8 @@ void FeatureSubsetChooser::apply(const ltr::Object& argument,
     for (size_t choosedFeatureIdx = 0;
             choosedFeatureIdx < countChoosedFeatures();
             ++choosedFeatureIdx) {
-        result << argument[choosedFeaturesIndexes_[choosedFeatureIdx]];
+        result <<
+                argument.features()[choosedFeaturesIndexes_[choosedFeatureIdx]];
     }
 
     *value = result;

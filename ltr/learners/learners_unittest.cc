@@ -4,11 +4,10 @@
 
 #include <vector>
 
-#include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_subset_chooser.h"
+#include "ltr/learners/learner.h"
 
 // The fixture for testing (contains data for tests).
-class FeatureConvertersTest : public ::testing::Test {
+class LearnersTest : public ::testing::Test {
     protected:
     virtual void SetUp() {
         // Code here will be called immediately after the constructor (right
@@ -24,5 +23,5 @@ class FeatureConvertersTest : public ::testing::Test {
 };
 
 // tests.
-TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
+TEST_F(LearnersTest, TestingLearnerX) {
 };
