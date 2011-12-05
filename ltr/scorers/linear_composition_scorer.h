@@ -1,5 +1,12 @@
 // Copyright 2011 Yandex
+
+#ifndef LTR_SCORERS_LINEAR_COMPOSITION_SCORER_H_
+#define LTR_SCORERS_LINEAR_COMPOSITION_SCORER_H_
+
 #pragma once
+
+#include <string>
+#include <vector>
 
 #include "scorers/scorer.h"
 #include "scorers/utility/scorer_utility.h"
@@ -8,7 +15,7 @@ namespace ltr {
   class LinearCompositionScorer : public IScorer {
   public:
     typedef boost::shared_ptr< LinearCompositionScorer > Ptr;
-     
+
     LinearCompositionScorer() : IScorer("LinearCompositionScorer") {
     }
 
@@ -39,9 +46,13 @@ namespace ltr {
 
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;
-    virtual std::string generateCppCode(const std::string& class_name, int tabbing) const;
-    virtual std::string generateJavaCode(const std::string& class_name, int tabbing, bool is_static) const;
+    virtual std::string generateCppCode
+      (const std::string& class_name, int tabbing) const;
+    virtual std::string generateJavaCode
+      (const std::string& class_name, int tabbing, bool is_static) const;
   private:
     std::vector< ScorerAndWeight > scorers_;
   };
 };
+
+#endif  // LTR_SCORERS_LINEAR_COMPOSITION_SCORER_H_

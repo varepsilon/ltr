@@ -1,4 +1,8 @@
 // Copyright 2011 Yandex
+
+#ifndef LTR_SCORERS_UTILITY_SCORER_UTILITY_H_
+#define LTR_SCORERS_UTILITY_SCORER_UTILITY_H_
+
 #pragma once
 
 #include <boost/lexical_cast.hpp>
@@ -25,7 +29,10 @@ namespace ltr {
 
 
     std::string GenerateLocalClassName(const IScorer& scorer, size_t index) {
-      return "Local" + boost::lexical_cast<std::string>(index) + "_" + scorer.alias();
+      return "Local" + boost::lexical_cast<std::string>(index) +
+        "_" + scorer.alias();
     }
   };
 };
+
+#endif  // LTR_SCORERS_UTILITY_SCORER_UTILITY_H_

@@ -2,10 +2,9 @@
 
 #include "ltr/scorers/utility/scorer_utility.h"
 
-namespace ltr
-{
+namespace ltr {
   namespace utility {
-    
+
     void MarkWithScorer(const Object& obj, const IScorer& scorer) {
       obj.setPredictedLabel(scorer(obj));
     }
@@ -20,6 +19,5 @@ namespace ltr
         MarkWithScorer(obj_list[index], scorer);
       }
     }
-
   };
 };
