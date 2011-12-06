@@ -23,7 +23,6 @@ std::string GenerateLocalClassName(const Scorer& scorer, size_t index) {
   return "Local" + boost::lexical_cast<std::string>(index) +
       "_" + scorer.alias();
 }
-
 }
 }
 

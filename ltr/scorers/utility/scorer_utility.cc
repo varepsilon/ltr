@@ -18,6 +18,5 @@ void MarkElement(const TElement& element, const Scorer& scorer) {
     element[i].setPredictedLabel(scorer(element[i]));
   }
 }
-
 }
 }
