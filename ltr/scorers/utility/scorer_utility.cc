@@ -5,8 +5,8 @@
 namespace ltr {
   namespace utility {
     template <class Markable>
-    void MarkDataSet(const DataSet<Markable>& elements, const IScorer& scorer){
-      for (size_t i = 0; i < elements.size(); ++i) {
+    void MarkDataSet(const DataSet<Markable>& elements, const IScorer& scorer) {
+      for (int i = 0; i < elements.size(); ++i) {
         MarkElement(elements[i], scorer);
       }
     }
