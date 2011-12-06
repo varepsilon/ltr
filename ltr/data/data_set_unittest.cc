@@ -22,6 +22,5 @@ class DataSetTest : public ::testing::Test {
 // tests.
 
 TEST_F(DataSetTest, DataSetTest_test) {
-  std::cout << "Here!!!" << std::endl;
   ltr::DataSet<ltr::ObjectList> data_set;
 }

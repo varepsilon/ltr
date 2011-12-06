@@ -41,7 +41,11 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
                            ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
-                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.cc)
+                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.cc
+                           ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.h
+                           ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
+                           ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
+                           ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h)
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})
