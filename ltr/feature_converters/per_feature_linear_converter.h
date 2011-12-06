@@ -15,7 +15,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
   public:
   typedef boost::shared_ptr< PerFeatureLinearConverter > Ptr;
 
-  PerFeatureLinearConverter(size_t featureCount) :
+  explicit PerFeatureLinearConverter(size_t featureCount) :
     coefficient_(featureCount, 1),
     shift_(featureCount, 0) {}
 

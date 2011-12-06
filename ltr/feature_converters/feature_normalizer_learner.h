@@ -34,7 +34,8 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
 };
 
 template <typename TElement>
-void FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
+void
+FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
   this->calcMinMaxStatistics(data_set);
   this->calcCurrentConverter();
 }

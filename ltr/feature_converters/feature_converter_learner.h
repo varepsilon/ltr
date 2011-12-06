@@ -16,7 +16,6 @@ class IFeatureConverterLearner {
   void learn(const DataSet<TElement>& data_set);
   FeatureConverter::Ptr make();
 };
-
 }
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_
