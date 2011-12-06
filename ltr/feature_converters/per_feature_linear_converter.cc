@@ -6,7 +6,7 @@
 
 namespace ltr {
 
-FeatureInfo PerFeatureLinearConverter::convertFeatureInfo (
+FeatureInfo PerFeatureLinearConverter::convertFeatureInfo(
     const FeatureInfo& oldFeatureInfo) const {
   this->checkFeatureCount(oldFeatureInfo.getFeatureCount());
   return oldFeatureInfo;
