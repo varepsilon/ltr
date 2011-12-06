@@ -1,12 +1,13 @@
 // Copyright 2011 Yandex School Practice
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "ltr/data/object.h"
-#include "ltr/data/data_set.h"
+#include <vector>
+
+#include "ltr/scorers/scorer.h"
 
 // The fixture for testing (contains data for tests).
-class DataSetTest : public ::testing::Test {
+class ScorersTest : public ::testing::Test {
     protected:
     virtual void SetUp() {
         // Code here will be called immediately after the constructor (right
@@ -17,11 +18,10 @@ class DataSetTest : public ::testing::Test {
         // Code here will be called immediately after each test (right
         // before the destructor).
     }
+    // objects, used in tests
+    protected:
 };
 
 // tests.
-
-TEST_F(DataSetTest, DataSetTest_test) {
-  std::cout << "Here!!!" << std::endl;
-  ltr::DataSet<ltr::ObjectList> data_set;
-}
+TEST_F(ScorersTest, TestingScorerX) {
+};

@@ -29,7 +29,7 @@ class Learner : public Reporter, public Aliaser, public Parameterized {
     virtual void learnImpl(const DataSet<TElement>& data,
             typename TScorer::Ptr scorer) const = 0;
 
-    std::vector<FeatureConverter::ConstPtr> featureConverters_;
+    FeatureConverterArray featureConverters_;
 };
 
 template< class TElement, class TScorer >

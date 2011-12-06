@@ -3,8 +3,6 @@
 #ifndef LTR_SCORERS_FAKE_SCORER_H_
 #define LTR_SCORERS_FAKE_SCORER_H_
 
-#pragma once
-
 #include <string>
 #include "ltr/scorers/scorer.h"
 
@@ -12,11 +10,11 @@ namespace ltr {
   /**
    * Fake Ranker. Simply always return 0.0.
    */
-  class FakeScorer : public IScorer {
+  class FakeScorer : public Scorer {
   public:
     typedef boost::shared_ptr< FakeScorer > Ptr;
 
-    FakeScorer() : IScorer("FakeScorer") {
+    FakeScorer() : Scorer("FakeScorer") {
     }
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;

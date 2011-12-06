@@ -4,6 +4,8 @@
 #define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
+#include <string>
 
 #include "ltr/data/object.h"
 #include "ltr/data/features_info.h"
@@ -27,6 +29,12 @@ class FeatureConverter {
     template <typename TElement>
     void apply(const DataSet<TElement> & argument,
             DataSet<TElement> * value) const;
+
+    virtual std::string generateCppCode(const std::string& class_name,
+            int tabbing = 0) const = 0;
+
+    virtual std::string generateJavaCode(const std::string& class_name,
+            int tabbing = 0, bool is_static = false) const = 0;
 };
 
 template <typename TElement>
@@ -47,6 +55,8 @@ void FeatureConverter::apply(
 
     *value = result;
 }
+
+typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
 }
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

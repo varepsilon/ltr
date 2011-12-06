@@ -152,7 +152,7 @@ namespace ltr {
   }
 
   void LinearCompositionScorer::add
-      (IScorer::Ptr scorer, double weight) {
+      (Scorer::Ptr scorer, double weight) {
     scorers_.push_back(ScorerAndWeight(scorer, weight));
   }
 };

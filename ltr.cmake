@@ -25,7 +25,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h ${Source_Path}/ltr/utility/
 SET(LTR_CORE ${Source_Path}/ltr/interfaces.h
 			 ${Source_Path}/ltr/interfaces.cc)
 
-SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
+SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
 			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
 			${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
 			${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc)

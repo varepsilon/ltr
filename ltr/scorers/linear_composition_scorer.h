@@ -12,18 +12,18 @@
 #include "scorers/utility/scorer_utility.h"
 
 namespace ltr {
-  class LinearCompositionScorer : public IScorer {
+  class LinearCompositionScorer : public Scorer {
   public:
     typedef boost::shared_ptr< LinearCompositionScorer > Ptr;
 
-    LinearCompositionScorer() : IScorer("LinearCompositionScorer") {
+    LinearCompositionScorer() : Scorer("LinearCompositionScorer") {
     }
 
     struct ScorerAndWeight {
-      IScorer::Ptr scorer;
+      Scorer::Ptr scorer;
       double weight;
 
-      ScorerAndWeight(IScorer::Ptr r, double w) :
+      ScorerAndWeight(Scorer::Ptr r, double w) :
       scorer(r),
       weight(w) {
       }
@@ -42,7 +42,7 @@ namespace ltr {
     ScorerAndWeight& at(size_t i);
 
     void add(const ScorerAndWeight& scorer);
-    void add(IScorer::Ptr scorer, double weight);
+    void add(Scorer::Ptr scorer, double weight);
 
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;

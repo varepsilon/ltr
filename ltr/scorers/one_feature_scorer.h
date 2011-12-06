@@ -3,8 +3,6 @@
 #ifndef LTR_SCORERS_ONE_FEATURE_SCORER_H_
 #define LTR_SCORERS_ONE_FEATURE_SCORER_H_
 
-#pragma once
-
 #include <string>
 #include "ltr/scorers/scorer.h"
 
@@ -13,7 +11,7 @@ namespace ltr {
   /**
    * Simple ranker. Represent single features multiplied by weight.
    */
-  class OneFeatureScorer : public IScorer {
+  class OneFeatureScorer : public Scorer {
   public:
     typedef boost::shared_ptr< OneFeatureScorer > Ptr;
 

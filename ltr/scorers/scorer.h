@@ -9,47 +9,37 @@
 
 #include "ltr/interfaces.h"
 #include "ltr/data/object.h"
-
-using std::vector;
+#include "ltr/feature_converters/feature_converter.h"
 
 namespace ltr {
 
-class Object;
+class Scorer : public Aliaser, public IBriefer {
+  public:
+  typedef boost::shared_ptr<Scorer> Ptr;
 
-/**
- * Score objects (not pairs or lists!). Is output of all learners.
- */
-class IScorer : public Aliaser, public IBriefer {
-    public:
-    typedef boost::shared_ptr<IScorer> Ptr;
+  Scorer(const std::string& alias,
+      const FeatureConverterArray& featureConverters = FeatureConverterArray()):
+        Aliaser(alias),
+        featureConverters_(featureConverters) {}
+  virtual ~Scorer() {}
 
-    explicit IScorer(const std::string& alias) : Aliaser(alias) {
-    }
+  double score(const Object& obj) const;
+  double operator() (const Object& obj) const;
 
-    /**
-     * Returns object's score.
-     */
-    virtual double operator()(const Object& obj) const = 0;
+  virtual std::string generateCppCode(const std::string& class_name,
+      int tabbing = 0) const = 0;
+  virtual std::string generateJavaCode(const std::string& class_name,
+      int tabbing = 0, bool is_static = false) const = 0;
 
-    /**
-     * Generates C++ header-only code.
-     * @param class_name - class name of generated class that MUST be used
-     * @param tabbing - count of tabs should be pasted of beginning of each line of generated code
-     */
-    virtual std::string generateCppCode(
-        const std::string& class_name, int tabbing = 0) const = 0;
+  private:
+  virtual double scoreImpl(const Object& obj) const = 0;
 
-    /**
-     * Generates Java code.
-     * @param class_name - class name of generated class that MUST be used
-     * @param tabbing - count of tabs should be pasted of beginning of each line of generated code
-     * @param is_static - if true, qualifier 'static' must be set for generated class (used fo embedded classes)
-     */
-    virtual std::string generateJavaCode(const std::string& class_name,
-        int tabbing = 0, bool is_static = false) const = 0;
+  virtual std::string generateCppCodeImpl(const std::string& class_name,
+      int tabbing = 0) const = 0;
+  virtual std::string generateJavaCodeImpl(const std::string& class_name,
+      int tabbing = 0, bool is_static = false) const = 0;
 
-    virtual ~IScorer() {}
+  FeatureConverterArray featureConverters_;
 };
-};
-
+}
 #endif  // LTR_SCORERS_SCORER_H_

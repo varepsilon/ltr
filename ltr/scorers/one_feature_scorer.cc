@@ -9,7 +9,7 @@ namespace ltr {
     (size_t feature_index, double feature_weight) :
   index_(feature_index),
   weight_(feature_weight),
-  IScorer("OneFeatureScorer") {
+  Scorer("OneFeatureScorer") {
   }
 
   size_t OneFeatureScorer::index() const {
