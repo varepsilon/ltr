@@ -3,8 +3,6 @@
 #ifndef LTR_MEASURES_MEASURE_H_
 #define LTR_MEASURES_MEASURE_H_
 
-#pragma once
-
 #include <boost/shared_ptr.hpp>
 #include <stdexcept>
 #include <string>
@@ -88,7 +86,6 @@ namespace ltr {  // template realizations
     double sum = 0.0;
     int query_proceed = 0;
 
-    // #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < static_cast<int>(set.size()); ++i) {
       query_proceed += 1;
       double val;
@@ -99,12 +96,10 @@ namespace ltr {  // template realizations
         LTR_LOG.warning() << "In Measure::average : "
           << err.what() << ".\n";
         val = 0.0;
-        // #pragma omp critical
         {
           query_proceed -= 1;
         }
       }
-      // #pragma omp critical
       {
         sum += val;
       }
@@ -114,8 +109,7 @@ namespace ltr {  // template realizations
     return sum;
   }
 
-  // waiting for element weights in dataset
-/*  template< class TElement>
+  template< class TElement>
   double Measure<TElement>::weightedAverage(const DataSet<TElement>& set) const {
     if(set.size() == 0) {
       throw logic_error(alias() + " gained empty set");
@@ -124,9 +118,8 @@ namespace ltr {  // template realizations
     double sum = 0.0;
     double weights = 0.0;
 
-    // #pragma omp parallel for schedule(dynamic)
     for(int i = 0; i < int(set.size()); ++i) {
-      double w = set.weight(i);
+      double w = set.getWeight(i);
       double val; 
       try {
         val = w * this->operator()(*set[i]);
@@ -137,14 +130,13 @@ namespace ltr {  // template realizations
         val = 0.0;
         w = 0.0;
       }
-      // #pragma omp critical (WAverage)
       {
         weights += w;
         sum += val;
       }
     }
     return sum / weights;
-  }*/
+  }
 };
 
 #endif  // LTR_MEASURES_MEASURE_H_
