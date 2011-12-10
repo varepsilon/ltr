@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_SCORERS_SOFT_SCORER_H_
+#define LTR_SCORERS_SOFT_SCORER_H_
+
 #include <vector>
 #include <string>
 
@@ -13,8 +16,8 @@ namespace ltr {
    public:
     typedef boost::shared_ptr< SoftScorer > Ptr;
 
-    SoftScorer(const std::string& alias,
-        const FeatureConverterArray& featureConverters = FeatureConverterArray()):
+    SoftScorer(const std::string& alias,  const FeatureConverterArray&
+        featureConverters = FeatureConverterArray()):
       Scorer(alias, featureConverters) {
     }
 
@@ -34,9 +37,8 @@ namespace ltr {
     LinearScorer(const Gradient& parameters, const FeatureConverterArray&
         featureConverters = FeatureConverterArray());
 
-
     std::string brief() const;     
-    
+
     Gradient getGradient(const Object& obj) const;
     size_t getParametersCount() const;
     double getParameter(int parameter_index) const;
@@ -58,3 +60,5 @@ namespace ltr {
       int tabbing = 0, bool is_static = false) const;
   };
 };
+
+#endif  // LTR_SCORERS_SOFT_SCORER_H_

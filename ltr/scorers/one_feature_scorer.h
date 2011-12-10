@@ -15,7 +15,7 @@ namespace ltr {
   public:
     typedef boost::shared_ptr< OneFeatureScorer > Ptr;
 
-    OneFeatureScorer(size_t feature_index = 0);
+    explicit OneFeatureScorer(size_t feature_index = 0);
 
     size_t index() const;
     void setIndex(size_t new_index);
