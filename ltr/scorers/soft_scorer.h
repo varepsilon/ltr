@@ -26,7 +26,7 @@ namespace ltr {
     virtual size_t getParametersCount() const = 0;
 
     virtual double getParameter(int parameter_index) const = 0;
- 
+
     virtual void shiftParameters(const Gradient& shift) = 0;
   };
 
@@ -37,7 +37,7 @@ namespace ltr {
     LinearScorer(const Gradient& parameters, const FeatureConverterArray&
         featureConverters = FeatureConverterArray());
 
-    std::string brief() const;     
+    std::string brief() const;
 
     Gradient getGradient(const Object& obj) const;
     size_t getParametersCount() const;

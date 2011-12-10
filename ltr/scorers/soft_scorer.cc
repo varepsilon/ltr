@@ -1,8 +1,10 @@
 // Copyright 2011 Yandex
 
 #include "scorers/soft_scorer.h"
-#include <string>
+
 #include <boost/lexical_cast.hpp>
+
+#include <string>
 
 namespace ltr {
   LinearScorer::LinearScorer(const Gradient& parameters,
@@ -21,7 +23,7 @@ namespace ltr {
     for (int feature = 0; feature < features_weights_.size(); ++feature) {
       scrore += features_weights_[feature] * object.features()[feature];
     }
-    return scrore;  
+    return scrore;
   }
 
   Gradient LinearScorer::getGradient(const Object& obj) const {
@@ -56,10 +58,11 @@ namespace ltr {
       append(class_name).
       append(" {\n").
       append("public:\n").
-      append("  static double score(const std::vector< double >& features) {\n").
+      append("  static double score").
+      append("(const std::vector< double >& features) {\n").
       append("    double result = 0;\n");
 
-    for(int feature = 0; feature < features_weights_.size(); ++feature) {
+    for (int feature = 0; feature < features_weights_.size(); ++feature) {
       hpp_code.
         append("    result += ").
         append(boost::lexical_cast<std::string>(features_weights_[feature])).
@@ -83,13 +86,13 @@ namespace ltr {
 
     java_code.
       append("public ").
-      append(std::string(is_static ? "static " : "" ) + "class ").
+      append(std::string(is_static ? "static " : "") + "class ").
       append(class_name).
       append(" {\n").
       append("\tpublic static double score(Vector<Double> features) { \n").
       append("    double result = 0;\n");
 
-    for(int feature = 0; feature < features_weights_.size(); ++feature) {
+    for (int feature = 0; feature < features_weights_.size(); ++feature) {
       java_code.
         append("    result += ").
         append(boost::lexical_cast<std::string>(features_weights_[feature])).
