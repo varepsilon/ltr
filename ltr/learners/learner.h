@@ -17,17 +17,19 @@ class Learner : public Reporter, public Aliaser, public Parameterized {
     public:
     typedef boost::shared_ptr<Learner> Ptr;
 
-    void learn(const DataSet<TElement>& data,
-            typename TScorer::Ptr scorer) const;
+    void learn(const DataSet<TElement>& data);
 
     void addFeatureConverter(
             typename ltr::FeatureConverter::ConstPtr p_FeatureConverter);
 
+    virtual void reset() = 0;
+    virtual void setInitialScorer(const TScorer& in_scorer) = 0;
+    virtual TScorer make() const = 0;
+
     virtual ~Learner();
 
     private:
-    virtual void learnImpl(const DataSet<TElement>& data,
-            typename TScorer::Ptr scorer) const = 0;
+    virtual void learnImpl(const DataSet<TElement>& data) = 0;
 
     FeatureConverterArray featureConverters_;
 };
@@ -39,8 +41,7 @@ void Learner< TElement, TScorer >::addFeatureConverter(
 }
 
 template< class TElement, class TScorer >
-void Learner< TElement, TScorer >::learn(const DataSet<TElement>& data,
-        typename TScorer::Ptr scorer) const {
+void Learner< TElement, TScorer >::learn(const DataSet<TElement>& data) {
     DataSet<TElement> sourceData = data.deepCopy();
     DataSet<TElement> convertedData;
     for (size_t featureConverterIdx = 0;
@@ -51,7 +52,7 @@ void Learner< TElement, TScorer >::learn(const DataSet<TElement>& data,
                 &convertedData);
         sourceData = convertedData;
     }
-    learnImpl(sourceData, scorer);
+    learnImpl(sourceData);
 }
 };
 #endif  // LTR_LEARNERS_LEARNER_H_

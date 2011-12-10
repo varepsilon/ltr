@@ -6,9 +6,8 @@
 
 namespace ltr {
   OneFeatureScorer::OneFeatureScorer
-    (size_t feature_index, double feature_weight) :
+    (size_t feature_index) :
   index_(feature_index),
-  weight_(feature_weight),
   Scorer("OneFeatureScorer") {
   }
 
@@ -16,26 +15,17 @@ namespace ltr {
     return index_;
   }
 
-  double OneFeatureScorer::weight() const {
-    return weight_;
-  }
-
   void OneFeatureScorer::setIndex(size_t i) {
     index_ = i;
   }
 
-  void OneFeatureScorer::setWeight(double w) {
-    weight_ = w;
-  }
-
   double OneFeatureScorer::operator()(const Object& obj) const {
-    return weight_ * obj[1].features().at(index_);
+    return obj[1].features().at(index_);
   }
 
   std::string OneFeatureScorer::brief() const {
     std::string result = "takes feature " +
-      boost::lexical_cast<std::string>(index_) +
-      " with weight " + boost::lexical_cast<std::string>(weight_);
+      boost::lexical_cast<std::string>(index_);
     return result;
   }
 
@@ -55,8 +45,7 @@ namespace ltr {
       append(tab_str).
         append("\tstatic double score").
         append("(const std::vector< double >& features) { return ").
-        append(boost::lexical_cast< std::string >(weight_)).
-        append(" * features[").
+        append("features[").
         append(boost::lexical_cast< std::string >(index_)).
         append("]; }\n").
       append(tab_str).
@@ -80,8 +69,7 @@ namespace ltr {
       append(tab_str).
         append("\tpublic static double score").
         append("(Vector<Double> features) { return ").
-        append(boost::lexical_cast< std::string >(weight_)).
-        append(" * features.get(").
+        append("features.get(").
         append(boost::lexical_cast< std::string >(index_)).
         append("); }").
       append(tab_str).

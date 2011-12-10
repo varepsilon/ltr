@@ -13,8 +13,8 @@
 
 namespace ltr {
 
-class Scorer : public Aliaser, public IBriefer {
-  public:
+class Scorer : public Aliaser {
+ public:
   typedef boost::shared_ptr<Scorer> Ptr;
 
   Scorer(const std::string& alias,
@@ -26,12 +26,14 @@ class Scorer : public Aliaser, public IBriefer {
   double score(const Object& obj) const;
   double operator() (const Object& obj) const;
 
+  virtual std::string brief() const = 0;
+
   virtual std::string generateCppCode(const std::string& class_name,
       int tabbing = 0) const = 0;
   virtual std::string generateJavaCode(const std::string& class_name,
       int tabbing = 0, bool is_static = false) const = 0;
 
-  private:
+ protected:
   virtual double scoreImpl(const Object& obj) const = 0;
 
   virtual std::string generateCppCodeImpl(const std::string& class_name,
