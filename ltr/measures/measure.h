@@ -110,22 +110,23 @@ namespace ltr {  // template realizations
   }
 
   template< class TElement>
-  double Measure<TElement>::weightedAverage(const DataSet<TElement>& set) const {
-    if(set.size() == 0) {
+  double Measure<TElement>::weightedAverage(
+      const DataSet<TElement>& set) const {
+    if (set.size() == 0) {
       throw logic_error(alias() + " gained empty set");
     }
 
     double sum = 0.0;
     double weights = 0.0;
 
-    for(int i = 0; i < int(set.size()); ++i) {
+    for (int i = 0; i < static_cast<int>(set.size()); ++i) {
       double w = set.getWeight(i);
-      double val; 
+      double val;
       try {
         val = w * this->operator()(*set[i]);
       }
-      catch (logic_error err) {
-        LTR_LOG.warning() << "In Measure::weightedAverage : " 
+      catch(logic_error err) {
+        LTR_LOG.warning() << "In Measure::weightedAverage : "
           << err.what() << ".\n";
         val = 0.0;
         w = 0.0;
