@@ -6,6 +6,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 
 #include <map>
+#include <vector>
 #include <string>
 #include <iostream>
 
