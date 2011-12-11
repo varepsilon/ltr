@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_CROSSVALIDATION_VALIDATION_RESULT_H_
+#define LTR_CROSSVALIDATION_VALIDATION_RESULT_H_
+
 #include <string>
 #include <vector>
 
@@ -11,7 +14,8 @@ namespace ltr {
 
     class ValidationResult {
      public:
-      void addSplitInfo(Scorer::Ptr in_scorer, const string& in_report, double in_measure_value);
+      void addSplitInfo(Scorer::Ptr in_scorer,
+        const string& in_report, double in_measure_value);
 
       size_t getSplitCount() const;
       Scorer::Ptr getScorer(size_t split_index) const;
@@ -32,7 +36,6 @@ namespace ltr {
 
       std::vector<OneSplitData> datas_;
     };
-
   };
 };
 
@@ -60,3 +63,5 @@ namespace ltr {
     }
   };
 };
+
+#endif  // LTR_CROSSVALIDATION_VALIDATION_RESULT_H_
