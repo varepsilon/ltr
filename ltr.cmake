@@ -41,12 +41,15 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h)
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
-                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
+						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
                            ${Source_Path}/ltr/feature_converters/feature_subset_chooser.cc
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.h
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h)
+						   
+SET(LTR_CROSSVALIDATION 	${Source_Path}/ltr/crossvalidation/splitter.h
+							${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h)
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})
@@ -60,7 +63,8 @@ SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERSCONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
+SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_IO_UTILS} ${LTR_SCORERS}
 			${LTR_LEARNERS} ${LTR_PARAMETERSCONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
-			${LTR_MEASURES})
+			${LTR_MEASURES} ${LTR_CROSSVALIDATION})
