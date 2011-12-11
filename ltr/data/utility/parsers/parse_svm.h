@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <iostream>
 
 #include "ltr/data/object.h"
@@ -19,13 +20,14 @@ namespace ltr {
   namespace io_utility {
   class SVMParser : public IParser {
     public:
-      void parse(const std::string& line,
-                 double* relevance,
-                 size_t* key,
-                 std::map<size_t, double>* features,
-                 size_t* qid);
-      void parseToObject(const std::string line, Object* obj);
-      std::string makeString(const Object& obj);
+      Object parse(const std::string& line,
+                   NominalFeatureHandler::Ptr featureHandler);
+      void makeString(const Object& obj, std::string* result);
+
+      DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,
+                                           const FeatureInfo& info);
+      DataSet<ObjectList> buildListDataSet(const std::vector<Object>& objects,
+                                           const FeatureInfo& info);
   };
   };
 };

@@ -22,14 +22,17 @@ namespace ltr {
   namespace io_utility {
     template<class TElement>
     DataSet<TElement> loadDataSet(string filename,
-                                  string format);
+                                  string format,
+                                  NominalFeatureHandler::Ptr handler);
     template<class TElement>
-    void saveDataSet(const DataSet<TElement> data,
-                     string filename,
-                     string format);
+    void saveDataSet(const DataSet<TElement>& data,
+                     const string& filename,
+                     const string& format);
 
     template<class TElement>
-    DataSet<TElement> buildDataSet(const map<size_t, vector<Object> >& object);
+    DataSet<TElement> buildDataSet(IParser::Ptr parset,
+                                   const vector<Object>& objects,
+                                   const FeatureInfo& info);
 
     template<class TElement>
     void savePredictions(const DataSet<TElement>& data,
@@ -44,70 +47,59 @@ namespace ltr {
   namespace io_utility {
     template<class TElement>
     DataSet<TElement> loadDataSet(string filename,
-                                  string format) {
+                                  string format,
+                                  NominalFeatureHandler::Ptr handler =
+                             NominalFeatureHandler::Ptr(new RemoveHandler())) {
       std::ifstream file(filename.c_str());
       if (file.fail())
         throw std::logic_error("File " + filename + " not found");
       IParser::Ptr parser = getParser(format);
       parser->init(&file);
-      map<size_t, vector<Object> > objects;
+      handler->init(parser->info());
+
+      vector<Object> objects;
       std::string line;
-      while (std::getline(file, line)) {
-        Object obj;
-        obj = parser->parseToObject(line);
-        objects[obj.queryId()].push_back(obj);
-      }
+      while (std::getline(file, line))
+        objects.push_back(parser->parse(line, handler));
+
       file.close();
-      return buildDataSet<TElement>(objects);
+      return buildDataSet<TElement>(parser, objects, handler->featureInfo());
     }
 
     template<>
-    DataSet<Object> buildDataSet(const map<size_t, vector<Object> >& objects) {
-      DataSet<Object> data;
+    DataSet<Object> buildDataSet(IParser::Ptr parser,
+                                 const vector<Object>& objects,
+                                 const FeatureInfo& info) {
+      DataSet<Object> data(info);
       typedef map<size_t, vector<Object> >::const_iterator object_iterator;
 
-      for (object_iterator it = objects.begin(); it != objects.end(); it++)
-        for (size_t i = 0; i < it->second.size(); i++)
-          data << it->second.at(i);
+      for (size_t i = 0; i < objects.size(); i++)
+          data << objects[i];
       return data;
     }
 
     template<>
-    DataSet<ObjectPair> buildDataSet(
-        const map<size_t, vector<Object> >& objects) {
-      DataSet<ObjectPair> data;
-      typedef map<size_t, vector<Object> >::const_iterator object_iterator;
-
-      for (object_iterator it = objects.begin(); it != objects.end(); it++)
-        for (size_t i = 0; i < it->second.size(); i++)
-          for (size_t j = 0; j < i; j++)
-            data << ObjectPair(it->second.at(i), it->second.at(j));
-      return data;
+    DataSet<ObjectPair> buildDataSet(IParser::Ptr parser,
+                                     const vector<Object>& objects,
+                                     const FeatureInfo& info) {
+      return parser->buildPairDataSet(objects, info);
     }
 
     template<>
-    DataSet<ObjectList> buildDataSet(
-        const map<size_t, vector<Object> >& objects) {
-      DataSet<ObjectList> data;
-      typedef map<size_t, vector<Object> >::const_iterator object_iterator;
-
-      ObjectList olist;
-        for (object_iterator it = objects.begin(); it != objects.end(); it++)
-          for (size_t i = 0; i < it->second.size(); i++)
-            olist << it->second.at(i);
-      data << olist;
-      return data;
+    DataSet<ObjectList> buildDataSet(IParser::Ptr parser,
+                                     const vector<Object>& objects,
+                                     const FeatureInfo& info) {
+      return parser->buildListDataSet(objects, info);
     }
 
     template<class TElement>
     void saveDataSet(const DataSet<TElement>& data,
-                     string filename,
-                     string format) {
+                     const string& filename,
+                     const string& format) {
       std::ofstream file(filename.c_str());
       if (file.fail())
         throw std::logic_error("can't open " + filename + " for writing");
       IParser::Ptr parser = getParser(format);
-      parser->writeHeader(data);
       for (size_t i = 0; i < data.size(); i++)
         for (size_t j = 0; j < data[i].size(); j++) {
           parser->writeString(data[i][j], &file);
@@ -131,4 +123,5 @@ namespace ltr {
     }
   };
 };
+
 #endif  // LTR_DATA_UTILITY_IO_UTILITY_H_

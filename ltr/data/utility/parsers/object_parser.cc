@@ -5,6 +5,7 @@
 #include "ltr/data/utility/parsers/object_parser.h"
 #include "ltr/data/utility/parsers/parse_svm.h"
 #include "ltr/data/utility/parsers/parse_yandex.h"
+#include "ltr/data/utility/parsers/parse_arff.h"
 
 namespace ltr {
   namespace io_utility {
@@ -15,31 +16,16 @@ namespace ltr {
         return IParser::Ptr(new SVMParser());
       else if (format_ == "YANDEX")
         return IParser::Ptr(new YandexParser());
+      else if (format_ == "ARFF")
+        return IParser::Ptr(new ARFFParser());
       else
         throw std::logic_error("unknown format " + format);
     }
 
-    Object IParser::parseToObject(const std::string line) {
-      Object obj;
-      double relevance = 0;
-      size_t key, qid;
-      std::map<size_t, double> features;
-      parse(line, &relevance, &key, &features, &qid);
-
-      obj.setActualLabel(relevance);
-      obj.setQuieryId(qid);
-
-      obj.features().assign(features.rbegin()->first, 0.0);
-
-      for (std::map<size_t, double>::const_iterator it = features.begin();
-              it != features.end(); ++it) {
-          obj.features()[it->first-1] = it->second;
-      }
-      return obj;
-    }
-
     void IParser::writeString(const Object& obj, std::ostream* out) {
-      *out << makeString(obj);
+      std::string str;
+      makeString(obj, &str);
+      *out << str;
     }
   };
 };

@@ -6,57 +6,67 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <map>
+#include <string>
+
+using std::map;
+using std::string;
 
 namespace ltr {
 
 typedef std::vector< double > Features;
-
+typedef map<string, string> MetaInfo;
 class Object {
-    public:
-    typedef boost::shared_ptr< Object > Ptr;
+  public:
+  typedef boost::shared_ptr< Object > Ptr;
 
-    Object();
+  Object();
 
-    const Features& features() const;
-    Features& features();
-    int queryId() const;
-    void setQuieryId(int id);
+  const Features& features() const;
+  Features& features();
 
-    Object& operator<<(double feature);
+  const string& getMetaInfo(string name) const;
+  void setMetaInfo(string name, string value);
+  const MetaInfo& metaInfo() const;
+  MetaInfo& metaInfo();
 
-    const Object& operator[](size_t i) const;
-    Object& operator[](size_t i);
-    const Object& at(const size_t i)const;
-    Object& at(const size_t i);
 
-    Object& operator=(const Object& other);
+  Object& operator<<(double feature);
 
-    size_t featureCount() const;
+  const Object& operator[](size_t i) const;
+  Object& operator[](size_t i);
+  const Object& at(const size_t i)const;
+  Object& at(const size_t i);
 
-    double actualLabel() const;
-    double predictedLabel() const;
-    void setActualLabel(double label);
-    void setPredictedLabel(double label) const;
+  Object& operator=(const Object& other);
 
-    Object deepCopy() const;
+  size_t featureCount() const;
 
-    /*
-     * Returns always 1.
-     * */
-    size_t size() const;
+  double actualLabel() const;
+  double predictedLabel() const;
+  void setActualLabel(double label);
+  void setPredictedLabel(double label) const;
 
-    friend bool operator==(const Object& o1, const Object& o2);
+  Object deepCopy() const;
 
-    private:
-    boost::shared_ptr<Features> features_;
-    double actual_label_;
-    int qid_;
-    mutable double predicted_label_;
+  /*
+   * Returns always 1.
+   * */
+  size_t size() const;
+
+  friend bool operator==(const Object& o1, const Object& o2);
+
+  private:
+  boost::shared_ptr<Features> features_;
+  boost::shared_ptr<map<string, string> > meta_info_;
+  double actual_label_;
+  int qid_;
+  mutable double predicted_label_;
+
+  friend bool operator==(const Object& ob1, const Object& ob2);
 };
-
-bool operator==(const Object& o1, const Object& o2);
-bool operator!=(const Object& o1, const Object& o2);
-std::ostream& operator<<(std::ostream& istr, const Object& obj);
+bool operator==(const Object& ob1, const Object& ob2);
+bool operator!=(const Object& ob1, const Object& ob2);
 }
 
 #endif  // LTR_DATA_OBJECT_H_

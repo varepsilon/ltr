@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "ltr/data/object.h"
-#include "ltr/data/features_info.h"
+#include "ltr/data/feature_info.h"
 #include "ltr/data/data_set.h"
 #include "ltr/feature_converters/feature_converter.h"
 
