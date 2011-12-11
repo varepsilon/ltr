@@ -3,9 +3,9 @@
 #ifndef LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 #define LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 
-#include "crossvalidation/splitter.h"
-
 #include <vector>
+
+#include "crossvalidation/splitter.h"
 
 namespace ltr {
   namespace cv {

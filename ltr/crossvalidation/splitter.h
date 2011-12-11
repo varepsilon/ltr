@@ -3,9 +3,9 @@
 #ifndef LTR_CROSSVALIDATION_SPLITTER_H_
 #define LTR_CROSSVALIDATION_SPLITTER_H_
 
-#include "data/data_set.h"
-
 #include <vector>
+
+#include "data/data_set.h"
 
 
 namespace ltr {
