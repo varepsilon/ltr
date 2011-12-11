@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_CROSSVALIDATION_SPLITTER_H_
+#define LTR_CROSSVALIDATION_SPLITTER_H_
+
 #include "data/data_set.h"
 
 #include <vector>
@@ -35,6 +38,7 @@ namespace ltr {
       SplittedDataSet split(int split_index,
         const DataSet<TElement>& base_set) const;
 
+      virtual ~Splitter() {}
      protected:
       virtual void splitImpl(
         int split_index,
@@ -66,3 +70,5 @@ SplittedDataSet Splitter<TElement>::split(int split_index,
 
   return output;
 }
+
+#endif  // LTR_CROSSVALIDATION_SPLITTER_H_

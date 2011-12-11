@@ -26,7 +26,7 @@ class Learner : public Reporter, public Aliaser, public Parameterized {
     virtual void setInitialScorer(const TScorer& in_scorer) = 0;
     virtual TScorer make() const = 0;
 
-    virtual ~Learner();
+    virtual ~Learner() {}
 
     private:
     virtual void learnImpl(const DataSet<TElement>& data) = 0;

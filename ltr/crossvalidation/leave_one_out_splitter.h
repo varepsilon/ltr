@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
+#define LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
+
 #include "crossvalidation/splitter.h"
 
 #include <vector>
@@ -12,7 +15,7 @@ namespace ltr {
     template<class TElement>
     class LeaveOneOutSplitter : public Splitter<class TElement> {
     public:
-      LeaveOneOutSplitter(size_t dataset_size);
+      explicit LeaveOneOutSplitter(size_t dataset_size);
 
       virtual int size() const;
 
@@ -42,9 +45,7 @@ namespace ltr {
         const DataSet<TElement>& base_set,
         std::vector<size_t>* train_set_indexes,
         std::vector<size_t>* test_set_indexes) const {
-
-      if(split_index < 0 || split_index >= size())
-      {
+      if (split_index < 0 || split_index >= size()) {
         throw std::logic_error("index should be in range [0..dataset_size-1]");
       }
 
@@ -61,3 +62,5 @@ namespace ltr {
     }
   };
 };
+
+#endif  // LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
