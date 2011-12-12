@@ -61,7 +61,9 @@ namespace ltr {
             measures[measure_index].average(current_splitted.test_set));
         }
 
-        output.addSplitInfo(current_scorer, current_report, current_measure_values);
+        output.addSplitInfo(current_scorer,
+          current_report,
+          current_measure_values);
       }
 
       return output;
