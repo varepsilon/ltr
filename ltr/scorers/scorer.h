@@ -26,10 +26,16 @@ class Scorer : public Aliaser, public IBriefer {
   double score(const Object& obj) const;
   double operator() (const Object& obj) const;
 
-  virtual std::string generateCppCode(const std::string& class_name,
-      int tabbing = 0) const = 0;
-  virtual std::string generateJavaCode(const std::string& class_name,
-      int tabbing = 0, bool is_static = false) const = 0;
+  std::string generateCppCode(const std::string& class_name,
+      int tabbing = 0) const {
+    // generate code for preprocessors
+    this->generateCppCodeImpl(class_name, tabbing);
+  }
+  std::string generateJavaCode(const std::string& class_name,
+      int tabbing = 0, bool is_static = false) const {
+    // generate code for preprocessors
+    this->generateJavaCodeImpl(class_name, tabbing, is_static);
+  }
 
   private:
   virtual double scoreImpl(const Object& obj) const = 0;
