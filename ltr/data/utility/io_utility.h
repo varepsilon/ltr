@@ -4,6 +4,7 @@
 #define LTR_DATA_UTILITY_IO_UTILITY_H_
 
 #include <string>
+#include <fstream>
 #include <vector>
 #include <map>
 

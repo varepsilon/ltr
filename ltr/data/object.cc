@@ -65,7 +65,6 @@ Object& Object::operator=(const Object& other)  {
   meta_info_ = other.meta_info_;
   actual_label_ = other.actual_label_;
   predicted_label_ = other.predicted_label_;
-  qid_ = other.qid_;
   return *this;
 }
 
@@ -101,8 +100,8 @@ size_t Object::size() const {
 };
 
 bool operator==(const Object& ob1, const Object& ob2) {
-  return ob1.features_.get() == ob2.features_.get() &&
-         ob1.meta_info_.get() == ob2.meta_info_.get() &&
+  return equalWithNaN(*ob1.features_, *ob2.features_) &&
+         *ob1.meta_info_ == *ob2.meta_info_ &&
          utility::equalWithNaN(ob1.actualLabel(), ob2.actualLabel()) &&
          utility::equalWithNaN(ob1.predictedLabel(), ob2.predictedLabel());
 }

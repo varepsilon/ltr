@@ -45,7 +45,7 @@ namespace ltr {
     string line = trim_copy(line_);
     parse_info<> info = boost::spirit::classic::parse(line.c_str(),
         (real_p[assign_a(relevance)] >>
-         str_p("qid") >> ':' >> uint_p[assign_a(qid)] >>
+         !(str_p("qid") >> ':' >> uint_p[assign_a(qid)]) >>
          +(uint_p[assign_a(key)] >> ':' >>
           lexeme_d[+digit_p >> !('.' >> +digit_p)][insert_at_a(features, key)])
           >> *anychar_p),
@@ -55,7 +55,7 @@ namespace ltr {
     }
     obj.setActualLabel(relevance);
     feature_handler->process(features, &obj.features());
-    if (qid > 0)
+    if (qid > -1)
       obj.setMetaInfo("queryId", lexical_cast<string>(qid));
     return obj;
   }

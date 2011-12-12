@@ -12,7 +12,7 @@ bool isNaN(double x) {
 }
 
 bool equalWithNaN(double a, double b) {
-    return a == b || (isNaN(a) && isNaN(b));
+    return DoubleEqual(a, b) || (isNaN(a) && isNaN(b));
 }
 
 bool DoubleMore(const double lhs, const double rhs) {
