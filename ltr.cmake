@@ -6,18 +6,24 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc
              ${Source_Path}/ltr/data/object_list.h ${Source_Path}/ltr/data/object_list.cc
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
-             ${Source_Path}/ltr/data/features_info.h ${Source_Path}/ltr/data/features_info.cc
+             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
              )
 
-SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h)
+SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
+				   ${Source_Path}/ltr/data/utility/data_set_utility.h
+				   ${Source_Path}/ltr/data/utility/data_set_utility.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
+				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
+				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
 				 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
 				 ${Source_Path}/ltr/data/utility/parsers/object_parser.cc
 				 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.h
 				 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.cc
 				 ${Source_Path}/ltr/data/utility/parsers/parse_svm.h
 				 ${Source_Path}/ltr/data/utility/parsers/parse_svm.cc
+				 ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
+				 ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc
 				 )
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h ${Source_Path}/ltr/utility/numerical.cc)

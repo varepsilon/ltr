@@ -1,30 +1,45 @@
 // Copyright 2011 Yandex
 
 #include <sstream>
+#include <stdexcept>
 
 #include "ltr/data/object.h"
 #include "ltr/data/utility/object_utility.h"
 #include "ltr/utility/numerical.h"
 
+using ltr::utility::equalWithNaN;
+
 namespace ltr {
 
 Object::Object() : features_(new Features()),
+    meta_info_(new MetaInfo()),
     actual_label_(1.0),
     predicted_label_(utility::NaN) {}
 
 const Features& Object::features() const {
   return *features_;
 }
+
 Features& Object::features() {
   return *features_;
 }
 
-int Object::queryId() const {
-  return qid_;
+const MetaInfo& Object::metaInfo() const {
+  return *meta_info_;
 }
 
-void Object::setQuieryId(int id) {
-  qid_ =  id;
+MetaInfo& Object::metaInfo() {
+  return *meta_info_;
+}
+
+const string& Object::getMetaInfo(string name) const {
+  if (meta_info_->find(name) == meta_info_->end())
+    throw std::logic_error("unknown meta info " + name);
+  return meta_info_->find(name)->second;
+}
+
+void Object::setMetaInfo(string name, string value) {
+  meta_info_->operator[](name) = value;
 }
 
 Object& Object::operator<<(double feature) {
@@ -47,6 +62,7 @@ Object& Object::at(const size_t i) {
 
 Object& Object::operator=(const Object& other)  {
   features_ = other.features_;
+  meta_info_ = other.meta_info_;
   actual_label_ = other.actual_label_;
   predicted_label_ = other.predicted_label_;
   qid_ = other.qid_;
@@ -76,6 +92,7 @@ void Object::setPredictedLabel(double predicted_label) const {
 Object Object::deepCopy() const {
   Object result = *this;
   result.features_.reset(new Features(*(this->features_)));
+  result.meta_info_.reset(new map<string, string>(*(this->meta_info_)));
   return result;
 }
 
@@ -83,27 +100,14 @@ size_t Object::size() const {
   return 1;
 };
 
-bool operator==(const Object& o1, const Object& o2) {
-  return
-  o1.queryId() == o2.queryId() &&
-  utility::equalWithNaN(o1.actualLabel(), o2.actualLabel()) &&
-  utility::equalWithNaN(o1.predictedLabel(), o2.predictedLabel()) &&
-  (o1.features_.get() == o2.features_.get() ||
-          equalWithNaN(*o1.features_, *o2.features_));
+bool operator==(const Object& ob1, const Object& ob2) {
+  return ob1.features_.get() == ob2.features_.get() &&
+         ob1.meta_info_.get() == ob2.meta_info_.get() &&
+         utility::equalWithNaN(ob1.actualLabel(), ob2.actualLabel()) &&
+         utility::equalWithNaN(ob1.predictedLabel(), ob2.predictedLabel());
 }
 
 bool operator!=(const Object& o1, const Object& o2) {
-  return !(o1 == o2);
-}
-
-std::ostream& operator<<(std::ostream& ostr, const Object& obj) {
-  ostr << '(';
-  for (size_t i = 0; i < obj.featureCount(); ++i) {
-    if (i != 0) ostr << ',';
-    ostr << obj[i];
-  }
-  ostr << " qid = " << obj.queryId();
-  ostr << ')';
-  return ostr;
+    return !(o1 == o2);
 }
 }

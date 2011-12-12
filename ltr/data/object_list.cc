@@ -47,22 +47,4 @@ ObjectList ObjectList::deepCopy() const {
     }
     return result;
 }
-
-bool operator==(const ObjectList& one, const ObjectList& another) {
-    return (one.p_Elements_ == another.p_Elements_);
-}
-
-bool operator!=(const ObjectList& one, const ObjectList& another) {
-    return !(one == another);
-}
-
-std::ostream& operator<<(std::ostream& ostr, const ObjectList& list) {
-    ostr << '{';
-    for (size_t i = 0; i < list.size(); ++i) {
-        if (i != 0) ostr << ',';
-        ostr << list[i];
-    }
-    ostr << '}';
-    return ostr;
-}
 }

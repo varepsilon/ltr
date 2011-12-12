@@ -7,22 +7,35 @@
 #include "ltr/scorers/scorer.h"
 
 namespace ltr {
-  /**
-   * Fake Ranker. Simply always return 0.0.
-   */
-  class FakeScorer : public Scorer {
+/**
+ * Fake Ranker. Simply always return 0.0.
+ */
+class FakeScorer : public Scorer {
   public:
-    typedef boost::shared_ptr< FakeScorer > Ptr;
+  typedef boost::shared_ptr< FakeScorer > Ptr;
 
-    FakeScorer() : Scorer("FakeScorer") {
-    }
-    virtual std::string brief() const;
-    virtual double operator()(const Object& obj) const;
-    virtual std::string generateCppCode
-        (const std::string& class_name, int tabbing) const;
-    virtual std::string generateJavaCode
-        (const std::string& class_name, int tabbing, bool is_static) const;
-  };
+  FakeScorer(
+      const FeatureConverterArray& featureConverters = FeatureConverterArray())
+  :Scorer("FakeScorer", featureConverters) {}
+
+  std::string brief() const {
+    return "all ranks are 0.";
+  }
+
+  private:
+  double scoreImpl(const Object& obj) const {
+    return 0;
+  }
+
+  std::string generateCppCodeImpl(const std::string& class_name,
+      int tabbing) const {
+    return "Not implemented.";
+  }
+  virtual std::string generateJavaCodeImpl(const std::string& class_name,
+      int tabbing, bool is_static) const {
+    return "Not implemented.";
+  }
 };
+}
 
 #endif  // LTR_SCORERS_FAKE_SCORER_H_

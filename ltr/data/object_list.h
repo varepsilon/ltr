@@ -35,10 +35,6 @@ class ObjectList {
     private:
     boost::shared_ptr< std::vector<Object> > p_Elements_;
 };
-
-bool operator==(const ObjectList& one, const ObjectList& another);
-bool operator!=(const ObjectList& one, const ObjectList& another);
-std::ostream& operator<<(std::ostream& istr, const ObjectList& list);
 }
 
 #endif  // LTR_DATA_OBJECT_LIST_H_

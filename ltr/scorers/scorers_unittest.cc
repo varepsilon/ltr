@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "ltr/scorers/scorer.h"
+#include "ltr/scorers/fake_scorer.h"
 
 // The fixture for testing (contains data for tests).
 class ScorersTest : public ::testing::Test {
@@ -24,4 +25,5 @@ class ScorersTest : public ::testing::Test {
 
 // tests.
 TEST_F(ScorersTest, TestingScorerX) {
+  // ltr::FakeScorer scorer;
 };
