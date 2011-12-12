@@ -3,5 +3,4 @@
 #include "scorers/fake_scorer.h"
 
 namespace ltr {
-
 };
