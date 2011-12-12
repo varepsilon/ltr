@@ -52,19 +52,11 @@ ObjectPair ObjectPair::deepCopy() const {
     result.o2_ = this->o2_.deepCopy();
     return result;
 }
-
-bool operator==(const ObjectPair& o1, const ObjectPair& o2) {
-    return
-    o1.first() == o1.first() &&
-    o1.second() == o2.second();
+bool operator==(const ObjectPair& p1, const ObjectPair& p2) {
+  return p1.first() == p2.first() && p1.second() == p2.second();
 }
 
-bool operator!=(const ObjectPair& o1, const ObjectPair& o2) {
-    return !(o1 == o2);
-}
-
-std::ostream& operator<<(std::ostream& ostr, const ObjectPair& pair) {
-    ostr << '[' << pair.first() << ',' << pair.second() << ']';
-    return ostr;
+bool operator!=(const ObjectPair& p1, const ObjectPair& p2) {
+  return !(p1 == p2);
 }
 }

@@ -6,6 +6,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 
 #include <map>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -19,12 +20,14 @@ namespace ltr {
   namespace io_utility {
     class YandexParser : public IParser {
       public:
-        void parse(const std::string& line,
-                   double* relevance,
-                   size_t* key,
-                   std::map<size_t, double>* features,
-                   size_t* qid);
-        std::string makeString(const Object& obj);
+        Object parse(const std::string &line_,
+                     NominalFeatureHandler::Ptr feature_handler);
+        void makeString(const Object& obj, std::string* result);
+
+        DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,
+                                             const FeatureInfo& info);
+        DataSet<ObjectList> buildListDataSet(const std::vector<Object>& objects,
+                                             const FeatureInfo& info);
     };
   };
 };
