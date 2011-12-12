@@ -8,24 +8,31 @@
 
 #include "scorers/scorer.h"
 
+using std::string;
+using std::vector;
+
 
 namespace ltr {
   namespace cv {
 
     class ValidationResult {
      public:
+      ValidationResult(const vector<string>& in_measure_names);
+
       void addSplitInfo(Scorer::Ptr in_scorer,
         const string& in_report, double in_measure_value);
 
       size_t getSplitCount() const;
       Scorer::Ptr getScorer(size_t split_index) const;
       const string& getReport(size_t split_index) const;
-      double getMeasureValue(size_t split_index) const;
+      const vector<double>& getMeasureValues(size_t split_index) const;
+      const vector<string>& getMeasureNames() const;
      private:
       struct OneSplitData {
+        // now scorer here is not used, but holding it is cheap and could be useful in future
         Scorer::Ptr scorer;
-        std::string report;
-        double measure_value;
+        string report;
+        vector<double> measure_values;
 
         OneSplitData(Scorer::Ptr in_scorer, const string& in_report,
             double in_measure_value) :
@@ -34,20 +41,25 @@ namespace ltr {
           measure_value(in_measure_value) {}
       };
 
-      std::vector<OneSplitData> datas_;
+      vector<OneSplitData> datas_;
+      vector<string> measure_names;
     };
   };
 };
 
 namespace ltr {
   namespace cv {
-    size_t ValidationResult::getSplitCount() const {
-      return datas_.size();
+    ValidationResult::ValidationResult(const vector<string>& in_measure_names)
+      : measure_names(in_measure_names) {
     }
 
     void ValidationResult::addSplitInfo(Scorer::Ptr in_scorer,
         const string& in_report, double in_measure_value) {
       datas_.push_back(OneSplitData(in_scorer, in_report, in_measure_value));
+    }
+
+    size_t ValidationResult::getSplitCount() const {
+      return datas_.size();
     }
 
     Scorer::Ptr ValidationResult::getScorer(size_t split_index) const {
@@ -58,8 +70,12 @@ namespace ltr {
       return datas_[split_index].report;
     }
 
-    double ValidationResult::getMeasureValue(size_t split_index) const {
-      return datas_[split_index].measure_value;
+    const vector<double>& ValidationResult::getMeasureValues(size_t split_index) const {
+      return datas_[split_index].measure_values;
+    }
+
+    const vector<string>& ValidationResult::getMeasureNames() const {
+      return measure_names;
     }
   };
 };

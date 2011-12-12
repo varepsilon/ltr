@@ -7,6 +7,8 @@
 
 #include "crossvalidation/splitter.h"
 
+using std::vector;
+
 namespace ltr {
   namespace cv {
     /**
@@ -15,9 +17,8 @@ namespace ltr {
     template<class TElement>
     class LeaveOneOutSplitter : public Splitter<class TElement> {
     public:
-      explicit LeaveOneOutSplitter(size_t dataset_size);
-
-      virtual int size() const;
+      explicit LeaveOneOutSplitter(size_t dataset_size)
+        : Splitter(dataset_size) {}
 
     private:
       virtual void splitImpl(
@@ -25,27 +26,15 @@ namespace ltr {
         const DataSet<TElement>& base_set,
         std::vector<size_t>* train_set_indexes,
         std::vector<size_t>* test_set_indexes) const;
-
-      const size_t dataset_size_;
     };
-
-    template<class TElement>
-    LeaveOneOutSplitter<TElement>::LeaveOneOutSplitter(size_t dataset_size)
-      : dataset_size_(dataset_size) {
-    }
-
-    template<class TElement>
-    int LeaveOneOutSplitter<TElement>::size() const {
-      return dataset_size_;
-    }
 
     template<class TElement>
     void LeaveOneOutSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        std::vector<size_t>* train_set_indexes,
-        std::vector<size_t>* test_set_indexes) const {
-      if (split_index < 0 || split_index >= size()) {
+        vector<size_t>* train_set_indexes,
+        vector<size_t>* test_set_indexes) const {
+      if (split_index < 0 || split_index >= splitCount()) {
         throw std::logic_error("index should be in range [0..dataset_size-1]");
       }
 

@@ -7,6 +7,7 @@
 
 #include "data/data_set.h"
 
+using std::vector;
 
 namespace ltr {
   namespace cv {
@@ -26,13 +27,16 @@ namespace ltr {
     template<class TElement>
     class Splitter {
      public:
+       Splitter(int split_count) : split_count_(split_count) {}
       /**
        * Total number of possible splits.
        */
-      virtual int size() const = 0;
+       int splitCount() const {
+         return split_count_;
+       };
       /**
        * Perform split.
-       * @param split_index - index of split (0..size()-1).
+       * @param split_index - index of split (0..splitCount()-1).
        * @param base_set - set to be splitted
        */
       SplittedDataSet split(int split_index,
@@ -43,8 +47,10 @@ namespace ltr {
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        std::vector<size_t>* train_set_indexes,
-        std::vector<size_t>* test_set_indexes) const = 0;
+        vector<size_t>* train_set_indexes,
+        vector<size_t>* test_set_indexes) const = 0;
+     private:
+      int split_count_;
     };
   };
 };
@@ -54,8 +60,8 @@ template <class TElement>
 SplittedDataSet Splitter<TElement>::split(int split_index,
     const DataSet<TElement>& base_set) const {
 
-  std::vector<size_t> train_set_indexes;
-  std::vector<size_t> test_set_indexes;
+  vector<size_t> train_set_indexes;
+  vector<size_t> test_set_indexes;
   splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);
 
   SplittedDataSet output(base_set.featureInfo());
