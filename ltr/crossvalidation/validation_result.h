@@ -17,7 +17,7 @@ namespace ltr {
 
     class ValidationResult {
      public:
-      ValidationResult(const vector<string>& in_measure_names);
+      explicit ValidationResult(const vector<string>& in_measure_names);
 
       void addSplitInfo(Scorer::Ptr in_scorer,
         const string& in_report, double in_measure_value);
@@ -29,7 +29,8 @@ namespace ltr {
       const vector<string>& getMeasureNames() const;
      private:
       struct OneSplitData {
-        // now scorer here is not used, but holding it is cheap and could be useful in future
+        // now scorer here is not used
+        // but holding it is cheap and could be useful in future
         Scorer::Ptr scorer;
         string report;
         vector<double> measure_values;
@@ -70,7 +71,8 @@ namespace ltr {
       return datas_[split_index].report;
     }
 
-    const vector<double>& ValidationResult::getMeasureValues(size_t split_index) const {
+    const vector<double>&
+        ValidationResult::getMeasureValues(size_t split_index) const {
       return datas_[split_index].measure_values;
     }
 

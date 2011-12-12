@@ -27,7 +27,7 @@ namespace ltr {
     template<class TElement>
     class Splitter {
      public:
-       Splitter(int split_count) : split_count_(split_count) {}
+       explicit Splitter(int split_count) : split_count_(split_count) {}
       /**
        * Total number of possible splits.
        */
