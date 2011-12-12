@@ -62,8 +62,6 @@ class Object {
   double actual_label_;
   int qid_;
   mutable double predicted_label_;
-
-  friend bool operator==(const Object& ob1, const Object& ob2);
 };
 bool operator==(const Object& ob1, const Object& ob2);
 bool operator!=(const Object& ob1, const Object& ob2);

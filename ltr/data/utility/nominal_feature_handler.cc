@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
 
+#include <stdexcept>
+
 #include <boost/lexical_cast.hpp>
 
 #include "ltr/data/utility/nominal_feature_handler.h"

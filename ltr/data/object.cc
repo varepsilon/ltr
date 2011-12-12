@@ -1,6 +1,7 @@
 // Copyright 2011 Yandex
 
 #include <sstream>
+#include <stdexcept>
 
 #include "ltr/data/object.h"
 #include "ltr/data/utility/object_utility.h"
