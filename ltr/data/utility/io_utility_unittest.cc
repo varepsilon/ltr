@@ -9,9 +9,8 @@
 #include "ltr/data/utility/nominal_feature_handler.h"
 #include "ltr/scorers/fake_scorer.h"
 
-//using ltr::io_utility::loadDataSet;
-//using ltr::io_utility::saveDataSet;
-using namespace ltr::io_utility;
+using ltr::io_utility::loadDataSet;
+using ltr::io_utility::saveDataSet;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::ObjectList;
