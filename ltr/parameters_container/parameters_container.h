@@ -57,7 +57,7 @@ namespace ltr {
        * If no invalids - result will be empty
        */
     virtual std::string checkParameters() const;
-    virtual ~Parameterized() {};
+    virtual ~Parameterized() {}
   protected:
     ParametersContainer parameters_;
   };
