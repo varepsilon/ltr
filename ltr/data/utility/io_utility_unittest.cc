@@ -6,18 +6,21 @@
 #include "gtest/gtest.h"
 
 #include "ltr/data/utility/io_utility.h"
+#include "ltr/data/utility/nominal_feature_handler.h"
 #include "ltr/scorers/fake_scorer.h"
 
-using ltr::io_utility::loadDataSet;
-using ltr::io_utility::saveDataSet;
+//using ltr::io_utility::loadDataSet;
+//using ltr::io_utility::saveDataSet;
+using namespace ltr::io_utility;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::ObjectList;
 using ltr::ObjectPair;
 
 int last_random = 2981984;
+
 int rand_r() {
-  return last_random = (last_random*11 + 23421) % 138274123;
+  return last_random = (last_random * 11 + 23421) % 138274123;
 }
 
 // The fixture for testing (contains data for tests).
