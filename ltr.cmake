@@ -44,7 +44,8 @@ SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_c
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h)
 
-SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h)
+SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
+	${Source_Path}/ltr/learners/best_feature_learner.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
 						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h

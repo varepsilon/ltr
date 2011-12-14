@@ -5,23 +5,6 @@
 #include "scorers/one_feature_scorer.h"
 
 namespace ltr {
-  OneFeatureScorer::OneFeatureScorer
-    (size_t feature_index) :
-  index_(feature_index),
-  Scorer("OneFeatureScorer") {
-  }
-
-  size_t OneFeatureScorer::index() const {
-    return index_;
-  }
-
-  void OneFeatureScorer::setIndex(size_t i) {
-    index_ = i;
-  }
-
-  double OneFeatureScorer::operator()(const Object& obj) const {
-    return obj[1].features().at(index_);
-  }
 
   std::string OneFeatureScorer::brief() const {
     std::string result = "takes feature " +
@@ -29,7 +12,7 @@ namespace ltr {
     return result;
   }
 
-  std::string OneFeatureScorer::generateCppCode
+  std::string OneFeatureScorer::generateCppCodeImpl
       (const std::string& class_name, int tabbing) const {
     std::string hpp_code;
 
@@ -52,29 +35,5 @@ namespace ltr {
         append("};\n");
 
     return hpp_code;
-  }
-
-  std::string OneFeatureScorer::generateJavaCode
-      (const std::string& class_name, int tabbing, bool is_static) const {
-    std::string java_code;
-
-    std::string tab_str(tabbing, '\t');
-
-    java_code.
-      append(tab_str).
-        append("public ").
-        append(std::string(is_static ? "static " : "") + "class ").
-        append(class_name).
-        append(" {\n").
-      append(tab_str).
-        append("\tpublic static double score").
-        append("(Vector<Double> features) { return ").
-        append("features.get(").
-        append(boost::lexical_cast< std::string >(index_)).
-        append("); }").
-      append(tab_str).
-        append("}\n");
-
-    return java_code;
   }
 };

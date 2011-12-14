@@ -24,7 +24,7 @@ class FakeScorer : public Scorer {
 
   private:
   double scoreImpl(const Object& obj) const {
-    return 0;
+    return 0.0;
   }
 
   std::string generateCppCodeImpl(const std::string& class_name,
