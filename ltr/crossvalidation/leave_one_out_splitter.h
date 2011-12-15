@@ -28,7 +28,8 @@ namespace ltr {
     };
 
     template<class TElement>
-    int LeaveOneOutSplitter<TElement>::splitCount(const DataSet<TElement>& base_set) const {
+    int LeaveOneOutSplitter<TElement>::splitCount(
+        const DataSet<TElement>& base_set) const {
       return base_set.size();
     }
 

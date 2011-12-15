@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
+#define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
+
 #include <algorithm>
 #include <vector>
 #include <cstdlib>
@@ -19,10 +22,10 @@ namespace ltr {
     public:
       TKFoldSimpleSplitter(size_t in_k = 10, size_t in_T = 10)
           : k(in_k), T(in_T) {
-        if(k < 2) {
+        if (k < 2) {
           throw std::logic_error("k should be grater then 1!");
         }
-        if(T < 1) {
+        if (T < 1) {
           throw std::logic_error("T should be positive!");
         }
       }
@@ -44,17 +47,18 @@ namespace ltr {
     };
 
     template<class TElement>
-    int TKFoldSimpleSplitter<TElement>::splitCount(const DataSet<TElement>& base_set) const {
+    int TKFoldSimpleSplitter<TElement>::splitCount(
+        const DataSet<TElement>& base_set) const {
       return k * T;
     }
-    
+
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
-      if(split_index < 0 || split_index >= splitCount(base_set)) {
+      if (split_index < 0 || split_index >= splitCount(base_set)) {
         throw std::logic_error("index should be in range [0..T*k-1]");
       }
 
@@ -71,17 +75,18 @@ namespace ltr {
       for (size_t index = 0; index < fold_size * block_index; ++index) {
         train_set_indexes->push_back(current_perm(index));
       }
-      for(size_t index = fold_size * block_index; index < fold_size * (block_index + 1); ++index)
-      {
+      for (size_t index = fold_size * block_index;
+          index < fold_size * (block_index + 1);
+          ++index) {
         test_set_indexes->push_back(current_perm(index));
       }
-      for(size_t index = fold_size * (block_index + 1); index < base_set.size(); ++index)
-      {
+      for (size_t index = fold_size * (block_index + 1);
+          index < base_set.size();
+          ++index) {
         train_set_indexes->push_back(current_perm(index));
       }
-  
     }
-    
+
     template<class TElement>
     Permutation TKFoldSimpleSplitter<TElement>::
         getRandomPermutation(int index, int dataset_size) const {
@@ -97,3 +102,5 @@ namespace ltr {
     }
   };
 };
+
+#endif  // LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
