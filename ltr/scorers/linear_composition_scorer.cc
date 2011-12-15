@@ -62,53 +62,6 @@ namespace ltr {
     return hpp_code;
   }
 
-  std::string LinearCompositionScorer::generateJavaCode
-      (const std::string& class_name, int tabbing, bool is_static) const {
-    std::string java_code;
-
-    std::string tab_str(tabbing, '\t');
-
-    java_code.
-      append(tab_str).
-      append("public ").
-      append(std::string(is_static ? "static " : "") + "class ").
-      append(class_name).
-      append(" {\n");
-
-    for (size_t i = 0; i < scorers_.size(); ++i) {
-      java_code.append(
-        scorers_[i].scorer->generateJavaCode(
-        utility::GenerateLocalClassName(*(scorers_[i].scorer), i),
-        tabbing + 1,
-        true));
-    }
-
-    java_code.
-      append(tab_str).
-      append("\tpublic static double score(Vector<Double> features) {\n").
-      append(tab_str).
-      append("\t\tdouble result = 0.0;\n");
-
-    for (size_t i = 0; i < scorers_.size(); ++i) {
-      java_code.
-        append(tab_str).
-        append("\t\tresult += ").
-        append(boost::lexical_cast< std::string >(scorers_[i].weight)).
-        append(" * ").
-        append(utility::GenerateLocalClassName(*(scorers_[i].scorer), i)).
-        append(".score(features);\n");
-    }
-    java_code.
-      append(tab_str).
-      append("\t\treturn result;\n").
-      append(tab_str).
-      append("\t}\n").
-      append(tab_str).
-      append("}\n");
-
-    return java_code;
-  }
-
   std::string LinearCompositionScorer::brief() const {
     std::string result =
       boost::lexical_cast<std::string>(scorers_.size())

@@ -4,7 +4,11 @@
 
 #include <vector>
 
+#include "ltr/data/object.h"
 #include "ltr/learners/learner.h"
+#include "ltr/learners/best_feature_learner.h"
+#include "ltr/measures/measure.h"
+#include "ltr/parameters_container/parameters_container.h"
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -24,4 +28,6 @@ class LearnersTest : public ::testing::Test {
 
 // tests.
 TEST_F(LearnersTest, TestingLearnerX) {
+  ltr::Measure<ltr::Object>::Ptr pMeasure;
+  ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 };

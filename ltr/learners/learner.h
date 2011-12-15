@@ -14,45 +14,52 @@ namespace ltr {
 
 template< class TElement, class TScorer >
 class Learner : public Reporter, public Aliaser, public Parameterized {
-    public:
-    typedef boost::shared_ptr<Learner> Ptr;
+  public:
+  typedef boost::shared_ptr<Learner> Ptr;
 
-    void learn(const DataSet<TElement>& data);
+  void learn(const DataSet<TElement>& data);
 
-    void addFeatureConverter(
-            typename ltr::FeatureConverter::ConstPtr p_FeatureConverter);
+  void addFeatureConverter(
+      typename ltr::FeatureConverter::ConstPtr p_FeatureConverter);
 
-    virtual void reset() = 0;
-    virtual void setInitialScorer(const TScorer& in_scorer) = 0;
-    virtual TScorer make() const = 0;
+  virtual void reset() = 0;
+  virtual void setInitialScorer(const TScorer& in_scorer) = 0;
+  virtual TScorer make() const = 0;
 
-    virtual ~Learner() {}
+  const FeatureConverterArray& getFeatureConverters() const {
+    return featureConverters_;
+  }
+  void setFeatureConverters(const FeatureConverterArray& featureConverters) {
+    this->featureConverters_ = featureConverters;
+  }
 
-    private:
-    virtual void learnImpl(const DataSet<TElement>& data) = 0;
+  virtual ~Learner() {}
 
-    FeatureConverterArray featureConverters_;
+  private:
+  virtual void learnImpl(const DataSet<TElement>& data) = 0;
+
+  FeatureConverterArray featureConverters_;
 };
 
 template< class TElement, class TScorer >
 void Learner< TElement, TScorer >::addFeatureConverter(
-        typename ltr::FeatureConverter::ConstPtr p_FeatureConverter) {
-    featureConverters_.push_back(p_FeatureConverter);
+    typename ltr::FeatureConverter::ConstPtr p_FeatureConverter) {
+  featureConverters_.push_back(p_FeatureConverter);
 }
 
 template< class TElement, class TScorer >
 void Learner< TElement, TScorer >::learn(const DataSet<TElement>& data) {
-    DataSet<TElement> sourceData = data.deepCopy();
-    DataSet<TElement> convertedData;
-    for (size_t featureConverterIdx = 0;
-            featureConverterIdx < featureConverters_.size();
-            ++featureConverterIdx) {
-        (*featureConverters_[featureConverterIdx]).apply(
-                sourceData,
-                &convertedData);
-        sourceData = convertedData;
-    }
-    learnImpl(sourceData);
+  DataSet<TElement> sourceData = data.deepCopy();
+  DataSet<TElement> convertedData;
+  for (size_t featureConverterIdx = 0;
+      featureConverterIdx < featureConverters_.size();
+      ++featureConverterIdx) {
+    (*featureConverters_[featureConverterIdx]).apply(
+        sourceData,
+        &convertedData);
+    sourceData = convertedData;
+  }
+  learnImpl(sourceData);
 }
 };
 #endif  // LTR_LEARNERS_LEARNER_H_

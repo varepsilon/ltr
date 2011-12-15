@@ -41,7 +41,7 @@ namespace ltr {
 
   class Aliaser {
   public:
-    explicit Aliaser(const std::string& input)
+    explicit Aliaser(const std::string& input = "Alias")
         : alias_(input) {}
 
     std::string alias() const {

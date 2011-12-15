@@ -5,7 +5,9 @@
 
 #include <string>
 #include "ltr/scorers/scorer.h"
+#include "ltr/feature_converters/feature_converter.h"
 
+using ltr::FeatureConverterArray;
 
 namespace ltr {
   /**
@@ -15,22 +17,29 @@ namespace ltr {
   public:
     typedef boost::shared_ptr< OneFeatureScorer > Ptr;
 
-    explicit OneFeatureScorer(size_t feature_index = 0);
+    explicit OneFeatureScorer(size_t feature_index = 0,
+        FeatureConverterArray featureConverterArray = FeatureConverterArray()) :
+        Scorer("OneFeatureScorer", featureConverterArray) {}
 
-    size_t index() const;
-    void setIndex(size_t new_index);
+    size_t getIndex() const {
+      return index_;
+    }
 
-
+    void setIndex(size_t newIndex) {
+      index_ = newIndex;
+    }
 
     virtual std::string brief() const;
-    virtual double operator()(const Object& obj) const;
-    virtual std::string generateCppCode
-      (const std::string& class_name, int tabbing) const;
-    virtual std::string generateJavaCode
-      (const std::string& class_name, int tabbing, bool is_static) const;
+
   private:
+    double scoreImpl(const Object& obj) const {
+      return obj[1].features().at(index_);
+    }
+
+    std::string generateCppCodeImpl(const std::string& class_name,
+        int tabbing = 0) const;
+
     size_t index_;
   };
 };
-
 #endif  // LTR_SCORERS_ONE_FEATURE_SCORER_H_

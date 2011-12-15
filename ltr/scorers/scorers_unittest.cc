@@ -25,5 +25,5 @@ class ScorersTest : public ::testing::Test {
 
 // tests.
 TEST_F(ScorersTest, TestingScorerX) {
-  // ltr::FakeScorer scorer;
+  ltr::FakeScorer scorer;
 };

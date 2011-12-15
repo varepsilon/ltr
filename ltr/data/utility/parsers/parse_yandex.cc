@@ -17,6 +17,7 @@
 
 using boost::algorithm::trim_copy;
 using boost::spirit::classic::parse;
+using boost::spirit::classic::rule;
 using boost::spirit::classic::parse_info;
 using boost::spirit::classic::real_p;
 using boost::spirit::classic::ch_p;
@@ -28,6 +29,7 @@ using boost::spirit::classic::insert_at_a;
 using boost::spirit::classic::str_p;
 using boost::spirit::classic::lexeme_d;
 using boost::spirit::classic::alnum_p;
+using boost::spirit::classic::digit_p;
 using boost::lexical_cast;
 
 using std::string;
@@ -43,13 +45,13 @@ namespace ltr {
     map<int, string> features;
     int key;
     double relevance;
+    rule<> number = *digit_p >> !('.' >> +digit_p);
     string line = trim_copy(line_);
     parse_info<> info = boost::spirit::classic::parse(line_.c_str(),
         (real_p[assign_a(relevance)] >>
-         +(uint_p[assign_a(key)] >>
-          ch_p(':') >>
-          lexeme_d[+alnum_p][insert_at_a(features, key)]) >>
-         ch_p('#') >> uint_p[assign_a(qid)] >>
+         +(uint_p[assign_a(key)] >> ':' >>
+          number[insert_at_a(features, key)]) >>
+         !(ch_p('#') >> uint_p[assign_a(qid)]) >>
          *anychar_p),
          space_p);
     if (!info.hit) {
@@ -57,7 +59,7 @@ namespace ltr {
     }
     obj.setActualLabel(relevance);
     feature_handler->process(features, &obj.features());
-    if (qid > 0)
+    if (qid > -1)
       obj.setMetaInfo("queryId", lexical_cast<string>(qid));
     return obj;
   }

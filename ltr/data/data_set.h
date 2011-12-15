@@ -145,5 +145,19 @@ DataSet<TElement> DataSet<TElement>::deepCopy() const {
   }
   return result;
 };
+
+template< typename TElement >
+bool operator==(const DataSet<TElement>& d1, const DataSet<TElement>& d2) {
+  if (d1.size() != d2.size())
+    return false;
+  for (int i = 0; i < d1.size(); i++) {
+    if (d1[i].size() != d2[i].size())
+      return false;
+    for (int j = 0; j < d1[i].size(); j++)
+      if (d1[i][j] != d2[i][j])
+        return false;
+  }
+  return true;
+}
 }
 #endif  // LTR_DATA_DATA_SET_H_

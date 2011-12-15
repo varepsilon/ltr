@@ -60,7 +60,6 @@ class Object {
   boost::shared_ptr<Features> features_;
   boost::shared_ptr<map<string, string> > meta_info_;
   double actual_label_;
-  int qid_;
   mutable double predicted_label_;
 };
 bool operator==(const Object& ob1, const Object& ob2);
