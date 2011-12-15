@@ -6,7 +6,6 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-
   class AbsError : public PointwiseMeasure {
   public:
     AbsError()
@@ -14,9 +13,8 @@ namespace ltr {
     }
 
   private:
-     double get_measure(Object& object) const;
+     double get_measure(const Object& object) const;
   };
-
 };
 
 #endif  // LTR_MEASURES_ABS_ERROR_H_

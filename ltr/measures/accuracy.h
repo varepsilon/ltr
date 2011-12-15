@@ -6,16 +6,14 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-
   class Accuracy : public PointwiseMeasure {
    public:
      Accuracy()
        : PointwiseMeasure("Accuracy") {
      }
    private:
-    double get_measure(Object& object) const;
+    double get_measure(const Object& object) const;
   };
-
-}
+};
 
 #endif  // LTR_MEASURES_ACCURACY_H_

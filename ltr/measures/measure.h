@@ -29,7 +29,7 @@ class Measure : public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<Measure> Ptr;
 
-  Measure(const string& alias) : Aliaser(alias) {}
+  explicit Measure(const string& alias) : Aliaser(alias) {}
 
   /**
    * Value of Measure(quality of algorithm)
