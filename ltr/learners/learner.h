@@ -3,8 +3,8 @@
 #ifndef LTR_LEARNERS_LEARNER_H_
 #define LTR_LEARNERS_LEARNER_H_
 
-#include <vector>
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 #include "ltr/interfaces/reporter.h"
 #include "ltr/interfaces/aliaser.h"
