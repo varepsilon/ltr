@@ -28,8 +28,10 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h ${Source_Path}/ltr/utility/numerical.cc)
 
-SET(LTR_CORE ${Source_Path}/ltr/interfaces.h
-			 ${Source_Path}/ltr/interfaces.cc)
+SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
+			 ${Source_Path}/ltr/interfaces/aliaser.h
+			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
+			 ${Source_Path}/ltr/interfaces/approach.h ${Source_Path}/ltr/interfaces/approach.cc)
 
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
 			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
@@ -70,7 +72,7 @@ SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(data\\utils FILES ${LTR_DATA_UTILS})
 SOURCE_GROUP(data\\ioutils FILES ${LTR_IO_UTILS})
-SOURCE_GROUP(core FILES ${LTR_CORE})
+SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
@@ -79,6 +81,6 @@ SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_CORE} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
 			${LTR_LEARNERS} ${LTR_PARAMETERSCONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
 			${LTR_MEASURES} ${LTR_CROSSVALIDATION})

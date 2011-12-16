@@ -1,40 +1,43 @@
 // Copyright 2011 Yandex
 
 #include <boost/lexical_cast.hpp>
+#include <string>
 
 #include "ltr/parameters_container/parameters_container.h"
 
+using std::string;
+
 namespace ltr {
-  void ParametersContainer::setFloat(const std::string& name,
+  void ParametersContainer::setFloat(const string& name,
                                      float value) {
     params[name] = value;
   };
 
-  void ParametersContainer::setInt(const std::string& name, int value) {
+  void ParametersContainer::setInt(const string& name, int value) {
     params[name] = value;
   };
 
-  void ParametersContainer::setBool(const std::string& name, bool value) {
+  void ParametersContainer::setBool(const string& name, bool value) {
     params[name] = value;
   };
 
-  float ParametersContainer::getFloat(const std::string& name) const {
+  float ParametersContainer::getFloat(const string& name) const {
     return get<float>(name);
   };
 
-  int ParametersContainer::getInt(const std::string& name) const {
+  int ParametersContainer::getInt(const string& name) const {
     return get<int>(name);
   };
 
-  bool ParametersContainer::getBool(const std::string& name) const {
+  bool ParametersContainer::getBool(const string& name) const {
     return get<bool>(name);
   };
 
-  std::string ParametersContainer::getString() const {
-    std::string output;
+  string ParametersContainer::getString() const {
+    string output;
     for (TMap::const_iterator it = params.begin(); it != params.end(); it++) {
         output.append(it->first + " "
-            + boost::lexical_cast<std::string>(it->second) + " ");
+            + boost::lexical_cast<string>(it->second) + " ");
     }
     return output;
   }
@@ -45,22 +48,5 @@ namespace ltr {
                         it != parameters.params.end(); ++it) {
         params[it->first] = it->second;
     }
-  }
-
-
-
-  ParametersContainer& Parameterized::parameters() {
-    return parameters_;
-  }
-
-  const ParametersContainer& Parameterized::parameters() const {
-    return parameters_;
-  }
-
-  void Parameterized::setDefaultParameters() {
-  }
-
-  std::string Parameterized::checkParameters() const {
-    return "";
   }
 };

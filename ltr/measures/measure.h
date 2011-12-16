@@ -11,7 +11,8 @@
 #include "ltr/data/object_list.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/data_set.h"
-#include "ltr/interfaces.h"
+#include "ltr/interfaces/aliaser.h"
+#include "ltr/interfaces/parameterized.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::string;

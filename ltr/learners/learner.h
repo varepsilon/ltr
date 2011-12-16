@@ -4,8 +4,11 @@
 #define LTR_LEARNERS_LEARNER_H_
 
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
-#include "ltr/interfaces.h"
+#include "ltr/interfaces/reporter.h"
+#include "ltr/interfaces/aliaser.h"
+#include "ltr/interfaces/parameterized.h"
 #include "ltr/data/data_set.h"
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/parameters_container/parameters_container.h"

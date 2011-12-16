@@ -10,25 +10,28 @@
 #include <vector>
 #include <stdexcept>
 
+using std::string;
+using std::map;
+
 namespace ltr {
   class ParametersContainer {
   public:
-    void setFloat(const std::string& name, float value);
-    void setInt(const std::string& name, int value);
-    void setBool(const std::string& name, bool value);
+    void setFloat(const string& name, float value);
+    void setInt(const string& name, int value);
+    void setBool(const string& name, bool value);
 
-    int getInt(const std::string& name) const;
-    float getFloat(const std::string& name) const;
-    bool getBool(const std::string& name) const;
+    int getInt(const string& name) const;
+    float getFloat(const string& name) const;
+    bool getBool(const string& name) const;
 
-    std::string getString() const;
+    string getString() const;
 
     void copyParameters(const ParametersContainer& parameters);
 
   protected:
-    template<class T> T get(const std::string &name) const;
+    template<class T> T get(const string &name) const;
 
-    typedef std::map<std::string, boost::variant<int, float, bool> > TMap;
+    typedef map<string, boost::variant<int, float, bool> > TMap;
     TMap params;
   };
 
@@ -45,22 +48,6 @@ namespace ltr {
       throw std::logic_error("parameter " + name + " has another type");
     }
   }
-
-  class Parameterized {
-  public:
-    ParametersContainer& parameters();
-    const ParametersContainer& parameters() const;
-    virtual void setDefaultParameters();
-      /*
-       * checks, if current parameters are valid.
-       * If invalid parameters found - description is written in result. 
-       * If no invalids - result will be empty
-       */
-    virtual std::string checkParameters() const;
-    virtual ~Parameterized() {}
-  protected:
-    ParametersContainer parameters_;
-  };
 };
 
 #endif  // LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
