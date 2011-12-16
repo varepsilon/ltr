@@ -8,26 +8,29 @@
 using std::string;
 
 namespace ltr {
+  /*
+   * Reporter logs results of job done in derived subclass
+   */
   class Reporter {
   public:
     string report() const {
-        return report_;
+      return report_;
     }
 
     Reporter() {}
     explicit Reporter(const string& input)
-        : report_(input) {}
+      : report_(input) {}
 
     void clearReport() {
-        report_.clear();
+      report_.clear();
     }
 
     void appendReport(const string& input) {
-        report_.append(input);
+      report_.append(input);
     }
 
     void setReport(const string& input) {
-        report_ = input;
+      report_ = input;
     }
 
   private:
