@@ -130,6 +130,5 @@ void savePredictions(const DataSet<TElement>& data,
   file.close();
 }
 };
-};
-
+}
 #endif  // LTR_DATA_UTILITY_IO_UTILITY_H_

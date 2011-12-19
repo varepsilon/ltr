@@ -42,7 +42,8 @@ SET (LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h ${Sou
 SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
-SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h)
+SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
+			${Source_Path}/ltr/measures/abs_error.h)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
 	${Source_Path}/ltr/learners/best_feature_learner.h)
