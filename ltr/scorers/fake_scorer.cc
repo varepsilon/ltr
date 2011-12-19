@@ -1,6 +1,6 @@
 // Copyright 2011 Yandex
 
-#include "scorers/fake_scorer.h"
+#include "ltr/scorers/fake_scorer.h"
 
 namespace ltr {
 };

@@ -6,6 +6,8 @@
 #include <string>
 #include "ltr/scorers/scorer.h"
 
+using std::string;
+
 namespace ltr {
 /**
  * Fake Ranker. Simply always return 0.0.
@@ -18,8 +20,8 @@ class FakeScorer : public Scorer {
       const FeatureConverterArray& featureConverters = FeatureConverterArray())
   :Scorer("FakeScorer", featureConverters) {}
 
-  std::string brief() const {
-    return "all ranks are 0.";
+  string brief() const {
+    return "All ranks are 0.";
   }
 
   private:
@@ -27,12 +29,8 @@ class FakeScorer : public Scorer {
     return 0.0;
   }
 
-  std::string generateCppCodeImpl(const std::string& class_name,
+  string generateCppCodeImpl(const string& class_name,
       int tabbing) const {
-    return "Not implemented.";
-  }
-  virtual std::string generateJavaCodeImpl(const std::string& class_name,
-      int tabbing, bool is_static) const {
     return "Not implemented.";
   }
 };
