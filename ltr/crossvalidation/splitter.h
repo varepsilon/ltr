@@ -27,13 +27,10 @@ namespace ltr {
     template<class TElement>
     class Splitter {
      public:
-       explicit Splitter(int split_count) : split_count_(split_count) {}
       /**
-       * Total number of possible splits.
+       * Total number of possible splits for an input dataset.
        */
-       int splitCount() const {
-         return split_count_;
-       };
+       virtual int splitCount(const DataSet<TElement>& base_set) const = 0;
       /**
        * Perform split.
        * @param split_index - index of split (0..splitCount()-1).
@@ -49,8 +46,6 @@ namespace ltr {
         const DataSet<TElement>& base_set,
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const = 0;
-     private:
-      int split_count_;
     };
   };
 };

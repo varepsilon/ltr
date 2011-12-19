@@ -41,7 +41,7 @@ namespace ltr {
       ValidationResult output(measure_names);
 
       for (int split_index = 0;
-          split_index < splitter.splitCount();
+          split_index < splitter.splitCount(data_set);
           ++split_index) {
         SplittedDataSet current_splitted(splitter.split(split_index, data_set));
 

@@ -17,10 +17,9 @@ namespace ltr {
     template<class TElement>
     class LeaveOneOutSplitter : public Splitter<class TElement> {
     public:
-      explicit LeaveOneOutSplitter(size_t dataset_size)
-        : Splitter(dataset_size) {}
+      virtual int splitCount(const DataSet<TElement>& base_set) const;
 
-    private:
+    protected:
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
@@ -29,12 +28,18 @@ namespace ltr {
     };
 
     template<class TElement>
+    int LeaveOneOutSplitter<TElement>::splitCount(
+        const DataSet<TElement>& base_set) const {
+      return base_set.size();
+    }
+
+    template<class TElement>
     void LeaveOneOutSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
-      if (split_index < 0 || split_index >= splitCount()) {
+      if (split_index < 0 || split_index >= splitCount(base_set)) {
         throw std::logic_error("index should be in range [0..dataset_size-1]");
       }
 

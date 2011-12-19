@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#include "ltr/interfaces.h"
+#include "ltr/interfaces/aliaser.h"
 #include "ltr/data/object.h"
 #include "ltr/feature_converters/feature_converter.h"
 

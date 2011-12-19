@@ -11,7 +11,12 @@ SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc)
 
 SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/scorers_unittest.cc)
 
+SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc ${Source_Path}/ltr/interfaces/aliaser_unittest.cc)
+
+SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES_TEST})
+
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST})
+SET(LTR_TEST ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST}
+			${LTR_INTERFACES_TEST})
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)
