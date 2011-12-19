@@ -11,13 +11,15 @@
 #include "ltr/data/object.h"
 #include "ltr/feature_converters/feature_converter.h"
 
+using std::string;
+
 namespace ltr {
 
 class Scorer : public Aliaser {
   public:
   typedef boost::shared_ptr<Scorer> Ptr;
 
-  Scorer(const std::string& alias,
+  Scorer(const string& alias,
       const FeatureConverterArray& featureConverters = FeatureConverterArray()):
         Aliaser(alias),
         featureConverters_(featureConverters) {}
@@ -25,9 +27,9 @@ class Scorer : public Aliaser {
   double score(const Object& obj) const;
   double operator() (const Object& obj) const;
 
-  virtual std::string brief() const = 0;
+  virtual string brief() const = 0;
 
-  std::string generateCppCode(const std::string& class_name,
+  string generateCppCode(const string& class_name,
       int tabbing = 0) const;
 
   const FeatureConverterArray& getFeatureConverters() const {
@@ -42,7 +44,7 @@ class Scorer : public Aliaser {
   private:
   virtual double scoreImpl(const Object& obj) const = 0;
 
-  virtual std::string generateCppCodeImpl(const std::string& class_name,
+  virtual string generateCppCodeImpl(const string& class_name,
       int tabbing = 0) const = 0;
 
   FeatureConverterArray featureConverters_;

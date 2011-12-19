@@ -1,22 +1,25 @@
 // Copyright 2011 Yandex
 
 #include <boost/lexical_cast.hpp>
+#include <string>
 
-#include "scorers/one_feature_scorer.h"
+#include "ltr/scorers/one_feature_scorer.h"
+
+using std::string;
 
 namespace ltr {
 
-  std::string OneFeatureScorer::brief() const {
-    std::string result = "takes feature " +
-      boost::lexical_cast<std::string>(index_);
+  string OneFeatureScorer::brief() const {
+    string result = "takes feature " +
+      boost::lexical_cast<string>(index_);
     return result;
   }
 
-  std::string OneFeatureScorer::generateCppCodeImpl
-      (const std::string& class_name, int tabbing) const {
-    std::string hpp_code;
+  string OneFeatureScorer::generateCppCodeImpl
+      (const string& class_name, int tabbing) const {
+    string hpp_code;
 
-    std::string tab_str(tabbing, '\t');
+    string tab_str(tabbing, '\t');
 
     hpp_code.
       append(tab_str).
@@ -27,9 +30,9 @@ namespace ltr {
         append("public:\n").
       append(tab_str).
         append("\tstatic double score").
-        append("(const std::vector< double >& features) { return ").
+        append("(const std::vector<double>& features) { return ").
         append("features[").
-        append(boost::lexical_cast< std::string >(index_)).
+        append(boost::lexical_cast<string>(index_)).
         append("]; }\n").
       append(tab_str).
         append("};\n");

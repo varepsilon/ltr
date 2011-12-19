@@ -8,7 +8,7 @@
 using std::string;
 
 namespace ltr {
-  /*
+  /**
    * Reporter logs results of job done in derived subclass
    */
   class Reporter {

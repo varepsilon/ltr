@@ -16,6 +16,7 @@ namespace ltr {
   }
 
   void Parameterized::setDefaultParameters() {
+    parameters_.clear();
   }
 
   string Parameterized::checkParameters() const {

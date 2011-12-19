@@ -8,7 +8,7 @@
 using std::string;
 
 namespace ltr {
-  /*
+  /**
    * Aliaser holds alias of derived subclass
    */
   class Aliaser {
