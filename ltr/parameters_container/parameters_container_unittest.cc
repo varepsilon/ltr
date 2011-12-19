@@ -29,7 +29,7 @@ TEST(ParametersContainerTest, AllInParametersContainerTest) {
   pc2.copyParameters(pc1);
 
   EXPECT_EQ(10.3, pc2.getDouble("double1"));
-  EXPECT_EQ(23, pc2.getDouble("double2"));
+  EXPECT_EQ(1, pc2.getDouble("double2"));
   EXPECT_EQ(1, pc2.getInt("int1"));
   EXPECT_EQ(2, pc2.getInt("int2"));
   EXPECT_EQ(true, pc2.getBool("bool1"));

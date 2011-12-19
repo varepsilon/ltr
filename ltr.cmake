@@ -45,11 +45,11 @@ SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
-			${Source_Path}/ltr/measures/abs_error.h)
-			${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc)
+		    	 ${Source_Path}/ltr/measures/abs_error.h
+			     ${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
-	${Source_Path}/ltr/learners/best_feature_learner.h)
+				 ${Source_Path}/ltr/learners/best_feature_learner.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
 						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
