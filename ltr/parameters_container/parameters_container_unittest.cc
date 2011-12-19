@@ -23,6 +23,8 @@ TEST(ParametersContainerTest, AllInParametersContainerTest) {
   EXPECT_EQ(1, pc1.getInt("int1"));
   EXPECT_EQ(true, pc1.getBool("bool1"));
 
+  EXPECT_ANY_THROW(pc1.getBool("none"));
+
   pc2.setInt("int2", 2);
   pc2.setDouble("double2", 23);
 

@@ -17,6 +17,8 @@ TEST(ParameterizedTest, AllInParameterizedTest) {
   EXPECT_EQ(false, p.parameters().getBool("bool1"));
   EXPECT_EQ(3.24, p.parameters().getDouble("double1"));
 
+  EXPECT_ANY_THROW(p.parameters().getDouble("none"));
+
   EXPECT_EQ("", p.checkParameters());
   p.setDefaultParameters();
 };
