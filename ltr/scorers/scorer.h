@@ -14,7 +14,10 @@
 using std::string;
 
 namespace ltr {
-
+/*
+ * Scorer is a class that can for every object evaluate
+ * a value - its rank, or score
+ */
 class Scorer : public Aliaser {
   public:
   typedef boost::shared_ptr<Scorer> Ptr;
