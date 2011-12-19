@@ -4,10 +4,10 @@
 
 #include <vector>
 
-//#include "ltr/data/object.h"
-//#include "ltr/learners/best_feature_learner.h"
-//#include "ltr/measures/abs_error.h"
-//#include "ltr/data/utility/io_utility.h"
+#include "ltr/data/object.h"
+#include "ltr/learners/best_feature_learner.h"
+#include "ltr/measures/abs_error.h"
+// #include "ltr/data/utility/io_utility.h"
 #include "ltr/data/data_set.h"
 
 // The fixture for testing (contains data for tests).

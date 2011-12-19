@@ -36,4 +36,4 @@ class AbsError : public Measure<TElement> {
   }
 };
 }
-#endif  // ABS_ERROR_H_
+#endif  // LTR_MEASURES_ABS_ERROR_H_
