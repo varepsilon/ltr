@@ -21,7 +21,7 @@ class FeatureConverter {
     virtual ~FeatureConverter() {}
 
     virtual FeatureInfo
-    convertFeatureInfo(const FeatureInfo& oldFeatureInfo) = 0;
+    convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const = 0;
 
     virtual void apply(const ltr::Object & argument, ltr::Object * value)
     const = 0;
