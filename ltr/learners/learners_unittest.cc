@@ -28,7 +28,6 @@ class LearnersTest : public ::testing::Test {
 
 // tests.
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-
   /* ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
@@ -39,5 +38,4 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
         "data/imat2009/imat2009_test.txt", "YANDEX");
 
   learner.learn(learn_data);*/
-
 };
