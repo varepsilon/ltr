@@ -8,8 +8,8 @@
 using std::string;
 
 namespace ltr {
-  void ParametersContainer::setFloat(const string& name,
-                                     float value) {
+  void ParametersContainer::setDouble(const string& name,
+                                     double value) {
     params[name] = value;
   };
 
@@ -21,8 +21,8 @@ namespace ltr {
     params[name] = value;
   };
 
-  float ParametersContainer::getFloat(const string& name) const {
-    return get<float>(name);
+  double ParametersContainer::getDouble(const string& name) const {
+    return get<double>(name);
   };
 
   int ParametersContainer::getInt(const string& name) const {
@@ -48,5 +48,9 @@ namespace ltr {
                         it != parameters.params.end(); ++it) {
         params[it->first] = it->second;
     }
+  }
+
+  void ParametersContainer::clear() {
+    params.clear();
   }
 };

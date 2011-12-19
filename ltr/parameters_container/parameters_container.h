@@ -16,22 +16,24 @@ using std::map;
 namespace ltr {
   class ParametersContainer {
   public:
-    void setFloat(const string& name, float value);
+    void setDouble(const string& name, double value);
     void setInt(const string& name, int value);
     void setBool(const string& name, bool value);
 
+    double getDouble(const string& name) const;
     int getInt(const string& name) const;
-    float getFloat(const string& name) const;
     bool getBool(const string& name) const;
 
     string getString() const;
 
     void copyParameters(const ParametersContainer& parameters);
 
+    void clear();
+
   protected:
     template<class T> T get(const string &name) const;
 
-    typedef map<string, boost::variant<int, float, bool> > TMap;
+    typedef map<string, boost::variant<int, double, bool> > TMap;
     TMap params;
   };
 

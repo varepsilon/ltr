@@ -14,12 +14,16 @@ namespace ltr {
   public:
     ParametersContainer& parameters();
     const ParametersContainer& parameters() const;
+    /*
+     * By default simply clears all parameters
+     */
     virtual void setDefaultParameters();
-      /*
-       * checks, if current parameters are valid.
-       * If invalid parameters found - description is written in result. 
-       * If no invalids - result will be empty
-       */
+     /*
+      * checks, if current parameters are valid.
+      * If invalid parameters found - description is written in result. 
+      * If no invalids - result will be empty
+      * Always return empty (ok) by default
+      */
     virtual std::string checkParameters() const;
     virtual ~Parameterized() {}
   protected:

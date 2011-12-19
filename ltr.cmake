@@ -39,9 +39,9 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
 			${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
 			${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc)
 			
-SET (LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
+SET (LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h)
 
-SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
+SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
@@ -76,11 +76,11 @@ SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
-SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERSCONTAINER})
+SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
-			${LTR_LEARNERS} ${LTR_PARAMETERSCONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
+			${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
 			${LTR_MEASURES} ${LTR_CROSSVALIDATION})
