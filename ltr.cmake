@@ -45,7 +45,7 @@ SET(LTR_PARAMETERSCONTAINER ${Source_Path}/ltr/parameters_container/parameters_c
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
-			${Source_Path}/ltr/measures/abs_error.h)
+			${Source_Path}/ltr/measures/abs_error.h
 			${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
