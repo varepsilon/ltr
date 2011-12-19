@@ -14,6 +14,10 @@ using std::string;
 using std::map;
 
 namespace ltr {
+  /**
+   * ParametersContainer holds parameters of types int, double and bool
+   * with their names
+   */
   class ParametersContainer {
   public:
     void setDouble(const string& name, double value);

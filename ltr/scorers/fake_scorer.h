@@ -10,7 +10,7 @@ using std::string;
 
 namespace ltr {
 /**
- * Fake Ranker. Simply always return 0.0.
+ * Fake Scorer. Simply always return 0.0.
  */
 class FakeScorer : public Scorer {
   public:
