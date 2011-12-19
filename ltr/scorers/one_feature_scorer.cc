@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#include <string>
 #include <boost/lexical_cast.hpp>
+#include <string>
 
 #include "ltr/scorers/one_feature_scorer.h"
 
