@@ -11,12 +11,12 @@ using std::string;
 
 TEST(ParameterizedTest, AllInParameterizedTest) {
   Parameterized p;
-  p.parameters().setBool("bool1",false);
-  p.parameters().setDouble("double1",3.24);
-  
+  p.parameters().setBool("bool1", false);
+  p.parameters().setDouble("double1", 3.24);
+
   EXPECT_EQ(false, p.parameters().getBool("bool1"));
   EXPECT_EQ(3.24, p.parameters().getDouble("double1"));
 
-  EXPECT_EQ("",p.checkParameters());
+  EXPECT_EQ("", p.checkParameters());
   p.setDefaultParameters();
 };
