@@ -22,7 +22,6 @@ class Accuracy : public Measure<TElement> {
 
 template <typename TElement>
 double Accuracy<TElement>::get_measure(const TElement& element) const {
-
   double errorNum = 0.0;
   for (size_t objIdx = 0; objIdx < element.size(); ++objIdx) {
     errorNum += utility::DoubleEqual(element[objIdx].predictedLabel(),

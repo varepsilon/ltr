@@ -21,11 +21,11 @@ class FakeScorer : public Scorer {
   FakeScorer(double scoreValue = 0.0,
       const FeatureConverterArray& featureConverters = FeatureConverterArray())
   :Scorer("FakeScorer", featureConverters),
-   score_value_(scoreValue) {}
+  score_value_(scoreValue) {}
 
   string brief() const {
     return "All ranks are constant (" +
-      boost::lexical_cast<std::string>(score_value_) + ")";
+    boost::lexical_cast<std::string>(score_value_) + ")";
   }
 
   private:

@@ -49,7 +49,6 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
-
   if (data.featureCount() == 0) {
     throw std::logic_error("There are no features for BF learner.");
   }
