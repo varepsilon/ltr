@@ -32,9 +32,6 @@ class FeatureConverter {
 
     virtual std::string generateCppCode(const std::string& class_name,
             int tabbing = 0) const = 0;
-
-    virtual std::string generateJavaCode(const std::string& class_name,
-            int tabbing = 0, bool is_static = false) const = 0;
 };
 
 template <typename TElement>

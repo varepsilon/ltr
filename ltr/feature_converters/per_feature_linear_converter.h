@@ -28,6 +28,11 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   void apply(const ltr::Object & argument, ltr::Object * value) const;
 
+  virtual std::string generateCppCode(const std::string& class_name,
+          int tabbing = 0) const {
+    return "Not implemented.";
+  };
+
   private:
   size_t featureCount() const;
   void checkFeatureCount(size_t checkedFeatureCount) const;

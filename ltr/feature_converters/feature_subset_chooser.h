@@ -45,10 +45,15 @@ class FeatureSubsetChooser : public FeatureConverter {
         return choosedFeaturesIndexes_.size();
     }
 
-    FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo);
+    FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const;
 
     void apply(const ltr::Object& source_object,
-            ltr::Object* preprocessed_element);
+            ltr::Object* preprocessed_element) const;
+
+    virtual std::string generateCppCode(const std::string& class_name,
+            int tabbing = 0) const {
+      return "Not implemented.";
+    }
 
     private:
     std::vector<size_t> choosedFeaturesIndexes_;
