@@ -19,6 +19,11 @@ using std::vector;
 
 namespace ltr {
   namespace io_utility {
+    /**
+     * @section DESCRIPTION
+     * This class allows to parse strings into Objects
+     *  and serialize Objects into strings.
+     */
     class IParser {
       public:
         class comment : public std::logic_error {
@@ -27,23 +32,47 @@ namespace ltr {
         };
         typedef boost::shared_ptr<IParser> Ptr;
 
-        // function to init parser. For example read header.
+        /**
+         * Method to init parser. For example, read file header.
+         */
         virtual void init(std::istream* in) {}
+        /**
+         * Function, returning information about features in file.
+         */
         virtual NominalFeatureInfo info() {return nominal_feature_info_;}
 
-        // function to serialize Object to string
-        virtual void makeString(const Object& obj, std::string* result) = 0;
+        /**
+         * Functions serializes object into string.
+         * @param object - object to serialize
+         * @param result - string, which will contain serialized object
+         */
+        virtual void makeString(const Object& object, std::string* result) = 0;
 
-        // function to write string to the stream
+        /**
+         * Method to write serialized object into stream.
+         */
         virtual void writeString(const Object& obj, std::ostream* out);
 
-        // function to parse string to object. if impossible, throws
+        /**
+         * Function to parse string into object.
+         * @param line -string to parse
+         * @param featureHandler - class,
+         *  converting features into vector of numbers
+         */
         virtual Object parse(const std::string& line,
                              NominalFeatureHandler::Ptr featureHandler) = 0;
-
+        /**
+         * Function to create Pairwise data set of given objects
+         * @param objects - objects to create data set from
+         * @param info - information about features in the object
+         */
         virtual DataSet<ObjectPair> buildPairDataSet(
             const vector<Object>& objects, const FeatureInfo& info) = 0;
-
+        /**
+         * Function to create Listwise data set of given objects
+         * @param objects - objects to create data set from
+         * @param info - information about features in the object
+         */
         virtual DataSet<ObjectList> buildListDataSet(
             const vector<Object>& objects, const FeatureInfo& info) = 0;
 
@@ -53,7 +82,10 @@ namespace ltr {
         NominalFeatureInfo nominal_feature_info_;
     };
 
-    // returns parser for the given format
+    /**
+     * Returns the parser for given format.
+     * @param format - format to create parser for.
+     */
     IParser::Ptr getParser(const std::string& format);
   };
 };

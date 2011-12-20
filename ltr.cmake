@@ -31,8 +31,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h ${Source_Path}/ltr/utility/
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
 			 ${Source_Path}/ltr/interfaces/aliaser.h
-			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
-			 ${Source_Path}/ltr/interfaces/approach.h ${Source_Path}/ltr/interfaces/approach.cc)
+			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc)
 
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
 			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
