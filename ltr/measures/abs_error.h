@@ -16,6 +16,8 @@ class AbsError : public Measure<TElement> {
   public:
   typedef boost::shared_ptr<AbsError> Ptr;
 
+  AbsError() : Measure<TElement>("Absolute error.") {}
+
   bool isBetter(double firstVal, double secondVal) const {
     return firstVal < secondVal;
   }

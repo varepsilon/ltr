@@ -28,10 +28,10 @@ class LearnersTest : public ::testing::Test {
 
 // tests.
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-  /* ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
+  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
-  ltr::DataSet<ltr::Object> learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
+  /* ltr::DataSet<ltr::Object> learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
       "data/imat2009/imat2009_learning.txt", "YANDEX");
 
   ltr::DataSet<ltr::Object> test_data = ltr::io_utility::loadDataSet<ltr::Object>(
