@@ -45,7 +45,6 @@ void savePredictions(const DataSet<TElement>& data,
 };
 };
 
-
 // Template realization
 namespace ltr {
 namespace io_utility {
@@ -70,31 +69,6 @@ DataSet<TElement> loadDataSet(const string& filename,
   return buildDataSet<TElement>(parser, objects, handler->featureInfo());
 }
 
-template<>
-DataSet<Object> buildDataSet(IParser::Ptr parser,
-    const vector<Object>& objects,
-    const FeatureInfo& info) {
-  DataSet<Object> data(info);
-  typedef map<size_t, vector<Object> >::const_iterator object_iterator;
-
-  for (size_t i = 0; i < objects.size(); i++)
-    data << objects[i];
-  return data;
-}
-
-template<>
-DataSet<ObjectPair> buildDataSet(IParser::Ptr parser,
-    const vector<Object>& objects,
-    const FeatureInfo& info) {
-  return parser->buildPairDataSet(objects, info);
-}
-
-template<>
-DataSet<ObjectList> buildDataSet(IParser::Ptr parser,
-    const vector<Object>& objects,
-    const FeatureInfo& info) {
-  return parser->buildListDataSet(objects, info);
-}
 
 template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,

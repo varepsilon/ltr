@@ -14,6 +14,7 @@ SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
+                                 ${Source_Path}/ltr/data/utility/io_utility.cc
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
 				 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
