@@ -49,9 +49,7 @@ class Measure : public Aliaser, public Parameterized {
    */
   double weightedAverage(const DataSet<TElement>& set) const;
 
-  virtual bool isBetter(double firstVal, double secondVal) const = 0;
-  virtual double bestValue() const = 0;
-  virtual double worstValue() const = 0;
+  virtual bool better(double firstVal, double secondVal) const = 0;
 
   private:
   virtual double get_measure(const TElement& element) const = 0;

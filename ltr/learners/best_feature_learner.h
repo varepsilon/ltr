@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <stdexcept>
 #include <limits>
 
 #include "ltr/learners/learner.h"
@@ -48,18 +49,26 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
-  double bestMeasureValue = p_measure_->worstValue();
-  size_t bestFeatureIdx = 0;
 
-  for (size_t featureIdx = 0; featureIdx < data.featureCount(); ++featureIdx) {
+  if (data.featureCount() == 0) {
+    throw std::logic_error("There are no features for BF learner.");
+  }
+
+  size_t bestFeatureIdx = 0;
+  OneFeatureScorer scorer(bestFeatureIdx);
+  utility::MarkDataSet(data, scorer);
+  double bestMeasureValue = p_measure_->average(data);
+
+  for (size_t featureIdx = 1; featureIdx < data.featureCount(); ++featureIdx) {
     OneFeatureScorer scorer(featureIdx);
     utility::MarkDataSet(data, scorer);
     double measureValue = p_measure_->average(data);
-    if (p_measure_->isBetter(measureValue, bestMeasureValue)) {
+    if (p_measure_->better(measureValue, bestMeasureValue)) {
       bestMeasureValue = measureValue;
       bestFeatureIdx = featureIdx;
     }
   }
+
   scorer_ = OneFeatureScorer(bestFeatureIdx, this->getFeatureConverters());
 }
 }
