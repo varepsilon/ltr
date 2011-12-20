@@ -27,6 +27,9 @@ namespace io_utility {
  * @param filename - path to file
  * @param format - data format (svmlite, yandex, arff)
  * @param handler - class, converting features into vector of numbers
+ * @code
+ * DataSet<Object> = loadDataSet<Object>("dataset.txt", "svmlite");
+ * @endcode
  */
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
@@ -39,6 +42,9 @@ DataSet<TElement> loadDataSet(const string& filename,
  * @param data - data set to save
  * @param filename - path to file
  * @param format - data format (svmlite, yandex, arff) 
+ * @code
+ * saveDataSet(data, "dataset.txt", "svmlite");
+ * @endcode
  */
 template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,
@@ -61,6 +67,9 @@ DataSet<TElement> buildDataSet(IParser::Ptr parser,
  * @param data - data set to predict
  * @param scorer - scorer for prediction
  * @param filename - path to file
+ * @code
+ * savePredictions(data, scorer, "predictions.txt");
+ * @endcode
  */
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
