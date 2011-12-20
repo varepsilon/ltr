@@ -21,6 +21,10 @@ namespace ltr {
   namespace io_utility {
     class IParser {
       public:
+        class comment : public std::logic_error {
+          public:
+            comment() : std::logic_error("") {}
+        };
         typedef boost::shared_ptr<IParser> Ptr;
 
         // function to init parser. For example read header.

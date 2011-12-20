@@ -58,6 +58,8 @@ namespace io_utility {
 
   Object ARFFParser::parse(const std::string& line,
                            NominalFeatureHandler::Ptr feature_handler) {
+    if (line[0] == '%')
+      throw IParser::comment();
     parseNextFeature.init(this);
     parseNextFeature.reset();
 
@@ -80,17 +82,19 @@ namespace io_utility {
 
     feature_handler->process(features_, &obj.features());
     obj.metaInfo() = meta_features_;
+    obj.setActualLabel(current_relevance_);
 
     return obj;
   }
 
   void ARFFParser::init(std::istream *in) {
     std::string line;
+    class_feature_id_ = -1;
 
     nominal_feature_info_.feature_type_.clear();
     nominal_feature_info_.feature_values_.clear();
 
-    int feature_id = 0;
+    int feature_id = 1;
     int meta_id = 0;
 
     while (std::getline(*in, line)) {
@@ -126,7 +130,7 @@ namespace io_utility {
       rule<> quoter = ch_p('\'');
 
       info = boost::spirit::classic::parse(other.c_str(),
-        lexeme_d[+alnum_p][assign_a(attr_name)] >> +space_p >>
+        lexeme_d[+(alnum_p | '_')][assign_a(attr_name)] >> +space_p >>
         (lexeme_d[+alnum_p][assign_a(attr_type)] |
         ('{' >> (( (quoter >> string_rule[push_back_a(values)] >> quoter) |
                   simple_string[push_back_a(values)]) % ',')
@@ -136,7 +140,12 @@ namespace io_utility {
 
       boost::to_upper(attr_type);
       nominal_feature_info_.feature_name_[feature_id] = attr_name;
-      if (attr_type == "NUMERIC") {
+      if (attr_name == "class") {
+        nominal_feature_info_.feature_type_[feature_id] = CLASS;
+        for (int i = 0; i < values.size(); i++)
+          classes_[values[i]] = i+1;
+        class_feature_id_ = feature_id;
+      } else if (attr_type == "NUMERIC" || attr_type == "REAL") {
         nominal_feature_info_.feature_type_[feature_id] = NUMERIC;
       } else if (attr_type == "STRING") {
         nominal_feature_info_.feature_type_[feature_id] = META;
@@ -146,10 +155,13 @@ namespace io_utility {
       }
       feature_id++;
     }
+    if (class_feature_id_ == -1)
+      throw std::logic_error("no class attribute found");
 }
 
   void ARFFParser::NextFeatureParser::reset() {
-    parser_->current_id_ = parser_->current_out_id_ = 0;
+    parser_->current_id_ = parser_->current_out_id_ = 1;
+    parser_->current_relevance_ = 0;
     parser_->features_.clear();
     parser_->meta_features_.clear();
   }
@@ -163,6 +175,10 @@ namespace io_utility {
     if (type == META) {
       parser_->meta_features_[
               parser_->nominal_feature_info_.feature_name_[cur_id] ] = feature;
+      parser_->current_id_++;
+      return;
+    } else if (type == CLASS) {
+      parser_->current_relevance_ = parser_->classes_[feature];
       parser_->current_id_++;
       return;
     }

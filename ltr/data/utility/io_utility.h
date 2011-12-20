@@ -63,7 +63,9 @@ DataSet<TElement> loadDataSet(const string& filename,
   vector<Object> objects;
   std::string line;
   while (std::getline(file, line))
-    objects.push_back(parser->parse(line, handler));
+    try {
+      objects.push_back(parser->parse(line, handler));
+    } catch(IParser::comment err) {}
 
   file.close();
   return buildDataSet<TElement>(parser, objects, handler->featureInfo());
