@@ -85,6 +85,9 @@ namespace ltr {
     /**
      * Returns the parser for given format.
      * @param format - format to create parser for.
+     * @code
+     * IParser::Ptr yandex_parser = getParser("yandex");
+     * @endcode
      */
     IParser::Ptr getParser(const std::string& format);
   };
