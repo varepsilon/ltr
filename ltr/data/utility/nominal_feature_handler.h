@@ -22,6 +22,7 @@ namespace io_utility {
     NOMINAL,
     BOOLEAN,
     META,
+    CLASS,
   };
   struct NominalFeatureInfo {
     public:

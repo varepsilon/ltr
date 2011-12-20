@@ -103,3 +103,11 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   saveDataSet(list_data, "tmp_file", "yandex");
   assert(list_data == loadDataSet<ObjectList>("tmp_file", "yandex"));
 }
+
+TEST_F(IOUtilityTest, TestingARFFPArser) {
+  DataSet<Object> arff_data =
+             loadDataSet<ltr::Object>("data/tests/arff/arff_test.txt", "arff");
+  DataSet<Object> svm_data =
+           loadDataSet<ltr::Object>("data/tests/svm/arff_test.txt", "svmlite");
+  assert(arff_data == svm_data);
+}
