@@ -5,7 +5,7 @@
 namespace ltr {
 
 FeatureInfo FeatureSubsetChooser::convertFeatureInfo(
-    const FeatureInfo& oldFeatureInfo) const{
+    const FeatureInfo& oldFeatureInfo) const {
   FeatureInfo convertedFeatureInfo(countChoosedFeatures());
 
   for (size_t choosedFeatureIdx = 0;

@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <string>
 #include <vector>
 
 #include "ltr/feature_converters/feature_converter.h"

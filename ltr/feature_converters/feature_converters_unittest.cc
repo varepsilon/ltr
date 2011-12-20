@@ -21,7 +21,6 @@ class FeatureConvertersTest : public ::testing::Test {
         "data/imat2009/imat2009_learning.txt", "YANDEX");
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
             "data/imat2009/imat2009_test.txt", "YANDEX");
-
   }
 
   virtual void TearDown() {
