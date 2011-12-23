@@ -21,7 +21,7 @@ using std::logic_error;
 namespace ltr {
 /**
  * @section DESCRIPTION
- * This class allows to calculate most famous Measures on the ranking lists.
+ * This class allows to calculate most famous Measures on the ranking lists, pairs or single objects.
  * To learn more about these Measures visit http://romip.ru/romip2010/20_appendix_a_metrics.pdf (Russian) or
  * http://en.wikipedia.org/wiki/Learning_to_rank#Evaluation_measures (English)
  */
