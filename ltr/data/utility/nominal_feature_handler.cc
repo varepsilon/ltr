@@ -19,7 +19,7 @@ namespace io_utility {
     if (info.feature_type_.size() == 0)
       return;
     max_feature_id = info.feature_type_.rbegin()->first;
-    for (int i = 0; i <= max_feature_id; i++) {
+    for (int i = 1; i <= max_feature_id; i++) {
       if (info.feature_type_.find(i) == info.feature_type_.end()) {
         feature_id[i] = cn++;
         continue;
@@ -29,7 +29,7 @@ namespace io_utility {
         nominal_cnt++;
         feature_id[i] = -1;
       } else {
-        feature_id[i] = cn++ - 1;
+        feature_id[i] = cn++;
       }
     }
 

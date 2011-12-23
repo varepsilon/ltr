@@ -18,14 +18,8 @@ class AbsError : public Measure<TElement> {
 
   AbsError() : Measure<TElement>("Absolute error.") {}
 
-  bool isBetter(double firstVal, double secondVal) const {
+  bool better(double firstVal, double secondVal) const {
     return firstVal < secondVal;
-  }
-  double bestValue() const {
-    return 0;
-  }
-  double worstValue() const {
-    return std::numeric_limits<double>::max();
   }
 
   private:

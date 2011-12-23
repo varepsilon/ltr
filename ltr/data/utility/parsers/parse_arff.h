@@ -32,8 +32,11 @@ namespace io_utility {
 
     private:
       int current_id_;
+      int class_feature_id_;
+      double current_relevance_;
       int current_out_id_;
       map<int, string> features_;
+      map<string, double> classes_;
       map<string, string> meta_features_;
       class NextFeatureParser {
         public:

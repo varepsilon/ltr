@@ -49,7 +49,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   }
 
   saveDataSet(data, "tmp_file", "svmlite");
-  assert(data == loadDataSet<ltr::Object>("tmp_file", "svmlite"));
+  EXPECT_EQ(loadDataSet<ltr::Object>("tmp_file", "svmlite"), data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;
@@ -68,7 +68,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   }
 
   saveDataSet(list_data, "tmp_file", "svmlite");
-  assert(list_data == loadDataSet<ObjectList>("tmp_file", "svmlite"));
+  EXPECT_EQ(loadDataSet<ltr::ObjectList>("tmp_file", "svmlite"), list_data);
 }
 
 TEST_F(IOUtilityTest, TestingYandexPArser) {
@@ -82,7 +82,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
     data << obj;
   }
   saveDataSet(data, "tmp_file", "yandex");
-  assert(data == loadDataSet<ltr::Object>("tmp_file", "yandex"));
+  EXPECT_EQ(loadDataSet<ltr::Object>("tmp_file", "yandex"), data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;
@@ -101,5 +101,27 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   }
 
   saveDataSet(list_data, "tmp_file", "yandex");
-  assert(list_data == loadDataSet<ObjectList>("tmp_file", "yandex"));
+  EXPECT_EQ(loadDataSet<ltr::ObjectList>("tmp_file", "yandex"), list_data);
+}
+
+TEST_F(IOUtilityTest, TestingARFFPArser) {
+  DataSet<Object> arff_data =
+             loadDataSet<ltr::Object>("data/tests/arff/arff_test.txt", "arff");
+  DataSet<Object> svm_data =
+           loadDataSet<ltr::Object>("data/tests/svm/arff_test.txt", "svmlite");
+  EXPECT_EQ(svm_data, arff_data);
+}
+
+TEST_F(IOUtilityTest, TestingSavePredictions) {
+  DataSet<Object> data;
+  const int N = 145;
+  const int featureN = 3;
+  for (int i = 0; i < N; i++) {
+    Object obj;
+    for (int j = 0; j < featureN; j++)
+      obj << static_cast<double>(rand_r()) / 15332;
+    data << obj;
+  }
+  EXPECT_NO_THROW(ltr::io_utility::savePredictions(data,
+                         ltr::Scorer::Ptr(new ltr::FakeScorer()), "tmp_file"));
 }

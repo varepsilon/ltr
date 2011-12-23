@@ -13,25 +13,13 @@
 namespace ltr {
 namespace utility {
 
-  template <class TElement>
-  void MarkDataSet(const DataSet<TElement>& elements, const Scorer& scorer) {
-    for (int i = 0; i < elements.size(); ++i) {
-      MarkElement(elements[i], scorer);
-    }
-  }
+template <class TElement>
+void MarkDataSet(const DataSet<TElement>& elements, const Scorer& scorer);
 
-  template <class TElement>
-  void MarkElement(const TElement& element, const Scorer& scorer) {
-    for (int i = 0; i < element.size(); ++i) {
-      element[i].setPredictedLabel(scorer(element[i]));
-    }
-  }
+template <class TElement>
+void MarkElement(const TElement& element, const Scorer& scorer);
 
-  std::string GenerateLocalClassName(const Scorer& scorer, size_t index) {
-    return "Local" + boost::lexical_cast<std::string>(index) +
-      "_" + scorer.alias();
-    }
-  };
-};
-
+std::string GenerateLocalClassName(const Scorer& scorer, size_t index);
+}
+}
 #endif  // LTR_SCORERS_UTILITY_SCORER_UTILITY_H_

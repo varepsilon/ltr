@@ -14,6 +14,7 @@ SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
+                                 ${Source_Path}/ltr/data/utility/io_utility.cc
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
 				 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
@@ -30,8 +31,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h ${Source_Path}/ltr/utility/
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
 			 ${Source_Path}/ltr/interfaces/aliaser.h
-			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
-			 ${Source_Path}/ltr/interfaces/approach.h ${Source_Path}/ltr/interfaces/approach.cc)
+			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc)
 
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
 			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
@@ -39,14 +39,15 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
 			${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
 			${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc)
 			
-SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h)
+SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
+                        ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
 
 SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 			${Source_Path}/ltr/measures/abs_error.h
-			${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc)
+			${Source_Path}/ltr/measures/accuracy.h)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
 				 ${Source_Path}/ltr/learners/best_feature_learner.h)

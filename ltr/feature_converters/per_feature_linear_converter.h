@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <string>
 #include <vector>
 
 #include "ltr/feature_converters/feature_converter.h"
@@ -27,6 +28,11 @@ class PerFeatureLinearConverter : public FeatureConverter {
   void setShift(size_t feature_idx, double shift);
 
   void apply(const ltr::Object & argument, ltr::Object * value) const;
+
+  virtual std::string generateCppCode(const std::string& class_name,
+          int tabbing = 0) const {
+    return "Not implemented.";
+  };
 
   private:
   size_t featureCount() const;
