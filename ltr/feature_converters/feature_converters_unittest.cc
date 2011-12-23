@@ -66,14 +66,42 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   EXPECT_GE(withoutBestFeatureMeasure, bestFeatureMeasure);
 };
 
-TEST_F(FeatureConvertersTest, TestingFeatureNormalisation) {
+TEST_F(FeatureConvertersTest, TestingFeatureNormalisationStatistics) {
   ltr::FeatureNormalizerLearner<ltr::Object> normalizerLearner;
-  normalizerLearner.learn(learn_data);
+
+  ltr::DataSet<ltr::Object> l_data(ltr::FeatureInfo(3));
+  ltr::Object o1;
+  ltr::Object o2;
+  ltr::Object o3;
+  o1 << 1.0 << 2.0 << 3.0;
+  o2 << 3.0 << 1.0 << 2.0;
+  o3 << 2.0 << 3.0 << 1.0;
+  l_data.add(o1);
+  l_data.add(o2);
+  l_data.add(o3);
+
+  normalizerLearner.learn(l_data);
+
+  for (size_t featureIdx = 0;
+      featureIdx < l_data.featureCount();
+      ++featureIdx) {
+    ltr::PerFeatureLinearConverter * pConv =
+        (ltr::PerFeatureLinearConverter *)(normalizerLearner.make().get());
+    double coef = pConv->getCoefficient(featureIdx);
+    double shift = pConv->getShift(featureIdx);
+    EXPECT_DOUBLE_EQ(coef, 0.5);
+    EXPECT_DOUBLE_EQ(shift, -0.5);
+  }
+}
+
+TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailure) {
+  ltr::FeatureNormalizerLearner<ltr::Object> normalizerLearner;
+  EXPECT_NO_THROW(normalizerLearner.learn(learn_data));
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
   learner.addFeatureConverter(normalizerLearner.make());
-
-  learner.learn(learn_data);
+  EXPECT_NO_THROW(learner.learn(learn_data));
+  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data, learner.make()));
 };

@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <string>
 
 #include "ltr/data/data_set.h"
@@ -14,21 +15,36 @@
 using std::string;
 using std::vector;
 using std::map;
+using std::set;
 using boost::lexical_cast;
 
 namespace ltr {
 namespace utility {
-  void groupByMeta(const vector<Object>& objects,
-                   string group_parameter,
-                   map<string, vector<Object> >* result);
+void groupByMeta(const vector<Object>& objects,
+    string group_parameter,
+    map<string, vector<Object> >* result);
 
-  void groupByIntMeta(const vector<Object>& objects,
-                      string group_parameter,
-                      map<int, vector<Object> >* result);
+void groupByIntMeta(const vector<Object>& objects,
+    string group_parameter,
+    map<int, vector<Object> >* result);
 
-  void groupByFloatMeta(const vector<Object>& objects,
-                        string group_parameter,
-                        map<float, vector<Object> >* result);
+void groupByFloatMeta(const vector<Object>& objects,
+    string group_parameter,
+    map<float, vector<Object> >* result);
+
+template <class TElement>
+class SubsetFromIndexVector {
+  public:
+  explicit SubsetFromIndexVector(const std::vector<size_t>& indexes) {
+    indexes_.insert(indexes.begin(), indexes.end());
+  }
+
+  bool takes(const TElement& element, size_t elementIdx) {
+    return indexes_.find(elementIdx) != indexes_.end();
+  }
+  private:
+  set<size_t> indexes_;
 };
-};
+}
+}
 #endif  // LTR_DATA_UTILITY_DATA_SET_UTILITY_H_

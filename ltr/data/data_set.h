@@ -9,6 +9,7 @@
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
+#include "ltr/data/utility/data_set_utility.h"
 
 namespace ltr {
 
@@ -48,6 +49,9 @@ class DataSet {
   void setWeight(size_t element_idx, double weight) const;
 
   DataSet<TElement> deepCopy() const;
+
+  template <typename TSubsetCreationStrategy>
+  DataSet<TElement> subset(TSubsetCreationStrategy strategy) const;
 
   private:
   boost::shared_ptr< std::vector<TElement> > p_Elements_;
@@ -144,7 +148,36 @@ DataSet<TElement> DataSet<TElement>::deepCopy() const {
     result << this->at(idx);
   }
   return result;
+}
+
+template<typename TElement>
+template<typename TSubsetCreationStrategy>
+DataSet<TElement> DataSet<TElement>::subset(
+    TSubsetCreationStrategy strategy) const {
+  DataSet<TElement> resultDataSet(this->featureInfo());
+  for (size_t elementIdx = 0; elementIdx < this->size(); ++elementIdx) {
+    if (strategy.takes((*this)[elementIdx], elementIdx)) {
+      resultDataSet.p_Elements_->push_back((*this)[elementIdx]);
+      resultDataSet.p_Weights_->push_back((*this).getWeight(elementIdx));
+    }
+  }
+  return resultDataSet;
 };
+
+template < >
+template < >
+DataSet<Object> DataSet<Object>::subset< std::vector<size_t> >(
+    std::vector<size_t> indexes) const;
+
+template < >
+template < >
+DataSet<ObjectPair> DataSet<ObjectPair>::subset< std::vector<size_t> >(
+    std::vector<size_t> indexes) const;
+
+template < >
+template < >
+DataSet<ObjectList> DataSet<ObjectList>::subset< std::vector<size_t> >(
+    std::vector<size_t> indexes) const;
 
 template< typename TElement >
 bool operator==(const DataSet<TElement>& d1, const DataSet<TElement>& d2) {
