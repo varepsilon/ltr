@@ -4,6 +4,7 @@
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
+#include "ltr/data/utility/data_set_utility.h"
 
 // The fixture for testing (contains data for tests).
 class DataSetTest : public ::testing::Test {
@@ -21,6 +22,25 @@ class DataSetTest : public ::testing::Test {
 
 // tests.
 
-TEST_F(DataSetTest, DataSetTest_test) {
-  ltr::DataSet<ltr::ObjectList> data_set;
+TEST_F(DataSetTest, DataSetLightSubsetTest) {
+  ltr::DataSet<ltr::Object> data_set(ltr::FeatureInfo(3));
+
+  ltr::Object o1;
+  ltr::Object o2;
+  ltr::Object o3;
+  o1 << 1.0 << 2.0 << 3.0;
+  o2 << 3.0 << 1.0 << 2.0;
+  o3 << 2.0 << 3.0 << 1.0;
+  data_set.add(o1);
+  data_set.add(o2);
+  data_set.add(o3);
+
+  ltr::utility::SubsetFromIndexVector<ltr::Object>
+  subset_strategy(std::vector<size_t>(1, 1));
+
+  data_set.subset(subset_strategy);
+  data_set.subset(std::vector<size_t>(1, 1));
+
+  EXPECT_EQ(data_set.subset(subset_strategy),
+      data_set.subset(std::vector<size_t>(1, 1)));
 }
