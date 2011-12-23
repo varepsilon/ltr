@@ -43,7 +43,7 @@ namespace ltr {
       for (int split_index = 0;
           split_index < splitter.splitCount(data_set);
           ++split_index) {
-        SplittedDataSet current_splitted(splitter.split(split_index, data_set));
+        SplittedDataSet<TElement> current_splitted(splitter.split(split_index, data_set));
 
         learner->reset();
         learner->learn(current_splitted.train_set);

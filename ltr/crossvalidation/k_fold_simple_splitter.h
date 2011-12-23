@@ -55,18 +55,19 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      size_t fold_size = base_set.size() / k;
-      for (size_t index = 0; index < fold_size * split_index; ++index) {
+      int block_size = base_set.size() / k;
+      int extra_length = base_set.size() % k;
+
+      int test_begin = block_size * split_index + std::min(split_index, extra_length);
+      int test_end = block_size * (split_index + 1) + std::min(split_index + 1, extra_length);
+
+      for (size_t index = 0; index < test_begin; ++index) {
         train_set_indexes->push_back(index);
       }
-      for (size_t index = fold_size * split_index;
-          index < fold_size * (split_index + 1);
-          ++index) {
+      for (size_t index = test_begin; index < test_end;  ++index) {
         test_set_indexes->push_back(index);
       }
-      for (size_t index = fold_size * (split_index + 1);
-          index < base_set.size();
-          ++index) {
+      for (size_t index = test_end; index < base_set.size(); ++index) {
         train_set_indexes->push_back(index);
       }
     };

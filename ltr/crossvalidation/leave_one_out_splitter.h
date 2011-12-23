@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "crossvalidation/splitter.h"
+#include "ltr/crossvalidation/splitter.h"
 
 using std::vector;
 
@@ -15,7 +15,7 @@ namespace ltr {
      * Splits leaving only one test object
      */
     template<class TElement>
-    class LeaveOneOutSplitter : public Splitter<class TElement> {
+    class LeaveOneOutSplitter : public Splitter<TElement> {
     public:
       virtual int splitCount(const DataSet<TElement>& base_set) const;
 
