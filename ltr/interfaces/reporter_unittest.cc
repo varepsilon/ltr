@@ -9,7 +9,7 @@ using ltr::Reporter;
 using std::string;
 
 
-TEST(ReporterTest, AllInReporterTest) {
+TEST(InterfacesTest, ReporterTest) {
   Reporter r1;
   Reporter r2("Hello");
   EXPECT_EQ("Hello", r2.report());

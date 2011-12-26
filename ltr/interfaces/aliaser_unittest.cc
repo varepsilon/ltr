@@ -9,7 +9,7 @@ using ltr::Aliaser;
 using std::string;
 
 
-TEST(AliaserTest, AllInAliaserTest) {
+TEST(InterfacesTest, AliaserTest) {
   Aliaser a1;
   Aliaser a2("Some alias");
   EXPECT_EQ("Alias", a1.alias());

@@ -9,7 +9,7 @@ using ltr::Parameterized;
 using std::string;
 
 
-TEST(ParameterizedTest, AllInParameterizedTest) {
+TEST(InterfacesTest, ParameterizedTest) {
   Parameterized p;
   p.parameters().setBool("bool1", false);
   p.parameters().setDouble("double1", 3.24);
