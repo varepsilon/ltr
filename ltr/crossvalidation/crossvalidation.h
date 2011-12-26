@@ -51,7 +51,7 @@ namespace ltr {
 
         string current_report = learner->report();
         typename TScorer::Ptr current_scorer(new TScorer);
-        *current_scorer = learner->make()
+        *current_scorer = learner->make();
 
         utility::MarkDataSet(current_splitted.test_set, *current_scorer);
 
