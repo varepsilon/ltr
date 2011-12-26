@@ -6,11 +6,13 @@
 #include <algorithm>
 #include <vector>
 #include <cstdlib>
+#include <stdexcept>
 
 #include "crossvalidation/splitter.h"
 
 using std::vector;
 using std::random_shuffle;
+using std::logic_error;
 
 namespace ltr {
   namespace cv {
@@ -23,10 +25,10 @@ namespace ltr {
       TKFoldSimpleSplitter(size_t in_k = 10, size_t in_T = 10)
           : k(in_k), T(in_T) {
         if (k < 2) {
-          throw std::logic_error("k should be grater then 1!");
+          throw logic_error("k should be grater then 1!");
         }
         if (T < 1) {
-          throw std::logic_error("T should be positive!");
+          throw logic_error("T should be positive!");
         }
       }
 
@@ -59,7 +61,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw std::logic_error("index should be in range [0..T*k-1]");
+        throw logic_error("index should be in range [0..T*k-1]");
       }
 
       train_set_indexes->clear();

@@ -4,10 +4,12 @@
 #define LTR_CROSSVALIDATION_K_FOLD_SIMPLE_SPLITTER_H_
 
 #include <vector>
+#include <stdexcept>
 
 #include "crossvalidation/splitter.h"
 
 using std::vector;
+using std::logic_error;
 
 namespace ltr {
   namespace cv {
@@ -20,7 +22,7 @@ namespace ltr {
       explicit KFoldSimpleSplitter(int in_k = 10)
           :k(in_k) {
         if (k < 2) {
-          throw std::logic_error("k should be grater then 1!");
+          throw logic_error("k should be grater then 1!");
         }
       }
 
@@ -49,7 +51,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw std::logic_error("index should be in range [0..k-1]");
+        throw logic_error("index should be in range [0..k-1]");
       }
 
       train_set_indexes->clear();
