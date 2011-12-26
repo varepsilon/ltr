@@ -4,7 +4,5 @@
 
 #include "ltr/crossvalidation/crossvalidation.h"
 
-
 TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
-
 };
