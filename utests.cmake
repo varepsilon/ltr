@@ -19,7 +19,8 @@ SET(LTR_PARAMETERS_CONTAINER_TEST ${Source_Path}/ltr/parameters_container/parame
 
 SET(LTR_CROSSVALIDATION	${Source_Path}/ltr/crossvalidation/splitter_unittest.h
 						${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter_unittest.cc
-						${Source_Path}/ltr/crossvalidation/leave_one_out_splitter_unittest.cc)
+						${Source_Path}/ltr/crossvalidation/leave_one_out_splitter_unittest.cc
+						${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter_unittest.cc)
 
 
 

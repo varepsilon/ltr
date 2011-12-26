@@ -48,7 +48,6 @@ namespace ltr {
         vector<size_t>* test_set_indexes) const = 0;
     };
 
-    // !rewrite with preprocessors
     template <class TElement>
     SplittedDataSet<TElement> Splitter<TElement>::split(int split_index,
         const DataSet<TElement>& base_set) const {
@@ -58,8 +57,6 @@ namespace ltr {
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);
 
       SplittedDataSet<TElement> output(base_set.featureInfo());
-      // here a subset preprocessor should be used, yet not performed
-      // thus this block is written manually
       for (int train = 0; train < train_set_indexes.size(); ++train) {
         output.train_set.add(base_set[train_set_indexes[train]],
           base_set.getWeight(train_set_indexes[train]));

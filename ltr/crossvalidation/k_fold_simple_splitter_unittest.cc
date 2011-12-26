@@ -23,8 +23,10 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
 
   vector<bool> used(data.size(), false);
   vector<int> test_sizes;
+
   for (int i = 0; i < spl.splitCount(data); ++i) {
-    SplittedDataSet<Object> spl_data = spl.split(i,data);
+    SplittedDataSet<Object> spl_data = spl.split(i, data);
+
     EXPECT_EQ(data.size(), spl_data.test_set.size() + spl_data.train_set.size());
 
     test_sizes.push_back(spl_data.test_set.size());
@@ -34,13 +36,12 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
       EXPECT_FALSE(used[test_object_feature])  << ::testing::PrintToString(test_object_feature);
       used[test_object_feature] = true;
     }
-
-    int diff = std::max_element(test_sizes.begin(), test_sizes.end()) -
-      std::min_element(test_sizes.begin(), test_sizes.end());
-    EXPECT_LE(diff, 1);
   }
 
   for (int i = 0; i < used.size(); ++i) {
     EXPECT_TRUE(used[i]);
   }
+  int diff = *std::max_element(test_sizes.begin(), test_sizes.end()) -
+    *std::min_element(test_sizes.begin(), test_sizes.end());
+  EXPECT_LE(diff, 1);
 };
