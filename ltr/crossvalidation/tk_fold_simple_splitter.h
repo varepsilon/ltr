@@ -76,8 +76,10 @@ namespace ltr {
       int block_size = base_set.size() / k;
       int extra_length = base_set.size() % k;
 
-      int test_begin = block_size * block_index + std::min(block_index, extra_length);
-      int test_end = block_size * (block_index + 1) + std::min(block_index + 1, extra_length);
+      int test_begin = block_size * block_index +
+        std::min(block_index, extra_length);
+      int test_end = block_size * (block_index + 1) +
+        std::min(block_index + 1, extra_length);
 
       for (size_t index = 0; index < test_begin; ++index) {
         train_set_indexes->push_back(current_perm[index]);
@@ -91,8 +93,9 @@ namespace ltr {
     }
 
     template<class TElement>
-    typename TKFoldSimpleSplitter<TElement>::Permutation TKFoldSimpleSplitter<TElement>::
-        getRandomPermutation(int index, int dataset_size) const {
+    typename TKFoldSimpleSplitter<TElement>::Permutation
+      TKFoldSimpleSplitter<TElement>::getRandomPermutation(
+        int index, int dataset_size) const {
       // one can use any other shift instead 23
       srand(index + 23);
       Permutation output;

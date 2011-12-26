@@ -22,7 +22,7 @@ TEST_F(SplitterTest, LeaveOneOutSplitterTest) {
 
   vector<bool> used(data.size(), false);
   for (int i = 0; i < spl.splitCount(data); ++i) {
-    SplittedDataSet<Object> spl_data = spl.split(i,data);
+    SplittedDataSet<Object> spl_data = spl.split(i, data);
     EXPECT_EQ(1, spl_data.test_set.size());
     EXPECT_EQ(data.size() - 1, spl_data.train_set.size());
 

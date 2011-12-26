@@ -27,13 +27,15 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
   for (int i = 0; i < spl.splitCount(data); ++i) {
     SplittedDataSet<Object> spl_data = spl.split(i, data);
 
-    EXPECT_EQ(data.size(), spl_data.test_set.size() + spl_data.train_set.size());
+    EXPECT_EQ(data.size(), spl_data.test_set.size()
+      + spl_data.train_set.size());
 
     test_sizes.push_back(spl_data.test_set.size());
 
     for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
       int test_object_feature = spl_data.test_set.at(test_i).features().at(0);
-      EXPECT_FALSE(used[test_object_feature])  << ::testing::PrintToString(test_object_feature);
+      EXPECT_FALSE(used[test_object_feature])
+        << ::testing::PrintToString(test_object_feature);
       used[test_object_feature] = true;
     }
   }

@@ -30,14 +30,18 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
     vector<bool> used(data.size(), false);
     vector<int> test_sizes;
     for (int block_i = 0; block_i < k; ++block_i) {
-      SplittedDataSet<Object> spl_data = spl.split(current_t * k + block_i, data);
-      EXPECT_EQ(data.size(), spl_data.test_set.size() + spl_data.train_set.size());
+      SplittedDataSet<Object> spl_data =
+        spl.split(current_t * k + block_i, data);
+      EXPECT_EQ(data.size(), spl_data.test_set.size()
+        + spl_data.train_set.size());
 
       test_sizes.push_back(spl_data.test_set.size());
 
       for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
-        int test_object_feature = spl_data.test_set.at(test_i).features().at(0);
-        EXPECT_FALSE(used[test_object_feature])  << ::testing::PrintToString(test_object_feature);
+        int test_object_feature =
+          spl_data.test_set.at(test_i).features().at(0);
+        EXPECT_FALSE(used[test_object_feature])
+          << ::testing::PrintToString(test_object_feature);
         used[test_object_feature] = true;
       }
     }
@@ -52,11 +56,11 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
 };
 
 bool Equal(const vector<int>& partition1, const vector<int>& partition2) {
-  map<int,int> accordance;
+  map<int, int> accordance;
   for (int i = 0; i < partition1.size(); ++i) {
-    map<int,int>::iterator found = accordance.find(partition1[i]);
+    map<int, int>::iterator found = accordance.find(partition1[i]);
     if (found == accordance.end()) {
-      accordance.insert(pair<int,int>(partition1[i], partition2[i]));
+      accordance.insert(pair<int, int>(partition1[i], partition2[i]));
     } else {
       if (found->second != partition2[i]) {
         return false;
@@ -77,7 +81,8 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
     marks[current_t].resize(data.size(), -1);
 
     for (int block_i = 0; block_i < k; ++block_i) {
-      SplittedDataSet<Object> spl_data = spl.split(current_t * k + block_i, data);
+      SplittedDataSet<Object> spl_data =
+        spl.split(current_t * k + block_i, data);
 
       for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
         int test_object_feature = spl_data.test_set.at(test_i).features().at(0);
@@ -86,8 +91,8 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
     }
   }
 
-  for (int first = 0; first < t; ++ first) {
-    for (int second = first + 1; second < t; ++ second) {
+  for (int first = 0; first < t; ++first) {
+    for (int second = first + 1; second < t; ++second) {
       EXPECT_FALSE(Equal(marks[first], marks[second]));
     }
   }

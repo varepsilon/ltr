@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 
 #include "crossvalidation/splitter.h"
 
@@ -60,8 +61,10 @@ namespace ltr {
       int block_size = base_set.size() / k;
       int extra_length = base_set.size() % k;
 
-      int test_begin = block_size * split_index + std::min(split_index, extra_length);
-      int test_end = block_size * (split_index + 1) + std::min(split_index + 1, extra_length);
+      int test_begin = block_size * split_index +
+        std::min(split_index, extra_length);
+      int test_end = block_size * (split_index + 1) +
+        std::min(split_index + 1, extra_length);
 
       for (size_t index = 0; index < test_begin; ++index) {
         train_set_indexes->push_back(index);
