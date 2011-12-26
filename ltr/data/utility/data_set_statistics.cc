@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
 
+#include <limits>
+
 #include "ltr/data/utility/data_set_statistics.h"
 
 namespace ltr {
