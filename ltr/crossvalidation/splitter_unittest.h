@@ -1,5 +1,8 @@
 // Copyright 2011 Yandex
 
+#ifndef LTR_CROSSVALIDATION_SPLITTER_UNITTEST_H_
+#define LTR_CROSSVALIDATION_SPLITTER_UNITTEST_H_
+
 #include <gtest/gtest.h>
 
 #include "ltr/data/data_set.h"
@@ -22,3 +25,5 @@ class SplitterTest : public ::testing::Test {
   protected:
   DataSet<Object> data;
 };
+
+#endif  // LTR_CROSSVALIDATION_SPLITTER_UNITTEST_H_

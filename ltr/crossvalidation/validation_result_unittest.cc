@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include <ltr/crossvalidation/validation_result.h>
+#include "ltr/crossvalidation/validation_result.h"
 #include "ltr/scorers/fake_scorer.h"
 
 using ltr::cv::ValidationResult;

@@ -63,6 +63,7 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
 SET(LTR_CROSSVALIDATION 	${Source_Path}/ltr/crossvalidation/splitter.h
 							${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
 							${Source_Path}/ltr/crossvalidation/validation_result.h
+							${Source_Path}/ltr/crossvalidation/validation_result.cc
 							${Source_Path}/ltr/crossvalidation/crossvalidation.h
 							${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
 							${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
