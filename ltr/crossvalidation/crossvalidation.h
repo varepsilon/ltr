@@ -50,8 +50,8 @@ namespace ltr {
         learner->learn(current_splitted.train_set);
 
         string current_report = learner->report();
-        typename TScorer::Ptr current_scorer =
-          TScorer::Ptr(new learner->make());
+        typename TScorer::Ptr current_scorer(new TScorer);
+        *current_scorer = learner->make()
 
         utility::MarkDataSet(current_splitted.test_set, *current_scorer);
 
