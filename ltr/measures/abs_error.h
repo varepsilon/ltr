@@ -3,8 +3,6 @@
 #ifndef LTR_MEASURES_ABS_ERROR_H_
 #define LTR_MEASURES_ABS_ERROR_H_
 
-#include <limits>
-
 #include <cmath>
 
 #include "ltr/measures/measure.h"

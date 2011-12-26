@@ -6,11 +6,13 @@
 #include <algorithm>
 #include <vector>
 #include <cstdlib>
+#include <stdexcept>
 
 #include "crossvalidation/splitter.h"
 
 using std::vector;
 using std::random_shuffle;
+using std::logic_error;
 
 namespace ltr {
   namespace cv {
@@ -23,10 +25,10 @@ namespace ltr {
       TKFoldSimpleSplitter(size_t in_k = 10, size_t in_T = 10)
           : k(in_k), T(in_T) {
         if (k < 2) {
-          throw std::logic_error("k should be grater then 1!");
+          throw logic_error("k should be grater then 1!");
         }
         if (T < 1) {
-          throw std::logic_error("T should be positive!");
+          throw logic_error("T should be positive!");
         }
       }
 
@@ -59,7 +61,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw std::logic_error("index should be in range [0..T*k-1]");
+        throw logic_error("index should be in range [0..T*k-1]");
       }
 
       train_set_indexes->clear();
@@ -71,24 +73,25 @@ namespace ltr {
       Permutation current_perm =
         getRandomPermutation(blocksplit_index, base_set.size());
 
-      size_t fold_size = base_set.size() / k;
-      for (size_t index = 0; index < fold_size * block_index; ++index) {
-        train_set_indexes->push_back(current_perm(index));
+      int block_size = base_set.size() / k;
+      int extra_length = base_set.size() % k;
+
+      int test_begin = block_size * block_index + std::min(block_index, extra_length);
+      int test_end = block_size * (block_index + 1) + std::min(block_index + 1, extra_length);
+
+      for (size_t index = 0; index < test_begin; ++index) {
+        train_set_indexes->push_back(current_perm[index]);
       }
-      for (size_t index = fold_size * block_index;
-          index < fold_size * (block_index + 1);
-          ++index) {
-        test_set_indexes->push_back(current_perm(index));
+      for (size_t index = test_begin; index < test_end;  ++index) {
+        test_set_indexes->push_back(current_perm[index]);
       }
-      for (size_t index = fold_size * (block_index + 1);
-          index < base_set.size();
-          ++index) {
-        train_set_indexes->push_back(current_perm(index));
+      for (size_t index = test_end; index < base_set.size(); ++index) {
+        train_set_indexes->push_back(current_perm[index]);
       }
     }
 
     template<class TElement>
-    Permutation TKFoldSimpleSplitter<TElement>::
+    typename TKFoldSimpleSplitter<TElement>::Permutation TKFoldSimpleSplitter<TElement>::
         getRandomPermutation(int index, int dataset_size) const {
       // one can use any other shift instead 23
       srand(index + 23);

@@ -4,10 +4,12 @@
 #define LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 
 #include <vector>
+#include <stdexcept>
 
-#include "crossvalidation/splitter.h"
+#include "ltr/crossvalidation/splitter.h"
 
 using std::vector;
+using std::logic_error;
 
 namespace ltr {
   namespace cv {
@@ -15,7 +17,7 @@ namespace ltr {
      * Splits leaving only one test object
      */
     template<class TElement>
-    class LeaveOneOutSplitter : public Splitter<class TElement> {
+    class LeaveOneOutSplitter : public Splitter<TElement> {
     public:
       virtual int splitCount(const DataSet<TElement>& base_set) const;
 
@@ -40,7 +42,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw std::logic_error("index should be in range [0..dataset_size-1]");
+        throw logic_error("index should be in range [0..dataset_size-1]");
       }
 
       train_set_indexes->clear();
