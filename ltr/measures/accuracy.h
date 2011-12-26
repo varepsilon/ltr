@@ -13,8 +13,8 @@ class Accuracy : public Measure<TElement> {
   public:
   Accuracy() : Measure<TElement>("Accuracy") {}
 
-  bool better(double firstVal, double secondVal) const {
-    return firstVal < secondVal;
+  bool better(double expected_better, double expected_worse) const {
+    return expected_better < expected_worse;
   }
   private:
   double get_measure(const TElement& object) const;

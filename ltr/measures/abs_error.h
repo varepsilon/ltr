@@ -16,8 +16,8 @@ class AbsError : public Measure<TElement> {
 
   AbsError() : Measure<TElement>("Absolute error.") {}
 
-  bool better(double firstVal, double secondVal) const {
-    return firstVal < secondVal;
+  bool better(double expected_better, double expected_worse) const {
+    return expected_better < expected_worse;
   }
 
   private:
