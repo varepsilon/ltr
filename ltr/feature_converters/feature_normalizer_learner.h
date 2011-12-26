@@ -12,6 +12,7 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/per_feature_linear_converter.h"
 #include "ltr/utility/numerical.h"
+#include "ltr/data/utility/data_set_statistics.h"
 
 namespace ltr {
 
@@ -24,7 +25,6 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
   FeatureConverter::Ptr make() const;
 
   private:
-  void calcMinMaxStatistics(const DataSet<TElement>& data_set);
   void calcCurrentConverter();
   size_t featureCount() const;
 
@@ -36,40 +36,9 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
 template <typename TElement>
 void
 FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
-  this->calcMinMaxStatistics(data_set);
+  utility::calcMinMaxStatistics(data_set, &feature_min_statistic_,
+      &feature_max_statistic_);
   this->calcCurrentConverter();
-}
-
-template <typename TElement>
-void FeatureNormalizerLearner<TElement>::calcMinMaxStatistics(
-    const DataSet<TElement>& data_set) {
-  feature_min_statistic_.resize(data_set.featureCount());
-  feature_max_statistic_.resize(data_set.featureCount());
-
-  std::fill(feature_min_statistic_.begin(),
-      feature_min_statistic_.end(),
-      std::numeric_limits<double>::max());
-
-  std::fill(feature_max_statistic_.begin(),
-      feature_max_statistic_.end(),
-      std::numeric_limits<double>::min());
-
-  for (size_t element_idx = 0; element_idx < data_set.size(); ++element_idx) {
-    for (size_t obj_idx = 0;
-        obj_idx < data_set[element_idx].size();
-        ++obj_idx) {
-      for (size_t feature_idx = 0;
-          feature_idx < data_set.featureCount();
-          ++feature_idx) {
-        feature_min_statistic_[feature_idx] = std::min(
-            feature_min_statistic_[feature_idx],
-            data_set[element_idx][obj_idx].features()[feature_idx]);
-        feature_max_statistic_[feature_idx] = std::max(
-            feature_max_statistic_[feature_idx],
-            data_set[element_idx][obj_idx].features()[feature_idx]);
-      }
-    }
-  }
 }
 
 template <typename TElement>

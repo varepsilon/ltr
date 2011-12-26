@@ -11,7 +11,9 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.h
-				   ${Source_Path}/ltr/data/utility/data_set_utility.cc)
+				   ${Source_Path}/ltr/data/utility/data_set_utility.cc
+                                   ${Source_Path}/ltr/data/utility/data_set_statistics.h
+				   ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                                  ${Source_Path}/ltr/data/utility/io_utility.cc
