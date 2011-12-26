@@ -20,7 +20,7 @@ namespace ltr {
       explicit ValidationResult(const vector<string>& in_measure_names);
 
       void addSplitInfo(Scorer::Ptr in_scorer,
-        const string& in_report, double in_measure_value);
+        const string& in_report, const vector<double>& in_measure_value);
 
       size_t getSplitCount() const;
       Scorer::Ptr getScorer(size_t split_index) const;
@@ -36,10 +36,10 @@ namespace ltr {
         vector<double> measure_values;
 
         OneSplitData(Scorer::Ptr in_scorer, const string& in_report,
-            double in_measure_value) :
+            const vector<double>& in_measure_value) :
           scorer(in_scorer),
           report(in_report),
-          measure_value(in_measure_value) {}
+          measure_values(in_measure_value) {}
       };
 
       vector<OneSplitData> datas_;
@@ -55,7 +55,7 @@ namespace ltr {
     }
 
     void ValidationResult::addSplitInfo(Scorer::Ptr in_scorer,
-        const string& in_report, double in_measure_value) {
+        const string& in_report, const vector<double>& in_measure_value) {
       datas_.push_back(OneSplitData(in_scorer, in_report, in_measure_value));
     }
 
