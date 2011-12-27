@@ -28,7 +28,7 @@ ObjectList& ObjectList::operator<<(const Object& obj) {
     (*p_Elements_).push_back(obj.deepCopy());
     return *this;
 }
-void ObjectList::Add(const Object& obj) {
+void ObjectList::add(const Object& obj) {
     (*this) << obj;
 }
 

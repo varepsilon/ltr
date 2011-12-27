@@ -56,6 +56,9 @@ void saveDataSet(const DataSet<TElement>& data,
  * @param parser - parser, which will build data set
  * @param objects - objects to build data set from
  * @param info - information about features in objects
+ * @code
+ * buildDataSet<TElement>(parser, objects, handler->featureInfo());
+ * @endcode
  */
 template<class TElement>
 DataSet<TElement> buildDataSet(IParser::Ptr parser,

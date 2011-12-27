@@ -55,6 +55,10 @@ namespace io_utility {
        * Function processes features.
        * @param features - map of features to process
        * @param result - link to vector to save resulting features in.
+       * @code
+       * vector<double> result;
+       * handler->process(features, &result);
+       * @endcode
        */
       virtual void process(map<int, string> features,
                            vector<double>* result) = 0;

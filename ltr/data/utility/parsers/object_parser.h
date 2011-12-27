@@ -34,6 +34,10 @@ namespace ltr {
 
         /**
          * Method to init parser. For example, read file header.
+         * @code
+         * ifstream fin("file.txt");
+         * parser->init(&fin);
+         * @endcode
          */
         virtual void init(std::istream* in) {}
         /**
@@ -45,11 +49,19 @@ namespace ltr {
          * Functions serializes object into string.
          * @param object - object to serialize
          * @param result - string, which will contain serialized object
+         * @code
+         * string result;
+         * parser->makeString(object, &result);
+         * @endcoe
          */
         virtual void makeString(const Object& object, std::string* result) = 0;
 
         /**
          * Method to write serialized object into stream.
+         * @code
+         * ofstream fout("file.txt");
+         * parser->writeString(object, &fout);
+         * @endcode
          */
         virtual void writeString(const Object& obj, std::ostream* out);
 

@@ -11,9 +11,11 @@
 #include <stdexcept>
 
 using std::string;
+using std::vector;
 using std::map;
 
 namespace ltr {
+  typedef vector<int> List;
   /**
    * ParametersContainer holds parameters of types int, double and bool
    * with their names
@@ -23,10 +25,12 @@ namespace ltr {
     void setDouble(const string& name, double value);
     void setInt(const string& name, int value);
     void setBool(const string& name, bool value);
+    void setList(const std::string& name, const List& value);
 
     double getDouble(const string& name) const;
     int getInt(const string& name) const;
     bool getBool(const string& name) const;
+    List getList(const string& name) const;
 
     string getString() const;
 
@@ -37,7 +41,7 @@ namespace ltr {
   protected:
     template<class T> T get(const string &name) const;
 
-    typedef map<string, boost::variant<int, double, bool> > TMap;
+    typedef map<string, boost::variant<int, double, bool, List> > TMap;
     TMap params;
   };
 

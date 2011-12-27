@@ -180,15 +180,19 @@ DataSet<ObjectList> DataSet<ObjectList>::subset< std::vector<size_t> >(
     std::vector<size_t> indexes) const;
 
 template< typename TElement >
-bool operator==(const DataSet<TElement>& d1, const DataSet<TElement>& d2) {
-  if (d1.size() != d2.size())
+bool operator==(const DataSet<TElement>& left,
+                const DataSet<TElement>& right) {
+  if (left.size() != right.size())
     return false;
-  for (int i = 0; i < d1.size(); i++) {
-    if (d1[i].size() != d2[i].size())
+  for (int i = 0; i < left.size(); ++i) {
+    if (left[i].size() != right[i].size()) {
       return false;
-    for (int j = 0; j < d1[i].size(); j++)
-      if (d1[i][j] != d2[i][j])
+    }
+    for (int j = 0; j < left[i].size(); ++j) {
+      if (left[i][j] != right[i][j]) {
         return false;
+      }
+    }
   }
   return true;
 }

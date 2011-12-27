@@ -38,11 +38,27 @@ namespace io_utility {
       map<int, string> features_;
       map<string, double> classes_;
       map<string, string> meta_features_;
+      /**
+       * @class NextFeatureParser
+       * This class is used only by ARFF Parser. It is functor,
+       * which is used in callbacks from boost::spirit
+       */
       class NextFeatureParser {
         public:
+          /**
+           * Function inits NextFatureParser.
+           */
           void init(ARFFParser* parser);
+          /**
+           * This operator is called by boost::spirit.
+           * It processes features and saves it in the map in the parser,
+           * given in init.
+           */
           void operator()(const char* feature,
                           const char* it) const;
+          /**
+           * Function prepares NextFeatureParser to process the next object.
+           */
           void reset();
 
         private:

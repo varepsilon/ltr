@@ -23,14 +23,14 @@ class ObjectList {
     Object& at(const size_t j);
 
     ObjectList& operator<<(const Object& obj);
-    void Add(const Object& obj);
+    void add(const Object& obj);
 
     size_t size() const;
     void clear();
 
     ObjectList deepCopy() const;
 
-    friend bool operator==(const ObjectList& one, const ObjectList& another);
+    friend bool operator==(const ObjectList& left, const ObjectList& right);
 
     private:
     boost::shared_ptr< std::vector<Object> > p_Elements_;
