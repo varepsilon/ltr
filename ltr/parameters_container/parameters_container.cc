@@ -14,18 +14,18 @@ namespace ltr {
     string operator()(type a) const {
       return boost::lexical_cast<string>(a);
     }
-    template<>
-    string operator()(List a) const {
-      string res = "[";
-      for (int i = 0; i < a.size(); i++) {
-        if (i != 0)
-          res.append(",");
-        res.append(boost::lexical_cast<string>(a[i]));
-      }
-      res.append("]");
-      return res;
-    }
   };
+  template<>
+  string printVisitor::operator()(List a) const {
+    string res = "[";
+    for (int i = 0; i < a.size(); i++) {
+      if (i != 0)
+        res.append(",");
+      res.append(boost::lexical_cast<string>(a[i]));
+    }
+    res.append("]");
+    return res;
+  }
 
   void ParametersContainer::setDouble(const string& name,
                                      double value) {
