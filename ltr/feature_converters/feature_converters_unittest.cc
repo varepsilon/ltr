@@ -27,7 +27,6 @@ class FeatureConvertersTest : public ::testing::Test {
         "data/imat2009/imat2009_learning.txt", "YANDEX");
     test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
             "data/imat2009/imat2009_test.txt", "YANDEX");
-
   }
 
   virtual void TearDown() {
@@ -114,7 +113,8 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
 
   learner.addFeatureConverter(normalizerLearner.make());
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
-  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
+  EXPECT_NO_THROW(
+      ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
 };
 
 TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
@@ -127,6 +127,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
 
   learner.addFeatureConverter(normalizerLearner.make());
   EXPECT_NO_THROW(learner.learn(learn_data_listwise));
-  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
+  EXPECT_NO_THROW(
+      ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
 };
 

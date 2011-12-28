@@ -25,7 +25,7 @@ namespace ltr {
     typedef map<string, boost::variant<int, double, bool, List> > TMap;
 
     ParametersContainer() {}
-    ParametersContainer(TMap parameters) : params(parameters) {}
+    explicit ParametersContainer(TMap parameters) : params(parameters) {}
 
     void setDouble(const string& name, double value);
     void setInt(const string& name, int value);

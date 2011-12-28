@@ -19,7 +19,7 @@ namespace ltr {
   public:
     Parameterized() {}
     explicit Parameterized(const ParametersContainer& parameters)
-    :parameters_(parameters) {};
+    :parameters_(parameters) {}
 
     ParametersContainer& parameters();
     const ParametersContainer& parameters() const;
