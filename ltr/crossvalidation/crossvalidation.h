@@ -17,22 +17,22 @@ using std::vector;
 
 namespace ltr {
   namespace cv {
-    template<class TElement, class TScorer>
+    template<class TElement>
     const ValidationResult& Validate(
       const DataSet<TElement>& data_set,
       const vector< Measure<TElement> >& measures,
-      typename Learner<TElement, TScorer>::Ptr learner,
+      typename BaseLearner<TElement>::Ptr learner,
       const Splitter<TElement>& splitter);
   };
 };
 
 namespace ltr {
   namespace cv {
-    template<class TElement, class TScorer>
+    template<class TElement>
     const ValidationResult& Validate(
         const DataSet<TElement>& data_set,
         const vector< Measure<TElement> >& measures,
-        typename Learner<TElement, TScorer>::Ptr learner,
+        typename BaseLearner<TElement>::Ptr learner,
         const Splitter<TElement>& splitter) {
       vector<string> measure_names;
       for (int i = 0; i < measures.size(); ++i) {
@@ -50,8 +50,7 @@ namespace ltr {
         learner->learn(current_splitted.train_set);
 
         string current_report = learner->report();
-        typename TScorer::Ptr current_scorer(new TScorer);
-        *current_scorer = learner->make();
+        typename Scorer::Ptr current_scorer = learner->makeScorerPtr();
 
         utility::MarkDataSet(current_splitted.test_set, *current_scorer);
 

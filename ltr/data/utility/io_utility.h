@@ -67,7 +67,7 @@ DataSet<TElement> buildDataSet(IParser::Ptr parser,
 /**
  * @function savePredictions
  * Function to save predicted labeles for given data set
- * @param data - data set to predict
+ * @param data - data set for prediction
  * @param scorer - scorer for prediction
  * @param filename - path to file
  * @code
@@ -76,8 +76,21 @@ DataSet<TElement> buildDataSet(IParser::Ptr parser,
  */
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
-    Scorer::Ptr scorer,
-    string filename);
+                     Scorer::Ptr scorer,
+                     const string& filename);
+
+/**
+ * @function savePredictions
+ * Function to save predicted labeles for given data set
+ * @param data - data set with marked predicted labeles
+ * @param filename - path to file
+ * @code
+ * savePredictions(data, "predictions.txt");
+ * @endcode
+ */
+template<class TElement>
+void savePredictions(const DataSet<TElement>& data,
+                     const string& filename);
 };
 };
 
@@ -110,8 +123,8 @@ DataSet<TElement> loadDataSet(const string& filename,
 
 template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,
-    const string& filename,
-    const string& format) {
+                 const string& filename,
+                 const string& format) {
   std::ofstream file(filename.c_str());
   if (file.fail())
     throw std::logic_error("can't open " + filename + " for writing");
@@ -126,8 +139,8 @@ void saveDataSet(const DataSet<TElement>& data,
 
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
-    Scorer::Ptr scorer,
-    string filename) {
+                     Scorer::Ptr scorer,
+                     const string& filename) {
   std::ofstream file(filename.c_str());
 
   if (file.fail()) {
@@ -138,6 +151,23 @@ void savePredictions(const DataSet<TElement>& data,
   for (size_t i = 0; i < data.size(); i++)
     for (size_t j = 0; j < data[i].size(); j++) {
       file << (*scorer)(data[i][j]) << std::endl;
+    }
+  file.close();
+}
+
+template<class TElement>
+void savePredictions(const DataSet<TElement>& data,
+                     const string& filename) {
+  std::ofstream file(filename.c_str());
+
+  if (file.fail()) {
+    throw std::logic_error("can't open " + filename + " for writing");
+  }
+
+  file.precision(utility::DOUBLE_PRECISION);
+  for (size_t i = 0; i < data.size(); i++)
+    for (size_t j = 0; j < data[i].size(); j++) {
+      file << data[i][j].predictedLabel() << std::endl;
     }
   file.close();
 }
