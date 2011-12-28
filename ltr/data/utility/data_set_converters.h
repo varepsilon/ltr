@@ -3,10 +3,10 @@
 #ifndef LTR_DATA_UTILITY_DATA_SET_CONVERTERS_H_
 #define LTR_DATA_UTILITY_DATA_SET_CONVERTERS_H_
 
-#include <vector>
+#include <boost/shared_ptr.hpp>
 #include <stdlib.h>
 
-#include <boost/shared_ptr.hpp>
+#include <vector>
 
 #include "ltr/data/data_set.h"
 
@@ -18,7 +18,10 @@ namespace utility {
 class ListToPairConvertionStrategy {
   public:
   typedef boost::shared_ptr<ListToPairConvertionStrategy> Ptr;
-  virtual void operator()(const ObjectList& list, vector<ObjectPair>* result) = 0;
+  virtual void operator()(const ObjectList& list,
+                          vector<ObjectPair>* result) = 0;
+  private:
+    virtual ~ListToPairConvertionStrategy() {}
 };
 
 class DefaultConverter : public ListToPairConvertionStrategy {

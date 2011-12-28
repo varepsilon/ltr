@@ -1,3 +1,5 @@
+// Copyright 2011 Yandex
+
 #include "ltr/data/utility/data_set_converters.h"
 
 namespace ltr {
@@ -23,7 +25,7 @@ DataSet< ObjectPair > convertDataSet(const DataSet<ObjectList>& data,
       for (int j = 0; j < tmp.size(); j++)
         result << tmp[j];
     }
-    return result;  
+    return result;
 }
 
 template<>
