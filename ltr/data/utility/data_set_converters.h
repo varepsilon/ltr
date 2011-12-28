@@ -20,8 +20,7 @@ class ListToPairConvertionStrategy {
   typedef boost::shared_ptr<ListToPairConvertionStrategy> Ptr;
   virtual void operator()(const ObjectList& list,
                           vector<ObjectPair>* result) = 0;
-  private:
-    virtual ~ListToPairConvertionStrategy() {}
+  virtual ~ListToPairConvertionStrategy() {}
 };
 
 class DefaultConverter : public ListToPairConvertionStrategy {
