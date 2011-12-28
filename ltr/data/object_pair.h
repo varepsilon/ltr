@@ -3,6 +3,8 @@
 #ifndef LTR_DATA_OBJECT_PAIR_H_
 #define LTR_DATA_OBJECT_PAIR_H_
 
+#include <vector>
+
 #include "ltr/data/object.h"
 
 #include <boost/shared_ptr.hpp>
@@ -15,6 +17,10 @@ class ObjectPair {
 
     ObjectPair();
     ObjectPair(const Object& o1, const Object& o2);
+    /**
+     * makes ObjectPair from objects[0] and objects[1]
+     */
+    ObjectPair(const std::vector<Object>& objects);
 
     const Object& first() const;
     Object& first();

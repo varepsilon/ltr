@@ -17,6 +17,10 @@ namespace ltr {
    */
   class Parameterized {
   public:
+    Parameterized() {}
+    explicit Parameterized(const ParametersContainer& parameters)
+    :parameters_(parameters) {};
+
     ParametersContainer& parameters();
     const ParametersContainer& parameters() const;
     /**
@@ -25,11 +29,9 @@ namespace ltr {
     virtual void setDefaultParameters();
      /**
       * checks, if current parameters are valid.
-      * If invalid parameters found - description is written in result. 
-      * If no invalids - result will be empty
-      * Always return empty (ok) by default
+      * If invalid parameters found - logic_error is thrown.
       */
-    virtual std::string checkParameters() const;
+    virtual void checkParameters() const;
     virtual ~Parameterized() {}
   protected:
     ParametersContainer parameters_;

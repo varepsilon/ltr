@@ -11,6 +11,9 @@ namespace ltr {
 
 ObjectList::ObjectList() : p_Elements_(new std::vector< Object >()) {}
 
+ObjectList::ObjectList(const std::vector<Object>& objects)
+  :p_Elements_(new std::vector< Object >(objects)) {}
+
 const Object& ObjectList::operator[](size_t i) const {
     return at(i);
 }

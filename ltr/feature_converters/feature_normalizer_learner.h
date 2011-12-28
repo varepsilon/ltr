@@ -21,8 +21,19 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
   public:
   typedef boost::shared_ptr< FeatureNormalizerLearner > Ptr;
 
+  explicit FeatureNormalizerLearner(const ParametersContainer& parameters)
+  :IFeatureConverterLearner<TElement>(parameters) {
+    this->checkParameters();
+  }
+  FeatureNormalizerLearner() {
+    this->setDefaultParameters();
+  }
+
   void learn(const DataSet<TElement>& data_set);
   FeatureConverter::Ptr make() const;
+
+  void setDefaultParameters();
+  void checkParameters() const;
 
   private:
   void calcCurrentConverter();
@@ -46,11 +57,16 @@ size_t FeatureNormalizerLearner<TElement>::featureCount() const {
   return feature_min_statistic_.size();
 }
 
-
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
   PerFeatureLinearConverter* p_converter = new PerFeatureLinearConverter(
       this->featureCount());
+
+  double normalizationIntervalBegin =
+      this->parameters().getDouble("NormalizationIntervalBegin");
+  double normalizationIntervalEnd =
+      this->parameters().getDouble("NormalizationIntervalEnd");
+
   for (size_t feature_idx = 0;
       feature_idx < this->featureCount();
       ++feature_idx) {
@@ -60,10 +76,12 @@ void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
     double shift;
     if (utility::DoubleEqual(delta, 0)) {
       coefficient = 0;
-      shift = 0.5;
+      shift = (normalizationIntervalEnd - normalizationIntervalBegin) / 2;
     } else {
-      coefficient = 1.0 / delta;
-      shift = -feature_min_statistic_[feature_idx] / delta;
+      coefficient =
+          (normalizationIntervalEnd - normalizationIntervalBegin) / delta;
+      shift = normalizationIntervalBegin -
+          coefficient * feature_min_statistic_[feature_idx];
     }
     p_converter->setCoefficient(feature_idx, coefficient);
     p_converter->setShift(feature_idx, shift);
@@ -75,6 +93,25 @@ template <typename TElement>
 FeatureConverter::Ptr FeatureNormalizerLearner<TElement>::make() const {
   return current_converter_;
 }
+
+template <typename TElement>
+void FeatureNormalizerLearner<TElement>::setDefaultParameters() {
+  Parameterized::setDefaultParameters();
+
+  this->parameters().setDouble("NormalizationIntervalBegin", 0.0);
+  this->parameters().setDouble("NormalizationIntervalEnd", 1.0);
 }
 
+template <typename TElement>
+void FeatureNormalizerLearner<TElement>::checkParameters() const {
+  double normalizationIntervalBegin =
+      this->parameters().getDouble("NormalizationIntervalBegin");
+  double normalizationIntervalEnd =
+      this->parameters().getDouble("NormalizationIntervalEnd");
+
+  if (normalizationIntervalBegin >= normalizationIntervalEnd) {
+    throw std::logic_error("Bad parameters for FeatureNormalizerLearner");
+  }
+}
+}
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_

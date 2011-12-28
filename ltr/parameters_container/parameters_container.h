@@ -22,6 +22,11 @@ namespace ltr {
    */
   class ParametersContainer {
   public:
+    typedef map<string, boost::variant<int, double, bool, List> > TMap;
+
+    ParametersContainer() {}
+    ParametersContainer(TMap parameters) : params(parameters) {}
+
     void setDouble(const string& name, double value);
     void setInt(const string& name, int value);
     void setBool(const string& name, bool value);
@@ -41,7 +46,6 @@ namespace ltr {
   protected:
     template<class T> T get(const string &name) const;
 
-    typedef map<string, boost::variant<int, double, bool, List> > TMap;
     TMap params;
   };
 
@@ -58,6 +62,5 @@ namespace ltr {
       throw std::logic_error("parameter " + name + " has another type");
     }
   }
-};
-
+}
 #endif  // LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_

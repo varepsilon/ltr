@@ -16,6 +16,7 @@ class ObjectList {
     typedef boost::shared_ptr< ObjectList > Ptr;
 
     ObjectList();
+    ObjectList(const std::vector<Object>& objects);
 
     const Object& operator[](size_t i) const;
     Object& operator[](size_t i);

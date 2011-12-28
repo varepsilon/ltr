@@ -16,6 +16,18 @@ Object::Object() : features_(new Features()),
     actual_label_(1.0),
     predicted_label_(utility::NaN) {}
 
+Object::Object(const Object& object)
+    :features_(new Features(*object.features_)),
+    meta_info_(new MetaInfo(*object.meta_info_)),
+    actual_label_(object.actual_label_),
+    predicted_label_(object.predicted_label_) {}
+
+Object::Object(const std::vector<Object>& objects)
+    :features_(new Features(*objects[0].features_)),
+    meta_info_(new MetaInfo(*objects[0].meta_info_)),
+    actual_label_(objects[0].actual_label_),
+    predicted_label_(objects[0].predicted_label_) {}
+
 const Features& Object::features() const {
   return *features_;
 }

@@ -10,6 +10,7 @@
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/parameters_container/parameters_container.h"
 
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
@@ -17,10 +18,16 @@ class FeatureConvertersTest : public ::testing::Test {
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
     // before each test).
-    learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
+    learn_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
         "data/imat2009/imat2009_learning.txt", "YANDEX");
-    test_data = ltr::io_utility::loadDataSet<ltr::Object>(
+    test_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
             "data/imat2009/imat2009_test.txt", "YANDEX");
+
+    learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
+        "data/imat2009/imat2009_learning.txt", "YANDEX");
+    test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
+            "data/imat2009/imat2009_test.txt", "YANDEX");
+
   }
 
   virtual void TearDown() {
@@ -29,8 +36,10 @@ class FeatureConvertersTest : public ::testing::Test {
   }
   // objects, used in tests
   protected:
-  ltr::DataSet<ltr::Object> learn_data;
-  ltr::DataSet<ltr::Object> test_data;
+  ltr::DataSet<ltr::Object> learn_data_pointwise;
+  ltr::DataSet<ltr::Object> test_data_pointwise;
+  ltr::DataSet<ltr::ObjectList> learn_data_listwise;
+  ltr::DataSet<ltr::ObjectList> test_data_listwise;
   static const size_t bestFeatureIndex = 16;
 };
 
@@ -38,7 +47,9 @@ class FeatureConvertersTest : public ::testing::Test {
 TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   std::vector<size_t> indexes;
 
-  for (size_t featureIdx = 0; featureIdx < learn_data.size(); ++featureIdx) {
+  for (size_t featureIdx = 0;
+      featureIdx < learn_data_pointwise.featureCount();
+      ++featureIdx) {
     if (featureIdx == bestFeatureIndex) {
       continue;
     }
@@ -53,15 +64,15 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
 
   learner.addFeatureConverter(pSubsetChooser);
 
-  learner.learn(learn_data);
+  EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
 
-  ltr::utility::MarkDataSet(learn_data, learner.make());
-  double withoutBestFeatureMeasure = pMeasure->average(learn_data);
+  ltr::utility::MarkDataSet(learn_data_pointwise, learner.make());
+  double withoutBestFeatureMeasure = pMeasure->average(learn_data_pointwise);
 
   ltr::OneFeatureScorer scorerByBestFeature(bestFeatureIndex);
-  ltr::utility::MarkDataSet(learn_data, scorerByBestFeature);
+  ltr::utility::MarkDataSet(learn_data_pointwise, scorerByBestFeature);
 
-  double bestFeatureMeasure = pMeasure->average(learn_data);
+  double bestFeatureMeasure = pMeasure->average(learn_data_pointwise);
 
   EXPECT_GE(withoutBestFeatureMeasure, bestFeatureMeasure);
 };
@@ -94,14 +105,28 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationStatistics) {
   }
 }
 
-TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailure) {
+TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
   ltr::FeatureNormalizerLearner<ltr::Object> normalizerLearner;
-  EXPECT_NO_THROW(normalizerLearner.learn(learn_data));
+  EXPECT_NO_THROW(normalizerLearner.learn(learn_data_pointwise));
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
   learner.addFeatureConverter(normalizerLearner.make());
-  EXPECT_NO_THROW(learner.learn(learn_data));
-  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data, learner.make()));
+  EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
+  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
 };
+
+TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
+  ltr::FeatureNormalizerLearner<ltr::ObjectList> normalizerLearner;
+  EXPECT_NO_THROW(normalizerLearner.learn(learn_data_listwise));
+
+  ltr::Measure<ltr::ObjectList>::Ptr
+  pMeasure(new ltr::AbsError<ltr::ObjectList>());
+  ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
+
+  learner.addFeatureConverter(normalizerLearner.make());
+  EXPECT_NO_THROW(learner.learn(learn_data_listwise));
+  EXPECT_NO_THROW(ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
+};
+

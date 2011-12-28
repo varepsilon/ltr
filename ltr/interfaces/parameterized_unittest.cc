@@ -19,6 +19,6 @@ TEST(InterfacesTest, ParameterizedTest) {
 
   EXPECT_ANY_THROW(p.parameters().getDouble("none"));
 
-  EXPECT_EQ("", p.checkParameters());
+  EXPECT_NO_THROW(p.checkParameters());
   p.setDefaultParameters();
 };

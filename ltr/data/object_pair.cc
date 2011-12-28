@@ -14,6 +14,11 @@ ObjectPair::ObjectPair(const Object& o1, const Object& o2)
     :o1_(o1),
     o2_(o2) {}
 
+ObjectPair::ObjectPair(const std::vector<Object>& objects)
+    :o1_(objects[0]),
+    o2_(objects[1]) {}
+
+
 const Object& ObjectPair::first() const {
     return o1_;
 }

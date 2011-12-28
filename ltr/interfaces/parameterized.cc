@@ -1,25 +1,20 @@
 // Copyright 2011 Yandex
 
-#include <string>
-
 #include "ltr/interfaces/parameterized.h"
 
-using std::string;
-
 namespace ltr {
-  ParametersContainer& Parameterized::parameters() {
-    return parameters_;
-  }
 
-  const ParametersContainer& Parameterized::parameters() const {
-    return parameters_;
-  }
+ParametersContainer& Parameterized::parameters() {
+  return parameters_;
+}
 
-  void Parameterized::setDefaultParameters() {
-    parameters_.clear();
-  }
+const ParametersContainer& Parameterized::parameters() const {
+  return parameters_;
+}
 
-  string Parameterized::checkParameters() const {
-    return "";
-  }
-};
+void Parameterized::setDefaultParameters() {
+  parameters_.clear();
+}
+
+void Parameterized::checkParameters() const {}
+}
