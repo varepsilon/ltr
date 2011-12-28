@@ -6,6 +6,27 @@
 
 namespace ltr {
 namespace utility {
+
+template <typename TElement>
+DataSet<TElement> lightSubset(const DataSet<TElement>& data,
+    const std::vector<size_t>& indexes) {
+  DataSet<TElement> resultDataSet(data.featureInfo());
+
+  for (size_t indexIdx = 0; indexIdx < indexes.size(); ++indexIdx) {
+    //resultDataSet.add(data[indexes[indexIdx]], data.getWeight(indexes[indexIdx]));
+    resultDataSet.p_Elements_->push_back(data[indexes[indexIdx]]);
+    resultDataSet.p_Weights_->push_back(data.getWeight(indexes[indexIdx]));
+  }
+  return resultDataSet;
+}
+
+template DataSet<Object> lightSubset<Object>(const DataSet<Object>& data,
+    const std::vector<size_t>& indexes);
+template DataSet<ObjectPair> lightSubset<ObjectPair>(const DataSet<ObjectPair>& data,
+    const std::vector<size_t>& indexes);
+template DataSet<ObjectList> lightSubset<ObjectList>(const DataSet<ObjectList>& data,
+    const std::vector<size_t>& indexes);
+
 void groupByMeta(const vector<Object>& objects,
     string group_parameter,
     map<string, vector<Object> >* result) {

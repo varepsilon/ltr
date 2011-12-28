@@ -32,19 +32,9 @@ void groupByFloatMeta(const vector<Object>& objects,
     string group_parameter,
     map<float, vector<Object> >* result);
 
-template <class TElement>
-class SubsetFromIndexVector {
-  public:
-  explicit SubsetFromIndexVector(const std::vector<size_t>& indexes) {
-    indexes_.insert(indexes.begin(), indexes.end());
-  }
-
-  bool takes(const TElement& element, size_t elementIdx) {
-    return indexes_.find(elementIdx) != indexes_.end();
-  }
-  private:
-  set<size_t> indexes_;
-};
+template <typename TElement>
+DataSet<TElement> lightSubset(const DataSet<TElement>& data,
+    const std::vector<size_t>& indexes);
 }
 }
 #endif  // LTR_DATA_UTILITY_DATA_SET_UTILITY_H_

@@ -34,4 +34,9 @@ TEST_F(DataSetTest, DataSetLightSubsetTest) {
   data_set.add(o1);
   data_set.add(o2);
   data_set.add(o3);
+
+  ltr::DataSet<ltr::Object> light_subset = ltr::utility::lightSubset(data_set,
+      std::vector<size_t>(1, 1));
+
+  EXPECT_EQ(light_subset.at(0), o2);
 }

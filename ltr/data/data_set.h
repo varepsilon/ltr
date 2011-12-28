@@ -9,13 +9,18 @@
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
-#include "ltr/data/utility/data_set_utility.h"
 
 namespace ltr {
 
 const double DEFAULT_ELEMENT_WEIGHT = 1.0;
 
 template <typename TElement> class DataSet;
+
+namespace utility {
+template <typename TElement>
+DataSet<TElement> lightSubset(const DataSet<TElement>& data,
+    const std::vector<size_t>& indexes);
+}
 
 typedef DataSet<Object> PointwiseDataSet;
 typedef DataSet<ObjectPair> PairwiseDataSet;
@@ -49,6 +54,9 @@ class DataSet {
   void setWeight(size_t element_idx, double weight) const;
 
   DataSet<TElement> deepCopy() const;
+
+  friend DataSet<TElement> utility::lightSubset< >(const DataSet<TElement>& data,
+      const std::vector<size_t>& indexes);
 
   private:
   boost::shared_ptr< std::vector<TElement> > p_Elements_;
