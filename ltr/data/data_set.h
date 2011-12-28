@@ -55,7 +55,8 @@ class DataSet {
 
   DataSet<TElement> deepCopy() const;
 
-  friend DataSet<TElement> utility::lightSubset< >(const DataSet<TElement>& data,
+  friend DataSet<TElement> utility::lightSubset< >(
+      const DataSet<TElement>& data,
       const std::vector<size_t>& indexes);
 
   private:
