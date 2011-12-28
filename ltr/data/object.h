@@ -21,11 +21,11 @@ class Object {
   typedef boost::shared_ptr< Object > Ptr;
 
   Object();
-  Object(const Object& object);
+  explicit Object(const Object& object);
   /**
    * makes object from the first object in the vector
    */
-  Object(const std::vector<Object>& objects);
+  explicit Object(const std::vector<Object>& objects);
 
   const Features& features() const;
   Features& features();
