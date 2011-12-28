@@ -34,13 +34,4 @@ TEST_F(DataSetTest, DataSetLightSubsetTest) {
   data_set.add(o1);
   data_set.add(o2);
   data_set.add(o3);
-
-  ltr::utility::SubsetFromIndexVector<ltr::Object>
-  subset_strategy(std::vector<size_t>(1, 1));
-
-  data_set.subset(subset_strategy);
-  data_set.subset(std::vector<size_t>(1, 1));
-
-  EXPECT_EQ(data_set.subset(subset_strategy),
-      data_set.subset(std::vector<size_t>(1, 1)));
 }

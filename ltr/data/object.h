@@ -21,7 +21,7 @@ class Object {
   typedef boost::shared_ptr< Object > Ptr;
 
   Object();
-  explicit Object(const Object& object);
+  Object(const Object& object);
   /**
    * makes object from the first object in the vector
    */
