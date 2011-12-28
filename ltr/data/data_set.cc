@@ -3,5 +3,4 @@
 #include "ltr/data/data_set.h"
 
 namespace ltr {
-
 }
