@@ -12,6 +12,8 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.cc
+				   ${Source_Path}/ltr/data/utility/data_set_converters.h
+				   ${Source_Path}/ltr/data/utility/data_set_converters.cc
                                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
 				   ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
