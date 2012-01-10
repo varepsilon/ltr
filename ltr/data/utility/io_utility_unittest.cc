@@ -1,6 +1,7 @@
 // Copyright 2011 Yandex
 
 #include <boost/lexical_cast.hpp>
+#include <boost/filesystem/path.hpp>
 #include <cstdlib>
 
 #include "gtest/gtest.h"
@@ -25,16 +26,25 @@ int rand_r() {
 
 // The fixture for testing (contains data for tests).
 class IOUtilityTest : public ::testing::Test {
-    protected:
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
+  protected:
+  virtual void SetUp() {
+    // Code here will be called immediately after the constructor (right
+    // before each test).
+    svm_arff_test_file_name = boost::filesystem::path(
+        "data/tests/svm/arff_test.txt").native_file_string();
+    arff_arff_test_file_name = boost::filesystem::path(
+        "data/tests/arff/arff_test.txt").native_file_string();
+    tmp_file_name = boost::filesystem::path("tmp_file").native_file_string();
+  }
 
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
+  virtual void TearDown() {
+    // Code here will be called immediately after each test (right
+    // before the destructor).
+  }
+
+  std::string svm_arff_test_file_name;
+  std::string arff_arff_test_file_name;
+  std::string tmp_file_name;
 };
 
 TEST_F(IOUtilityTest, TestingSVMPArser) {
@@ -48,8 +58,8 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
     data << obj;
   }
 
-  saveDataSet(data, "tmp_file", "svmlite");
-  EXPECT_EQ(loadDataSet<ltr::Object>("tmp_file", "svmlite"), data);
+  saveDataSet(data, tmp_file_name, "svmlite");
+  EXPECT_EQ(loadDataSet<ltr::Object>(tmp_file_name, "svmlite"), data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;
@@ -67,8 +77,8 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
     list_data << lst;
   }
 
-  saveDataSet(list_data, "tmp_file", "svmlite");
-  EXPECT_EQ(loadDataSet<ltr::ObjectList>("tmp_file", "svmlite"), list_data);
+  saveDataSet(list_data, tmp_file_name, "svmlite");
+  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "svmlite"), list_data);
 }
 
 TEST_F(IOUtilityTest, TestingYandexPArser) {
@@ -81,8 +91,8 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
       obj << static_cast<double>(rand_r()) / 15332;
     data << obj;
   }
-  saveDataSet(data, "tmp_file", "yandex");
-  EXPECT_EQ(loadDataSet<ltr::Object>("tmp_file", "yandex"), data);
+  saveDataSet(data, tmp_file_name, "yandex");
+  EXPECT_EQ(loadDataSet<ltr::Object>(tmp_file_name, "yandex"), data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;
@@ -100,15 +110,18 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
     list_data << lst;
   }
 
-  saveDataSet(list_data, "tmp_file", "yandex");
-  EXPECT_EQ(loadDataSet<ltr::ObjectList>("tmp_file", "yandex"), list_data);
+  saveDataSet(list_data, tmp_file_name, "yandex");
+  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "yandex"),
+      list_data);
 }
 
 TEST_F(IOUtilityTest, TestingARFFPArser) {
   DataSet<Object> arff_data =
-             loadDataSet<ltr::Object>("data/tests/arff/arff_test.txt", "arff");
+      loadDataSet<ltr::Object>(arff_arff_test_file_name, "arff");
+
   DataSet<Object> svm_data =
-           loadDataSet<ltr::Object>("data/tests/svm/arff_test.txt", "svmlite");
+      loadDataSet<ltr::Object>(svm_arff_test_file_name, "svmlite");
+
   EXPECT_EQ(svm_data, arff_data);
 }
 
@@ -123,5 +136,5 @@ TEST_F(IOUtilityTest, TestingSavePredictions) {
     data << obj;
   }
   EXPECT_NO_THROW(ltr::io_utility::savePredictions(data,
-                         ltr::Scorer::Ptr(new ltr::FakeScorer()), "tmp_file"));
+      ltr::Scorer::Ptr(new ltr::FakeScorer()), tmp_file_name));
 }

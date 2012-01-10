@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <boost/filesystem/path.hpp>
+
 #include <vector>
 
 #include "ltr/feature_converters/feature_converter.h"
@@ -14,19 +16,24 @@
 
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
+  public:
+  FeatureConvertersTest()
+    :path_to_learndata("data/imat2009/imat2009_learning.txt"),
+     path_to_testdata("data/imat2009/imat2009_test.txt") {}
+
   protected:
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
     // before each test).
     learn_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-        "data/imat2009/imat2009_learning.txt", "YANDEX");
+        path_to_learndata.native_file_string(), "YANDEX");
     test_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-            "data/imat2009/imat2009_test.txt", "YANDEX");
+        path_to_testdata.native_file_string(), "YANDEX");
 
     learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-        "data/imat2009/imat2009_learning.txt", "YANDEX");
+        path_to_learndata.native_file_string(), "YANDEX");
     test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-            "data/imat2009/imat2009_test.txt", "YANDEX");
+        path_to_testdata.native_file_string(), "YANDEX");
   }
 
   virtual void TearDown() {
@@ -40,6 +47,9 @@ class FeatureConvertersTest : public ::testing::Test {
   ltr::DataSet<ltr::ObjectList> learn_data_listwise;
   ltr::DataSet<ltr::ObjectList> test_data_listwise;
   static const size_t bestFeatureIndex = 16;
+
+  boost::filesystem::path path_to_learndata;
+  boost::filesystem::path path_to_testdata;
 };
 
 // tests.

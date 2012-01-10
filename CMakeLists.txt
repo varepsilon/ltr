@@ -46,7 +46,7 @@ and set the BOOST_ROOT environment variable to installation path
     ENDIF (WIN32)
 ENDIF (NOT Boost_FOUND)
 
-FIND_PACKAGE(Boost REQUIRED)
+FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
 
 IF (NOT DEFINED Boost_LIBRARYDIR)
     IF (WIN32)
@@ -101,4 +101,4 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 # lets SETup our unit-tests for LTR (executed by Google Test)
 INCLUDE (${Source_Path}/utests.cmake NO_POLICY_SCOPE)
 ADD_EXECUTABLE (ltr_lib_test ${LTR_TEST_ALL})
-TARGET_LINK_LIBRARIES (ltr_lib_test ltr_lib gtest)
+TARGET_LINK_LIBRARIES (ltr_lib_test ltr_lib gtest ${Boost_LIBRARIES})

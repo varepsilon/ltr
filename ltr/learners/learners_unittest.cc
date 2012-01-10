@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <boost/filesystem.hpp>
+
 #include <vector>
 #include <limits>
 
@@ -19,10 +21,17 @@ class LearnersTest : public ::testing::Test {
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
     // before each test).
+    std::string learn_data_file_name =
+        boost::filesystem::path("data/imat2009/imat2009_learning.txt")
+        .native_file_string();
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
-        "data/imat2009/imat2009_learning.txt", "YANDEX");
+        learn_data_file_name, "YANDEX");
+
+    std::string test_data_file_name =
+        boost::filesystem::path("data/imat2009/imat2009_test.txt")
+        .native_file_string();
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
-            "data/imat2009/imat2009_test.txt", "YANDEX");
+        test_data_file_name, "YANDEX");
   }
 
   virtual void TearDown() {
