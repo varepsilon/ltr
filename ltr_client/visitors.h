@@ -94,7 +94,7 @@ class SetTypeVisitor : public boost::static_visitor<void> {
 
 /**
 @class TrainVisitor
-This class is used run right train function for VLearnerInfo and VDataInfo
+This class is used to run right train function for VLearnerInfo and VDataInfo
 */
 class TrainVisitor : public boost::static_visitor<void> {
     mutable LtrClient* client;
@@ -103,14 +103,14 @@ class TrainVisitor : public boost::static_visitor<void> {
         TrainVisitor(string name, LtrClient* client = 0) : name(name),
             client(client) {}
         template<class TElement1, class TElement2>
-        void operator()(LearnerInfo<TElement1>&, DataInfo<TElement2>&) const {}
+        inline void operator()(LearnerInfo<TElement1>&, DataInfo<TElement2>&) const {}
 
         template<class TElement>
-        void operator()(LearnerInfo<TElement>& l, DataInfo<TElement>&d) const;
+        inline void operator()(LearnerInfo<TElement>& l, DataInfo<TElement>&d) const;
 };
 
 template<class TElement>
-void TrainVisitor::operator()(LearnerInfo<TElement>& l,
+inline void TrainVisitor::operator()(LearnerInfo<TElement>& l,
                               DataInfo<TElement>&d) const {
     if (client)
         client->train<TElement>(name, l, d);
