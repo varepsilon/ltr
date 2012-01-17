@@ -151,9 +151,9 @@ template <class TValue>
 TValue DecisionVertex<TValue>::value(const Object& obj) const {
   typename Vertex<TValue>::Ptr best_child = NULL;
   double max_value = 0;
-  if (!hasChild())
+  if (!this->hasChild())
     throw std::logic_error("non list vertex has no children");
-  typename Vertex<TValue>::Ptr child = firstChild();
+  typename Vertex<TValue>::Ptr child = this->firstChild();
   while (child != NULL) {
     if (best_child == NULL || max_value < child->condition_->value(obj)) {
       best_child = child;
@@ -166,9 +166,9 @@ TValue DecisionVertex<TValue>::value(const Object& obj) const {
 
 template <class TValue>
 TValue RegressionVertex<TValue>::value(const Object& obj) const {
-  if (!hasChild())
+  if (!this->hasChild())
     throw std::logic_error("non list vertex has no children");
-  typename Vertex<TValue>::Ptr child = firstChild();
+  typename Vertex<TValue>::Ptr child = this->firstChild();
 
   vector<double> conditions;
   vector<TValue> values;
