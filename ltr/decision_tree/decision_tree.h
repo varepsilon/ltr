@@ -196,7 +196,6 @@ template<class TValue>
 void DecisionTree<TValue>::setRoot(typename Vertex<TValue>::Ptr root) {
   root_ = root;
 }
-
 }
 }
 
