@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <map>
+#include <cmath>
 #include <vector>
 #include <stdexcept>
 
@@ -66,7 +67,7 @@ void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
       last_child_ = NULL;
     return;
   }
-  Vertex<TValue>::Ptr now = first_child_;
+  typename Vertex<TValue>::Ptr now = first_child_;
   while (now != NULL) {
     if (now->nextSibling() == child) {
       now->sibling_ = now->nextSibling()->nextSibling();
@@ -78,7 +79,7 @@ void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
 
 template<class TValue>
 bool Vertex<TValue>::hasNextSibling() {
-  return (sibling != NULL);
+  return (sibling_ != NULL);
 }
 
 template<class TValue>
@@ -88,7 +89,7 @@ bool Vertex<TValue>::hasChild() {
 
 template<class TValue>
 typename Vertex<TValue>::Ptr Vertex<TValue>::nextSibling() {
-  return sibling;
+  return sibling_;
 }
 
 template<class TValue>
@@ -103,10 +104,10 @@ void Vertex<TValue>::setCondition(Condition::Ptr condition) {
 
 template<class TValue>
 void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
-  if (last_child == NULL)
-    first_child = last_child_ = child;
+  if (last_child_ == NULL)
+    first_child_ = last_child_ = child;
   else
-    last_child = last_child->sibling = child;
+    last_child_ = last_child_->sibling_ = child;
 }
 
 template<class TValue>
@@ -148,11 +149,11 @@ class RegressionVertex : public Vertex<TValue> {
 
 template <class TValue>
 TValue DecisionVertex<TValue>::value(const Object& obj) const {
-  Vertex<TValue>::Ptr best_child = NULL;
+  typename Vertex<TValue>::Ptr best_child = NULL;
   double max_value = 0;
   if (!hasChild())
     throw std::logic_error("non list vertex has no children");
-  Vertex<TValue>::Ptr child = firstChild();
+  typename Vertex<TValue>::Ptr child = firstChild();
   while (child != NULL) {
     if (best_child == NULL || max_value < child->condition_->value(obj)) {
       best_child = child;
@@ -167,7 +168,7 @@ template <class TValue>
 TValue RegressionVertex<TValue>::value(const Object& obj) const {
   if (!hasChild())
     throw std::logic_error("non list vertex has no children");
-  Vertex<TValue>::Ptr child = firstChild();
+  typename Vertex<TValue>::Ptr child = firstChild();
 
   vector<double> conditions;
   vector<TValue> values;
