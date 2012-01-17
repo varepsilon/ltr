@@ -9,8 +9,6 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
 
-class LtrClient;
-
 #define PW "pointwise"
 #define LW "listwise"
 #define PRW "pairwise"

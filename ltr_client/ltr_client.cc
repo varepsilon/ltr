@@ -9,6 +9,7 @@
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/visitors.h"
+#include "ltr_client/train_visitor.h"
 #include "utility/timer.h"
 #include "ltr/data/utility/io_utility.h"
 
