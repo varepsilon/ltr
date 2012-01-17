@@ -1,6 +1,7 @@
 // Copyright 2011 Yandex
 
 #include <cmath>
+#include <stdexcept>
 
 #include "ltr/decision_tree/classification_result.h"
 

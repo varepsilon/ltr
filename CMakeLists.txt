@@ -46,6 +46,8 @@ and set the BOOST_ROOT environment variable to installation path
     ENDIF (WIN32)
 ENDIF (NOT Boost_FOUND)
 
+FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
+
 IF (NOT DEFINED Boost_LIBRARYDIR)
     IF (WIN32)
         SET(Boost_LIBRARYDIR "$ENV{BOOST_ROOT}/lib")
