@@ -20,10 +20,6 @@ using ltr::ObjectPair;
 
 int last_random = 2981984;
 
-int rand_r() {
-  return last_random = (last_random * 11 + 23421) % 138274123;
-}
-
 // The fixture for testing (contains data for tests).
 class IOUtilityTest : public ::testing::Test {
   protected:
@@ -31,10 +27,10 @@ class IOUtilityTest : public ::testing::Test {
     // Code here will be called immediately after the constructor (right
     // before each test).
     svm_arff_test_file_name = boost::filesystem::path(
-        "data/tests/svm/arff_test.txt").native_file_string();
+        "data/tests/svm/arff_test.txt").string();
     arff_arff_test_file_name = boost::filesystem::path(
-        "data/tests/arff/arff_test.txt").native_file_string();
-    tmp_file_name = boost::filesystem::path("tmp_file").native_file_string();
+        "data/tests/arff/arff_test.txt").string();
+    tmp_file_name = boost::filesystem::path("tmp_file").string();
   }
 
   virtual void TearDown() {
@@ -54,7 +50,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand_r()) / 15332;
+      obj << static_cast<double>(rand()) / 15332;
     data << obj;
   }
 
@@ -65,13 +61,13 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
   for (int i = 0; i < N; i++) {
-    int cn = rand_r() % (1 + max_list_size - min_list_size) + min_list_size;
+    int cn = rand() % (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
       obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
-        obj << static_cast<double>(rand_r()) / 15332;
+        obj << static_cast<double>(rand()) / 15332;
       lst << obj;
     }
     list_data << lst;
@@ -88,7 +84,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand_r()) / 15332;
+      obj << static_cast<double>(rand()) / 15332;
     data << obj;
   }
   saveDataSet(data, tmp_file_name, "yandex");
@@ -98,13 +94,13 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
   for (int i = 0; i < N; i++) {
-    int cn = rand_r() % (1 + max_list_size - min_list_size) + min_list_size;
+    int cn = rand() % (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
       obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
-        obj << static_cast<double>(rand_r()) / 15332;
+        obj << static_cast<double>(rand()) / 15332;
       lst << obj;
     }
     list_data << lst;
@@ -132,7 +128,7 @@ TEST_F(IOUtilityTest, TestingSavePredictions) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand_r()) / 15332;
+      obj << static_cast<double>(rand()) / 15332;
     data << obj;
   }
   EXPECT_NO_THROW(ltr::io_utility::savePredictions(data,

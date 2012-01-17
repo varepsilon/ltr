@@ -8,14 +8,18 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
              ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
              )
+SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
+					  ${Source_Path}/ltr/decision_tree/decision_tree.cc
+					  ${Source_Path}/ltr/decision_tree/classification_result.h
+					  ${Source_Path}/ltr/decision_tree/classification_result.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.cc
 				   ${Source_Path}/ltr/data/utility/data_set_converters.h
 				   ${Source_Path}/ltr/data/utility/data_set_converters.cc
-                                   ${Source_Path}/ltr/data/utility/data_set_statistics.h
-				   ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
+                   ${Source_Path}/ltr/data/utility/data_set_statistics.h
+                   ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                                  ${Source_Path}/ltr/data/utility/io_utility.cc
@@ -85,8 +89,9 @@ SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
+SOURCE_GROUP(decision_tree FILES ${LTR_DECISION_TREE})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
 			${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
-			${LTR_MEASURES} ${LTR_CROSSVALIDATION})
+			${LTR_MEASURES} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE})

@@ -23,13 +23,13 @@ class LearnersTest : public ::testing::Test {
     // before each test).
     std::string learn_data_file_name =
         boost::filesystem::path("data/imat2009/imat2009_learning.txt")
-        .native_file_string();
+        .string();
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
         learn_data_file_name, "YANDEX");
 
     std::string test_data_file_name =
         boost::filesystem::path("data/imat2009/imat2009_test.txt")
-        .native_file_string();
+        .string();
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
         test_data_file_name, "YANDEX");
   }
