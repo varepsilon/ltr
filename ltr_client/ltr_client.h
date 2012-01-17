@@ -22,6 +22,8 @@
 #include "ltr_client/measures_initer.h"
 #include "ltr_client/learners_initer.h"
 
+#include "ltr/data/utility/io_utility.h"
+
 class TrainVisitor;
 /**
 @class LtrClient
