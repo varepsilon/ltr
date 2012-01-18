@@ -4,6 +4,7 @@
 #define LTR_DECISION_TREE_DECISION_TREE_H_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include <map>
 #include <cmath>
@@ -35,9 +36,12 @@ template <class TValue>
 class Vertex {
   public:
     typedef boost::shared_ptr<Vertex> Ptr;
+    typedef boost::weak_ptr<Vertex> WeakPtr;
 
-    Vertex() {}
-    explicit Vertex(Condition::Ptr condition) : condition_(condition) {}
+
+    Vertex() : parent_(0) {}
+    explicit Vertex(Condition::Ptr condition) :
+        condition_(condition), parent_(0) {}
     void addChild(Ptr child);
     bool hasNextSibling() const;
     bool hasChild() const;
@@ -56,7 +60,7 @@ class Vertex {
     Ptr first_child_;
     Ptr last_child_;
     Ptr sibling_;
-    Ptr parent_;
+    Vertex<TValue>* parent_;
     Condition::Ptr condition_;
 
     template<class TValue1>
@@ -119,7 +123,7 @@ void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
     first_child_ = last_child_ = child;
   else
     last_child_ = last_child_->sibling_ = child;
-  child->parent_ = Vertex<TValue>::Ptr(this);
+  child->parent_ = this;
 }
 
 template <class TValue>
