@@ -19,6 +19,9 @@ using std::vector;
 namespace ltr {
 namespace DecisionTree {
 
+extern bool _cache_conditions;
+extern bool _deep_cache_conditions;
+
 class Condition {
   public:
     typedef boost::shared_ptr<Condition> Ptr;
