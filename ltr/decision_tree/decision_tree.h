@@ -36,13 +36,13 @@ class Vertex {
   public:
     typedef boost::shared_ptr<Vertex> Ptr;
 
-    Vertex();
+    Vertex() {}
     explicit Vertex(Condition::Ptr condition) : condition_(condition) {}
     void addChild(Ptr child);
-    bool hasNextSibling();
-    bool hasChild();
-    Ptr nextSibling();
-    Ptr firstChild();
+    bool hasNextSibling() const;
+    bool hasChild() const;
+    Ptr nextSibling() const;
+    Ptr firstChild() const;
 
     void removeChild(Ptr child);
 
@@ -52,11 +52,21 @@ class Vertex {
 
     virtual ~Vertex() {}
 
-  private:
+  protected:
     Ptr first_child_;
     Ptr last_child_;
     Ptr sibling_;
+    Ptr parent_;
     Condition::Ptr condition_;
+
+    template<class TValue>
+    friend class DecisionVertex;
+
+    template<class TValue>
+    friend class RegressionVertex;
+
+    template<class TValue>
+    friend class LeafVertex;
 };
 
 template<class TValue>
@@ -71,6 +81,7 @@ void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
   while (now != NULL) {
     if (now->nextSibling() == child) {
       now->sibling_ = now->nextSibling()->nextSibling();
+      child->parent_ = NULL;
       return;
     }
     now = now->nextSibling();
@@ -78,22 +89,22 @@ void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
 }
 
 template<class TValue>
-bool Vertex<TValue>::hasNextSibling() {
+bool Vertex<TValue>::hasNextSibling() const {
   return (sibling_ != NULL);
 }
 
 template<class TValue>
-bool Vertex<TValue>::hasChild() {
+bool Vertex<TValue>::hasChild() const {
   return (first_child_ != NULL);
 }
 
 template<class TValue>
-typename Vertex<TValue>::Ptr Vertex<TValue>::nextSibling() {
+typename Vertex<TValue>::Ptr Vertex<TValue>::nextSibling() const {
   return sibling_;
 }
 
 template<class TValue>
-typename Vertex<TValue>::Ptr Vertex<TValue>::firstChild() {
+typename Vertex<TValue>::Ptr Vertex<TValue>::firstChild() const {
   return first_child_;
 }
 
@@ -108,48 +119,84 @@ void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
     first_child_ = last_child_ = child;
   else
     last_child_ = last_child_->sibling_ = child;
+  child->parent_ = Vertex<TValue>::Ptr(this);
 }
-
-template<class TValue>
-class DecisionTree {
-  public:
-    typedef typename Vertex<TValue>::Ptr VertexPtr;
-    TValue value(const Object& obj) {
-      return root_->value(obj);
-    }
-    void setRoot(VertexPtr root);
-  private:
-    VertexPtr root_;
-};
 
 template <class TValue>
 class LeafVertex : public Vertex<TValue> {
   public:
+    typedef typename boost::shared_ptr<LeafVertex<TValue> > Ptr;
     TValue value(const Object& obj) const {
       return value_;
     }
-    LeafVertex() {}
+    LeafVertex() : Vertex() {}
     LeafVertex(Condition::Ptr condition, const TValue& value) :
         value_(value), Vertex<TValue>(condition) {}
   private:
     TValue value_;
 };
 
+template<class TValue>
+typename LeafVertex<TValue>::Ptr LeafVertexPtr() {
+  return typename LeafVertex<TValue>::Ptr(new LeafVertex());
+}
+
+template<class TValue>
+typename LeafVertex<TValue>::Ptr LeafVertexPtr(Condition::Ptr condition,
+                                               const TValue& value) {
+  return typename LeafVertex<TValue>::Ptr(
+      new LeafVertex<TValue>(condition, value));
+}
+
 template <class TValue>
 class DecisionVertex : public Vertex<TValue> {
   public:
+    typedef boost::shared_ptr<DecisionVertex<TValue> > Ptr;
+
+    DecisionVertex() : Vertex<TValue>() {}
+    explicit DecisionVertex(Condition::Ptr condition) :
+        Vertex<TValue>(condition) {}
     TValue value(const Object& obj) const;
 };
+
+template<class TValue>
+typename DecisionVertex<TValue>::Ptr DecisionVertexPtr() {
+  return typename DecisionVertex<TValue>::Ptr(new DecisionVertex<TValue>());
+}
+
+template<class TValue>
+typename DecisionVertex<TValue>::Ptr DecisionVertexPtr(
+    Condition::Ptr condition) {
+  return typename DecisionVertex<TValue>::Ptr(
+      new DecisionVertex<TValue>(condition));
+}
 
 template <class TValue>
 class RegressionVertex : public Vertex<TValue> {
   public:
+    typedef boost::shared_ptr<RegressionVertex<TValue> > Ptr;
+
+    RegressionVertex() : Vertex<TValue>() {}
+    explicit RegressionVertex(Condition::Ptr condition) :
+        Vertex<TValue>(condition) {}
     TValue value(const Object& obj) const;
 };
 
+template<class TValue>
+typename RegressionVertex<TValue>::Ptr RegressionVertexPtr() {
+  return typename RegressionVertex<TValue>::Ptr(new RegressionVertex<TValue>());
+}
+
+template<class TValue>
+typename RegressionVertex<TValue>::Ptr RegressionVertexPtr(
+    Condition::Ptr condition) {
+  return typename RegressionVertex<TValue>::Ptr(
+      new RegressionVertex<TValue>(condition));
+}
+
 template <class TValue>
 TValue DecisionVertex<TValue>::value(const Object& obj) const {
-  typename Vertex<TValue>::Ptr best_child = NULL;
+  typename Vertex<TValue>::Ptr best_child;
   double max_value = 0;
   if (!this->hasChild())
     throw std::logic_error("non list vertex has no children");
@@ -157,7 +204,7 @@ TValue DecisionVertex<TValue>::value(const Object& obj) const {
   while (child != NULL) {
     if (best_child == NULL || max_value < child->condition_->value(obj)) {
       best_child = child;
-      max_value = child->condition->value(obj);
+      max_value = child->condition_->value(obj);
     }
     child = child->nextSibling();
   }
@@ -194,8 +241,37 @@ TValue RegressionVertex<TValue>::value(const Object& obj) const {
 }
 
 template<class TValue>
+class DecisionTree {
+  public:
+    typedef typename Vertex<TValue>::Ptr VertexPtr;
+    TValue value(const Object& obj) {
+      return root_->value(obj);
+    }
+    void setRoot(VertexPtr root);
+    void removeVertex(VertexPtr vertex);
+  private:
+    VertexPtr root_;
+};
+
+template<class TValue>
 void DecisionTree<TValue>::setRoot(typename Vertex<TValue>::Ptr root) {
   root_ = root;
+}
+
+template<class TValue>
+void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
+  Vertex<TValue>::Ptr v = vertex;
+  while (v != NULL)
+    v = v->parent_;
+  if (v != root)
+    throw std::logic_error("can't remove vertex: vertex from another tree");
+
+  if (vertex == root) {
+    root = NULL;
+    return;
+  }
+
+  vertex->parent_->removeChild(vertex);
 }
 }
 }

@@ -11,7 +11,12 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
 SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
 					  ${Source_Path}/ltr/decision_tree/decision_tree.cc
 					  ${Source_Path}/ltr/decision_tree/classification_result.h
-					  ${Source_Path}/ltr/decision_tree/classification_result.cc)
+					  ${Source_Path}/ltr/decision_tree/classification_result.cc
+					  
+					  ${Source_Path}/ltr/decision_tree/fake_condition.h
+					  ${Source_Path}/ltr/decision_tree/fake_condition.cc
+					  ${Source_Path}/ltr/decision_tree/one_feature_condition.h
+					  ${Source_Path}/ltr/decision_tree/one_feature_condition.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 				   ${Source_Path}/ltr/data/utility/data_set_utility.h
@@ -21,8 +26,8 @@ SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
-SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
-                                 ${Source_Path}/ltr/data/utility/io_utility.cc
+SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h                
+                 ${Source_Path}/ltr/data/utility/io_utility.cc
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
 				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
 				 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
