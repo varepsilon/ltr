@@ -33,9 +33,9 @@ using ltr::Object;
 TEST_F(DecisionTreeTest, TestingBasicOperations) {
   DecisionTree<double> tree;
   typedef Vertex<double>::Ptr VertexPtr;
-  VertexPtr leaf1 = LeafVertexPtr<double>(OneFeatureConditionPtr(0), 1);
-  VertexPtr leaf2 = LeafVertexPtr<double>(OneFeatureConditionPtr(1), 2);
-  VertexPtr leaf3 = LeafVertexPtr<double>(OneFeatureConditionPtr(2), 3);
+  VertexPtr leaf1 = LeafVertexPtr<double>(OneFeatureConditionPtr(0), 1.0);
+  VertexPtr leaf2 = LeafVertexPtr<double>(OneFeatureConditionPtr(1), 2.0);
+  VertexPtr leaf3 = LeafVertexPtr<double>(OneFeatureConditionPtr(2), 3.0);
 
   VertexPtr v1 = DecisionVertexPtr<double>();
 
@@ -48,5 +48,5 @@ TEST_F(DecisionTreeTest, TestingBasicOperations) {
   Object obj;
   obj << 1.0 << 5.0 << 2.0;
 
-  EXPECT_EQ(2, tree.value(obj));
+  EXPECT_EQ(2.0, tree.value(obj));
 }

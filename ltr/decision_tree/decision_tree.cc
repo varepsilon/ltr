@@ -12,7 +12,7 @@ double Condition::operator()(const Object& obj) const {
 double Condition::value(const Object& obj) const {
   if (obj == last_object_)
     return last_value_;
-  return valueImpl(last_object_ = obj);
+  return last_value_ = valueImpl(last_object_ = obj);
 }
 }
 }
