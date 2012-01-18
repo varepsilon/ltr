@@ -59,13 +59,13 @@ class Vertex {
     Ptr parent_;
     Condition::Ptr condition_;
 
-    template<class TValue>
+    template<class TValue1>
     friend class DecisionVertex;
 
-    template<class TValue>
+    template<class TValue1>
     friend class RegressionVertex;
 
-    template<class TValue>
+    template<class TValue1>
     friend class LeafVertex;
 };
 
@@ -129,7 +129,7 @@ class LeafVertex : public Vertex<TValue> {
     TValue value(const Object& obj) const {
       return value_;
     }
-    LeafVertex() : Vertex() {}
+    LeafVertex() : Vertex<TValue>() {}
     LeafVertex(Condition::Ptr condition, const TValue& value) :
         value_(value), Vertex<TValue>(condition) {}
   private:
@@ -138,7 +138,7 @@ class LeafVertex : public Vertex<TValue> {
 
 template<class TValue>
 typename LeafVertex<TValue>::Ptr LeafVertexPtr() {
-  return typename LeafVertex<TValue>::Ptr(new LeafVertex());
+  return typename LeafVertex<TValue>::Ptr(new LeafVertex<TValue>());
 }
 
 template<class TValue>
@@ -260,13 +260,13 @@ void DecisionTree<TValue>::setRoot(typename Vertex<TValue>::Ptr root) {
 
 template<class TValue>
 void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
-  Vertex<TValue>::Ptr v = vertex;
+  typename Vertex<TValue>::Ptr v = vertex;
   while (v != NULL)
     v = v->parent_;
-  if (v != root)
+  if (v != this->root)
     throw std::logic_error("can't remove vertex: vertex from another tree");
 
-  if (vertex == root) {
+  if (vertex == this->root) {
     root = NULL;
     return;
   }
