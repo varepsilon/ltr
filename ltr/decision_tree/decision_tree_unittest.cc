@@ -33,10 +33,10 @@ using ltr::DecisionTree::Vertex;
 
 using ltr::Object;
 
-#define LESS ltr::DecisionTree::CompareType::LESS
-#define GREATER ltr::DecisionTree::CompareType::GREATER
-#define EQUAL ltr::DecisionTree::CompareType::EQUAL
-#define GREATER_OR_EQUAL ltr::DecisionTree::CompareType::GREATER_OR_EQUAL
+#define LESS ltr::DecisionTree::LESS
+#define GREATER ltr::DecisionTree::GREATER
+#define EQUAL ltr::DecisionTree::EQUAL
+#define GREATER_OR_EQUAL ltr::DecisionTree::GREATER_OR_EQUAL
 
 
 TEST_F(DecisionTreeTest, TestingBasicOperations) {
