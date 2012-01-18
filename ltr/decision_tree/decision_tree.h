@@ -267,7 +267,7 @@ void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
     throw std::logic_error("can't remove vertex: vertex from another tree");
 
   if (vertex == this->root) {
-    root = NULL;
+    this->root = typename Vertex<TValue>::Ptr(NULL);
     return;
   }
 
