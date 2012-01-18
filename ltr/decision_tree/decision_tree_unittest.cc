@@ -33,6 +33,12 @@ using ltr::DecisionTree::Vertex;
 
 using ltr::Object;
 
+#define LESS ltr::DecisionTree::CompareType::LESS
+#define GREATER ltr::DecisionTree::CompareType::GREATER
+#define EQUAL ltr::DecisionTree::CompareType::EQUAL
+#define GREATER_OR_EQUAL ltr::DecisionTree::CompareType::GREATER_OR_EQUAL
+
+
 TEST_F(DecisionTreeTest, TestingBasicOperations) {
   DecisionTree<double> tree;
   typedef Vertex<double>::Ptr VertexPtr;
@@ -41,18 +47,18 @@ TEST_F(DecisionTreeTest, TestingBasicOperations) {
   ConditionPtr second = OneFeatureConditionPtr(1);
 
   VertexPtr leaf1 = LeafVertexPtr<double>(
-      CompareConditionPtr(first, CompareType::LESS, 10.0), 1.0);
+      CompareConditionPtr(first, LESS, 10.0), 1.0);
   VertexPtr leaf2 = LeafVertexPtr<double>(
-      CompareConditionPtr(first, CompareType::EQUAL, 10.0), 2.0);
+      CompareConditionPtr(first, EQUAL, 10.0), 2.0);
   VertexPtr leaf3 = LeafVertexPtr<double>(
-      CompareConditionPtr(second, CompareType::LESS, 50.0), 3.0);
+      CompareConditionPtr(second, LESS, 50.0), 3.0);
   VertexPtr leaf4 = LeafVertexPtr<double>(
-      CompareConditionPtr(second, CompareType::GREATER_OR_EQUAL, 50.0), 4.0);
+      CompareConditionPtr(second, GREATER_OR_EQUAL, 50.0), 4.0);
 
   VertexPtr v1 = DecisionVertexPtr<double>();
 
   VertexPtr v2 = DecisionVertexPtr<double>(
-      CompareConditionPtr(first, CompareType::GREATER, 10.0));
+      CompareConditionPtr(first, GREATER, 10.0));
 
   v1->addChild(leaf1);
   v1->addChild(leaf2);
