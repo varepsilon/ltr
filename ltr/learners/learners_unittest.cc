@@ -14,6 +14,8 @@
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/utility/scorer_utility.h"
+#include "ltr/scorers/gp_scorer.h"
+#include "ltr/learners/gp_learner.h"
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -56,6 +58,21 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
 
   ltr::utility::MarkDataSet(test_data, learner.make());
   double measureAfter = pMeasure->average(test_data);
+
+  EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
+};
+
+TEST_F(LearnersTest, TestingGPLearner) {
+  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
+  ltr::gp::GPLearner<ltr::Object> learner(pMeasure);
+  learner.learn(learn_data);
+
+  ltr::FakeScorer fakeScorer(std::numeric_limits<double>::max());
+  ltr::utility::MarkDataSet(learn_data, fakeScorer);
+  double measureBefore = pMeasure->average(learn_data);
+
+  ltr::utility::MarkDataSet(learn_data, learner.make());
+  double measureAfter = pMeasure->average(learn_data);
 
   EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
 };

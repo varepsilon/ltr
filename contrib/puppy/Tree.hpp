@@ -99,7 +99,7 @@ public:
 }
 
 inline std::ostream& operator<<(std::ostream& ioOS, const Puppy::Tree& inTree);
-
+inline std::ostream& foo(std::ostream& ioOS, const Puppy::Tree& inTree);
 
 /*!
  *  \brief Compare equality of two trees.
@@ -137,5 +137,9 @@ inline std::ostream& operator<<(std::ostream& ioOS, const Puppy::Tree& inTree)
   return ioOS;
 }
 
-
+inline std::ostream& foo(std::ostream& ioOS, const Puppy::Tree& inTree)
+{
+  inTree.write(ioOS);
+  return ioOS;
+}
 #endif // Puppy_Tree_hpp

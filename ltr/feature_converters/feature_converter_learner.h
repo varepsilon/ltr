@@ -15,9 +15,11 @@ namespace ltr {
 template < typename TElement >
 class IFeatureConverterLearner : public Parameterized {
   public:
-
   explicit IFeatureConverterLearner(const ParametersContainer& parameters =
-      ParametersContainer()) : Parameterized(parameters) {}
+      ParametersContainer()) {
+    this->setDefaultParameters();
+    this->parameters().copyParameters(parameters);
+  }
 
   void learn(const DataSet<TElement>& data_set);
   FeatureConverter::Ptr make();

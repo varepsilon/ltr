@@ -41,7 +41,8 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
 			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
 			${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
 			${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
-			${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc)
+			${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc
+                        ${Source_Path}/ltr/scorers/gp_scorer.h)
 			
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
                         ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
@@ -54,7 +55,14 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 			${Source_Path}/ltr/measures/accuracy.h)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
-				 ${Source_Path}/ltr/learners/best_feature_learner.h)
+				 ${Source_Path}/ltr/learners/best_feature_learner.h
+                                 ${Source_Path}/ltr/learners/gp_learner.h
+                                 ${Source_Path}/ltr/learners/gp_learner.cc)
+
+SET(LTR_LEARNERS_UTILS ${Source_Path}/ltr/learners/utility/gp_primitives.h
+                        ${Source_Path}/ltr/learners/utility/gp_functions.h
+                        ${Source_Path}/ltr/learners/utility/gp_functions.cc)
+
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
 						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
@@ -85,8 +93,9 @@ SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
+SOURCE_GROUP(learners\\utils FILES ${LTR_LEARNERS_UTILS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
-			${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_FEATURE_CONVERTERS}
-			${LTR_MEASURES} ${LTR_CROSSVALIDATION})
+			${LTR_LEARNERS} ${LTR_LEARNERS_UTILS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
+                        ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_CROSSVALIDATION})

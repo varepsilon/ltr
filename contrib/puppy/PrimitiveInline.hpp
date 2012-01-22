@@ -292,6 +292,3 @@ Puppy::Primitive::getArgument(unsigned int inN, void* outResult, Puppy::Context&
 
 
 #endif // Puppy_PrimitiveInline_hpp
-
-
- 

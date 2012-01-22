@@ -3,22 +3,19 @@
 #include <gtest/gtest.h>
 #include <string>
 
-#include "ltr/interfaces/parameterized.h"
+#include "ltr/parameters_container/parameters_container.h"
 
-using ltr::Parameterized;
+using ltr::ParametersContainer;
 using std::string;
 
 
 TEST(InterfacesTest, ParameterizedTest) {
-  Parameterized p;
-  p.parameters().setBool("bool1", false);
-  p.parameters().setDouble("double1", 3.24);
+  ParametersContainer p;
+  p.setBool("bool1", false);
+  p.setDouble("double1", 3.24);
 
-  EXPECT_EQ(false, p.parameters().getBool("bool1"));
-  EXPECT_EQ(3.24, p.parameters().getDouble("double1"));
+  EXPECT_EQ(false, p.getBool("bool1"));
+  EXPECT_EQ(3.24, p.getDouble("double1"));
 
-  EXPECT_ANY_THROW(p.parameters().getDouble("none"));
-
-  EXPECT_NO_THROW(p.checkParameters());
-  p.setDefaultParameters();
+  EXPECT_ANY_THROW(p.getDouble("none"));
 };
