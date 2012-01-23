@@ -18,6 +18,10 @@
 namespace ltr {
 namespace gp {
 
+/**
+@class GPLearner
+Implements genetic programming approach applied to learning to rank.
+*/
 template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
   public:
@@ -72,6 +76,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
 
   private:
+  /** Method clears and adds primitives to the context.
+  */
   void initContext() {
     Puppy::Context newContext;
     context_= newContext;
@@ -104,6 +110,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
     }
   }
 
+  /** Method creates initial population.
+  */
   void initPopulation() {
     population_.clear();
     population_.resize(this->parameters().getInt("POP_SIZE"));
@@ -172,6 +180,10 @@ class GPLearner : public Learner<TElement, GPScorer> {
     // std::cout << population_[inPopulationBestTreeIdx_] << std::endl;
   }
 
+  /** Method evaluates the population, it sets individ tree fitness to the
+   *  average on the data set metric value.
+   *  @param data data set for calculation of the average metric value
+   */
   void evaluatePopulation(const DataSet<TElement>& data) {
     for (size_t treeIdx = 0; treeIdx < population_.size(); ++treeIdx) {
       if (population_[treeIdx].mValid) {
