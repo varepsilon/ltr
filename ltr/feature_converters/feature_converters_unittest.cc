@@ -26,14 +26,14 @@ class FeatureConvertersTest : public ::testing::Test {
     // Code here will be called immediately after the constructor (right
     // before each test).
     learn_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-        path_to_learndata.native_file_string(), "YANDEX");
+        path_to_learndata.string(), "YANDEX");
     test_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-        path_to_testdata.native_file_string(), "YANDEX");
+        path_to_testdata.string(), "YANDEX");
 
     learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-        path_to_learndata.native_file_string(), "YANDEX");
+        path_to_learndata.string(), "YANDEX");
     test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-        path_to_testdata.native_file_string(), "YANDEX");
+        path_to_testdata.string(), "YANDEX");
   }
 
   virtual void TearDown() {

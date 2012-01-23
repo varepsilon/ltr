@@ -79,9 +79,12 @@ TARGET_LINK_LIBRARIES (puppy ${Boost_LIBRARIES})
 ##########################################################################################
 # lets SETup utility and tinyxml library
 INCLUDE (${Source_Path}/utility.cmake)
+INCLUDE (${Source_Path}/tinyxml.cmake)
 ADD_LIBRARY(util_logger ${LOGGER_SOURCES})
 ADD_LIBRARY(util_timer ${TIMER_SOURCES})
 SET(UTILITY util_timer util_logger)
+
+ADD_LIBRARY(tinyxml ${TINYXML_SOURCES})
 
 ##########################################################################################
 # lets SETup LTR as a static library project, called LTR_lib
@@ -102,3 +105,9 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 INCLUDE (${Source_Path}/utests.cmake NO_POLICY_SCOPE)
 ADD_EXECUTABLE (ltr_lib_test ${LTR_TEST_ALL})
 TARGET_LINK_LIBRARIES (ltr_lib_test ltr_lib gtest ${Boost_LIBRARIES})
+
+##########################################################################################
+# lets SETup LTR_client
+INCLUDE (${Source_Path}/ltr_client.cmake NO_POLICY_SCOPE)
+ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
+TARGET_LINK_LIBRARIES (ltr_client ltr_lib tinyxml ${UTILITY})

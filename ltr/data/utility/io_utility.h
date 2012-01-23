@@ -22,7 +22,6 @@ using std::vector;
 namespace ltr {
 namespace io_utility {
 /**
- * @function loadDataSet
  * Function to load data set from file.
  * @param filename - path to file
  * @param format - data format (svmlite, yandex, arff)
@@ -37,7 +36,6 @@ DataSet<TElement> loadDataSet(const string& filename,
     NominalFeatureHandler::Ptr handler =
         NominalFeatureHandler::Ptr(new RemoveHandler()));
 /**
- * @function saveDataSet
  * Function to save data set into file.
  * @param data - data set to save
  * @param filename - path to file
@@ -51,7 +49,6 @@ void saveDataSet(const DataSet<TElement>& data,
     const string& filename,
     const string& format);
 /**
- * @function buildDataSet
  * Function to build data set of given objects
  * @param parser - parser, which will build data set
  * @param objects - objects to build data set from
@@ -65,7 +62,6 @@ DataSet<TElement> buildDataSet(IParser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info);
 /**
- * @function savePredictions
  * Function to save predicted labeles for given data set
  * @param data - data set for prediction
  * @param scorer - scorer for prediction
@@ -80,7 +76,6 @@ void savePredictions(const DataSet<TElement>& data,
                      const string& filename);
 
 /**
- * @function savePredictions
  * Function to save predicted labeles for given data set
  * @param data - data set with marked predicted labeles
  * @param filename - path to file

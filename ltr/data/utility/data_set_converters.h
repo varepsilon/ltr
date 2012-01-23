@@ -30,6 +30,9 @@ class DefaultConverter : public ListToPairConvertionStrategy {
 
 /**
  * Function converts data set from one type to another.
+ * @param data - data set to convert
+ * @param strategy - strategy of convertion.
+ * Used only in List to Pair convertion
  */
 template< class TElementTo, class TElementFrom >
 DataSet< TElementTo > convertDataSet(const DataSet<TElementFrom>& data,
