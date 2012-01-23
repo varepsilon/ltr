@@ -1,12 +1,16 @@
 // Copyright 2011 Yandex School Practice
 
+#include <boost/filesystem/path.hpp>
+
 #include <stdlib.h>
+#include <string>
 
 #include "gtest/gtest.h"
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/data_set_utility.h"
+#include "ltr/data/utility/io_utility.h"
 
 #include "ltr/data/utility/data_set_converters.h"
 
@@ -70,4 +74,20 @@ TEST_F(DataSetTest, DataSetConvertersTest) {
   ltr::DataSet<ltr::ObjectPair> pair_data;
   EXPECT_NO_THROW(pair_data = convertDataSet<ltr::ObjectPair>(list_data));
   EXPECT_NO_THROW(convertDataSet<ltr::Object>(pair_data));
+}
+
+
+TEST_F(DataSetTest, DataSetAlignTest) {
+  ltr::DataSet<ltr::Object> test_data;
+
+  std::string test_data_file_name =
+      boost::filesystem::path("data/imat2009/imat2009_test.txt")
+      .string();
+
+  test_data = ltr::io_utility::loadDataSet<ltr::Object>(test_data_file_name,
+      "YANDEX");
+
+  for (size_t objIdx = 0; objIdx < test_data.size(); ++objIdx) {
+    EXPECT_EQ(test_data.featureCount(), test_data.at(objIdx).featureCount());
+  }
 }
