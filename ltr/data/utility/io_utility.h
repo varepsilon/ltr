@@ -112,6 +112,10 @@ DataSet<TElement> loadDataSet(const string& filename,
     } catch(IParser::comment err) {}
 
   file.close();
+  int feature_cnt = handler->featureInfo().getFeatureCount();
+  for (size_t i = 0; i < objects.size(); i++)
+    for (size_t cn = objects[i].features().size(); cn < feature_cnt; cn++)
+      objects[i] << 0.0;
   return buildDataSet<TElement>(parser, objects, handler->featureInfo());
 }
 
