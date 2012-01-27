@@ -7,6 +7,8 @@
 
 #include "ltr/measures/abs_error.h"
 
+#include "ltr/measures/dcg.h"
+
 template<> MeasureInfo<ltr::Object>::MeasureInfo() {
     approach = PW;
 }
@@ -26,11 +28,10 @@ VMeasureInfo MeasureIniter::init(const std::string& type_,
   boost::to_upper(type);
   if (initers.find(type) == initers.end())
       throw std::logic_error("unknown measure " + type);
-  VMeasureInfo info  = initers[type](parameters);
-  SetApproachVisitor v;
-  SetTypeVisitor tv(type);
-  boost::apply_visitor(v, info);
-  boost::apply_visitor(tv, info);
+  VMeasureInfo info = initers[type](parameters);
+
+  boost::apply_visitor(SetApproachVisitor(), info);
+  boost::apply_visitor(SetTypeVisitor(type), info);
   return info;
 }
 

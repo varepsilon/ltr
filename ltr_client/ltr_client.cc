@@ -17,6 +17,8 @@ template <> std::string Approach<ltr::Object>::name() {return PW;}
 template <> std::string Approach<ltr::ObjectPair>::name() {return PRW;}
 template <> std::string Approach<ltr::ObjectList>::name() {return LW;}
 
+using boost::algorithm::to_upper;
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "config file missing";
@@ -167,7 +169,7 @@ void LtrClient::loadLearners() {
         if (!approach) {
             client_logger_.warning() << "No approach defined for learner '"
                           << name
-                          << "'. It will defined automatically if possible."
+                          << "'. It will be defined automatically if possible."
                           << std::endl;
             approach = "";
         }
@@ -196,8 +198,10 @@ void LtrClient::loadLearners() {
         info.parameters = parameters;
         if (measure)
             info.measure_name = measure;
-        if (weak_learner)
+        if (weak_learner) {
             info.weak_learner = weak_learner;
+            boost::to_upper(info.weak_learner);
+        }
         learners[name] = info;
         client_logger_.info() << "found learner '"
                               << name << "': "

@@ -66,6 +66,6 @@ double DCG::get_measure(const ObjectList& objects) const {
 }
 
 double DCG::iterartion_dcg_formula(double relevance, size_t position) {
-  return (pow(2, relevance) - 1) / log(position + 2);
+  return (pow(2, relevance) - 1) / log(position + 2.0);
 }
 }
