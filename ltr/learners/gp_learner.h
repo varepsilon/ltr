@@ -19,9 +19,9 @@ namespace ltr {
 namespace gp {
 
 /**
-@class GPLearner
-Implements genetic programming approach applied to learning to rank.
-*/
+ @class GPLearner
+ Implements genetic programming approach applied to learning to rank.
+ */
 template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
   public:
