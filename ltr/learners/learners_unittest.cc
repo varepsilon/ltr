@@ -11,6 +11,8 @@
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/measures/ndcg.h"
+#include "ltr/measures/dcg.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/utility/scorer_utility.h"
@@ -29,6 +31,10 @@ class LearnersTest : public ::testing::Test {
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
         learn_data_file_name, "YANDEX");
 
+    learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
+            learn_data_file_name, "YANDEX");
+
+
     std::string test_data_file_name =
         boost::filesystem::path("data/imat2009/imat2009_test.txt")
         .string();
@@ -44,6 +50,8 @@ class LearnersTest : public ::testing::Test {
   protected:
   ltr::DataSet<ltr::Object> learn_data;
   ltr::DataSet<ltr::Object> test_data;
+
+  ltr::DataSet<ltr::ObjectList> learn_data_listwise;
 };
 
 // tests.
@@ -63,16 +71,8 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
 };
 
 TEST_F(LearnersTest, TestingGPLearner) {
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
-  ltr::gp::GPLearner<ltr::Object> learner(pMeasure);
-  learner.learn(learn_data);
+  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
+  ltr::gp::GPLearner<ltr::ObjectList> learner(pMeasure);
 
-  ltr::FakeScorer fakeScorer(std::numeric_limits<double>::max());
-  ltr::utility::MarkDataSet(learn_data, fakeScorer);
-  double measureBefore = pMeasure->average(learn_data);
-
-  ltr::utility::MarkDataSet(learn_data, learner.make());
-  double measureAfter = pMeasure->average(learn_data);
-
-  EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
+  learner.learn(learn_data_listwise);
 };

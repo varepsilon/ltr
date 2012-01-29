@@ -10,6 +10,8 @@
 #include "ltr/measures/measure.h"
 #include "ltr/parameters_container/parameters_container.h"
 
+#include "ltr_client/measures_info.h"
+
 using std::pair;
 
 namespace ltr {

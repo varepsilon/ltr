@@ -77,7 +77,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
 
   private:
   /** Method clears and adds primitives to the context.
-  */
+   */
   void initContext() {
     Puppy::Context newContext;
     context_= newContext;
@@ -111,7 +111,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
 
   /** Method creates initial population.
-  */
+   */
   void initPopulation() {
     population_.clear();
     population_.resize(this->parameters().getInt("POP_SIZE"));
@@ -127,57 +127,59 @@ class GPLearner : public Learner<TElement, GPScorer> {
       reset();
     }
 
-    // std::cout << "Evaluating data for the first time.\n";
+    std::cout << "Evaluating data for the first time.\n";
     this->evaluatePopulation(data);
 
-    /* std::cout << "The population looks like: \n";
+    std::cout << "The population looks like: \n";
     for (size_t treeIdx = 0; treeIdx < population_.size(); ++treeIdx) {
-      using ::operator<<;
+      using ::operator <<;
       std::cout << population_[treeIdx] << std::endl;
-    } */
+    }
 
-    // std::cout << "Evolution begins.\n";
+    std::cout << "Evolution begins.\n";
     for (int generationIdx = 0;
         generationIdx < this->parameters().getInt("NBR_GEN");
         ++generationIdx) {
-      // std::cout << "Generation "<< generationIdx << ".\n";
+      std::cout << "Generation "<< generationIdx << ".\n";
 
-      // std::cout << "Tournament.\n";
+      std::cout << "Tournament.\n";
       Puppy::applySelectionTournament(population_, context_,
           this->parameters().getInt("NBR_PART"));
 
-      // std::cout << "Crossover.\n";
+      std::cout << "Crossover.\n";
       Puppy::applyCrossover(population_, context_,
           this->parameters().getDouble("CROSSOVER_PROBA"),
           this->parameters().getDouble("CROSSOVER_DISTRIB_PROBA"),
           this->parameters().getInt("MAX_DEPTH"));
 
-      // std::cout << "Mutation standart.\n";
+      std::cout << "Mutation standart.\n";
       Puppy::applyMutationStandard(population_, context_,
           this->parameters().getDouble("MUT_STD_PROBA"),
           this->parameters().getInt("MUT_MAX_REGEN_DEPTH"),
           this->parameters().getInt("MAX_DEPTH"));
 
-      // std::cout << "Mutation swap.\n";
+      std::cout << "Mutation swap.\n";
       Puppy::applyMutationSwap(population_, context_,
           this->parameters().getDouble("MUT_SWAP_PROBA"),
           this->parameters().getDouble("MUT_SWAP_DISTRIB_PROBA"));
 
-      // std::cout << "Evaluation.\n";
+      std::cout << "Evaluation.\n";
       this->evaluatePopulation(data);
-    }
 
-    inPopulationBestTreeIdx_ = 0;
-    for (size_t treeIdx = 1; treeIdx < population_.size(); ++treeIdx) {
-      if (population_[inPopulationBestTreeIdx_].mFitness <
-          population_[treeIdx].mFitness) {
-        inPopulationBestTreeIdx_ = treeIdx;
+      inPopulationBestTreeIdx_ = 0;
+      for (size_t treeIdx = 1; treeIdx < population_.size(); ++treeIdx) {
+        if (population_[inPopulationBestTreeIdx_].mFitness <
+            population_[treeIdx].mFitness) {
+          inPopulationBestTreeIdx_ = treeIdx;
+        }
       }
+      std::cout
+      << "The best one is number " << inPopulationBestTreeIdx_ << ".\n";
+      using ::operator <<;
+      std::cout << population_[inPopulationBestTreeIdx_] << std::endl;
+      std::cout << "with fitness " <<
+          population_[inPopulationBestTreeIdx_].mFitness << "\n";
     }
-    // std::cout
-    // << "The best one is number " << inPopulationBestTreeIdx_ << ".\n";
-    // using ::operator<<;
-    // std::cout << population_[inPopulationBestTreeIdx_] << std::endl;
   }
 
   /** Method evaluates the population, it sets individ tree fitness to the
