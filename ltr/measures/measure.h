@@ -57,8 +57,9 @@ class Measure : public Aliaser, public Parameterized {
 
 template <class TElement>
 class LessIsBetterMeasure : public Measure<TElement> {
-public:
-  explicit LessIsBetterMeasure(const string& alias) : Measure<TElement>(alias) {}
+ public:
+  explicit LessIsBetterMeasure(const string& alias)
+    : Measure<TElement>(alias) {}
 
   bool better(double expected_better, double expected_worse) const {
     return expected_better < expected_worse;
@@ -67,8 +68,9 @@ public:
 
 template <class TElement>
 class MoreIsBetterMeasure : public Measure<TElement> {
-public:
-  explicit MoreIsBetterMeasure(const string& alias) : Measure<TElement>(alias) {}
+ public:
+  explicit MoreIsBetterMeasure(const string& alias)
+    : Measure<TElement>(alias) {}
 
   bool better(double expected_better, double expected_worse) const {
     return expected_better > expected_worse;
