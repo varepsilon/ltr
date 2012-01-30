@@ -34,11 +34,11 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   FakeScorer::Ptr fscorer(new FakeScorer());
   MarkDataSet(data, *fscorer);
 
-  AbsError<Object>::Ptr ab_measure(new AbsError<Object>);
+  AbsError::Ptr ab_measure(new AbsError);
   BestFeatureLearner<Object>::Ptr bfl(
     new BestFeatureLearner<Object>(ab_measure));
 
-  vector<AbsError<Object>> abm_vector;
+  vector<AbsError> abm_vector;
   abm_vector.push_back(*ab_measure);
   LeaveOneOutSplitter<Object> spl;
 

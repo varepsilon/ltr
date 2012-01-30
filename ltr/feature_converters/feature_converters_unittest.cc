@@ -68,7 +68,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   ltr::FeatureSubsetChooser::Ptr pSubsetChooser(
       new ltr::FeatureSubsetChooser(indexes));
 
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
+  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
   learner.addFeatureConverter(pSubsetChooser);
@@ -118,7 +118,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
   ltr::FeatureNormalizerLearner<ltr::Object> normalizerLearner;
   EXPECT_NO_THROW(normalizerLearner.learn(learn_data_pointwise));
 
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
+  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
   learner.addFeatureConverter(normalizerLearner.make());
@@ -127,6 +127,9 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
       ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
 };
 
+// ltr::AbsError<ltr::ObjectList>() need to be replaced with other listwise
+// measure. None implemented yet
+/*
 TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::FeatureNormalizerLearner<ltr::ObjectList> normalizerLearner;
   EXPECT_NO_THROW(normalizerLearner.learn(learn_data_listwise));
@@ -140,4 +143,4 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
 };
-
+*/

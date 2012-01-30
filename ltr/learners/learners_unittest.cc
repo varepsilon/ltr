@@ -56,7 +56,7 @@ class LearnersTest : public ::testing::Test {
 
 // tests.
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError<ltr::Object>());
+  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
   learner.learn(learn_data);
 
