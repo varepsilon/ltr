@@ -11,7 +11,8 @@
 #include "ltr/data/object_list.h"
 
 namespace ltr {
-
+/** The default weight for an element in data set.
+ */
 const double DEFAULT_ELEMENT_WEIGHT = 1.0;
 
 template <typename TElement> class DataSet;
@@ -22,46 +23,104 @@ DataSet<TElement> lightSubset(const DataSet<TElement>& data,
     const std::vector<size_t>& indexes);
 }
 
+/** \typedef Type for a data set that implements pointwise approach.
+ */
 typedef DataSet<Object> PointwiseDataSet;
+/** \typedef Type for a data set that implements pairwise approach.
+ */
 typedef DataSet<ObjectPair> PairwiseDataSet;
+/** \typedef Type for a data set that implements listwise approach.
+ */
 typedef DataSet<ObjectList> ListwiseDataSet;
 
+/** \class \brief Template class that implements DataSet.
+ *  \tparam type of elements, which would be stored in the DataSet. The
+ *  elements should implement Object container interface. Those could be
+ *  Object, ObjectPair or ObjectList.
+ */
 template <typename TElement>
 class DataSet {
   public:
+  /** Shared pointer type to the DataSet.
+   */
   typedef boost::shared_ptr< DataSet > Ptr;
 
+  /** The constructor creates a data set to store objects with given
+   * FeatureInfo.
+   */
   DataSet(const FeatureInfo& featureInfo = FeatureInfo());
   virtual ~DataSet();
-
+  /** Returns FeatureInfo, objects with same FeatureInfo are allowed to be
+   * stored in the DataSet.
+   */
   const FeatureInfo& featureInfo() const;
+  /** Returns the number of features in objects of the DataSet.
+   */
   size_t featureCount() const;
-
+  /** Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
+   */
   DataSet& operator<<(const TElement& element);
+  /** Adds an element(Object, ObjectPair, ObjectList etc.) with
+   * DEFAULT_ELEMENT_WEIGHT to the DataSet.
+   */
   void add(const TElement& element);
+  /** Adds an element(Object, ObjectPair, ObjectList etc.) with given weight
+   * to the DataSet.
+   */
   void add(const TElement& element, double weight);
-
+  /** Returns the number of elements in the DataSet.
+   */
   size_t size() const;
+  /** Deletes all elements from the DataSet.
+   */
   void clear();
+  /** Deletes the element with given index from the DataSet.
+   */
   void erase(size_t i);
-
+  /** Returns a constant link to the ith element of the DataSet.
+   */
   const TElement& operator[](size_t i) const;
+  /** Returns a link to the ith element of the DataSet.
+   */
   TElement& operator[](size_t i);
+  /** Returns a constant link to the ith element of the DataSet.
+   */
   const TElement& at(size_t i) const;
+  /** Returns a link to the ith element of the DataSet.
+   */
   TElement& at(size_t i);
-
+  /** Returns the weight of ith element.
+   */
   double getWeight(size_t element_idx) const;
+  /** Sets the weight of ith element.
+   * \param element_idx index of the element to set up weight.
+   * \param new weight value.
+   */
   void setWeight(size_t element_idx, double weight) const;
-
+  /** Creates a new DataSet cantaining the copies of the elements in the
+   * DataSet.
+   */
   DataSet<TElement> deepCopy() const;
-
+  /** The function creates new DataSet, which contains easy copies of elements
+   * with given indexes (easy means that they share objects' resources: feature
+   * vectors, objects' meat information).
+   * \param data the DataSet from which the subset is build.
+   * \param indexes the indexes of elements from data based on those the subset
+   * is build.
+   */
   friend DataSet<TElement> utility::lightSubset< >(
       const DataSet<TElement>& data,
       const std::vector<size_t>& indexes);
 
   private:
+  /** Shared pointer to the actual vector, in which the elements are stored.
+   */
   boost::shared_ptr< std::vector<TElement> > p_Elements_;
+  /** The information about objects that are stored in the DataSet.
+   */
   FeatureInfo::Ptr featureInfo_;
+  /** Shared pointer to the vector of elements' weights.
+     */
   boost::shared_ptr< std::vector<double> > p_Weights_;
 };
 

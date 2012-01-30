@@ -10,32 +10,57 @@
 #include <vector>
 
 namespace ltr {
-
+/** \class The class stores a number of objects. The container for number of
+ *  objects, can be stored in DataSet. That would represent a listwise data set.
+ */
 class ObjectList {
-    public:
-    typedef boost::shared_ptr< ObjectList > Ptr;
+  public:
+  /** \typedef Shared pointer to an object list.
+   */
+  typedef boost::shared_ptr< ObjectList > Ptr;
+  /** Default constructor creates an empty list of objects.
+   */
+  ObjectList();
+  /** The constructor creates an list of objects from the copies of objects in
+   *  the given vector.
+   */
+  explicit ObjectList(const std::vector<Object>& objects);
+  /** Returns a constant link to the ith object in the object list.
+   */
+  const Object& operator[](size_t i) const;
+  /** Returns a link to the ith object in the object list.
+   */
+  Object& operator[](size_t i);
+  /** Returns a constant link to the ith object in the object list.
+   */
+  const Object& at(const size_t j) const;
+  /** Returns a link to the ith object in the object list.
+   */
+  Object& at(const size_t j);
+  /** Adds a deep copy of the given object to the object list.
+   */
+  ObjectList& operator<<(const Object& obj);
+  /** Adds a deep copy of the given object to the object list.
+   */
+  void add(const Object& obj);
+  /** Returns the number of objects in the object list.
+   */
+  size_t size() const;
+  /** Removes all object from the object list.
+   */
+  void clear();
+  /** Creates a new object list cantaining deep copies of the objects in the
+   * list.
+   */
+  ObjectList deepCopy() const;
+  /** Operator, checks whether two objects are equal.
+   */
+  friend bool operator==(const ObjectList& left, const ObjectList& right);
 
-    ObjectList();
-    explicit ObjectList(const std::vector<Object>& objects);
-
-    const Object& operator[](size_t i) const;
-    Object& operator[](size_t i);
-    const Object& at(const size_t j) const;
-    Object& at(const size_t j);
-
-    ObjectList& operator<<(const Object& obj);
-    void add(const Object& obj);
-
-    size_t size() const;
-    void clear();
-
-    ObjectList deepCopy() const;
-
-    friend bool operator==(const ObjectList& left, const ObjectList& right);
-
-    private:
-    boost::shared_ptr< std::vector<Object> > p_Elements_;
+  private:
+  /** Shared pointer to the vector of Object s.
+   */
+  boost::shared_ptr< std::vector<Object> > p_Elements_;
 };
 }
-
 #endif  // LTR_DATA_OBJECT_LIST_H_
