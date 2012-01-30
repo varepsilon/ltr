@@ -14,10 +14,17 @@ using std::vector;
 
 namespace ltr {
 namespace utility {
-
+/**
+ * Class is used to convert data from ObjectList to the list of ObjectPair.
+ */
 class ListToPairConvertionStrategy {
   public:
   typedef boost::shared_ptr<ListToPairConvertionStrategy> Ptr;
+  /**
+   * Function converts data from ObjectList to the list of ObjectPair.
+   * @param list - list to convert
+   * @param result - pointer to the vector to save result in
+   */
   virtual void operator()(const ObjectList& list,
                           vector<ObjectPair>* result) = 0;
   virtual ~ListToPairConvertionStrategy() {}

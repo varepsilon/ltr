@@ -430,7 +430,7 @@ void LtrClient::saveCodeAndPredicts(TiXmlElement* command,
         std::string file_path = root_path_ + name + "."
                                             + predict_data + ".predicts";
         ltr::io_utility::savePredictions(info.data,
-                                         scorers[name], info.data_file);
+                                         scorers[name], file_path);
         client_logger_.info() << "saved predictions for '" << predict_data
                                         << "' into " << file_path << std::endl;
         predict = predict->NextSiblingElement("predict");
