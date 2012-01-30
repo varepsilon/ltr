@@ -15,7 +15,8 @@ using std::logic_error;
 namespace ltr {
   namespace cv {
     /**
-     * Simply splits by indexes (not using random).
+     * Simply splits by indexes (not using random). Is in fact leave-one-out
+     * for granulated into k pieces dataset
      */
     template<class TElement>
     class KFoldSimpleSplitter : public Splitter<TElement> {

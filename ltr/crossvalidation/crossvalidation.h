@@ -14,13 +14,14 @@
 
 using std::string;
 using std::vector;
+using ltr::utility::MarkDataSet;
 
 namespace ltr {
   namespace cv {
     template<class TElement>
     const ValidationResult& Validate(
       const DataSet<TElement>& data_set,
-      const vector< Measure<TElement> >& measures,
+      const vector< typename Measure<TElement> >& measures,
       typename BaseLearner<TElement>::Ptr learner,
       const Splitter<TElement>& splitter);
   };
@@ -31,8 +32,8 @@ namespace ltr {
     template<class TElement>
     const ValidationResult& Validate(
         const DataSet<TElement>& data_set,
-        const vector< Measure<TElement> >& measures,
-        typename BaseLearner<TElement>::Ptr learner,
+        const vector< typename Measure<TElement>::Ptr >& measures,
+        typename BaseLearner<TElement> learner,
         const Splitter<TElement>& splitter) {
       vector<string> measure_names;
       for (int i = 0; i < measures.size(); ++i) {
@@ -52,7 +53,7 @@ namespace ltr {
         string current_report = learner->report();
         typename Scorer::Ptr current_scorer = learner->makeScorerPtr();
 
-        utility::MarkDataSet(current_splitted.test_set, *current_scorer);
+        MarkDataSet(current_splitted.test_set, *current_scorer);
 
         vector<double> current_measure_values;
         for (int measure_index = 0;

@@ -46,4 +46,7 @@ TEST(CrossvalidationTest, ValidationResultTest) {
   EXPECT_EQ(fscorer1, vr.getScorer(0));
   EXPECT_EQ(measures1[0], vr.getMeasureValues(0).at(0));
   EXPECT_EQ(measures2[1], vr.getMeasureValues(1).at(1));
+
+  measures2.push_back(5);
+  EXPECT_ANY_THROW(vr.addSplitInfo(fscorer2, report2, measures2));
 };
