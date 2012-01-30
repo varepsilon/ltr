@@ -35,7 +35,8 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   MarkDataSet(data, *fscorer);
 
   AbsError<Object>::Ptr ab_measure(new AbsError<Object>);
-  BestFeatureLearner<Object>::Ptr bfl(new BestFeatureLearner<Object>(ab_measure));
+  BestFeatureLearner<Object>::Ptr bfl(
+    new BestFeatureLearner<Object>(ab_measure));
 
   vector<AbsError<Object>> abm_vector;
   abm_vector.push_back(*ab_measure);
