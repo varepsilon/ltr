@@ -21,7 +21,7 @@ namespace ltr {
     template<class TElement>
     const ValidationResult& Validate(
       const DataSet<TElement>& data_set,
-      const vector< typename Measure<TElement> >& measures,
+      const vector< Measure<TElement> >& measures,
       typename BaseLearner<TElement>::Ptr learner,
       const Splitter<TElement>& splitter);
   };
@@ -32,7 +32,7 @@ namespace ltr {
     template<class TElement>
     const ValidationResult& Validate(
         const DataSet<TElement>& data_set,
-        const vector< typename Measure<TElement> >& measures,
+        const vector< Measure<TElement> >& measures,
         typename BaseLearner<TElement>::Ptr learner,
         const Splitter<TElement>& splitter) {
       vector<string> measure_names;
