@@ -2,12 +2,14 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/crossvalidation/validation_result.h"
 
 using std::string;
 using std::vector;
+using std::logic_error;
 
 
 namespace ltr {
@@ -18,6 +20,9 @@ namespace ltr {
 
     void ValidationResult::addSplitInfo(Scorer::Ptr in_scorer,
         const string& in_report, const vector<double>& in_measure_value) {
+      if (measure_names.size() != in_measure_value.size()) {
+        throw logic_error("not expected measures quantity");
+      }
       datas_.push_back(OneSplitData(in_scorer, in_report, in_measure_value));
     }
 

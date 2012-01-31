@@ -14,7 +14,10 @@ using std::vector;
 
 namespace ltr {
   namespace cv {
-
+    /*
+    * For every split of crossvalidation done ValidationResult holds scorer
+    * with it's learner's report and array of measure values on some test data
+    */
     class ValidationResult {
      public:
       explicit ValidationResult(const vector<string>& in_measure_names);

@@ -29,14 +29,18 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
   for (int current_t = 0; current_t < t; ++current_t) {
     vector<bool> used(data.size(), false);
     vector<int> test_sizes;
+    // for every split of a kfold
     for (int block_i = 0; block_i < k; ++block_i) {
       SplittedDataSet<Object> spl_data =
         spl.split(current_t * k + block_i, data);
       EXPECT_EQ(data.size(), spl_data.test_set.size()
         + spl_data.train_set.size());
 
+      // holding test sizes for checking if they are close
       test_sizes.push_back(spl_data.test_set.size());
 
+      // every element expects not to be used in two different test data
+      // (for different splits)
       for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
         int test_object_feature =
           spl_data.test_set.at(test_i).features().at(0);
@@ -46,15 +50,21 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
       }
     }
 
+    // every element expects being used in test data at least once
     for (int i = 0; i < used.size(); ++i) {
       EXPECT_TRUE(used[i]);
     }
+    // checking if test data sizes are close for different splits
     int diff = *std::max_element(test_sizes.begin(), test_sizes.end()) -
         *std::min_element(test_sizes.begin(), test_sizes.end());
     EXPECT_LE(diff, 1);
   }
+
+  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl1(1, t));
+  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl2(k, 0));
 };
 
+// partition is a mapping from element to part's number
 bool Equal(const vector<int>& partition1, const vector<int>& partition2) {
   map<int, int> accordance;
   for (int i = 0; i < partition1.size(); ++i) {
@@ -77,6 +87,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
 
   vector< vector<int> > marks(t);
 
+  // making t partitions
   for (int current_t = 0; current_t < t; ++current_t) {
     marks[current_t].resize(data.size(), -1);
 
@@ -91,6 +102,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
     }
   }
 
+  // checking if there is no equal partitions
   for (int first = 0; first < t; ++first) {
     for (int second = first + 1; second < t; ++second) {
       EXPECT_FALSE(Equal(marks[first], marks[second]));

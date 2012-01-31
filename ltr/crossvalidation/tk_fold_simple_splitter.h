@@ -17,7 +17,9 @@ using std::logic_error;
 namespace ltr {
   namespace cv {
     /**
-     * Splits by indexes and shuffles them
+     * Splits by indexes and shuffles them.
+     * Knows T random permutations of indexes (pseudo-random used)
+     * and represets a k-fold splitter for every of that permutations
      */
     template<class TElement>
     class TKFoldSimpleSplitter : public Splitter<TElement> {

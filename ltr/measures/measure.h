@@ -55,6 +55,28 @@ class Measure : public Aliaser, public Parameterized {
   virtual double get_measure(const TElement& element) const = 0;
 };
 
+template <class TElement>
+class LessIsBetterMeasure : public Measure<TElement> {
+ public:
+  explicit LessIsBetterMeasure(const string& alias)
+    : Measure<TElement>(alias) {}
+
+  bool better(double expected_better, double expected_worse) const {
+    return expected_better < expected_worse;
+  }
+};
+
+template <class TElement>
+class MoreIsBetterMeasure : public Measure<TElement> {
+ public:
+  explicit MoreIsBetterMeasure(const string& alias)
+    : Measure<TElement>(alias) {}
+
+  bool better(double expected_better, double expected_worse) const {
+    return expected_better > expected_worse;
+  }
+};
+
 typedef Measure<Object> PointwiseMeasure;
 typedef Measure<ObjectPair> PairwiseMeasure;
 typedef Measure<ObjectList> ListwiseMeasure;

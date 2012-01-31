@@ -6,28 +6,23 @@
 #include <cmath>
 
 #include "ltr/measures/measure.h"
+#include "ltr/data/object.h"
+
+using ltr::Object;
+using ltr::LessIsBetterMeasure;
 
 namespace ltr {
 
-template <typename TElement>
-class AbsError : public Measure<TElement> {
+class AbsError : public LessIsBetterMeasure<Object> {
   public:
   typedef boost::shared_ptr<AbsError> Ptr;
 
-  AbsError() : Measure<TElement>("Absolute error.") {}
-
-  bool better(double expected_better, double expected_worse) const {
-    return expected_better < expected_worse;
-  }
+  AbsError() : LessIsBetterMeasure<Object>("Absolute error.") {}
 
   private:
-  double get_measure(const TElement& element) const {
-    double absError = 0.0;
-    for (size_t objIdx = 0; objIdx < element.size(); ++objIdx) {
-      absError += std::fabs(element[objIdx].actualLabel() -
-          element[objIdx].predictedLabel());
-    }
-    return absError;
+  double get_measure(const Object& element) const {
+    return std::fabs(element.actualLabel() -
+          element.predictedLabel());
   }
 };
 }

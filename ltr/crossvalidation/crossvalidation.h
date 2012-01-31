@@ -14,6 +14,7 @@
 
 using std::string;
 using std::vector;
+using ltr::utility::MarkDataSet;
 
 namespace ltr {
   namespace cv {
@@ -52,7 +53,7 @@ namespace ltr {
         string current_report = learner->report();
         typename Scorer::Ptr current_scorer = learner->makeScorerPtr();
 
-        utility::MarkDataSet(current_splitted.test_set, *current_scorer);
+        MarkDataSet(current_splitted.test_set, *current_scorer);
 
         vector<double> current_measure_values;
         for (int measure_index = 0;
