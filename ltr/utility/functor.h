@@ -26,11 +26,16 @@ class SerializableFunctor {
     SerializableFunctor() {
       id = n_serializable_functors_++;
     }
-    int getId() {return id;}
 
-    virtual string generateCppCode(
-      const string& function_name =
-        "function" + lexical_cast<string>(id)) const = 0;
+    int getId() {return id;}
+    string getDefaultFunctionName() {
+      return "function" + lexical_cast<string>(id);
+    }
+
+    virtual string generateCppCode(const string& function_name) const = 0;
+    string generateCppCode() {
+      return generateCppCode("function" + lexical_cast<string>(id));
+    }
 
     TValue operator()(const Object& obj) const {
       return value(obj);
