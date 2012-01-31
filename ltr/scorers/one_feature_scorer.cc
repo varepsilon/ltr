@@ -15,10 +15,9 @@ namespace ltr {
     return result;
   }
 
-  string OneFeatureScorer::generateCppCodeImpl
-      (const string& class_name, int tabbing) const {
+  string OneFeatureScorer::generateCppCode(const string& function_name) const {
     string hpp_code;
-
+    /*
     string tab_str(tabbing, '\t');
 
     hpp_code.
@@ -36,7 +35,7 @@ namespace ltr {
         append("]; }\n").
       append(tab_str).
         append("};\n");
-
+*/
     return hpp_code;
   }
 };

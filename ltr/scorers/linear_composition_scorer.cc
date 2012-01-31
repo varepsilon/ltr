@@ -13,11 +13,11 @@ namespace ltr {
     return result;
   }
 
-  std::string LinearCompositionScorer::generateCppCode
-      (const std::string& class_name, int tabbing) const {
+  string LinearCompositionScorer::generateCppCode
+      (const string& function_name) const {
     std::string hpp_code;
 
-    std::string tab_str(tabbing, '\t');
+    /*std::string tab_str(0, '\t');
 
     hpp_code.
       append(tab_str).
@@ -58,7 +58,7 @@ namespace ltr {
       append("\t}\n").
       append(tab_str).
       append("};\n");
-
+    */
     return hpp_code;
   }
 

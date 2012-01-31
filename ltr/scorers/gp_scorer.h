@@ -49,8 +49,7 @@ class GPScorer : public Scorer {
     return resultScore;
   }
 
-  string generateCppCodeImpl(const string& class_name,
-      int tabbing) const {
+  string generateCppCode(const string& function_name) const {
     return "Not implemented.";
   }
 

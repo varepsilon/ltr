@@ -16,13 +16,4 @@ double Scorer::score(const ltr::Object& obj) const {
   }
   return scoreImpl(sourceObject);
 }
-
-double Scorer::operator()(const ltr::Object& obj) const {
-  return this->score(obj);
-}
-
-std::string Scorer::generateCppCode(const std::string& class_name,
-    int tabbing) const {
-  return this->generateCppCodeImpl(class_name, tabbing);
-}
 }
