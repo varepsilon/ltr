@@ -11,6 +11,7 @@
 #include "ltr/data/object.h"
 
 using std::string;
+using boost::shared_ptr;
 using boost::lexical_cast;
 
 namespace ltr {
@@ -23,6 +24,7 @@ class SerializableFunctor {
     int id;
 
   public:
+    typedef shared_ptr<SerializableFunctor> Ptr;
     SerializableFunctor() {
       id = n_serializable_functors_++;
     }
@@ -34,7 +36,7 @@ class SerializableFunctor {
 
     virtual string generateCppCode(const string& function_name) const = 0;
     string generateCppCode() {
-      return generateCppCode("function" + lexical_cast<string>(id));
+      return generateCppCode(getDefaultFunctionName());
     }
 
     TValue operator()(const Object& obj) const {

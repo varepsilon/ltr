@@ -17,48 +17,28 @@ namespace ltr {
       (const string& function_name) const {
     std::string hpp_code;
 
-    /*std::string tab_str(0, '\t');
+    for (size_t i = 0; i < scorers_.size(); ++i)
+      hpp_code.append(scorers_[i].scorer->generateCppCode());
 
     hpp_code.
-      append(tab_str).
-      append("class ").
-      append(class_name).
-      append(" {\n");
-
-    for (size_t i = 0; i < scorers_.size(); ++i) {
-      hpp_code.append(
-        scorers_[i].scorer->generateCppCode(
-        utility::GenerateLocalClassName(*(scorers_[i].scorer), i),
-        tabbing + 1));
-    }
-
-    hpp_code.
-      append(tab_str).
-      append("public:\n").
-      append(tab_str).
-      append("\tstatic double score").
+      append("inline double ").
+      append(function_name).
       append("(const std::vector< double >& features) {\n").
-      append(tab_str).
-      append("\t\tdouble result = 0.0;\n");
+      append("\tdouble result = 0.0;\n");
 
     for (size_t i = 0; i < scorers_.size(); ++i) {
       hpp_code.
-        append(tab_str).
-        append("\t\tresult += ").
+        append("\tresult += ").
         append(boost::lexical_cast< std::string >(scorers_[i].weight)).
         append(" * ").
-        append(utility::GenerateLocalClassName(*(scorers_[i].scorer), i)).
-        append("::score(features);\n");
+        append(scorers_[i].scorer->getDefaultFunctionName()).
+        append("(features);\n");
     }
 
     hpp_code.
-      append(tab_str).
-      append("\t\treturn result;\n").
-      append(tab_str).
-      append("\t}\n").
-      append(tab_str).
+      append("\treturn result;\n").
       append("};\n");
-    */
+
     return hpp_code;
   }
 
