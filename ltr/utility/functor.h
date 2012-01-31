@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_UTILITY_FUNCTOR_H_
 #define LTR_UTILITY_FUNCTOR_H_
@@ -32,10 +32,11 @@ class SerializableFunctor {
       const string& function_name =
         "function" + lexical_cast<string>(id)) const = 0;
 
-    TValue operator()(const Object& obj) const{
+    TValue operator()(const Object& obj) const {
       return value(obj);
     }
     virtual TValue value(const Object& obj) const = 0;
+    virtual ~SerializableFunctor() {}
 };
 }
 #endif  // LTR_UTILITY_FUNCTOR_H_

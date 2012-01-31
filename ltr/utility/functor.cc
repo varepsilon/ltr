@@ -1,3 +1,5 @@
+// Copyright 2011 Yandex
+
 #include "ltr/utility/functor.h"
 
 namespace ltr {

@@ -32,7 +32,7 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
     return score(obj);
   }
   double score(const Object& obj) const;
-  
+
   virtual string brief() const = 0;
 
   const FeatureConverterArray& getFeatureConverters() const {
