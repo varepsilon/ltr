@@ -364,8 +364,8 @@ void LtrClient::launch() {
         std::string com = com_;
         if (com == "train")
             makeTrain(command);
-        else if (com == "report")
-            makeReport(command);
+        else if (com == "crossvalidation")
+            makeCrossvalidation(command);
 
         command = command->NextSiblingElement();
     }
@@ -461,12 +461,12 @@ void LtrClient::saveCodeAndPredicts(TiXmlElement* command,
     client_logger_.info() << "command completed" << std::endl;
 }
 
-void LtrClient::makeReport(TiXmlElement *command) {
+void LtrClient::makeCrossvalidation(TiXmlElement *command) {
     TiXmlElement* elem;
     std::string approach;
-    std::vector<VLearnerInfo> r_learners;
-    std::vector<VMeasureInfo> r_measures;
-    std::vector<VDataInfo> r_datas;
+    std::map<string, VLearnerInfo> r_learners;
+    std::map<string, VMeasureInfo> r_measures;
+    std::map<string, VDataInfo> r_datas;
 
     elem = command->FirstChildElement("learner");
     while (elem) {
@@ -475,7 +475,7 @@ void LtrClient::makeReport(TiXmlElement *command) {
             if (r_learners.size() == 0 ||
                 boost::apply_visitor(GetApproachVisitor(),
                                     learners[lname]) == approach)
-                r_learners.push_back(learners[lname]);
+                r_learners[lname] = learners[lname];
             if (r_learners.size() == 1)
                 approach = boost::apply_visitor(GetApproachVisitor(),
                                                 learners[lname]);
@@ -483,7 +483,7 @@ void LtrClient::makeReport(TiXmlElement *command) {
         elem = elem->NextSiblingElement("learner");
     }
     if (r_learners.size() == 0) {
-        client_logger_.error() << "Failed: <report> with no learners"
+        client_logger_.error() << "Failed: <crossvalidation> with no learners"
                                << std::endl;
         return;
     }
@@ -494,11 +494,11 @@ void LtrClient::makeReport(TiXmlElement *command) {
         if (mname && measures.find(mname) != measures.end())
             if (boost::apply_visitor(GetApproachVisitor(),
                                      measures[mname]) == approach)
-                r_measures.push_back(measures[mname]);
+                r_measures[mname] = measures[mname];
         elem = elem->NextSiblingElement("measure");
     }
     if (r_measures.size() == 0) {
-        client_logger_.error() << "Failed: <report> with no measures"
+        client_logger_.error() << "Failed: <crossvalidation> with no measures"
                                << std::endl;
         return;
     }
@@ -509,12 +509,31 @@ void LtrClient::makeReport(TiXmlElement *command) {
         if (dname && datas.find(dname) != datas.end())
             if (boost::apply_visitor(GetApproachVisitor(),
                                      datas[dname]) == approach)
-                r_datas.push_back(datas[dname]);
+                r_datas[dname] = datas[dname];
         elem = elem->NextSiblingElement("measure");
     }
     if (r_datas.size() == 0) {
-        client_logger_.error() << "Failed: <report> with no datas"
+        client_logger_.error() << "Failed: <crossvalidation> with no datas"
                                << std::endl;
         return;
     }
+
+    if ((r_learners.size() > 1) +
+        (r_measures.size() > 1) +
+        (r_datas.size() > 1)) {
+      client_logger_.error() << "Failed: <crossvalidation> "
+                             << "can create only one table"
+                             << std::endl;
+      return;
+    }
+
+    if (approach == Approach<ltr::Object>::name())
+      return makeCrossvalidationImpl<ltr::Object>
+                          (r_learners, r_measures, r_datas);
+    else if (approach == Approach<ltr::ObjectPair>::name())
+      return makeCrossvalidationImpl<ltr::ObjectPair>
+                          (r_learners, r_measures, r_datas);
+    if (approach == Approach<ltr::ObjectList>::name())
+      return makeCrossvalidationImpl<ltr::ObjectList>
+                          (r_learners, r_measures, r_datas);
 }
