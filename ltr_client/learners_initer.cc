@@ -4,15 +4,8 @@
 
 #include <iostream>
 
-#define ADD_INITER(type, element, function) \
-    approaches[type].push_back(Approach<element>::name()); \
-    initers[type][Approach<element>::name()] = \
-                            LearnerIniter::Initer<element>(function);
-
 LearnerIniter::LearnerIniter() {
-  ADD_INITER("BEST_FEATURE", ltr::Object, BFIniter<ltr::Object>);
-  ADD_INITER("BEST_FEATURE", ltr::ObjectPair, BFIniter<ltr::ObjectPair>);
-  ADD_INITER("BEST_FEATURE", ltr::ObjectList, BFIniter<ltr::ObjectList>);
+  registerLearners();
 }
 
 std::string LearnerIniter::getApproach(std::string type, std::string approach) {

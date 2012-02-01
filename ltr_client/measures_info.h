@@ -15,8 +15,8 @@ Class contains all necessary information about one measure object.
 */
 template< class TElement>
 struct MeasureInfo {
-  MeasureInfo();
   typename ltr::Measure<TElement>::Ptr measure;
+  ltr::ParametersContainer parameters;
   string type;
   string approach;
 };

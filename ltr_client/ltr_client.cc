@@ -129,9 +129,16 @@ void LtrClient::loadMeasures() {
                                                         + std::string(name));
 
         ltr::ParametersContainer parameters =
-                loadParameters(measure_elem->FirstChildElement("parameters"));
+              loadParameters(measure_elem->FirstChildElement("parameters"));
 
-        measures[name] = measure_initer.init(type, parameters);
+        // This is a temporary object. It will be converted into the right type
+        // in the loadMeasuresImpl<type>()
+        MeasureInfo<ltr::Object> info;
+        info.type = type;
+        info.approach = measure_initer.getApproach(type);
+        info.parameters = parameters;
+
+        measures[name] = info;
 
         client_logger_.info() << "created measure '"
                               << name << "', type: " << type
@@ -140,6 +147,9 @@ void LtrClient::loadMeasures() {
 
         measure_elem = measure_elem->NextSiblingElement("measure");
     }
+    loadMeasuresImpl<ltr::Object>();
+    loadMeasuresImpl<ltr::ObjectPair>();
+    loadMeasuresImpl<ltr::ObjectList>();
 }
 
 
@@ -158,7 +168,7 @@ void LtrClient::loadLearners() {
         const char* name = learner_elem->Attribute("name");
         const char* type = learner_elem->Attribute("type");
         const char* approach = learner_elem->Attribute("approach");
-        const char* weak_learner = 0;
+        const char* weak_learner_name = 0;
         const char* measure;
 
         if (!name)
@@ -181,7 +191,7 @@ void LtrClient::loadLearners() {
         TiXmlElement* weak_learner_elem =
                                learner_elem->FirstChildElement("weak_learner");
         if (weak_learner_elem)
-            weak_learner = weak_learner_elem->GetText();
+            weak_learner_name = weak_learner_elem->GetText();
 
         TiXmlElement* measure_elem =
                                learner_elem->FirstChildElement("measure");
@@ -198,9 +208,9 @@ void LtrClient::loadLearners() {
         info.parameters = parameters;
         if (measure)
             info.measure_name = measure;
-        if (weak_learner) {
-            info.weak_learner = weak_learner;
-            boost::to_upper(info.weak_learner);
+        if (weak_learner_name) {
+            info.weak_learner_name = weak_learner_name;
+            boost::to_upper(info.weak_learner_name);
         }
         learners[name] = info;
         client_logger_.info() << "found learner '"
@@ -243,8 +253,8 @@ void LtrClient::dfsCheck(std::string name, std::string approach) {
     if (info.approach != approach)
         throw std::logic_error("approach conflict: " + name
                                             + " learner must be " + approach);
-    if (info.weak_learner != "")
-        dfsCheck(info.weak_learner, approach);
+    if (info.weak_learner_name != "")
+        dfsCheck(info.weak_learner_name, approach);
 
     dfs_colors_[name] = 2;
 }
@@ -424,13 +434,18 @@ void LtrClient::saveCodeAndPredicts(TiXmlElement* command,
             predict = predict->NextSiblingElement("predict");
             continue;
         }
-        DataInfo<ltr::Object> info = boost::apply_visitor(DataInfoVisitor(),
-                                                          datas[predict_data]);
+        if (datas.find(predict_data) == datas.end()) {
+          client_logger_.error() << "Can't predict. Unknown data "
+                                 << predict_data << std::endl;
+          predict = predict->NextSiblingElement("predict");
+          continue;
+        }
 
         std::string file_path = root_path_ + name + "."
                                             + predict_data + ".predicts";
-        ltr::io_utility::savePredictions(info.data,
-                                         scorers[name], file_path);
+        boost::apply_visitor(SavePredictionsVisitor(scorers[name], file_path),
+                             datas[predict_data]);
+
         client_logger_.info() << "saved predictions for '" << predict_data
                                         << "' into " << file_path << std::endl;
         predict = predict->NextSiblingElement("predict");
