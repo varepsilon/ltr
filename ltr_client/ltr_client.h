@@ -148,17 +148,14 @@ class LtrClient {
                    DataInfo<TElement> d_info);
 };
 
-
-using boost::apply_visitor;
-
 template <class TElement>
 void LtrClient::loadMeasuresImpl() {
     for (measure_iterator i = measures.begin(); i != measures.end(); i++) {
-      if (apply_visitor(GetApproachVisitor(), i->second) ==
+      if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
                                                   Approach<TElement>::name()) {
         i->second = measure_initer.init<TElement>
-              (apply_visitor(GetTypeVisitor(), i->second),
-              apply_visitor(GetParametersVisitor(), i->second));
+              (boost::apply_visitor(GetTypeVisitor(), i->second),
+               boost::apply_visitor(GetParametersVisitor(), i->second));
       }
     }
 }
