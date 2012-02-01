@@ -2,6 +2,8 @@
 
 set (INITERS_SRC ${Source_Path}/ltr_client/learners_initer.h ${Source_Path}/ltr_client/learners_initer.cc
         		${Source_Path}/ltr_client/measures_initer.h ${Source_Path}/ltr_client/measures_initer.cc
+        		${Source_Path}/ltr_client/learners_initer.h ${Source_Path}/ltr_client/register_learners.cc
+        		${Source_Path}/ltr_client/learners_initer.h ${Source_Path}/ltr_client/register_measures.cc
                 )
 
 set (INFOS_SRC ${Source_Path}/ltr_client/learners_info.h
