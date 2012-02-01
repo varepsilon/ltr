@@ -4,11 +4,6 @@
 
 #include <iostream>
 
-#define ADD_INITER(type, element, function) \
-    approaches[type].push_back(Approach<element>::name()); \
-    initers[type][Approach<element>::name()] = \
-                            LearnerIniter::Initer<element>(function);
-
 LearnerIniter::LearnerIniter() {
   registerLearners();
 }

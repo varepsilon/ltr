@@ -72,7 +72,7 @@ class SimpleMeasureFactory {
   public:
     static typename TMeasure::Ptr create
         (const ltr::ParametersContainer& parameters) {
-      return TMeasure::Ptr(new TMeasure(parameters));
+      return typename TMeasure::Ptr(new TMeasure(parameters));
     }
 };
 
