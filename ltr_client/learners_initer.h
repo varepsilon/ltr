@@ -17,6 +17,33 @@
 This class is used to init learner of given type and approach.
 */
 class LearnerIniter {
+    private:
+        template<class TElement>
+        class Initer {
+          typedef typename ltr::BaseLearner<TElement>::Ptr (*TFunct)
+              (const LearnerInfo<TElement>&);
+          TFunct function;
+
+          public:
+            Initer() {}
+            typename ltr::BaseLearner<TElement>::Ptr operator()
+                (const LearnerInfo<TElement>& info) {
+              return function(info);
+            }
+            explicit Initer(TFunct function) : function(function) {}
+        };
+        map<std::string, map<std::string,
+            boost::variant<Initer<ltr::Object>,
+                           Initer<ltr::ObjectPair>,
+                           Initer<ltr::ObjectList> > > >initers;
+        map<std::string, vector<std::string> > approaches;
+
+        /**
+         * Function registers all learners in this factory.
+         * Add your learners here
+         */
+        void registerLearners();
+
     public:
         LearnerIniter();
         /**
@@ -27,15 +54,6 @@ class LearnerIniter {
         LearnerInfo<TElement> init(const LearnerInfo<TElement>& info);
 
         /**
-        Function creates learner object.
-        @param info - information about learner to create.
-        @param weak_learner - information about weak_learner used by learner.
-        */
-        template<class TElement>
-        LearnerInfo<TElement> init(const LearnerInfo<TElement>& info,
-                                   const LearnerInfo<TElement>& weak_learner);
-
-        /**
         Function returns approach for learner with given type and approach.
         Throws if impossible.
         @param type - type of learner.
@@ -43,50 +61,31 @@ class LearnerIniter {
         */
         std::string getApproach(std::string type, std::string approach);
 
-    private:
         template<class TElement>
-        class Initer {
-          typedef LearnerInfo<TElement> (*TFunct)(const LearnerInfo<TElement>&,
-                                                  const LearnerInfo<TElement>&);
-          TFunct function;
-
-          public:
-            Initer() {}
-            LearnerInfo<TElement> operator()(const LearnerInfo<TElement>& info,
-                const LearnerInfo<TElement>& weak_ = LearnerInfo<TElement>()) {
-              return function(info, weak_);
-            }
-            explicit Initer(TFunct function) : function(function) {}
-        };
-        map<std::string, map<std::string,
-            boost::variant<Initer<ltr::Object>,
-                           Initer<ltr::ObjectPair>,
-                           Initer<ltr::ObjectList> > > >initers;
-        map<std::string, vector<std::string> > approaches;
-
-        VLearnerInfo no_info_;
+        void registerLearner(std::string type,
+                             typename Initer<TElement>::TFunct func) {
+          approaches[type].push_back(Approach<TElement>::name());
+          initers[type][Approach<TElement>::name()] = Initer<TElement>(func);
+        }
 };
 
 template<class TElement>
 LearnerInfo<TElement> LearnerIniter::init(const LearnerInfo<TElement>& info) {
-    return boost::get<Initer<TElement> >(initers[info.type][info.approach])
-                                                              (info);
-}
+  typename ltr::BaseLearner<TElement>::Ptr learner_ptr =
+        boost::get<Initer<TElement> >(initers[info.type][info.approach])(info);
 
-template<class TElement>
-LearnerInfo<TElement> LearnerIniter::init(const LearnerInfo<TElement>& info,
-                                   const LearnerInfo<TElement>& weak_learner) {
-    return boost::get<Initer<TElement> >(initers[info.type][info.approach])
-                                                           (info, weak_learner);
-}
-
-template<class TElement>
-LearnerInfo<TElement> BFIniter(const LearnerInfo<TElement>& info,
-                               const LearnerInfo<TElement>& weak_info) {
   LearnerInfo<TElement> result = info;
-  result.learner = typename ltr::BaseLearner<TElement>::Ptr(
-                          new ltr::BestFeatureLearner<TElement>(info.measure));
+  result.learner = learner_ptr;
   return result;
 }
+
+#define REGISTER_LISTWISE_LEARNER(type, function) \
+  registerLearner<ltr::ObjectList>(type, function);
+
+#define REGISTER_POINTWISE_LEARNER(type, function) \
+  registerLearner<ltr::Object>(type, function);
+
+#define REGISTER_PAIRWISE_LEARNER(type, function) \
+  registerLearner<ltr::ObjectPair>(type, function);
 
 #endif  // LTR_CLIENT_LEARNERS_INITER_H_

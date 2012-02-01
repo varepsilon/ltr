@@ -9,6 +9,7 @@
 #include "ltr_client/learners_info.h"
 #include "ltr_client/datas_info.h"
 #include "ltr_client/measures_info.h"
+#include "ltr/data/utility/io_utility.h"
 
 #include "boost/variant.hpp"
 /**
@@ -31,6 +32,58 @@ class GetApproachVisitor : public boost::static_visitor<std::string> {
         std::string operator()(LearnerInfo<TElement>& info) const {
             return info.approach;
         }
+};
+
+/**
+@class GetApproachVisitor
+This class is used to get Approach for VMeasureInfo, VDataInfo or VLearnerInfo.
+*/
+class SavePredictionsVisitor : public boost::static_visitor<void> {
+  private:
+    ltr::Scorer::Ptr scorer;
+    std::string file_path;
+  public:
+    SavePredictionsVisitor(ltr::Scorer::Ptr scorer, std::string file_path) :
+        scorer(scorer), file_path(file_path) {}
+    template<class TElement>
+    void operator()(DataInfo<TElement>& info) const {
+      ltr::io_utility::savePredictions(info.data, scorer, file_path);
+    }
+};
+
+/**
+@class GetTypeVisitor
+This class is used to get type for VMeasureInfo or VLearnerInfo.
+*/
+class GetTypeVisitor : public boost::static_visitor<std::string> {
+    public:
+        template<class TElement>
+        std::string operator()(MeasureInfo<TElement>& info) const {
+            return info.type;
+        }
+
+        template<class TElement>
+        std::string operator()(LearnerInfo<TElement>& info) const {
+            return info.type;
+        }
+};
+
+/**
+@class GetParametersVisitor
+This class is used to get Approach for VMeasureInfo or VLearnerInfo.
+*/
+class GetParametersVisitor
+    : public boost::static_visitor<ltr::ParametersContainer> {
+  public:
+    template<class TElement>
+    ltr::ParametersContainer operator()(MeasureInfo<TElement>& info) const {
+      return info.parameters;
+    }
+
+    template<class TElement>
+    ltr::ParametersContainer operator()(LearnerInfo<TElement>& info) const {
+      return info.approach;
+    }
 };
 
 /**

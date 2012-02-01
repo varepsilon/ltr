@@ -19,8 +19,9 @@ template< class TElement>
 struct LearnerInfo {
   typename ltr::BaseLearner<TElement>::Ptr learner;
   typename ltr::Measure<TElement>::Ptr measure;
+  typename ltr::BaseLearner<TElement>::Ptr weak_learner;
   ltr::ParametersContainer parameters;
-  string weak_learner;
+  string weak_learner_name;
   string measure_name;
   string type;
   string approach;

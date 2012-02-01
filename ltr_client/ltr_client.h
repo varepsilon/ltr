@@ -75,6 +75,9 @@ class LtrClient {
         /** Function loads learners for particular approach.
         */
         template <class TElement> void loadLearnersImpl();
+        /** Function loads measures for particular approach.
+        */
+        template <class TElement> void loadMeasuresImpl();
         /**
         Function loads one learner with given name and info.
         @param name - learner name
@@ -145,12 +148,29 @@ class LtrClient {
                    DataInfo<TElement> d_info);
 };
 
+
+using boost::apply_visitor;
+
+template <class TElement>
+void LtrClient::loadMeasuresImpl() {
+    for (measure_iterator i = measures.begin(); i != measures.end(); i++) {
+      if (apply_visitor(GetApproachVisitor(), i->second) ==
+                                                  Approach<TElement>::name()) {
+        i->second = measure_initer.init<TElement>
+              (apply_visitor(GetTypeVisitor(), i->second),
+              apply_visitor(GetParametersVisitor(), i->second));
+      }
+    }
+}
+
+
 template <class TElement>
 void LtrClient::loadDataImpl() {
     for (data_iterator i = datas.begin(); i != datas.end(); i++) {
-        DataInfo<ltr::Object> tm_info =
+        try {
+          DataInfo<ltr::Object> tm_info =
                                  boost::get<DataInfo<ltr::Object> >(i->second);
-        if (tm_info.approach == Approach<TElement>::name()) {
+          if (tm_info.approach == Approach<TElement>::name()) {
             DataInfo<TElement> info;
             info.approach = tm_info.approach;
             info.data_file = tm_info.data_file;
@@ -163,7 +183,8 @@ void LtrClient::loadDataImpl() {
                 "' from " << info.data_file << " as " << info.format
                 << "(" << info.approach << ")" << std::endl;
             i->second = info;
-        }
+          }
+        } catch(boost::bad_get) {}
     }
 }
 
@@ -194,7 +215,7 @@ void LtrClient::loadLearnerImpl(const std::string& name,
                 info.measure_name = tm_info.measure_name;
                 info.approach = tm_info.approach;
                 info.type = tm_info.type;
-                info.weak_learner = tm_info.weak_learner;
+                info.weak_learner_name = tm_info.weak_learner_name;
                 info.parameters = tm_info.parameters;
 
                 if (info.measure_name != "") {
@@ -206,15 +227,13 @@ void LtrClient::loadLearnerImpl(const std::string& name,
                             ("measure approach conflict in learner " + name);
                     }
                 }
-                if (info.weak_learner == "") {
-                    learners[name] = info = learner_initer.init(info);
-                } else {
-                    loadLearnerImpl<TElement>(info.weak_learner,
-                                              learners[info.weak_learner]);
-                    learners[name] = info = learner_initer.init(info,
-                                 boost::get<LearnerInfo<TElement> >
-                                                (learners[info.weak_learner]));
+                if (info.weak_learner_name != "") {
+                    loadLearnerImpl<TElement>(info.weak_learner_name,
+                                              learners[info.weak_learner_name]);
+                    info.weak_learner = (boost::get<LearnerInfo<TElement> >
+                      (learners[info.weak_learner_name])).learner;
                 }
+                learners[name] = info = learner_initer.init(info);
                 info.learner->checkParameters();
                 client_logger_.info() << "created learner "
                                       << name << std::endl;
