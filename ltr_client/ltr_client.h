@@ -14,6 +14,7 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr_client/constants.h"
+#include "ltr_client/visitors.h"
 
 #include "ltr_client/datas_info.h"
 #include "ltr_client/learners_info.h"
