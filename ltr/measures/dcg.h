@@ -35,7 +35,7 @@ bool sortPredicatedDecreasingActualIncreasingFunc(
  * \class DCG
  * Implements function-object to calculate DCG on ObjectLists.
  */
-class DCG : public Measure<ObjectList> {
+class DCG : public MoreIsBetterMeasure<ObjectList> {
   public:
   /**
    * Constructor
@@ -44,7 +44,7 @@ class DCG : public Measure<ObjectList> {
    * in an ObjectList are considered).
    */
   DCG(const ParametersContainer& parameters = ParametersContainer())
-  :Measure<ObjectList>("DCG") {
+  :MoreIsBetterMeasure<ObjectList>("DCG") {
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
   }
@@ -55,7 +55,7 @@ class DCG : public Measure<ObjectList> {
    * calculation. 0 means, that all objects are used.
    */
   explicit DCG(int numberOfObjectsToConsider)
-  :Measure<ObjectList>("DCG") {
+  :MoreIsBetterMeasure<ObjectList>("DCG") {
     assert(numberOfObjectsToConsider >= 0);
     this->parameters().clear();
     this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER",
@@ -68,13 +68,6 @@ class DCG : public Measure<ObjectList> {
   void setDefaultParameters() {
     this->parameters().clear();
     this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  }
-
-  /** The function returns true if expected_better is actually better
-   * expected_worse.
-   */
-  bool better(double expected_better, double expected_worse) const {
-    return expected_better > expected_worse;
   }
 
   private:

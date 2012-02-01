@@ -25,7 +25,7 @@ bool sortActualDecreasingFunc(
  * \class NDCG
  * Implements function-object to calculate NDCG on ObjectLists.
  */
-class NDCG : public Measure<ObjectList> {
+class NDCG : public MoreIsBetterMeasure<ObjectList> {
   public:
   /**
    * Constructor
@@ -34,7 +34,7 @@ class NDCG : public Measure<ObjectList> {
    * in an ObjectList are considered).
    */
   NDCG(const ParametersContainer& parameters = ParametersContainer())
-  :Measure<ObjectList>("NDCG") {
+  :MoreIsBetterMeasure<ObjectList>("NDCG") {
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
   }
@@ -45,7 +45,7 @@ class NDCG : public Measure<ObjectList> {
    * calculation. 0 means, that all objects are used.
    */
   explicit NDCG(int numberOfObjectsToConsider)
-  :Measure<ObjectList>("NDCG") {
+  :MoreIsBetterMeasure<ObjectList>("NDCG") {
     assert(numberOfObjectsToConsider >= 0);
     this->parameters().clear();
     this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER",
@@ -58,13 +58,6 @@ class NDCG : public Measure<ObjectList> {
   void setDefaultParameters() {
     this->parameters().clear();
     this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  }
-
-  /** The function returns true if expected_better is actually better
-   * expected_worse.
-   */
-  bool better(double expected_better, double expected_worse) const {
-    return expected_better > expected_worse;
   }
 
   private:

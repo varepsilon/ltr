@@ -45,7 +45,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h
               ${Source_Path}/ltr/utility/numerical.cc
               ${Source_Path}/ltr/utility/functor.h
-              ${Source_Path}/ltr/utility/functor.cc)
+              ${Source_Path}/ltr/utility/serializable.h
+              ${Source_Path}/ltr/utility/serializable.cc
+              ${Source_Path}/ltr/utility/serializable_functor.h)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
 			 ${Source_Path}/ltr/interfaces/aliaser.h

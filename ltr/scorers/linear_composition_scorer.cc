@@ -31,7 +31,7 @@ namespace ltr {
         append("\tresult += ").
         append(boost::lexical_cast< std::string >(scorers_[i].weight)).
         append(" * ").
-        append(scorers_[i].scorer->getDefaultFunctionName()).
+        append(scorers_[i].scorer->getDefaultSerializableObjectName()).
         append("(features);\n");
     }
 

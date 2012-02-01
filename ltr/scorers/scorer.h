@@ -10,7 +10,7 @@
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/data/object.h"
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/utility/functor.h"
+#include "ltr/utility/serializable_functor.h"
 
 using std::string;
 
@@ -31,6 +31,7 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   double value(const Object& obj) const {
     return score(obj);
   }
+
   double score(const Object& obj) const;
 
   virtual string brief() const = 0;

@@ -4,8 +4,12 @@
 #define LTR_LEARNERS_UTILITY_GP_PRIMITIVES_H_
 
 #include <cmath>
+#include <string>
 
 #include "contrib/puppy/Puppy.hpp"
+#include "ltr/utility/functor.h"
+
+using std::string;
 
 namespace ltr {
 namespace gp {
