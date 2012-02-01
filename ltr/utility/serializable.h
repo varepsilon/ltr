@@ -38,7 +38,7 @@ class Serializable {
   /** The function creates cpp code for serializable object using default name.
    */
   string generateCppCode() {
-    this->generateCppCode(this->getDefaultSerializableObjectName());
+    return this->generateCppCode(this->getDefaultSerializableObjectName());
   }
   /** Returns unique id of the serializable object.
    */
