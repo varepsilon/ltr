@@ -63,7 +63,8 @@ class LearnerIniter {
 
         template<class TElement>
         void registerLearner(std::string type,
-                             typename Initer<TElement>::TFunct func) {
+            typename ltr::BaseLearner<TElement>::Ptr(*func)
+                (const LearnerInfo<TElement>&)) {
           approaches[type].push_back(Approach<TElement>::name());
           initers[type][Approach<TElement>::name()] = Initer<TElement>(func);
         }
