@@ -14,9 +14,7 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
 					  ${Source_Path}/ltr/decision_tree/classification_result.cc
 					  
 					  ${Source_Path}/ltr/decision_tree/fake_condition.h
-					  ${Source_Path}/ltr/decision_tree/fake_condition.cc
 					  ${Source_Path}/ltr/decision_tree/one_feature_condition.h
-					  ${Source_Path}/ltr/decision_tree/one_feature_condition.cc
 					  ${Source_Path}/ltr/decision_tree/compare_condition.h
 					  ${Source_Path}/ltr/decision_tree/compare_condition.cc)
 
