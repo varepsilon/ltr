@@ -19,6 +19,10 @@ using ltr::ParametersContainer;
 template<class T>
 class SimpleFactory {
   public:
+    /**
+     * Static function to create object, inited by ParametersContainer
+     * @param parameters - parameters to create object
+     */
     static typename T::BasePtr create
         (const ltr::ParametersContainer& parameters) {
       return typename T::BasePtr(new T(parameters));
@@ -39,6 +43,10 @@ class SimpleFactory {
   #error "Unknown factory"
 #endif
 
+/**
+This class is used to init Measures, Learners and Splitters.
+Has 3 instantations MeasureFactory, LearnerFactory, SplitterFactory
+*/
 class FACTORY_CLASS {
   private:
     template<class TElement>
@@ -61,12 +69,21 @@ class FACTORY_CLASS {
                            Initer<ltr::ObjectList> > > >initers;
       map<std::string, vector<std::string> > approaches;
 
+      /**
+       * Function registers all your classes in this factory.
+       * Add your classes in it
+       */
       void registerAll();
 
   public:
     FACTORY_CLASS() {
       registerAll();
     }
+    /**
+     Function inits object.
+     @param type - object type(name of measure, learnes, splitter etc. used)
+     @param parameters - parameters for creation object
+     */
     template<class TElement>
     typename TObject<TElement>::BasePtr init(string type,
         const ParametersContainer& parameters) {
@@ -77,6 +94,12 @@ class FACTORY_CLASS {
 
       return object_ptr;
     }
+    /**
+     Function returns approach for object with given type and approach.
+     Throws if impossible.
+     @param type - type of object.
+     @param approach - approach of object, can be "" if unknown.
+     */
     string getApproach(string type, string approach="") {
       if (approaches.find(type) == approaches.end())
         throw std::logic_error("unknown type " + type);
@@ -94,6 +117,12 @@ class FACTORY_CLASS {
       return "";
     }
 
+    /**
+     * Registers new class of object
+     * @param type - type of object
+     * @param func - pointer to the function,
+     * which will be used to create object.
+     */
     template<class TElement>
     void registerClass(string type,
         typename TObject<TElement>::BasePtr(*func)

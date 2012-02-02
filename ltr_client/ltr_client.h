@@ -20,7 +20,7 @@
 #include "ltr_client/learners_info.h"
 #include "ltr_client/measures_info.h"
 
-#include "ltr_client/measures_initer.h"
+#include "ltr_client/measure_factory.h"
 #include "ltr_client/learners_initer.h"
 
 #include "ltr/data/utility/io_utility.h"
@@ -62,7 +62,7 @@ class LtrClient {
         TiXmlElement *root_;
         std::string root_path_;
         logger::PrintLogger client_logger_;
-        MeasureIniter measure_initer;
+        MeasureFactory measure_initer;
         LearnerIniter learner_initer;
 
         std::map<std::string, VDataInfo> datas;
@@ -163,14 +163,16 @@ class LtrClient {
 
 template <class TElement>
 void LtrClient::loadMeasuresImpl() {
-    for (measure_iterator i = measures.begin(); i != measures.end(); i++) {
-      if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
-                                                  Approach<TElement>::name()) {
-        i->second = measure_initer.init<TElement>
-              (boost::apply_visitor(GetTypeVisitor(), i->second),
-               boost::apply_visitor(GetParametersVisitor(), i->second));
-      }
+  for (measure_iterator i = measures.begin(); i != measures.end(); i++) {
+    if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
+                                                Approach<TElement>::name()) {
+      MeasureInfo<TElement> info;
+      info.type = boost::apply_visitor(GetTypeVisitor(), i->second);
+      info.parameters = boost::apply_visitor(GetParametersVisitor(), i->second);
+      info.measure = measure_initer.init<TElement>(info.type, info.parameters);
+      i->second = info;
     }
+  }
 }
 
 
