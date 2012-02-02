@@ -3,10 +3,14 @@
 #ifndef LTR_DECISION_TREE_COMPARE_CONDITION_H_
 #define LTR_DECISION_TREE_COMPARE_CONDITION_H_
 
+#include <string>
+
 #include "ltr/decision_tree/decision_tree.h"
 
+using std::string;
+
 namespace ltr {
-namespace DecisionTree {
+namespace decision_tree {
 
 enum CompareType {
   EQUAL,
@@ -32,8 +36,11 @@ class CompareCondition : public Condition {
         compare_type_(type),
         compare_number_(number) {}
 
+    string generateCppCode(const string& function_name) const {
+      return "Not implemented";
+    }
   private:
-    double valueImpl(const Object& obj) const;
+    double value(const Object& obj) const;
 
     Condition::Ptr weak_condition_;
     CompareType compare_type_;

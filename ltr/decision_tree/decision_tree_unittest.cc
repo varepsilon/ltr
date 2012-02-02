@@ -20,29 +20,30 @@ class DecisionTreeTest : public ::testing::Test {
     }
 };
 
-using ltr::DecisionTree::DecisionTree;
-using ltr::DecisionTree::DecisionVertexPtr;
-using ltr::DecisionTree::LeafVertexPtr;
-using ltr::DecisionTree::RegressionVertexPtr;
-using ltr::DecisionTree::FakeConditionPtr;
-using ltr::DecisionTree::OneFeatureConditionPtr;
-using ltr::DecisionTree::CompareConditionPtr;
-using ltr::DecisionTree::CompareType;
+using ltr::decision_tree::DecisionTree;
+using ltr::decision_tree::DecisionVertexPtr;
+using ltr::decision_tree::LeafVertexPtr;
+using ltr::decision_tree::RegressionVertexPtr;
+using ltr::decision_tree::FakeConditionPtr;
+using ltr::decision_tree::OneFeatureConditionPtr;
+using ltr::decision_tree::CompareConditionPtr;
+using ltr::decision_tree::CompareType;
 
-using ltr::DecisionTree::Vertex;
+using ltr::decision_tree::Vertex;
 
 using ltr::Object;
 
-#define LESS ltr::DecisionTree::LESS
-#define GREATER ltr::DecisionTree::GREATER
-#define EQUAL ltr::DecisionTree::EQUAL
-#define GREATER_OR_EQUAL ltr::DecisionTree::GREATER_OR_EQUAL
+#define LESS ltr::decision_tree::LESS
+#define GREATER ltr::decision_tree::GREATER
+#define EQUAL ltr::decision_tree::EQUAL
+#define GREATER_OR_EQUAL ltr::decision_tree::GREATER_OR_EQUAL
 
 
 TEST_F(DecisionTreeTest, TestingBasicOperations) {
   DecisionTree<double> tree;
   typedef Vertex<double>::Ptr VertexPtr;
-  typedef ltr::DecisionTree::Condition::Ptr ConditionPtr;
+  typedef ltr::decision_tree::Condition::Ptr ConditionPtr;
+
   ConditionPtr first = OneFeatureConditionPtr(0);
   ConditionPtr second = OneFeatureConditionPtr(1);
 
@@ -70,8 +71,6 @@ TEST_F(DecisionTreeTest, TestingBasicOperations) {
   tree.setRoot(v1);
 
   Object obj;
-
-  ltr::DecisionTree::_deep_cache_conditions = true;
 
   obj << 5.0 << 1.0;
   EXPECT_EQ(1.0, tree.value(obj));

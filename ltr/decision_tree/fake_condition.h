@@ -4,19 +4,16 @@
 #define LTR_DECISION_TREE_FAKE_CONDITION_H_
 
 #include "ltr/decision_tree/decision_tree.h"
+#include "ltr/scorers/fake_scorer.h"
 
 namespace ltr {
-namespace DecisionTree {
+namespace decision_tree {
 
-class FakeCondition : public Condition {
-  public:
-    typedef boost::shared_ptr<FakeCondition> Ptr;
+typedef FakeScorer FakeCondition;
 
-  private:
-    double valueImpl(const Object& obj) const;
-};
-
-FakeCondition::Ptr FakeConditionPtr();
+FakeCondition::Ptr FakeConditionPtr() {
+  return FakeCondition::Ptr(new FakeCondition);
+}
 }
 }
 

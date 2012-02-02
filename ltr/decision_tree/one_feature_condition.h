@@ -4,25 +4,20 @@
 #define LTR_DECISION_TREE_ONE_FEATURE_CONDITION_H_
 
 #include "ltr/decision_tree/decision_tree.h"
+#include "ltr/scorers/one_feature_scorer.h"
 
 namespace ltr {
-namespace DecisionTree {
+namespace decision_tree {
 
-class OneFeatureCondition : public Condition {
-  public:
-    typedef boost::shared_ptr<OneFeatureCondition> Ptr;
-    OneFeatureCondition() : feature_id_(0) {}
-    explicit OneFeatureCondition(int feature_id) : feature_id_(feature_id) {}
+typedef OneFeatureScorer OneFeatureCondition;
 
-    void setFeatureId(int feature_id);
-  private:
-    double valueImpl(const Object& obj) const;
+OneFeatureCondition::Ptr OneFeatureConditionPtr() {
+  return OneFeatureCondition::Ptr(new OneFeatureCondition());
+}
 
-    int feature_id_;
-};
-
-OneFeatureCondition::Ptr OneFeatureConditionPtr();
-OneFeatureCondition::Ptr OneFeatureConditionPtr(int feature_id);
+OneFeatureCondition::Ptr OneFeatureConditionPtr(int feature_id) {
+  return OneFeatureCondition::Ptr(new OneFeatureCondition(feature_id));
+}
 }
 }
 

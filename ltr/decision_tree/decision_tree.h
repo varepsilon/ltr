@@ -12,28 +12,15 @@
 #include <stdexcept>
 
 #include "ltr/data/object.h"
+#include "ltr/utility/serializable_functor.h"
 
 using std::map;
 using std::vector;
 
 namespace ltr {
-namespace DecisionTree {
+namespace decision_tree {
 
-extern bool _cache_conditions;
-extern bool _deep_cache_conditions;
-
-class Condition {
-  public:
-    typedef boost::shared_ptr<Condition> Ptr;
-    double operator()(const Object& obj) const;
-    double value(const Object& obj) const;
-
-    virtual ~Condition() {}
-  private:
-    virtual double valueImpl(const Object& obj) const = 0;
-    mutable Object last_object_;
-    mutable double last_value_;
-};
+typedef SerializableFunctor<double> Condition;
 
 template <class TValue>
 class Vertex {
@@ -59,21 +46,14 @@ class Vertex {
 
     virtual ~Vertex() {}
 
+    Condition::Ptr condition() {return condition_;}
+
   protected:
     Ptr first_child_;
     Ptr last_child_;
     Ptr sibling_;
     Vertex<TValue>* parent_;
     Condition::Ptr condition_;
-
-    template<class TValue1>
-    friend class DecisionVertex;
-
-    template<class TValue1>
-    friend class RegressionVertex;
-
-    template<class TValue1>
-    friend class LeafVertex;
 };
 
 template<class TValue>
@@ -209,9 +189,9 @@ TValue DecisionVertex<TValue>::value(const Object& obj) const {
     throw std::logic_error("non list vertex has no children");
   typename Vertex<TValue>::Ptr child = this->firstChild();
   while (child != NULL) {
-    if (best_child == NULL || max_value < child->condition_->value(obj)) {
+    if (best_child == NULL || max_value < child->condition()->value(obj)) {
       best_child = child;
-      max_value = child->condition_->value(obj);
+      max_value = child->condition()->value(obj);
     }
     child = child->nextSibling();
   }
@@ -228,8 +208,8 @@ TValue RegressionVertex<TValue>::value(const Object& obj) const {
   vector<TValue> values;
   double sum = 0;
   while (child != NULL) {
-    conditions.push_back(std::fabs(child->condition_->dicide(obj)));
-    sum += std::fabs(child->condition_->dicide(obj));
+    conditions.push_back(std::fabs(child->condition()->value(obj)));
+    sum += std::fabs(child->condition_->value(obj));
     values.push_back(child->value(obj));
     child = child->nextSibling();
   }
