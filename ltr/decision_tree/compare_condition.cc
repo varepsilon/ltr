@@ -4,7 +4,7 @@
 #include "ltr/utility/numerical.h"
 
 namespace ltr {
-namespace DecisionTree {
+namespace decision_tree {
 
 void CompareCondition::setCompareNumber(double number) {
   compare_number_ = number;
@@ -18,7 +18,7 @@ void CompareCondition::setWeakCondition(Condition::Ptr weak_condition) {
   weak_condition_ = weak_condition;
 }
 
-double CompareCondition::valueImpl(const ltr::Object &obj) const {
+double CompareCondition::value(const ltr::Object &obj) const {
   if (weak_condition_ == NULL)
     throw std::logic_error("no weak condition");
   double weak_value = weak_condition_->value(obj);

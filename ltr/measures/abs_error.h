@@ -15,9 +15,11 @@ namespace ltr {
 
 class AbsError : public LessIsBetterMeasure<Object> {
   public:
-  typedef boost::shared_ptr<AbsError> Ptr;
-
-  AbsError() : LessIsBetterMeasure<Object>("Absolute error.") {}
+  AbsError(const ParametersContainer& parameters = ParametersContainer())
+  :LessIsBetterMeasure<Object>("Absolute error.") {
+    this->setDefaultParameters();
+    this->parameters().copyParameters(parameters);
+  }
 
   private:
   double get_measure(const Object& element) const {

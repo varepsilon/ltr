@@ -20,6 +20,7 @@ template< class TElement >
 class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<BaseLearner> Ptr;
+  typedef boost::shared_ptr<BaseLearner> BasePtr;
 
   void learn(const DataSet<TElement>& data);
 

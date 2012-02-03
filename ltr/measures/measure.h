@@ -29,6 +29,7 @@ template <class TElement>
 class Measure : public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<Measure> Ptr;
+  typedef boost::shared_ptr<Measure> BasePtr;
 
   explicit Measure(const string& alias) : Aliaser(alias) {}
 

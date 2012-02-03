@@ -38,10 +38,6 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   BestFeatureLearner<Object>::Ptr bfl(
     new BestFeatureLearner<Object>(ab_measure));
 
-  vector<AbsError> abm_vector;
-  abm_vector.push_back(*ab_measure);
-  LeaveOneOutSplitter<Object> spl;
-
   // not works yet
   // ValidationResult vr(Validate(data, abm_vector, *bfl, spl));
 };

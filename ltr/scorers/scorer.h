@@ -22,6 +22,7 @@ namespace ltr {
 class Scorer : public Aliaser, public SerializableFunctor<double> {
   public:
   typedef boost::shared_ptr<Scorer> Ptr;
+  typedef boost::shared_ptr<Scorer> BasePtr;
 
   Scorer(const string& alias,
       const FeatureConverterArray& featureConverters = FeatureConverterArray()):
