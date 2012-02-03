@@ -14,6 +14,7 @@ template <typename TValue>
 class SerializableFunctor : public Functor<TValue>, public Serializable {
   public:
   typedef boost::shared_ptr<SerializableFunctor> Ptr;
+  virtual ~SerializableFunctor() {}
 };
 }
 #endif  // LTR_UTILITY_SERIALIZABLE_FUNCTOR_H_

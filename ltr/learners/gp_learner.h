@@ -36,8 +36,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
 
   void setDefaultParameters() {
     this->parameters().clear();
-    this->parameters().setInt("POP_SIZE", 100);
-    this->parameters().setInt("NBR_GEN", 5);
+    this->parameters().setInt("POP_SIZE", 3);
+    this->parameters().setInt("NBR_GEN", 3);
     this->parameters().setInt("NBR_PART", 2);
     this->parameters().setInt("MAX_DEPTH", 17);
     this->parameters().setInt("MIN_INIT_DEPTH", 2);
@@ -104,8 +104,9 @@ class GPLearner : public Learner<TElement, GPScorer> {
     for (int featureIdx = 0;
         featureIdx < featureCountInContext_;
         ++featureIdx) {
-      std::string featureName = "F";
+      std::string featureName = "feature[";
       featureName += boost::lexical_cast<string>(featureIdx);
+      featureName += "]";
       context_.insert(new Puppy::TokenT<double>(featureName));
     }
   }

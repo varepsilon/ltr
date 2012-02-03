@@ -7,6 +7,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include <string>
+#include <iostream>
 
 using std::string;
 
@@ -37,16 +38,16 @@ class Serializable {
   const = 0;
   /** The function creates cpp code for serializable object using default name.
    */
-  string generateCppCode() {
-    this->generateCppCode(this->getDefaultSerializableObjectName());
+  string generateCppCode() const {
+    return this->generateCppCode(this->getDefaultSerializableObjectName());
   }
   /** Returns unique id of the serializable object.
    */
-  size_t getId() {return id_;}
+  size_t getId() const {return id_;}
   /** The function returns a string with default name for the object.
    */
-  string getDefaultSerializableObjectName() {
-    return "serializable_object_" + boost::lexical_cast<string>(id_);
+  string getDefaultSerializableObjectName() const {
+    return "serializable_object_" + boost::lexical_cast<string>(this->getId());
   }
 
   virtual ~Serializable() {}

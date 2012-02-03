@@ -7,14 +7,15 @@
 #include <string>
 
 #include "contrib/puppy/Puppy.hpp"
-#include "ltr/utility/functor.h"
+#include "ltr/utility/serializable.h"
 
 using std::string;
+using boost::lexical_cast;
 
 namespace ltr {
 namespace gp {
 
-class Add : public Puppy::Primitive {
+class Add : public Puppy::Primitive, public Serializable {
   public:
   Add() : Primitive(2, "ADD") {}
   virtual ~Add() {}
@@ -26,9 +27,13 @@ class Add : public Puppy::Primitive {
     getArgument(1, &lArg2, ioContext);
     lResult += lArg2;
   }
+  string generateCppCode(const string& function_name) const {
+    return "inline double " + function_name +
+      "(double lhs, double rhs) { return lhs + rhs;}\n";
+  }
 };
 
-class Subtract : public Puppy::Primitive {
+class Subtract : public Puppy::Primitive, public Serializable {
   public:
   Subtract() : Primitive(2, "SUB") {}
   virtual ~Subtract() {}
@@ -40,9 +45,13 @@ class Subtract : public Puppy::Primitive {
     getArgument(1, &lArg2, ioContext);
     lResult -= lArg2;
   }
+  string generateCppCode(const string& function_name) const {
+    return "inline double " + function_name +
+      "(double lhs, double rhs) { return lhs - rhs;}\n";
+  }
 };
 
-class Multiply : public Puppy::Primitive {
+class Multiply : public Puppy::Primitive, public Serializable {
   public:
   Multiply() : Primitive(2, "MUL") {}
   virtual ~Multiply() {}
@@ -54,9 +63,15 @@ class Multiply : public Puppy::Primitive {
     getArgument(1, &lArg2, ioContext);
     lResult *= lArg2;
   }
+  string generateCppCode(const string& function_name) const {
+    return "inline double " + function_name +
+      "(double lhs, double rhs) { return lhs * rhs;}\n";
+  }
 };
 
-class Divide : public Puppy::Primitive {
+class Divide : public Puppy::Primitive, public Serializable {
+  static const double safeDivisionEps = 0.001;
+
   public:
   Divide() : Primitive(2, "DIV") {}
   virtual ~Divide() {}
@@ -65,16 +80,32 @@ class Divide : public Puppy::Primitive {
     double& lResult = *(static_cast<double*>(outDatum));
     double lArg2;
     getArgument(1, &lArg2, ioContext);
-    if (std::fabs(lArg2) < 0.001) {
+    if (std::fabs(lArg2) < safeDivisionEps) {
       lResult = 1.0;
     } else {
       getArgument(0, &lResult, ioContext);
       lResult /= lArg2;
     }
   }
+  string generateCppCode(const string& function_name) const {
+    string code;
+    code.append("#include <cmath>\n");
+    code.append("inline double ");
+    code.append(function_name);
+    code.append("(double lhs, double rhs) {\n");
+    code.append("  if (std::fabs(rhs) < ");
+    code.append(lexical_cast<string>(safeDivisionEps));
+    code.append(") {\n");
+    code.append("    return 1.0;\n");
+    code.append("  } else {\n");
+    code.append("    return lhs / rhs;\n");
+    code.append("  }\n");
+    code.append("}\n");
+    return code;
+  }
 };
 
-class IfThenFunc : public Puppy::Primitive {
+class IfThenFunc : public Puppy::Primitive, public Serializable {
   public:
   IfThenFunc() : Primitive(3, "IF") {}
   virtual ~IfThenFunc() {}
@@ -89,9 +120,20 @@ class IfThenFunc : public Puppy::Primitive {
       getArgument(2, &lResult, ioContext);
     }
   }
+  string generateCppCode(const string& function_name) const {
+    return "inline double " + function_name +
+      "(double lhs, double mhs, double rhs) {\n" +
+      "  if (lhs > 0.0) {\n" +
+      "    return mhs;\n" +
+      "  } else {\n" +
+       "    return rhs;\n" +
+      "  }\n" +
+      "}\n";
+  }
 };
 
-class Ephemeral : public Puppy::Primitive {
+class Ephemeral : public Puppy::Primitive, public Serializable {
+  static const size_t doubleTokenPrecision = 20;
   public:
   Ephemeral() : Primitive(0, "E") {}
   virtual ~Ephemeral() {}
@@ -101,8 +143,12 @@ class Ephemeral : public Puppy::Primitive {
       Puppy::Context& ioContext) {
     double lValue = ioContext.mRandom.rollUniform(-1.0, 1.0);
     std::ostringstream lOSS;
+    lOSS.precision(doubleTokenPrecision);
     lOSS << lValue;
     return new Puppy::TokenT<double>(lOSS.str(), lValue);
+  }
+  string generateCppCode(const string& function_name) const {
+    return "";
   }
 };
 }

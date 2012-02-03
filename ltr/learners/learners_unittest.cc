@@ -27,17 +27,17 @@ class LearnersTest : public ::testing::Test {
     // before each test).
     std::string learn_data_file_name =
         boost::filesystem::path("data/imat2009/imat2009_learning.txt")
-        .string();
+    .string();
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
         learn_data_file_name, "YANDEX");
 
     learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-            learn_data_file_name, "YANDEX");
+        learn_data_file_name, "YANDEX");
 
 
     std::string test_data_file_name =
         boost::filesystem::path("data/imat2009/imat2009_test.txt")
-        .string();
+    .string();
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
         test_data_file_name, "YANDEX");
   }
@@ -75,4 +75,8 @@ TEST_F(LearnersTest, TestingGPLearner) {
   ltr::gp::GPLearner<ltr::ObjectList> learner(pMeasure);
 
   learner.learn(learn_data_listwise);
+
+  ltr::gp::GPScorer scorer = learner.make();
+
+  std::cout << scorer.generateCppCode();
 };
