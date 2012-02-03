@@ -10,8 +10,6 @@
 #include "ltr_client/constants.h"
 #include "ltr_client/learners_info.h"
 
-#include "ltr/learners/best_feature_learner.h"
-
 /**
 @class LearnerIniter
 This class is used to init learner of given type and approach.
