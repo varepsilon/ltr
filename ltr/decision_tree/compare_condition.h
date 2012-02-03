@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include "ltr/decision_tree/decision_tree.h"
+#include "ltr/decision_tree/condition.h"
 
 using std::string;
 
@@ -39,6 +39,7 @@ class CompareCondition : public Condition {
     string generateCppCode(const string& function_name) const {
       return "Not implemented";
     }
+
   private:
     double value(const Object& obj) const;
 

@@ -3,8 +3,9 @@
 #include "gtest/gtest.h"
 
 #include "ltr/decision_tree/decision_tree.h"
-#include "ltr/decision_tree/fake_condition.h"
-#include "ltr/decision_tree/one_feature_condition.h"
+#include "ltr/decision_tree/leaf_vertex.h"
+#include "ltr/decision_tree/decision_vertex.h"
+#include "ltr/decision_tree/regression_vertex.h"
 #include "ltr/decision_tree/compare_condition.h"
 
 class DecisionTreeTest : public ::testing::Test {

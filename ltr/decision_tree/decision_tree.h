@@ -8,22 +8,21 @@
 
 #include <map>
 #include <cmath>
+#include <string>
 #include <vector>
 #include <stdexcept>
 
-#include "ltr/data/object.h"
-#include "ltr/utility/serializable_functor.h"
+#include "ltr/decision_tree/condition.h"
 
 using std::map;
+using std::string;
 using std::vector;
 
 namespace ltr {
 namespace decision_tree {
 
-typedef SerializableFunctor<double> Condition;
-
 template <class TValue>
-class Vertex {
+class Vertex : public SerializableFunctor<TValue> {
   public:
     typedef boost::shared_ptr<Vertex> Ptr;
     typedef boost::weak_ptr<Vertex> WeakPtr;
@@ -39,8 +38,6 @@ class Vertex {
     Ptr firstChild() const;
 
     void removeChild(Ptr child);
-
-    virtual TValue value(const Object& obj) const = 0;
 
     void setCondition(Condition::Ptr condition);
 
@@ -109,133 +106,19 @@ void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
   child->parent_ = this;
 }
 
-template <class TValue>
-class LeafVertex : public Vertex<TValue> {
-  public:
-    typedef typename boost::shared_ptr<LeafVertex<TValue> > Ptr;
-    TValue value(const Object& obj) const {
-      return value_;
-    }
-    LeafVertex() : Vertex<TValue>() {}
-    LeafVertex(Condition::Ptr condition, const TValue& value) :
-        value_(value), Vertex<TValue>(condition) {}
-  private:
-    TValue value_;
-};
-
 template<class TValue>
-typename LeafVertex<TValue>::Ptr LeafVertexPtr() {
-  return typename LeafVertex<TValue>::Ptr(new LeafVertex<TValue>());
-}
-
-template<class TValue>
-typename LeafVertex<TValue>::Ptr LeafVertexPtr(Condition::Ptr condition,
-                                               const TValue& value) {
-  return typename LeafVertex<TValue>::Ptr(
-      new LeafVertex<TValue>(condition, value));
-}
-
-template <class TValue>
-class DecisionVertex : public Vertex<TValue> {
-  public:
-    typedef boost::shared_ptr<DecisionVertex<TValue> > Ptr;
-
-    DecisionVertex() : Vertex<TValue>() {}
-    explicit DecisionVertex(Condition::Ptr condition) :
-        Vertex<TValue>(condition) {}
-    TValue value(const Object& obj) const;
-};
-
-template<class TValue>
-typename DecisionVertex<TValue>::Ptr DecisionVertexPtr() {
-  return typename DecisionVertex<TValue>::Ptr(new DecisionVertex<TValue>());
-}
-
-template<class TValue>
-typename DecisionVertex<TValue>::Ptr DecisionVertexPtr(
-    Condition::Ptr condition) {
-  return typename DecisionVertex<TValue>::Ptr(
-      new DecisionVertex<TValue>(condition));
-}
-
-template <class TValue>
-class RegressionVertex : public Vertex<TValue> {
-  public:
-    typedef boost::shared_ptr<RegressionVertex<TValue> > Ptr;
-
-    RegressionVertex() : Vertex<TValue>() {}
-    explicit RegressionVertex(Condition::Ptr condition) :
-        Vertex<TValue>(condition) {}
-    TValue value(const Object& obj) const;
-};
-
-template<class TValue>
-typename RegressionVertex<TValue>::Ptr RegressionVertexPtr() {
-  return typename RegressionVertex<TValue>::Ptr(new RegressionVertex<TValue>());
-}
-
-template<class TValue>
-typename RegressionVertex<TValue>::Ptr RegressionVertexPtr(
-    Condition::Ptr condition) {
-  return typename RegressionVertex<TValue>::Ptr(
-      new RegressionVertex<TValue>(condition));
-}
-
-template <class TValue>
-TValue DecisionVertex<TValue>::value(const Object& obj) const {
-  typename Vertex<TValue>::Ptr best_child;
-  double max_value = 0;
-  if (!this->hasChild())
-    throw std::logic_error("non list vertex has no children");
-  typename Vertex<TValue>::Ptr child = this->firstChild();
-  while (child != NULL) {
-    if (best_child == NULL || max_value < child->condition()->value(obj)) {
-      best_child = child;
-      max_value = child->condition()->value(obj);
-    }
-    child = child->nextSibling();
-  }
-  return best_child->value(obj);
-}
-
-template <class TValue>
-TValue RegressionVertex<TValue>::value(const Object& obj) const {
-  if (!this->hasChild())
-    throw std::logic_error("non list vertex has no children");
-  typename Vertex<TValue>::Ptr child = this->firstChild();
-
-  vector<double> conditions;
-  vector<TValue> values;
-  double sum = 0;
-  while (child != NULL) {
-    conditions.push_back(std::fabs(child->condition()->value(obj)));
-    sum += std::fabs(child->condition_->value(obj));
-    values.push_back(child->value(obj));
-    child = child->nextSibling();
-  }
-  TValue result;
-  if (sum == 0) {
-    result = values[0];
-    for (int i = 1; i < values.size(); i++)
-      result = result + values[i];
-    result = result / values.size();
-    return result;
-  }
-  result = values[0] * conditions[0];
-  for (int i = 1; i < values.size(); i++)
-    result = result + values[i] * conditions[i];
-  return result;
-}
-
-template<class TValue>
-class DecisionTree {
+class DecisionTree : public SerializableFunctor<TValue> {
   public:
     typedef typename Vertex<TValue>::Ptr VertexPtr;
-    TValue value(const Object& obj) {
+    TValue value(const Object& obj) const {
       return root_->value(obj);
     }
     void setRoot(VertexPtr root);
     void removeVertex(VertexPtr vertex);
+
+    string generateCppCode(const string& function_name) const {
+      return root_->generateCppCode(function_name);
+    }
   private:
     VertexPtr root_;
 };
