@@ -62,7 +62,7 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
   size_t bestFeatureIdx = 0;
   OneFeatureScorer scorer(bestFeatureIdx);
   utility::MarkDataSet(data, scorer);
-  double bestMeasureValue = p_measure_->average(data);
+  double bestMeasureValue = this->p_measure_->average(data);
 
   for (size_t featureIdx = 1; featureIdx < data.featureCount(); ++featureIdx) {
     OneFeatureScorer scorer(featureIdx);
