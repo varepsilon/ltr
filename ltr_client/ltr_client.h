@@ -21,7 +21,7 @@
 #include "ltr_client/measures_info.h"
 
 #include "ltr_client/measure_factory.h"
-#include "ltr_client/learners_initer.h"
+#include "ltr_client/learner_factory.h"
 
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/crossvalidation/crossvalidation.h"
@@ -63,7 +63,7 @@ class LtrClient {
         std::string root_path_;
         logger::PrintLogger client_logger_;
         MeasureFactory measure_initer;
-        LearnerIniter learner_initer;
+        LearnerFactory learner_initer;
 
         std::map<std::string, VDataInfo> datas;
         std::map<std::string, VLearnerInfo> learners;
@@ -243,8 +243,12 @@ void LtrClient::loadLearnerImpl(const std::string& name) {
                     info.weak_learner = (boost::get<LearnerInfo<TElement> >
                       (learners[info.weak_learner_name])).learner;
                 }
-                learners[name] = info = learner_initer.init(info);
+                info.learner = learner_initer.init<TElement>
+                    (info.type, info.parameters);
+                info.learner->setMeasure(info.measure);
+                info.learner->setWeakLearner(info.weak_learner);
                 info.learner->checkParameters();
+                learners[name] = info;
                 client_logger_.info() << "created learner "
                                       << name << std::endl;
         }

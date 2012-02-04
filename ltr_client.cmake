@@ -1,9 +1,8 @@
 # lets list sample's binaries
 
-set (INITERS_SRC ${Source_Path}/ltr_client/learners_initer.h
-                 ${Source_Path}/ltr_client/learners_initer.cc
-                 ${Source_Path}/ltr_client/factory.h
+set (INITERS_SRC ${Source_Path}/ltr_client/factory.h
         		 ${Source_Path}/ltr_client/measure_factory.h
+        		 ${Source_Path}/ltr_client/learner_factory.h
         		 ${Source_Path}/ltr_client/register_learners.cc
         		 ${Source_Path}/ltr_client/register_measures.cc
                  )

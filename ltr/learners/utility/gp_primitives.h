@@ -70,7 +70,7 @@ class Multiply : public Puppy::Primitive, public Serializable {
 };
 
 class Divide : public Puppy::Primitive, public Serializable {
-  static const double safeDivisionEps = 0.001;
+  static const double safeDivisionEps;
 
   public:
   Divide() : Primitive(2, "DIV") {}

@@ -4,5 +4,6 @@
 
 namespace ltr {
 namespace gp {
+  const double Divide::safeDivisionEps = 0.001;
 }
 }
