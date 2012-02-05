@@ -14,11 +14,15 @@ using boost::lexical_cast;
 
 namespace ltr {
 namespace gp {
-
+/** \class The Puppy::Primitive implements addition functor, it is used to
+ * build Puppy::trees from.
+ */
 class Add : public Puppy::Primitive, public Serializable {
   public:
   Add() : Primitive(2, "ADD") {}
   virtual ~Add() {}
+  /** The implementation of addition functor.
+   */
   virtual void execute(void* outDatum,
       Puppy::Context& ioContext) {
     double& lResult = *(static_cast<double*>(outDatum));
@@ -27,16 +31,23 @@ class Add : public Puppy::Primitive, public Serializable {
     getArgument(1, &lArg2, ioContext);
     lResult += lArg2;
   }
+  /** The function returns a string with the functor as cpp code. It is used
+   * for serialization GPScorer to cpp code.
+   */
   string generateCppCode(const string& function_name) const {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs + rhs;}\n";
   }
 };
-
+/** \class The Puppy::Primitive implements subtraction functor, it is used to
+ * build Puppy::trees from.
+ */
 class Subtract : public Puppy::Primitive, public Serializable {
   public:
   Subtract() : Primitive(2, "SUB") {}
   virtual ~Subtract() {}
+  /** The implementation of subtraction functor.
+   */
   virtual void execute(void* outDatum,
       Puppy::Context& ioContext) {
     double& lResult = *(static_cast<double*>(outDatum));
@@ -45,16 +56,23 @@ class Subtract : public Puppy::Primitive, public Serializable {
     getArgument(1, &lArg2, ioContext);
     lResult -= lArg2;
   }
+  /** The function returns a string with the functor as cpp code. It is used
+   * for serialization GPScorer to cpp code.
+   */
   string generateCppCode(const string& function_name) const {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs - rhs;}\n";
   }
 };
-
+/** \class The Puppy::Primitive implements multiplication functor, it is used to
+ * build Puppy::trees from.
+ */
 class Multiply : public Puppy::Primitive, public Serializable {
   public:
   Multiply() : Primitive(2, "MUL") {}
   virtual ~Multiply() {}
+  /** The implementation of multiplication functor.
+   */
   virtual void execute(void* outDatum,
       Puppy::Context& ioContext) {
     double& lResult = *(static_cast<double*>(outDatum));
@@ -63,18 +81,25 @@ class Multiply : public Puppy::Primitive, public Serializable {
     getArgument(1, &lArg2, ioContext);
     lResult *= lArg2;
   }
+  /** The function returns a string with the functor as cpp code. It is used
+   * for serialization GPScorer to cpp code.
+   */
   string generateCppCode(const string& function_name) const {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs * rhs;}\n";
   }
 };
-
+/** \class The Puppy::Primitive implements division functor, it is used to
+ * build Puppy::trees from.
+ */
 class Divide : public Puppy::Primitive, public Serializable {
   static const double safeDivisionEps = 0.001;
 
   public:
   Divide() : Primitive(2, "DIV") {}
   virtual ~Divide() {}
+  /** The implementation of division functor.
+   */
   virtual void execute(void* outDatum,
       Puppy::Context& ioContext) {
     double& lResult = *(static_cast<double*>(outDatum));
@@ -87,6 +112,9 @@ class Divide : public Puppy::Primitive, public Serializable {
       lResult /= lArg2;
     }
   }
+  /** The function returns a string with the functor as cpp code. It is used
+   * for serialization GPScorer to cpp code.
+   */
   string generateCppCode(const string& function_name) const {
     string code;
     code.append("#include <cmath>\n");
@@ -104,11 +132,15 @@ class Divide : public Puppy::Primitive, public Serializable {
     return code;
   }
 };
-
+/** \class The Puppy::Primitive implements if-then-else functor, it is used to
+ * build Puppy::trees from.
+ */
 class IfThenFunc : public Puppy::Primitive, public Serializable {
   public:
   IfThenFunc() : Primitive(3, "IF") {}
   virtual ~IfThenFunc() {}
+  /** The implementation of if-then-else functor functor.
+   */
   virtual void execute(void* outDatum,
       Puppy::Context& ioContext) {
     double& lResult = *(static_cast<double*>(outDatum));
@@ -131,8 +163,10 @@ class IfThenFunc : public Puppy::Primitive, public Serializable {
       "}\n";
   }
 };
-
-class Ephemeral : public Puppy::Primitive, public Serializable {
+/** \class The Puppy::Primitive implements the functor, that gives random
+ * constants to build Puppy::Tree.
+ */
+class Ephemeral : public Puppy::Primitive {
   static const size_t doubleTokenPrecision = 20;
   public:
   Ephemeral() : Primitive(0, "E") {}
@@ -146,9 +180,6 @@ class Ephemeral : public Puppy::Primitive, public Serializable {
     lOSS.precision(doubleTokenPrecision);
     lOSS << lValue;
     return new Puppy::TokenT<double>(lOSS.str(), lValue);
-  }
-  string generateCppCode(const string& function_name) const {
-    return "";
   }
 };
 }

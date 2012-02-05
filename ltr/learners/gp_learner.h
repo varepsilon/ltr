@@ -17,14 +17,21 @@
 
 namespace ltr {
 namespace gp {
-
 /**
- @class GPLearner
+ \class GPLearner
  Implements genetic programming approach applied to learning to rank.
+ \tparam TElement object container of those the dataset consists (it can be
+ Object, ObjectPair, ObjectList).
  */
 template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
   public:
+  /** Constructor creates a GPLearner.
+   * \param p_Measure shared pointer to the measure that would be maximized on
+   * a dataset within learning.
+   * \param parameters the ParametersContainer parameters from which would
+   * overwrite the default parameters.
+   */
   GPLearner(typename Measure<TElement>::Ptr p_Measure,
       const ParametersContainer& parameters = ParametersContainer())
   :p_Measure_(p_Measure),
@@ -33,7 +40,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
   }
-
+  /** The function sets up default parameters for genetic learning process.
+   */
   void setDefaultParameters() {
     this->parameters().clear();
     this->parameters().setInt("POP_SIZE", 3);
@@ -57,19 +65,24 @@ class GPLearner : public Learner<TElement, GPScorer> {
     this->parameters().setBool("USE_IF", true);
     this->parameters().setBool("USE_EFEM", true);
   }
-
+  /** The function recreates the context and reinitializes the population.
+   */
   void reset() {
     this->initContext();
     this->initPopulation();
   }
 
+  /** The function sets up context and population from the given GPScorer.
+   * \param in_scorer GPScorer whose population and context would be set up.
+   */
   void setInitialScorer(const GPScorer& in_scorer) {
     population_ = in_scorer.population_;
     context_ = in_scorer.context_;
     featureCountInContext_ = in_scorer.featureCountInContext_;
     inPopulationBestTreeIdx_ = in_scorer.inPopulationBestTreeIdx_;
   }
-
+  /** The function return trained GPscorer after learning process
+   */
   GPScorer make() const {
     return GPScorer(this->population_, this->context_,
         this->featureCountInContext_, this->inPopulationBestTreeIdx_);
@@ -122,6 +135,10 @@ class GPLearner : public Learner<TElement, GPScorer> {
         this->parameters().getInt("MAX_INIT_DEPTH"));
   }
 
+  /** The implementation of genetic programming optimization approach.
+   * \param data DataSet on which the p_Measure would be maximized within the
+   * learning procedure.
+   */
   void learnImpl(const DataSet<TElement>& data) {
     if (data.featureCount() != featureCountInContext_) {
       featureCountInContext_ = data.featureCount();
@@ -199,13 +216,28 @@ class GPLearner : public Learner<TElement, GPScorer> {
       population_[treeIdx].mFitness = static_cast<float>(measureVal);
     }
   }
-
+  /** Smart pointer to the measure object, the measure would be maximized
+   * within the learning procedure.
+   */
   typename Measure<TElement>::Ptr p_Measure_;
+  /** The set of Puppy::trees (formulas that represent the optimization space),
+   * that represent a population within the learning procedure.
+   */
   Population population_;
+  /** Context that contains all the routine needed to build Puppy::trees within
+   * the population.
+   */
   Puppy::Context context_;
+  /** The number of features, to process dataset with the number of features
+   * the context_ is constructed for.
+   */
   size_t featureCountInContext_;
+  /** The index of the best Puppy::tree (formula, individ) in current
+   * population.
+   */
   size_t inPopulationBestTreeIdx_;
 };
+
 template class GPLearner<Object>;
 template class GPLearner<ObjectPair>;
 template class GPLearner<ObjectList>;
