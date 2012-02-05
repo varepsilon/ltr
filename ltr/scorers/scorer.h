@@ -10,6 +10,7 @@
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/data/object.h"
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/utility/serializable_functor.h"
 
 using std::string;
 
@@ -18,22 +19,23 @@ namespace ltr {
  * Scorer is a class that can for every object evaluate
  * a value - its rank, or score
  */
-class Scorer : public Aliaser {
+class Scorer : public Aliaser, public SerializableFunctor<double> {
   public:
   typedef boost::shared_ptr<Scorer> Ptr;
+  typedef boost::shared_ptr<Scorer> BasePtr;
 
   Scorer(const string& alias,
       const FeatureConverterArray& featureConverters = FeatureConverterArray()):
         Aliaser(alias),
         featureConverters_(featureConverters) {}
 
+  double value(const Object& obj) const {
+    return score(obj);
+  }
+
   double score(const Object& obj) const;
-  double operator() (const Object& obj) const;
 
   virtual string brief() const = 0;
-
-  string generateCppCode(const string& class_name,
-      int tabbing = 0) const;
 
   const FeatureConverterArray& getFeatureConverters() const {
     return featureConverters_;
@@ -46,9 +48,6 @@ class Scorer : public Aliaser {
 
   private:
   virtual double scoreImpl(const Object& obj) const = 0;
-
-  virtual string generateCppCodeImpl(const string& class_name,
-      int tabbing = 0) const = 0;
 
   FeatureConverterArray featureConverters_;
 };

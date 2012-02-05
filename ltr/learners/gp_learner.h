@@ -25,19 +25,25 @@ namespace gp {
 template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
   public:
-  GPLearner(typename Measure<TElement>::Ptr p_Measure,
-      const ParametersContainer& parameters = ParametersContainer())
-  :p_Measure_(p_Measure),
-  featureCountInContext_(0),
+  GPLearner(const ParametersContainer& parameters = ParametersContainer())
+  : featureCountInContext_(0),
   inPopulationBestTreeIdx_(0) {
+    this->setDefaultParameters();
+    this->parameters().copyParameters(parameters);
+  }
+  GPLearner(typename Measure<TElement>::Ptr p_measure,
+      const ParametersContainer& parameters = ParametersContainer())
+  : featureCountInContext_(0),
+  inPopulationBestTreeIdx_(0) {
+    this->setMeasure(p_measure);
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
   }
 
   void setDefaultParameters() {
     this->parameters().clear();
-    this->parameters().setInt("POP_SIZE", 100);
-    this->parameters().setInt("NBR_GEN", 5);
+    this->parameters().setInt("POP_SIZE", 3);
+    this->parameters().setInt("NBR_GEN", 3);
     this->parameters().setInt("NBR_PART", 2);
     this->parameters().setInt("MAX_DEPTH", 17);
     this->parameters().setInt("MIN_INIT_DEPTH", 2);
@@ -104,8 +110,9 @@ class GPLearner : public Learner<TElement, GPScorer> {
     for (int featureIdx = 0;
         featureIdx < featureCountInContext_;
         ++featureIdx) {
-      std::string featureName = "F";
+      std::string featureName = "feature[";
       featureName += boost::lexical_cast<string>(featureIdx);
+      featureName += "]";
       context_.insert(new Puppy::TokenT<double>(featureName));
     }
   }
@@ -192,14 +199,13 @@ class GPLearner : public Learner<TElement, GPScorer> {
         continue;
       }
       markDataSetWithTree<TElement>(data, &context_, &population_[treeIdx]);
-      double measureVal = p_Measure_->average(data);
+      double measureVal = this->p_measure_->average(data);
       // This line yields a topic for research. Why so?
       //
       population_[treeIdx].mFitness = static_cast<float>(measureVal);
     }
   }
 
-  typename Measure<TElement>::Ptr p_Measure_;
   Population population_;
   Puppy::Context context_;
   size_t featureCountInContext_;

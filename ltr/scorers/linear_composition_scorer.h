@@ -46,10 +46,8 @@ namespace ltr {
 
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;
-    virtual std::string generateCppCode
-      (const std::string& class_name, int tabbing) const;
-    virtual std::string generateJavaCode
-      (const std::string& class_name, int tabbing, bool is_static) const;
+    virtual string generateCppCode(const string& function_name) const;
+
   private:
     std::vector< ScorerAndWeight > scorers_;
   };

@@ -38,8 +38,7 @@ namespace ltr {
       return obj[1].features().at(index_);
     }
 
-    string generateCppCodeImpl(const string& class_name,
-        int tabbing = 0) const;
+    string generateCppCode(const string& function_name) const;
 
     size_t index_;
   };

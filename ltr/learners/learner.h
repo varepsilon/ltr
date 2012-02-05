@@ -13,6 +13,7 @@
 #include "ltr/scorers/scorer.h"
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/parameters_container/parameters_container.h"
+#include "ltr/measures/measure.h"
 
 namespace ltr {
 
@@ -20,6 +21,7 @@ template< class TElement >
 class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<BaseLearner> Ptr;
+  typedef boost::shared_ptr<BaseLearner> BasePtr;
 
   void learn(const DataSet<TElement>& data);
 
@@ -37,6 +39,16 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   }
 
   virtual ~BaseLearner() {}
+  void setMeasure(typename Measure<TElement>::Ptr measure) {
+    p_measure_ = measure;
+  }
+  void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner) {
+    p_weak_learner_ = weak_learner;
+  }
+
+  protected:
+  typename Measure<TElement>::Ptr p_measure_;
+  typename BaseLearner<TElement>::Ptr p_weak_learner_;
 
   private:
   virtual void learnImpl(const DataSet<TElement>& data) = 0;

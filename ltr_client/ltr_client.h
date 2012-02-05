@@ -14,15 +14,20 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr_client/constants.h"
+#include "ltr_client/visitors.h"
 
 #include "ltr_client/datas_info.h"
 #include "ltr_client/learners_info.h"
 #include "ltr_client/measures_info.h"
 
-#include "ltr_client/measures_initer.h"
-#include "ltr_client/learners_initer.h"
+#include "ltr_client/measure_factory.h"
+#include "ltr_client/learner_factory.h"
 
 #include "ltr/data/utility/io_utility.h"
+#include "ltr/crossvalidation/crossvalidation.h"
+#include "ltr/crossvalidation/tk_fold_simple_splitter.h"
+
+using ltr::cv::Splitter;
 
 class TrainVisitor;
 /**
@@ -57,8 +62,8 @@ class LtrClient {
         TiXmlElement *root_;
         std::string root_path_;
         logger::PrintLogger client_logger_;
-        MeasureIniter measure_initer;
-        LearnerIniter learner_initer;
+        MeasureFactory measure_initer;
+        LearnerFactory learner_initer;
 
         std::map<std::string, VDataInfo> datas;
         std::map<std::string, VLearnerInfo> learners;
@@ -75,14 +80,16 @@ class LtrClient {
         /** Function loads learners for particular approach.
         */
         template <class TElement> void loadLearnersImpl();
+        /** Function loads measures for particular approach.
+        */
+        template <class TElement> void loadMeasuresImpl();
         /**
         Function loads one learner with given name and info.
         @param name - learner name
         @param info - information about learner
         */
         template <class TElement>
-        void loadLearnerImpl(const std::string& name,
-                             const VLearnerInfo& info);
+        void loadLearnerImpl(const std::string& name);
 
         /** Function checks learners graph for cycles and approaches conflicts
         */
@@ -126,7 +133,16 @@ class LtrClient {
         /** Function executes one <report> command
          * @param command - Xml Element for command to execute
          */
-        void makeReport(TiXmlElement* command);
+        void makeCrossvalidation(TiXmlElement* command);
+
+        /** Function executes one <report> command
+         * @param command - Xml Element for command to execute
+         */
+        template<class TElement>
+        void makeCrossvalidationImpl(
+            std::map<string, VLearnerInfo> r_learners,
+            std::map<string, VMeasureInfo> r_measures,
+            std::map<string, VDataInfo> r_datas);
 
         /** Function saves scorer code and predictions for given data.
          * @param command - Xml Element for command
@@ -146,24 +162,40 @@ class LtrClient {
 };
 
 template <class TElement>
+void LtrClient::loadMeasuresImpl() {
+  for (measure_iterator i = measures.begin(); i != measures.end(); i++) {
+    if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
+                                                Approach<TElement>::name()) {
+      MeasureInfo<TElement> info;
+      info.type = boost::apply_visitor(GetTypeVisitor(), i->second);
+      info.parameters = boost::apply_visitor(GetParametersVisitor(), i->second);
+      info.measure = measure_initer.init<TElement>(info.type, info.parameters);
+      i->second = info;
+    }
+  }
+}
+
+
+template <class TElement>
 void LtrClient::loadDataImpl() {
     for (data_iterator i = datas.begin(); i != datas.end(); i++) {
+      if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
+                                                  Approach<TElement>::name()) {
         DataInfo<ltr::Object> tm_info =
                                  boost::get<DataInfo<ltr::Object> >(i->second);
-        if (tm_info.approach == Approach<TElement>::name()) {
-            DataInfo<TElement> info;
-            info.approach = tm_info.approach;
-            info.data_file = tm_info.data_file;
-            info.format = tm_info.format;
+        DataInfo<TElement> info;
+        info.approach = tm_info.approach;
+        info.data_file = tm_info.data_file;
+        info.format = tm_info.format;
 
-            info.data = ltr::io_utility::loadDataSet<TElement>(info.data_file,
+        info.data = ltr::io_utility::loadDataSet<TElement>(info.data_file,
                                                                info.format);
 
-            client_logger_.info() << "Loaded data '" << i->first <<
-                "' from " << info.data_file << " as " << info.format
-                << "(" << info.approach << ")" << std::endl;
-            i->second = info;
-        }
+        client_logger_.info() << "Loaded data '" << i->first <<
+            "' from " << info.data_file << " as " << info.format
+            << "(" << info.approach << ")" << std::endl;
+        i->second = info;
+      }
     }
 }
 
@@ -175,7 +207,7 @@ void LtrClient::loadLearnersImpl() {
                            boost::get<LearnerInfo<ltr::Object> >(i->second);
             if (tm_info.approach == Approach<TElement>::name()
                 && tm_info.learner == NULL) {
-                    loadLearnerImpl<TElement>(i->first, tm_info);
+                    loadLearnerImpl<TElement>(i->first);
             }
         } catch(boost::bad_get) {
         }
@@ -183,18 +215,18 @@ void LtrClient::loadLearnersImpl() {
 }
 
 template <class TElement>
-void LtrClient::loadLearnerImpl(const std::string& name,
-                                const VLearnerInfo& info) {
+void LtrClient::loadLearnerImpl(const std::string& name) {
     try {
+        VLearnerInfo vinfo = learners[name];
         LearnerInfo<ltr::Object> tm_info =
-                           boost::get<LearnerInfo<ltr::Object> >(info);
+                           boost::get<LearnerInfo<ltr::Object> >(vinfo);
         if (tm_info.approach == Approach<TElement>::name()
             && tm_info.learner == NULL) {
                 LearnerInfo<TElement> info;
                 info.measure_name = tm_info.measure_name;
                 info.approach = tm_info.approach;
                 info.type = tm_info.type;
-                info.weak_learner = tm_info.weak_learner;
+                info.weak_learner_name = tm_info.weak_learner_name;
                 info.parameters = tm_info.parameters;
 
                 if (info.measure_name != "") {
@@ -206,16 +238,17 @@ void LtrClient::loadLearnerImpl(const std::string& name,
                             ("measure approach conflict in learner " + name);
                     }
                 }
-                if (info.weak_learner == "") {
-                    learners[name] = info = learner_initer.init(info);
-                } else {
-                    loadLearnerImpl<TElement>(info.weak_learner,
-                                              learners[info.weak_learner]);
-                    learners[name] = info = learner_initer.init(info,
-                                 boost::get<LearnerInfo<TElement> >
-                                                (learners[info.weak_learner]));
+                if (info.weak_learner_name != "") {
+                    loadLearnerImpl<TElement>(info.weak_learner_name);
+                    info.weak_learner = (boost::get<LearnerInfo<TElement> >
+                      (learners[info.weak_learner_name])).learner;
                 }
+                info.learner = learner_initer.init<TElement>
+                    (info.type, info.parameters);
+                info.learner->setMeasure(info.measure);
+                info.learner->setWeakLearner(info.weak_learner);
                 info.learner->checkParameters();
+                learners[name] = info;
                 client_logger_.info() << "created learner "
                                       << name << std::endl;
         }
@@ -232,6 +265,25 @@ void LtrClient::train(std::string name,
     client_logger_.info() << "Train " << name << " finished. Report:"
                           << l_info.learner->report() << std::endl;
     scorers[name] = l_info.learner->makeScorerPtr();
+}
+
+template<class TElement>
+void LtrClient::makeCrossvalidationImpl(
+            std::map<string, VLearnerInfo> r_learners,
+            std::map<string, VMeasureInfo> r_measures,
+            std::map<string, VDataInfo> r_datas) {
+  std::map<string, LearnerInfo<TElement> > learners;
+  std::map<string, MeasureInfo<TElement> > measures;
+  std::map<string, DataInfo<TElement> > datas;
+  for (learner_iterator it = r_learners.begin();
+       it != r_learners.end(); it++)
+       learners[it->first] = boost::get<LearnerInfo<TElement> >(it->second);
+  for (measure_iterator it = r_measures.begin();
+       it != r_measures.end(); it++)
+       measures[it->first] = boost::get<MeasureInfo<TElement> >(it->second);
+  for (data_iterator it = r_datas.begin();
+       it != r_datas.end(); it++)
+       datas[it->first] = boost::get<DataInfo<TElement> >(it->second);
 }
 
 #endif  // LTR_CLIENT_LTR_CLIENT_H_
