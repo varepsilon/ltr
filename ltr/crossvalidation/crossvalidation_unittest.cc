@@ -57,4 +57,5 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   EXPECT_EQ(2, vr.getMeasureNames().size());
   string expected_str = "Absolute error.";
   EXPECT_EQ(expected_str, vr.getMeasureNames().at(0));
+
 };
