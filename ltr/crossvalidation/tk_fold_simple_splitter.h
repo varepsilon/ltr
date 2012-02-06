@@ -3,6 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 
+#include <boost/shared_ptr.hpp>
 #include <algorithm>
 #include <vector>
 #include <cstdlib>
@@ -24,6 +25,8 @@ namespace ltr {
     template<class TElement>
     class TKFoldSimpleSplitter : public Splitter<TElement> {
     public:
+      typedef boost::shared_ptr<TKFoldSimpleSplitter> Ptr;
+
       TKFoldSimpleSplitter(size_t in_k = 10, size_t in_T = 10)
           : k(in_k), T(in_T) {
         if (k < 2) {

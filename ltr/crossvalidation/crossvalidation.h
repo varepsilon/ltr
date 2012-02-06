@@ -23,7 +23,7 @@ namespace ltr {
       const DataSet<TElement>& data_set,
       const vector< typename Measure<TElement>::Ptr >& measures,
       typename BaseLearner<TElement>::Ptr learner,
-      const Splitter<TElement>& splitter);
+      typename Splitter<TElement>::Ptr splitter);
   };
 };
 
@@ -34,7 +34,7 @@ namespace ltr {
         const DataSet<TElement>& data_set,
         const vector< typename Measure<TElement>::Ptr >& measures,
         typename BaseLearner<TElement>::Ptr learner,
-        const Splitter<TElement>& splitter) {
+        typename Splitter<TElement>::Ptr splitter) {
       vector<string> measure_names;
       for (int i = 0; i < measures.size(); ++i) {
         measure_names.push_back(measures[i]->alias());
@@ -42,10 +42,10 @@ namespace ltr {
       ValidationResult output(measure_names);
 
       for (int split_index = 0;
-          split_index < splitter.splitCount(data_set);
+          split_index < splitter->splitCount(data_set);
           ++split_index) {
         SplittedDataSet<TElement> current_splitted(
-          splitter.split(split_index, data_set));
+          splitter->split(split_index, data_set));
 
         learner->reset();
         learner->learn(current_splitted.train_set);

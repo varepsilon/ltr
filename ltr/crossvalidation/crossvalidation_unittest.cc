@@ -48,7 +48,8 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   vector<PointwiseMeasure::Ptr> abm_vector;
   abm_vector.push_back(ab_measure);
   abm_vector.push_back(ab_measure);
-  LeaveOneOutSplitter<Object> spl;
+
+  LeaveOneOutSplitter<Object>::Ptr spl(new LeaveOneOutSplitter<Object>);
 
   ValidationResult vr = Validate(data, abm_vector, bfl, spl);
 
