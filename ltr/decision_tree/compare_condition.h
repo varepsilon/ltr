@@ -20,12 +20,21 @@ enum CompareType {
   LESS_OR_EQUAL,
 };
 
+/**
+Class for condition, which compares value of a weak functor with a constant.
+*/
 class CompareCondition : public Condition {
   public:
     typedef boost::shared_ptr<CompareCondition> Ptr;
 
+    /** Sets a compare type.
+    */
     void setCompareType(CompareType type);
+    /** Sets a constant to compare with
+    */
     void setCompareNumber(double number);
+    /** Sets weak condition
+    */
     void setWeakCondition(Condition::Ptr weak_condition);
 
     CompareCondition() {}

@@ -22,27 +22,52 @@ namespace ltr {
 namespace decision_tree {
 
 template <class TValue>
+/**
+Vertex is a node in the decision tree. It has a condition, leading in it.
+Condition is a functor, which returns probability for object
+to be decided by this vertex.
+It can have children.
+*/
 class Vertex : public SerializableFunctor<TValue> {
   public:
     typedef boost::shared_ptr<Vertex> Ptr;
     typedef boost::weak_ptr<Vertex> WeakPtr;
 
-
     Vertex() : parent_(0) {}
+    /**
+    This constructor creates a vertex with a condition leading in it.
+    @param condition - condition leading in the vertex
+    */
     explicit Vertex(Condition::Ptr condition) :
         condition_(condition), parent_(0) {}
+    /**
+    Adds child to the vertex.
+    @param child - child to add.
+    */
     void addChild(Ptr child);
+    /** Returns true, if vertex has a next sibling vertex.
+    */
     bool hasNextSibling() const;
+    /** Returns true, if vertex has a child.
+    */
     bool hasChild() const;
+    /** Returns a pointer to its sibling vertex.
+    */
     Ptr nextSibling() const;
+    /** Returns a pointer to the first child of this vertex.
+    */
     Ptr firstChild() const;
-
+    /** Removes child from this vertex.
+    @param child - child to remove.
+    */
     void removeChild(Ptr child);
-
+    /** Sets a condition leading to this vertex.
+    @param condition - condition to set.
+    */
     void setCondition(Condition::Ptr condition);
-
     virtual ~Vertex() {}
-
+    /** Returns a condition, leading to the vertex.
+    */
     Condition::Ptr condition() {return condition_;}
 
   protected:
@@ -106,14 +131,29 @@ void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
   child->parent_ = this;
 }
 
+/**
+Decision tree. It contains a pointer to the root Vertex.
+*/
 template<class TValue>
 class DecisionTree : public SerializableFunctor<TValue> {
   public:
     typedef typename Vertex<TValue>::Ptr VertexPtr;
+    /**
+    Returns the decision of the tree for the given object.
+    @param obj - object to decide.
+    */
     TValue value(const Object& obj) const {
       return root_->value(obj);
     }
+    /**
+    Sets the root vertex.
+    @param root - new root of the tree.
+    */
     void setRoot(VertexPtr root);
+    /**
+    Removes vertex out of the tree.
+    @param vertex - vertex to remove.
+    */
     void removeVertex(VertexPtr vertex);
 
     string generateCppCode(const string& function_name) const {

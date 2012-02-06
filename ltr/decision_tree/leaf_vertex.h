@@ -10,6 +10,9 @@
 namespace ltr {
 namespace decision_tree {
 
+/**
+Leaf Vertex is a node, which returns constant value for any object.
+*/
 template <class TValue>
 class LeafVertex : public Vertex<TValue> {
   public:

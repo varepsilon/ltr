@@ -10,6 +10,10 @@
 namespace ltr {
 namespace decision_tree {
 
+/**
+DecisionVertex is a node, which returns lineal regression of values
+in its children
+*/
 template <class TValue>
 class RegressionVertex : public Vertex<TValue> {
   public:

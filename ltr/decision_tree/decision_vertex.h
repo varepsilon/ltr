@@ -10,6 +10,10 @@
 namespace ltr {
 namespace decision_tree {
 
+/**
+DecisionVertex is a node, which returns value of the child
+with the greatest condition
+*/
 template <class TValue>
 class DecisionVertex : public Vertex<TValue> {
   public:
