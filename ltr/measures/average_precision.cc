@@ -1,10 +1,10 @@
 // Copyright 2011 Yandex
 
-#include "ltr/measures/average_precision.h"
-
 #include <string>
 #include <algorithm>
 #include <boost/lexical_cast.hpp>
+
+#include "ltr/measures/average_precision.h"
 #include "ltr/measures/utils/measure_utility.h"
 
 using std::sort;
