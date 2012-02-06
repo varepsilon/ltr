@@ -23,11 +23,26 @@ namespace ltr {
 namespace gp {
 
 typedef vector<Puppy::Tree> Population;
-
+/** \class The class prepresent Scorer for GPLearner. It contains the last
+ * population of genetic programming's evolution process.
+ */
 class GPScorer : public Scorer {
   public:
+  /** \typedef boost shared pointer to GPScorer;
+   */
   typedef boost::shared_ptr< GPScorer > Ptr;
-
+  /** Constructor.
+   * \param population the current population of  genetic programming's
+   * evolution process, vector of Puppy::tree.
+   * \param context the context upon which the Puppy::trees in the population
+   * are constructed.
+   * \param featureCountInContext the number of features for those the context
+   * was created.
+   * \param inPopulationBestTreeIdx the index of best Puppy::tree(formula,
+   * individ) in the population.
+   * \param featureConverters the vector of featureConverters to be applied
+   * to the dataset before scoring.
+   */
   GPScorer(const Population& population,
       const Puppy::Context& context,
       size_t featureCountInContext,
@@ -44,7 +59,12 @@ class GPScorer : public Scorer {
     return "GPScorer";
   }
 
+  /** use also functions from base class;
+   */
   using Scorer::generateCppCode;
+  /** the function generates code for the scorer as cpp code
+   * \param class_name the name for the class that would be created.
+   */
   string generateCppCode(const string& class_name) const {
     string code;
     code.append("#include <cmath>\n");
@@ -78,6 +98,9 @@ class GPScorer : public Scorer {
   }
 
   private:
+  /** The implementation of scoring function. It scores using the best
+   *  Puppy::tree in the population.
+   */
   double scoreImpl(const Object& obj) const {
     assert(featureCountInContext_ == obj.featureCount());
     setContextToObject(&context_, obj);
@@ -85,12 +108,25 @@ class GPScorer : public Scorer {
     population_[inPopulationBestTreeIdx_].interpret(&resultScore, context_);
     return resultScore;
   }
-
+  /** the current population of  genetic programming's
+   * evolution process, vector of Puppy::tree.
+   */
   mutable Population population_;
+  /** the context upon which the Puppy::trees in the population
+   * are constructed.
+   */
   mutable Puppy::Context context_;
+  /** the number of features for those the context
+    * was created.
+    */
   size_t inPopulationBestTreeIdx_;
+  /** the index of best Puppy::tree(formula,
+   * individ) in the population.
+   */
   size_t featureCountInContext_;
-
+  /** GPlearner can access the class private data to set up the scorer as the
+   * starting point of GP evolution process.
+   */
   template <typename TElement>
   friend class GPLearner;
 };
