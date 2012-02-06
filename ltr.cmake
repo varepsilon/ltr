@@ -69,12 +69,13 @@ SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_
                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
 							
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
-			${Source_Path}/ltr/measures/abs_error.h
-			${Source_Path}/ltr/measures/accuracy.h
-                        ${Source_Path}/ltr/measures/dcg.h
-                        ${Source_Path}/ltr/measures/dcg.cc
-                        ${Source_Path}/ltr/measures/ndcg.h
-                        ${Source_Path}/ltr/measures/ndcg.cc)
+				 ${Source_Path}/ltr/measures/abs_error.h
+				 ${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc
+				 ${Source_Path}/ltr/measures/average_precision.h ${Source_Path}/ltr/measures/average_precision.cc
+                 ${Source_Path}/ltr/measures/dcg.h ${Source_Path}/ltr/measures/dcg.cc
+                 ${Source_Path}/ltr/measures/ndcg.h ${Source_Path}/ltr/measures/ndcg.cc)
+
+SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
 				 ${Source_Path}/ltr/learners/best_feature_learner.h
@@ -114,6 +115,7 @@ SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
+SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\utils FILES ${LTR_LEARNERS_UTILS})
 SOURCE_GROUP(decision_tree FILES ${LTR_DECISION_TREE})
@@ -121,5 +123,5 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
 			${LTR_LEARNERS} ${LTR_LEARNERS_UTILS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
-                        ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE})
+                        ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE})
 
