@@ -6,6 +6,7 @@
 #include "ltr/data/object_pair.h"
 
 namespace ltr {
+  template<>
   double Accuracy<Object>::get_measure(const Object& object) const {
       if (utility::DoubleEqual(object.predictedLabel(),
           object.actualLabel())) {
@@ -15,6 +16,7 @@ namespace ltr {
       }
   }
 
+  template<>
   double Accuracy<ObjectPair>::get_measure(
       const ObjectPair& object_pair) const {
     bool predicted_is_less = utility::DoubleLess(
