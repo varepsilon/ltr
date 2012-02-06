@@ -35,10 +35,10 @@ class GPScorer : public Scorer {
       const FeatureConverterArray& featureConverters =
           FeatureConverterArray())
   :Scorer("GPScorer", featureConverters),
-   population_(population),
-   context_(context),
-   featureCountInContext_(featureCountInContext),
-   inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
+  population_(population),
+  context_(context),
+  featureCountInContext_(featureCountInContext),
+  inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
 
   string brief() const {
     return "GPScorer";
