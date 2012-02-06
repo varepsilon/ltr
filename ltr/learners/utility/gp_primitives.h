@@ -117,7 +117,6 @@ class Divide : public Puppy::Primitive, public Serializable {
    */
   string generateCppCode(const string& function_name) const {
     string code;
-    code.append("#include <cmath>\n");
     code.append("inline double ");
     code.append(function_name);
     code.append("(double lhs, double rhs) {\n");

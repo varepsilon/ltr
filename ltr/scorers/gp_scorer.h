@@ -35,18 +35,22 @@ class GPScorer : public Scorer {
       const FeatureConverterArray& featureConverters =
           FeatureConverterArray())
   :Scorer("GPScorer", featureConverters),
-  population_(population),
-  context_(context),
-  featureCountInContext_(featureCountInContext),
-  inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
+   population_(population),
+   context_(context),
+   featureCountInContext_(featureCountInContext),
+   inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
 
   string brief() const {
     return "GPScorer";
   }
 
   using Scorer::generateCppCode;
-  string generateCppCode(const string& function_name) const {
+  string generateCppCode(const string& class_name) const {
     string code;
+    code.append("#include <cmath>\n");
+    code.append("class ");
+    code.append(class_name);
+    code.append(" {\n");
     // generate primitive-functions code.
     vector<Puppy::PrimitiveHandle>::const_iterator functionItr =
         context_.mFunctionSet.begin();
@@ -55,6 +59,7 @@ class GPScorer : public Scorer {
           *functionItr);
       string function_name = pSerializable->getDefaultSerializableObjectName();
       function_name += (*functionItr)->getName();
+      code.append("static ");
       code.append(pSerializable->generateCppCode(function_name));
     }
     // generate the function from tree.
@@ -62,13 +67,13 @@ class GPScorer : public Scorer {
     writeTreeAsStringOfCppCalls(population_[inPopulationBestTreeIdx_],
         &sstreamForCalls, 0);
     // generate scoring function
-    code.append("double ");
-    code.append(function_name);
-    code.append("(double * feature) {\n");
+    code.append("public:\n");
+    code.append("static double score(double * feature) {\n");
     code.append("  return ");
     code.append(sstreamForCalls.str());
     code.append(";\n");
     code.append("}\n");
+    code.append("};\n");
     return code;
   }
 
