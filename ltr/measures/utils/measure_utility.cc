@@ -15,7 +15,8 @@ using ltr::utility::equalWithNaN;
 namespace ltr {
 namespace utility {
 
-  vector<PredictedAndActualLabels> ExtractLabels(const ObjectList& object_list) {
+  vector<PredictedAndActualLabels> ExtractLabels(
+      const ObjectList& object_list) {
     vector<PredictedAndActualLabels> output(object_list.size());
 
     for (size_t index = 0; index < object_list.size(); ++index) {
@@ -36,6 +37,5 @@ namespace utility {
     }
     return false;
   }
-
 };
 };

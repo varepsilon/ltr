@@ -21,7 +21,7 @@ namespace ltr {
 
     void setDefaultParameters();
   private:
-    double get_measure(ObjectList& objects) const;
+    double get_measure(const ObjectList& objects) const;
   };
 };
 

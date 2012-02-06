@@ -1,9 +1,10 @@
 // Copyright 2011 Yandex
 
+#include "ltr/measures/average_precision.h"
+
 #include <string>
 #include <algorithm>
 #include <boost/lexical_cast.hpp>
-#include "ltr/measures/average_precision.h"
 #include "ltr/measures/utils/measure_utility.h"
 
 using std::sort;
@@ -17,8 +18,8 @@ namespace ltr {
     this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
   }
 
-  double AveragePrecision::get_measure(ObjectList& objects) const {
-  	vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
+  double AveragePrecision::get_measure(const ObjectList& objects) const {
+    vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
     double ans = 0;
