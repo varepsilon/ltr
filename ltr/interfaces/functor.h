@@ -34,4 +34,4 @@ class Functor {
   virtual ~Functor() {}
 };
 }
-#endif  // LTR_UTILITY_FUNCTOR_H_
+#endif  // LTR_INTERFACES_FUNCTOR_H_
