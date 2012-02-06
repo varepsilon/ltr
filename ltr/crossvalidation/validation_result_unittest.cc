@@ -49,4 +49,6 @@ TEST(CrossvalidationTest, ValidationResultTest) {
 
   measures2.push_back(5);
   EXPECT_ANY_THROW(vr.addSplitInfo(fscorer2, report2, measures2));
+
+  EXPECT_NO_THROW(ValidationResult copy = vr);
 };

@@ -6,7 +6,9 @@
 #include "ltr/crossvalidation/crossvalidation.h"
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/data/object.h"
+#include "ltr/data/feature_info.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/measures/measure.h"
 #include "ltr/crossvalidation/leave_one_out_splitter.h"
 #include "ltr/crossvalidation/validation_result.h"
 #include "ltr/scorers/utility/scorer_utility.h"
@@ -14,6 +16,7 @@
 
 using std::vector;
 
+using ltr::FeatureInfo;
 using ltr::Object;
 using ltr::AbsError;
 using ltr::BestFeatureLearner;
@@ -22,10 +25,14 @@ using ltr::cv::Validate;
 using ltr::cv::ValidationResult;
 using ltr::FakeScorer;
 using ltr::utility::MarkDataSet;
+using ltr::PointwiseMeasure;
+
+const int data_lenght = 11;
+const FeatureInfo fi(1);
+
 
 TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
-  DataSet<Object> data;
-  int data_lenght = 11;
+  DataSet<Object> data(fi);
   for (int i = 0; i < data_lenght; ++i) {
     Object obj;
     obj << i;
@@ -38,6 +45,16 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
   BestFeatureLearner<Object>::Ptr bfl(
     new BestFeatureLearner<Object>(ab_measure));
 
-  // not works yet
-  // ValidationResult vr(Validate(data, abm_vector, *bfl, spl));
+  vector<PointwiseMeasure::Ptr> abm_vector;
+  abm_vector.push_back(ab_measure);
+  abm_vector.push_back(ab_measure);
+  LeaveOneOutSplitter<Object> spl;
+
+  ValidationResult vr = Validate(data, abm_vector, bfl, spl);
+
+  EXPECT_EQ(data_lenght, vr.getSplitCount());
+  EXPECT_EQ(2, vr.getMeasureValues(0).size());
+  EXPECT_EQ(2, vr.getMeasureNames().size());
+  string expected_str = "Absolute error.";
+  EXPECT_EQ(expected_str, vr.getMeasureNames().at(0));
 };

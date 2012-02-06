@@ -19,9 +19,9 @@ using ltr::utility::MarkDataSet;
 namespace ltr {
   namespace cv {
     template<class TElement>
-    const ValidationResult& Validate(
+    ValidationResult Validate(
       const DataSet<TElement>& data_set,
-      const vector< Measure<TElement> >& measures,
+      const vector< typename Measure<TElement>::Ptr >& measures,
       typename BaseLearner<TElement>::Ptr learner,
       const Splitter<TElement>& splitter);
   };
@@ -30,14 +30,14 @@ namespace ltr {
 namespace ltr {
   namespace cv {
     template<class TElement>
-    const ValidationResult& Validate(
+    ValidationResult Validate(
         const DataSet<TElement>& data_set,
-        const vector< Measure<TElement> >& measures,
+        const vector< typename Measure<TElement>::Ptr >& measures,
         typename BaseLearner<TElement>::Ptr learner,
         const Splitter<TElement>& splitter) {
       vector<string> measure_names;
       for (int i = 0; i < measures.size(); ++i) {
-        measure_names.push_back(measures[i].alias());
+        measure_names.push_back(measures[i]->alias());
       }
       ValidationResult output(measure_names);
 
@@ -60,7 +60,7 @@ namespace ltr {
             measure_index < measures.size();
             ++measure_index) {
           current_measure_values.push_back(
-            measures[measure_index].average(current_splitted.test_set));
+            measures[measure_index]->average(current_splitted.test_set));
         }
 
         output.addSplitInfo(current_scorer,

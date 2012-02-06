@@ -74,6 +74,7 @@ TEST_F(LearnersTest, TestingGPLearner) {
   ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
   ltr::gp::GPLearner<ltr::ObjectList> learner(pMeasure);
 
+
   learner.learn(learn_data_listwise);
 
   ltr::gp::GPScorer scorer = learner.make();

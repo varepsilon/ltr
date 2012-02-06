@@ -34,12 +34,23 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   GPLearner(typename Measure<TElement>::Ptr p_Measure,
       const ParametersContainer& parameters = ParametersContainer())
-  :p_Measure_(p_Measure),
-  featureCountInContext_(0),
+  : featureCountInContext_(0),
+  inPopulationBestTreeIdx_(0) {
+    this->setMeasure(p_Measure);
+    this->setDefaultParameters();
+    this->parameters().copyParameters(parameters);
+  }
+  /** Constructor creates a GPLearner. But leaves p_measure uninitialized.
+   * \param parameters the ParametersContainer parameters from which would
+   * overwrite the default parameters.
+   */
+  GPLearner(const ParametersContainer& parameters = ParametersContainer())
+  : featureCountInContext_(0),
   inPopulationBestTreeIdx_(0) {
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
   }
+
   /** The function sets up default parameters for genetic learning process.
    */
   void setDefaultParameters() {
@@ -210,12 +221,13 @@ class GPLearner : public Learner<TElement, GPScorer> {
         continue;
       }
       markDataSetWithTree<TElement>(data, &context_, &population_[treeIdx]);
-      double measureVal = p_Measure_->average(data);
+      double measureVal = this->p_measure_->average(data);
       // This line yields a topic for research. Why so?
       //
       population_[treeIdx].mFitness = static_cast<float>(measureVal);
     }
   }
+
   /** Smart pointer to the measure object, the measure would be maximized
    * within the learning procedure.
    */

@@ -1,30 +1,22 @@
 // Copyright 2012 Yandex
 
-#include "ltr_client/learners_initer.h"
+#include "ltr_client/learner_factory.h"
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/learners/gp_learner.h"
 
+using ltr::Object;
+using ltr::ObjectPair;
+using ltr::ObjectList;
 
-template<class TElement>
-typename ltr::BaseLearner<TElement>::Ptr BFIniter
-    (const LearnerInfo<TElement>& info) {
-  return typename ltr::BaseLearner<TElement>::Ptr(
-                          new ltr::BestFeatureLearner<TElement>(info.measure));
-}
+using ltr::BestFeatureLearner;
+using ltr::gp::GPLearner;
 
-template <typename TElement>
-typename ltr::BaseLearner<TElement>::Ptr GPIniter(
-    const LearnerInfo<TElement>& info) {
-  return typename ltr::BaseLearner<TElement>::Ptr(
-      new ltr::gp::GPLearner<TElement>(info.measure, info.parameters));
-}
+void LearnerFactory::registerAll() {
+  REGISTER_POINTWISE_LEARNER("BEST_FEATURE", BestFeatureLearner<Object>);
+  REGISTER_PAIRWISE_LEARNER("BEST_FEATURE", BestFeatureLearner<ObjectPair>);
+  REGISTER_LISTWISE_LEARNER("BEST_FEATURE", BestFeatureLearner<ObjectList>);
 
-void LearnerIniter::registerLearners() {
-  REGISTER_POINTWISE_LEARNER("BEST_FEATURE", BFIniter<ltr::Object>);
-  REGISTER_PAIRWISE_LEARNER("BEST_FEATURE", BFIniter<ltr::ObjectPair>);
-  REGISTER_LISTWISE_LEARNER("BEST_FEATURE", BFIniter<ltr::ObjectList>);
-
-  REGISTER_POINTWISE_LEARNER("GP", GPIniter<ltr::Object>);
-  REGISTER_PAIRWISE_LEARNER("GP", GPIniter<ltr::ObjectPair>);
-  REGISTER_LISTWISE_LEARNER("GP", GPIniter<ltr::ObjectList>);
+  REGISTER_POINTWISE_LEARNER("GP", GPLearner<Object>);
+  REGISTER_PAIRWISE_LEARNER("GP", GPLearner<ObjectPair>);
+  REGISTER_LISTWISE_LEARNER("GP", GPLearner<ObjectList>);
 }
