@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_UTILITY_SERIALIZABLE_FUNCTOR_H_
-#define LTR_UTILITY_SERIALIZABLE_FUNCTOR_H_
+#ifndef LTR_INTERFACES_SERIALIZABLE_FUNCTOR_H_
+#define LTR_INTERFACES_SERIALIZABLE_FUNCTOR_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -17,4 +17,4 @@ class SerializableFunctor : public Functor<TValue>, public Serializable {
   virtual ~SerializableFunctor() {}
 };
 }
-#endif  // LTR_UTILITY_SERIALIZABLE_FUNCTOR_H_
+#endif  // LTR_INTERFACES_SERIALIZABLE_FUNCTOR_H_
