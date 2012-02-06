@@ -30,7 +30,7 @@ namespace ltr {
     void setDouble(const string& name, double value);
     void setInt(const string& name, int value);
     void setBool(const string& name, bool value);
-    void setList(const std::string& name, const List& value);
+    void setList(const string& name, const List& value);
 
     double getDouble(const string& name) const;
     int getInt(const string& name) const;
@@ -44,7 +44,7 @@ namespace ltr {
     void clear();
 
   protected:
-    template<class T> T get(const string &name) const;
+    template<class T> T get(const string& name) const;
 
     TMap params;
   };
@@ -52,7 +52,7 @@ namespace ltr {
 
   // Template realization
   template <class T>
-  T ParametersContainer::get(const std::string &name) const {
+  T ParametersContainer::get(const string& name) const {
     if (params.find(name) == params.end()) {
       throw std::logic_error(name + " no such parameter");
     }
