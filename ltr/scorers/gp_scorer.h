@@ -13,7 +13,7 @@
 
 #include "ltr/learners/utility/gp_functions.h"
 #include "ltr/learners/utility/gp_primitives.h"
-#include "ltr/utility/serializable.h"
+#include "ltr/interfaces/serializable.h"
 
 using std::vector;
 using std::string;

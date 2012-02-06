@@ -5,8 +5,8 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "ltr/utility/functor.h"
-#include "ltr/utility/serializable.h"
+#include "ltr/interfaces/functor.h"
+#include "ltr/interfaces/serializable.h"
 
 namespace ltr {
 

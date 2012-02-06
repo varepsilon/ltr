@@ -7,7 +7,7 @@
 #include <string>
 
 #include "contrib/puppy/Puppy.hpp"
-#include "ltr/utility/serializable.h"
+#include "ltr/interfaces/serializable.h"
 
 using std::string;
 using boost::lexical_cast;

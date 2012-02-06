@@ -7,7 +7,7 @@
 
 #include "ltr/data/data_set.h"
 #include "contrib/puppy/Puppy.hpp"
-#include "ltr/utility/serializable.h"
+#include "ltr/interfaces/serializable.h"
 
 namespace ltr {
 namespace gp {
