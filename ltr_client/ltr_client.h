@@ -3,6 +3,8 @@
 #ifndef LTR_CLIENT_LTR_CLIENT_H_
 #define LTR_CLIENT_LTR_CLIENT_H_
 
+#include <boost/format.hpp>
+
 #include <string>
 #include <map>
 #include <fstream>
@@ -22,12 +24,18 @@
 
 #include "ltr_client/measure_factory.h"
 #include "ltr_client/learner_factory.h"
+#include "ltr_client/splitter_factory.h"
 
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/crossvalidation/crossvalidation.h"
 #include "ltr/crossvalidation/tk_fold_simple_splitter.h"
 
 using ltr::cv::Splitter;
+using ltr::cv::Validate;
+using ltr::cv::ValidationResult;
+
+using boost::format;
+using std::map;
 
 class TrainVisitor;
 /**
@@ -46,6 +54,9 @@ class LtrClient {
         /** Function loads all measures given in config.
         */
         void loadMeasures();
+        /** Function loads all splitters given in config.
+        */
+        void loadSplitters();
         /** Function loads all learners given in config.
         */
         void loadLearners();
@@ -62,17 +73,21 @@ class LtrClient {
         TiXmlElement *root_;
         std::string root_path_;
         logger::PrintLogger client_logger_;
+
         MeasureFactory measure_initer;
         LearnerFactory learner_initer;
+        SplitterFactory splitter_initer;
 
         std::map<std::string, VDataInfo> datas;
         std::map<std::string, VLearnerInfo> learners;
         std::map<std::string, VMeasureInfo> measures;
+        std::map<std::string, VSplitterInfo> splitters;
         std::map<std::string, ltr::Scorer::Ptr> scorers;
 
-        typedef std::map<std::string, VDataInfo>::iterator data_iterator;
-        typedef std::map<std::string, VLearnerInfo>::iterator learner_iterator;
-        typedef std::map<std::string, VMeasureInfo>::iterator measure_iterator;
+        typedef map<std::string, VDataInfo>::iterator data_iterator;
+        typedef map<std::string, VLearnerInfo>::iterator learner_iterator;
+        typedef map<std::string, VMeasureInfo>::iterator measure_iterator;
+        typedef map<std::string, VSplitterInfo>::iterator splitter_iterator;
 
         /** Function loads data objects for particular approach.
         */
@@ -83,6 +98,9 @@ class LtrClient {
         /** Function loads measures for particular approach.
         */
         template <class TElement> void loadMeasuresImpl();
+        /** Function loads splitters for particular approach.
+        */
+        template <class TElement> void loadSplittersImpl();
         /**
         Function loads one learner with given name and info.
         @param name - learner name
@@ -140,9 +158,14 @@ class LtrClient {
          */
         template<class TElement>
         void makeCrossvalidationImpl(
+            std::string fold,
             std::map<string, VLearnerInfo> r_learners,
             std::map<string, VMeasureInfo> r_measures,
             std::map<string, VDataInfo> r_datas);
+        /**
+         * Function builds text table of given data.
+         */
+        std::string buildTable(std::vector<std::vector<std::string> > table);
 
         /** Function saves scorer code and predictions for given data.
          * @param command - Xml Element for command
@@ -170,11 +193,38 @@ void LtrClient::loadMeasuresImpl() {
       info.type = boost::apply_visitor(GetTypeVisitor(), i->second);
       info.parameters = boost::apply_visitor(GetParametersVisitor(), i->second);
       info.measure = measure_initer.init<TElement>(info.type, info.parameters);
+      info.approach = Approach<TElement>::name();
       i->second = info;
+
+      client_logger_.info() << "created measure '"
+                            << i->first << "', type: " << info.type
+                            << " approach = " << info.approach
+                            << " parameters: " << info.parameters.getString()
+                            << std::endl;
     }
   }
 }
 
+template <class TElement>
+void LtrClient::loadSplittersImpl() {
+  for (splitter_iterator i = splitters.begin(); i != splitters.end(); i++) {
+    if (boost::apply_visitor(GetApproachVisitor(), i->second) ==
+                                                Approach<TElement>::name()) {
+      SplitterInfo<TElement> info;
+      info.type = boost::apply_visitor(GetTypeVisitor(), i->second);
+      info.parameters = boost::apply_visitor(GetParametersVisitor(), i->second);
+      info.splitter =
+          splitter_initer.init<TElement>(info.type, info.parameters);
+      info.approach = Approach<TElement>::name();
+      i->second = info;
+
+      client_logger_.info() << "created splitter '"
+                            << i->first << "', type: " << info.type
+                            << " parameters: " << info.parameters.getString()
+                            << std::endl;
+    }
+  }
+}
 
 template <class TElement>
 void LtrClient::loadDataImpl() {
@@ -269,21 +319,101 @@ void LtrClient::train(std::string name,
 
 template<class TElement>
 void LtrClient::makeCrossvalidationImpl(
+            std::string fold,
             std::map<string, VLearnerInfo> r_learners,
             std::map<string, VMeasureInfo> r_measures,
             std::map<string, VDataInfo> r_datas) {
-  std::map<string, LearnerInfo<TElement> > learners;
-  std::map<string, MeasureInfo<TElement> > measures;
-  std::map<string, DataInfo<TElement> > datas;
+  std::vector<typename ltr::BaseLearner<TElement>::Ptr> learners;
+  std::vector<typename ltr::Measure<TElement>::Ptr> measures;
+  std::vector<ltr::DataSet<TElement> > datas;
+
+  std::vector<std::string> learner_names;
+  std::vector<std::string> measure_names;
+  std::vector<std::string> data_names;
+  typename Splitter<TElement>::Ptr splitter;
+
+  if (boost::apply_visitor(GetApproachVisitor(), splitters[fold])
+    != Approach<TElement>::name()) {
+    client_logger_.error() << "Failed: fold approach conflict"
+                           << " in <crossvalidation>"
+                           << std::endl;
+    return;
+  }
+  splitter = (boost::get<SplitterInfo<TElement> >(splitters[fold])).splitter;
   for (learner_iterator it = r_learners.begin();
-       it != r_learners.end(); it++)
-       learners[it->first] = boost::get<LearnerInfo<TElement> >(it->second);
+       it != r_learners.end(); it++) {
+       learners.push_back
+          ((boost::get<LearnerInfo<TElement> >(it->second)).learner);
+       learner_names.push_back(it->first);
+  }
   for (measure_iterator it = r_measures.begin();
-       it != r_measures.end(); it++)
-       measures[it->first] = boost::get<MeasureInfo<TElement> >(it->second);
+       it != r_measures.end(); it++) {
+       measures.push_back
+          ((boost::get<MeasureInfo<TElement> >(it->second)).measure);
+       measure_names.push_back(it->first);
+  }
   for (data_iterator it = r_datas.begin();
-       it != r_datas.end(); it++)
-       datas[it->first] = boost::get<DataInfo<TElement> >(it->second);
+       it != r_datas.end(); it++) {
+       datas.push_back
+          ((boost::get<DataInfo<TElement> >(it->second)).data);
+       data_names.push_back(it->first);
+  }
+
+  client_logger_.info() << "Running crossvalidation " << std::endl;
+
+  std::vector<double> results;
+  for (size_t i = 0; i < learners.size(); i++)
+    for (size_t j = 0; j < datas.size(); j++) {
+      ValidationResult res =
+          Validate(datas[j], measures, learners[i], splitter);
+      for (size_t mi = 0; mi < measures.size(); mi++) {
+        double sum = 0;
+        for (size_t si = 0; si < res.getSplitCount(); si++)
+          sum += res.getMeasureValues(si)[mi];
+
+        results.push_back(sum / res.getSplitCount());
+      }
+    }
+
+  std::vector<std::vector<std::string> > table;
+  if (learners.size() == 1) {
+    table.resize(datas.size() + 1);
+    table[0].push_back(" ");
+    for (size_t j = 0; j < measures.size(); j++)
+      table[0].push_back(measure_names[j]);
+    for (size_t i = 0; i < datas.size(); i++) {
+      table[i+1].push_back(data_names[i]);
+      for (size_t j = 0; j < measures.size(); j++) {
+        table[i+1].push_back
+          (str(boost::format("%.4f") % results[j + i * measures.size()]));
+      }
+    }
+  } else if (measures.size() == 1) {
+    table.resize(datas.size() + 1);
+    table[0].push_back(" ");
+    for (size_t j = 0; j < learners.size(); j++)
+      table[0].push_back(learner_names[j]);
+    for (size_t i = 0; i < datas.size(); i++) {
+      table[i+1].push_back(data_names[i]);
+      for (size_t j = 0; j < learners.size(); j++) {
+        table[i+1].push_back
+          (str(boost::format("%.4f") % results[j + i * learners.size()]));
+      }
+    }
+  } else {
+    table.resize(learners.size() + 1);
+    table[0].push_back(" ");
+    for (size_t j = 0; j < measures.size(); j++)
+      table[0].push_back(measure_names[j]);
+    for (size_t i = 0; i < learners.size(); i++) {
+      table[i+1].push_back(learner_names[i]);
+      for (size_t j = 0; j < measures.size(); j++) {
+        table[i+1].push_back
+          (str(boost::format("%.4f") % results[j + i * measures.size()]));
+      }
+    }
+  }
+  buildTable(table);
 }
 
 #endif  // LTR_CLIENT_LTR_CLIENT_H_

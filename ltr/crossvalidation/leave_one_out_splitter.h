@@ -23,6 +23,13 @@ namespace ltr {
       typedef boost::shared_ptr<LeaveOneOutSplitter> Ptr;
 
       virtual int splitCount(const DataSet<TElement>& base_set) const;
+      explicit LeaveOneOutSplitter
+          (const ParametersContainer& parameters = ParametersContainer()) {
+        this->setDefaultParameters();
+        this->parameters().copyParameters(parameters);
+      }
+      void setDefaultParameters() {}
+      void checkParameters() {}
 
     protected:
       virtual void splitImpl(

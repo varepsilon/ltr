@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "ltr/data/data_set.h"
+#include "ltr/interfaces/parameterized.h"
 
 using std::vector;
 
@@ -27,7 +28,7 @@ namespace ltr {
      * Splits data set into training + test sets.
      */
     template<class TElement>
-    class Splitter {
+    class Splitter : public Parameterized {
      public:
        typedef boost::shared_ptr<Splitter> Ptr;
        typedef boost::shared_ptr<Splitter> BasePtr;

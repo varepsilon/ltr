@@ -3,12 +3,15 @@
 set (INITERS_SRC ${Source_Path}/ltr_client/factory.h
         		 ${Source_Path}/ltr_client/measure_factory.h
         		 ${Source_Path}/ltr_client/learner_factory.h
+        		 ${Source_Path}/ltr_client/splitter_factory.h
         		 ${Source_Path}/ltr_client/register_learners.cc
         		 ${Source_Path}/ltr_client/register_measures.cc
+        		 ${Source_Path}/ltr_client/register_splitters.cc
                  )
 
 set (INFOS_SRC ${Source_Path}/ltr_client/learners_info.h
                ${Source_Path}/ltr_client/datas_info.h
+               ${Source_Path}/ltr_client/splitter_info.h
                ${Source_Path}/ltr_client/measures_info.h
                )
 

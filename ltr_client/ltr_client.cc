@@ -6,6 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <sstream>
+#include <cmath>
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/visitors.h"
@@ -18,6 +20,7 @@ template <> std::string Approach<ltr::ObjectPair>::name() {return PRW;}
 template <> std::string Approach<ltr::ObjectList>::name() {return LW;}
 
 using boost::algorithm::to_upper;
+using std::string;
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -29,6 +32,7 @@ int main(int argc, char* argv[]) {
         client.loadConfig(argv[1]);
         client.loadData();
         client.loadMeasures();
+        client.loadSplitters();
         client.loadLearners();
         client.launch();
         client.saveWarnings();
@@ -137,19 +141,63 @@ void LtrClient::loadMeasures() {
         info.type = type;
         info.approach = measure_initer.getApproach(type);
         info.parameters = parameters;
-
         measures[name] = info;
-
-        client_logger_.info() << "created measure '"
-                              << name << "', type: " << type
-                              << " parameters: " << parameters.getString()
-                              << std::endl;
 
         measure_elem = measure_elem->NextSiblingElement("measure");
     }
     loadMeasuresImpl<ltr::Object>();
     loadMeasuresImpl<ltr::ObjectPair>();
     loadMeasuresImpl<ltr::ObjectList>();
+}
+
+void LtrClient::loadSplitters() {
+    TiXmlElement* splitters_elem = root_->FirstChildElement("splitters");
+    if (!splitters_elem) {
+        client_logger_.warning() << "no splitters found" << std::endl;
+        return;
+    }
+    TiXmlElement* splitter_elem = splitters_elem->FirstChildElement("splitter");
+    if (!splitter_elem) {
+        client_logger_.warning() << "no splitters found" << std::endl;
+        return;
+    }
+    while (splitter_elem) {
+        const char* name = splitter_elem->Attribute("name");
+        const char* type = splitter_elem->Attribute("type");
+        const char* approach = splitter_elem->Attribute("approach");
+
+        if (!name)
+            throw std::logic_error("<splitter> with no 'name' attribute");
+        if (!type)
+            throw std::logic_error("<splitter> with no 'type' attribute");
+        if (!approach) {
+            client_logger_.warning() << "No approach defined for splitter '"
+                          << name
+                          << "'. It will be defined automatically if possible."
+                          << std::endl;
+            approach = "";
+        }
+
+        if (splitters.find(name) != splitters.end())
+            throw std::logic_error("dublicate splitter name "
+                                                        + std::string(name));
+
+        ltr::ParametersContainer parameters =
+              loadParameters(splitter_elem->FirstChildElement("parameters"));
+
+        // This is a temporary object. It will be converted into the right type
+        // in the loadSplittersImpl<type>()
+        SplitterInfo<ltr::Object> info;
+        info.type = type;
+        info.approach = splitter_initer.getApproach(type, approach);
+        info.parameters = parameters;
+        splitters[name] = info;
+
+        splitter_elem = splitter_elem->NextSiblingElement("splitter");
+    }
+    loadSplittersImpl<ltr::Object>();
+    loadSplittersImpl<ltr::ObjectPair>();
+    loadSplittersImpl<ltr::ObjectList>();
 }
 
 
@@ -468,6 +516,19 @@ void LtrClient::makeCrossvalidation(TiXmlElement *command) {
     std::map<string, VMeasureInfo> r_measures;
     std::map<string, VDataInfo> r_datas;
 
+    const char* fold_ = command->Attribute("fold");
+    if (!fold_) {
+        client_logger_.error() << "Failed: <crossvalidation> with no fold"
+                               << std::endl;
+        return;
+    }
+    std::string fold = fold_;
+    if (splitters.find(fold) == splitters.end()) {
+        client_logger_.error() << "Failed: <crossvalidation>"
+                               << " with unknown fold '" << fold
+                               << "'" << std::endl;
+        return;
+    }
     elem = command->FirstChildElement("learner");
     while (elem) {
         const char* lname = elem->GetText();
@@ -510,7 +571,7 @@ void LtrClient::makeCrossvalidation(TiXmlElement *command) {
             if (boost::apply_visitor(GetApproachVisitor(),
                                      datas[dname]) == approach)
                 r_datas[dname] = datas[dname];
-        elem = elem->NextSiblingElement("measure");
+        elem = elem->NextSiblingElement("data");
     }
     if (r_datas.size() == 0) {
         client_logger_.error() << "Failed: <crossvalidation> with no datas"
@@ -520,7 +581,7 @@ void LtrClient::makeCrossvalidation(TiXmlElement *command) {
 
     if ((r_learners.size() > 1) +
         (r_measures.size() > 1) +
-        (r_datas.size() > 1)) {
+        (r_datas.size() > 1) > 2) {
       client_logger_.error() << "Failed: <crossvalidation> "
                              << "can create only one table"
                              << std::endl;
@@ -529,11 +590,53 @@ void LtrClient::makeCrossvalidation(TiXmlElement *command) {
 
     if (approach == Approach<ltr::Object>::name())
       return makeCrossvalidationImpl<ltr::Object>
-                          (r_learners, r_measures, r_datas);
+                          (fold, r_learners, r_measures, r_datas);
     else if (approach == Approach<ltr::ObjectPair>::name())
       return makeCrossvalidationImpl<ltr::ObjectPair>
-                          (r_learners, r_measures, r_datas);
+                          (fold, r_learners, r_measures, r_datas);
     if (approach == Approach<ltr::ObjectList>::name())
       return makeCrossvalidationImpl<ltr::ObjectList>
-                          (r_learners, r_measures, r_datas);
+                          (fold, r_learners, r_measures, r_datas);
+}
+
+std::string LtrClient::buildTable(std::vector<std::vector<string> > table) {
+  std::string str;
+
+  std::vector<size_t> colWidth;
+  for (size_t i = 0; i < table[0].size(); i++) {
+    size_t wd = 0;
+    for (size_t j = 0; j < table.size(); j++)
+      wd = std::max(wd, table[j][i].size());
+    colWidth.push_back(wd);
+  }
+
+  str.append(string(colWidth[0], ' '))
+     .append("|");
+  for (size_t i = 1; i < table[0].size(); i++)
+    str.append(table[0][i])
+       .append(string(colWidth[i] - table[0][i].size(), ' '))
+       .append("|");
+  client_logger_.info() << str << std::endl;
+  str.clear();
+
+  str.append(string(colWidth[0], '-'))
+     .append("+");
+  for (size_t i = 1; i < table[0].size(); i++)
+    str.append(string(colWidth[i], '-'))
+       .append("+");
+  client_logger_.info() << str << std::endl;
+  str.clear();
+
+  for (size_t i = 1; i < table.size(); i++) {
+    str.append(table[i][0])
+       .append(string(colWidth[0] - table[i][0].size(), ' '))
+       .append("|");
+    for (size_t j = 1; j < table[0].size(); j++)
+      str.append(table[i][j])
+         .append(string(colWidth[j] - table[i][j].size(), ' '))
+         .append("|");
+    client_logger_.info() << str << std::endl;
+    str.clear();
+  }
+  return "";
 }

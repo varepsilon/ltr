@@ -37,7 +37,7 @@ class SimpleFactory {
   #define FACTORY_CLASS LearnerFactory
   #define TObject ltr::BaseLearner
 #elif defined SPLITTER_FACTORY
-  #define FACTORY_CLASS MeasureFactory
+  #define FACTORY_CLASS SplitterFactory
   #define TObject ltr::cv::Splitter
 #else
   #error "Unknown factory"

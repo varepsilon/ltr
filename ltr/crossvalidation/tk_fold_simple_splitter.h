@@ -36,6 +36,25 @@ namespace ltr {
           throw logic_error("T should be positive!");
         }
       }
+      explicit TKFoldSimpleSplitter
+          (const ParametersContainer& parameters = ParametersContainer()) {
+        this->setDefaultParameters();
+        this->parameters().copyParameters(parameters);
+        k = this->parameters().getInt("K");
+        T = this->parameters().getInt("T");
+      }
+      void setDefaultParameters() {
+        this->parameters().setInt("K", 10);
+        this->parameters().setInt("T", 10);
+      }
+      void checkParameters() {
+        if (this->parameters().getInt("K") < 2) {
+          throw logic_error("k should be grater then 1!");
+        }
+        if (this->parameters().getInt("T") < 1) {
+          throw logic_error("T should be positive!");
+        }
+      }
 
       virtual int splitCount(const DataSet<TElement>& base_set) const;
 
@@ -45,12 +64,13 @@ namespace ltr {
         const DataSet<TElement>& base_set,
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const;
+
     private:
       typedef vector<size_t> Permutation;
       Permutation getRandomPermutation(int index, int dataset_size) const;
 
-      const size_t T;
-      const size_t k;
+      size_t T;
+      size_t k;
     };
 
     template<class TElement>
