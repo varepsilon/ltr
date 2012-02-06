@@ -3,7 +3,7 @@
 #ifndef LTR_DECISION_TREE_CONDITION_H_
 #define LTR_DECISION_TREE_CONDITION_H_
 
-#include "ltr/utility/serializable_functor.h"
+#include "ltr/interfaces/serializable_functor.h"
 
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/scorers/one_feature_scorer.h"

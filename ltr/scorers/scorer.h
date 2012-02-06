@@ -10,7 +10,7 @@
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/data/object.h"
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/utility/serializable_functor.h"
+#include "ltr/interfaces/serializable_functor.h"
 
 using std::string;
 

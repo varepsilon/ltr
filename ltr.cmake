@@ -6,68 +6,66 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc
              ${Source_Path}/ltr/data/object_list.h ${Source_Path}/ltr/data/object_list.cc
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
-             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
-             )
+             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc)
+
 SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
-					  ${Source_Path}/ltr/decision_tree/decision_tree.cc
-					  ${Source_Path}/ltr/decision_tree/classification_result.h
-					  ${Source_Path}/ltr/decision_tree/classification_result.cc
-					  
-					  ${Source_Path}/ltr/decision_tree/leaf_vertex.h
-					  ${Source_Path}/ltr/decision_tree/decision_vertex.h
-					  ${Source_Path}/ltr/decision_tree/regression_vertex.h
-					  
-					  ${Source_Path}/ltr/decision_tree/condition.h
-					  ${Source_Path}/ltr/decision_tree/condition.cc
-					  ${Source_Path}/ltr/decision_tree/compare_condition.h
-					  ${Source_Path}/ltr/decision_tree/compare_condition.cc)
+                      ${Source_Path}/ltr/decision_tree/decision_tree.cc
+                      ${Source_Path}/ltr/decision_tree/classification_result.h
+                      ${Source_Path}/ltr/decision_tree/classification_result.cc
+                      
+                      ${Source_Path}/ltr/decision_tree/leaf_vertex.h
+                      ${Source_Path}/ltr/decision_tree/decision_vertex.h
+                      ${Source_Path}/ltr/decision_tree/regression_vertex.h
+                      
+                      ${Source_Path}/ltr/decision_tree/condition.h
+                      ${Source_Path}/ltr/decision_tree/condition.cc
+                      ${Source_Path}/ltr/decision_tree/compare_condition.h
+                      ${Source_Path}/ltr/decision_tree/compare_condition.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
-				   ${Source_Path}/ltr/data/utility/data_set_utility.h
-				   ${Source_Path}/ltr/data/utility/data_set_utility.cc
-				   ${Source_Path}/ltr/data/utility/data_set_converters.h
-				   ${Source_Path}/ltr/data/utility/data_set_converters.cc
+                   ${Source_Path}/ltr/data/utility/data_set_utility.h
+                   ${Source_Path}/ltr/data/utility/data_set_utility.cc
+                   ${Source_Path}/ltr/data/utility/data_set_converters.h
+                   ${Source_Path}/ltr/data/utility/data_set_converters.cc
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h                
                  ${Source_Path}/ltr/data/utility/io_utility.cc
-				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
-				 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
-				 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
-				 ${Source_Path}/ltr/data/utility/parsers/object_parser.cc
-				 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.h
-				 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.cc
-				 ${Source_Path}/ltr/data/utility/parsers/parse_svm.h
-				 ${Source_Path}/ltr/data/utility/parsers/parse_svm.cc
-				 ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
-				 ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc
-				 )
+                 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
+                 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
+                 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
+                 ${Source_Path}/ltr/data/utility/parsers/object_parser.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.h
+                 ${Source_Path}/ltr/data/utility/parsers/parse_yandex.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parse_svm.h
+                 ${Source_Path}/ltr/data/utility/parsers/parse_svm.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
+                 ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc)
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h
-              ${Source_Path}/ltr/utility/numerical.cc
-              ${Source_Path}/ltr/utility/functor.h
-              ${Source_Path}/ltr/utility/serializable.h
-              ${Source_Path}/ltr/utility/serializable.cc
-              ${Source_Path}/ltr/utility/serializable_functor.h)
+              ${Source_Path}/ltr/utility/numerical.cc)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
-			 ${Source_Path}/ltr/interfaces/aliaser.h
-			 ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc)
+                   ${Source_Path}/ltr/interfaces/aliaser.h
+                   ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
+                   ${Source_Path}/ltr/interfaces/functor.h
+                   ${Source_Path}/ltr/interfaces/serializable.h ${Source_Path}/ltr/interfaces/serializable.cc
+                   ${Source_Path}/ltr/interfaces/serializable_functor.h)
 
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
-			${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
-			${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
-			${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
-			${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc
-                        ${Source_Path}/ltr/scorers/gp_scorer.h)
-			
+                ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
+                ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
+                ${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
+                ${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc
+                ${Source_Path}/ltr/scorers/gp_scorer.h)
+            
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
-                        ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
+                      ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
 
 SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
-                            ${Source_Path}/ltr/parameters_container/parameters_container.cc)
-							
+                             ${Source_Path}/ltr/parameters_container/parameters_container.cc)
+                            
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 				 ${Source_Path}/ltr/measures/abs_error.h
 				 ${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc
@@ -78,31 +76,31 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
-				 ${Source_Path}/ltr/learners/best_feature_learner.h
-                                 ${Source_Path}/ltr/learners/gp_learner.h
-                                 ${Source_Path}/ltr/learners/gp_learner.cc)
+                 ${Source_Path}/ltr/learners/best_feature_learner.h
+                 ${Source_Path}/ltr/learners/gp_learner.h
+                 ${Source_Path}/ltr/learners/gp_learner.cc)
 
 SET(LTR_LEARNERS_UTILS ${Source_Path}/ltr/learners/utility/gp_primitives.h
-                        ${Source_Path}/ltr/learners/utility/gp_functions.h
-                        ${Source_Path}/ltr/learners/utility/gp_functions.cc)
+                       ${Source_Path}/ltr/learners/utility/gp_functions.h
+                       ${Source_Path}/ltr/learners/utility/gp_functions.cc)
 
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
-						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
+                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
                            ${Source_Path}/ltr/feature_converters/feature_subset_chooser.cc
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.h
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h)
-						   
-SET(LTR_CROSSVALIDATION 	${Source_Path}/ltr/crossvalidation/splitter.h
-							${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
-							${Source_Path}/ltr/crossvalidation/validation_result.h
-							${Source_Path}/ltr/crossvalidation/validation_result.cc
-							${Source_Path}/ltr/crossvalidation/crossvalidation.h
-							${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
-							${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
-							
+                           
+SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
+                        ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
+                        ${Source_Path}/ltr/crossvalidation/validation_result.h
+                        ${Source_Path}/ltr/crossvalidation/validation_result.cc
+                        ${Source_Path}/ltr/crossvalidation/crossvalidation.h
+                        ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
+                        ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
+                            
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})

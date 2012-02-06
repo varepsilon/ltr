@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_UTILITY_FUNCTOR_H_
-#define LTR_UTILITY_FUNCTOR_H_
+#ifndef LTR_INTERFACES_FUNCTOR_H_
+#define LTR_INTERFACES_FUNCTOR_H_
 
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
@@ -34,4 +34,4 @@ class Functor {
   virtual ~Functor() {}
 };
 }
-#endif  // LTR_UTILITY_FUNCTOR_H_
+#endif  // LTR_INTERFACES_FUNCTOR_H_

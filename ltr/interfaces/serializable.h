@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_UTILITY_SERIALIZABLE_H_
-#define LTR_UTILITY_SERIALIZABLE_H_
+#ifndef LTR_INTERFACES_SERIALIZABLE_H_
+#define LTR_INTERFACES_SERIALIZABLE_H_
 
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
@@ -58,4 +58,4 @@ class Serializable {
   size_t id_;
 };
 }
-#endif  // LTR_UTILITY_SERIALIZABLE_H_
+#endif  // LTR_INTERFACES_SERIALIZABLE_H_
