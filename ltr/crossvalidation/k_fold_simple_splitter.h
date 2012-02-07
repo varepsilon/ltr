@@ -24,17 +24,10 @@ namespace ltr {
     public:
       typedef boost::shared_ptr<KFoldSimpleSplitter> Ptr;
 
-      explicit KFoldSimpleSplitter(int in_k = 10)
-          :k(in_k) {
-        if (k < 2) {
-          throw logic_error("k should be grater then 1!");
-        }
-      }
       explicit KFoldSimpleSplitter
           (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
-        k = this->parameters().getInt("K");
       }
       void setDefaultParameters() {
         this->parameters().setInt("K", 10);
@@ -53,15 +46,12 @@ namespace ltr {
         const DataSet<TElement>& base_set,
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const;
-
-    private:
-      int k;
     };
 
     template<class TElement>
     int KFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return k;
+      return this->parameters().getInt("K");
     }
 
     template<class TElement>
@@ -77,8 +67,8 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int block_size = base_set.size() / k;
-      int extra_length = base_set.size() % k;
+      int block_size = base_set.size() / this->parameters().getInt("K");
+      int extra_length = base_set.size() % this->parameters().getInt("K");
 
       int test_begin = block_size * split_index +
         std::min(split_index, extra_length);

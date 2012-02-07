@@ -14,15 +14,25 @@
 using ltr::cv::TKFoldSimpleSplitter;
 using ltr::cv::SplittedDataSet;
 using ltr::Object;
+using ltr::ParametersContainer;
 
 using std::vector;
 using std::map;
 using std::pair;
 
+const int k = 3;
+const int t = 4;
+
+TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {
+  ParametersContainer param;
+  param.setInt("K", in_k);
+  param.setInt("T", in_t);
+  return TKFoldSimpleSplitter<Object>(param);
+}
+
+
 TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
-  int k = 3;
-  int t = 4;
-  TKFoldSimpleSplitter<Object> spl(k, t);
+  TKFoldSimpleSplitter<Object> spl = Use_k_t(k, t);
   EXPECT_EQ(t * k, spl.splitCount(data));
 
   // testing tkfold as kfold for each t
@@ -60,8 +70,10 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
     EXPECT_LE(diff, 1);
   }
 
-  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl1(1, t));
-  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl2(k, 0));
+  TKFoldSimpleSplitter<Object> spl1 = Use_k_t(1, t);
+  TKFoldSimpleSplitter<Object> spl2 = Use_k_t(k, 0);
+  EXPECT_ANY_THROW(spl1.checkParameters());
+  EXPECT_ANY_THROW(spl2.checkParameters());
 };
 
 // partition is a mapping from element to part's number
@@ -81,9 +93,7 @@ bool Equal(const vector<int>& partition1, const vector<int>& partition2) {
 }
 
 TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
-  int k = 3;
-  int t = 4;
-  TKFoldSimpleSplitter<Object> spl(k, t);
+  TKFoldSimpleSplitter<Object> spl = Use_k_t(k, t);
 
   vector< vector<int> > marks(t);
 

@@ -28,8 +28,6 @@ namespace ltr {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
       }
-      void setDefaultParameters() {}
-      void checkParameters() {}
 
     protected:
       virtual void splitImpl(

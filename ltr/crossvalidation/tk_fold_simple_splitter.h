@@ -27,21 +27,10 @@ namespace ltr {
     public:
       typedef boost::shared_ptr<TKFoldSimpleSplitter> Ptr;
 
-      TKFoldSimpleSplitter(size_t in_k = 10, size_t in_T = 10)
-          : k(in_k), T(in_T) {
-        if (k < 2) {
-          throw logic_error("k should be grater then 1!");
-        }
-        if (T < 1) {
-          throw logic_error("T should be positive!");
-        }
-      }
       explicit TKFoldSimpleSplitter
           (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
-        k = this->parameters().getInt("K");
-        T = this->parameters().getInt("T");
       }
       void setDefaultParameters() {
         this->parameters().setInt("K", 10);
@@ -68,15 +57,12 @@ namespace ltr {
     private:
       typedef vector<size_t> Permutation;
       Permutation getRandomPermutation(int index, int dataset_size) const;
-
-      size_t T;
-      size_t k;
     };
 
     template<class TElement>
     int TKFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return k * T;
+      return this->parameters().getInt("K") * this->parameters().getInt("T");
     }
 
     template<class TElement>
@@ -92,14 +78,14 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int blocksplit_index = split_index / k;
-      int block_index = split_index % k;
+      int blocksplit_index = split_index / this->parameters().getInt("K");
+      int block_index = split_index % this->parameters().getInt("K");
 
       Permutation current_perm =
         getRandomPermutation(blocksplit_index, base_set.size());
 
-      int block_size = base_set.size() / k;
-      int extra_length = base_set.size() % k;
+      int block_size = base_set.size() / this->parameters().getInt("K");
+      int extra_length = base_set.size() % this->parameters().getInt("K");
 
       int test_begin = block_size * block_index +
         std::min(block_index, extra_length);

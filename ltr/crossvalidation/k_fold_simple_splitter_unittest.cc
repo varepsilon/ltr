@@ -13,12 +13,21 @@
 using ltr::cv::KFoldSimpleSplitter;
 using ltr::cv::SplittedDataSet;
 using ltr::Object;
+using ltr::ParametersContainer;
 
 using std::vector;
 
+const int k = 3;
+
+KFoldSimpleSplitter<Object> Use_k(int in_k) {
+  ParametersContainer param;
+  param.setInt("K", in_k);
+  return KFoldSimpleSplitter<Object>(param);
+}
+
 TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
-  int k = 3;
-  KFoldSimpleSplitter<Object> spl(k);
+  KFoldSimpleSplitter<Object> spl = Use_k(k);
+
   EXPECT_EQ(k, spl.splitCount(data));
 
   vector<bool> used(data.size(), false);
@@ -52,5 +61,6 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
     *std::min_element(test_sizes.begin(), test_sizes.end());
   EXPECT_LE(diff, 1);
 
-  EXPECT_ANY_THROW(KFoldSimpleSplitter<Object> spl1(1));
+  KFoldSimpleSplitter<Object> spl1 = Use_k(1);
+  EXPECT_ANY_THROW(spl1.checkParameters());
 };
