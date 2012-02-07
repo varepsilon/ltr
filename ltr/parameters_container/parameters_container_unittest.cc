@@ -28,6 +28,11 @@ TEST(ParametersContainerTest, AllInParametersContainerTest) {
   pc2.setInt("int2", 2);
   pc2.setDouble("double2", 23);
 
+  EXPECT_ANY_THROW(pc2.copyParameters(pc1));
+
+  pc2.setDouble("double1", 0);
+  pc2.setInt("int1", 0);
+  pc2.setBool("bool1", false);
   pc2.copyParameters(pc1);
 
   EXPECT_EQ(10.3, pc2.getDouble("double1"));

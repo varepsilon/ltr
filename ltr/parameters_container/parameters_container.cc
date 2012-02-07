@@ -2,10 +2,12 @@
 
 #include <boost/lexical_cast.hpp>
 #include <string>
+#include <stdexcept>
 
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::string;
+using std::logic_error;
 
 namespace ltr {
   class printVisitor : public boost::static_visitor<string> {
@@ -73,7 +75,18 @@ namespace ltr {
                                        const ParametersContainer& parameters) {
     for (TMap::const_iterator it = parameters.params.begin();
                         it != parameters.params.end(); ++it) {
-        params[it->first] = it->second;
+        if (params.find(it->first) != params.end()) {
+          params[it->first] = it->second;
+        } else {
+          string err = "Wrong parameter name " + it->first;
+          err.append(". You may mean one of these:");
+          for (TMap::const_iterator inner_it = params.begin();
+              inner_it != params.end(); ++inner_it) {
+            err.append(" " + inner_it->first);
+          }
+          err.append(".");
+          throw logic_error(err);
+        }
     }
   }
 
