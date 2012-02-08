@@ -20,7 +20,7 @@ namespace ltr {
       this->checkParameters();
     }
 
-  void AveragePrecision::setDefaultParameters() {
+  void setDefaultParameters() {
     this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
   }
   private:
