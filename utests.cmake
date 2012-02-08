@@ -11,7 +11,7 @@ SET(LTR_FEATURE_CONVERTERS_TEST ${Source_Path}/ltr/feature_converters/feature_co
 
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc)
 
-SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measures_unittest.cc)
+SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/listwise_measures_unittest.cc)
 
 SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
 					 ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc)

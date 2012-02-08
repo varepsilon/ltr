@@ -17,9 +17,12 @@ namespace ltr {
         :MoreIsBetterMeasure<ObjectList>("Average precision") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
     }
 
-    void setDefaultParameters();
+  void AveragePrecision::setDefaultParameters() {
+    this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
+  }
   private:
     double get_measure(const ObjectList& objects) const;
   };

@@ -14,10 +14,6 @@ using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
 
 namespace ltr {
-  void AveragePrecision::setDefaultParameters() {
-    this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
-  }
-
   double AveragePrecision::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
@@ -29,7 +25,7 @@ namespace ltr {
         ++labels_it, total_amount += 1) {
       if (labels_it->actual >= parameters().getDouble("SCORE_FOR_RELEVANT")) {
         relevant_amount += 1;
-        ans += relevant_amount/total_amount;
+        ans += static_cast<double>(relevant_amount)/total_amount;
       }
     }
     if (relevant_amount == 0) {
