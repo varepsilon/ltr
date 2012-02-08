@@ -31,6 +31,7 @@ namespace ltr {
           (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
+        this->checkParameters();
       }
       void setDefaultParameters() {
         this->parameters().setInt("K", 10);

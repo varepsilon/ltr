@@ -70,10 +70,8 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
     EXPECT_LE(diff, 1);
   }
 
-  TKFoldSimpleSplitter<Object> spl1 = Use_k_t(1, t);
-  TKFoldSimpleSplitter<Object> spl2 = Use_k_t(k, 0);
-  EXPECT_ANY_THROW(spl1.checkParameters());
-  EXPECT_ANY_THROW(spl2.checkParameters());
+  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl1 = Use_k_t(1, t));
+  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl2 = Use_k_t(k, 0));
 };
 
 // partition is a mapping from element to part's number

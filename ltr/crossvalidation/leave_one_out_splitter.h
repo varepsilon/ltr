@@ -27,6 +27,7 @@ namespace ltr {
           (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
+        this->checkParameters();
       }
 
     protected:

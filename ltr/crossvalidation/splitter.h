@@ -11,6 +11,7 @@
 #include "ltr/interfaces/parameterized.h"
 
 using std::vector;
+using ltr::utility::lightSubset;
 
 namespace ltr {
   namespace cv {
@@ -61,14 +62,8 @@ namespace ltr {
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);
 
       SplittedDataSet<TElement> output(base_set.featureInfo());
-      for (int train = 0; train < train_set_indexes.size(); ++train) {
-        output.train_set.add(base_set[train_set_indexes[train]],
-          base_set.getWeight(train_set_indexes[train]));
-      }
-      for (int test = 0; test < test_set_indexes.size(); ++test) {
-        output.test_set.add(base_set[test_set_indexes[test]],
-          base_set.getWeight(test_set_indexes[test]));
-      }
+      output.train_set = lightSubset(base_set, train_set_indexes);
+      output.test_set = lightSubset(base_set, test_set_indexes);
 
       return output;
     }
