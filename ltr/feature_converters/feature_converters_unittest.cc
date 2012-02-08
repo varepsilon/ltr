@@ -12,6 +12,7 @@
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/measures/average_precision.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 // The fixture for testing (contains data for tests).
@@ -127,15 +128,12 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
       ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
 };
 
-// ltr::AbsError<ltr::ObjectList>() need to be replaced with other listwise
-// measure. None implemented yet
-/*
 TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::FeatureNormalizerLearner<ltr::ObjectList> normalizerLearner;
   EXPECT_NO_THROW(normalizerLearner.learn(learn_data_listwise));
 
   ltr::Measure<ltr::ObjectList>::Ptr
-  pMeasure(new ltr::AbsError<ltr::ObjectList>());
+  pMeasure(new ltr::AveragePrecision());
   ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
 
   learner.addFeatureConverter(normalizerLearner.make());
@@ -143,4 +141,3 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
 };
-*/
