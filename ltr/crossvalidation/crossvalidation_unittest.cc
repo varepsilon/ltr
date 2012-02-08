@@ -30,12 +30,11 @@ using ltr::PointwiseMeasure;
 const int data_lenght = 11;
 const FeatureInfo fi(1);
 
-
-TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
+TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
   DataSet<Object> data(fi);
   for (int i = 0; i < data_lenght; ++i) {
     Object obj;
-    obj << i;
+    obj << 1;
     data.add(obj);
   }
   FakeScorer::Ptr fscorer(new FakeScorer());
@@ -47,15 +46,21 @@ TEST(CrossvalidationTest, CompilingCrossvalidationTest) {
 
   vector<PointwiseMeasure::Ptr> abm_vector;
   abm_vector.push_back(ab_measure);
-  abm_vector.push_back(ab_measure);
 
   LeaveOneOutSplitter<Object>::Ptr spl(new LeaveOneOutSplitter<Object>);
 
   ValidationResult vr = Validate(data, abm_vector, bfl, spl);
 
   EXPECT_EQ(data_lenght, vr.getSplitCount());
-  EXPECT_EQ(2, vr.getMeasureValues(0).size());
-  EXPECT_EQ(2, vr.getMeasureNames().size());
+  EXPECT_EQ(1, vr.getMeasureValues(0).size());
+  EXPECT_EQ(1, vr.getMeasureNames().size());
   string expected_str = "Absolute error";
   EXPECT_EQ(expected_str, vr.getMeasureNames().at(0));
+
+  for (int split = 0; split < vr.getSplitCount(); ++split) {
+    Object test_obj;
+    test_obj << 1;
+    EXPECT_EQ(1, vr.getScorer(split)->score(test_obj));
+    EXPECT_EQ(0, vr.getMeasureValues(split).at(0));
+  }
 };
