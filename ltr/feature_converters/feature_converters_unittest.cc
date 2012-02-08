@@ -128,6 +128,8 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
       ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
 };
 
+// waiting for unittest for AveragePrecision
+/*
 TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::FeatureNormalizerLearner<ltr::ObjectList> normalizerLearner;
   EXPECT_NO_THROW(normalizerLearner.learn(learn_data_listwise));
@@ -141,3 +143,4 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
 };
+*/
