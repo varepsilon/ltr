@@ -32,11 +32,10 @@ class PointMeasuresTest : public ::testing::Test {
     o4 << 4;
     o4.setActualLabel(3.1);
     o4.setPredictedLabel(3.1);
-    
+
     o5 << 5;
     o5.setActualLabel(0.76);
     o5.setPredictedLabel(2.13);
-
   }
 
   virtual void TearDown() {
