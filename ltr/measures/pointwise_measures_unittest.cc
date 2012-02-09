@@ -8,6 +8,7 @@
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/accuracy.h"
 #include "ltr/measures/squared_error.h"
+#include "ltr/measures/true_point.h"
 
 using ltr::Object;
 using ltr::utility::DoubleEqual;
@@ -15,6 +16,7 @@ using ltr::ParametersContainer;
 using ltr::AbsError;
 using ltr::Accuracy;
 using ltr::SquaredError;
+using ltr::TruePoint;
 
 class PointwiseMeasuresTest : public ::testing::Test {
   protected:
@@ -28,8 +30,8 @@ class PointwiseMeasuresTest : public ::testing::Test {
     o2.setPredictedLabel(2.3);
 
     o3 << 3;
-    o3.setActualLabel(-0.5);
-    o3.setPredictedLabel(0.5);
+    o3.setActualLabel(0.5);
+    o3.setPredictedLabel(-0.5);
 
     o4 << 4;
     o4.setActualLabel(3.1);
@@ -76,4 +78,13 @@ TEST_F(PointwiseMeasuresTest, TestingSquaredError) {
   EXPECT_TRUE(DoubleEqual(se(o3), 1));
   EXPECT_TRUE(DoubleEqual(se(o4), 0));
   EXPECT_TRUE(DoubleEqual(se(o5), 1.8769));
+}
+
+TEST_F(PointwiseMeasuresTest, TestingTruePoint) {
+  TruePoint tp;
+  EXPECT_TRUE(DoubleEqual(tp(o1), 1.0));
+  EXPECT_TRUE(DoubleEqual(tp(o2), 0.555555555555556));
+  EXPECT_TRUE(DoubleEqual(tp(o3), 0.5));
+  EXPECT_TRUE(DoubleEqual(tp(o4), 1.0));
+  EXPECT_TRUE(DoubleEqual(tp(o5), 0.421940928270042));
 }
