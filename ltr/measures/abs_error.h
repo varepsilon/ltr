@@ -12,21 +12,20 @@ using ltr::Object;
 using ltr::LessIsBetterMeasure;
 
 namespace ltr {
+  class AbsError : public LessIsBetterMeasure<Object> {
+    public:
+    AbsError(const ParametersContainer& parameters = ParametersContainer())
+        :LessIsBetterMeasure<Object>("Absolute error") {
+      this->setDefaultParameters();
+      this->parameters().copyParameters(parameters);
+      this->checkParameters();
+    }
 
-class AbsError : public LessIsBetterMeasure<Object> {
-  public:
-  AbsError(const ParametersContainer& parameters = ParametersContainer())
-      :LessIsBetterMeasure<Object>("Absolute error") {
-    this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
-    this->checkParameters();
-  }
-
-  private:
-  double get_measure(const Object& element) const {
-    return std::fabs(element.actualLabel() -
-          element.predictedLabel());
-  }
+    private:
+    double get_measure(const Object& element) const {
+      return std::fabs(element.actualLabel() -
+            element.predictedLabel());
+    }
+  };
 };
-}
 #endif  // LTR_MEASURES_ABS_ERROR_H_
