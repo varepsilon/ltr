@@ -6,14 +6,15 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-
+// Can be poinwise and pairwise, but not listwise
 template <class TElement>
 class Accuracy : public MoreIsBetterMeasure<TElement> {
   public:
   Accuracy(const ParametersContainer& parameters = ParametersContainer())
-    :LessIsBetterMeasure<TElement>("Accuracy") {
+    :MoreIsBetterMeasure<TElement>("Accuracy") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
   }
   private:
   double get_measure(const TElement& object) const;

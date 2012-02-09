@@ -11,12 +11,16 @@ SET(LTR_FEATURE_CONVERTERS_TEST ${Source_Path}/ltr/feature_converters/feature_co
 
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc)
 
-SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/listwise_measures_unittest.cc)
+SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
+                      ${Source_Path}/ltr/measures/listwise_measures_unittest.cc
+                      ${Source_Path}/ltr/measures/pointwise_measures_unittest.cc
+					  ${Source_Path}/ltr/measures/pairwise_measures_unittest.cc)
 
 SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
 					 ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc)
 
-SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
+SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
+                        ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
 						${Source_Path}/ltr/interfaces/parameterized_unittest.cc)
 
 SET(LTR_PARAMETERS_CONTAINER_TEST ${Source_Path}/ltr/parameters_container/parameters_container_unittest.cc)

@@ -43,7 +43,7 @@ class ListwiseMeasuresTest : public ::testing::Test {
     olist << o3;
 
     Object o4;
-    o3 << 4;
+    o4 << 4;
     o4.setActualLabel(1);
     o4.setPredictedLabel(3);
 
