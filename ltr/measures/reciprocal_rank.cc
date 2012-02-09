@@ -1,11 +1,11 @@
 // Copyright 2011 Yandex
 
 #include <boost/lexical_cast.hpp>
-#include <string>
 #include <algorithm>
+#include <string>
 #include <stdexcept>
 
-#include "ltr/measures/average_precision.h"
+#include "ltr/measures/reciprocal_rank.h"
 #include "ltr/measures/utils/measure_utility.h"
 
 using std::sort;
@@ -16,31 +16,39 @@ using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
 
 namespace ltr {
-  double AveragePrecision::get_measure(const ObjectList& objects) const {
+  double ReciprocalRank::RRFormula(double pos) {
+    return 1.0/pos;
+  }
+
+  double ReciprocalRank::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    double ans = 0;
-    int relevant_amount = 0, total_amount = 1;
+    double result = 0.0;
+    bool relevant_found = false;
+    size_t pos = 1;
+
     for (vector<PredictedAndActualLabels>::const_iterator labels_it
         = labels.begin(); labels_it != labels.end();
-        ++labels_it, total_amount += 1) {
+        ++labels_it, pos += 1) {
       if (labels_it->actual >= parameters().getDouble("SCORE_FOR_RELEVANT")) {
-        relevant_amount += 1;
-        ans += static_cast<double>(relevant_amount)/total_amount;
+        result = RRFormula(static_cast<double>(pos));
+        relevant_found = true;
+        break;
       }
     }
-    if (relevant_amount == 0) {
+
+    if (!relevant_found) {
       string str;
       str.append("No relevants for some query on relevant score = ").
         append(boost::lexical_cast<string>(
           parameters().getDouble("SCORE_FOR_RELEVANT")));
       throw logic_error(str);
     }
-    double metric = ans / relevant_amount;
-    if (metric > 1.0) {
-      throw logic_error("Average Precision calculated > 1");
+
+    if (result > 1.0) {
+      throw logic_error("Reciprocal Rank calculated > 1");
     }
-    return metric;
+    return result;
   }
 };

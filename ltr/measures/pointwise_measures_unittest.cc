@@ -7,14 +7,16 @@
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/accuracy.h"
+#include "ltr/measures/squared_error.h"
 
 using ltr::Object;
 using ltr::utility::DoubleEqual;
 using ltr::ParametersContainer;
 using ltr::AbsError;
 using ltr::Accuracy;
+using ltr::SquaredError;
 
-class PointMeasuresTest : public ::testing::Test {
+class PointwiseMeasuresTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
     o1 << 1;
@@ -49,7 +51,7 @@ class PointMeasuresTest : public ::testing::Test {
     Object o5;
 };
 
-TEST_F(PointMeasuresTest, TestingAbsError) {
+TEST_F(PointwiseMeasuresTest, TestingAbsError) {
   AbsError ae;
   EXPECT_TRUE(DoubleEqual(ae(o1), 0));
   EXPECT_TRUE(DoubleEqual(ae(o2), 0.8));
@@ -58,11 +60,20 @@ TEST_F(PointMeasuresTest, TestingAbsError) {
   EXPECT_TRUE(DoubleEqual(ae(o5), 1.37));
 }
 
-TEST_F(PointMeasuresTest, TestingAccuracy) {
+TEST_F(PointwiseMeasuresTest, TestingAccuracy) {
   Accuracy<Object> ac;
   EXPECT_EQ(1, ac(o1));
   EXPECT_EQ(0, ac(o2));
   EXPECT_EQ(0, ac(o3));
   EXPECT_EQ(1, ac(o4));
   EXPECT_EQ(0, ac(o5));
+}
+
+TEST_F(PointwiseMeasuresTest, TestingSquaredError) {
+  SquaredError se;
+  EXPECT_TRUE(DoubleEqual(se(o1), 0));
+  EXPECT_TRUE(DoubleEqual(se(o2), 0.64));
+  EXPECT_TRUE(DoubleEqual(se(o3), 1));
+  EXPECT_TRUE(DoubleEqual(se(o4), 0));
+  EXPECT_TRUE(DoubleEqual(se(o5), 1.8769));
 }

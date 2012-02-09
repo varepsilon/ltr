@@ -2,23 +2,24 @@
 
 #include <gtest/gtest.h>
 
-#include <boost/filesystem.hpp>
-
 #include <vector>
 #include <limits>
 
+#include "ltr/utility/numerical.h"
 #include "ltr/measures/dcg.h"
 #include "ltr/measures/ndcg.h"
 #include "ltr/measures/average_precision.h"
-#include "ltr/utility/numerical.h"
+#include "ltr/measures/reciprocal_rank.h"
 
+using ltr::utility::DoubleEqual;
+using ltr::ParametersContainer;
 using ltr::Object;
 using ltr::ObjectList;
 using ltr::DCG;
 using ltr::NDCG;
 using ltr::AveragePrecision;
-using ltr::utility::DoubleEqual;
-using ltr::ParametersContainer;
+using ltr::ReciprocalRank;
+
 
 class ListwiseMeasuresTest : public ::testing::Test {
   protected:
@@ -106,4 +107,21 @@ TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
   param.setDouble("SCORE_FOR_RELEVANT", 5.0);
   AveragePrecision ap3(param);
   EXPECT_ANY_THROW(ap3(olist));
+}
+
+TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
+  ParametersContainer param;
+  param.setDouble("SCORE_FOR_RELEVANT", 2.0);
+  ReciprocalRank rr0(param);
+  EXPECT_TRUE(DoubleEqual(rr0(olist), 1.0)) << rr0(olist);
+  EXPECT_TRUE(DoubleEqual(rr0(olist2), 0.5)) << rr0(olist2);
+
+  param.setDouble("SCORE_FOR_RELEVANT", 1.0);
+  ReciprocalRank rr1(param);
+  EXPECT_TRUE(DoubleEqual(rr1(olist), 1.0)) << rr1(olist);
+  EXPECT_TRUE(DoubleEqual(rr1(olist2), 1.0)) << rr1(olist2);
+
+  param.setDouble("SCORE_FOR_RELEVANT", 5.0);
+  ReciprocalRank rr2(param);
+  EXPECT_ANY_THROW(rr2(olist));
 }

@@ -68,10 +68,12 @@ SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_
                             
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 				 ${Source_Path}/ltr/measures/abs_error.h
+				 ${Source_Path}/ltr/measures/squared_error.h
 				 ${Source_Path}/ltr/measures/accuracy.h ${Source_Path}/ltr/measures/accuracy.cc
 				 ${Source_Path}/ltr/measures/average_precision.h ${Source_Path}/ltr/measures/average_precision.cc
                  ${Source_Path}/ltr/measures/dcg.h ${Source_Path}/ltr/measures/dcg.cc
-                 ${Source_Path}/ltr/measures/ndcg.h ${Source_Path}/ltr/measures/ndcg.cc)
+                 ${Source_Path}/ltr/measures/ndcg.h ${Source_Path}/ltr/measures/ndcg.cc
+				 ${Source_Path}/ltr/measures/reciprocal_rank.h ${Source_Path}/ltr/measures/reciprocal_rank.cc)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
