@@ -38,8 +38,10 @@ namespace ltr {
       if (labels[labels_index].actual < 0) {
         throw logic_error(alias() + " some actual object label < 0");
       }
-      result += GMRRFormula(static_cast<double>(pos), labels[labels_index].actual, p_look);
-      p_relevance = labels[labels_index].actual / this->parameters().getInt("MAX_LABEL");
+      result += GMRRFormula(static_cast<double>(pos),
+        labels[labels_index].actual, p_look);
+      p_relevance = labels[labels_index].actual
+        / this->parameters().getInt("MAX_LABEL");
       p_look *= (1 - p_relevance);
     }
 
