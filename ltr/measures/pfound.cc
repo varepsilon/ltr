@@ -16,7 +16,7 @@ using ltr::ObjectList;
 
 namespace ltr {
   double PFound::get_measure(const ObjectList& objects) const {
-	  vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
+    vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
     size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");

@@ -135,7 +135,7 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
   PFound pf2(param);
   EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
   EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
- 
+
   pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   EXPECT_TRUE(DoubleEqual(pf(olist), pf2(olist)));
   EXPECT_TRUE(DoubleEqual(pf(olist2), pf2(olist2)));
