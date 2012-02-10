@@ -28,7 +28,7 @@ namespace ltr {
      * Some decreasing function, usually f(x) = 1/x
      * @param pos Position of the first RELEVANT object
      */
-    static double RRFormula(double pos);
+    double RRFormula(double pos) const;
   };
 };
 

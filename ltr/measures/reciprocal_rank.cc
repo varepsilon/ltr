@@ -16,8 +16,8 @@ using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
 
 namespace ltr {
-  double ReciprocalRank::RRFormula(double pos) {
-    return 1.0/pos;
+  double ReciprocalRank::RRFormula(double pos) const {
+    return 1.0 / pos;
   }
 
   double ReciprocalRank::get_measure(const ObjectList& objects) const {
