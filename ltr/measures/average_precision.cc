@@ -39,7 +39,9 @@ namespace ltr {
     }
     double metric = ans / relevant_amount;
     if (metric > 1.0) {
-      throw logic_error("Average Precision calculated > 1");
+      throw logic_error(alias() + " calculated > 1");
+    } else if (metric < 0.0) {
+      throw logic_error(alias() + " calculated < 0");
     }
     return metric;
   }

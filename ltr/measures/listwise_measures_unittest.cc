@@ -125,7 +125,7 @@ TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
   EXPECT_ANY_THROW(rr(olist));
 }
 
-TEST_F(ListwiseMeasuresTest, PFoundRank) {
+TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
   PFound pf;
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.88024)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.7985632)) << pf(olist2);
@@ -149,7 +149,10 @@ TEST_F(ListwiseMeasuresTest, PFoundRank) {
   pf.parameters().setDouble("P_BREAK", 0.23);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.76434259259259)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.65711983024691)) << pf(olist2);
+}
 
+TEST_F(ListwiseMeasuresTest, TestingPFoundRankExceptions) {
+  PFound pf;
   pf.parameters().setDouble("P_BREAK", -0.1);
   EXPECT_ANY_THROW(pf(olist));
   pf.parameters().setDouble("P_BREAK", 2.1);

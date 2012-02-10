@@ -13,7 +13,7 @@ namespace ltr {
   public:
     ReciprocalRank(const ParametersContainer&
         parameters = ParametersContainer())
-        :MoreIsBetterMeasure<ObjectList>("ReciprocalRank") {
+        :MoreIsBetterMeasure<ObjectList>("Reciprocal Rank") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
     }

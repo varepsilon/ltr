@@ -8,6 +8,7 @@
 #include "ltr/measures/measure.h"
 #include "ltr/data/object.h"
 
+using std::fabs;
 using ltr::Object;
 using ltr::LessIsBetterMeasure;
 
@@ -22,7 +23,7 @@ namespace ltr {
 
     private:
     double get_measure(const Object& element) const {
-      return std::fabs(element.actualLabel() -
+      return fabs(element.actualLabel() -
             element.predictedLabel());
     }
   };
