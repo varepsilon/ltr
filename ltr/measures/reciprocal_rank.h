@@ -16,7 +16,6 @@ namespace ltr {
         :MoreIsBetterMeasure<ObjectList>("ReciprocalRank") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
     }
 
     void setDefaultParameters() {

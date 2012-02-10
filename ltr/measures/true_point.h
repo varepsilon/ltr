@@ -21,7 +21,6 @@ namespace ltr {
         :MoreIsBetterMeasure<Object>("TruePoint") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
     }
 
   private:

@@ -17,7 +17,6 @@ namespace ltr {
         :MoreIsBetterMeasure<ObjectList>("Average precision") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
     }
 
   void setDefaultParameters() {

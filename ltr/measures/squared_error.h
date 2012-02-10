@@ -18,7 +18,6 @@ namespace ltr {
         :LessIsBetterMeasure<Object>("Squared error") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
     }
 
     private:

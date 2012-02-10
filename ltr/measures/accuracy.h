@@ -14,7 +14,6 @@ class Accuracy : public MoreIsBetterMeasure<TElement> {
     :MoreIsBetterMeasure<TElement>("Accuracy") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
   }
   private:
   double get_measure(const TElement& object) const;

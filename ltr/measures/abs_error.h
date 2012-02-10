@@ -18,7 +18,6 @@ namespace ltr {
         :LessIsBetterMeasure<Object>("Absolute error") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
-      this->checkParameters();
     }
 
     private:

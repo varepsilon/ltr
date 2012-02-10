@@ -84,14 +84,11 @@ typedef Measure<ObjectList> ListwiseMeasure;
 
 template< class TElement>
 double Measure<TElement>::operator()(const TElement& element) const {
+  this->checkParameters();
   if (element.size() == 0) {
     throw logic_error(alias() + " gained empty list");
   }
-  double measure;
-  measure = get_measure(element);
-  if (measure < 0) {
-    throw logic_error(alias() + " negative calculated");
-  };
+  double measure = get_measure(element);
   return measure;
 };
 

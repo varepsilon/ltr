@@ -10,6 +10,7 @@
 #include "ltr/measures/ndcg.h"
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/reciprocal_rank.h"
+#include "ltr/measures/pfound.h"
 
 using ltr::utility::DoubleEqual;
 using ltr::ParametersContainer;
@@ -19,6 +20,7 @@ using ltr::DCG;
 using ltr::NDCG;
 using ltr::AveragePrecision;
 using ltr::ReciprocalRank;
+using ltr::PFound;
 
 
 class ListwiseMeasuresTest : public ::testing::Test {
@@ -124,4 +126,46 @@ TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
   param.setDouble("SCORE_FOR_RELEVANT", 5.0);
   ReciprocalRank rr2(param);
   EXPECT_ANY_THROW(rr2(olist));
+}
+
+TEST_F(ListwiseMeasuresTest, PFoundRank) {
+  PFound pf;
+  EXPECT_TRUE(DoubleEqual(pf(olist), 0.88024)) << pf(olist);
+  EXPECT_TRUE(DoubleEqual(pf(olist2), 0.7985632)) << pf(olist2);
+
+  ParametersContainer param;
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  PFound pf2(param);
+  EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
+  EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
+
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
+  param.setDouble("MAX_LABEL", 6.0);
+  PFound pf3(param);
+  EXPECT_TRUE(DoubleEqual(pf3(olist), 0.78078703703703)) << pf3(olist);
+  EXPECT_TRUE(DoubleEqual(pf3(olist2), 0.71972415123456)) << pf3(olist2);
+
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+  param.setDouble("P_BREAK", 0.23);
+  PFound pf4(param);
+  EXPECT_TRUE(DoubleEqual(pf4(olist), 0.76434259259259)) << pf4(olist);
+  EXPECT_TRUE(DoubleEqual(pf4(olist2), 0.65711983024691)) << pf4(olist2);
+
+  param.setDouble("P_BREAK", -0.1);
+  PFound pf5(param);
+  EXPECT_ANY_THROW(pf5(olist));
+  param.setDouble("P_BREAK", 2.1);
+  PFound pf6(param);
+  EXPECT_ANY_THROW(pf6(olist));
+  param.setDouble("P_BREAK", 0.1);
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", -2);
+  PFound pf7(param);
+  EXPECT_ANY_THROW(pf7(olist));
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  param.setDouble("MAX_LABEL", -8.0);
+  PFound pf8(param);
+  EXPECT_ANY_THROW(pf8(olist));
+
+  olist[1].setActualLabel(-1.0);
+  EXPECT_ANY_THROW(pf(olist));
 }
