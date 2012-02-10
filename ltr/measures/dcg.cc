@@ -2,70 +2,44 @@
 
 #include <cmath>
 #include <algorithm>
-#include <vector>
-#include <iostream>
+#include <stdexcept>
 
+#include "ltr/data/object_list.h"
 #include "ltr/measures/dcg.h"
-#include "ltr/utility/numerical.h"
+#include "ltr/measures/utils/measure_utility.h"
 
 using std::pow;
 using std::log;
-using std::min;
 using std::sort;
-using std::vector;
+using std::logic_error;
+using ltr::utility::PredictedAndActualLabels;
+using ltr::utility::ExtractLabels;
+using ltr::utility::PredictedDecreasingActualIncreasing;
+using ltr::ObjectList;
 
-using ltr::utility::DoubleLess;
-using ltr::utility::DoubleMore;
-using ltr::utility::equalWithNaN;
 
 namespace ltr {
-
-bool sortPredicatedDecreasingActualIncreasingFunc(
-    const PredictedAndActualLabels& firstObjectsLabels,
-    const PredictedAndActualLabels& secondObjectsLabels) {
-  if (DoubleMore(firstObjectsLabels.first, secondObjectsLabels.first)) {
-    return true;
-  }
-  if (equalWithNaN(firstObjectsLabels.first, secondObjectsLabels.first)) {
-    return DoubleLess(firstObjectsLabels.second, secondObjectsLabels.second);
-  }
-  return false;
-}
-
-double DCG::get_measure(const ObjectList& objects) const {
-  int consideredTopObjectsNumber  =
-      this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
-
-  consideredTopObjectsNumber = consideredTopObjectsNumber == 0 ?
-      objects.size() : min<int>(consideredTopObjectsNumber, objects.size());
-
-  assert(consideredTopObjectsNumber >= 0);
-
-  if (predictedAndActualLabels.size() != objects.size()) {
-    predictedAndActualLabels.resize(objects.size());
+  double DCG::DCGFormula(double relevance, size_t position) {
+    return (pow(2, relevance) - 1) / log(position + 2.0);
   }
 
-  for (size_t objIdx = 0; objIdx < objects.size(); ++objIdx) {
-    predictedAndActualLabels[objIdx].first = objects[objIdx].predictedLabel();
-    predictedAndActualLabels[objIdx].second = objects[objIdx].actualLabel();
+  double DCG::get_measure(const ObjectList& objects) const {
+    vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
+    sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
+
+    size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    if ((n == 0) || (n > labels.size())) {
+      n = labels.size();
+    }
+
+    double result = 0.0;
+    for (int labels_index = 0; labels_index < n; ++labels_index) {
+      result += DCGFormula(labels[labels_index].actual, labels_index);
+    }
+
+    if (result < 0.0) {
+      throw logic_error(alias() + " calculated < 0");
+    }
+    return result;
   }
-
-  sort(predictedAndActualLabels.begin(), predictedAndActualLabels.end(),
-      sortPredicatedDecreasingActualIncreasingFunc);
-
-  double dcgMeasueValue = 0.0;
-  for (int position = 0;
-      position < consideredTopObjectsNumber;
-      ++position) {
-    dcgMeasueValue += iterartion_dcg_formula(
-        predictedAndActualLabels[position].second,
-        position);
-  }
-
-  return dcgMeasueValue;
-}
-
-double DCG::iterartion_dcg_formula(double relevance, size_t position) {
-  return (pow(2, relevance) - 1) / log(position + 2.0);
-}
-}
+};

@@ -27,6 +27,10 @@ namespace utility {
   bool PredictedDecreasingActualIncreasing(
     const PredictedAndActualLabels& left,
     const PredictedAndActualLabels& right);
+
+  bool ActualDecreasing(
+    const PredictedAndActualLabels& left,
+    const PredictedAndActualLabels& right);
 };
 };
 

@@ -37,5 +37,11 @@ namespace utility {
     }
     return false;
   }
+
+  bool ActualDecreasing(
+      const PredictedAndActualLabels& left,
+      const PredictedAndActualLabels& right) {
+    return DoubleMore(left.actual, right.actual);
+  }
 };
 };

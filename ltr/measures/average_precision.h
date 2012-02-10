@@ -20,6 +20,7 @@ namespace ltr {
     }
 
   void setDefaultParameters() {
+    this->parameters().clear();
     this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
   }
   private:

@@ -26,6 +26,7 @@ namespace ltr {
     * if 0 than consider all docs
     */
     void setDefaultParameters() {
+      this->parameters().clear();
       this->parameters().setDouble("P_BREAK", 0.15);
       this->parameters().setDouble("MAX_LABEL", 5.0);
       this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);

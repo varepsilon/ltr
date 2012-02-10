@@ -19,6 +19,7 @@ namespace ltr {
     }
 
     void setDefaultParameters() {
+      this->parameters().clear();
       this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
     }
 
@@ -28,7 +29,7 @@ namespace ltr {
      * Some decreasing function, usually f(x) = 1/x
      * @param pos Position of the first RELEVANT object
      */
-    double RRFormula(double pos) const;
+    static double RRFormula(double pos);
   };
 };
 

@@ -67,9 +67,12 @@ class ListwiseMeasuresTest : public ::testing::Test {
 
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg0;
-  DCG dcg1(1);
-  DCG dcg2(2);
-  DCG dcg3(3);
+  DCG dcg1;
+  dcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  DCG dcg2;
+  dcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  DCG dcg3;
+  dcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 21.64042561333445));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 22.550664839961289));
@@ -79,9 +82,12 @@ TEST_F(ListwiseMeasuresTest, TestingDCG) {
 
 TEST_F(ListwiseMeasuresTest, TestingNDCG) {
   NDCG ndcg0;
-  NDCG ndcg1(1);
-  NDCG ndcg2(2);
-  NDCG ndcg3(3);
+  NDCG ndcg1;
+  ndcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  NDCG ndcg2;
+  ndcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  NDCG ndcg3;
+  ndcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.92530188545727754));

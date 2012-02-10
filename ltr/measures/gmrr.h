@@ -18,6 +18,7 @@ namespace ltr {
     * NUMBER_OF_OBJECTS_TO_CONSIDER Number of top documents to consider
     */
     void setDefaultParameters() {
+      this->parameters().clear();
       this->parameters().setDouble("MAX_LABEL", 5.0);
       this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
@@ -32,9 +33,9 @@ namespace ltr {
   private:
     double get_measure(const ObjectList& objects) const;
     /*
-    * @param pos Current position in the sorted list
-    * @param label Label of the current object in list
-    * @param p_look The probability of that user have reached the current position
+    * \param pos Current position in the sorted list
+    * \param label Label of the current object in list
+    * \param p_look The probability of that user have reached the current position
     * without meeting some good enough document
     */
     double GMRRFormula(double pos, double label, double p_look) const;
