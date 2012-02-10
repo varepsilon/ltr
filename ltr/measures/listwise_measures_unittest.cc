@@ -92,40 +92,37 @@ TEST_F(ListwiseMeasuresTest, TestingNDCG) {
 TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
   ParametersContainer param;
   param.setDouble("SCORE_FOR_RELEVANT", 2.0);
-  AveragePrecision ap0(param);
-  EXPECT_TRUE(DoubleEqual(ap0(olist), 0.833333333333333333)) << ap0(olist);
-  EXPECT_TRUE(DoubleEqual(ap0(olist2), 0.5)) << ap0(olist2);
+  AveragePrecision ap(param);
+  EXPECT_TRUE(DoubleEqual(ap(olist), 0.833333333333333333)) << ap(olist);
+  EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
   param.setDouble("SCORE_FOR_RELEVANT", 1.0);
   AveragePrecision ap1(param);
   EXPECT_TRUE(DoubleEqual(ap1(olist), 1.0)) << ap1(olist);
   EXPECT_TRUE(DoubleEqual(ap1(olist2), 1.0)) << ap1(olist2);
 
-  param.setDouble("SCORE_FOR_RELEVANT", 4.0);
-  AveragePrecision ap2(param);
-  EXPECT_TRUE(DoubleEqual(ap2(olist), 1.0)) << ap2(olist);
-  EXPECT_TRUE(DoubleEqual(ap2(olist2), 0.5)) << ap2(olist2);
+  ap.parameters().setDouble("SCORE_FOR_RELEVANT", 4.0);
+  EXPECT_TRUE(DoubleEqual(ap(olist), 1.0)) << ap(olist);
+  EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  param.setDouble("SCORE_FOR_RELEVANT", 5.0);
-  AveragePrecision ap3(param);
-  EXPECT_ANY_THROW(ap3(olist));
+  ap.parameters().setDouble("SCORE_FOR_RELEVANT", 5.0);
+  EXPECT_ANY_THROW(ap(olist));
 }
 
 TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
   ParametersContainer param;
   param.setDouble("SCORE_FOR_RELEVANT", 2.0);
-  ReciprocalRank rr0(param);
-  EXPECT_TRUE(DoubleEqual(rr0(olist), 1.0)) << rr0(olist);
-  EXPECT_TRUE(DoubleEqual(rr0(olist2), 0.5)) << rr0(olist2);
+  ReciprocalRank rr(param);
+  EXPECT_TRUE(DoubleEqual(rr(olist), 1.0)) << rr(olist);
+  EXPECT_TRUE(DoubleEqual(rr(olist2), 0.5)) << rr(olist2);
 
   param.setDouble("SCORE_FOR_RELEVANT", 1.0);
   ReciprocalRank rr1(param);
   EXPECT_TRUE(DoubleEqual(rr1(olist), 1.0)) << rr1(olist);
   EXPECT_TRUE(DoubleEqual(rr1(olist2), 1.0)) << rr1(olist2);
 
-  param.setDouble("SCORE_FOR_RELEVANT", 5.0);
-  ReciprocalRank rr2(param);
-  EXPECT_ANY_THROW(rr2(olist));
+  rr.parameters().setDouble("SCORE_FOR_RELEVANT", 5.0);
+  EXPECT_ANY_THROW(rr(olist));
 }
 
 TEST_F(ListwiseMeasuresTest, PFoundRank) {
@@ -138,34 +135,34 @@ TEST_F(ListwiseMeasuresTest, PFoundRank) {
   PFound pf2(param);
   EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
   EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
+ 
+  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  EXPECT_TRUE(DoubleEqual(pf(olist), pf2(olist)));
+  EXPECT_TRUE(DoubleEqual(pf(olist2), pf2(olist2)));
 
-  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
-  param.setDouble("MAX_LABEL", 6.0);
-  PFound pf3(param);
-  EXPECT_TRUE(DoubleEqual(pf3(olist), 0.78078703703703)) << pf3(olist);
-  EXPECT_TRUE(DoubleEqual(pf3(olist2), 0.71972415123456)) << pf3(olist2);
+  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
+  pf.parameters().setDouble("MAX_LABEL", 6.0);
+  EXPECT_TRUE(DoubleEqual(pf(olist), 0.78078703703703)) << pf(olist);
+  EXPECT_TRUE(DoubleEqual(pf(olist2), 0.71972415123456)) << pf(olist2);
 
-  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  param.setDouble("P_BREAK", 0.23);
-  PFound pf4(param);
-  EXPECT_TRUE(DoubleEqual(pf4(olist), 0.76434259259259)) << pf4(olist);
-  EXPECT_TRUE(DoubleEqual(pf4(olist2), 0.65711983024691)) << pf4(olist2);
+  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+  pf.parameters().setDouble("P_BREAK", 0.23);
+  EXPECT_TRUE(DoubleEqual(pf(olist), 0.76434259259259)) << pf(olist);
+  EXPECT_TRUE(DoubleEqual(pf(olist2), 0.65711983024691)) << pf(olist2);
 
-  param.setDouble("P_BREAK", -0.1);
-  PFound pf5(param);
-  EXPECT_ANY_THROW(pf5(olist));
-  param.setDouble("P_BREAK", 2.1);
-  PFound pf6(param);
-  EXPECT_ANY_THROW(pf6(olist));
-  param.setDouble("P_BREAK", 0.1);
-  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", -2);
-  PFound pf7(param);
-  EXPECT_ANY_THROW(pf7(olist));
-  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
-  param.setDouble("MAX_LABEL", -8.0);
-  PFound pf8(param);
-  EXPECT_ANY_THROW(pf8(olist));
+  pf.parameters().setDouble("P_BREAK", -0.1);
+  EXPECT_ANY_THROW(pf(olist));
+  pf.parameters().setDouble("P_BREAK", 2.1);
+  EXPECT_ANY_THROW(pf(olist));
+  pf.parameters().setDouble("P_BREAK", 0.1);
+  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", -2);
+  EXPECT_ANY_THROW(pf(olist));
+  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  pf.parameters().setDouble("MAX_LABEL", -8.0);
+  EXPECT_ANY_THROW(pf(olist));
 
+  pf.setDefaultParameters();
   olist[1].setActualLabel(-1.0);
   EXPECT_ANY_THROW(pf(olist));
+  EXPECT_NO_THROW(pf(olist2));
 }
