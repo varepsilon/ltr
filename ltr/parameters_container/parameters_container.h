@@ -49,7 +49,6 @@ namespace ltr {
     TMap params;
   };
 
-
   // Template realization
   template <class T>
   T ParametersContainer::get(const string& name) const {
