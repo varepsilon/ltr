@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <string>
+#include <vector>
 
 #include "ltr/data/object_list.h"
 #include "ltr/measures/measure.h"
@@ -14,6 +15,7 @@
 using std::sort;
 using std::logic_error;
 using std::string;
+using std::vector;
 using ltr::utility::PredictedAndActualLabels;
 using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
@@ -23,7 +25,7 @@ namespace ltr {
   class DCGFormula : public Aliaser {
   public:
     DCGFormula() : Aliaser("common DCG formula") {}
-    DCGFormula(const string& alias) : Aliaser(alias) {}
+    explicit DCGFormula(const string& alias) : Aliaser(alias) {}
     /** The result of this function is added to the DCG for each position.
      * \param relevance the relevance the object in position
      * \param position the position number 0..size() - 1

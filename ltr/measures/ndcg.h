@@ -5,6 +5,7 @@
 
 #include <stdexcept>
 #include <algorithm>
+#include <vector>
 
 #include "ltr/data/object_list.h"
 #include "ltr/measures/measure.h"
@@ -14,6 +15,7 @@
 
 using std::sort;
 using std::logic_error;
+using std::vector;
 using ltr::utility::PredictedAndActualLabels;
 using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
