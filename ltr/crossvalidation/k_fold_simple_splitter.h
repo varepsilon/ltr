@@ -62,7 +62,7 @@ namespace ltr {
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::checkParameters() const {
       if (this->parameters().getInt("K") < 2) {
-        throw logic_error(alias() + " k should be grater then 1");
+        throw logic_error(this->alias() + " k should be grater then 1");
       }
     }
 
@@ -79,7 +79,8 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw logic_error(alias() + " index should be in range [0..k-1]");
+        throw logic_error(this->alias() +
+          " index should be in range [0..k-1]");
       }
 
       train_set_indexes->clear();

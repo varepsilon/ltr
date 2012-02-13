@@ -45,7 +45,7 @@ namespace ltr {
        */
       void checkParameters() const;
 
-      virtual int splitCount(const DataSet<TElement>& base_set) const;
+      int splitCount(const DataSet<TElement>& base_set) const;
 
     protected:
       virtual void splitImpl(
@@ -75,10 +75,10 @@ namespace ltr {
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::checkParameters() const {
       if (this->parameters().getInt("K") < 2) {
-        throw logic_error("k should be grater then 1!");
+        throw logic_error(this->alias() + " k should be grater then 1!");
       }
       if (this->parameters().getInt("T") < 1) {
-        throw logic_error("T should be positive!");
+        throw logic_error(this->alias() + " T should be positive!");
       }
     }
 
@@ -95,7 +95,8 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw logic_error("index should be in range [0..T*k-1]");
+        throw logic_error(this-> alias() +
+          " index should be in range [0..T*k-1]");
       }
 
       train_set_indexes->clear();
