@@ -18,17 +18,23 @@ using ltr::utility::MarkDataSet;
 
 namespace ltr {
   namespace cv {
+    /**
+     * Performs crossvalidation
+     * @param data_set - data set to run crossvalidation on
+     * @param measures - measures, wich values will be calculated for every split
+     * on test data
+     * @param learner - learner used to produce scorers on train data
+     * @param splitter - splitter used to split dataset into train + test sets
+     * @returns ValidationResult with information about all splits performed
+     */
     template<class TElement>
     ValidationResult Validate(
       const DataSet<TElement>& data_set,
       const vector< typename Measure<TElement>::Ptr >& measures,
       typename BaseLearner<TElement>::Ptr learner,
       typename Splitter<TElement>::Ptr splitter);
-  };
-};
 
-namespace ltr {
-  namespace cv {
+    // template realizations
     template<class TElement>
     ValidationResult Validate(
         const DataSet<TElement>& data_set,

@@ -16,30 +16,33 @@ using std::logic_error;
 namespace ltr {
   namespace cv {
     /**
-     * Simply splits by indexes (not using random). Is in fact leave-one-out
-     * for granulated into k pieces dataset
+     * Simply splits by indices of objects in dataset (not using random).
+     * Is in fact leave-one-out for granulated into k pieces dataset
      */
     template<class TElement>
     class KFoldSimpleSplitter : public Splitter<TElement> {
     public:
       typedef boost::shared_ptr<KFoldSimpleSplitter> Ptr;
-
+      /**
+       * @param parameters Standart LTR parameter container with int parameter
+       * K, by default K = 10
+       */
       explicit KFoldSimpleSplitter
-          (const ParametersContainer& parameters = ParametersContainer()) {
+          (const ParametersContainer& parameters = ParametersContainer())
+          : Splitter<TElement>("KFoldSimpleSplitter") {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
-        this->checkParameters();
       }
-      void setDefaultParameters() {
-        this->parameters().setInt("K", 10);
-      }
-      void checkParameters() {
-        if (this->parameters().getInt("K") < 2) {
-          throw logic_error("k should be grater then 1!");
-        }
-      }
+      /**
+       * Clears parameters container and sets int K = 10
+       */
+      void setDefaultParameters();
+      /**
+       * Checks if K >= 2 (that should be true)
+       */
+      void checkParameters() const;
 
-      virtual int splitCount(const DataSet<TElement>& base_set) const;
+      int splitCount(const DataSet<TElement>& base_set) const;
 
     protected:
       virtual void splitImpl(
@@ -48,6 +51,20 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const;
     };
+
+    // template realizations
+    template<class TElement>
+    void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
+      this->parameters().clear();
+      this->parameters().setInt("K", 10);
+    }
+
+    template<class TElement>
+    void KFoldSimpleSplitter<TElement>::checkParameters() const {
+      if (this->parameters().getInt("K") < 2) {
+        throw logic_error(alias() + " k should be grater then 1");
+      }
+    }
 
     template<class TElement>
     int KFoldSimpleSplitter<TElement>::splitCount(
@@ -62,7 +79,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw logic_error("index should be in range [0..k-1]");
+        throw logic_error(alias() + " index should be in range [0..k-1]");
       }
 
       train_set_indexes->clear();

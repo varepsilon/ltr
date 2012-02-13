@@ -6,16 +6,23 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <string>
 
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/aliaser.h"
 
 using std::vector;
+using std::string;
+using ltr::Aliaser;
 using ltr::utility::lightSubset;
 
 namespace ltr {
   namespace cv {
     template<class TElement>
+    /**
+     * Contains two datasets, one for training, another for testing
+     */
     struct SplittedDataSet {
       DataSet<TElement> train_set;
       DataSet<TElement> test_set;
@@ -26,27 +33,40 @@ namespace ltr {
     };
 
     /**
-     * Splits data set into training + test sets.
+     * Splits data set into training + testing sets.
      */
     template<class TElement>
-    class Splitter : public Parameterized {
-     public:
-       typedef boost::shared_ptr<Splitter> Ptr;
-       typedef boost::shared_ptr<Splitter> BasePtr;
+    class Splitter : public Parameterized, public Aliaser {
+    public:
+      typedef boost::shared_ptr<Splitter> Ptr;
+      typedef boost::shared_ptr<Splitter> BasePtr;
+      /**
+       * Sets splitter's alias
+       */
+      Splitter(const string& alias) : Aliaser(alias) {}
       /**
        * Total number of possible splits for an input dataset.
        */
-       virtual int splitCount(const DataSet<TElement>& base_set) const = 0;
+      virtual int splitCount(const DataSet<TElement>& base_set) const = 0;
       /**
-       * Perform split.
-       * @param split_index - index of split (0..splitCount()-1).
+       * Perform split into training + testing sets
+       * @param split_index - index of split (0..splitCount()-1)
        * @param base_set - set to be splitted
        */
       SplittedDataSet<TElement> split(int split_index,
         const DataSet<TElement>& base_set) const;
 
       virtual ~Splitter() {}
-     protected:
+    protected:
+      /**
+       * Perform split into training + testing sets by operating objects' indices
+       * @param split_index - index of split (0..splitCount()-1)
+       * @param base_set - set to be splitted
+       * @param train_set_indexes - indices of objects from input dataset to
+       * be splitted as train set
+       * @param test_set_indexes - indices of objects from input dataset to
+       * be splitted as test set
+       */
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
@@ -54,9 +74,11 @@ namespace ltr {
         vector<size_t>* test_set_indexes) const = 0;
     };
 
+    // template realization
     template <class TElement>
     SplittedDataSet<TElement> Splitter<TElement>::split(int split_index,
         const DataSet<TElement>& base_set) const {
+      this->checkParameters();
       vector<size_t> train_set_indexes;
       vector<size_t> test_set_indexes;
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);

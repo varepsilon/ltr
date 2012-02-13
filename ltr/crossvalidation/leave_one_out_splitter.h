@@ -23,11 +23,15 @@ namespace ltr {
       typedef boost::shared_ptr<LeaveOneOutSplitter> Ptr;
 
       virtual int splitCount(const DataSet<TElement>& base_set) const;
+      /**
+       * @param parameters Standart LTR parameter container with no parameters
+       * (LeaveOneOutSplitter has no parameters at all)
+       */
       explicit LeaveOneOutSplitter
-          (const ParametersContainer& parameters = ParametersContainer()) {
+          (const ParametersContainer& parameters = ParametersContainer())
+          : Splitter<TElement>("LeaveOneOutSplitter") {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
-        this->checkParameters();
       }
 
     protected:
@@ -38,6 +42,7 @@ namespace ltr {
         std::vector<size_t>* test_set_indexes) const;
     };
 
+    // template realizations
     template<class TElement>
     int LeaveOneOutSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
@@ -51,7 +56,7 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw logic_error("index should be in range [0..dataset_size-1]");
+        throw logic_error(alias() + " index should be in range [0..dataset_size-1]");
       }
 
       train_set_indexes->clear();
