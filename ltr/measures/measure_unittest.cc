@@ -63,4 +63,9 @@ TEST(MeasureTest, MeasureTest) {
   ObjectList empty_olist;
   AveragePrecision ap;
   EXPECT_ANY_THROW(ap(empty_olist));
+
+  EXPECT_TRUE(ae.better(0.3, 1.2));
+  EXPECT_FALSE(se.better(0.2, 0.1));
+  EXPECT_TRUE(ap.better(1, 0.5));
+  EXPECT_FALSE(ap.better(0.3, 1.5));
 }
