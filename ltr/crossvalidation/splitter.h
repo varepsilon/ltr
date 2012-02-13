@@ -43,7 +43,7 @@ namespace ltr {
       /**
        * Sets splitter's alias
        */
-      Splitter(const string& alias) : Aliaser(alias) {}
+      explicit Splitter(const string& alias) : Aliaser(alias) {}
       /**
        * Total number of possible splits for an input dataset.
        */

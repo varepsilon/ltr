@@ -56,7 +56,8 @@ namespace ltr {
         vector<size_t>* train_set_indexes,
         vector<size_t>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
-        throw logic_error(alias() + " index should be in range [0..dataset_size-1]");
+        throw logic_error(alias() +
+          " index should be in range [0..dataset_size-1]");
       }
 
       train_set_indexes->clear();
