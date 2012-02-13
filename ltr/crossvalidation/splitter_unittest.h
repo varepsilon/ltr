@@ -27,7 +27,6 @@ class SplitterTest : public ::testing::Test {
     // but it's not significant for splitters
   }
 
-  protected:
   DataSet<Object> data;
 };
 

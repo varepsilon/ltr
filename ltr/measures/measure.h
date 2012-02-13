@@ -95,7 +95,7 @@ double Measure<TElement>::operator()(const TElement& element) const {
 template< class TElement>
 double Measure<TElement>::average(const DataSet<TElement>& set) const {
   if (set.size() == 0) {
-    throw logic_error(alias() + " measure gained empty set");
+    throw logic_error(alias() + " gained empty set");
   }
 
   double sum = 0.0;
