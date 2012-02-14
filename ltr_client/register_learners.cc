@@ -11,6 +11,7 @@ using ltr::ObjectList;
 using ltr::BestFeatureLearner;
 using ltr::gp::GPLearner;
 
+template<>
 void LearnerFactory::registerAll() {
   REGISTER_POINTWISE_LEARNER("BEST_FEATURE", BestFeatureLearner<Object>);
   REGISTER_PAIRWISE_LEARNER("BEST_FEATURE", BestFeatureLearner<ObjectPair>);
