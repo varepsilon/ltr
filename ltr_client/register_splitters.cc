@@ -13,6 +13,7 @@ using ltr::cv::KFoldSimpleSplitter;
 using ltr::cv::TKFoldSimpleSplitter;
 using ltr::cv::LeaveOneOutSplitter;
 
+template<>
 void SplitterFactory::registerAll() {
   REGISTER_POINTWISE_SPLITTER("K_FOLD", KFoldSimpleSplitter<Object>);
   REGISTER_PAIRWISE_SPLITTER("K_FOLD", KFoldSimpleSplitter<ObjectPair>);

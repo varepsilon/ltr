@@ -5,6 +5,7 @@
 #include "ltr/measures/ndcg.h"
 #include "ltr/measures/abs_error.h"
 
+template <>
 void MeasureFactory::registerAll() {
   REGISTER_LISTWISE_MEASURE("DCG", ltr::DCG);
   REGISTER_LISTWISE_MEASURE("NDCG", ltr::NDCG);
