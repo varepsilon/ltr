@@ -28,26 +28,13 @@ class SimpleFactory {
       return typename T::BasePtr(new T(parameters));
     }
 };
-#endif  // LTR_CLIENT_FACTORY_H_
-
-#if defined MEASURE_FACTORY
-  #define FACTORY_CLASS MeasureFactory
-  #define TObject ltr::Measure
-#elif defined LEARNER_FACTORY
-  #define FACTORY_CLASS LearnerFactory
-  #define TObject ltr::BaseLearner
-#elif defined SPLITTER_FACTORY
-  #define FACTORY_CLASS SplitterFactory
-  #define TObject ltr::cv::Splitter
-#else
-  #error "Unknown factory"
-#endif
 
 /**
 This class is used to init Measures, Learners and Splitters.
 Has 3 instantations MeasureFactory, LearnerFactory, SplitterFactory
 */
-class FACTORY_CLASS {
+template<template<class T> class TObject>
+class Factory {
   private:
     template<class TElement>
       class Initer {
@@ -76,7 +63,7 @@ class FACTORY_CLASS {
       void registerAll();
 
   public:
-    FACTORY_CLASS() {
+    Factory() {
       registerAll();
     }
     /**
@@ -131,5 +118,5 @@ class FACTORY_CLASS {
       initers[type][Approach<TElement>::name()] = Initer<TElement>(func);
     }
 };
-#undef FACTORY_CLASS
-#undef TObject
+
+#endif  // LTR_CLIENT_FACTORY_H_

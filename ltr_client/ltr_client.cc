@@ -217,7 +217,7 @@ void LtrClient::loadLearners() {
         const char* type = learner_elem->Attribute("type");
         const char* approach = learner_elem->Attribute("approach");
         const char* weak_learner_name = 0;
-        const char* measure;
+        const char* measure = "";
 
         if (!name)
             throw std::logic_error("<learner> with no 'name' attribute");
@@ -335,9 +335,20 @@ bool LtrClient::parseBool(std::string val) {
 vector<int> LtrClient::parseList(std::string val) {
     vector<int> res;
     std::stringstream str(val);
-    int tm;
-    while (str >> tm)
+    int tm, tm2;
+    char tmch;
+    while (str >> tm) {
+      if (str.peek() == '-') {
+        if (!(str >> tmch >> tm2))
+          throw std::logic_error("list format error: " + val);
+        for (int a = tm; a <= tm2; a++)
+          res.push_back(a);
+      } else {
         res.push_back(tm);
+      }
+      if (!str.eof() && str.peek() != ' ')
+        throw std::logic_error("list format error: " + val);
+    }
     return res;
 }
 
@@ -384,8 +395,8 @@ ltr::ParametersContainer LtrClient::loadParameters(TiXmlElement* params) {
                 }
             }
         } catch(std::logic_error err) {
-            client_logger_.warning() << "can't parse parameter "
-                                     << name << " " << err.what() << std::endl;
+          throw std::logic_error("can't parse parameter " +
+                                  name + ": " + err.what());
         }
         param = param->NextSiblingElement();
     }
