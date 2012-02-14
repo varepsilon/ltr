@@ -73,6 +73,7 @@ namespace ltr {
   };
 
   typedef BaseDCG<DCGFormula> DCG;
+  typedef BaseDCG<YandexDCGFormula> YADCG;
 
   // template realizations
   template<class TDCGFormula>

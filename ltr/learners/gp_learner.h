@@ -55,15 +55,15 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   void setDefaultParameters() {
     this->parameters().clear();
-    this->parameters().setInt("POP_SIZE", 3);
+    this->parameters().setInt("POP_SIZE", 10);
     this->parameters().setInt("NBR_GEN", 3);
     this->parameters().setInt("NBR_PART", 2);
-    this->parameters().setInt("MAX_DEPTH", 17);
+    this->parameters().setInt("MAX_DEPTH", 35);
     this->parameters().setInt("MIN_INIT_DEPTH", 2);
-    this->parameters().setInt("MAX_INIT_DEPTH", 5);
+    this->parameters().setInt("MAX_INIT_DEPTH", 20);
     this->parameters().setDouble("INIT_GROW_PROBA", 0.5);
     this->parameters().setDouble("CROSSOVER_PROBA", 0.9);
-    this->parameters().setDouble("CROSSOVER_DISTRIB_PROBA", 0.9);
+    this->parameters().setDouble("CROSSOVER_DISTRIB_PROBA", 0.5);
     this->parameters().setDouble("MUT_STD_PROBA", 0.05);
     this->parameters().setInt("MUT_MAX_REGEN_DEPTH", 5);
     this->parameters().setDouble("MUT_SWAP_PROBA", 0.05);
@@ -146,6 +146,32 @@ class GPLearner : public Learner<TElement, GPScorer> {
         this->parameters().getInt("MAX_INIT_DEPTH"));
   }
 
+  /** This function implements the changes made in the population at each
+   *  algorithm's iteration.
+   */
+  virtual void evaluationStrategyStepImpl() {
+    std::cout << "Tournament.\n";
+    Puppy::applySelectionTournament(population_, context_,
+        this->parameters().getInt("NBR_PART"));
+
+    std::cout << "Crossover.\n";
+    Puppy::applyCrossover(population_, context_,
+        this->parameters().getDouble("CROSSOVER_PROBA"),
+        this->parameters().getDouble("CROSSOVER_DISTRIB_PROBA"),
+        this->parameters().getInt("MAX_DEPTH"));
+
+    std::cout << "Mutation standart.\n";
+    Puppy::applyMutationStandard(population_, context_,
+        this->parameters().getDouble("MUT_STD_PROBA"),
+        this->parameters().getInt("MUT_MAX_REGEN_DEPTH"),
+        this->parameters().getInt("MAX_DEPTH"));
+
+    std::cout << "Mutation swap.\n";
+    Puppy::applyMutationSwap(population_, context_,
+        this->parameters().getDouble("MUT_SWAP_PROBA"),
+        this->parameters().getDouble("MUT_SWAP_DISTRIB_PROBA"));
+  }
+
   /** The implementation of genetic programming optimization approach.
    * \param data DataSet on which the p_Measure would be maximized within the
    * learning procedure.
@@ -171,26 +197,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
         ++generationIdx) {
       std::cout << "Generation "<< generationIdx << ".\n";
 
-      std::cout << "Tournament.\n";
-      Puppy::applySelectionTournament(population_, context_,
-          this->parameters().getInt("NBR_PART"));
-
-      std::cout << "Crossover.\n";
-      Puppy::applyCrossover(population_, context_,
-          this->parameters().getDouble("CROSSOVER_PROBA"),
-          this->parameters().getDouble("CROSSOVER_DISTRIB_PROBA"),
-          this->parameters().getInt("MAX_DEPTH"));
-
-      std::cout << "Mutation standart.\n";
-      Puppy::applyMutationStandard(population_, context_,
-          this->parameters().getDouble("MUT_STD_PROBA"),
-          this->parameters().getInt("MUT_MAX_REGEN_DEPTH"),
-          this->parameters().getInt("MAX_DEPTH"));
-
-      std::cout << "Mutation swap.\n";
-      Puppy::applyMutationSwap(population_, context_,
-          this->parameters().getDouble("MUT_SWAP_PROBA"),
-          this->parameters().getDouble("MUT_SWAP_DISTRIB_PROBA"));
+      this->evaluationStrategyStepImpl();
 
       std::cout << "Evaluation.\n";
       this->evaluatePopulation(data);
@@ -202,6 +209,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
           inPopulationBestTreeIdx_ = treeIdx;
         }
       }
+
       std::cout
       << "The best one is number " << inPopulationBestTreeIdx_ << ".\n";
       using ::operator <<;
@@ -221,9 +229,11 @@ class GPLearner : public Learner<TElement, GPScorer> {
         continue;
       }
       markDataSetWithTree<TElement>(data, &context_, &population_[treeIdx]);
-      double measureVal = this->p_measure_->average(data);
+
       // This line yields a topic for research. Why so?
       //
+      double measureVal = this->p_measure_->weightedAverage(data);
+
       population_[treeIdx].mFitness = static_cast<float>(measureVal);
     }
   }

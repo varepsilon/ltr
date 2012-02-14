@@ -8,6 +8,7 @@
 template <>
 void MeasureFactory::registerAll() {
   REGISTER_LISTWISE_MEASURE("DCG", ltr::DCG);
+  REGISTER_LISTWISE_MEASURE("YADCG", ltr::YADCG);
   REGISTER_LISTWISE_MEASURE("NDCG", ltr::NDCG);
   REGISTER_POINTWISE_MEASURE("ABS_ERROR", ltr::AbsError);
 }
