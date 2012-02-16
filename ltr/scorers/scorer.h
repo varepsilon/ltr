@@ -75,7 +75,7 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
           featureConverterIdx)->getDefaultSerializableObjectName());
       code.append("  std::vector<double> ");
       code.append(curVectorName);
-      code.append(";\n");
+      code.append(";\n  ");
       code.append(featureConverterFunctionName);
       code.append("(");
       code.append(prevVectorName);
@@ -85,11 +85,11 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
 
       prevVectorName = curVectorName;
     }
-    code.append(" return ");
+    code.append("  return ");
     code.append(implFunctionName);
     code.append("(");
     code.append(prevVectorName);
-    code.append(");");
+    code.append(");\n");
     code.append("}\n");
     return code;
   }
