@@ -18,6 +18,7 @@
 #include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/learners/gp_learner.h"
+#include "ltr/learners/gp_learner_determinant_strategy.h"
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -81,3 +82,15 @@ TEST_F(LearnersTest, TestingGPLearner) {
 
   std::cout << scorer.generateCppCode();
 };
+
+TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
+  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::YADCG());
+  ltr::gp::GPLearnerWithDeterminantStrategy<ltr::ObjectList> learner(pMeasure);
+
+  learner.learn(learn_data_listwise);
+
+  ltr::gp::GPScorer scorer = learner.make();
+
+  std::cout << scorer.generateCppCode();
+};
+

@@ -14,6 +14,7 @@
 #include "ltr/learners/utility/gp_functions.h"
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/measures/measure.h"
+#include "ltr/interfaces/utility/parametrized_utility.h"
 
 namespace ltr {
 namespace gp {
@@ -53,7 +54,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
 
   /** The function sets up default parameters for genetic learning process.
    */
-  void setDefaultParameters() {
+  virtual void setDefaultParameters() {
     this->parameters().clear();
     this->parameters().setInt("POP_SIZE", 10);
     this->parameters().setInt("NBR_GEN", 3);
@@ -75,6 +76,32 @@ class GPLearner : public Learner<TElement, GPScorer> {
     this->parameters().setBool("USE_DIV", true);
     this->parameters().setBool("USE_IF", true);
     this->parameters().setBool("USE_EFEM", true);
+  }
+  /** The method checks the correctness of the parameters in the parameters
+   * container. If one of them is not correct it throws
+   * std::logical_error(PARAMETER_NAME).
+   */
+  virtual void checkParameters() const {
+    checkIntParameterGreaterZero(*this, "POP_SIZE");
+    checkIntParameterGreaterZero(*this, "NBR_GEN");
+    checkIntParameterGreaterThan(*this, "NBR_PART", 1);
+    checkIntParameterGreaterZero(*this, "MAX_DEPTH");
+    checkIntParameterGreaterZero(*this, "MIN_INIT_DEPTH");
+    checkIntParameterGreaterThan(*this, "MAX_INIT_DEPTH",
+        this->parameters().getInt("MIN_INIT_DEPTH") - 1);
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "INIT_GROW_PROBA");
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "CROSSOVER_PROBA");
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "CROSSOVER_DISTRIB_PROBA");
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "MUT_STD_PROBA");
+    checkIntParameterGreaterZero(*this, "MUT_MAX_REGEN_DEPTH");
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "MUT_SWAP_PROBA");
+    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
+        "MUT_SWAP_DISTRIB_PROBA");
   }
   /** The function recreates the context and reinitializes the population.
    */
@@ -146,7 +173,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
         this->parameters().getInt("MAX_INIT_DEPTH"));
   }
 
-  /** This function implements the changes made in the population at each
+  /** \brief This function implements the changes made in the population at each
    *  algorithm's iteration.
    */
   virtual void evaluationStrategyStepImpl() {
@@ -197,6 +224,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
         ++generationIdx) {
       std::cout << "Generation "<< generationIdx << ".\n";
 
+      std::cout << "Calling strategy\n";
       this->evaluationStrategyStepImpl();
 
       std::cout << "Evaluation.\n";
@@ -235,6 +263,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
       double measureVal = this->p_measure_->weightedAverage(data);
 
       population_[treeIdx].mFitness = static_cast<float>(measureVal);
+      population_[treeIdx].mValid = true;
     }
   }
 
@@ -242,6 +271,13 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * within the learning procedure.
    */
   typename Measure<TElement>::Ptr p_Measure_;
+  size_t featureCountInContext_;
+  /** The index of the best Puppy::tree (formula, individ) in current
+   * population.
+   */
+  size_t inPopulationBestTreeIdx_;
+
+  protected:
   /** The set of Puppy::trees (formulas that represent the optimization space),
    * that represent a population within the learning procedure.
    */
@@ -253,11 +289,6 @@ class GPLearner : public Learner<TElement, GPScorer> {
   /** The number of features, to process dataset with the number of features
    * the context_ is constructed for.
    */
-  size_t featureCountInContext_;
-  /** The index of the best Puppy::tree (formula, individ) in current
-   * population.
-   */
-  size_t inPopulationBestTreeIdx_;
 };
 
 template class GPLearner<Object>;
