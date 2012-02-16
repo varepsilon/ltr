@@ -33,7 +33,7 @@ class FakeScorer : public Scorer {
     return score_value_;
   }
 
-  string generateCppCode(const string& function_name) const {
+  string generateCppCodeImpl(const string& function_name) const {
     return "Not implemented.";
   }
 

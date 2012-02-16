@@ -59,44 +59,6 @@ class GPScorer : public Scorer {
     return "GPScorer";
   }
 
-  /** use also functions from base class;
-   */
-  using Scorer::generateCppCode;
-  /** the function generates code for the scorer as cpp code
-   * \param class_name the name for the class that would be created.
-   */
-  string generateCppCode(const string& class_name) const {
-    string code;
-    code.append("#include <cmath>\n");
-    code.append("class ");
-    code.append(class_name);
-    code.append(" {\n");
-    // generate primitive-functions code.
-    vector<Puppy::PrimitiveHandle>::const_iterator functionItr =
-        context_.mFunctionSet.begin();
-    for (; functionItr != context_.mFunctionSet.end(); ++functionItr) {
-      const Serializable* pSerializable = puppyPrimitiveHandleToPSerializable(
-          *functionItr);
-      string function_name = pSerializable->getDefaultSerializableObjectName();
-      function_name += (*functionItr)->getName();
-      code.append("static ");
-      code.append(pSerializable->generateCppCode(function_name));
-    }
-    // generate the function from tree.
-    stringstream sstreamForCalls;
-    writeTreeAsStringOfCppCalls(population_[inPopulationBestTreeIdx_],
-        &sstreamForCalls, 0);
-    // generate scoring function
-    code.append("public:\n");
-    code.append("static double score(double * feature) {\n");
-    code.append("  return ");
-    code.append(sstreamForCalls.str());
-    code.append(";\n");
-    code.append("}\n");
-    code.append("};\n");
-    return code;
-  }
-
   private:
   /** The implementation of scoring function. It scores using the best
    *  Puppy::tree in the population.
@@ -108,6 +70,39 @@ class GPScorer : public Scorer {
     population_[inPopulationBestTreeIdx_].interpret(&resultScore, context_);
     return resultScore;
   }
+  /** the function generates code for the scorer as cpp code function
+   * \param class_name the name for the class that would be created.
+   */
+  string generateCppCodeImpl(const string& function_name) const {
+    string code;
+    code.append("#include <vector>\n");
+    // generate primitive-functions code.
+    vector<Puppy::PrimitiveHandle>::const_iterator functionItr =
+        context_.mFunctionSet.begin();
+    for (; functionItr != context_.mFunctionSet.end(); ++functionItr) {
+      const Serializable* pSerializable = puppyPrimitiveHandleToPSerializable(
+          *functionItr);
+      string primiriveFunctionName =
+          pSerializable->getDefaultSerializableObjectName();
+      primiriveFunctionName += (*functionItr)->getName();
+      code.append(pSerializable->generateCppCode(primiriveFunctionName));
+    }
+    // generate the function from tree.
+    stringstream sstreamForCalls;
+    writeTreeAsStringOfCppCalls(population_[inPopulationBestTreeIdx_],
+        &sstreamForCalls, 0);
+    // generate scoring function
+    code.append("double ");
+    code.append(function_name);
+    code.append("(std::vector< double >& feature) {\n");
+    code.append("  return ");
+    code.append(sstreamForCalls.str());
+    code.append(";\n");
+    code.append("}\n");
+
+    return code;
+  }
+
   /** the current population of  genetic programming's
    * evolution process, vector of Puppy::tree.
    */

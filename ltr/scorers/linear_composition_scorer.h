@@ -46,9 +46,9 @@ namespace ltr {
 
     virtual std::string brief() const;
     virtual double operator()(const Object& obj) const;
-    virtual string generateCppCode(const string& function_name) const;
 
   private:
+    virtual string generateCppCodeImpl(const string& function_name) const;
     std::vector< ScorerAndWeight > scorers_;
   };
 };

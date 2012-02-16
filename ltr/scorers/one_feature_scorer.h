@@ -38,7 +38,7 @@ namespace ltr {
       return obj[1].features().at(index_);
     }
 
-    string generateCppCode(const string& function_name) const;
+    string generateCppCodeImpl(const string& function_name) const;
 
     size_t index_;
   };

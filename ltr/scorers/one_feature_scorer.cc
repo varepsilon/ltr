@@ -15,7 +15,8 @@ namespace ltr {
     return result;
   }
 
-  string OneFeatureScorer::generateCppCode(const string& function_name) const {
+  string OneFeatureScorer::generateCppCodeImpl(
+      const string& function_name) const {
     string hpp_code;
 
     hpp_code.

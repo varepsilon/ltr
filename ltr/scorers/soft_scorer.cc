@@ -48,7 +48,7 @@ namespace ltr {
     }
   }
 
-  std::string LinearScorer::generateCppCode(const std::string& class_name,
+  std::string LinearScorer::generateCppCodeImpl(const std::string& class_name,
       int tabbing) const {
     std::string hpp_code;
     std::string tab_str(tabbing, '\t');

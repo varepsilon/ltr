@@ -44,10 +44,18 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
     this->featureConverters_ = featureConverters;
   }
 
+  using SerializableFunctor<double>::generateCppCode;
+
+  string generateCppCode(const string& function_name) const {
+    string code = generateCppCodeImpl(function_name);
+    return code;
+  }
+
   virtual ~Scorer() {}
 
   private:
   virtual double scoreImpl(const Object& obj) const = 0;
+  virtual string generateCppCodeImpl(const string& function_name) const = 0;
 
   FeatureConverterArray featureConverters_;
 };

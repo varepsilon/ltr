@@ -56,8 +56,6 @@ namespace ltr {
 
     std::string generateCppCodeImpl(const std::string& class_name,
       int tabbing = 0) const;
-    std::string generateJavaCodeImpl(const std::string& class_name,
-      int tabbing = 0, bool is_static = false) const;
   };
 };
 

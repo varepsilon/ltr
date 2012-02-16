@@ -13,7 +13,7 @@ namespace ltr {
     return result;
   }
 
-  string LinearCompositionScorer::generateCppCode
+  string LinearCompositionScorer::generateCppCodeImpl
       (const string& function_name) const {
     std::string hpp_code;
 
