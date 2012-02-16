@@ -29,8 +29,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   void apply(const ltr::Object & argument, ltr::Object * value) const;
 
-  virtual std::string generateCppCode(const std::string& class_name,
-          int tabbing = 0) const {
+  virtual std::string generateCppCode(const std::string& function_name) const {
     return "Not implemented.";
   };
 

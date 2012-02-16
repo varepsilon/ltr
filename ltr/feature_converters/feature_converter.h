@@ -11,10 +11,11 @@
 #include "ltr/data/feature_info.h"
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/serializable.h"
 
 namespace ltr {
 
-class FeatureConverter {
+class FeatureConverter : public Serializable {
   public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
@@ -30,9 +31,6 @@ class FeatureConverter {
   template <typename TElement>
   void apply(const DataSet<TElement> & argument,
       DataSet<TElement> * value) const;
-
-  virtual std::string generateCppCode(const std::string& class_name,
-      int tabbing = 0) const = 0;
 };
 
 template <typename TElement>
