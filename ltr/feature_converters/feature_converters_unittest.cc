@@ -13,6 +13,7 @@
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/average_precision.h"
+#include "ltr/measures/dcg.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 // The fixture for testing (contains data for tests).
@@ -133,8 +134,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::FeatureNormalizerLearner<ltr::ObjectList> normalizerLearner;
   EXPECT_NO_THROW(normalizerLearner.learn(learn_data_listwise));
 
-  ltr::Measure<ltr::ObjectList>::Ptr
-  pMeasure(new ltr::AveragePrecision());
+  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
   ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
 
   learner.addFeatureConverter(normalizerLearner.make());
@@ -142,3 +142,5 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
 };
+
+
