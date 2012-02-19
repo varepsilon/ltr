@@ -12,6 +12,7 @@ namespace ltr {
         :ListwiseMeasure("GMRR") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
     }
     /**
     * MAX_LABEL Maximal possible relevance of document

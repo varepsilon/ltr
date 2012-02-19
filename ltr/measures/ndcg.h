@@ -31,7 +31,7 @@ namespace ltr {
    * Implements function-object to calculate NDCG on ObjectLists.
    */
   template<class TDCGFormula>
-  class BaseNDCG : public MoreIsBetterMeasure<ObjectList> {
+  class BaseNDCG : public ListwiseMeasure {
     public:
     /**
      * Constructor
@@ -40,9 +40,10 @@ namespace ltr {
      * in an ObjectList are considered).
      */
     BaseNDCG(const ParametersContainer& parameters = ParametersContainer())
-    :MoreIsBetterMeasure<ObjectList>("NDCG with " + TDCGFormula().alias()) {
+    :ListwiseMeasure("NDCG with " + TDCGFormula().alias()) {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
     }
 
     /** The function clears parameters container and sets default value 0 for
@@ -50,6 +51,8 @@ namespace ltr {
      */
     void setDefaultParameters();
     void checkParameters() const;
+
+    bool better(double expected_better, double expected_worse) const;
 
     private:
     /** The function calculates NDCG measure.
@@ -59,8 +62,15 @@ namespace ltr {
   };
 
   typedef BaseNDCG<DCGFormula> NDCG;
+  typedef BaseNDCG<YandexDCGFormula> YandexNDCG;
 
   // template realizations
+  template<class TDCGFormula>
+  bool BaseNDCG<TDCGFormula>::better(double expected_better, double expected_worse) const {
+    TDCGFormula formula;
+    return formula.better(expected_better, expected_worse);
+  }
+
   template<class TDCGFormula>
   double BaseNDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);

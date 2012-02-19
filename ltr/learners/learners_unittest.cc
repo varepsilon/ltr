@@ -84,7 +84,7 @@ TEST_F(LearnersTest, TestingGPLearner) {
 };
 
 TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
-  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::YADCG());
+  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::YandexDCG());
   ltr::gp::GPLearnerWithDeterminantStrategy<ltr::ObjectList> learner(pMeasure);
 
   learner.learn(learn_data_listwise);

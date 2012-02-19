@@ -17,7 +17,9 @@ using ltr::ParametersContainer;
 using ltr::Object;
 using ltr::ObjectList;
 using ltr::DCG;
+using ltr::YandexDCG;
 using ltr::NDCG;
+using ltr::YandexNDCG;
 using ltr::AveragePrecision;
 using ltr::ReciprocalRank;
 using ltr::PFound;
@@ -64,7 +66,6 @@ class ListwiseMeasuresTest : public ::testing::Test {
     ObjectList olist2;
 };
 
-
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg0;
   DCG dcg1;
@@ -74,10 +75,25 @@ TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg3;
   dcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
-  EXPECT_TRUE(DoubleEqual(dcg1(olist), 21.64042561333445));
-  EXPECT_TRUE(DoubleEqual(dcg2(olist), 22.550664839961289));
-  EXPECT_TRUE(DoubleEqual(dcg3(olist), 24.714707401294735));
-  EXPECT_TRUE(DoubleEqual(dcg0(olist), 24.714707401294735));
+  EXPECT_TRUE(DoubleEqual(dcg1(olist), 15.0));
+  EXPECT_TRUE(DoubleEqual(dcg2(olist), 15.6309297535714));
+  EXPECT_TRUE(DoubleEqual(dcg3(olist), 17.1309297535714));
+  EXPECT_TRUE(DoubleEqual(dcg0(olist), 17.1309297535714));
+};
+
+TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
+  YandexDCG dcg0;
+  YandexDCG dcg1;
+  dcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  YandexDCG dcg2;
+  dcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  YandexDCG dcg3;
+  dcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+
+  EXPECT_TRUE(DoubleEqual(dcg1(olist), 4.0));
+  EXPECT_TRUE(DoubleEqual(dcg2(olist), 4.5));
+  EXPECT_TRUE(DoubleEqual(dcg3(olist), 5.273705614469));
+  EXPECT_TRUE(DoubleEqual(dcg0(olist), 5.273705614469));
 };
 
 TEST_F(ListwiseMeasuresTest, TestingNDCG) {
@@ -93,6 +109,21 @@ TEST_F(ListwiseMeasuresTest, TestingNDCG) {
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.92530188545727754));
   EXPECT_TRUE(DoubleEqual(ndcg3(olist), 0.98494436382700368));
   EXPECT_TRUE(DoubleEqual(ndcg0(olist), 0.98494436382700368));
+};
+
+TEST_F(ListwiseMeasuresTest, TestingYandexNDCG) {
+  YandexNDCG ndcg0;
+  YandexNDCG ndcg1;
+  ndcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  YandexNDCG ndcg2;
+  ndcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  YandexNDCG ndcg3;
+  ndcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+
+  EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
+  EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.9));
+  EXPECT_TRUE(DoubleEqual(ndcg3(olist), 0.97899567765921));
+  EXPECT_TRUE(DoubleEqual(ndcg0(olist), 0.97899567765921));
 };
 
 TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
@@ -111,8 +142,9 @@ TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
   EXPECT_TRUE(DoubleEqual(ap(olist), 1.0)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  ap.parameters().setDouble("SCORE_FOR_RELEVANT", 5.0);
-  EXPECT_ANY_THROW(ap(olist));
+  param.setDouble("SCORE_FOR_RELEVANT", 5.0);
+  AveragePrecision ap2(param);
+  EXPECT_ANY_THROW(ap2(olist));
 }
 
 TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
@@ -127,8 +159,9 @@ TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
   EXPECT_TRUE(DoubleEqual(rr1(olist), 1.0)) << rr1(olist);
   EXPECT_TRUE(DoubleEqual(rr1(olist2), 1.0)) << rr1(olist2);
 
-  rr.parameters().setDouble("SCORE_FOR_RELEVANT", 5.0);
-  EXPECT_ANY_THROW(rr(olist));
+  param.setDouble("SCORE_FOR_RELEVANT", 5.0);
+  ReciprocalRank rr2(param);
+  EXPECT_ANY_THROW(rr2(olist));
 }
 
 TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
@@ -158,19 +191,19 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
 }
 
 TEST_F(ListwiseMeasuresTest, TestingPFoundRankExceptions) {
-  PFound pf;
-  pf.parameters().setDouble("P_BREAK", -0.1);
-  EXPECT_ANY_THROW(pf(olist));
-  pf.parameters().setDouble("P_BREAK", 2.1);
-  EXPECT_ANY_THROW(pf(olist));
-  pf.parameters().setDouble("P_BREAK", 0.1);
-  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", -2);
-  EXPECT_ANY_THROW(pf(olist));
-  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
-  pf.parameters().setDouble("MAX_LABEL", -8.0);
-  EXPECT_ANY_THROW(pf(olist));
+  ParametersContainer param;
+  param.setDouble("P_BREAK", -0.1);
+  EXPECT_ANY_THROW(PFound pf(param));
+  param.setDouble("P_BREAK", 2.1);
+  EXPECT_ANY_THROW(PFound pf2(param));
+  param.setDouble("P_BREAK", 0.1);
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", -2);
+  EXPECT_ANY_THROW(PFound pf3(param));
+  param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  param.setDouble("MAX_LABEL", -8.0);
+  EXPECT_ANY_THROW(PFound pf4(param));
 
-  pf.setDefaultParameters();
+  PFound pf;
   olist[1].setActualLabel(-1.0);
   EXPECT_ANY_THROW(pf(olist));
   EXPECT_NO_THROW(pf(olist2));

@@ -18,6 +18,7 @@ namespace ltr {
         :MoreIsBetterMeasure<ObjectList>("PFound") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
     }
     /**
     * P_BREAK Probability of unexpected user's break

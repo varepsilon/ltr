@@ -31,6 +31,8 @@ namespace ltr {
      * \param position the position number 0..size() - 1
      */
     virtual double operator()(double relevance, size_t position) const;
+    virtual bool better(double expected_better, double expected_worse) const;
+    virtual void checkDCGResult(double result) const;
   };
 
   class YandexDCGFormula : public DCGFormula {
@@ -45,7 +47,7 @@ namespace ltr {
    * Implements function-object to calculate DCG on ObjectLists.
    */
   template<class TDCGFormula>
-  class BaseDCG : public MoreIsBetterMeasure<ObjectList> {
+  class BaseDCG : public ListwiseMeasure {
     public:
     /**
      * Constructor
@@ -54,9 +56,10 @@ namespace ltr {
      * in an ObjectList are considered).
      */
     BaseDCG(const ParametersContainer& parameters = ParametersContainer())
-    :MoreIsBetterMeasure<ObjectList>("DCG with " + TDCGFormula().alias()) {
+    :ListwiseMeasure("DCG with " + TDCGFormula().alias()) {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
+      this->checkParameters();
     }
 
     /** The function clears parameters container and sets default value 0 for
@@ -64,6 +67,8 @@ namespace ltr {
      */
     void setDefaultParameters();
     void checkParameters() const;
+
+    bool better(double expected_better, double expected_worse) const;
 
     private:
     /** The function calculates DCG measure.
@@ -73,9 +78,15 @@ namespace ltr {
   };
 
   typedef BaseDCG<DCGFormula> DCG;
-  typedef BaseDCG<YandexDCGFormula> YADCG;
+  typedef BaseDCG<YandexDCGFormula> YandexDCG;
 
   // template realizations
+  template<class TDCGFormula>
+  bool BaseDCG<TDCGFormula>::better(double expected_better, double expected_worse) const {
+    TDCGFormula formula;
+    return formula.better(expected_better, expected_worse);
+  }
+
   template<class TDCGFormula>
   double BaseDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
@@ -92,9 +103,7 @@ namespace ltr {
       result += formula(labels[labels_index].actual, labels_index);
     }
 
-    if (result < 0.0) {
-      throw logic_error(alias() + " calculated < 0");
-    }
+    formula.checkDCGResult(result);
     return result;
   }
 
