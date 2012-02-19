@@ -25,7 +25,7 @@ namespace ltr {
     }
     /** 
      * Clears parameters container and sets default values:
-     * SCORE_FOR_RELEVANT = 3.0, if object's score is more or equal to SCORE_FOR_RELEVANT,
+     * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
      * the object is considered to be relevant
      */
     void setDefaultParameters() {

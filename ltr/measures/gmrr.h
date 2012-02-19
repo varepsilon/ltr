@@ -6,7 +6,10 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-  // graded mean reciprocal rank
+  /**
+   * Graded Mean Reciprocal Rank
+   * See http://romip.ru/romip2010/20_appendix_a_metrics.pdf pp 185
+   */
   class GMRR: public ListwiseMeasure {
   public:
     GMRR(const ParametersContainer& parameters = ParametersContainer())
@@ -34,12 +37,12 @@ namespace ltr {
     }
   private:
     double get_measure(const ObjectList& objects) const;
-    /*
-    * \param pos Current position in the sorted list
-    * \param label Label of the current object in list
-    * \param p_look The probability of that user have reached the current position
-    * without meeting some good enough document
-    */
+    /**
+     * @param pos Current position in the sorted list
+     * @param label Label of the current object in list
+     * @param p_look The probability of that user have reached the current position
+     * without meeting some good enough document
+     */
     double GMRRFormula(double pos, double label, double p_look) const;
   };
 };

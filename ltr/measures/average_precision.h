@@ -7,9 +7,10 @@
 #include "ltr/data/object_list.h"
 
 namespace ltr {
-  /*
-  * http://en.wikipedia.org/wiki/Information_retrieval#Average_precision
-  */
+  /**
+   * Average precision listwise measure.
+   * See http://en.wikipedia.org/wiki/Information_retrieval#Average_precision
+   */
   class AveragePrecision: public MoreIsBetterMeasure<ObjectList> {
   public:
     AveragePrecision(const ParametersContainer&
@@ -19,7 +20,11 @@ namespace ltr {
       this->parameters().copyParameters(parameters);
       this->checkParameters();
     }
-
+  /** 
+   * Clears parameters container and sets default values:
+   * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
+   * the object is considered to be relevant
+   */
   void setDefaultParameters() {
     this->parameters().clear();
     this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
