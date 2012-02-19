@@ -33,6 +33,9 @@ namespace ltr {
       if (labels[labels_index].actual < 0) {
         throw logic_error(alias() + " some actual object label < 0");
       }
+      if (labels[labels_index].actual > max_label) {
+        throw logic_error(alias() + " some actual object label > MAX_LABEL");
+      }
       p_relevance = labels[labels_index].actual / max_label;
 
       result += p_look * p_relevance;

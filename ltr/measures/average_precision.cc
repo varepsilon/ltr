@@ -32,7 +32,7 @@ namespace ltr {
     }
     if (relevant_amount == 0) {
       string str;
-      str.append("No relevants for some query on relevant score = ").
+      str.append(alias() + " no relevants for some query on relevant score = ").
         append(boost::lexical_cast<string>(
           parameters().getDouble("SCORE_FOR_RELEVANT")));
       throw logic_error(str);
