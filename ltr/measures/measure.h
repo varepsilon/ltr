@@ -34,28 +34,40 @@ class Measure : public Aliaser, public Parameterized {
   explicit Measure(const string& alias) : Aliaser(alias) {}
 
   /**
-   * Value of Measure(quality of algorithm)
-   * @param element for counting measure
+   * Value of measure(quality of algorithm)
+   * @param element - element(single object, pair or list) for counting measure on
    */
   double operator()(const TElement& element) const;
 
   /**
-   * This method allows to get average value for all elements
-   * @param set - learning set of objects
+   * Gets average measure value of all elements (as if all elements have equal weights)
+   * @param set - input dataset of objects, to count average measure on
    */
   double average(const DataSet<TElement>& set) const;
 
   /**
-   * Returns sums of measures for all elements proportional to their weights.
+   * Gets average measure value of all elements (using for counting average weights from dataset)
+   * @param set - input dataset of objects, to count average measure on
    */
   double weightedAverage(const DataSet<TElement>& set) const;
-
+  /**
+   * Returns if expected better value of measure is really better than expected worse one.
+   * There are two types of measures: when bigger measure is better (e.g. accuracy)
+   * and when smaller measure is better (e.g. abs error).
+   */
   virtual bool better(double expected_better, double expected_worse) const = 0;
 
   private:
+  /**
+   * Implementation. Returns value of measure(quality of algorithm)
+   * @param element - element(single object, pair or list) for counting measure on
+   */
   virtual double get_measure(const TElement& element) const = 0;
 };
 
+/**
+ * Type of measure when smaller result is better (e.g. abs error)
+ */
 template <class TElement>
 class LessIsBetterMeasure : public Measure<TElement> {
  public:
@@ -66,7 +78,9 @@ class LessIsBetterMeasure : public Measure<TElement> {
     return expected_better < expected_worse;
   }
 };
-
+/**
+ * Type of measure when bigger result is better (e.g. accuracy)
+ */
 template <class TElement>
 class MoreIsBetterMeasure : public Measure<TElement> {
  public:

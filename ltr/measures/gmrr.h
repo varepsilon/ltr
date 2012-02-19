@@ -6,6 +6,7 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
+  // graded mean reciprocal rank
   class GMRR: public ListwiseMeasure {
   public:
     GMRR(const ParametersContainer& parameters = ParametersContainer())

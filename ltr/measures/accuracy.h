@@ -6,7 +6,12 @@
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-// Can be poinwise and pairwise, but not listwise
+/**
+ * Accuracy measure. Can be poinwise and pairwise, but not listwise.
+ * Returns 1 if actual score is equal (almost) to predicted one
+ * (or for pairs if actual and predicted pair orders are equal)
+ * and 0 otherwise
+ */
 template <class TElement>
 class Accuracy : public MoreIsBetterMeasure<TElement> {
   public:

@@ -12,6 +12,9 @@ using ltr::Object;
 using ltr::LessIsBetterMeasure;
 
 namespace ltr {
+  /**
+   * Squared error pointwise measure
+   */
   class SquaredError : public LessIsBetterMeasure<Object> {
     public:
     SquaredError(const ParametersContainer& parameters = ParametersContainer())

@@ -15,6 +15,9 @@ using ltr::MoreIsBetterMeasure;
 
 
 namespace ltr {
+  /**
+   * TruePoint pointwise measure. Is 1.0 / (1.0 + AbsError)
+   */
   class TruePoint : public MoreIsBetterMeasure<Object> {
   public:
     TruePoint(const ParametersContainer& parameters = ParametersContainer())

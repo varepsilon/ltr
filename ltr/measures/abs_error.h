@@ -13,6 +13,9 @@ using ltr::Object;
 using ltr::LessIsBetterMeasure;
 
 namespace ltr {
+  /**
+   * Absolute error pointwise measure
+   */
   class AbsError : public LessIsBetterMeasure<Object> {
     public:
     AbsError(const ParametersContainer& parameters = ParametersContainer())
