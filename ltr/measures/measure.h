@@ -53,7 +53,7 @@ class Measure : public Aliaser, public Parameterized {
   /**
    * Returns if expected better value of measure is really better than expected worse one.
    * There are two types of measures: when bigger measure is better (e.g. accuracy)
-   * and when smaller measure is better (e.g. abs error).
+   * and when smaller measure is better (e.g. abs error)
    */
   virtual bool better(double expected_better, double expected_worse) const = 0;
 

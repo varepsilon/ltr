@@ -22,19 +22,35 @@ using ltr::utility::PredictedDecreasingActualIncreasing;
 using ltr::ObjectList;
 
 namespace ltr {
+  /**
+   * DCGFormula is formula, which result is added to the DCG measure for each position.
+   * Also it contains information if resulted DCG measure is MoreIsBetter of LessIsBetter
+   * and what bounds has DCG result (e.g. it must be non-negative)
+   */
   class DCGFormula : public Aliaser {
   public:
     DCGFormula() : Aliaser("common DCG formula") {}
     explicit DCGFormula(const string& alias) : Aliaser(alias) {}
-    /** The result of this function is added to the DCG for each position.
-     * \param relevance the relevance the object in position
-     * \param position the position number 0..size() - 1
+    /**
+     * The result of this function is added to the DCG for each position.
+     * @param relevance - the relevance of the object in position
+     * @param position - the position number 0..size() - 1
      */
     virtual double operator()(double relevance, size_t position) const;
+    /**
+     * Returns if expected better value of DCGmeasure is really better than expected worse one.
+     * By default bigger DCG measure is better
+     */
     virtual bool better(double expected_better, double expected_worse) const;
+    /**
+     * Checks DCG measure result. By default checks if result >= 0 (it should be true)
+     */
     virtual void checkDCGResult(double result) const;
   };
 
+  /**
+   * Yandex DCG formula from http://imat2009.yandex.ru/datasets
+   */
   class YandexDCGFormula : public DCGFormula {
   public:
     YandexDCGFormula() : DCGFormula("yandex DCG formula") {}
@@ -43,17 +59,15 @@ namespace ltr {
 
 
   /**
-   * \class DCG
-   * Implements function-object to calculate DCG on ObjectLists.
+   * DCG listwise measure, which is parametrized by formula used in it
    */
   template<class TDCGFormula>
   class BaseDCG : public ListwiseMeasure {
     public:
     /**
-     * Constructor
-     * \param parameters Standart LTR parameter container with int parameter
-     * NUMBER_OF_OBJECTS_TO_CONSIDER (by default 0 is used, that means all objects
-     * in an ObjectList are considered).
+     * @param parameters Standart LTR parameter container with int parameter
+     * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
+     * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
     BaseDCG(const ParametersContainer& parameters = ParametersContainer())
     :ListwiseMeasure("DCG with " + TDCGFormula().alias()) {
@@ -62,18 +76,19 @@ namespace ltr {
       this->checkParameters();
     }
 
-    /** The function clears parameters container and sets default value 0 for
-     *  NUMBER_OF_OBJECTS_TOCONSIDER;
+    /** 
+     * Clears parameters container and sets default values:
+     * NUMBER_OF_OBJECTS_TOCONSIDER = 0
      */
     void setDefaultParameters();
+    /**
+     * Checks if NUMBER_OF_OBJECTS_TOCONSIDER > 0 (should be true)
+     */
     void checkParameters() const;
 
     bool better(double expected_better, double expected_worse) const;
 
     private:
-    /** The function calculates DCG measure.
-     * \param objects ObjectList to calculate measure on
-     */
     double get_measure(const ObjectList& objects) const;
   };
 

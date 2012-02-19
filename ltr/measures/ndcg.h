@@ -27,17 +27,15 @@ using ltr::DCGFormula;
 
 namespace ltr {
   /**
-   * \class NDCG
-   * Implements function-object to calculate NDCG on ObjectLists.
+   * NDCG (Normalized DCG) listwise measure, which is parametrized by formula used in it
    */
   template<class TDCGFormula>
   class BaseNDCG : public ListwiseMeasure {
     public:
     /**
-     * Constructor
-     * \param parameters Standart LTR parameter container with int parameter
-     * NUMBER_OF_OBJECTS_TO_CONSIDER (by default 0 is used, that means all objects
-     * in an ObjectList are considered).
+     * @param parameters Standart LTR parameter container with int parameter
+     * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
+     * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
     BaseNDCG(const ParametersContainer& parameters = ParametersContainer())
     :ListwiseMeasure("NDCG with " + TDCGFormula().alias()) {
@@ -46,18 +44,19 @@ namespace ltr {
       this->checkParameters();
     }
 
-    /** The function clears parameters container and sets default value 0 for
-     *  NUMBER_OF_OBJECTS_TO_CONSIDER;
+    /** 
+     * Clears parameters container and sets default values:
+     * NUMBER_OF_OBJECTS_TOCONSIDER = 0
      */
     void setDefaultParameters();
+    /**
+     * Checks if NUMBER_OF_OBJECTS_TOCONSIDER > 0 (should be true)
+     */
     void checkParameters() const;
 
     bool better(double expected_better, double expected_worse) const;
 
     private:
-    /** The function calculates NDCG measure.
-     * \param objects ObjectList to calculate measure on
-     */
     double get_measure(const ObjectList& objects) const;
   };
 

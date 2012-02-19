@@ -16,6 +16,10 @@ namespace ltr {
    */
   class ReciprocalRank : public MoreIsBetterMeasure<ObjectList> {
   public:
+    /**
+     * @param parameters Standart LTR parameter container with int parameter
+     * SCORE_FOR_RELEVANT, by default SCORE_FOR_RELEVANT = 3.0
+     */
     ReciprocalRank(const ParametersContainer&
         parameters = ParametersContainer())
         :MoreIsBetterMeasure<ObjectList>("Reciprocal Rank") {
