@@ -65,7 +65,8 @@ namespace ltr {
 
   // template realizations
   template<class TDCGFormula>
-  bool BaseNDCG<TDCGFormula>::better(double expected_better, double expected_worse) const {
+  bool BaseNDCG<TDCGFormula>::better
+      (double expected_better, double expected_worse) const {
     TDCGFormula formula;
     return formula.better(expected_better, expected_worse);
   }
