@@ -32,6 +32,7 @@ namespace ltr {
           : Splitter<TElement>("KFoldSimpleSplitter") {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
+        this->checkParameters();
       }
       /**
        * Clears parameters container and sets int K = 10

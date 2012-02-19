@@ -35,6 +35,7 @@ namespace ltr {
           : Splitter<TElement>("TKFoldSimpleSplitter") {
         this->setDefaultParameters();
         this->parameters().copyParameters(parameters);
+        this->checkParameters();
       }
       /**
        * Clears parameters container and sets ints K = 10 and T = 10
