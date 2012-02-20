@@ -19,7 +19,8 @@ using ltr::ObjectList;
 
 namespace ltr {
   double GMRR::GMRRFormula(double label) const {
-    return (pow(2.0, label) - 1) / pow(2.0, this->parameters().getDouble("MAX_LABEL"));
+    return (pow(2.0, label) - 1)
+      / pow(2.0, this->parameters().getDouble("MAX_LABEL"));
   }
 
   double GMRR::get_measure(const ObjectList& objects) const {
@@ -37,7 +38,8 @@ namespace ltr {
       if (labels[labels_index].actual < 0) {
         throw logic_error(alias() + " some actual object label < 0");
       }
-      if (labels[labels_index].actual > this->parameters().getDouble("MAX_LABEL")) {
+      if (labels[labels_index].actual
+          > this->parameters().getDouble("MAX_LABEL")) {
         throw logic_error(alias() + " some actual object label > MAX_LABEL");
       }
       p_relevance = GMRRFormula(labels[labels_index].actual);
