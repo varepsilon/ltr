@@ -4,16 +4,19 @@
 #define LTR_MEASURES_GMRR_H_
 
 #include "ltr/measures/measure.h"
+#include "ltr/data/object_list.h"
+
+using ltr::ObjectList;
 
 namespace ltr {
   /**
    * Graded Mean Reciprocal Rank
    * See http://romip.ru/romip2010/20_appendix_a_metrics.pdf pp 185
    */
-  class GMRR: public ListwiseMeasure {
+  class GMRR: public MoreIsBetterMeasure<ObjectList> {
   public:
     GMRR(const ParametersContainer& parameters = ParametersContainer())
-        :ListwiseMeasure("GMRR") {
+        :MoreIsBetterMeasure<ObjectList>("GMRR") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
       this->checkParameters();
@@ -38,12 +41,9 @@ namespace ltr {
   private:
     double get_measure(const ObjectList& objects) const;
     /**
-     * @param pos Current position in the sorted list
-     * @param label Label of the current object in list
-     * @param p_look The probability of that user have reached the current position
-     * without meeting some good enough document
+     * @param label - label of the current object in list
      */
-    double GMRRFormula(double pos, double label, double p_look) const;
+    double GMRRFormula(double label) const;
   };
 };
 

@@ -11,6 +11,7 @@
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/reciprocal_rank.h"
 #include "ltr/measures/pfound.h"
+#include "ltr/measures/gmrr.h"
 
 using ltr::utility::DoubleEqual;
 using ltr::ParametersContainer;
@@ -23,6 +24,7 @@ using ltr::YandexNDCG;
 using ltr::AveragePrecision;
 using ltr::ReciprocalRank;
 using ltr::PFound;
+using ltr::GMRR;
 
 
 class ListwiseMeasuresTest : public ::testing::Test {
@@ -64,6 +66,26 @@ class ListwiseMeasuresTest : public ::testing::Test {
   protected:
     ObjectList olist;
     ObjectList olist2;
+};
+
+TEST_F(ListwiseMeasuresTest, TestingGMRR) {
+  GMRR gmrr0;
+  GMRR gmrr1;
+  gmrr1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  GMRR gmrr2;
+  gmrr2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+
+  EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.49313354492187));
+  EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.46875));
+  EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.47705078125));
+
+  gmrr0.parameters().setDouble("MAX_LABEL", 4.0);
+  gmrr1.parameters().setDouble("MAX_LABEL", 4.0);
+  gmrr2.parameters().setDouble("MAX_LABEL", 4.0);
+
+  EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.943115234375));
+  EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.9375));
+  EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.939453125));
 };
 
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
