@@ -4,6 +4,7 @@
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/learners/gp_learner.h"
 #include "ltr/learners/gp_learner_determinant_strategy.h"
+#include "ltr/learners/decision_tree_learner.h"
 
 using ltr::Object;
 using ltr::ObjectPair;

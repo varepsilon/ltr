@@ -17,8 +17,7 @@ namespace ltr {
         parameters = ParametersContainer())
         :MoreIsBetterMeasure<ObjectList>("Average precision") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
-      this->checkParameters();
+      this->copyParameters(parameters);
     }
   /** 
    * Clears parameters container and sets default values:
@@ -26,8 +25,8 @@ namespace ltr {
    * the object is considered to be relevant
    */
   void setDefaultParameters() {
-    this->parameters().clear();
-    this->parameters().setDouble("SCORE_FOR_RELEVANT", 3.0);
+    this->clearParameters();
+    this->addDoubleParameter("SCORE_FOR_RELEVANT", 3.0);
   }
   private:
     double get_measure(const ObjectList& objects) const;

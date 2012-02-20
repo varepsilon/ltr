@@ -23,7 +23,7 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
       const ParametersContainer& parameters = ParametersContainer())
   : GPLearner<TElement>(p_Measure, parameters) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
   }
 
   /** Constructor creates a GPLearnerWithDeterminantStrategy. But leaves
@@ -35,33 +35,33 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
       const ParametersContainer& parameters = ParametersContainer())
   : GPLearner<TElement>(parameters) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
   }
 
   /** The function sets up default parameters for genetic learning process.
    */
   virtual void setDefaultParameters() {
-    this->parameters().clear();
-    this->parameters().setInt("POP_SIZE", 10);
-    this->parameters().setInt("NBR_GEN", 3);
-    this->parameters().setInt("MAX_DEPTH", 35);
-    this->parameters().setInt("MIN_INIT_DEPTH", 2);
-    this->parameters().setInt("MAX_INIT_DEPTH", 20);
-    this->parameters().setDouble("INIT_GROW_PROBA", 0.5);
-    this->parameters().setDouble("TOP_FOR_NEXT_GENERATION_PART", 0.3);
-    this->parameters().setDouble("CROSSOVER_VS_MUTATION_PART", 0.7);
-    this->parameters().setDouble("CROSSOVER_DISTRIB_PROBA", 0.3);
-    this->parameters().setDouble("STANDART_MUTATION_VS_SWAP_MUTATION_PROBA",
+    this->clearParameters();
+    this->addIntParameter("POP_SIZE", 10);
+    this->addIntParameter("NBR_GEN", 3);
+    this->addIntParameter("MAX_DEPTH", 35);
+    this->addIntParameter("MIN_INIT_DEPTH", 2);
+    this->addIntParameter("MAX_INIT_DEPTH", 5);
+    this->addDoubleParameter("INIT_GROW_PROBA", 0.5);
+    this->addDoubleParameter("TOP_FOR_NEXT_GENERATION_PART", 0.3);
+    this->addDoubleParameter("CROSSOVER_VS_MUTATION_PART", 0.7);
+    this->addDoubleParameter("CROSSOVER_DISTRIB_PROBA", 0.3);
+    this->addDoubleParameter("STANDART_MUTATION_VS_SWAP_MUTATION_PROBA",
         0.5);
-    this->parameters().setInt("MUT_MAX_REGEN_DEPTH", 5);
-    this->parameters().setDouble("MUT_SWAP_DISTRIB_PROBA", 0.5);
-    this->parameters().setInt("SEED", 1);
-    this->parameters().setBool("USE_ADD", true);
-    this->parameters().setBool("USE_SUB", true);
-    this->parameters().setBool("USE_MUL", true);
-    this->parameters().setBool("USE_DIV", true);
-    this->parameters().setBool("USE_IF", true);
-    this->parameters().setBool("USE_EFEM", true);
+    this->addIntParameter("MUT_MAX_REGEN_DEPTH", 5);
+    this->addDoubleParameter("MUT_SWAP_DISTRIB_PROBA", 0.5);
+    this->addIntParameter("SEED", 1);
+    this->addBoolParameter("USE_ADD", true);
+    this->addBoolParameter("USE_SUB", true);
+    this->addBoolParameter("USE_MUL", true);
+    this->addBoolParameter("USE_DIV", true);
+    this->addBoolParameter("USE_IF", true);
+    this->addBoolParameter("USE_EFEM", true);
   }
   /** The method checks the correctness of the parameters in the parameters
    * container. If one of them is not correct it throws
@@ -73,7 +73,7 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     checkIntParameterGreaterZero(*this, "MAX_DEPTH");
     checkIntParameterGreaterZero(*this, "MIN_INIT_DEPTH");
     checkIntParameterGreaterThan(*this, "MAX_INIT_DEPTH",
-        this->parameters().getInt("MIN_INIT_DEPTH") - 1);
+        this->getIntParameter("MIN_INIT_DEPTH") - 1);
     checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
         "INIT_GROW_PROBA");
     checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
@@ -107,7 +107,7 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     std::sort(this->population_.begin(), this->population_.end());
 
     size_t topBoundIdx =
-        (1 - this->parameters().getDouble("TOP_FOR_NEXT_GENERATION_PART")) *
+        (1 - this->getDoubleParameter("TOP_FOR_NEXT_GENERATION_PART")) *
         this->population_.size();
     if (topBoundIdx == this->population_.size()) {
       topBoundIdx -= 1;
@@ -123,7 +123,7 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     }
 
     size_t crossoverBoundIdx =
-        this->parameters().getDouble("CROSSOVER_VS_MUTATION_PART") *
+        this->getDoubleParameter("CROSSOVER_VS_MUTATION_PART") *
         topBoundIdx;
     if (crossoverBoundIdx % 2 != 1) {
       crossoverBoundIdx -= 1;
@@ -133,22 +133,22 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
       Puppy::mateTrees(this->population_[treeIdx],
           this->population_[treeIdx + 1],
           this->context_,
-          this->parameters().getDouble("CROSSOVER_DISTRIB_PROBA"),
-          this->parameters().getInt("MAX_DEPTH"));
+          this->getDoubleParameter("CROSSOVER_DISTRIB_PROBA"),
+          this->getIntParameter("MAX_DEPTH"));
     }
 
     for (size_t treeIdx = crossoverBoundIdx; treeIdx < topBoundIdx; ++treeIdx) {
       if (this->context_.mRandom.rollUniform() <=
-          this->parameters().getDouble(
+          this->getDoubleParameter(
               "STANDART_MUTATION_VS_SWAP_MUTATION_PROBA")) {
         Puppy::mutateStandard(this->population_[treeIdx],
             this->context_,
-            this->parameters().getInt("MUT_MAX_REGEN_DEPTH"),
-            this->parameters().getInt("MAX_DEPTH"));
+            this->getIntParameter("MUT_MAX_REGEN_DEPTH"),
+            this->getIntParameter("MAX_DEPTH"));
       } else {
         Puppy::mutateSwap(this->population_[treeIdx],
             this->context_,
-            this->parameters().getDouble("MUT_SWAP_DISTRIB_PROBA"));
+            this->getDoubleParameter("MUT_SWAP_DISTRIB_PROBA"));
       }
     }
   }

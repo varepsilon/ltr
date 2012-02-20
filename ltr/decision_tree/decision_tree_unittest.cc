@@ -39,7 +39,6 @@ using ltr::Object;
 #define EQUAL ltr::decision_tree::EQUAL
 #define GREATER_OR_EQUAL ltr::decision_tree::GREATER_OR_EQUAL
 
-
 TEST_F(DecisionTreeTest, TestingBasicOperations) {
   DecisionTree<double> tree;
   typedef Vertex<double>::Ptr VertexPtr;

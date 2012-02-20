@@ -20,14 +20,14 @@ using ltr::ObjectList;
 namespace ltr {
   double GMRR::GMRRFormula(double pos, double label, double p_look) const {
     return (1.0 / pos) * p_look *
-      (pow(2.0, label) - 1) / pow(2.0, this->parameters().getInt("MAX_LABEL"));
+      (pow(2.0, label) - 1) / pow(2.0, this->getIntParameter("MAX_LABEL"));
   }
 
   double GMRR::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -41,7 +41,7 @@ namespace ltr {
       result += GMRRFormula(static_cast<double>(pos),
         labels[labels_index].actual, p_look);
       p_relevance = labels[labels_index].actual
-        / this->parameters().getInt("MAX_LABEL");
+        / this->getIntParameter("MAX_LABEL");
       p_look *= (1 - p_relevance);
     }
 

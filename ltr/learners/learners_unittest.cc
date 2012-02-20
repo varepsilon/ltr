@@ -56,7 +56,7 @@ class LearnersTest : public ::testing::Test {
 };
 
 // tests.
-TEST_F(LearnersTest, TestingBestFeatureLearner) {
+/*TEST_F(LearnersTest, TestingBestFeatureLearner) {
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
   learner.learn(learn_data);
@@ -69,12 +69,11 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   double measureAfter = pMeasure->average(test_data);
 
   EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
-};
+};*/
 
 TEST_F(LearnersTest, TestingGPLearner) {
   ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
   ltr::gp::GPLearner<ltr::ObjectList> learner(pMeasure);
-
 
   learner.learn(learn_data_listwise);
 

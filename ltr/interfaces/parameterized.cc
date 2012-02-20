@@ -4,14 +4,6 @@
 
 namespace ltr {
 
-ParametersContainer& Parameterized::parameters() {
-  return parameters_;
-}
-
-const ParametersContainer& Parameterized::parameters() const {
-  return parameters_;
-}
-
 void Parameterized::setDefaultParameters() {
   parameters_.clear();
 }

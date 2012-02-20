@@ -27,7 +27,7 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   BestFeatureLearner
       (const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
   }
 
   BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure,

@@ -18,7 +18,7 @@ class IFeatureConverterLearner : public Parameterized {
   explicit IFeatureConverterLearner(const ParametersContainer& parameters =
       ParametersContainer()) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
   }
 
   void learn(const DataSet<TElement>& data_set);

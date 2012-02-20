@@ -23,7 +23,7 @@ namespace ltr {
     TruePoint(const ParametersContainer& parameters = ParametersContainer())
         :MoreIsBetterMeasure<Object>("TruePoint") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
+      this->copyParameters(parameters);
     }
 
   private:

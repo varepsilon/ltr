@@ -15,23 +15,22 @@ namespace ltr {
     GMRR(const ParametersContainer& parameters = ParametersContainer())
         :ListwiseMeasure("GMRR") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
-      this->checkParameters();
+      this->copyParameters(parameters);
     }
     /**
     * MAX_LABEL Maximal possible relevance of document
     * NUMBER_OF_OBJECTS_TO_CONSIDER Number of top documents to consider
     */
     void setDefaultParameters() {
-      this->parameters().clear();
-      this->parameters().setDouble("MAX_LABEL", 5.0);
-      this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+      this->clearParameters();
+      this->addDoubleParameter("MAX_LABEL", 5.0);
+      this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
     void checkParameters() const {
-      if (this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
+      if (this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
         throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
       }
-      if (this->parameters().getDouble("MAX_LABEL") < 0.0) {
+      if (this->getDoubleParameter("MAX_LABEL") < 0.0) {
         throw logic_error(alias() + " MAX_LABEL < 0");
       }
     }

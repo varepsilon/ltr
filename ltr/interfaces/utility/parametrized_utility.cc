@@ -14,7 +14,7 @@ void checkIntParameterGreaterZero(const Parameterized& parametrized,
 void checkIntParameterGreaterThan(const Parameterized& parametrized,
     const string& parameterName,
     int value) {
-  if (parametrized.parameters().getInt(parameterName) <= value) {
+  if (parametrized.getIntParameter(parameterName) <= value) {
     throw logic_error(parameterName + " is not correct.");
   }
 }
@@ -23,8 +23,8 @@ void checkDoubleParameterGreaterInsegment(const Parameterized& parametrized,
     const string& parameterName,
     double segmentBegins,
     double segmentEnds) {
-  if ((parametrized.parameters().getDouble(parameterName) <= segmentBegins) ||
-      (parametrized.parameters().getDouble(parameterName) >= segmentEnds)) {
+  if ((parametrized.getDoubleParameter(parameterName) <= segmentBegins) ||
+      (parametrized.getDoubleParameter(parameterName) >= segmentEnds)) {
     throw logic_error(parameterName + " is not correct.");
   }
 }

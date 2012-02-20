@@ -119,7 +119,7 @@ typename Vertex<TValue>::Ptr Vertex<TValue>::firstChild() const {
 
 template<class TValue>
 void Vertex<TValue>::setCondition(Condition::Ptr condition) {
-  return condition_ = condition;
+  condition_ = condition;
 }
 
 template<class TValue>
