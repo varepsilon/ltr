@@ -4,11 +4,13 @@
 #define LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_LEARNER_H_
 
 #include <set>
+#include <vector>
 
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
 
 using std::set;
+using std::vector;
 using ltr::IDataPreprocessorLearner;
 
 namespace ltr {
