@@ -92,9 +92,9 @@ class DecisionTreeLearner
       this->copyParameters(parameters);
 
       conditions_learner_ =
-          ConditionsLearner::Ptr(new ConditionsLearner());
+          typename ConditionsLearner::Ptr(new ConditionsLearner());
       splitting_quality_ =
-          SplittingQuality::Ptr(new SplittingQuality());
+          typename SplittingQuality::Ptr(new SplittingQuality());
     }
 };
 }
