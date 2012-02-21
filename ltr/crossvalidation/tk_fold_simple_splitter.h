@@ -34,8 +34,7 @@ namespace ltr {
           (const ParametersContainer& parameters = ParametersContainer())
           : Splitter<TElement>("TKFoldSimpleSplitter") {
         this->setDefaultParameters();
-        this->parameters().copyParameters(parameters);
-        this->checkParameters();
+        this->copyParameters(parameters);
       }
       /**
        * Clears parameters container and sets ints K = 10 and T = 10
@@ -68,25 +67,21 @@ namespace ltr {
     // template realizations
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
-      this->parameters().clear();
-      this->parameters().setInt("K", 10);
-      this->parameters().setInt("T", 10);
+      this->clearParameters();
+      this->addIntParameter("K", 10);
+      this->addIntParameter("T", 10);
     }
 
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-      if (this->parameters().getInt("K") < 2) {
-        throw logic_error(this->alias() + " k should be grater then 1!");
-      }
-      if (this->parameters().getInt("T") < 1) {
-        throw logic_error(this->alias() + " T should be positive!");
-      }
+      CHECK_INT_PARAMETER("K", X > 1);
+      CHECK_INT_PARAMETER("T", X > 0);
     }
 
     template<class TElement>
     int TKFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return this->parameters().getInt("K") * this->parameters().getInt("T");
+      return this->getIntParameter("K") * this->getIntParameter("T");
     }
 
     template<class TElement>
@@ -103,14 +98,14 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int blocksplit_index = split_index / this->parameters().getInt("K");
-      int block_index = split_index % this->parameters().getInt("K");
+      int blocksplit_index = split_index / this->getIntParameter("K");
+      int block_index = split_index % this->getIntParameter("K");
 
       Permutation current_perm =
         getRandomPermutation(blocksplit_index, base_set.size());
 
-      int block_size = base_set.size() / this->parameters().getInt("K");
-      int extra_length = base_set.size() % this->parameters().getInt("K");
+      int block_size = base_set.size() / this->getIntParameter("K");
+      int extra_length = base_set.size() % this->getIntParameter("K");
 
       int test_begin = block_size * block_index +
         std::min(block_index, extra_length);

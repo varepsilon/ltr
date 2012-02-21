@@ -31,7 +31,7 @@ namespace ltr {
     for (vector<PredictedAndActualLabels>::const_iterator labels_it
         = labels.begin(); labels_it != labels.end();
         ++labels_it, pos += 1) {
-      if (labels_it->actual >= parameters().getDouble("SCORE_FOR_RELEVANT")) {
+      if (labels_it->actual >= getDoubleParameter("SCORE_FOR_RELEVANT")) {
         result = RRFormula(static_cast<double>(pos));
         relevant_found = true;
         break;
@@ -42,7 +42,7 @@ namespace ltr {
       string str;
       str.append(alias() + " no relevants for some query on relevant score = ").
         append(boost::lexical_cast<string>(
-          parameters().getDouble("SCORE_FOR_RELEVANT")));
+          getDoubleParameter("SCORE_FOR_RELEVANT")));
       throw logic_error(str);
     }
 

@@ -1,17 +1,30 @@
 // Copyright 2012 Yandex
 
 #include "ltr_client/learner_factory.h"
+
 #include "ltr/learners/best_feature_learner.h"
+
 #include "ltr/learners/gp_learner.h"
 #include "ltr/learners/gp_learner_determinant_strategy.h"
+
+#include "ltr/learners/decision_tree_learner.h"
+#include "ltr/learners/utility/id3_splitter.h"
+#include "ltr/learners/utility/splitting_quality.h"
 
 using ltr::Object;
 using ltr::ObjectPair;
 using ltr::ObjectList;
 
 using ltr::BestFeatureLearner;
+
 using ltr::gp::GPLearner;
 using ltr::gp::GPLearnerWithDeterminantStrategy;
+
+using ltr::DecisionTreeLearner;
+using ltr::decision_tree::ID3_Splitter;
+using ltr::decision_tree::SqrErrorQuality;
+
+typedef DecisionTreeLearner<ID3_Splitter, SqrErrorQuality> ID3_Learner;
 
 template<>
 void LearnerFactory::registerAll() {
@@ -29,4 +42,6 @@ void LearnerFactory::registerAll() {
       GPLearnerWithDeterminantStrategy<ObjectPair>);
   REGISTER_LISTWISE_LEARNER("GP_DETERMINANT_STRATEGY", \
       GPLearnerWithDeterminantStrategy<ObjectList>);
+
+  REGISTER_POINTWISE_LEARNER("ID3", ID3_Learner);
 }

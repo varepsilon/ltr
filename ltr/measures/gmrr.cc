@@ -27,7 +27,7 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -38,6 +38,7 @@ namespace ltr {
       if (labels[labels_index].actual < 0) {
         throw logic_error(alias() + " some actual object label < 0");
       }
+
       if (labels[labels_index].actual
           > this->parameters().getDouble("MAX_LABEL")) {
         throw logic_error(alias() + " some actual object label > MAX_LABEL");

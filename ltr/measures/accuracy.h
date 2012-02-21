@@ -18,7 +18,7 @@ class Accuracy : public MoreIsBetterMeasure<TElement> {
   Accuracy(const ParametersContainer& parameters = ParametersContainer())
     :MoreIsBetterMeasure<TElement>("Accuracy") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
+      this->copyParameters(parameters);
   }
   private:
   double get_measure(const TElement& object) const;

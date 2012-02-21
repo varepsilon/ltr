@@ -31,8 +31,7 @@ namespace ltr {
           (const ParametersContainer& parameters = ParametersContainer())
           : Splitter<TElement>("LeaveOneOutSplitter") {
         this->setDefaultParameters();
-        this->parameters().copyParameters(parameters);
-        this->checkParameters();
+        this->copyParameters(parameters);
       }
 
     protected:

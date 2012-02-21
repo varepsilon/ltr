@@ -62,9 +62,9 @@ void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
       this->featureCount());
 
   double normalizationIntervalBegin =
-      this->parameters().getDouble("NormalizationIntervalBegin");
+      this->getDoubleParameter("NormalizationIntervalBegin");
   double normalizationIntervalEnd =
-      this->parameters().getDouble("NormalizationIntervalEnd");
+      this->getDoubleParameter("NormalizationIntervalEnd");
 
   for (size_t feature_idx = 0;
       feature_idx < this->featureCount();
@@ -97,16 +97,16 @@ template <typename TElement>
 void FeatureNormalizerLearner<TElement>::setDefaultParameters() {
   Parameterized::setDefaultParameters();
 
-  this->parameters().setDouble("NormalizationIntervalBegin", 0.0);
-  this->parameters().setDouble("NormalizationIntervalEnd", 1.0);
+  this->addDoubleParameter("NormalizationIntervalBegin", 0.0);
+  this->addDoubleParameter("NormalizationIntervalEnd", 1.0);
 }
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::checkParameters() const {
   double normalizationIntervalBegin =
-      this->parameters().getDouble("NormalizationIntervalBegin");
+      this->getDoubleParameter("NormalizationIntervalBegin");
   double normalizationIntervalEnd =
-      this->parameters().getDouble("NormalizationIntervalEnd");
+      this->getDoubleParameter("NormalizationIntervalEnd");
 
   if (normalizationIntervalBegin >= normalizationIntervalEnd) {
     throw std::logic_error("Bad parameters for FeatureNormalizerLearner");

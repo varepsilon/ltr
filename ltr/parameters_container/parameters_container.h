@@ -32,6 +32,10 @@ namespace ltr {
     void setBool(const string& name, bool value);
     void setList(const string& name, const List& value);
 
+    template<class T>
+    bool has(const string& name) const;
+
+    template<class T> T get(const string& name) const;
     double getDouble(const string& name) const;
     int getInt(const string& name) const;
     bool getBool(const string& name) const;
@@ -44,12 +48,22 @@ namespace ltr {
     void clear();
 
   protected:
-    template<class T> T get(const string& name) const;
-
     TMap params;
   };
 
   // Template realization
+  template <class T>
+  bool ParametersContainer::has(const string& name) const {
+    if (params.find(name) == params.end())
+      return 0;
+    try {
+      boost::get<T>(params.find(name)->second);
+      return 1;
+    } catch(...) {
+      return 0;
+    }
+  }
+
   template <class T>
   T ParametersContainer::get(const string& name) const {
     if (params.find(name) == params.end()) {

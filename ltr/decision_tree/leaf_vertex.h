@@ -20,6 +20,9 @@ class LeafVertex : public Vertex<TValue> {
     TValue value(const Object& obj) const {
       return value_;
     }
+    void setValue(TValue value) {
+      value_ = value;
+    }
     LeafVertex() : Vertex<TValue>() {}
     LeafVertex(Condition::Ptr condition, const TValue& value) :
         value_(value), Vertex<TValue>(condition) {}

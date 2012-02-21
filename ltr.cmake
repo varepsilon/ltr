@@ -22,6 +22,9 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
                       ${Source_Path}/ltr/decision_tree/compare_condition.h
                       ${Source_Path}/ltr/decision_tree/compare_condition.cc)
 
+SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/decision_tree/utility/utility.h
+                              ${Source_Path}/ltr/decision_tree/utility/utility.cc)
+
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_utility.cc
@@ -62,7 +65,8 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
                 ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
                 ${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
                 ${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc
-                ${Source_Path}/ltr/scorers/gp_scorer.h)
+                ${Source_Path}/ltr/scorers/gp_scorer.h
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc)
             
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
                       ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
@@ -89,11 +93,18 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/gp_learner.h
                  ${Source_Path}/ltr/learners/gp_learner.cc
                  ${Source_Path}/ltr/learners/gp_learner_determinant_strategy.h
-                 ${Source_Path}/ltr/learners/gp_learner_determinant_strategy.cc)
+                 ${Source_Path}/ltr/learners/gp_learner_determinant_strategy.cc
+                 ${Source_Path}/ltr/learners/decision_tree_learner.h
+                 ${Source_Path}/ltr/learners/decision_tree_learner.cc)
 
 SET(LTR_LEARNERS_UTILS ${Source_Path}/ltr/learners/utility/gp_primitives.h
                        ${Source_Path}/ltr/learners/utility/gp_functions.h
-                       ${Source_Path}/ltr/learners/utility/gp_functions.cc)
+                       ${Source_Path}/ltr/learners/utility/gp_functions.cc
+                       
+                       ${Source_Path}/ltr/learners/utility/conditions_learner.h
+                       ${Source_Path}/ltr/learners/utility/id3_splitter.cc
+                       ${Source_Path}/ltr/learners/utility/id3_splitter.h
+                       ${Source_Path}/ltr/learners/utility/splitting_quality.h)
 
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
@@ -140,11 +151,12 @@ SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\utils FILES ${LTR_LEARNERS_UTILS})
 SOURCE_GROUP(decision_tree FILES ${LTR_DECISION_TREE})
+SOURCE_GROUP(decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_INTERFACES_UTILITY} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_LEARNERS_UTILS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
             ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE}
-            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION})
+            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY})
 

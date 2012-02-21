@@ -91,11 +91,11 @@ TEST_F(ListwiseMeasuresTest, TestingGMRR) {
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg0;
   DCG dcg1;
-  dcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   DCG dcg2;
-  dcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   DCG dcg3;
-  dcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 15.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 15.6309297535714));
@@ -106,11 +106,11 @@ TEST_F(ListwiseMeasuresTest, TestingDCG) {
 TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
   YandexDCG dcg0;
   YandexDCG dcg1;
-  dcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   YandexDCG dcg2;
-  dcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   YandexDCG dcg3;
-  dcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 4.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 4.5));
@@ -121,11 +121,11 @@ TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
 TEST_F(ListwiseMeasuresTest, TestingNDCG) {
   NDCG ndcg0;
   NDCG ndcg1;
-  ndcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  ndcg1.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   NDCG ndcg2;
-  ndcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  ndcg2.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   NDCG ndcg3;
-  ndcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  ndcg3.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.92530188545727754));
@@ -136,11 +136,11 @@ TEST_F(ListwiseMeasuresTest, TestingNDCG) {
 TEST_F(ListwiseMeasuresTest, TestingYandexNDCG) {
   YandexNDCG ndcg0;
   YandexNDCG ndcg1;
-  ndcg1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  ndcg1.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   YandexNDCG ndcg2;
-  ndcg2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  ndcg2.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   YandexNDCG ndcg3;
-  ndcg3.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  ndcg3.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
 
   EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.9));
@@ -160,7 +160,7 @@ TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
   EXPECT_TRUE(DoubleEqual(ap1(olist), 1.0)) << ap1(olist);
   EXPECT_TRUE(DoubleEqual(ap1(olist2), 1.0)) << ap1(olist2);
 
-  ap.parameters().setDouble("SCORE_FOR_RELEVANT", 4.0);
+  ap.setDoubleParameter("SCORE_FOR_RELEVANT", 4.0);
   EXPECT_TRUE(DoubleEqual(ap(olist), 1.0)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
@@ -197,17 +197,17 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
   EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
   EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
 
-  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  pf.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
   EXPECT_TRUE(DoubleEqual(pf(olist), pf2(olist)));
   EXPECT_TRUE(DoubleEqual(pf(olist2), pf2(olist2)));
 
-  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
-  pf.parameters().setDouble("MAX_LABEL", 6.0);
+  pf.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
+  pf.setDoubleParameter("MAX_LABEL", 6.0);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.78078703703703)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.71972415123456)) << pf(olist2);
 
-  pf.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  pf.parameters().setDouble("P_BREAK", 0.23);
+  pf.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+  pf.setDoubleParameter("P_BREAK", 0.23);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.76434259259259)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.65711983024691)) << pf(olist2);
 }

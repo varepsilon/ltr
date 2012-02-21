@@ -20,7 +20,7 @@ namespace ltr {
     SquaredError(const ParametersContainer& parameters = ParametersContainer())
         :LessIsBetterMeasure<Object>("Squared error") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
+      this->copyParameters(parameters);
     }
 
     private:

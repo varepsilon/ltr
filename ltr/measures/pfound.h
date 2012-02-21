@@ -21,8 +21,7 @@ namespace ltr {
     PFound(const ParametersContainer& parameters = ParametersContainer())
         :MoreIsBetterMeasure<ObjectList>("PFound") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
-      this->checkParameters();
+      this->copyParameters(parameters);
     }
     /**
      * Clears parameters container and sets default values:
@@ -32,28 +31,19 @@ namespace ltr {
      * (0 means all docs)
      */
     void setDefaultParameters() {
-      this->parameters().clear();
-      this->parameters().setDouble("P_BREAK", 0.15);
-      this->parameters().setDouble("MAX_LABEL", 5.0);
-      this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+      this->clearParameters();
+      this->addDoubleParameter("P_BREAK", 0.15);
+      this->addDoubleParameter("MAX_LABEL", 5.0);
+      this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
     /**
      * Checks if 0 <= P_BREAK <= 1, NUMBER_OF_OBJECTS_TO_CONSIDER >=0,
      * MAX_LABEL >= 0 (all should be true)
      */
     void checkParameters() const {
-      if (this->parameters().getDouble("P_BREAK") > 1.0) {
-        throw logic_error(alias() + " P_BREAK > 1");
-      }
-      if (this->parameters().getDouble("P_BREAK") < 0.0) {
-        throw logic_error(alias() + " P_BREAK < 0");
-      }
-      if (this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
-        throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
-      }
-      if (this->parameters().getDouble("MAX_LABEL") < 0.0) {
-        throw logic_error(alias() + " MAX_LABEL < 0");
-      }
+      CHECK_DOUBLE_PARAMETER("P_BREAK", X >= 0 && X <= 1);
+      CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
+      CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
     }
 
   private:

@@ -31,8 +31,7 @@ namespace ltr {
           (const ParametersContainer& parameters = ParametersContainer())
           : Splitter<TElement>("KFoldSimpleSplitter") {
         this->setDefaultParameters();
-        this->parameters().copyParameters(parameters);
-        this->checkParameters();
+        this->copyParameters(parameters);
       }
       /**
        * Clears parameters container and sets int K = 10
@@ -56,21 +55,19 @@ namespace ltr {
     // template realizations
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
-      this->parameters().clear();
-      this->parameters().setInt("K", 10);
+      this->clearParameters();
+      this->addIntParameter("K", 10);
     }
 
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::checkParameters() const {
-      if (this->parameters().getInt("K") < 2) {
-        throw logic_error(this->alias() + " k should be grater then 1");
-      }
+      CHECK_INT_PARAMETER("K", X >= 2);
     }
 
     template<class TElement>
     int KFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return this->parameters().getInt("K");
+      return this->getIntParameter("K");
     }
 
     template<class TElement>
@@ -87,8 +84,8 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int block_size = base_set.size() / this->parameters().getInt("K");
-      int extra_length = base_set.size() % this->parameters().getInt("K");
+      int block_size = base_set.size() / this->getIntParameter("K");
+      int extra_length = base_set.size() % this->getIntParameter("K");
 
       int test_begin = block_size * split_index +
         std::min(split_index, extra_length);

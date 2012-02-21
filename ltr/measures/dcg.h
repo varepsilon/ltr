@@ -72,8 +72,7 @@ namespace ltr {
     BaseDCG(const ParametersContainer& parameters = ParametersContainer())
     :ListwiseMeasure("DCG with " + TDCGFormula().alias()) {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
-      this->checkParameters();
+      this->copyParameters(parameters);
     }
 
     /** 
@@ -108,7 +107,7 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -125,14 +124,12 @@ namespace ltr {
 
   template<class TDCGFormula>
   void BaseDCG<TDCGFormula>::setDefaultParameters() {
-    this->parameters().clear();
-    this->parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+    this->clearParameters();
+    this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
   }
   template<class TDCGFormula>
   void BaseDCG<TDCGFormula>::checkParameters() const {
-    if (this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
-      throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
-    }
+    CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
   }
 };
 #endif  // LTR_MEASURES_DCG_H_

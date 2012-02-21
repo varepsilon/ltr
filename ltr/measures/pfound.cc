@@ -19,14 +19,14 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->parameters().getInt("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
-    double p_break = this->parameters().getDouble("P_BREAK");
-    double max_label = this->parameters().getDouble("MAX_LABEL");
+    double p_break = this->getDoubleParameter("P_BREAK");
+    double max_label = this->getDoubleParameter("MAX_LABEL");
     size_t cur = 1;
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {

@@ -25,7 +25,7 @@ namespace ltr {
     for (vector<PredictedAndActualLabels>::const_iterator labels_it
         = labels.begin(); labels_it != labels.end();
         ++labels_it, total_amount += 1) {
-      if (labels_it->actual >= parameters().getDouble("SCORE_FOR_RELEVANT")) {
+      if (labels_it->actual >= getDoubleParameter("SCORE_FOR_RELEVANT")) {
         relevant_amount += 1;
         ans += static_cast<double>(relevant_amount)/total_amount;
       }
@@ -34,7 +34,7 @@ namespace ltr {
       string str;
       str.append(alias() + " no relevants for some query on relevant score = ").
         append(boost::lexical_cast<string>(
-          parameters().getDouble("SCORE_FOR_RELEVANT")));
+          getDoubleParameter("SCORE_FOR_RELEVANT")));
       throw logic_error(str);
     }
     double metric = ans / relevant_amount;

@@ -21,7 +21,7 @@ namespace ltr {
     AbsError(const ParametersContainer& parameters = ParametersContainer())
         :LessIsBetterMeasure<Object>("Absolute error") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
+      this->copyParameters(parameters);
     }
 
     private:
