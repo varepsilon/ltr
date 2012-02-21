@@ -36,7 +36,7 @@ class FeatureSubsetChooser : public FeatureConverter {
   const vector<size_t>& getChoosedFeaturesIndices() const {
     return indices_;
   }
-  size_t countChoosedFeatures() const {
+  size_t getChoosedFeaturesCount() const {
     return indices_.size();
   }
 

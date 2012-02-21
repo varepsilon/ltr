@@ -47,11 +47,11 @@ void FeatureSubsetChooserLearner<TElement>::setDefaultParameters() {
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
   vector<size_t> indices = this->parameters().getList("INDICES");
-  set<size_t> used_objects;
+  set<size_t> used_features;
   for (int index = 0; indices.size(); ++index) {
     size_t current_object = indices[index];
-    if (used_obects.find(current_object) != used_obects.end()) {
-      used_obects.insert(current_object);
+    if (used_features.find(current_object) != used_features.end()) {
+      used_features.insert(current_object);
     } else {
       throw logic_error("Indicies array contains equal elements");
     }
@@ -72,7 +72,7 @@ void FeatureSubsetChooserLearner<TElement>::learn(const DataSet<TElement>& data_
 }
 
 template <typename TElement>
-FeatureSubsetChooser::Ptr FeatureSubsetChooserLearner<TElement>::make() const {
+FeatureConverter::Ptr FeatureSubsetChooserLearner<TElement>::make() const {
   return converter_;
 }
 };

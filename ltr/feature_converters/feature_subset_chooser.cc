@@ -13,10 +13,10 @@ namespace ltr {
 
 FeatureInfo FeatureSubsetChooser::convertFeatureInfo(
     const FeatureInfo& oldFeatureInfo) const {
-  FeatureInfo convertedFeatureInfo(countChoosedFeatures());
+  FeatureInfo convertedFeatureInfo(getChoosedFeaturesCount());
 
   for (size_t choosed_feature_index = 0;
-      choosed_feature_index < countChoosedFeatures();
+      choosed_feature_index < getChoosedFeaturesCount();
       ++choosed_feature_index) {
     convertedFeatureInfo.setFeatureType(choosed_feature_index,
         oldFeatureInfo.getFeatureType(
@@ -32,12 +32,12 @@ void FeatureSubsetChooser::apply(const Object& argument,
   if (max_used_feature_ > argument.featureCount()) {
     throw logic_error("Current object has "
       + boost::lexical_cast<string>(argument.featureCount())
-      + " features while numer "
+      + " features while number "
       + boost::lexical_cast<string>(max_used_feature_)
       + " was requested");
   }
   for (size_t choosed_feature_index = 0;
-      choosed_feature_index < countChoosedFeatures();
+      choosed_feature_index < getChoosedFeaturesCount();
       ++choosed_feature_index) {
     result <<
         argument.features()[indices_[choosed_feature_index]];
