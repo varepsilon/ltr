@@ -13,29 +13,40 @@ using std::vector;
 
 #define CHECK_PARAMETER(type, name, condition) \
   { \
-    type X = (*this).template getParameter<type>(name); \
+    type X = this->get_##type_##parameter(name); \
     if (!(condition)) \
       throw std::logic_error("Error in parameter '" \
         name "' check: " #condition); \
   }
 
-#define CHECK_TWO_PARAMETERS(type1, type2, name1, name2, condition) \
-  { \
-    type1 X1 = (*this).template getParameter<type1>(name1); \
-    type2 X2 = (*this).template getParameter<type2>(name2); \
-    if (!(condition)) \
-      throw std::logic_error("Error in parameters '" \
-        name1 "' and '" name2 "' check: " #condition); \
-  }
-
 #define CHECK_INT_PARAMETER(name, condition) \
-  CHECK_PARAMETER(int, name, condition)
+  { \
+    int X = this->getIntParameter(name); \
+    if (!(condition)) \
+      throw std::logic_error("Error in parameter '" \
+        name "' check: " #condition); \
+  }
 #define CHECK_DOUBLE_PARAMETER(name, condition) \
-  CHECK_PARAMETER(double, name, condition)
+  { \
+    double X = this->getDoubleParameter(name); \
+    if (!(condition)) \
+      throw std::logic_error("Error in parameter '" \
+        name "' check: " #condition); \
+  }
 #define CHECK_BOOL_PARAMETER(name, condition) \
-  CHECK_PARAMETER(bool, name, condition)
+  { \
+    bool X = this->getBoolParameter(name); \
+    if (!(condition)) \
+      throw std::logic_error("Error in parameter '" \
+        name "' check: " #condition); \
+  }
 #define CHECK_LIST_PARAMETER(name, condition) \
-  CHECK_PARAMETER(vector<int>, name, condition)
+  { \
+    vector<int> X = this->getListParameter(name); \
+    if (!(condition)) \
+      throw std::logic_error("Error in parameter '" \
+        name "' check: " #condition); \
+  }
 
 #define CHECK_HAS_PARAMETER(type, name) \
   if (!parameters_.has<type>(name)) \

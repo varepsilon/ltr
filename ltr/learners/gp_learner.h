@@ -89,8 +89,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
     CHECK_INT_PARAMETER("MIN_INIT_DEPTH", X > 0);
     CHECK_INT_PARAMETER("MUT_MAX_REGEN_DEPTH", X > 0);
 
-    CHECK_TWO_PARAMETERS(int, int, \
-                         "MAX_INIT_DEPTH", "MIN_INIT_DEPTH", X1 > X2 - 1);
+    CHECK_INT_PARAMETER("MAX_INIT_DEPTH", \
+      X > this->getIntParameter("MIN_INIT_DEPTH") - 1);
 
     CHECK_DOUBLE_PARAMETER("INIT_GROW_PROBA", X >= 0 && X <= 1);
     CHECK_DOUBLE_PARAMETER("CROSSOVER_PROBA", X >= 0 && X <= 1);
