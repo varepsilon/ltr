@@ -15,9 +15,9 @@
 
 using ltr::decision_tree::DecisionVertexPtr;
 using ltr::decision_tree::LeafVertexPtr;
-
 using ltr::decision_tree::LeafVertex;
 using ltr::decision_tree::split;
+using ltr::decision_tree::Condition;
 
 namespace ltr {
 
