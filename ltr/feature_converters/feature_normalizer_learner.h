@@ -21,12 +21,11 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
   public:
   typedef boost::shared_ptr< FeatureNormalizerLearner > Ptr;
 
-  explicit FeatureNormalizerLearner(const ParametersContainer& parameters)
-  :IFeatureConverterLearner<TElement>(parameters) {
-    this->checkParameters();
-  }
-  FeatureNormalizerLearner() {
+  explicit FeatureNormalizerLearner(const ParametersContainer& parameters =
+      ParametersContainer()) {
     this->setDefaultParameters();
+    this->parameters().copyParameters(parameters);
+    this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
