@@ -66,9 +66,9 @@ void SimpleSubsetPreprocessorLearner<TElement>
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    converter_.setChoosedElementsIndices(all_used);
+    converter_->setChoosedElementsIndices(all_used);
   } else {
-    converter_.setChoosedElementsIndices(this->parameters().getList("INDICES"));
+    converter_->setChoosedElementsIndices(this->parameters().getList("INDICES"));
   }
 }
 

@@ -68,9 +68,9 @@ void FeatureSubsetChooserLearner<TElement>
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    converter_.setChoosedFeaturesIndices(all_used);
+    converter_->setChoosedFeaturesIndices(all_used);
   } else {
-    converter_.setChoosedFeaturesIndices(this->parameters().getList("INDICES"));
+    converter_->setChoosedFeaturesIndices(this->parameters().getList("INDICES"));
   }
 }
 
