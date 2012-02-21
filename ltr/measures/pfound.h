@@ -41,18 +41,9 @@ namespace ltr {
      * MAX_LABEL >= 0 (all should be true)
      */
     void checkParameters() const {
-      if (this->getDoubleParameter("P_BREAK") > 1.0) {
-        throw logic_error(alias() + " P_BREAK > 1");
-      }
-      if (this->getDoubleParameter("P_BREAK") < 0.0) {
-        throw logic_error(alias() + " P_BREAK < 0");
-      }
-      if (this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
-        throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
-      }
-      if (this->getDoubleParameter("MAX_LABEL") < 0.0) {
-        throw logic_error(alias() + " MAX_LABEL < 0");
-      }
+      CHECK_DOUBLE_PARAMETER("P_BREAK", X >= 0 && X <= 1);
+      CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
+      CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
     }
 
   private:

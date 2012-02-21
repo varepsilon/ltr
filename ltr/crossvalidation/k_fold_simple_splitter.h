@@ -61,9 +61,7 @@ namespace ltr {
 
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::checkParameters() const {
-      if (this->getIntParameter("K") < 2) {
-        throw logic_error(this->alias() + " k should be grater then 1");
-      }
+      CHECK_INT_PARAMETERS("K", X >= 2);
     }
 
     template<class TElement>

@@ -74,12 +74,8 @@ namespace ltr {
 
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-      if (this->getIntParameter("K") < 2) {
-        throw logic_error(this->alias() + " k should be grater then 1!");
-      }
-      if (this->getIntParameter("T") < 1) {
-        throw logic_error(this->alias() + " T should be positive!");
-      }
+      CHECK_INT_PARAMETERS("K", X > 1);
+      CHECK_INT_PARAMETERS("T", X > 0);
     }
 
     template<class TElement>

@@ -14,29 +14,17 @@ using ltr::DataSet;
 namespace ltr {
 namespace decision_tree {
 
-class SplittingQuality {
+class FakeSplittingQuality {
   public:
-    typedef boost::shared_ptr<SplittingQuality> Ptr;
-    virtual double value(DataSet<ltr::Object> data,
-                         vector<DataSet<ltr::Object> > split) const  = 0;
-    double operator()(DataSet<ltr::Object> data,
-                      vector<DataSet<ltr::Object> > split) const {
-      return value(data, split);
-    }
-    virtual ~SplittingQuality() {}
-};
+    typedef boost::shared_ptr<FakeSplittingQuality> Ptr;
 
-class FakeQuality : public SplittingQuality {
-  public:
-    typedef boost::shared_ptr<FakeQuality> Ptr;
-
-    virtual double value(DataSet<ltr::Object> data,
+    double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const {
       return 0;
     }
 };
 
-class SqrErrorQuality : public SplittingQuality {
+class SqrErrorQuality {
   private:
     double sqrError(DataSet<ltr::Object> data) const {
       double weight_sum = 0;
@@ -55,9 +43,9 @@ class SqrErrorQuality : public SplittingQuality {
     }
 
   public:
-    typedef boost::shared_ptr<FakeQuality> Ptr;
+    typedef boost::shared_ptr<SqrErrorQuality> Ptr;
 
-    virtual double value(DataSet<ltr::Object> data,
+    double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const {
       if (split.size() <= 1)
         return -1e9;

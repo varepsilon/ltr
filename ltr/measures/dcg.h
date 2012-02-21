@@ -129,9 +129,7 @@ namespace ltr {
   }
   template<class TDCGFormula>
   void BaseDCG<TDCGFormula>::checkParameters() const {
-    if (this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
-      throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
-    }
+    CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
   }
 };
 #endif  // LTR_MEASURES_DCG_H_

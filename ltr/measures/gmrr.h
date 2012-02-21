@@ -27,12 +27,8 @@ namespace ltr {
       this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
     void checkParameters() const {
-      if (this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
-        throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
-      }
-      if (this->getDoubleParameter("MAX_LABEL") < 0.0) {
-        throw logic_error(alias() + " MAX_LABEL < 0");
-      }
+      CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
+      CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
     }
   private:
     double get_measure(const ObjectList& objects) const;

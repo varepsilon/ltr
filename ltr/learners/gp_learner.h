@@ -82,26 +82,22 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * std::logical_error(PARAMETER_NAME).
    */
   virtual void checkParameters() const {
-    checkIntParameterGreaterZero(*this, "POP_SIZE");
-    checkIntParameterGreaterZero(*this, "NBR_GEN");
-    checkIntParameterGreaterThan(*this, "NBR_PART", 1);
-    checkIntParameterGreaterZero(*this, "MAX_DEPTH");
-    checkIntParameterGreaterZero(*this, "MIN_INIT_DEPTH");
-    checkIntParameterGreaterThan(*this, "MAX_INIT_DEPTH",
-        this->getIntParameter("MIN_INIT_DEPTH") - 1);
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "INIT_GROW_PROBA");
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "CROSSOVER_PROBA");
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "CROSSOVER_DISTRIB_PROBA");
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "MUT_STD_PROBA");
-    checkIntParameterGreaterZero(*this, "MUT_MAX_REGEN_DEPTH");
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "MUT_SWAP_PROBA");
-    checkDoubleParameterGreaterOrEqualZeroLessOrEqualOne(*this,
-        "MUT_SWAP_DISTRIB_PROBA");
+    CHECK_INT_PARAMETER("POP_SIZE", X > 0);
+    CHECK_INT_PARAMETER("NBR_GEN", X > 0);
+    CHECK_INT_PARAMETER("NBR_PART", X > 1);
+    CHECK_INT_PARAMETER("MAX_DEPTH", X > 0);
+    CHECK_INT_PARAMETER("MIN_INIT_DEPTH", X > 0);
+    CHECK_INT_PARAMETER("MUT_MAX_REGEN_DEPTH", X > 0);
+
+    CHECK_TWO_PARAMETERS(int, int, \
+                         "MAX_INIT_DEPTH", "MIN_INIT_DEPTH", X1 > X2 - 1);
+
+    CHECK_DOUBLE_PARAMETER("INIT_GROW_PROBA", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("CROSSOVER_PROBA", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("CROSSOVER_DISTRIB_PROBA", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("MUT_STD_PROBA", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("MUT_SWAP_PROBA", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("MUT_SWAP_DISTRIB_PROBA", X >= 0 && X <= 1);
   }
   /** The function recreates the context and reinitializes the population.
    */
