@@ -81,14 +81,16 @@ namespace lc {
   void LinearCompositionLearner<TElement,
       TLCSWeightsUpdater, TDSWeightsUpdater>::
         learnImpl(const DataSet<TElement>& data) {
+    linear_composition_scorer_weights_updater_.setMeasure(measure);
+    data_set_weights_updater_.setMeasure(measure);
     for (int iteration = 0;
         iteration < this->parameters().getInt("NUMBER_OF_ITERATIONS");
         ++iteration) {
-      weak_learner_->reset();
+      weak_learner->reset();
       DataSet<TElement> train_data, buf_data;
 
       data_preprocessor_learner->learn(data);
-      DataPreprocessor<TElement>::Ptr data_preprocessor
+      typename DataPreprocessor<TElement>::Ptr data_preprocessor
         = data_preprocessor_learner->make();
       data_preprocessor->apply(data, &buf_data);
 
@@ -99,7 +101,7 @@ namespace lc {
 
       weak_learner_->learn(train_data);
       Scorer::Ptr current_scorer = weak_learner_->makeScorerPtr();
-      scorer_->add(current_scorer, 1.0);
+      scorer_.add(current_scorer, 1.0);
 
       linear_composition_scorer_weights_updater_.updateWeights(data, &scorer_);
       data_set_weights_updater_.updateWeights(&data, scorer_);
