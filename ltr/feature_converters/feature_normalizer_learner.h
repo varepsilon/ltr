@@ -24,7 +24,7 @@ class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
   explicit FeatureNormalizerLearner(const ParametersContainer& parameters =
       ParametersContainer()) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
     this->checkParameters();
   }
 

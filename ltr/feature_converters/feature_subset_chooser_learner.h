@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <set>
+#include <vector>
 #include <stdexcept>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
@@ -13,6 +14,7 @@
 
 using std::set;
 using std::logic_error;
+using std::vector;
 
 namespace ltr {
 template <typename TElement>
@@ -59,7 +61,8 @@ void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
 }
 
 template <typename TElement>
-void FeatureSubsetChooserLearner<TElement>::learn(const DataSet<TElement>& data_set) {
+void FeatureSubsetChooserLearner<TElement>
+    ::learn(const DataSet<TElement>& data_set) {
   if (this->parameters().getList("INDICES").size() == 0) {
     vector<size_t> all_used(data_set.featureInfo().getFeatureCount());
     for (int index = 0; index < all_used.size(); ++index) {

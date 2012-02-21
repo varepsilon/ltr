@@ -71,17 +71,17 @@ class ListwiseMeasuresTest : public ::testing::Test {
 TEST_F(ListwiseMeasuresTest, TestingGMRR) {
   GMRR gmrr0;
   GMRR gmrr1;
-  gmrr1.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  gmrr1.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   GMRR gmrr2;
-  gmrr2.parameters().setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  gmrr2.setIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
 
   EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.49313354492187));
   EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.46875));
   EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.47705078125));
 
-  gmrr0.parameters().setDouble("MAX_LABEL", 4.0);
-  gmrr1.parameters().setDouble("MAX_LABEL", 4.0);
-  gmrr2.parameters().setDouble("MAX_LABEL", 4.0);
+  gmrr0.setDoubleParameter("MAX_LABEL", 4.0);
+  gmrr1.setDoubleParameter("MAX_LABEL", 4.0);
+  gmrr2.setDoubleParameter("MAX_LABEL", 4.0);
 
   EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.943115234375));
   EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.9375));

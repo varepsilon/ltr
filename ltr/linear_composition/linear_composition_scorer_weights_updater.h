@@ -20,7 +20,8 @@ namespace lc {
   public:
     typedef boost::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
 
-    FakeLCScorerWeightsUpdater(typename Measure<TElement>::Ptr in_measure)
+    explicit FakeLCScorerWeightsUpdater(
+        typename Measure<TElement>::Ptr in_measure)
       : measure_(in_measure) {}
 
     void updateWeights(const DataSet<TElement>& data,

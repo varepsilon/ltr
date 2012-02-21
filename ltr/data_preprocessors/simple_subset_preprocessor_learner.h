@@ -3,19 +3,23 @@
 #ifndef LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_LEARNER_H_
 #define LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_LEARNER_H_
 
+#include <set>
+
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
 
+using std::set;
 using ltr::IDataPreprocessorLearner;
 
 namespace ltr {
 template <typename TElement>
-class SimpleSubsetPreprocessorLearner : public IDataPreprocessorLearner<TElement> {
+class SimpleSubsetPreprocessorLearner
+    : public IDataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<SimpleSubsetPreprocessorLearner> Ptr;
 
-  explicit SimpleSubsetPreprocessorLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
+  explicit SimpleSubsetPreprocessorLearner(
+      const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->parameters().copyParameters(parameters);
     this->checkParameters();
@@ -53,7 +57,8 @@ void SimpleSubsetPreprocessorLearner<TElement>::checkParameters() const {
 }
 
 template <typename TElement>
-void SimpleSubsetPreprocessorLearner<TElement>::learn(const DataSet<TElement>& data_set) {
+void SimpleSubsetPreprocessorLearner<TElement>
+    ::learn(const DataSet<TElement>& data_set) {
   if (this->parameters().getList("INDICES").size() == 0) {
     vector<size_t> all_used(data_set.size());
     for (int index = 0; index < all_used.size(); ++index) {
@@ -66,7 +71,8 @@ void SimpleSubsetPreprocessorLearner<TElement>::learn(const DataSet<TElement>& d
 }
 
 template <typename TElement>
-typename DataPreprocessor<TElement>::Ptr SimpleSubsetPreprocessorLearner<TElement>::make() const {
+typename DataPreprocessor<TElement>::Ptr
+    SimpleSubsetPreprocessorLearner<TElement>::make() const {
   return converter_;
 }
 };

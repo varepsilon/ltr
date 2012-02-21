@@ -54,7 +54,8 @@ namespace ltr {
 
   // template realizations
   template <class TElement>
-  void SimpleSubsetPreprocessor<TElement>::apply(const DataSet<TElement>& input_dataset,
+  void SimpleSubsetPreprocessor<TElement>::apply(
+      const DataSet<TElement>& input_dataset,
       DataSet<TElement>* output_dataset) const {
     if (max_used_element_ > input_dataset.size()) {
       throw logic_error("Current dataset has "

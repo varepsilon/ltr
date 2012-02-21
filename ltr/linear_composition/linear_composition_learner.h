@@ -24,7 +24,8 @@ using ltr::Learner;
 namespace ltr {
 namespace lc {
   template <class TElement, class TLCSWeightsUpdater, class TDSWeightsUpdater>
-  class LinearCompositionLearner : public Learner<TElement, LinearCompositionScorer> {
+  class LinearCompositionLearner
+      : public Learner<TElement, LinearCompositionScorer> {
   public:
     typedef boost::shared_ptr<LinearCompositionLearner> Ptr;
 
@@ -56,11 +57,13 @@ namespace lc {
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
     void setFeatureConverterLearner(
-        typename IFeatureConverterLearner<TElement>::Ptr in_feature_converter_learner) {
+        typename IFeatureConverterLearner<TElement>::Ptr
+          in_feature_converter_learner) {
       feature_converter_learner = in_feature_converter_learner;
     }
     void setDataPreprocessorLearner(
-      typename IDataPreprocessorLearner<TElement>::Ptr in_data_preprocessor_learner) {
+      typename IDataPreprocessorLearner<TElement>::Ptr
+        in_data_preprocessor_learner) {
       data_preprocessor_learner = in_data_preprocessor_learner;
     }
   private:
@@ -75,8 +78,9 @@ namespace lc {
   };
 
   template <class TElement, class TLCSWeightsUpdater, class TDSWeightsUpdater>
-  void LinearCompositionLearner<TElement, TLCSWeightsUpdater, TDSWeightsUpdater>::
-      learnImpl(const DataSet<TElement>& data) {
+  void LinearCompositionLearner<TElement,
+      TLCSWeightsUpdater, TDSWeightsUpdater>::
+        learnImpl(const DataSet<TElement>& data) {
     for (int iteration = 0;
         iteration < this->parameters().getInt("NUMBER_OF_ITERATIONS");
         ++iteration) {
@@ -84,11 +88,13 @@ namespace lc {
       DataSet<TElement> train_data, buf_data;
 
       data_preprocessor_learner->learn(data);
-      DataPreprocessor<TElement>::Ptr data_preprocessor = data_preprocessor_learner->make();
+      DataPreprocessor<TElement>::Ptr data_preprocessor
+        = data_preprocessor_learner->make();
       data_preprocessor->apply(data, &buf_data);
 
       feature_converter_learner->learn(data);
-      FeatureConverter::Ptr feature_converter = feature_converter_learner->make();
+      FeatureConverter::Ptr feature_converter
+        = feature_converter_learner->make();
       feature_converter->apply(buf_data, &train_data);
 
       weak_learner_->learn(train_data);
