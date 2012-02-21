@@ -14,7 +14,7 @@
 namespace ltr {
   class LinearCompositionScorer : public Scorer {
   public:
-    typedef boost::shared_ptr< LinearCompositionScorer > Ptr;
+    typedef boost::shared_ptr<LinearCompositionScorer> Ptr;
 
     LinearCompositionScorer() : Scorer("LinearCompositionScorer") {
     }
@@ -23,10 +23,8 @@ namespace ltr {
       Scorer::Ptr scorer;
       double weight;
 
-      ScorerAndWeight(Scorer::Ptr r, double w) :
-      scorer(r),
-      weight(w) {
-      }
+      ScorerAndWeight(Scorer::Ptr r, double w)
+        : scorer(r), weight(w) {}
     };
 
     /**
@@ -45,7 +43,7 @@ namespace ltr {
     void add(Scorer::Ptr scorer, double weight);
 
     virtual std::string brief() const;
-    virtual double operator()(const Object& obj) const;
+    virtual double scoreImpl(const Object& obj) const;
 
   private:
     virtual string generateCppCodeImpl(const string& function_name) const;

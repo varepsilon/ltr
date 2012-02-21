@@ -102,7 +102,13 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.h
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
-                           ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h)
+                           ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
+						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser_learner.h)
+						   
+SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
+                           ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor.h
+						   ${Source_Path}/ltr/data_preprocessors/data_preprocessor_learner.h
+						   ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor_learner.h)
                            
 SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
@@ -111,6 +117,10 @@ SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
+						
+SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composition_learner.h
+                           ${Source_Path}/ltr/linear_composition/data_set_weights_updater.h
+                           ${Source_Path}/ltr/linear_composition/linear_composition_scorer_weights_updater.h)
                             
 
 # lets divide binaries in groups, for comfort navigation
@@ -121,6 +131,7 @@ SOURCE_GROUP(data\\ioutils FILES ${LTR_IO_UTILS})
 SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES})
 SOURCE_GROUP(interfaces\\utils FILES ${LTR_INTERFACES_UTILITY})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS})
+SOURCE_GROUP(data_preprocessor FILES ${LTR_DATA_PREPROCESSORS})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
@@ -130,8 +141,10 @@ SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\utils FILES ${LTR_LEARNERS_UTILS})
 SOURCE_GROUP(decision_tree FILES ${LTR_DECISION_TREE})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
+SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_INTERFACES_UTILITY} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_LEARNERS_UTILS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
-            ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE})
+            ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE}
+            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION})
 

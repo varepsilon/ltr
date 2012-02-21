@@ -5,7 +5,7 @@
 #include "scorers/linear_composition_scorer.h"
 
 namespace ltr {
-  double LinearCompositionScorer::operator()(const Object& obj) const {
+  double LinearCompositionScorer::scoreImpl(const Object& obj) const {
     double result = 0.0;
     for (size_t i = 0; i < scorers_.size(); ++i) {
       result += scorers_[i].weight * ((*scorers_[i].scorer)(obj));

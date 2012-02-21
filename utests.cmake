@@ -9,6 +9,8 @@ SET(LTR_DECISION_TREE_TEST ${Source_Path}/ltr/decision_tree/decision_tree_unitte
 
 SET(LTR_FEATURE_CONVERTERS_TEST ${Source_Path}/ltr/feature_converters/feature_converters_unittest.cc)
 
+SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_preprocessors_unittest.cc)
+
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc)
 
 SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
@@ -31,6 +33,8 @@ SET(LTR_CROSSVALIDATION	${Source_Path}/ltr/crossvalidation/splitter_unittest.h
 						${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter_unittest.cc
 						${Source_Path}/ltr/crossvalidation/validation_result_unittest.cc
 						${Source_Path}/ltr/crossvalidation/crossvalidation_unittest.cc)
+						
+SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composition_unittest.cc)
 
 
 
@@ -39,10 +43,12 @@ SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER_TEST})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS_TEST})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES_TEST})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
+SOURCE_GROUP(data_preprocessors FILES ${LTR_DATA_PREPROCESSORS_TEST})
+SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 
 # lets list all LTR_TEST's source binaries
 SET(LTR_TEST ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST}
-			${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
-                        ${LTR_MEASURES_TEST})
+			 ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
+             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_LINEAR_COMPOSITION})
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)
