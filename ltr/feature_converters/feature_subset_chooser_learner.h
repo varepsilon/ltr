@@ -25,7 +25,7 @@ class FeatureSubsetChooserLearner : public IFeatureConverterLearner<TElement> {
   explicit FeatureSubsetChooserLearner(const ParametersContainer& parameters =
       ParametersContainer()) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
     this->checkParameters();
   }
 
@@ -43,12 +43,12 @@ class FeatureSubsetChooserLearner : public IFeatureConverterLearner<TElement> {
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::setDefaultParameters() {
   vector<size_t> empty;
-  this->parameters().setList("INDICES", empty);
+  this->setListParameter("INDICES", empty);
 }
 
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
-  vector<size_t> indices = this->parameters().getList("INDICES");
+  vector<size_t> indices = this->getListParameter("INDICES");
   set<size_t> used_features;
   for (int index = 0; indices.size(); ++index) {
     size_t current_object = indices[index];
@@ -63,14 +63,15 @@ void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  if (this->parameters().getList("INDICES").size() == 0) {
+  if (this->getListParameter("INDICES").size() == 0) {
     vector<size_t> all_used(data_set.featureInfo().getFeatureCount());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
     converter_->setChoosedFeaturesIndices(all_used);
   } else {
-    converter_->setChoosedFeaturesIndices(this->parameters().getList("INDICES"));
+    converter_->setChoosedFeaturesIndices(
+      this->getListParameter("INDICES"));
   }
 }
 

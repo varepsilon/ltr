@@ -23,7 +23,7 @@ class SimpleSubsetPreprocessorLearner
   explicit SimpleSubsetPreprocessorLearner(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->parameters().copyParameters(parameters);
+    this->copyParameters(parameters);
     this->checkParameters();
   }
 
@@ -41,12 +41,12 @@ class SimpleSubsetPreprocessorLearner
 template <typename TElement>
 void SimpleSubsetPreprocessorLearner<TElement>::setDefaultParameters() {
   vector<size_t> empty;
-  this->parameters().setList("INDICES", empty);
+  this->setListParameter("INDICES", empty);
 }
 
 template <typename TElement>
 void SimpleSubsetPreprocessorLearner<TElement>::checkParameters() const {
-  vector<size_t> indices = this->parameters().getList("INDICES");
+  vector<size_t> indices = this->getListParameter("INDICES");
   set<size_t> used_elements;
   for (int index = 0; indices.size(); ++index) {
     size_t current_object = indices[index];
@@ -61,14 +61,15 @@ void SimpleSubsetPreprocessorLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void SimpleSubsetPreprocessorLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  if (this->parameters().getList("INDICES").size() == 0) {
+  if (this->getListParameter("INDICES").size() == 0) {
     vector<size_t> all_used(data_set.size());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
     converter_->setChoosedElementsIndices(all_used);
   } else {
-    converter_->setChoosedElementsIndices(this->parameters().getList("INDICES"));
+    converter_->setChoosedElementsIndices(
+      this->getListParameter("INDICES"));
   }
 }
 
