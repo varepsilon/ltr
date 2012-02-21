@@ -34,7 +34,7 @@ class SimpleSubsetPreprocessorLearner
   void checkParameters() const;
 
   private:
-  SimpleSubsetPreprocessor::Ptr converter_;
+  typename SimpleSubsetPreprocessor<TElement>::Ptr converter_;
 };
 
 // template realizations
