@@ -13,7 +13,7 @@ using std::vector;
 
 #define CHECK_PARAMETER(type, name, condition) \
   { \
-    type X = (*this).getParameter<type>(name); \
+    type X = (*this).template getParameter<type>(name); \
     if (!(condition)) \
       throw std::logic_error("Error in parameter '" \
         name "' check: " #condition); \
@@ -21,8 +21,8 @@ using std::vector;
 
 #define CHECK_TWO_PARAMETERS(type1, type2, name1, name2, condition) \
   { \
-    type1 X1 = (*this).getParameter<type1>(name1); \
-    type2 X2 = (*this).getParameter<type2>(name2); \
+    type1 X1 = (*this).template getParameter<type1>(name1); \
+    type2 X2 = (*this).template getParameter<type2>(name2); \
     if (!(condition)) \
       throw std::logic_error("Error in parameters '" \
         name1 "' and '" name2 "' check: " #condition); \

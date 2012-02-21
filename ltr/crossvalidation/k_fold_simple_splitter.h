@@ -61,7 +61,7 @@ namespace ltr {
 
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::checkParameters() const {
-      CHECK_INT_PARAMETERS("K", X >= 2);
+      CHECK_INT_PARAMETER("K", X >= 2);
     }
 
     template<class TElement>

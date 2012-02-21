@@ -74,8 +74,8 @@ namespace ltr {
 
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-      CHECK_INT_PARAMETERS("K", X > 1);
-      CHECK_INT_PARAMETERS("T", X > 0);
+      CHECK_INT_PARAMETER("K", X > 1);
+      CHECK_INT_PARAMETER("T", X > 0);
     }
 
     template<class TElement>
