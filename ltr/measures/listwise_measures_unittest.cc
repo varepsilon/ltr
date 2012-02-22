@@ -166,7 +166,7 @@ TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
 
   param.setDouble("SCORE_FOR_RELEVANT", 5.0);
   AveragePrecision ap2(param);
-  EXPECT_ANY_THROW(ap2(olist));
+  EXPECT_TRUE(DoubleEqual(ap2(olist), 0.0));
 }
 
 TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
@@ -183,7 +183,7 @@ TEST_F(ListwiseMeasuresTest, TestingReciprocalRank) {
 
   param.setDouble("SCORE_FOR_RELEVANT", 5.0);
   ReciprocalRank rr2(param);
-  EXPECT_ANY_THROW(rr2(olist));
+  EXPECT_TRUE(DoubleEqual(rr2(olist), 0.0));
 }
 
 TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
@@ -224,9 +224,4 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRankExceptions) {
   param.setInt("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
   param.setDouble("MAX_LABEL", -8.0);
   EXPECT_ANY_THROW(PFound pf4(param));
-
-  PFound pf;
-  olist[1].setActualLabel(-1.0);
-  EXPECT_ANY_THROW(pf(olist));
-  EXPECT_NO_THROW(pf(olist2));
 }

@@ -30,14 +30,13 @@ namespace ltr {
         ans += static_cast<double>(relevant_amount)/total_amount;
       }
     }
+    double metric;
     if (relevant_amount == 0) {
-      string str;
-      str.append(alias() + " no relevants for some query on relevant score = ").
-        append(boost::lexical_cast<string>(
-          getDoubleParameter("SCORE_FOR_RELEVANT")));
-      throw logic_error(str);
+      // todo: log here!
+      metric = 0;  // the worst
+    } else {
+      metric = ans / relevant_amount;
     }
-    double metric = ans / relevant_amount;
     if (metric > 1.0) {
       throw logic_error(alias() + " calculated > 1");
     } else if (metric < 0.0) {

@@ -31,10 +31,14 @@ namespace ltr {
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       if (labels[labels_index].actual < 0) {
-        throw logic_error(alias() + " some actual object label < 0");
+        // todo: log here!
+        // throw logic_error(alias() + " some actual object label < 0");
+        labels[labels_index].actual = 0;
       }
       if (labels[labels_index].actual > max_label) {
-        throw logic_error(alias() + " some actual object label > MAX_LABEL");
+        // todo: log here!
+        // throw logic_error(alias() + " some actual object label > MAX_LABEL");
+        labels[labels_index].actual = max_label;
       }
       p_relevance = labels[labels_index].actual / max_label;
 

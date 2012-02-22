@@ -16,7 +16,7 @@ using ltr::utility::ExtractLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
 
 namespace ltr {
-  double ReciprocalRank::RRFormula(double pos) {
+  double ReciprocalRank::RRFormula(int pos) {
     return 1.0 / pos;
   }
 
@@ -32,18 +32,14 @@ namespace ltr {
         = labels.begin(); labels_it != labels.end();
         ++labels_it, pos += 1) {
       if (labels_it->actual >= getDoubleParameter("SCORE_FOR_RELEVANT")) {
-        result = RRFormula(static_cast<double>(pos));
+        result = RRFormula(pos);
         relevant_found = true;
         break;
       }
     }
 
     if (!relevant_found) {
-      string str;
-      str.append(alias() + " no relevants for some query on relevant score = ").
-        append(boost::lexical_cast<string>(
-          getDoubleParameter("SCORE_FOR_RELEVANT")));
-      throw logic_error(str);
+      // todo: log here!
     }
 
     if (result > 1.0) {

@@ -42,7 +42,7 @@ namespace ltr {
      * Some decreasing function, usually f(x) = 1/x
      * @param pos - position of the first relevant object
      */
-    static double RRFormula(double pos);
+    static double RRFormula(int pos);
   };
 };
 
