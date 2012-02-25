@@ -38,8 +38,8 @@ namespace ltr {
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        std::vector<size_t>* train_set_indexes,
-        std::vector<size_t>* test_set_indexes) const;
+        std::vector<int>* train_set_indexes,
+        std::vector<int>* test_set_indexes) const;
     };
 
     // template realizations
@@ -53,8 +53,8 @@ namespace ltr {
     void LeaveOneOutSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const {
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
         throw logic_error(this->alias() +
           " index should be in range [0..dataset_size-1]");
@@ -64,10 +64,10 @@ namespace ltr {
       test_set_indexes->clear();
 
       test_set_indexes->push_back(split_index);
-      for (size_t index = 0; index < split_index; ++index) {
+      for (int index = 0; index < split_index; ++index) {
         train_set_indexes->push_back(index);
       }
-      for (size_t index = split_index + 1; index < base_set.size(); ++index) {
+      for (int index = split_index + 1; index < base_set.size(); ++index) {
         train_set_indexes->push_back(index);
       }
     }

@@ -70,16 +70,16 @@ namespace ltr {
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const = 0;
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const = 0;
     };
 
     // template realization
     template <class TElement>
     SplittedDataSet<TElement> Splitter<TElement>::split(int split_index,
         const DataSet<TElement>& base_set) const {
-      vector<size_t> train_set_indexes;
-      vector<size_t> test_set_indexes;
+      vector<int> train_set_indexes;
+      vector<int> test_set_indexes;
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);
 
       SplittedDataSet<TElement> output(base_set.featureInfo());

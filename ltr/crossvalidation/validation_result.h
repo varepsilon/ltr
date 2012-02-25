@@ -41,15 +41,15 @@ namespace ltr {
       /**
        * Gets scorer by split index
        */
-      Scorer::Ptr getScorer(size_t split_index) const;
+      Scorer::Ptr getScorer(int split_index) const;
       /**
        * Gets report by split index
        */
-      const string& getReport(size_t split_index) const;
+      const string& getReport(int split_index) const;
       /**
        * Gets measure values by split index
        */
-      const vector<double>& getMeasureValues(size_t split_index) const;
+      const vector<double>& getMeasureValues(int split_index) const;
       /**
        * Gets names (aliases) of measures, which values
        * are held in ValidationResult

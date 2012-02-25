@@ -51,11 +51,11 @@ namespace ltr {
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const;
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const;
 
     private:
-      typedef vector<size_t> Permutation;
+      typedef vector<int> Permutation;
       /**
        * Gets a random permutation of length dataset_size
        * @param index - number of permutation
@@ -88,8 +88,8 @@ namespace ltr {
     void TKFoldSimpleSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const {
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
         throw logic_error(this-> alias() +
           " index should be in range [0..T*k-1]");
@@ -112,13 +112,13 @@ namespace ltr {
       int test_end = block_size * (block_index + 1) +
         std::min(block_index + 1, extra_length);
 
-      for (size_t index = 0; index < test_begin; ++index) {
+      for (int index = 0; index < test_begin; ++index) {
         train_set_indexes->push_back(current_perm[index]);
       }
-      for (size_t index = test_begin; index < test_end;  ++index) {
+      for (int index = test_begin; index < test_end;  ++index) {
         test_set_indexes->push_back(current_perm[index]);
       }
-      for (size_t index = test_end; index < base_set.size(); ++index) {
+      for (int index = test_end; index < base_set.size(); ++index) {
         train_set_indexes->push_back(current_perm[index]);
       }
     }
@@ -130,7 +130,7 @@ namespace ltr {
       // one can use any other shift instead 23
       srand(index + 23);
       Permutation output;
-      for (size_t index = 0; index < dataset_size; ++index) {
+      for (int index = 0; index < dataset_size; ++index) {
         output.push_back(index);
       }
       random_shuffle(output.begin(), output.end());

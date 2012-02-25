@@ -27,7 +27,8 @@ class BeggingPreprocessorLearner
   typedef boost::shared_ptr<BeggingPreprocessorLearner> Ptr;
 
   explicit BeggingPreprocessorLearner(
-      const ParametersContainer& parameters = ParametersContainer()) {
+      const ParametersContainer& parameters = ParametersContainer())
+      : preprocessor_(new SimpleSubsetPreprocessor<TElement>) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
@@ -40,14 +41,14 @@ class BeggingPreprocessorLearner
   void checkParameters() const;
 
   private:
-  typename BeggingPreprocessorLearner<TElement>::Ptr converter_;
+  typename SimpleSubsetPreprocessor<TElement>::Ptr preprocessor_;
 };
 
 // template realizations
 template <typename TElement>
 void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
-  this->setDoubleParameter("SELECTED_PART", 0.3);
-  this->setBoolParameter("WITH_REPLACE", true);
+  this->addDoubleParameter("SELECTED_PART", 0.3);
+  this->addBoolParameter("WITH_REPLACE", true);
 }
 
 template <typename TElement>
@@ -62,11 +63,11 @@ void BeggingPreprocessorLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void BeggingPreprocessorLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  size_t size = static_cast<size_t>(floor(data_set.size()
+  int size = static_cast<int>(floor(data_set.size()
     * this->getDoubleParameter("SELECTED_PART")));
 
-  if (data_set.size() != 0) {
-    vector<size_t> indices(size);
+  if (size != 0) {
+    vector<int> indices(size);
     srand(unsigned(time(NULL)));
 
     if (this->getBoolParameter("WITH_REPLACE")) {
@@ -74,21 +75,21 @@ void BeggingPreprocessorLearner<TElement>
         indices[i] = (rand() % data_set.size());
       }
     } else {
-      vector<size_t> all_used(data_set.size());
+      vector<int> all_used(data_set.size());
       for (int index = 0; index < all_used.size(); ++index) {
         all_used[index] = index;
       }
       random_shuffle(all_used.begin(), all_used.end());
-      copy(all_used.begin(), all_used.end(), indices.begin());
+      copy(all_used.begin(), all_used.begin() + size, indices.begin());
     }
-    converter_->setChoosedElementsIndices(indices);
+    preprocessor_->setChoosedElementsIndices(indices);
   }
 }
 
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     BeggingPreprocessorLearner<TElement>::make() const {
-  return converter_;
+  return preprocessor_;
 }
 };
 

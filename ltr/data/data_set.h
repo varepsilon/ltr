@@ -20,7 +20,7 @@ template <typename TElement> class DataSet;
 namespace utility {
 template <typename TElement>
 DataSet<TElement> lightSubset(const DataSet<TElement>& data,
-    const std::vector<size_t>& indexes);
+    const std::vector<int>& indexes);
 }
 
 /** \typedef Type for a data set that implements pointwise approach.
@@ -110,7 +110,7 @@ class DataSet {
    */
   friend DataSet<TElement> utility::lightSubset< >(
       const DataSet<TElement>& data,
-      const std::vector<size_t>& indexes);
+      const std::vector<int>& indexes);
 
   private:
   /** Shared pointer to the actual vector, in which the elements are stored.

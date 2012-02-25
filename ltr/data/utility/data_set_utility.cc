@@ -9,7 +9,7 @@ namespace utility {
 
 template <typename TElement>
 DataSet<TElement> lightSubset(const DataSet<TElement>& data,
-    const std::vector<size_t>& indexes) {
+    const std::vector<int>& indexes) {
   DataSet<TElement> resultDataSet(data.featureInfo());
 
   for (size_t indexIdx = 0; indexIdx < indexes.size(); ++indexIdx) {
@@ -20,13 +20,13 @@ DataSet<TElement> lightSubset(const DataSet<TElement>& data,
 }
 
 template DataSet<Object> lightSubset<Object>(const DataSet<Object>& data,
-    const std::vector<size_t>& indexes);
+    const std::vector<int>& indexes);
 template DataSet<ObjectPair> lightSubset<ObjectPair>(
     const DataSet<ObjectPair>& data,
-    const std::vector<size_t>& indexes);
+    const std::vector<int>& indexes);
 template DataSet<ObjectList> lightSubset<ObjectList>(
     const DataSet<ObjectList>& data,
-    const std::vector<size_t>& indexes);
+    const std::vector<int>& indexes);
 
 void groupByMeta(const vector<Object>& objects,
     string group_parameter,

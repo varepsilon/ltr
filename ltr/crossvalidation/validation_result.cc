@@ -30,16 +30,16 @@ namespace ltr {
       return datas_.size();
     }
 
-    Scorer::Ptr ValidationResult::getScorer(size_t split_index) const {
+    Scorer::Ptr ValidationResult::getScorer(int split_index) const {
       return datas_[split_index].scorer;
     }
 
-    const string& ValidationResult::getReport(size_t split_index) const {
+    const string& ValidationResult::getReport(int split_index) const {
       return datas_[split_index].report;
     }
 
     const vector<double>&
-        ValidationResult::getMeasureValues(size_t split_index) const {
+        ValidationResult::getMeasureValues(int split_index) const {
       return datas_[split_index].measure_values;
     }
 

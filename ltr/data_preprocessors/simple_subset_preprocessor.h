@@ -28,16 +28,17 @@ namespace ltr {
   public:
     typedef boost::shared_ptr<SimpleSubsetPreprocessor> Ptr;
 
-    explicit SimpleSubsetPreprocessor(const vector<size_t>& input_indices)
+    SimpleSubsetPreprocessor() {}
+    explicit SimpleSubsetPreprocessor(const vector<int>& input_indices)
         : indices_(input_indices) {
       max_used_element_ = *max_element(indices_.begin(), indices_.end());
     }
 
-    void setChoosedElementsIndices(const vector<size_t>& input_indices) {
+    void setChoosedElementsIndices(const vector<int>& input_indices) {
       indices_ = input_indices;
       max_used_element_ = *max_element(indices_.begin(), indices_.end());
     }
-    const vector<size_t>& getChoosedElementsIndices() const {
+    const vector<int>& getChoosedElementsIndices() const {
       return indices_;
     }
     size_t getChoosedElementsCount() const {
@@ -48,7 +49,7 @@ namespace ltr {
       DataSet<TElement>* output_dataset) const;
 
   private:
-    vector<size_t> indices_;
+    vector<int> indices_;
     int max_used_element_;
   };
 

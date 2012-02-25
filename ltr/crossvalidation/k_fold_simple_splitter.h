@@ -48,8 +48,8 @@ namespace ltr {
       virtual void splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const;
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const;
     };
 
     // template realizations
@@ -74,8 +74,8 @@ namespace ltr {
     void KFoldSimpleSplitter<TElement>::splitImpl(
         int split_index,
         const DataSet<TElement>& base_set,
-        vector<size_t>* train_set_indexes,
-        vector<size_t>* test_set_indexes) const {
+        vector<int>* train_set_indexes,
+        vector<int>* test_set_indexes) const {
       if (split_index < 0 || split_index >= splitCount(base_set)) {
         throw logic_error(this->alias() +
           " index should be in range [0..k-1]");
@@ -92,13 +92,13 @@ namespace ltr {
       int test_end = block_size * (split_index + 1) +
         std::min(split_index + 1, extra_length);
 
-      for (size_t index = 0; index < test_begin; ++index) {
+      for (int index = 0; index < test_begin; ++index) {
         train_set_indexes->push_back(index);
       }
-      for (size_t index = test_begin; index < test_end;  ++index) {
+      for (int index = test_begin; index < test_end;  ++index) {
         test_set_indexes->push_back(index);
       }
-      for (size_t index = test_end; index < base_set.size(); ++index) {
+      for (int index = test_end; index < base_set.size(); ++index) {
         train_set_indexes->push_back(index);
       }
     };

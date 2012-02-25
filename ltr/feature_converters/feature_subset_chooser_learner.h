@@ -50,9 +50,9 @@ template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
   vector<size_t> indices = this->getListParameter("INDICES");
   set<size_t> used_features;
-  for (int index = 0; indices.size(); ++index) {
+  for (int index = 0; index < indices.size(); ++index) {
     size_t current_object = indices[index];
-    if (used_features.find(current_object) != used_features.end()) {
+    if (used_features.find(current_object) == used_features.end()) {
       used_features.insert(current_object);
     } else {
       throw logic_error("Indicies array contains equal elements");

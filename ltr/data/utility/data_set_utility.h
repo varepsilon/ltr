@@ -34,7 +34,7 @@ void groupByFloatMeta(const vector<Object>& objects,
 
 template <typename TElement>
 DataSet<TElement> lightSubset(const DataSet<TElement>& data,
-    const std::vector<size_t>& indexes);
+    const std::vector<int>& indexes);
 }
 }
 #endif  // LTR_DATA_UTILITY_DATA_SET_UTILITY_H_
