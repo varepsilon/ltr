@@ -121,7 +121,9 @@ SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocess
                            ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor.h
 						   ${Source_Path}/ltr/data_preprocessors/data_preprocessor_learner.h
 						   ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor_learner.h
-						   ${Source_Path}/ltr/data_preprocessors/begging_preprocessor_learner.h)
+						   ${Source_Path}/ltr/data_preprocessors/begging_preprocessor_learner.h
+						   ${Source_Path}/ltr/data_preprocessors/fake_data_preprocessor.h
+						   ${Source_Path}/ltr/data_preprocessors/fake_preprocessor_learner.h)
                            
 SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h

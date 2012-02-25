@@ -10,6 +10,8 @@
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor_learner.h"
 #include "ltr/data_preprocessors/begging_preprocessor_learner.h"
+#include "ltr/data_preprocessors/fake_data_preprocessor.h"
+#include "ltr/data_preprocessors/fake_preprocessor_learner.h"
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
@@ -23,6 +25,8 @@ using ltr::DataPreprocessor;
 using ltr::SimpleSubsetPreprocessor;
 using ltr::SimpleSubsetPreprocessorLearner;
 using ltr::BeggingPreprocessorLearner;
+using ltr::FakeDataPreprocessor;
+using ltr::FakePreprocessorLearner;
 
 const int data_size = 11;
 
@@ -40,6 +44,40 @@ class DataPreprocessorTest : public ::testing::Test {
 
   DataSet<Object> data;
 };
+
+template<class TElement>
+bool AreEqual(const DataSet<TElement>& first,
+              const DataSet<TElement>& second) {
+  if (first.size() != second.size()) {
+    return false;
+  }
+  for (int i = 0; i < first.size(); ++i) {
+    if (first[i].features() != second[i].features()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+TEST_F(DataPreprocessorTest, FakePreprocessorTest) {
+  FakeDataPreprocessor<Object> prep;
+
+  DataSet<Object> prep_data;
+  prep.apply(data, &prep_data);
+
+  EXPECT_TRUE(AreEqual(data, prep_data));
+}
+
+TEST_F(DataPreprocessorTest, FakePreprocessorLearnerTest) {
+  FakePreprocessorLearner<Object> prep_learner;
+  prep_learner.learn(data);
+  DataPreprocessor<Object>::Ptr prep = prep_learner.make();
+
+  DataSet<Object> prep_data;
+  prep->apply(data, &prep_data);
+
+  EXPECT_TRUE(AreEqual(data, prep_data));
+}
 
 TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorTest) {
   vector<int> indices;
@@ -81,15 +119,7 @@ TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorLearnerTest) {
   DataSet<Object> prep_data;
   prep->apply(data, &prep_data);
 
-  vector<int> all_used(data.size());
-  for (int index = 0; index < all_used.size(); ++index) {
-    all_used[index] = index;
-  }
-
-  EXPECT_EQ(all_used.size(), prep_data.size());
-  for (int i = 0; i < all_used.size(); ++i) {
-    EXPECT_EQ(all_used[i], prep_data[i].features()[0]);
-  }
+  EXPECT_TRUE(AreEqual(data, prep_data));
 
   vector<int> unequal;
   unequal.push_back(3);
