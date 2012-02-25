@@ -7,6 +7,7 @@
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor_learner.h"
+#include "ltr/data_preprocessors/begging_preprocessor_learner.h"
 
 using ltr::DataSet;
 

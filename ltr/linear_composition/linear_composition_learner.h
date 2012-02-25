@@ -9,9 +9,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/learners/learner.h"
-/*#include "ltr/linear_composition/data_set_weights_updater.h"
-#include "ltr/linear_composition/linear_composition_scorer_weights_updater.h"
-*/
+
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 

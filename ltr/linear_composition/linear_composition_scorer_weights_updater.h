@@ -20,9 +20,7 @@ namespace lc {
   public:
     typedef boost::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
 
-    explicit FakeLCScorerWeightsUpdater(
-        typename Measure<TElement>::Ptr in_measure)
-      : measure_(in_measure) {}
+    explicit FakeLCScorerWeightsUpdater() {}
 
     void updateWeights(const DataSet<TElement>& data,
         LinearCompositionScorer* lin_scorer) const {

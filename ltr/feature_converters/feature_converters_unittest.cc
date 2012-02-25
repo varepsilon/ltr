@@ -17,6 +17,7 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr/feature_converters/feature_subset_chooser_learner.h"
+#include "ltr/feature_converters/RSM_feature_converter_learner.h"
 
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
