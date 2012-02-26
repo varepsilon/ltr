@@ -63,9 +63,9 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
 
 
 template< class TElement, class TScorer >
-class Learner : public BaseLearner< TElement > {
+class Learner : public BaseLearner<TElement> {
   public:
-  explicit Learner(const string& alias) : BaseLearner(alias) {}
+  explicit Learner(const string& alias) : BaseLearner<TElement>(alias) {}
 
   virtual TScorer make() const = 0;
   virtual Scorer::Ptr makeScorerPtr() const;
