@@ -140,7 +140,8 @@ SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composit
                            ${Source_Path}/ltr/linear_composition/data_set_weights_updater.h
                            ${Source_Path}/ltr/linear_composition/linear_composition_scorer_weights_updater.h
                            ${Source_Path}/ltr/linear_composition/ada_rank_data_set_weights_updater.h
-                           ${Source_Path}/ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h)
+                           ${Source_Path}/ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h
+						   ${Source_Path}/ltr/linear_composition/average_lc_scorer_weights_updater.h)
                             
 
 # lets divide binaries in groups, for comfort navigation

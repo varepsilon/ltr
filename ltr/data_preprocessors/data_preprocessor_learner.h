@@ -15,6 +15,8 @@ namespace ltr {
 template <typename TElement>
 class IDataPreprocessorLearner : public Parameterized {
   public:
+  typedef boost::shared_ptr<IDataPreprocessorLearner> Ptr;
+
   virtual void learn(const DataSet<TElement>& data_set) = 0;
   virtual typename DataPreprocessor<TElement>::Ptr make() const = 0;
 };

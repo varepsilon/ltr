@@ -21,6 +21,7 @@
 
 using ltr::Measure;
 using ltr::DataSet;
+using ltr::FeatureConverterArray;
 using ltr::LinearCompositionScorer;
 using ltr::Learner;
 using ltr::lc::FakeDataSetWeightsUpdater;
@@ -32,8 +33,8 @@ using ltr::FakePreprocessorLearner;
 namespace ltr {
 namespace lc {
   template <class TElement,
-    class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater,
-    class TDSWeightsUpdater = FakeDataSetWeightsUpdater>
+    class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater<TElement>,
+    class TDSWeightsUpdater = FakeDataSetWeightsUpdater<TElement> >
   class LinearCompositionLearner
       : public Learner<TElement, LinearCompositionScorer> {
   public:
@@ -41,11 +42,11 @@ namespace lc {
 
     LinearCompositionLearner(
         const ParametersContainer& parameters = ParametersContainer())
-        : feature_converter_learner(new FakeFeatureConverterLearner),
-        data_preprocessor_learner(new FakePreprocessorLearner),
+        : feature_converter_learner(new FakeFeatureConverterLearner<TElement>),
+        data_preprocessor_learner(new FakePreprocessorLearner<TElement>),
         Learner("LinearCompositionLearner") {
       this->setDefaultParameters();
-      this->parameters().copyParameters(parameters);
+      this->copyParameters(parameters);
       this->checkParameters();
     }
 
@@ -59,13 +60,11 @@ namespace lc {
       scorer_.clear();
     }
     void setDefaultParameters() {
-      this->parameters().clear();
-      this->parameters().setInt("NUMBER_OF_ITERATIONS", 10);
+      this->clearParameters();
+      this->addIntParameter("NUMBER_OF_ITERATIONS", 10);
     }
     void checkParameters() const {
-      if (this->parameters().getInt("NUMBER_OF_ITERATIONS") < 0) {
-        throw logic_error(/*alias() + */" NUMBER_OF_ITERATIONS < 0");
-      }
+      CHECK_INT_PARAMETER("NUMBER_OF_ITERATIONS", X > 0);
     }
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
@@ -98,8 +97,10 @@ namespace lc {
         learnImpl(const DataSet<TElement>& data) {
     linear_composition_scorer_weights_updater_.setMeasure(this->p_measure_);
     data_set_weights_updater_.setMeasure(this->p_measure_);
+    this->p_weak_learner_->setMeasure(this->p_measure_);
+
     for (int iteration = 0;
-        iteration < this->parameters().getInt("NUMBER_OF_ITERATIONS");
+        iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
         ++iteration) {
       this->p_weak_learner_->reset();
       DataSet<TElement> train_data, buf_data;
@@ -116,6 +117,9 @@ namespace lc {
 
       this->p_weak_learner_->learn(train_data);
       Scorer::Ptr current_scorer = this->p_weak_learner_->makeScorerPtr();
+      ltr::FeatureConverterArray in_scorer_converters;
+      in_scorer_converters.push_back(feature_converter);
+      current_scorer->setFeatureConverters(in_scorer_converters);
       scorer_.add(current_scorer, 1.0);
 
       linear_composition_scorer_weights_updater_.updateWeights(data, &scorer_);

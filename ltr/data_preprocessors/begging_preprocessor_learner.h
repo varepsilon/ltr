@@ -47,6 +47,7 @@ class BeggingPreprocessorLearner
 // template realizations
 template <typename TElement>
 void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
+  this->clearParameters();
   this->addDoubleParameter("SELECTED_PART", 0.3);
   this->addBoolParameter("WITH_REPLACE", true);
 }

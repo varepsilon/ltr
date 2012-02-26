@@ -15,6 +15,7 @@ namespace ltr {
 template < typename TElement >
 class IFeatureConverterLearner : public Parameterized {
   public:
+  typedef boost::shared_ptr<IFeatureConverterLearner> Ptr;
 
   virtual void learn(const DataSet<TElement>& data_set) = 0;
   virtual FeatureConverter::Ptr make() const = 0;

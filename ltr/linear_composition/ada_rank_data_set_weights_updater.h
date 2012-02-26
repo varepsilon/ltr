@@ -30,7 +30,7 @@ namespace lc {
 
     explicit AdaRankDataSetWeightsUpdater() {}
 
-    void updateWeights(DataSet<TElement>* data,
+    void updateWeights(const DataSet<TElement>* data,
         const LinearCompositionScorer& lin_scorer) const;
 
     void setMeasure(typename Measure<TElement>::Ptr in_measure) {
@@ -43,7 +43,7 @@ namespace lc {
   // template realizations
   template <class TElement>
   void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
-      DataSet<TElement>* data,
+      const DataSet<TElement>* data,
       const LinearCompositionScorer& lin_scorer) const {
     int last_scorer_number = static_cast<int>(lin_scorer->size()) - 1;
 		MarkDataSet(*data, lin_scorer[last_scorer_number].scorer);

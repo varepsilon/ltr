@@ -41,6 +41,7 @@ class SimpleSubsetPreprocessorLearner
 // template realizations
 template <typename TElement>
 void SimpleSubsetPreprocessorLearner<TElement>::setDefaultParameters() {
+  this->clearParameters();
   vector<int> empty;
   this->addListParameter("INDICES", empty);
 }

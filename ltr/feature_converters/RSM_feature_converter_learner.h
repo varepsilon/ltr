@@ -44,6 +44,7 @@ class RSMFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
 // template realizations
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::setDefaultParameters() {
+  this->clearParameters();
   this->addDoubleParameter("SELECTED_PART", 0.3);
 }
 

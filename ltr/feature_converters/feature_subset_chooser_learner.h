@@ -43,6 +43,7 @@ class FeatureSubsetChooserLearner : public IFeatureConverterLearner<TElement> {
 // template realizations
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::setDefaultParameters() {
+  this->clearParameters();
   vector<int> empty;
   this->addListParameter("INDICES", empty);
 }
