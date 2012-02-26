@@ -44,7 +44,7 @@ namespace lc {
         const ParametersContainer& parameters = ParametersContainer())
         : feature_converter_learner(new FakeFeatureConverterLearner<TElement>),
         data_preprocessor_learner(new FakePreprocessorLearner<TElement>),
-        Learner("LinearCompositionLearner") {
+        Learner<TElement, LinearCompositionScorer>("LinearCompositionLearner") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
       this->checkParameters();

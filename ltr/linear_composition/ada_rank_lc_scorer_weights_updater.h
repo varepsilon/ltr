@@ -52,8 +52,8 @@ namespace lc {
     double numerator = 0.0;
     double denominator = 0.0;
 
-    for (size_t data_index = 0; data_index < data.size(); ++data_index) {
-      double measure_value = measure_->operator()(data[data_index]);
+    for (size_t i = 0; i < data.size(); ++i) {
+      double measure_value = measure_->operator()(data[i]);
 
       numerator += data[i].weight() * measure_value;
       denominator += data[i].weight() * (1 - measure_value);

@@ -45,7 +45,7 @@ namespace lc {
   void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
       const DataSet<TElement>* data,
       const LinearCompositionScorer& lin_scorer) const {
-    int last_scorer_number = static_cast<int>(lin_scorer->size()) - 1;
+    int last_scorer_number = static_cast<int>(lin_scorer.size()) - 1;
     MarkDataSet(*data, lin_scorer[last_scorer_number].scorer);
 
     vector<double> measure_exps(data->size());
