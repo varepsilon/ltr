@@ -87,7 +87,8 @@ class DecisionTreeLearner
 
 // Realisation starts here------------------------------------------------------
     explicit DecisionTreeLearner
-        (const ParametersContainer& parameters) {
+        (const ParametersContainer& parameters)
+        : Learner("DecisionTreeLearner") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
 

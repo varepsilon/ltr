@@ -9,26 +9,41 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/learners/learner.h"
+#include "ltr/linear_composition/ada_rank_data_set_weights_updater.h"
+#include "ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h"
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
+
+#include "ltr/feature_converters/fake_feature_converter_learner.h"
+#include "ltr/data_preprocessors/fake_preprocessor_learner.h"
+
 
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
 using ltr::Learner;
+using ltr::lc::FakeDataSetWeightsUpdater;
+using ltr::lc::FakeLCScorerWeightsUpdater;
+using ltr::FakeFeatureConverterLearner;
+using ltr::FakePreprocessorLearner;
 
 
 namespace ltr {
 namespace lc {
-  template <class TElement, class TLCSWeightsUpdater, class TDSWeightsUpdater>
+  template <class TElement,
+    class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater,
+    class TDSWeightsUpdater = FakeDataSetWeightsUpdater>
   class LinearCompositionLearner
       : public Learner<TElement, LinearCompositionScorer> {
   public:
     typedef boost::shared_ptr<LinearCompositionLearner> Ptr;
 
     LinearCompositionLearner(
-        const ParametersContainer& parameters = ParametersContainer()) {
+        const ParametersContainer& parameters = ParametersContainer())
+        : feature_converter_learner(new FakeFeatureConverterLearner),
+        data_preprocessor_learner(new FakePreprocessorLearner),
+        Learner("LinearCompositionLearner") {
       this->setDefaultParameters();
       this->parameters().copyParameters(parameters);
       this->checkParameters();
@@ -75,6 +90,8 @@ namespace lc {
     void learnImpl(const DataSet<TElement>& data);
   };
 
+
+  // template realizations
   template <class TElement, class TLCSWeightsUpdater, class TDSWeightsUpdater>
   void LinearCompositionLearner<TElement,
       TLCSWeightsUpdater, TDSWeightsUpdater>::

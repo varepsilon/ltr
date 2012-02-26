@@ -36,7 +36,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
   GPLearner(typename Measure<TElement>::Ptr p_Measure,
       const ParametersContainer& parameters = ParametersContainer())
   : featureCountInContext_(0),
-  inPopulationBestTreeIdx_(0) {
+  inPopulationBestTreeIdx_(0),
+  Learner("GPLearner") {
     this->setMeasure(p_Measure);
     this->setDefaultParameters();
     this->copyParameters(parameters);
@@ -47,7 +48,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   GPLearner(const ParametersContainer& parameters = ParametersContainer())
   : featureCountInContext_(0),
-  inPopulationBestTreeIdx_(0) {
+  inPopulationBestTreeIdx_(0),
+  Learner("GPLearner") {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }

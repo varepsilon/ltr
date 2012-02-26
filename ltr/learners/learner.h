@@ -5,6 +5,9 @@
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
+#include <string>
+
+using std::string;
 
 #include "ltr/interfaces/reporter.h"
 #include "ltr/interfaces/aliaser.h"
@@ -22,6 +25,8 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<BaseLearner> Ptr;
   typedef boost::shared_ptr<BaseLearner> BasePtr;
+
+  BaseLearner(const string& alias) : Aliaser(alias) {}
 
   void learn(const DataSet<TElement>& data);
 
@@ -60,6 +65,8 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
 template< class TElement, class TScorer >
 class Learner : public BaseLearner< TElement > {
   public:
+  Learner(const string& alias) : BaseLearner(alias) {}
+
   virtual TScorer make() const = 0;
   virtual Scorer::Ptr makeScorerPtr() const;
   virtual void setInitialScorer(const TScorer& in_scorer) = 0;
