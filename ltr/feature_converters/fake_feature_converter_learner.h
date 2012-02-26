@@ -16,7 +16,7 @@ class FakeFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
 
   explicit FakeFeatureConverterLearner(const ParametersContainer& parameters =
       ParametersContainer())
-      : converter_(new FakeFeatureConverter){
+      : converter_(new FakeFeatureConverter) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();

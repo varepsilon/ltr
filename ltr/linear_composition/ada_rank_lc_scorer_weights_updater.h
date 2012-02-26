@@ -47,29 +47,30 @@ namespace lc {
       const DataSet<TElement>& data,
       LinearCompositionScorer* lin_scorer) const {
     int last_scorer_number = static_cast<int>(lin_scorer->size()) - 1;
-		MarkDataSet(data, (*lin_scorer)[last_scorer_number].scorer);
+    MarkDataSet(data, (*lin_scorer)[last_scorer_number].scorer);
 
-		double numerator = 0.0;
-		double denominator = 0.0;
+    double numerator = 0.0;
+    double denominator = 0.0;
 
-		for(size_t data_index = 0; data_index < data.size(); ++data_index) {
+    for (size_t data_index = 0; data_index < data.size(); ++data_index) {
       double measure_value = measure_->operator()(data[data_index]);
 
-			numerator += data[i].weight() * measure_value;
-			denominator += data[i].weight() * (1 - measure_value);
-		}
-		
-		if(denominator < DoubleEps) {
-			Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
-			lin_scorer->clear();
-			lin_scorer->add(best_scorer, 1.0);
-			//report_ = "AdaRank on mertic " + measure_.Alias() + ". Best ranker found!";
-			return;
-		}
+      numerator += data[i].weight() * measure_value;
+      denominator += data[i].weight() * (1 - measure_value);
+    }
 
-		double result_weight = 0.5 * log(numerator/denominator);
+    if (denominator < DoubleEps) {
+      Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
+      lin_scorer->clear();
+      lin_scorer->add(best_scorer, 1.0);
+      // report_ = "AdaRank on mertic " +
+      //  measure_.Alias() + ". Best ranker found!";
+      return;
+    }
 
-		(*lin_scorer)[last_scorer_number].weight = result_weight;
+    double result_weight = 0.5 * log(numerator/denominator);
+
+    (*lin_scorer)[last_scorer_number].weight = result_weight;
   }
 };
 };

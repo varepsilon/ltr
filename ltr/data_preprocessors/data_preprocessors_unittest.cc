@@ -1,9 +1,9 @@
 // Copyright 2011 Yandex
 
+#include <gtest/gtest.h>
+
 #include <vector>
 #include <set>
-
-#include <gtest/gtest.h>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"

@@ -1,9 +1,9 @@
 // Copyright 2011 Yandex School Practice
 
+#include <gtest/gtest.h>
+
 #include <vector>
 #include <set>
-
-#include <gtest/gtest.h>
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"

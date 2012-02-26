@@ -70,7 +70,8 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
       << abs_error->average(data);
   }
 
-  LinearCompositionLearner<Object, AverageLCScorerWeightsUpdater<Object> > av_lc_learner;
+  LinearCompositionLearner<Object,
+    AverageLCScorerWeightsUpdater<Object> > av_lc_learner;
   av_lc_learner.setMeasure(abs_error);
   av_lc_learner.setWeakLearner(bf_learner);
   av_lc_learner.learn(data);

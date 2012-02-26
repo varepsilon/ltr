@@ -56,7 +56,7 @@ template <typename TElement>
 void BeggingPreprocessorLearner<TElement>::checkParameters() const {
   if (this->getBoolParameter("WITH_REPLACE")) {
     CHECK_DOUBLE_PARAMETER("SELECTED_PART", X >= 0);
-  } else{
+  } else {
     CHECK_DOUBLE_PARAMETER("SELECTED_PART", X >= 0 && X <= 1);
   }
 }
