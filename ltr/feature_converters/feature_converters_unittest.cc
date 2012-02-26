@@ -16,9 +16,6 @@
 #include "ltr/measures/dcg.h"
 #include "ltr/parameters_container/parameters_container.h"
 
-#include "ltr/feature_converters/feature_subset_chooser_learner.h"
-#include "ltr/feature_converters/RSM_feature_converter_learner.h"
-
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
   public:
@@ -51,7 +48,7 @@ class FeatureConvertersTest : public ::testing::Test {
   ltr::DataSet<ltr::Object> test_data_pointwise;
   ltr::DataSet<ltr::ObjectList> learn_data_listwise;
   ltr::DataSet<ltr::ObjectList> test_data_listwise;
-  static const size_t bestFeatureIndex = 16;
+  static const int bestFeatureIndex = 16;
 
   boost::filesystem::path path_to_learndata;
   boost::filesystem::path path_to_testdata;
@@ -59,9 +56,9 @@ class FeatureConvertersTest : public ::testing::Test {
 
 // tests.
 TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
-  std::vector<size_t> indexes;
+  std::vector<int> indexes;
 
-  for (size_t featureIdx = 0;
+  for (int featureIdx = 0;
       featureIdx < learn_data_pointwise.featureCount();
       ++featureIdx) {
     if (featureIdx == bestFeatureIndex) {
@@ -107,7 +104,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationStatistics) {
 
   normalizerLearner.learn(l_data);
 
-  for (size_t featureIdx = 0;
+  for (int featureIdx = 0;
       featureIdx < l_data.featureCount();
       ++featureIdx) {
     ltr::PerFeatureLinearConverter * pConv =

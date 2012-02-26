@@ -24,7 +24,8 @@ class RSMFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
   typedef boost::shared_ptr<RSMFeatureConverterLearner> Ptr;
 
   explicit RSMFeatureConverterLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
+      ParametersContainer())
+      : converter_(new FeatureSubsetChooser) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
@@ -43,7 +44,7 @@ class RSMFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
 // template realizations
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::setDefaultParameters() {
-  this->setDoubleParameter("SELECTED_PART", 0.3);
+  this->addDoubleParameter("SELECTED_PART", 0.3);
 }
 
 template <typename TElement>
@@ -54,18 +55,18 @@ void RSMFeatureConverterLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  size_t size = static_cast<size_t>(
+  int size = static_cast<int>(
     floor(data_set.featureInfo().getFeatureCount()
       * this->getDoubleParameter("SELECTED_PART")));
-  vector<size_t> indices(size);
+  vector<int> indices(size);
   srand(unsigned(time(NULL)));
 
-  vector<size_t> all_used(data_set.featureInfo().getFeatureCount());
+  vector<int> all_used(data_set.featureInfo().getFeatureCount());
   for (int index = 0; index < all_used.size(); ++index) {
     all_used[index] = index;
   }
   random_shuffle(all_used.begin(), all_used.end());
-  copy(all_used.begin(), all_used.end(), indices.begin());
+  copy(all_used.begin(), all_used.begin() + size, indices.begin());
 
   converter_->setChoosedFeaturesIndices(indices);
 }

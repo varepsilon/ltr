@@ -29,8 +29,8 @@ class FeatureConverter : public Serializable {
   const = 0;
 
   template <typename TElement>
-  void apply(const DataSet<TElement> & argument,
-      DataSet<TElement> * value) const;
+  void apply(const DataSet<TElement>& argument,
+      DataSet<TElement>* value) const;
 };
 
 template <typename TElement>

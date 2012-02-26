@@ -25,18 +25,19 @@ class FeatureSubsetChooser : public FeatureConverter {
   public:
   typedef boost::shared_ptr<FeatureSubsetChooser> Ptr;
 
-  explicit FeatureSubsetChooser(const vector<size_t>& input_indices)
+  FeatureSubsetChooser() {}
+  explicit FeatureSubsetChooser(const vector<int>& input_indices)
       : indices_(input_indices) {
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
   }
-  void setChoosedFeaturesIndices(const vector<size_t>& input_indices) {
+  void setChoosedFeaturesIndices(const vector<int>& input_indices) {
     indices_ = input_indices;
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
   }
-  const vector<size_t>& getChoosedFeaturesIndices() const {
+  const vector<int>& getChoosedFeaturesIndices() const {
     return indices_;
   }
-  size_t getChoosedFeaturesCount() const {
+  int getChoosedFeaturesCount() const {
     return indices_.size();
   }
 
@@ -51,7 +52,7 @@ class FeatureSubsetChooser : public FeatureConverter {
   }
 
   private:
-  vector<size_t> indices_;
+  vector<int> indices_;
   int max_used_feature_;
 };
 }

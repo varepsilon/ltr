@@ -114,16 +114,19 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
-						   ${Source_Path}/ltr/feature_converters/feature_subset_chooser_learner.h
-						   ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h)
-						   
+                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser_learner.h
+                           ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h
+                           ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
+						   ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
+						   ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
+                           
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor.h
-						   ${Source_Path}/ltr/data_preprocessors/data_preprocessor_learner.h
-						   ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor_learner.h
-						   ${Source_Path}/ltr/data_preprocessors/begging_preprocessor_learner.h
-						   ${Source_Path}/ltr/data_preprocessors/fake_data_preprocessor.h
-						   ${Source_Path}/ltr/data_preprocessors/fake_preprocessor_learner.h)
+                           ${Source_Path}/ltr/data_preprocessors/data_preprocessor_learner.h
+                           ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor_learner.h
+                           ${Source_Path}/ltr/data_preprocessors/begging_preprocessor_learner.h
+                           ${Source_Path}/ltr/data_preprocessors/fake_data_preprocessor.h
+                           ${Source_Path}/ltr/data_preprocessors/fake_preprocessor_learner.h)
                            
 SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
@@ -132,12 +135,12 @@ SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
-						
+                        
 SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composition_learner.h
                            ${Source_Path}/ltr/linear_composition/data_set_weights_updater.h
                            ${Source_Path}/ltr/linear_composition/linear_composition_scorer_weights_updater.h
-						   ${Source_Path}/ltr/linear_composition/ada_rank_data_set_weights_updater.h
-						   ${Source_Path}/ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h)
+                           ${Source_Path}/ltr/linear_composition/ada_rank_data_set_weights_updater.h
+                           ${Source_Path}/ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h)
                             
 
 # lets divide binaries in groups, for comfort navigation

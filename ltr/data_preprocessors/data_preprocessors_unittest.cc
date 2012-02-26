@@ -30,7 +30,7 @@ using ltr::FakePreprocessorLearner;
 
 const int data_size = 11;
 
-class DataPreprocessorTest : public ::testing::Test {
+class DataPreprocessorsTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
     for (int i = 0; i < data_size; ++i) {
@@ -59,7 +59,7 @@ bool AreEqual(const DataSet<TElement>& first,
   return true;
 }
 
-TEST_F(DataPreprocessorTest, FakePreprocessorTest) {
+TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
   FakeDataPreprocessor<Object> prep;
 
   DataSet<Object> prep_data;
@@ -68,7 +68,7 @@ TEST_F(DataPreprocessorTest, FakePreprocessorTest) {
   EXPECT_TRUE(AreEqual(data, prep_data));
 }
 
-TEST_F(DataPreprocessorTest, FakePreprocessorLearnerTest) {
+TEST_F(DataPreprocessorsTest, FakePreprocessorLearnerTest) {
   FakePreprocessorLearner<Object> prep_learner;
   prep_learner.learn(data);
   DataPreprocessor<Object>::Ptr prep = prep_learner.make();
@@ -79,7 +79,7 @@ TEST_F(DataPreprocessorTest, FakePreprocessorLearnerTest) {
   EXPECT_TRUE(AreEqual(data, prep_data));
 }
 
-TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorTest) {
+TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorTest) {
   vector<int> indices;
   indices.push_back(3);
   indices.push_back(7);
@@ -111,7 +111,7 @@ TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorTest) {
   EXPECT_ANY_THROW(prep.apply(data, &prep_data));
 }
 
-TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorLearnerTest) {
+TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorLearnerTest) {
   SimpleSubsetPreprocessorLearner<Object> prep_learner;
   prep_learner.learn(data);
   DataPreprocessor<Object>::Ptr prep = prep_learner.make();
@@ -142,7 +142,7 @@ TEST_F(DataPreprocessorTest, SimpleSubsetPreprocessorLearnerTest) {
   }
 }
 
-TEST_F(DataPreprocessorTest, BeggingPreprocessorLearnerTest) {
+TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
   BeggingPreprocessorLearner<Object> prep_learner;
   prep_learner.learn(data);
   DataPreprocessor<Object>::Ptr prep = prep_learner.make();
