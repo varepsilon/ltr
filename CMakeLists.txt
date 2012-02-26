@@ -5,7 +5,7 @@
 #Options. Mostly for Google Test jet.
 
 #let all libraries be static, not shared
-OPTION(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." ON)
+OPTION(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." OFF)
 
 # When other libraries are using a shared version of runtime libraries,
 # Google Test also has to use one.
@@ -46,7 +46,9 @@ and set the BOOST_ROOT environment variable to installation path
     ENDIF (WIN32)
 ENDIF (NOT Boost_FOUND)
 
-FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
+
+#FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
+FIND_PACKAGE(Boost REQUIRED)
 
 IF (NOT DEFINED Boost_LIBRARYDIR)
     IF (WIN32)
@@ -74,18 +76,18 @@ ENDIF (UNIX)
 ##########################################################################################
 # lets SETup Puppy library
 INCLUDE (${Source_Path}/puppy.cmake)
-ADD_LIBRARY(puppy STATIC ${Puppy_HEADERS} ${Puppy_SOURCES})
+ADD_LIBRARY(puppy ${Puppy_HEADERS} ${Puppy_SOURCES})
 TARGET_LINK_LIBRARIES (puppy ${Boost_LIBRARIES})
 
 ##########################################################################################
 # lets SETup utility and tinyxml library
 INCLUDE (${Source_Path}/utility.cmake)
 INCLUDE (${Source_Path}/tinyxml.cmake)
-ADD_LIBRARY(util_logger STATIC ${LOGGER_SOURCES})
-ADD_LIBRARY(util_timer STATIC ${TIMER_SOURCES})
+ADD_LIBRARY(util_logger ${LOGGER_SOURCES})
+ADD_LIBRARY(util_timer ${TIMER_SOURCES})
 SET(UTILITY util_timer util_logger)
 
-ADD_LIBRARY(tinyxml STATIC ${TINYXML_SOURCES})
+ADD_LIBRARY(tinyxml ${TINYXML_SOURCES})
 
 ##########################################################################################
 # lets SETup LTR as a static library project, called LTR_lib

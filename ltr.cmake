@@ -117,8 +117,8 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/feature_subset_chooser_learner.h
                            ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
-						   ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
-						   ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
+                           ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
+                           ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
                            
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor.h
@@ -141,7 +141,7 @@ SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composit
                            ${Source_Path}/ltr/linear_composition/linear_composition_scorer_weights_updater.h
                            ${Source_Path}/ltr/linear_composition/ada_rank_data_set_weights_updater.h
                            ${Source_Path}/ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h
-						   ${Source_Path}/ltr/linear_composition/average_lc_scorer_weights_updater.h)
+                           ${Source_Path}/ltr/linear_composition/average_lc_scorer_weights_updater.h)
                             
 
 # lets divide binaries in groups, for comfort navigation
