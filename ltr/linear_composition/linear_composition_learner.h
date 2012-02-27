@@ -33,8 +33,8 @@ using ltr::FakePreprocessorLearner;
 namespace ltr {
 namespace lc {
   template <class TElement,
-    class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater<TElement>,
-    class TDSWeightsUpdater = FakeDataSetWeightsUpdater<TElement> >
+    template<class> class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater,
+    template<class> class TDSWeightsUpdater = FakeDataSetWeightsUpdater>
   class LinearCompositionLearner
       : public Learner<TElement, LinearCompositionScorer> {
   public:
@@ -80,8 +80,8 @@ namespace lc {
     }
   private:
     LinearCompositionScorer scorer_;
-    TLCSWeightsUpdater linear_composition_scorer_weights_updater_;
-    TDSWeightsUpdater data_set_weights_updater_;
+    TLCSWeightsUpdater<TElement> linear_composition_scorer_weights_updater_;
+    TDSWeightsUpdater<TElement> data_set_weights_updater_;
 
     typename IFeatureConverterLearner<TElement>::Ptr feature_converter_learner;
     typename IDataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
@@ -91,10 +91,12 @@ namespace lc {
 
 
   // template realizations
-  template <class TElement, class TLCSWeightsUpdater, class TDSWeightsUpdater>
+  template <class TElement,
+    template<class> class TLCSWeightsUpdater,
+    template<class> class TDSWeightsUpdater>
   void LinearCompositionLearner<TElement,
       TLCSWeightsUpdater, TDSWeightsUpdater>::
-        learnImpl(const DataSet<TElement>& data) {
+      learnImpl(const DataSet<TElement>& data) {
     linear_composition_scorer_weights_updater_.setMeasure(this->p_measure_);
     data_set_weights_updater_.setMeasure(this->p_measure_);
     this->p_weak_learner_->setMeasure(this->p_measure_);
