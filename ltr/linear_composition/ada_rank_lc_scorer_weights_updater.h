@@ -5,6 +5,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <algorithm>
+
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
@@ -14,6 +16,7 @@
 
 using std::exp;
 using std::log;
+using std::swap;
 
 using ltr::Measure;
 using ltr::DataSet;
@@ -51,12 +54,17 @@ namespace lc {
 
     double numerator = 0.0;
     double denominator = 0.0;
-
+// todo: weightted average + max and min of measure (eg vector <-)
     for (size_t i = 0; i < data.size(); ++i) {
       double measure_value = measure_->operator()(data[i]);
 
       numerator += data.getWeight(i) * measure_value;
       denominator += data.getWeight(i) * (1 - measure_value);
+    }
+
+    bool measure_more_is_better = measure_->better(1.0, 0.0);
+    if (!measure_more_is_better) {
+      swap(numerator, denominator);
     }
 
     if (denominator < DoubleEps) {

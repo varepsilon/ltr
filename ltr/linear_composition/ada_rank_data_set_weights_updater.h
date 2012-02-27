@@ -50,10 +50,12 @@ namespace lc {
 
     vector<double> measure_exps(data->size());
     double sum_exps = 0.0;
+    bool measure_more_is_better = measure_->better(1.0, 0.0);
+    int measure_sign = measure_more_is_better ? -1 : 1;
 
     for (size_t data_index = 0; data_index < data->size(); ++data_index) {
       double measure_value = measure_->operator()(data->at(data_index));
-      double measure_value_exp = exp(1 - 2 * measure_value);
+      double measure_value_exp = exp(measure_sign * measure_value);
       measure_exps[data_index] = measure_value_exp;
       sum_exps += measure_value_exp;
     }

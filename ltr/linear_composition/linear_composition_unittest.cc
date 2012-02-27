@@ -156,14 +156,16 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
 
   adads_lc_learner.learn(data);
   LinearCompositionScorer lin_scorer = adads_lc_learner.make();
-  
+
   EXPECT_NO_THROW(MarkDataSet(data, lin_scorer));
 }
 
 TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object,
     AdaRankLCScorerWeightsUpdater> adalcs_lc_learner;
-
+  // careful here: abs_error is not in [0..1] whereas
+  // AdaRankLCScorerWeightsUpdater requires it
+  // new version in progress
   AbsError::Ptr abs_error(new AbsError);
   adalcs_lc_learner.setMeasure(abs_error);
 
@@ -172,7 +174,7 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
 
   adalcs_lc_learner.learn(data);
   LinearCompositionScorer lin_scorer = adalcs_lc_learner.make();
-  
+
   EXPECT_NO_THROW(MarkDataSet(data, lin_scorer));
 }
 
@@ -180,7 +182,9 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object,
     AdaRankLCScorerWeightsUpdater,
     AdaRankDataSetWeightsUpdater> ada_lc_learner;
-
+  // careful here: abs_error is not in [0..1] whereas
+  // AdaRankLCScorerWeightsUpdater requires it
+  // new version in progress
   AbsError::Ptr abs_error(new AbsError);
   ada_lc_learner.setMeasure(abs_error);
 
@@ -197,6 +201,6 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
 
   ada_lc_learner.learn(data);
   LinearCompositionScorer lin_scorer = ada_lc_learner.make();
-  
+
   EXPECT_NO_THROW(MarkDataSet(data, lin_scorer));
 }
