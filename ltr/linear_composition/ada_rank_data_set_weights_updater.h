@@ -46,7 +46,7 @@ namespace lc {
       const DataSet<TElement>* data,
       const LinearCompositionScorer& lin_scorer) const {
     int last_scorer_number = static_cast<int>(lin_scorer.size()) - 1;
-    MarkDataSet(*data, lin_scorer[last_scorer_number].scorer);
+    MarkDataSet(*data, *lin_scorer[last_scorer_number].scorer);
 
     vector<double> measure_exps(data->size());
     double sum_exps = 0.0;
@@ -59,7 +59,7 @@ namespace lc {
     }
 
     for (size_t data_index = 0; data_index < data->size(); ++data_index) {
-      data->at(data_index).setWeight(measure_exps[data_index] / sum_exps);
+      data->setWeight(data_index, measure_exps[data_index] / sum_exps);
     }
   }
 };
