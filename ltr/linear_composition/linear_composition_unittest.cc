@@ -132,8 +132,8 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   lc_learner.setMeasure(abs_error);
 
   RSMFeatureConverterLearner<Object>::Ptr
-    begging(new RSMFeatureConverterLearner<Object>);
-  lc_learner.setFeatureConverterLearner(begging);
+    rsm(new RSMFeatureConverterLearner<Object>);
+  lc_learner.setFeatureConverterLearner(rsm);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
   lc_learner.setWeakLearner(bf_learner);
@@ -172,6 +172,31 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
 
   adalcs_lc_learner.learn(data);
   LinearCompositionScorer lin_scorer = adalcs_lc_learner.make();
+  
+  EXPECT_NO_THROW(MarkDataSet(data, lin_scorer));
+}
+
+TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
+  LinearCompositionLearner<Object,
+    AdaRankLCScorerWeightsUpdater,
+    AdaRankDataSetWeightsUpdater> ada_lc_learner;
+
+  AbsError::Ptr abs_error(new AbsError);
+  ada_lc_learner.setMeasure(abs_error);
+
+  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  ada_lc_learner.setWeakLearner(bf_learner);
+
+  RSMFeatureConverterLearner<Object>::Ptr
+    rsm(new RSMFeatureConverterLearner<Object>);
+  ada_lc_learner.setFeatureConverterLearner(rsm);
+
+  BeggingPreprocessorLearner<Object>::Ptr
+    begging(new BeggingPreprocessorLearner<Object>);
+  ada_lc_learner.setDataPreprocessorLearner(begging);
+
+  ada_lc_learner.learn(data);
+  LinearCompositionScorer lin_scorer = ada_lc_learner.make();
   
   EXPECT_NO_THROW(MarkDataSet(data, lin_scorer));
 }
