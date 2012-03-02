@@ -45,12 +45,6 @@ namespace ltr {
       result += p_look * p_relevance;
       p_look *= (1 - p_relevance) * (1 - p_break);
     }
-
-    if (result > 1.0) {
-      throw logic_error(alias() + " calculated > 1");
-    } else if (result < 0.0) {
-      throw logic_error(alias() + " calculated < 0");
-    }
     return result;
   }
 };

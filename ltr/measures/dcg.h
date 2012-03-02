@@ -27,34 +27,29 @@ namespace ltr {
    * Also it contains information if resulted DCG measure is MoreIsBetter of LessIsBetter
    * and what bounds has DCG result (e.g. it must be non-negative)
    */
-  class DCGFormula : public Aliaser {
+  class DCGFormula {
   public:
-    DCGFormula() : Aliaser("common DCG formula") {}
-    explicit DCGFormula(const string& alias) : Aliaser(alias) {}
     /**
      * The result of this function is added to the DCG for each position.
      * @param relevance - the relevance of the object in position
      * @param position - the position number 0..size() - 1
      */
-    virtual double operator()(double relevance, size_t position) const;
-    /**
-     * Returns if expected better value of DCGmeasure is really better than expected worse one.
-     * By default bigger DCG measure is better
-     */
-    virtual bool better(double expected_better, double expected_worse) const;
-    /**
-     * Checks DCG measure result. By default checks if result >= 0 (it should be true)
-     */
-    virtual void checkDCGResult(double result) const;
+    static double count(double relevance, size_t position);
+    static string alias();
+    static double best();
+    static double worst();
+
   };
 
   /**
    * Yandex DCG formula from http://imat2009.yandex.ru/datasets
    */
-  class YandexDCGFormula : public DCGFormula {
+  class YandexDCGFormula {
   public:
-    YandexDCGFormula() : DCGFormula("yandex DCG formula") {}
-    double operator()(double relevance, size_t position) const;
+    static double count(double relevance, size_t position);
+    static string alias();
+    static double best();
+    static double worst();
   };
 
 
@@ -70,7 +65,7 @@ namespace ltr {
      * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
     BaseDCG(const ParametersContainer& parameters = ParametersContainer())
-    :ListwiseMeasure("DCG with " + TDCGFormula().alias()) {
+      : ListwiseMeasure("DCG with " + TDCGFormula::alias()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -85,7 +80,8 @@ namespace ltr {
      */
     void checkParameters() const;
 
-    bool better(double expected_better, double expected_worse) const;
+    double best() const;
+    double worst() const;
 
     private:
     double get_measure(const ObjectList& objects) const;
@@ -96,10 +92,13 @@ namespace ltr {
 
   // template realizations
   template<class TDCGFormula>
-  bool BaseDCG<TDCGFormula>::better
-      (double expected_better, double expected_worse) const {
-    TDCGFormula formula;
-    return formula.better(expected_better, expected_worse);
+  double BaseDCG<TDCGFormula>::best() const {
+    return TDCGFormula::best();
+  }
+
+  template<class TDCGFormula>
+  double BaseDCG<TDCGFormula>::worst() const {
+    return TDCGFormula::worst();
   }
 
   template<class TDCGFormula>
@@ -113,12 +112,10 @@ namespace ltr {
     }
 
     double result = 0.0;
-    TDCGFormula formula;
     for (int labels_index = 0; labels_index < n; ++labels_index) {
-      result += formula(labels[labels_index].actual, labels_index);
+      result += TDCGFormula::count(labels[labels_index].actual, labels_index);
     }
 
-    formula.checkDCGResult(result);
     return result;
   }
 

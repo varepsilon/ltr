@@ -14,7 +14,7 @@ namespace ltr {
    * Returns f(x), where x is position of first relevant object.
    * Usually f(x) = 1.0 / x
    */
-  class ReciprocalRank : public MoreIsBetterMeasure<ObjectList> {
+  class ReciprocalRank : public ListwiseMeasure {
   public:
     /**
      * @param parameters Standart LTR parameter container with int parameter
@@ -22,7 +22,7 @@ namespace ltr {
      */
     ReciprocalRank(const ParametersContainer&
         parameters = ParametersContainer())
-        :MoreIsBetterMeasure<ObjectList>("Reciprocal Rank") {
+        : ListwiseMeasure("Reciprocal Rank") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -36,6 +36,12 @@ namespace ltr {
       this->addDoubleParameter("SCORE_FOR_RELEVANT", 3.0);
     }
 
+    double best() const {
+      return 1.0;
+    }
+    double worst() const {
+      return 0.0;
+    }
   private:
     double get_measure(const ObjectList& objects) const;
     /**

@@ -11,21 +11,26 @@
 using std::fabs;
 
 using ltr::Object;
-using ltr::MoreIsBetterMeasure;
 
 
 namespace ltr {
   /**
    * TruePoint pointwise measure. Is 1.0 / (1.0 + AbsError)
    */
-  class TruePoint : public MoreIsBetterMeasure<Object> {
+  class TruePoint : public PointwiseMeasure {
   public:
     TruePoint(const ParametersContainer& parameters = ParametersContainer())
-        :MoreIsBetterMeasure<Object>("TruePoint") {
+        : PointwiseMeasure("TruePoint") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
-
+    
+    double best() const {
+      return 1.0;
+    }
+    double worst() const {
+      return 0.0;
+    }
   private:
     double get_measure(const Object& object) const {
       return 1/(fabs(object.actualLabel() - object.predictedLabel()) + 1.0);

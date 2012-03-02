@@ -13,10 +13,10 @@ namespace ltr {
    * Graded Mean Reciprocal Rank
    * See http://romip.ru/romip2010/20_appendix_a_metrics.pdf pp 185
    */
-  class GMRR: public MoreIsBetterMeasure<ObjectList> {
+  class GMRR: public ListwiseMeasure {
   public:
     GMRR(const ParametersContainer& parameters = ParametersContainer())
-        :MoreIsBetterMeasure<ObjectList>("GMRR") {
+        : ListwiseMeasure("GMRR") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -32,6 +32,13 @@ namespace ltr {
     void checkParameters() const {
       CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
       CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
+    }
+
+    double best() const {
+      return 1.0;
+    }
+    double worst() const {
+      return 0.0;
     }
   private:
     double get_measure(const ObjectList& objects) const;

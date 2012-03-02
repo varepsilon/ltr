@@ -5,23 +5,31 @@
 
 #include <cmath>
 
+#include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"
 #include "ltr/data/object.h"
 
 using std::fabs;
 using ltr::Object;
-using ltr::LessIsBetterMeasure;
+using ltr::utility::INFINITY;
 
 namespace ltr {
   /**
    * Absolute error pointwise measure
    */
-  class AbsError : public LessIsBetterMeasure<Object> {
+  class AbsError : public PointwiseMeasure {
     public:
     AbsError(const ParametersContainer& parameters = ParametersContainer())
-        :LessIsBetterMeasure<Object>("Absolute error") {
+        :PointwiseMeasure("Absolute error") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
+    }
+
+    double worst() const {
+      return INFINITY;
+    }
+    double best() const {
+      return 0;
     }
 
     private:

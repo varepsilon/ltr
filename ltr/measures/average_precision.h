@@ -11,11 +11,11 @@ namespace ltr {
    * Average precision listwise measure.
    * See http://en.wikipedia.org/wiki/Information_retrieval#Average_precision
    */
-  class AveragePrecision: public MoreIsBetterMeasure<ObjectList> {
+  class AveragePrecision: public ListwiseMeasure {
   public:
     AveragePrecision(const ParametersContainer&
         parameters = ParametersContainer())
-        :MoreIsBetterMeasure<ObjectList>("Average precision") {
+        : ListwiseMeasure("Average precision") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -27,6 +27,12 @@ namespace ltr {
   void setDefaultParameters() {
     this->clearParameters();
     this->addDoubleParameter("SCORE_FOR_RELEVANT", 3.0);
+  }
+  double best() const {
+    return 1.0;
+  }
+  double worst() const {
+    return 0.0;
   }
   private:
     double get_measure(const ObjectList& objects) const;

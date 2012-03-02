@@ -41,12 +41,6 @@ namespace ltr {
     if (!relevant_found) {
       // todo: log here!
     }
-
-    if (result > 1.0) {
-      throw logic_error(alias() + " calculated > 1");
-    } else if (result  < 0.0) {
-      throw logic_error(alias() + " calculated < 0");
-    }
     return result;
   }
 };

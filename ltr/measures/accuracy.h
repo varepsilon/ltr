@@ -13,12 +13,18 @@ namespace ltr {
  * and 0 otherwise
  */
 template <class TElement>
-class Accuracy : public MoreIsBetterMeasure<TElement> {
+class Accuracy : public Measure<TElement> {
   public:
   Accuracy(const ParametersContainer& parameters = ParametersContainer())
-    :MoreIsBetterMeasure<TElement>("Accuracy") {
+    : Measure<TElement>("Accuracy") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
+  }
+  double best() const {
+    return 1.0;
+  }
+  double worst() const {
+    return 0.0;
   }
   private:
   double get_measure(const TElement& object) const;

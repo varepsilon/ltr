@@ -12,14 +12,14 @@ using std::logic_error;
 using ltr::ObjectList;
 
 namespace ltr {
-  class PFound: public MoreIsBetterMeasure<ObjectList> {
+  class PFound: public ListwiseMeasure {
   public:
     /**
      * Yandex pFound listwise measure. See http://romip.ru/romip2010/20_appendix_a_metrics.pdf pp 186.
      * Here pRel = object's score / MAX_LABEL
      */
     PFound(const ParametersContainer& parameters = ParametersContainer())
-        :MoreIsBetterMeasure<ObjectList>("PFound") {
+        : ListwiseMeasure("PFound") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -46,6 +46,12 @@ namespace ltr {
       CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
     }
 
+    double best() const {
+      return 1.0;
+    }
+    double worst() const {
+      return 0.0;
+    }
   private:
     double get_measure(const ObjectList& objects) const;
   };

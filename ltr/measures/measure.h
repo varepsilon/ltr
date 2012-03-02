@@ -4,6 +4,8 @@
 #define LTR_MEASURES_MEASURE_H_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/lexical_cast.hpp>
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 
@@ -17,6 +19,8 @@
 
 using std::string;
 using std::logic_error;
+using std::min;
+using std::max;
 
 namespace ltr {
 /**
@@ -55,9 +59,22 @@ class Measure : public Aliaser, public Parameterized {
    * There are two types of measures: when bigger measure is better (e.g. accuracy)
    * and when smaller measure is better (e.g. abs error)
    */
-  virtual bool better(double expected_better, double expected_worse) const = 0;
+  bool better(double expected_better, double expected_worse) const;
+
+  /**
+   * Returns the worst measure's possible value or -ltr::INFINITY if unlimited
+   */
+  virtual double worst() const = 0;
+  /**
+   * Returns the best measure's possible value or ltr::INFINITY if unlimited
+   */
+  virtual double best() const = 0;
 
   private:
+  /**
+   * Throws if measure's result is not between best() and worst()
+   */
+  void checkResult(double result) const;
   /**
    * Implementation. Returns value of measure(quality of algorithm)
    * @param element - element(single object, pair or list) for counting measure on
@@ -65,47 +82,43 @@ class Measure : public Aliaser, public Parameterized {
   virtual double get_measure(const TElement& element) const = 0;
 };
 
-/**
- * Type of measure when smaller result is better (e.g. abs error)
- */
-template <class TElement>
-class LessIsBetterMeasure : public Measure<TElement> {
- public:
-  explicit LessIsBetterMeasure(const string& alias)
-    : Measure<TElement>(alias) {}
-
-  bool better(double expected_better, double expected_worse) const {
-    return expected_better < expected_worse;
-  }
-};
-/**
- * Type of measure when bigger result is better (e.g. accuracy)
- */
-template <class TElement>
-class MoreIsBetterMeasure : public Measure<TElement> {
- public:
-  explicit MoreIsBetterMeasure(const string& alias)
-    : Measure<TElement>(alias) {}
-
-  bool better(double expected_better, double expected_worse) const {
-    return expected_better > expected_worse;
-  }
-};
-
 typedef Measure<Object> PointwiseMeasure;
 typedef Measure<ObjectPair> PairwiseMeasure;
 typedef Measure<ObjectList> ListwiseMeasure;
 
-template< class TElement>
+// template realizations
+template<class TElement>
+bool Measure<TElement>::better(double expected_better,
+    double expected_worse) const {
+  if (worst() < best()) {
+    return expected_worse < expected_better;
+  } else {
+    return expected_worse > expected_better;
+  }
+}
+
+template<class TElement>
+void Measure<TElement>::checkResult(double result) const {
+  if (result > max(best(), worst())) {
+    throw logic_error(alias() + " calculated > " +
+      boost::lexical_cast<string>(max(best(), worst())));
+  } else if (min(best(), worst())) {
+    throw logic_error(alias() + " calculated < " +
+      boost::lexical_cast<string>(min(best(), worst())));
+  }
+}
+
+template<class TElement>
 double Measure<TElement>::operator()(const TElement& element) const {
   if (element.size() == 0) {
     throw logic_error(alias() + " gained empty list");
   }
   double measure = get_measure(element);
+  checkResult(measure);
   return measure;
 };
 
-template< class TElement>
+template<class TElement>
 double Measure<TElement>::average(const DataSet<TElement>& set) const {
   if (set.size() == 0) {
     throw logic_error(alias() + " gained empty set");
@@ -125,7 +138,7 @@ double Measure<TElement>::average(const DataSet<TElement>& set) const {
   return sum;
 }
 
-template< class TElement>
+template<class TElement>
 double Measure<TElement>::weightedAverage(
     const DataSet<TElement>& set) const {
   if (set.size() == 0) {

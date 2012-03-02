@@ -38,7 +38,7 @@ namespace ltr {
      * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
     BaseNDCG(const ParametersContainer& parameters = ParametersContainer())
-    :ListwiseMeasure("NDCG with " + TDCGFormula().alias()) {
+      : ListwiseMeasure("NDCG with " + TDCGFormula::alias()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -53,7 +53,8 @@ namespace ltr {
      */
     void checkParameters() const;
 
-    bool better(double expected_better, double expected_worse) const;
+    double best() const;
+    double worst() const;
 
     private:
     double get_measure(const ObjectList& objects) const;
@@ -64,10 +65,13 @@ namespace ltr {
 
   // template realizations
   template<class TDCGFormula>
-  bool BaseNDCG<TDCGFormula>::better
-      (double expected_better, double expected_worse) const {
-    TDCGFormula formula;
-    return formula.better(expected_better, expected_worse);
+  double BaseNDCG<TDCGFormula>::best() const {
+    return 1.0;
+  }
+
+  template<class TDCGFormula>
+  double BaseNDCG<TDCGFormula>::worst() const {
+    return 0.0;
   }
 
   template<class TDCGFormula>
@@ -80,29 +84,22 @@ namespace ltr {
       n = labels.size();
     }
 
-    TDCGFormula formula;
-
     double best_possible_DCG = 0.0;
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       best_possible_DCG +=
-        formula(labels[labels_index].actual, labels_index);
+        TDCGFormula::count(labels[labels_index].actual, labels_index);
     }
 
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
     double DCG_value = 0.0;
     for (int labels_index = 0; labels_index < n; ++labels_index) {
-      DCG_value += formula(labels[labels_index].actual, labels_index);
+      DCG_value += TDCGFormula::count(
+        labels[labels_index].actual, labels_index);
     }
 
     if (!utility::DoubleEqual(best_possible_DCG, 0.0)) {
-      double result =  DCG_value / best_possible_DCG;
-      if (result > 1.0) {
-        throw logic_error(alias() + " calculated > 1");
-      } else if (result < 0.0) {
-        throw logic_error(alias() + " calculated < 0");
-      }
-      return result;
+      return DCG_value / best_possible_DCG;
     } else {
       return 0.0;
     }

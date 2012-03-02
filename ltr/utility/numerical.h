@@ -6,6 +6,8 @@
 #include <cmath>
 #include <limits>
 
+using std::numeric_limits;
+
 namespace ltr {
 namespace utility {
 const int DOUBLE_PRECISION = 16;
@@ -21,9 +23,14 @@ const double ln_2 = std::log(2.0);
 const double DoubleEps = 1e-14;
 
 /**
+ * Very big double positive value.
+ */
+const double INFINITY = numeric_limits<double>::max();
+
+/**
  * Double special value: Not-a-Number.
  */
-const double NaN = std::numeric_limits< double >::quiet_NaN();
+const double NaN = numeric_limits<double>::quiet_NaN();
 
 /**
  * Checks weather x is Not-a-Number.
