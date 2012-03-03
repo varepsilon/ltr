@@ -38,7 +38,6 @@ namespace ltr {
     static string alias();
     static double best();
     static double worst();
-
   };
 
   /**

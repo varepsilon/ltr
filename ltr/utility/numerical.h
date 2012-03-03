@@ -25,7 +25,7 @@ const double DoubleEps = 1e-14;
 /**
  * Very big double positive value.
  */
-const double INFINITY = numeric_limits<double>::max();
+const double Inf = numeric_limits<double>::max();
 
 /**
  * Double special value: Not-a-Number.

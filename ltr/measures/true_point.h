@@ -24,7 +24,7 @@ namespace ltr {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
-    
+
     double best() const {
       return 1.0;
     }

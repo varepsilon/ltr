@@ -62,11 +62,11 @@ class Measure : public Aliaser, public Parameterized {
   bool better(double expected_better, double expected_worse) const;
 
   /**
-   * Returns the worst measure's possible value or -ltr::INFINITY if unlimited
+   * Returns the worst measure's possible value or -ltr::Inf if unlimited
    */
   virtual double worst() const = 0;
   /**
-   * Returns the best measure's possible value or ltr::INFINITY if unlimited
+   * Returns the best measure's possible value or ltr::Inf if unlimited
    */
   virtual double best() const = 0;
 

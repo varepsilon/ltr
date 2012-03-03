@@ -54,7 +54,7 @@ namespace lc {
     void updateWeights(const DataSet<TElement>* data,
         const LinearCompositionScorer& lin_scorer) const {
       // doing nothing
-    }    
+    }
   };
 };
 };

@@ -11,7 +11,7 @@
 
 using std::fabs;
 using ltr::Object;
-using ltr::utility::INFINITY;
+using ltr::utility::Inf;
 
 namespace ltr {
   /**
@@ -26,7 +26,7 @@ namespace ltr {
     }
 
     double worst() const {
-      return INFINITY;
+      return Inf;
     }
     double best() const {
       return 0.0;

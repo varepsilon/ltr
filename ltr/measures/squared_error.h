@@ -10,7 +10,7 @@
 #include "ltr/data/object.h"
 
 using ltr::Object;
-using ltr::utility::INFINITY;
+using ltr::utility::Inf;
 
 namespace ltr {
   /**
@@ -28,7 +28,7 @@ namespace ltr {
       return 0.0;
     }
     double worst() const {
-      return INFINITY;
+      return Inf;
     }
     private:
     double get_measure(const Object& object) const {

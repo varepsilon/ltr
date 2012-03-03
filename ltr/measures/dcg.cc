@@ -10,7 +10,7 @@ using std::string;
 using std::pow;
 using std::log;
 
-using ltr::utility::INFINITY;
+using ltr::utility::Inf;
 
 
 namespace ltr {
@@ -21,7 +21,7 @@ namespace ltr {
     return "DCGFormula";
   }
   double DCGFormula::best() {
-    return INFINITY;
+    return Inf;
   }
   double DCGFormula::worst() {
     return 0.0;
@@ -34,7 +34,7 @@ namespace ltr {
     return "YandexDCGFormula";
   }
   double YandexDCGFormula::best() {
-    return INFINITY;
+    return Inf;
   }
   double YandexDCGFormula::worst() {
     return 0.0;

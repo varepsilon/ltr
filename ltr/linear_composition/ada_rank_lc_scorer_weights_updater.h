@@ -56,17 +56,14 @@ namespace lc {
 
     double numerator = 0.0;
     double denominator = 0.0;
-// todo: weightted average + max and min of measure (eg vector <-)
+
     for (size_t i = 0; i < data.size(); ++i) {
       double measure_value = measure_->operator()(data[i]);
+      double normalized_measure_value = (measure_value - measure_->worst()) /
+        (measure_->best() - measure_->worst());
 
-      numerator += data.getWeight(i) * measure_value;
-      denominator += data.getWeight(i) * (1 - measure_value);
-    }
-
-    bool measure_more_is_better = measure_->better(1.0, 0.0);
-    if (!measure_more_is_better) {
-      swap(numerator, denominator);
+      numerator += data.getWeight(i) * normalized_measure_value;
+      denominator += data.getWeight(i) * (1 - normalized_measure_value);
     }
 
     if (denominator < DoubleEps) {
