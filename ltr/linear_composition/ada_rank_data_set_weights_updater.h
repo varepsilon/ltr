@@ -52,9 +52,10 @@ namespace lc {
     double sum_exps = 0.0;
 
     for (size_t data_index = 0; data_index < data->size(); ++data_index) {
-      double measure_value = measure_->operator()(data->at(data_index));
-      double normalized_measure_value = (measure_value - measure_->worst()) /
-        (measure_->best() - measure_->worst());
+      double measure_value = this->measure_->operator()(data->at(data_index));
+      double normalized_measure_value =
+        (measure_value - this->measure_->worst()) /
+        (this->measure_->best() - this->measure_->worst());
 
       double measure_value_exp = exp(-2 * normalized_measure_value);
       measure_exps[data_index] = measure_value_exp;

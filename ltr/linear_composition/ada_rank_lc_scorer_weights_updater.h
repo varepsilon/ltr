@@ -58,9 +58,10 @@ namespace lc {
     double denominator = 0.0;
 
     for (size_t i = 0; i < data.size(); ++i) {
-      double measure_value = measure_->operator()(data[i]);
-      double normalized_measure_value = (measure_value - measure_->worst()) /
-        (measure_->best() - measure_->worst());
+      double measure_value = this->measure_->operator()(data[i]);
+      double normalized_measure_value =
+        (measure_value - this->measure_->worst()) /
+        (this->measure_->best() - this->measure_->worst());
 
       numerator += data.getWeight(i) * normalized_measure_value;
       denominator += data.getWeight(i) * (1 - normalized_measure_value);
