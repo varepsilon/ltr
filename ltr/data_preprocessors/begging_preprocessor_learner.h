@@ -14,7 +14,7 @@
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
 
-using ltr::IDataPreprocessorLearner;
+using ltr::DataPreprocessorLearner;
 using std::vector;
 using std::random_shuffle;
 using std::copy;
@@ -22,7 +22,7 @@ using std::copy;
 namespace ltr {
 template <typename TElement>
 class BeggingPreprocessorLearner
-    : public IDataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<BeggingPreprocessorLearner> Ptr;
 

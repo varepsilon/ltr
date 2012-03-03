@@ -78,8 +78,11 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
       << abs_error->average(data);
   }
 
-  LinearCompositionLearner<Object,
-    AverageLCScorerWeightsUpdater> av_lc_learner;
+  AverageLCScorerWeightsUpdater<Object>::Ptr
+    av_lcswu(new AverageLCScorerWeightsUpdater<Object>);
+
+  LinearCompositionLearner<Object> av_lc_learner;
+  av_lc_learner.setLCScorerWeightsUpdater(av_lcswu);
   av_lc_learner.setMeasure(abs_error);
   av_lc_learner.setWeakLearner(bf_learner);
   av_lc_learner.learn(data);
@@ -145,8 +148,11 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
 }
 
 TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object, FakeLCScorerWeightsUpdater,
-    AdaRankDataSetWeightsUpdater> adads_lc_learner;
+  LinearCompositionLearner<Object> adads_lc_learner;
+
+  AdaRankDataSetWeightsUpdater<Object>::Ptr
+    ada_dswu(new AdaRankDataSetWeightsUpdater<Object>);
+  adads_lc_learner.setDataSetWeightsUpdater(ada_dswu);
 
   AbsError::Ptr abs_error(new AbsError);
   adads_lc_learner.setMeasure(abs_error);
@@ -161,8 +167,11 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
 }
 
 TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object,
-    AdaRankLCScorerWeightsUpdater> adalcs_lc_learner;
+  LinearCompositionLearner<Object> adalcs_lc_learner;
+
+  AdaRankLCScorerWeightsUpdater<Object>::Ptr
+    ada_lcswu(new AdaRankLCScorerWeightsUpdater<Object>);
+  adalcs_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
   // careful here: abs_error is not in [0..1] whereas
   // AdaRankLCScorerWeightsUpdater requires it
   // new version in progress
@@ -179,9 +188,15 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
 }
 
 TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object,
-    AdaRankLCScorerWeightsUpdater,
-    AdaRankDataSetWeightsUpdater> ada_lc_learner;
+  LinearCompositionLearner<Object> ada_lc_learner;
+
+  AdaRankLCScorerWeightsUpdater<Object>::Ptr
+    ada_lcswu(new AdaRankLCScorerWeightsUpdater<Object>);
+  ada_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
+
+  AdaRankDataSetWeightsUpdater<Object>::Ptr
+    ada_dswu(new AdaRankDataSetWeightsUpdater<Object>);
+  ada_lc_learner.setDataSetWeightsUpdater(ada_dswu);
   // careful here: abs_error is not in [0..1] whereas
   // AdaRankLCScorerWeightsUpdater requires it
   // new version in progress

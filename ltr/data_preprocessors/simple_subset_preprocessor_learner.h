@@ -11,12 +11,12 @@
 
 using std::set;
 using std::vector;
-using ltr::IDataPreprocessorLearner;
+using ltr::DataPreprocessorLearner;
 
 namespace ltr {
 template <typename TElement>
 class SimpleSubsetPreprocessorLearner
-    : public IDataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<SimpleSubsetPreprocessorLearner> Ptr;
 

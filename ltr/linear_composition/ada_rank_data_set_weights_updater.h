@@ -12,6 +12,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/scorers/utility/scorer_utility.h"
+#include "ltr/linear_composition/data_set_weights_updater.h"
 
 using std::vector;
 using std::exp;
@@ -24,20 +25,19 @@ using ltr::utility::MarkDataSet;
 namespace ltr {
 namespace lc {
   template <class TElement>
-  class AdaRankDataSetWeightsUpdater {
+  class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   public:
     typedef boost::shared_ptr<AdaRankDataSetWeightsUpdater> Ptr;
 
-    explicit AdaRankDataSetWeightsUpdater() {}
+    explicit AdaRankDataSetWeightsUpdater(
+        const ParametersContainer& parameters = ParametersContainer())
+        : DataSetWeightsUpdater<TElement>("AdaRankDataSetWeightsUpdater") {
+      this->setDefaultParameters();
+      this->copyParameters(parameters);
+    }
 
     void updateWeights(const DataSet<TElement>* data,
         const LinearCompositionScorer& lin_scorer) const;
-
-    void setMeasure(typename Measure<TElement>::Ptr in_measure) {
-      measure_ = in_measure;
-    }
-  protected:
-    typename Measure<TElement>::Ptr measure_;
   };
 
   // template realizations

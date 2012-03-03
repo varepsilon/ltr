@@ -7,13 +7,13 @@
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/fake_data_preprocessor.h"
 
-using ltr::IDataPreprocessorLearner;
+using ltr::DataPreprocessorLearner;
 using ltr::FakeDataPreprocessor;
 
 namespace ltr {
 template <typename TElement>
 class FakePreprocessorLearner
-    : public IDataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<FakePreprocessorLearner> Ptr;
 

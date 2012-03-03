@@ -20,7 +20,7 @@ namespace ltr {
   class AbsError : public PointwiseMeasure {
     public:
     AbsError(const ParametersContainer& parameters = ParametersContainer())
-        :PointwiseMeasure("Absolute error") {
+        : PointwiseMeasure("Absolute error") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -29,7 +29,7 @@ namespace ltr {
       return INFINITY;
     }
     double best() const {
-      return 0;
+      return 0.0;
     }
 
     private:

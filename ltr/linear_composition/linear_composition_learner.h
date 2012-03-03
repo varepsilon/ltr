@@ -9,8 +9,8 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/learners/learner.h"
-#include "ltr/linear_composition/ada_rank_data_set_weights_updater.h"
-#include "ltr/linear_composition/ada_rank_lc_scorer_weights_updater.h"
+#include "ltr/linear_composition/data_set_weights_updater.h"
+#include "ltr/linear_composition/linear_composition_scorer_weights_updater.h"
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
@@ -28,13 +28,13 @@ using ltr::lc::FakeDataSetWeightsUpdater;
 using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::FakeFeatureConverterLearner;
 using ltr::FakePreprocessorLearner;
+using ltr::lc::LCScorerWeightsUpdater;
+using ltr::lc::DataSetWeightsUpdater;
 
 
 namespace ltr {
 namespace lc {
-  template <class TElement,
-    template<class> class TLCSWeightsUpdater = FakeLCScorerWeightsUpdater,
-    template<class> class TDSWeightsUpdater = FakeDataSetWeightsUpdater>
+  template <class TElement>
   class LinearCompositionLearner
       : public Learner<TElement, LinearCompositionScorer> {
   public:
@@ -44,6 +44,9 @@ namespace lc {
         const ParametersContainer& parameters = ParametersContainer())
         : feature_converter_learner(new FakeFeatureConverterLearner<TElement>),
         data_preprocessor_learner(new FakePreprocessorLearner<TElement>),
+        data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
+        linear_composition_scorer_weights_updater
+          (new FakeLCScorerWeightsUpdater<TElement>),
         Learner<TElement, LinearCompositionScorer>("LinearCompositionLearner") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
@@ -74,31 +77,42 @@ namespace lc {
       feature_converter_learner = in_feature_converter_learner;
     }
     void setDataPreprocessorLearner(
-      typename IDataPreprocessorLearner<TElement>::Ptr
+      typename DataPreprocessorLearner<TElement>::Ptr
         in_data_preprocessor_learner) {
       data_preprocessor_learner = in_data_preprocessor_learner;
     }
+    void setDataSetWeightsUpdater(
+      typename DataSetWeightsUpdater<TElement>::Ptr
+        in_data_set_weights_updater) {
+      data_set_weights_updater = in_data_set_weights_updater;
+    }
+    void setLCScorerWeightsUpdater(
+      typename LCScorerWeightsUpdater<TElement>::Ptr
+        in_linear_composition_scorer_weights_updater) {
+     linear_composition_scorer_weights_updater
+       = in_linear_composition_scorer_weights_updater;
+    }
   private:
     LinearCompositionScorer scorer_;
-    TLCSWeightsUpdater<TElement> linear_composition_scorer_weights_updater_;
-    TDSWeightsUpdater<TElement> data_set_weights_updater_;
+
+    typename LCScorerWeightsUpdater<TElement>::Ptr
+      linear_composition_scorer_weights_updater;
+    typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater;
 
     typename IFeatureConverterLearner<TElement>::Ptr feature_converter_learner;
-    typename IDataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
+    typename DataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
 
     void learnImpl(const DataSet<TElement>& data);
   };
 
 
   // template realizations
-  template <class TElement,
-    template<class> class TLCSWeightsUpdater,
-    template<class> class TDSWeightsUpdater>
-  void LinearCompositionLearner<TElement,
-      TLCSWeightsUpdater, TDSWeightsUpdater>::
+  template <class TElement>
+  void LinearCompositionLearner<TElement>::
       learnImpl(const DataSet<TElement>& data) {
-    linear_composition_scorer_weights_updater_.setMeasure(this->p_measure_);
-    data_set_weights_updater_.setMeasure(this->p_measure_);
+    linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
+    data_set_weights_updater->setMeasure(this->p_measure_);
+    data_preprocessor_learner->setMeasure(this->p_measure_);
     this->p_weak_learner_->setMeasure(this->p_measure_);
 
     for (int iteration = 0;
@@ -124,8 +138,8 @@ namespace lc {
       current_scorer->setFeatureConverters(in_scorer_converters);
       scorer_.add(current_scorer, 1.0);
 
-      linear_composition_scorer_weights_updater_.updateWeights(data, &scorer_);
-      data_set_weights_updater_.updateWeights(&data, scorer_);
+      linear_composition_scorer_weights_updater->updateWeights(data, &scorer_);
+      data_set_weights_updater->updateWeights(&data, scorer_);
     }
   }
 };
