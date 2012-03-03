@@ -18,6 +18,7 @@
 
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/measures/true_point.h"
 #include "ltr/data_preprocessors/begging_preprocessor_learner.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
 
@@ -38,6 +39,7 @@ using ltr::BestFeatureLearner;
 using ltr::lc::LinearCompositionLearner;
 using ltr::AbsError;
 using ltr::lc::AverageLCScorerWeightsUpdater;
+using ltr::TruePoint;
 
 const int data_size = 11;
 
@@ -172,11 +174,9 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
   AdaRankLCScorerWeightsUpdater<Object>::Ptr
     ada_lcswu(new AdaRankLCScorerWeightsUpdater<Object>);
   adalcs_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
-  // careful here: abs_error is not in [0..1] whereas
-  // AdaRankLCScorerWeightsUpdater requires it
-  // new version in progress
-  AbsError::Ptr abs_error(new AbsError);
-  adalcs_lc_learner.setMeasure(abs_error);
+
+  TruePoint::Ptr true_point(new TruePoint);
+  adalcs_lc_learner.setMeasure(true_point);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
   adalcs_lc_learner.setWeakLearner(bf_learner);
@@ -197,11 +197,9 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_dswu(new AdaRankDataSetWeightsUpdater<Object>);
   ada_lc_learner.setDataSetWeightsUpdater(ada_dswu);
-  // careful here: abs_error is not in [0..1] whereas
-  // AdaRankLCScorerWeightsUpdater requires it
-  // new version in progress
-  AbsError::Ptr abs_error(new AbsError);
-  ada_lc_learner.setMeasure(abs_error);
+
+  TruePoint::Ptr true_point(new TruePoint);
+  ada_lc_learner.setMeasure(true_point);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
   ada_lc_learner.setWeakLearner(bf_learner);
