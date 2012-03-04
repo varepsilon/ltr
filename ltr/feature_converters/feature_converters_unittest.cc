@@ -111,8 +111,8 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationStatistics) {
         (ltr::PerFeatureLinearConverter *)(normalizerLearner.make().get());
     double coef = pConv->getCoefficient(featureIdx);
     double shift = pConv->getShift(featureIdx);
-    EXPECT_DOUBLE_EQ(coef, 0.5);
-    EXPECT_DOUBLE_EQ(shift, -0.5);
+    EXPECT_NEAR(coef, 0.5, 1e-7);
+    EXPECT_NEAR(shift, -0.5, 1e-7);
   }
 }
 
