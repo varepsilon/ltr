@@ -24,11 +24,19 @@ using ltr::utility::MarkDataSet;
 
 namespace ltr {
 namespace lc {
+  /**
+   * DataSetWeightsUpdater which implements AdaRank algorithm's part
+   * concerning updating weights of dataset. About AdaRank see
+   * http://research.microsoft.com/en-us/people/hangli/xu-sigir07.pdf
+   */
   template <class TElement>
   class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   public:
     typedef boost::shared_ptr<AdaRankDataSetWeightsUpdater> Ptr;
 
+    /**
+     * @param parameters Standart LTR parameter container with no parameters
+     */
     explicit AdaRankDataSetWeightsUpdater(
         const ParametersContainer& parameters = ParametersContainer())
         : DataSetWeightsUpdater<TElement>("AdaRankDataSetWeightsUpdater") {
@@ -57,7 +65,7 @@ namespace lc {
         (measure_value - this->measure_->worst()) /
         (this->measure_->best() - this->measure_->worst());
 
-      double measure_value_exp = exp(-2 * normalized_measure_value);
+      double measure_value_exp = exp(-normalized_measure_value);
       measure_exps[data_index] = measure_value_exp;
       sum_exps += measure_value_exp;
     }

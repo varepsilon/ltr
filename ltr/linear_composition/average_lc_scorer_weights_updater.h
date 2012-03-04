@@ -25,12 +25,19 @@ using ltr::Scorer;
 
 namespace ltr {
 namespace lc {
+  /**
+   * LCScorerWeightsUpdater wich holds composition scorer's weights equal to
+   * 1.0 / (composition length)
+   */
   template <class TElement>
   class AverageLCScorerWeightsUpdater
     : public LCScorerWeightsUpdater<TElement> {
   public:
     typedef boost::shared_ptr<AverageLCScorerWeightsUpdater> Ptr;
 
+    /**
+     * @param parameters Standart LTR parameter container with no parameters
+     */
     explicit AverageLCScorerWeightsUpdater(
         const ParametersContainer& parameters = ParametersContainer())
         : LCScorerWeightsUpdater<TElement>

@@ -28,12 +28,20 @@ using ltr::Scorer;
 
 namespace ltr {
 namespace lc {
+  /**
+   * LCScorerWeightsUpdater which implements AdaRank algorithm's part
+   * concerning updating weights of composition. About AdaRank see
+   * http://research.microsoft.com/en-us/people/hangli/xu-sigir07.pdf
+   */
   template <class TElement>
   class AdaRankLCScorerWeightsUpdater
     : public LCScorerWeightsUpdater<TElement> {
   public:
     typedef boost::shared_ptr<AdaRankLCScorerWeightsUpdater> Ptr;
 
+    /**
+     * @param parameters Standart LTR parameter container with no parameters
+     */
     explicit AdaRankLCScorerWeightsUpdater(
         const ParametersContainer& parameters = ParametersContainer())
         : LCScorerWeightsUpdater<TElement>
