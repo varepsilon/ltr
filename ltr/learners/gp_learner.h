@@ -14,7 +14,6 @@
 #include "ltr/learners/utility/gp_functions.h"
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/measures/measure.h"
-#include "ltr/interfaces/utility/parametrized_utility.h"
 
 namespace ltr {
 namespace gp {

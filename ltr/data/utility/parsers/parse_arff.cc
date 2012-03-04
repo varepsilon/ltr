@@ -64,7 +64,7 @@ namespace io_utility {
     parseNextFeature.reset();
 
     Object obj;
-    rule<> number = +digit_p >> !('.' >> *digit_p);
+    rule<> number = !ch_p('-') >> +digit_p >> !('.' >> *digit_p);
     rule<> nan = lexeme_d[str_p("?")];
     rule<> string_rule = lexeme_d[*(anychar_p - ch_p('\''))];
     rule<> simple_string = lexeme_d[*(alnum_p | '-')];
@@ -130,7 +130,7 @@ namespace io_utility {
       rule<> quoter = ch_p('\'');
 
       info = boost::spirit::classic::parse(other.c_str(),
-        lexeme_d[+(alnum_p | '_')][assign_a(attr_name)] >> +space_p >>
+        lexeme_d[+(alnum_p | '_' | '-')][assign_a(attr_name)] >> +space_p >>
         (lexeme_d[+alnum_p][assign_a(attr_type)] |
         ('{' >> (( (quoter >> string_rule[push_back_a(values)] >> quoter) |
                   simple_string[push_back_a(values)]) % ',')

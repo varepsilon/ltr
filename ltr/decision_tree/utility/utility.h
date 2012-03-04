@@ -18,14 +18,9 @@ void split(DataSet<Object> data,
            vector<Condition::Ptr> conditions,
            vector<DataSet<Object> >* datas);
 
-template<class T>
-struct ClassName {
-  static string name() {return "Unknown";}
-};
-
-#define CLASS_NAME_INST(T) \
-  template<> \
-  string ClassName<T>::name() {return #T;}
+/** Function returns the string name of the given class
+ */
+template<class T> string ClassName();
 }
 }
 

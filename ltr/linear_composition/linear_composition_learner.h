@@ -129,7 +129,8 @@ namespace lc {
       feature_converter_learner->learn(data);
       FeatureConverter::Ptr feature_converter
         = feature_converter_learner->make();
-      feature_converter->apply(buf_data, &train_data);
+      ltr::utility::ApplyFeatureConverter(feature_converter,
+                                          buf_data, &train_data);
 
       this->p_weak_learner_->learn(train_data);
       Scorer::Ptr current_scorer = this->p_weak_learner_->makeScorerPtr();

@@ -22,6 +22,37 @@ template <> std::string Approach<ltr::ObjectList>::name() {return LW;}
 using boost::algorithm::to_upper;
 using std::string;
 
+/*using namespace ltr;
+
+#include "ltr/learners/decision_tree_learner.h"
+#include "ltr/learners/utility/id3_splitter.h"
+#include "ltr/learners/utility/sqr_error_quality.h"
+using namespace ltr::decision_tree;
+
+typedef DecisionTreeLearner<ID3_Splitter, SqrErrorQuality> ID3_Learner;
+
+int main() {
+  try {
+    logger::Logger::Get().Init("C:/ltr/tmp/ltr_client.log");
+    DataSet<Object> data1 = io_utility::loadDataSet<Object>("C:/ltr/ltr1/data/arff/segment-challenge.arff", "arff");
+    DataSet<Object> test = io_utility::loadDataSet<Object>("C:/ltr/ltr1/data/arff/segment-test.arff", "arff");
+
+    ID3_Learner l;
+    l.learn(data1);
+    utility::MarkDataSet(test, l.make());
+
+    int err = 0;
+    for (int i = 0; i < test.size(); i++)
+      if (test[i].actualLabel() != test[i].predictedLabel())
+        err ++;
+
+    std::cout << err << " / " << test.size() << " errors\n";
+  } catch(std::logic_error err) {
+    std::cout << err.what();
+  }
+  return 0;
+}*/
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "config file missing";
@@ -367,31 +398,35 @@ ltr::ParametersContainer LtrClient::loadParameters(TiXmlElement* params) {
         }
         std::string val = param->GetText();
         const char* type_ = param->Attribute("type");
+        const char* group_ = param->Attribute("group");
+        string group = "";
+        if (group_ != NULL)
+          group = string(group_);
         try {
             if (type_) {
                 std::string type = type_;
                 if (type == "int")
-                    res.setInt(name, parseInt(val));
+                    res.setInt(name, parseInt(val), group);
                 else if (type == "double")
-                    res.setDouble(name, parseDouble(val));
+                    res.setDouble(name, parseDouble(val), group);
                 else if (type == "list")
-                    res.setList(name, parseList(val));
+                    res.setList(name, parseList(val), group);
                 else if (type == "bool")
-                    res.setBool(name, parseBool(val));
+                    res.setBool(name, parseBool(val), group);
                 else
                     throw std::logic_error("Unknown parameter type " + type);
             } else {
                 // Parameter is list if it has a ' '
                 if (val.find(' ') < val.size()) {
-                    res.setList(name, parseList(val));
+                    res.setList(name, parseList(val), group);
                 } else if (val[0] >= '0' && val[0] <= '9') {
                     // parameter is number
                     if (val.find('.') < val.size())
-                        res.setDouble(name, parseDouble(val));
+                        res.setDouble(name, parseDouble(val), group);
                     else
-                        res.setInt(name, parseInt(val));
+                        res.setInt(name, parseInt(val), group);
                 } else {  // parameter is bool
-                    res.setBool(name, parseBool(val));
+                    res.setBool(name, parseBool(val), group);
                 }
             }
         } catch(std::logic_error err) {
@@ -507,6 +542,23 @@ void LtrClient::saveCodeAndPredicts(TiXmlElement* command,
 
         client_logger_.info() << "saved predictions for '" << predict_data
                                         << "' into " << file_path << std::endl;
+        TiXmlElement* measure = predict->FirstChildElement("measure");
+        while (measure) {
+          const char* measure_name = measure->GetText();
+          if (measures.find(measure_name) == measures.end()) {
+            client_logger_.error() << "Unknown measure '"
+                                   << measure_name << "'" << std::endl;
+            measure = measure->NextSiblingElement("measure");
+            continue;
+          }
+          boost::apply_visitor(MarkDataSetVisitor(scorers[name]),
+                               datas[predict_data]);
+          client_logger_.info() << "Mesaure " << measure_name << " value: "
+            << boost::apply_visitor(ApplyMeasureVisitor(),
+                                    measures[measure_name],
+                                    datas[predict_data]) << std::endl;
+          measure = measure->NextSiblingElement("measure");
+        }
         predict = predict->NextSiblingElement("predict");
     }
     if (command->FirstChildElement("cpp")) {

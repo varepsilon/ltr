@@ -15,6 +15,7 @@ using std::string;
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
 
@@ -107,9 +108,10 @@ void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   for (size_t featureConverterIdx = 0;
       featureConverterIdx < featureConverters_.size();
       ++featureConverterIdx) {
-    (*featureConverters_[featureConverterIdx]).apply(
-        sourceData,
-        &convertedData);
+        ltr::utility::ApplyFeatureConverter(
+          featureConverters_[featureConverterIdx],
+          sourceData,
+          &convertedData);
     sourceData = convertedData;
   }
   learnImpl(sourceData);
