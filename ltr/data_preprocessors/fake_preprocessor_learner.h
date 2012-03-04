@@ -42,7 +42,7 @@ class FakePreprocessorLearner
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     FakePreprocessorLearner<TElement>::make() const {
-  FakeDataPreprocessor<TElement>::Ptr
+  typename FakeDataPreprocessor<TElement>::Ptr \
     output(new FakeDataPreprocessor<TElement>(*preprocessor_));
   return output;
 }

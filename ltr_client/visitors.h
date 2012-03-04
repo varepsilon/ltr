@@ -11,6 +11,7 @@
 #include "ltr_client/measures_info.h"
 #include "ltr_client/splitter_info.h"
 #include "ltr/data/utility/io_utility.h"
+#include "ltr/scorers/utility/scorer_utility.h"
 
 #include "boost/variant.hpp"
 /**
@@ -155,6 +156,31 @@ class SetTypeVisitor : public boost::static_visitor<void> {
     template<class TElement>
     void operator()(LearnerInfo<TElement>& info) const {
         info.type = type;
+    }
+};
+
+class MarkDataSetVisitor : public boost::static_visitor<void> {
+  ltr::Scorer::Ptr scorer;
+  public:
+    explicit MarkDataSetVisitor(ltr::Scorer::Ptr scorer) : scorer(scorer) {}
+    template<class TElement>
+    void operator()(DataInfo<TElement>& d_info) const {
+      ltr::utility::MarkDataSet<TElement>(d_info.data, *scorer);
+    }
+};
+
+class ApplyMeasureVisitor : public boost::static_visitor<double> {
+  public:
+    template<class TElement1, class TElement2>
+    double operator()(MeasureInfo<TElement1>& m_info,
+                      DataInfo<TElement2>& d_info) const {
+      throw std::logic_error("approach conflict");
+    }
+
+    template<class TElement>
+    double operator()(MeasureInfo<TElement>& m_info,
+                      DataInfo<TElement>& d_info) const {
+      return m_info.measure->average(d_info.data);
     }
 };
 

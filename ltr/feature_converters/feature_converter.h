@@ -39,34 +39,7 @@ class FeatureConverter : public Serializable {
    * @param value - output object
    */
   virtual void apply(const Object& argument, Object* value) const = 0;
-
-// todo: move this apply to utils
-  template <typename TElement>
-  void apply(const DataSet<TElement>& argument,
-      DataSet<TElement>* value) const;
 };
-
-template <typename TElement>
-void FeatureConverter::apply(
-    const DataSet<TElement> & argument,
-    DataSet<TElement> * value) const {
-  DataSet<TElement> result(this->convertFeatureInfo(argument.featureInfo()));
-
-  for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
-    std::vector<Object> objectsInTElement;
-    for (size_t objIdx = 0;
-        objIdx < argument[elementIdx].size();
-        ++objIdx) {
-      Object objToAdd;
-      apply(argument[elementIdx][objIdx], &objToAdd);
-      objectsInTElement.push_back(objToAdd);
-    }
-    TElement telementToAdd(objectsInTElement);
-    result.add(telementToAdd, argument.getWeight(elementIdx));
-  }
-
-  *value = result;
-}
 
 typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
 }

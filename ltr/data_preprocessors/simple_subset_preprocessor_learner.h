@@ -89,7 +89,7 @@ void SimpleSubsetPreprocessorLearner<TElement>
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     SimpleSubsetPreprocessorLearner<TElement>::make() const {
-  SimpleSubsetPreprocessor<TElement>::Ptr
+  typename SimpleSubsetPreprocessor<TElement>::Ptr \
     output(new SimpleSubsetPreprocessor<TElement>(*preprocessor_));
   return output;
 }

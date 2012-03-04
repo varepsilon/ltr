@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "ltr/decision_tree/utility/utility.h"
 #include "ltr/decision_tree/decision_tree.h"
 
 namespace ltr {
@@ -25,7 +26,77 @@ class DecisionVertex : public Vertex<TValue> {
     TValue value(const Object& obj) const;
 
     string generateCppCode(const string& function_name) const {
-      return "Not implemented yet";
+      string hpp_code;
+      int n_children = 0;
+      typename Vertex<TValue>::Ptr child = this->firstChild();
+      while (child != NULL) {
+        hpp_code.append(child->condition()->generateCppCode());
+        hpp_code.append(child->generateCppCode());
+        child = child->nextSibling();
+        n_children++;
+      }
+
+      hpp_code.
+        append("inline ").
+        append(ClassName<TValue>()).
+        append(" ").
+        append(function_name).
+        append("(const std::vector<double>& features) {\n").
+        append("  typedef ").
+          append(ClassName<TValue>()).
+          append(" (*vertex_function_ptr)").
+          append("(const std::vector<double>&);\n").
+        append("  typedef ").
+          append("double (*condition_function_ptr)").
+          append("(const std::vector<double>&);\n").
+        append("  condition_function_ptr conditions[] = {");
+
+      // Create array of condition functions
+      child = this->firstChild();
+      if (child != NULL) {
+        hpp_code.
+          append(child->condition()->getDefaultSerializableObjectName());
+        child = child->nextSibling();
+      }
+      while (child != NULL) {
+        hpp_code.
+          append(", ").
+          append(child->condition()->getDefaultSerializableObjectName());
+        child = child->nextSibling();
+      }
+      hpp_code.
+        append("};\n").
+        append("  vertex_function_ptr children[] = {");
+
+      // Create array of children functions
+      child = this->firstChild();
+      if (child != NULL) {
+        hpp_code.append(child->getDefaultSerializableObjectName());
+        child = child->nextSibling();
+      }
+      while (child != NULL) {
+        hpp_code.
+          append(", ").
+          append(child->getDefaultSerializableObjectName());
+        child = child->nextSibling();
+      }
+      hpp_code.
+        append("};\n").
+        append("  int best_id = -1;\n").
+        append("  double best_condition = 0;\n").
+        append("  for (int i = 0; i < ").
+        append(boost::lexical_cast<string>(n_children)).
+        append("; i++) {\n").
+        append("    double val = conditions[i](features);\n").
+        append("    if (best_id == -1 || val > best_condition) {\n").
+          append("      best_id = i;\n").
+          append("      best_condition = val;\n").
+        append("    }\n").
+        append("  }\n").
+        append("  return children[best_id](features);\n").
+        append("}\n");
+
+      return hpp_code;
     }
 };
 

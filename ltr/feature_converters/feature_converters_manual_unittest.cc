@@ -10,6 +10,7 @@
 #include "ltr/data/feature_info.h"
 
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
 #include "ltr/feature_converters/feature_subset_chooser.h"
@@ -69,7 +70,7 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
   FeatureConverter::Ptr ffc(new FakeFeatureConverter);
   DataSet<Object> conv_data;
 
-  ffc->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(ffc, data, &conv_data);
   EXPECT_TRUE(AreEqual(data, conv_data));
 }
 
@@ -80,7 +81,7 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterLearnerTest) {
 
   DataSet<Object> conv_data;
 
-  conv->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
   EXPECT_TRUE(AreEqual(data, conv_data));
 }
 
@@ -95,7 +96,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserTest) {
   EXPECT_EQ(indices, conv->getChoosedFeaturesIndices());
 
   DataSet<Object> conv_data;
-  static_cast<FeatureConverter::Ptr>(conv)->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
   EXPECT_EQ(3, conv_data.featureInfo().getFeatureCount());
   for (int i = 0; i < indices.size(); ++i) {
@@ -104,7 +105,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserTest) {
 
   indices.push_back(1);
   conv->setChoosedFeaturesIndices(indices);
-  static_cast<FeatureConverter::Ptr>(conv)->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
   EXPECT_EQ(4, conv_data.featureInfo().getFeatureCount());
   for (int i = 0; i < indices.size(); ++i) {
@@ -113,8 +114,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserTest) {
 
   indices.push_back(103);
   conv->setChoosedFeaturesIndices(indices);
-  EXPECT_ANY_THROW(static_cast<FeatureConverter::Ptr>(conv)->
-    apply(data, &conv_data));
+  EXPECT_ANY_THROW(ltr::utility::ApplyFeatureConverter(conv, data, &conv_data));
 }
 
 TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
@@ -123,7 +123,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  conv->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
   EXPECT_TRUE(AreEqual(data, conv_data));
 
@@ -141,7 +141,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
 
-  conv2->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
   EXPECT_EQ(indices.size(), conv_data.featureInfo().getFeatureCount());
   for (int i = 0; i < indices.size(); ++i) {
     EXPECT_EQ(indices[i], conv_data[0].features()[i]);
@@ -154,7 +154,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  conv->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
   EXPECT_EQ(4, conv_data.featureInfo().getFeatureCount());
   set<int> used_features;
@@ -173,7 +173,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   conv_learner.setDoubleParameter("SELECTED_PART", 0.8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
-  conv2->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
 
   EXPECT_EQ(9, conv_data.featureInfo().getFeatureCount());
   used_features.clear();
@@ -193,6 +193,6 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   conv_learner.setDoubleParameter("SELECTED_PART", 1e-8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv3 = conv_learner.make();
-  conv3->apply(data, &conv_data);
+  ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
   EXPECT_EQ(1, conv_data.featureInfo().getFeatureCount());
 }

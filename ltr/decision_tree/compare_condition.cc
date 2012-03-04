@@ -35,6 +35,58 @@ double CompareCondition::value(const ltr::Object &obj) const {
   }
 }
 
+string CompareCondition::generateCppCode(const string& function_name) const {
+  if (weak_condition_ == NULL)
+    throw std::logic_error("no weak condition");
+
+  string hpp_code;
+
+  hpp_code.append(weak_condition_->generateCppCode());
+
+  hpp_code.
+      append("inline double ").
+      append(function_name).
+      append("(const std::vector<double>& features) {\n").
+      append("  double eps = ").
+      append(boost::lexical_cast<string>(utility::DoubleEps)).
+      append(";\n").
+      append("  double weak_val = ").
+      append(weak_condition_->getDefaultSerializableObjectName()).
+      append("(features);\n").
+      append("  double compare_number = ").
+      append(boost::lexical_cast<string>(compare_number_)).
+      append(";\n");
+
+  switch (compare_type_) {
+    case EQUAL:
+      hpp_code.
+        append("  return weak_val < compare_number + eps && ").
+        append("weak_val < compare_number + eps;\n");
+      break;
+    case GREATER:
+      hpp_code.
+        append("  return weak_val > compare_number - eps;\n");
+      break;
+    case LESS:
+      hpp_code.
+        append("  return weak_val < compare_number + eps;\n");
+      break;
+    case GREATER_OR_EQUAL:
+      hpp_code.
+        append("  return weak_val >= compare_number - eps;\n");
+      break;
+    case LESS_OR_EQUAL:
+      hpp_code.
+        append("  return weak_val <= compare_number + eps;\n");
+      break;
+    default:
+      throw std::logic_error("unknown compare type");
+  }
+  hpp_code.append("}\n");
+
+  return hpp_code;
+}
+
 CompareCondition::Ptr CompareConditionPtr() {
   return CompareCondition::Ptr(new CompareCondition);
 }

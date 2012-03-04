@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "ltr/decision_tree/utility/utility.h"
 #include "ltr/decision_tree/decision_tree.h"
 
 namespace ltr {
@@ -28,8 +29,20 @@ class LeafVertex : public Vertex<TValue> {
         value_(value), Vertex<TValue>(condition) {}
 
     string generateCppCode(const string& function_name) const {
-      return "Not implemented yet";
+      string hpp_code;
+
+      hpp_code.
+        append("inline ").
+        append(ClassName<TValue>()).
+        append(" ").
+        append(function_name).
+        append("(const std::vector<double>& features) { return ").
+        append(boost::lexical_cast<string>(value_)).
+        append("; }\n");
+
+      return hpp_code;
     }
+
   private:
     TValue value_;
 };

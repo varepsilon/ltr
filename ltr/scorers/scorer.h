@@ -48,6 +48,8 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   using SerializableFunctor<double>::generateCppCode;
 
   string generateCppCode(const string& function_name) const {
+    if (featureConverters_.size() == 0)
+      return generateCppCodeImpl(function_name);
     string code;
     string implFunctionName(function_name);
     implFunctionName.append("Impl");

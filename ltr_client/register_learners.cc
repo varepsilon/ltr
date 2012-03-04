@@ -7,9 +7,7 @@
 #include "ltr/learners/gp_learner.h"
 #include "ltr/learners/gp_learner_determinant_strategy.h"
 
-#include "ltr/learners/decision_tree_learner.h"
-#include "ltr/learners/utility/id3_splitter.h"
-#include "ltr/learners/utility/splitting_quality.h"
+#include "ltr/learners/id3_learner.h"
 
 using ltr::Object;
 using ltr::ObjectPair;
@@ -20,11 +18,7 @@ using ltr::BestFeatureLearner;
 using ltr::gp::GPLearner;
 using ltr::gp::GPLearnerWithDeterminantStrategy;
 
-using ltr::DecisionTreeLearner;
-using ltr::decision_tree::ID3_Splitter;
-using ltr::decision_tree::SqrErrorQuality;
-
-typedef DecisionTreeLearner<ID3_Splitter, SqrErrorQuality> ID3_Learner;
+using ltr::ID3_Learner;
 
 template<>
 void LearnerFactory::registerAll() {

@@ -190,8 +190,8 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  prep_learner.setDoubleParameter("SELECTED_PART", 0.5);
   EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
+  prep_learner.setDoubleParameter("SELECTED_PART", 0.5);
   prep_learner.setBoolParameter("WITH_REPLACE", false);
   EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
 

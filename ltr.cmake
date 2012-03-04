@@ -56,10 +56,6 @@ SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/serializable.h ${Source_Path}/ltr/interfaces/serializable.cc
                    ${Source_Path}/ltr/interfaces/serializable_functor.h)
 
-SET(LTR_INTERFACES_UTILITY ${Source_Path}/ltr/interfaces/utility/parametrized_utility.h
-                           ${Source_Path}/ltr/interfaces/utility/parametrized_utility.cc)
-
-
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
                 ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
                 ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
@@ -95,16 +91,16 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/gp_learner_determinant_strategy.h
                  ${Source_Path}/ltr/learners/gp_learner_determinant_strategy.cc
                  ${Source_Path}/ltr/learners/decision_tree_learner.h
-                 ${Source_Path}/ltr/learners/decision_tree_learner.cc)
+                 ${Source_Path}/ltr/learners/decision_tree_learner.cc
+                 ${Source_Path}/ltr/learners/id3_learner.h)
 
 SET(LTR_LEARNERS_UTILS ${Source_Path}/ltr/learners/utility/gp_primitives.h
                        ${Source_Path}/ltr/learners/utility/gp_functions.h
                        ${Source_Path}/ltr/learners/utility/gp_functions.cc
                        
-                       ${Source_Path}/ltr/learners/utility/conditions_learner.h
                        ${Source_Path}/ltr/learners/utility/id3_splitter.cc
                        ${Source_Path}/ltr/learners/utility/id3_splitter.h
-                       ${Source_Path}/ltr/learners/utility/splitting_quality.h)
+                       ${Source_Path}/ltr/learners/utility/sqr_error_quality.h)
 
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
@@ -119,6 +115,8 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
+
+SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
                            
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/simple_subset_preprocessor.h
@@ -150,8 +148,8 @@ SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(data\\utils FILES ${LTR_DATA_UTILS})
 SOURCE_GROUP(data\\ioutils FILES ${LTR_IO_UTILS})
 SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES})
-SOURCE_GROUP(interfaces\\utils FILES ${LTR_INTERFACES_UTILITY})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS})
+SOURCE_GROUP(feature_converters\\utils FILES ${LTR_FEATURE_CONVERTERS_UTILITY})
 SOURCE_GROUP(data_preprocessor FILES ${LTR_DATA_PREPROCESSORS})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
@@ -165,8 +163,8 @@ SOURCE_GROUP(decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_INTERFACES_UTILITY} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_LEARNERS_UTILS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
-            ${LTR_FEATURE_CONVERTERS} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE}
+            ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE}
             ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY})
 
