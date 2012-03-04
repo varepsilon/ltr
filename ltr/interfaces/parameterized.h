@@ -62,7 +62,7 @@ class Parameterized {
   virtual void checkParameters() const;
   /** Sets integer parameter and calls checkParameters()
    */
-  void setIntParameter(const string& name, int value) {
+  void setIntParameter(const string& name, int valuez) {
     CHECK_HAS_PARAMETER(int, name);
     parameters_.setInt(name, value);
     checkParameters();

@@ -44,10 +44,7 @@ class CompareCondition : public Condition {
         weak_condition_(weak_condition),
         compare_type_(type),
         compare_number_(number) {}
-
-    string generateCppCode(const string& function_name) const {
-      return "Not implemented";
-    }
+    string generateCppCode(const string& function_name) const;
 
   private:
     double value(const Object& obj) const;

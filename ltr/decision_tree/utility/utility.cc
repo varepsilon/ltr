@@ -29,8 +29,8 @@ void split(DataSet<Object> data,
   }
 }
 
-/*CLASS_NAME_INST(int)
-CLASS_NAME_INST(double)
-CLASS_NAME_INST(bool)*/
+template<> string ClassName<int>() {return "int";}
+template<> string ClassName<double>() {return "double";}
+template<> string ClassName<bool>() {return "bool";}
 }
 }
