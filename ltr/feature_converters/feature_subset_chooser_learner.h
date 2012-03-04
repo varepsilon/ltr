@@ -17,11 +17,22 @@ using std::logic_error;
 using std::vector;
 
 namespace ltr {
+/**
+ * Produces FeatureSubsetChooser with specific indices. Duplication of indices
+ * is denied (throws while checking parameters)
+ */
 template <typename TElement>
-class FeatureSubsetChooserLearner : public IFeatureConverterLearner<TElement> {
+class FeatureSubsetChooserLearner : public FeatureConverterLearner<TElement> {
   public:
   typedef boost::shared_ptr<FeatureSubsetChooserLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with list parameter
+   * INDICES. INDICES is a list of indices of features to be used in produced
+   * FeatureConverter. If INDICES is empty an equivalent to FakeFeatureConverter
+   * for train dataset is produced.
+   * By default INDICES is empty
+   */
   explicit FeatureSubsetChooserLearner(const ParametersContainer& parameters =
       ParametersContainer())
       : converter_(new FeatureSubsetChooser) {
@@ -79,7 +90,8 @@ void FeatureSubsetChooserLearner<TElement>
 
 template <typename TElement>
 FeatureConverter::Ptr FeatureSubsetChooserLearner<TElement>::make() const {
-  return converter_;
+  FeatureSubsetChooser::Ptr output(new FeatureSubsetChooser(*converter_));
+  return output;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_

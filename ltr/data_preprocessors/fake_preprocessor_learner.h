@@ -11,12 +11,18 @@ using ltr::DataPreprocessorLearner;
 using ltr::FakeDataPreprocessor;
 
 namespace ltr {
+/**
+ * Always produces fake data preprocessor
+ */
 template <typename TElement>
 class FakePreprocessorLearner
     : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<FakePreprocessorLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
   explicit FakePreprocessorLearner(
       const ParametersContainer& parameters = ParametersContainer())
       : preprocessor_(new FakeDataPreprocessor<TElement>) {
@@ -36,7 +42,9 @@ class FakePreprocessorLearner
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     FakePreprocessorLearner<TElement>::make() const {
-  return preprocessor_;
+  FakeDataPreprocessor<TElement>::Ptr
+    output(new FakeDataPreprocessor<TElement>(*preprocessor_));
+  return output;
 }
 };
 

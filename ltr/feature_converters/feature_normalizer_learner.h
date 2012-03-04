@@ -16,10 +16,10 @@
 
 namespace ltr {
 
-template <typename TElement>
-class FeatureNormalizerLearner : public IFeatureConverterLearner<TElement> {
+template <class TElement>
+class FeatureNormalizerLearner : public FeatureConverterLearner<TElement> {
   public:
-  typedef boost::shared_ptr< FeatureNormalizerLearner > Ptr;
+  typedef boost::shared_ptr<FeatureNormalizerLearner> Ptr;
 
   explicit FeatureNormalizerLearner(const ParametersContainer& parameters =
       ParametersContainer()) {
@@ -90,7 +90,9 @@ void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
 
 template <typename TElement>
 FeatureConverter::Ptr FeatureNormalizerLearner<TElement>::make() const {
-  return current_converter_;
+  PerFeatureLinearConverter::Ptr output(
+    new PerFeatureLinearConverter(*current_converter_));
+  return output;
 }
 
 template <typename TElement>

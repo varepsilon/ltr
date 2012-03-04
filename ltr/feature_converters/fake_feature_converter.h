@@ -16,7 +16,9 @@ using std::string;
 using ltr::Object;
 
 namespace ltr {
-
+/**
+ * Fake feature converter. Does nothing with inputted object
+ */
 class FakeFeatureConverter : public FeatureConverter {
   public:
   typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
@@ -26,9 +28,9 @@ class FakeFeatureConverter : public FeatureConverter {
   FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const;
 
   void apply(const Object& source_object,
-    Object* preprocessed_element) const;
+    Object* preprocessed_object) const;
 
-  virtual string generateCppCode(
+  string generateCppCode(
       const string& function_name) const {
     return "Not implemented.";
   }

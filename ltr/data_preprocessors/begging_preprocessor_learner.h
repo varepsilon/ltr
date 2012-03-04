@@ -20,12 +20,24 @@ using std::random_shuffle;
 using std::copy;
 
 namespace ltr {
+/**
+ * Produces SimpleSubsetPreprocessor with random indices (duplication allowed)
+ */
 template <typename TElement>
 class BeggingPreprocessorLearner
     : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<BeggingPreprocessorLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with double parameter
+   * SELECTED_PART and bool parameter WITH_REPLACE. WITH_REPLACE is true if dublication
+   * in indices of produced SimpleSubsetPreprocessor is allowed, false otherwise.
+   * SELECTED_PART is a part of elements chosen by produced
+   * SimpleSubsetPreprocessor. Upper rounding is used, so never produces
+   * SimpleSubsetPreprocessor with 0 features.
+   * By default SELECTED_PART = 0.3, WITH_REPLACE = true
+   */
   explicit BeggingPreprocessorLearner(
       const ParametersContainer& parameters = ParametersContainer())
       : preprocessor_(new SimpleSubsetPreprocessor<TElement>) {
@@ -55,16 +67,16 @@ void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
 template <typename TElement>
 void BeggingPreprocessorLearner<TElement>::checkParameters() const {
   if (this->getBoolParameter("WITH_REPLACE")) {
-    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X >= 0);
+    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0);
   } else {
-    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X >= 0 && X <= 1);
+    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
   }
 }
 
 template <typename TElement>
 void BeggingPreprocessorLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  int size = static_cast<int>(floor(data_set.size()
+  int size = static_cast<int>(ceil(data_set.size()
     * this->getDoubleParameter("SELECTED_PART")));
 
   if (size != 0) {
@@ -90,7 +102,9 @@ void BeggingPreprocessorLearner<TElement>
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     BeggingPreprocessorLearner<TElement>::make() const {
-  return preprocessor_;
+  SimpleSubsetPreprocessor<TElement>::Ptr
+    output(new SimpleSubsetPreprocessor<TElement>(*preprocessor_));
+  return output;
 }
 };
 

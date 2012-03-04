@@ -14,7 +14,10 @@
 #include "ltr/interfaces/serializable.h"
 
 namespace ltr {
-
+/**
+ * Converts object's features. E. g. normalizes each of them or
+ * chooses a subset
+ */
 class FeatureConverter : public Serializable {
   public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
@@ -22,12 +25,22 @@ class FeatureConverter : public Serializable {
 
   virtual ~FeatureConverter() {}
 
+  /**
+   * Returns converted feature info (objects before and after converting
+   * by FeatureConverter may have different FeatureInfo, e. g. FeatureConverter
+   * may change the number of object's features)
+   */
   virtual FeatureInfo
   convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const = 0;
 
-  virtual void apply(const ltr::Object & argument, ltr::Object * value)
-  const = 0;
+  /**
+   * Converts object's features
+   * @param argument - object to be converted
+   * @param value - output object
+   */
+  virtual void apply(const Object& argument, Object* value) const = 0;
 
+// todo: move this apply to utils
   template <typename TElement>
   void apply(const DataSet<TElement>& argument,
       DataSet<TElement>* value) const;

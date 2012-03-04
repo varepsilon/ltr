@@ -72,7 +72,7 @@ namespace lc {
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
     void setFeatureConverterLearner(
-        typename IFeatureConverterLearner<TElement>::Ptr
+        typename FeatureConverterLearner<TElement>::Ptr
           in_feature_converter_learner) {
       feature_converter_learner = in_feature_converter_learner;
     }
@@ -99,7 +99,7 @@ namespace lc {
       linear_composition_scorer_weights_updater;
     typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater;
 
-    typename IFeatureConverterLearner<TElement>::Ptr feature_converter_learner;
+    typename FeatureConverterLearner<TElement>::Ptr feature_converter_learner;
     typename DataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
 
     void learnImpl(const DataSet<TElement>& data);

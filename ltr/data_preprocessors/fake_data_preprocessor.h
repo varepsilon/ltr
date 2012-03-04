@@ -12,6 +12,9 @@ using ltr::DataSet;
 using ltr::DataPreprocessor;
 
 namespace ltr {
+  /**
+   * Fake data preprocessor. Does nothing with inputted dataset
+   */
   template <class TElement>
   class FakeDataPreprocessor : public DataPreprocessor<TElement> {
   public:

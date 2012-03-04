@@ -23,24 +23,43 @@ using ltr::DataPreprocessor;
 using ltr::utility::lightSubset;
 
 namespace ltr {
+  /**
+   * Choses an element subset from inputted dataset. Throws while applying
+   * if inputted dataset has too little elements (if one of elements to be chosen
+   * has index with no element for this index in inputted dataset). Duplication of
+   * resulted element's indices is allowed. (So e. g. a subset dataset can have
+   * more elements than original dataset. Is used in begging.)
+   */
   template <class TElement>
   class SimpleSubsetPreprocessor : public DataPreprocessor<TElement> {
   public:
     typedef boost::shared_ptr<SimpleSubsetPreprocessor> Ptr;
 
     SimpleSubsetPreprocessor() {}
+    /**
+     * @param input_indices - indices of elements to be chosen from inputted dataset
+     */
     explicit SimpleSubsetPreprocessor(const vector<int>& input_indices)
         : indices_(input_indices) {
       max_used_element_ = *max_element(indices_.begin(), indices_.end());
     }
-
+    /**
+     * Sets indices of elements to be chosen
+     * @param input_indices - indices of elements to be chosen from inputted dataset
+     */
     void setChoosedElementsIndices(const vector<int>& input_indices) {
       indices_ = input_indices;
       max_used_element_ = *max_element(indices_.begin(), indices_.end());
     }
+    /**
+     * Returns indices of elements to be chosen
+     */
     const vector<int>& getChoosedElementsIndices() const {
       return indices_;
     }
+    /**
+     * Returns number of elements to be chosen
+     */
     size_t getChoosedElementsCount() const {
       return indices_.size();
     }

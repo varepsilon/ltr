@@ -9,11 +9,17 @@
 #include "ltr/feature_converters/fake_feature_converter.h"
 
 namespace ltr {
+/**
+ * Always produces fake feature converter
+ */
 template <typename TElement>
-class FakeFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
+class FakeFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   public:
   typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
   explicit FakeFeatureConverterLearner(const ParametersContainer& parameters =
       ParametersContainer())
       : converter_(new FakeFeatureConverter) {
@@ -32,7 +38,8 @@ class FakeFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
 // template realizations
 template <typename TElement>
 FeatureConverter::Ptr FakeFeatureConverterLearner<TElement>::make() const {
-  return converter_;
+  FakeFeatureConverter::Ptr output(new FakeFeatureConverter(*converter_));
+  return output;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_LEARNER_H_

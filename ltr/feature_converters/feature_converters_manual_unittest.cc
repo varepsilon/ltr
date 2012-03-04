@@ -156,7 +156,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   DataSet<Object> conv_data;
   conv->apply(data, &conv_data);
 
-  EXPECT_EQ(3, conv_data.featureInfo().getFeatureCount());
+  EXPECT_EQ(4, conv_data.featureInfo().getFeatureCount());
   set<int> used_features;
   for (int i = 0; i < conv_data.featureInfo().getFeatureCount(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
@@ -175,7 +175,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   FeatureConverter::Ptr conv2 = conv_learner.make();
   conv2->apply(data, &conv_data);
 
-  EXPECT_EQ(8, conv_data.featureInfo().getFeatureCount());
+  EXPECT_EQ(9, conv_data.featureInfo().getFeatureCount());
   used_features.clear();
   for (int i = 0; i < conv_data.featureInfo().getFeatureCount(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
@@ -188,4 +188,11 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
       ADD_FAILURE();
     }
   }
+
+  EXPECT_ANY_THROW(conv_learner.setDoubleParameter("SELECTED_PART", 0.0));
+  conv_learner.setDoubleParameter("SELECTED_PART", 1e-8);
+  conv_learner.learn(data);
+  FeatureConverter::Ptr conv3 = conv_learner.make();
+  conv3->apply(data, &conv_data);
+  EXPECT_EQ(1, conv_data.featureInfo().getFeatureCount());
 }

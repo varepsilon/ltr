@@ -18,11 +18,21 @@ using std::random_shuffle;
 using std::copy;
 
 namespace ltr {
+/**
+ * Produces FeatureSubsetChooser with random indices (with no duplication)
+ */
 template <typename TElement>
-class RSMFeatureConverterLearner : public IFeatureConverterLearner<TElement> {
+class RSMFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   public:
   typedef boost::shared_ptr<RSMFeatureConverterLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with double parameter
+   * SELECTED_PART. SELECTED_PART is a part of features chosen by produced
+   * FeatureSubsetChooser. Upper rounding is used, so never produces
+   * FeatureSubsetChooser with 0 features.
+   * By default SELECTED_PART = 0.3
+   */
   explicit RSMFeatureConverterLearner(const ParametersContainer& parameters =
       ParametersContainer())
       : converter_(new FeatureSubsetChooser) {
@@ -50,14 +60,14 @@ void RSMFeatureConverterLearner<TElement>::setDefaultParameters() {
 
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::checkParameters() const {
-  CHECK_DOUBLE_PARAMETER("SELECTED_PART", X >= 0 && X <= 1);
+  CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
 }
 
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
   int size = static_cast<int>(
-    floor(data_set.featureInfo().getFeatureCount()
+    ceil(data_set.featureInfo().getFeatureCount()
       * this->getDoubleParameter("SELECTED_PART")));
   vector<int> indices(size);
   srand(unsigned(time(NULL)));
@@ -74,7 +84,8 @@ void RSMFeatureConverterLearner<TElement>
 
 template <typename TElement>
 FeatureConverter::Ptr RSMFeatureConverterLearner<TElement>::make() const {
-  return converter_;
+  FeatureSubsetChooser::Ptr output(new FeatureSubsetChooser(*converter_));
+  return output;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_RSM_FEATURE_CONVERTER_LEARNER_H_

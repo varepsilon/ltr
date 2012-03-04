@@ -14,12 +14,23 @@ using std::vector;
 using ltr::DataPreprocessorLearner;
 
 namespace ltr {
+/**
+ * Produces SimpleSubsetPreprocessors with specific indices. Duplication of indices
+ * is denied (throws while checking parameters)
+ */
 template <typename TElement>
 class SimpleSubsetPreprocessorLearner
     : public DataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<SimpleSubsetPreprocessorLearner> Ptr;
 
+  /**
+   * @param parameters Standart LTR parameter container with list parameter
+   * INDICES. INDICES is a list of indices of elements to be used in produced
+   * DataPreprocessor. If INDICES is empty an equivalent to FakeDataPreprocessor
+   * for train dataset is produced.
+   * By default INDICES is empty
+   */
   explicit SimpleSubsetPreprocessorLearner(
       const ParametersContainer& parameters = ParametersContainer())
       : preprocessor_(new SimpleSubsetPreprocessor<TElement>) {
@@ -78,7 +89,9 @@ void SimpleSubsetPreprocessorLearner<TElement>
 template <typename TElement>
 typename DataPreprocessor<TElement>::Ptr
     SimpleSubsetPreprocessorLearner<TElement>::make() const {
-  return preprocessor_;
+  SimpleSubsetPreprocessor<TElement>::Ptr
+    output(new SimpleSubsetPreprocessor<TElement>(*preprocessor_));
+  return output;
 }
 };
 

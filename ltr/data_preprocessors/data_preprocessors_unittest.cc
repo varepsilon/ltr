@@ -150,7 +150,7 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
   DataSet<Object> prep_data;
   prep->apply(data, &prep_data);
 
-  EXPECT_EQ(3, prep_data.size());
+  EXPECT_EQ(4, prep_data.size());
   for (int i = 0; i < prep_data.size(); ++i) {
     EXPECT_GT(data_size, prep_data[i].features()[0]);
     EXPECT_LE(0, prep_data[i].features()[0]);
@@ -163,7 +163,7 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
   DataPreprocessor<Object>::Ptr prep2 = prep_learner.make();
   prep2->apply(data, &prep_data);
 
-  EXPECT_EQ(8, prep_data.size());
+  EXPECT_EQ(9, prep_data.size());
   set<int> used_elements;
   for (int i = 0; i < prep_data.size(); ++i) {
     EXPECT_GT(data_size, prep_data[i].features()[0]);
@@ -184,9 +184,20 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
   DataPreprocessor<Object>::Ptr prep3 = prep_learner.make();
   prep3->apply(data, &prep_data);
 
-  EXPECT_EQ(16, prep_data.size());
+  EXPECT_EQ(17, prep_data.size());
   for (int i = 0; i < prep_data.size(); ++i) {
     EXPECT_GT(data_size, prep_data[i].features()[0]);
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
+
+  prep_learner.setDoubleParameter("SELECTED_PART", 0.5);
+  EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
+  prep_learner.setBoolParameter("WITH_REPLACE", false);
+  EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
+
+  prep_learner.setDoubleParameter("SELECTED_PART", 1e-8);
+  prep_learner.learn(data);
+  DataPreprocessor<Object>::Ptr prep4 = prep_learner.make();
+  prep4->apply(data, &prep_data);
+  EXPECT_EQ(1, prep_data.size());
 }

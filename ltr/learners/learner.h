@@ -19,8 +19,14 @@ using std::string;
 #include "ltr/measures/measure.h"
 
 namespace ltr {
-
-template< class TElement >
+/**
+ * BaseLearner, implements a learning (on data) strategy of a specific algorithm
+ * (e. g.desicion tree). Has a descendent Learner which also can produce specific result
+ * scorers. Is used everywhere where a Ptr on Learner is needed - having Ptr on
+ * Learner is inconvenient cause Learner is also parametrised be TScorer
+ * and inheritance tree is a forest
+ */
+template<class TElement>
 class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   public:
   typedef boost::shared_ptr<BaseLearner> Ptr;
@@ -61,12 +67,22 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   FeatureConverterArray featureConverters_;
 };
 
-
-template< class TElement, class TScorer >
+/**
+ * Learner, implements a learning (on data) strategy of a specific algorithm
+ * (e. g.desicion tree) and can produce specific result scorers. Everywhere where a Ptr
+ * on Learner is needed - use Ptr on BaseLearner. Having Ptr on
+ * Learner is inconvenient cause Learner is also parametrised be TScorer
+ * and inheritance tree is a forest
+ */
+template<class TElement, class TScorer>
 class Learner : public BaseLearner<TElement> {
   public:
   explicit Learner(const string& alias) : BaseLearner<TElement>(alias) {}
 
+  /**
+   * Is for being sure Scorer::Ptr outputted by makeScorerPtr() are Ptrs on
+   * different (physically) scorers
+   */
   virtual TScorer make() const = 0;
   virtual Scorer::Ptr makeScorerPtr() const;
   virtual void setInitialScorer(const TScorer& in_scorer) = 0;
