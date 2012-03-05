@@ -9,26 +9,25 @@
 using std::string;
 using std::logic_error;
 
-template<>
-string boost::lexical_cast<string, ltr::List>(const ltr::List& a) {
-  string res = "[";
-  for (int i = 0; i < a.size(); i++) {
-    if (i != 0)
-      res.append(",");
-    res.append(boost::lexical_cast<string>(a[i]));
-  }
-  res.append("]");
-  return res;
-}
-
 namespace ltr {
   class toStringVisitor : public boost::static_visitor<string> {
   public:
     template<class type>
-    string operator()(type a) const {
+    string operator()(const type& a) const {
       return boost::lexical_cast<string>(a);
     }
   };
+  template<>
+  string toStringVisitor::operator()<List>(const List& a) const {
+    string res = "[";
+    for (int i = 0; i < a.size(); i++) {
+      if (i != 0)
+        res.append(",");
+      res.append(boost::lexical_cast<string>(a[i]));
+    }
+    res.append("]");
+    return res;
+  }
 
   void ParametersContainer::setDouble(const string& name,
                                      double value,
