@@ -22,11 +22,11 @@ class ID3_Learner : public DecisionTreeLearner {
       this->setConditionsLearner(
         ConditionsLearner::Ptr(
           new ID3_Splitter(
-            parameters.getParametersGroup("conditions learner"))));
+            parameters.getGroup("conditions learner"))));
       this->setSplittingQuality(
         SplittingQuality::Ptr(
           new SqrErrorQuality(
-            parameters.getParametersGroup("splitting quality"))));
+            parameters.getGroup("splitting quality"))));
     }
 };
 }

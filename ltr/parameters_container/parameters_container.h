@@ -10,6 +10,9 @@
 #include <vector>
 #include <stdexcept>
 
+// I don't need it. It is for Hook!!!
+#include <algorithm>
+
 using std::string;
 using std::vector;
 using std::map;
@@ -23,11 +26,9 @@ namespace ltr {
   class ParametersContainer {
   public:
     typedef map<string,
-                map<string,
-                    boost::variant<int, double, bool, List> > > TMap;
-
-    typedef map<string,
                 boost::variant<int, double, bool, List> > TGroup;
+
+    typedef map<string, TGroup> TMap;
 
     ParametersContainer() {
       params[""] = TGroup();
@@ -48,10 +49,10 @@ namespace ltr {
     bool getBool(const string& name, const string& group="") const;
     List getList(const string& name, const string& group="") const;
 
-    string getString() const;
+    string toString() const;
 
-    void copyParameters(const ParametersContainer& parameters);
-    ParametersContainer getParametersGroup(const string& group) const;
+    void copy(const ParametersContainer& parameters);
+    ParametersContainer getGroup(const string& group) const;
 
     void clear();
 
@@ -65,12 +66,12 @@ namespace ltr {
                                 const string& group) const {
     if (params.find(group) == params.end())
       return 0;
-    const TGroup& gr = params.find(group)->second;
+    const TGroup& group_ = params.find(group)->second;
 
-    if (gr.find(name) == gr.end())
+    if (group_.find(name) == group_.end())
       return 0;
     try {
-      boost::get<T>(gr.find(name)->second);
+      boost::get<T>(group_.find(name)->second);
       return 1;
     } catch(...) {
       return 0;
@@ -83,12 +84,12 @@ namespace ltr {
     if (params.find(group) == params.end()) {
       throw std::logic_error("no such group: " + group);
     }
-    const TGroup& gr = params.find(group)->second;
-    if (gr.find(name) == gr.end()) {
+    const TGroup& group_ = params.find(group)->second;
+    if (group_.find(name) == group_.end()) {
       throw std::logic_error("no such parameter: " + name);
     }
     try {
-      return boost::get<T>(gr.find(name)->second);
+      return boost::get<T>(group_.find(name)->second);
     } catch(...) {
       throw std::logic_error("parameter " + name + " has another type");
     }

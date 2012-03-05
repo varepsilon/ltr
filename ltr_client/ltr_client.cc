@@ -296,7 +296,7 @@ void LtrClient::loadLearners() {
                               << name << "': "
                               << info.type << "(" << info.approach
                               << ") parameters: "
-                              << parameters.getString() << std::endl;
+                              << parameters.toString() << std::endl;
 
         learner_elem = learner_elem->NextSiblingElement("learner");
     }

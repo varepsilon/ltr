@@ -118,7 +118,7 @@ class Parameterized {
    * @param params - container to copy parameters from.
    */
   void copyParameters(const ParametersContainer& params) {
-    parameters_.copyParameters(params);
+    parameters_.copy(params);
     checkParameters();
   }
   /**
