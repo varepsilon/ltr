@@ -20,7 +20,7 @@ namespace ltr {
  */
 template <typename TElement>
 class SimpleSubsetPreprocessorLearner
-    : public DataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement, SimpleSubsetPreprocessor> {
   public:
   typedef boost::shared_ptr<SimpleSubsetPreprocessorLearner> Ptr;
 
@@ -32,21 +32,20 @@ class SimpleSubsetPreprocessorLearner
    * By default INDICES is empty
    */
   explicit SimpleSubsetPreprocessorLearner(
-      const ParametersContainer& parameters = ParametersContainer())
-      : preprocessor_(new SimpleSubsetPreprocessor<TElement>) {
+      const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
-  typename DataPreprocessor<TElement>::Ptr make() const;
+  SimpleSubsetPreprocessor<TElement> make() const;
 
   void setDefaultParameters();
   void checkParameters() const;
 
   private:
-  typename SimpleSubsetPreprocessor<TElement>::Ptr preprocessor_;
+  SimpleSubsetPreprocessor<TElement> preprocessor_;
 };
 
 // template realizations
@@ -79,19 +78,17 @@ void SimpleSubsetPreprocessorLearner<TElement>
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    preprocessor_->setChoosedElementsIndices(all_used);
+    preprocessor_.setChoosedElementsIndices(all_used);
   } else {
-    preprocessor_->setChoosedElementsIndices(
+    preprocessor_.setChoosedElementsIndices(
       this->getListParameter("INDICES"));
   }
 }
 
 template <typename TElement>
-typename DataPreprocessor<TElement>::Ptr
+SimpleSubsetPreprocessor<TElement>
     SimpleSubsetPreprocessorLearner<TElement>::make() const {
-  typename SimpleSubsetPreprocessor<TElement>::Ptr \
-    output(new SimpleSubsetPreprocessor<TElement>(*preprocessor_));
-  return output;
+  return preprocessor_;
 }
 };
 

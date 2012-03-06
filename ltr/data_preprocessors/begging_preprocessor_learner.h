@@ -25,7 +25,7 @@ namespace ltr {
  */
 template <typename TElement>
 class BeggingPreprocessorLearner
-    : public DataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement, SimpleSubsetPreprocessor> {
   public:
   typedef boost::shared_ptr<BeggingPreprocessorLearner> Ptr;
 
@@ -40,21 +40,20 @@ class BeggingPreprocessorLearner
    * By default SELECTED_PART = 0.3, WITH_REPLACE = true, RANDOM_SEED = 237
    */
   explicit BeggingPreprocessorLearner(
-      const ParametersContainer& parameters = ParametersContainer())
-      : preprocessor_(new SimpleSubsetPreprocessor<TElement>) {
+      const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
-  typename DataPreprocessor<TElement>::Ptr make() const;
+  SimpleSubsetPreprocessor<TElement> make() const;
 
   void setDefaultParameters();
   void checkParameters() const;
 
   private:
-  typename SimpleSubsetPreprocessor<TElement>::Ptr preprocessor_;
+    SimpleSubsetPreprocessor<TElement> preprocessor_;
 };
 
 // template realizations
@@ -98,16 +97,14 @@ void BeggingPreprocessorLearner<TElement>
       random_shuffle(all_used.begin(), all_used.end());
       copy(all_used.begin(), all_used.begin() + size, indices.begin());
     }
-    preprocessor_->setChoosedElementsIndices(indices);
+    preprocessor_.setChoosedElementsIndices(indices);
   }
 }
 
 template <typename TElement>
-typename DataPreprocessor<TElement>::Ptr
+SimpleSubsetPreprocessor<TElement>
     BeggingPreprocessorLearner<TElement>::make() const {
-  typename SimpleSubsetPreprocessor<TElement>::Ptr \
-    output(new SimpleSubsetPreprocessor<TElement>(*preprocessor_));
-  return output;
+  return preprocessor_;
 }
 };
 

@@ -16,7 +16,7 @@ namespace ltr {
  */
 template <typename TElement>
 class FakePreprocessorLearner
-    : public DataPreprocessorLearner<TElement> {
+    : public DataPreprocessorLearner<TElement, FakeDataPreprocessor> {
   public:
   typedef boost::shared_ptr<FakePreprocessorLearner> Ptr;
 
@@ -24,27 +24,24 @@ class FakePreprocessorLearner
    * @param parameters Standart LTR parameter container with no parameters
    */
   explicit FakePreprocessorLearner(
-      const ParametersContainer& parameters = ParametersContainer())
-      : preprocessor_(new FakeDataPreprocessor<TElement>) {
+      const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set) {}
-  typename DataPreprocessor<TElement>::Ptr make() const;
+  FakeDataPreprocessor<TElement> make() const;
 
   private:
-  typename FakeDataPreprocessor<TElement>::Ptr preprocessor_;
+  FakeDataPreprocessor<TElement> preprocessor_;
 };
 
 // template realizations
 template <typename TElement>
-typename DataPreprocessor<TElement>::Ptr
+FakeDataPreprocessor<TElement>
     FakePreprocessorLearner<TElement>::make() const {
-  typename FakeDataPreprocessor<TElement>::Ptr \
-    output(new FakeDataPreprocessor<TElement>(*preprocessor_));
-  return output;
+  return preprocessor_;
 }
 };
 

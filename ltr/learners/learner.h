@@ -22,7 +22,7 @@ using std::string;
 namespace ltr {
 /**
  * BaseLearner, implements a learning (on data) strategy of a specific algorithm
- * (e. g.desicion tree). Has a descendent Learner which also can produce specific result
+ * (e. g. desicion tree). Has a descendent Learner which also can produce specific result
  * scorers. Is used everywhere where a Ptr on Learner is needed - having Ptr on
  * Learner is inconvenient cause Learner is also parametrised be TScorer
  * and inheritance tree is a forest
@@ -70,9 +70,9 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
 
 /**
  * Learner, implements a learning (on data) strategy of a specific algorithm
- * (e. g.desicion tree) and can produce specific result scorers. Everywhere where a Ptr
- * on Learner is needed - use Ptr on BaseLearner. Having Ptr on
- * Learner is inconvenient cause Learner is also parametrised be TScorer
+ * (e. g. desicion tree) and can produce specific result scorers. Everywhere where
+ * a Ptr on Learner is needed - use Ptr on BaseLearner. Having Ptr on
+ * Learner is inconvenient cause Learner is also parametrised by TScorer
  * and inheritance tree is a forest
  */
 template<class TElement, class TScorer>

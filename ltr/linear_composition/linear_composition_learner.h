@@ -118,7 +118,7 @@ namespace lc {
       feature_converter_learner = in_feature_converter_learner;
     }
     void setDataPreprocessorLearner(
-      typename DataPreprocessorLearner<TElement>::Ptr
+      typename BaseDataPreprocessorLearner<TElement>::Ptr
         in_data_preprocessor_learner) {
       data_preprocessor_learner = in_data_preprocessor_learner;
     }
@@ -141,7 +141,7 @@ namespace lc {
     typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater;
 
     typename FeatureConverterLearner<TElement>::Ptr feature_converter_learner;
-    typename DataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
+    typename BaseDataPreprocessorLearner<TElement>::Ptr data_preprocessor_learner;
 
     void learnImpl(const DataSet<TElement>& data);
   };
@@ -164,7 +164,7 @@ namespace lc {
 
       data_preprocessor_learner->learn(data);
       typename DataPreprocessor<TElement>::Ptr data_preprocessor
-        = data_preprocessor_learner->make();
+        = data_preprocessor_learner->makePtr();
       data_preprocessor->apply(data, &buf_data);
 
       feature_converter_learner->learn(data);
