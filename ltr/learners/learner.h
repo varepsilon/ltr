@@ -81,8 +81,9 @@ class Learner : public BaseLearner<TElement> {
   explicit Learner(const string& alias) : BaseLearner<TElement>(alias) {}
 
   /**
-   * Is for being sure Scorer::Ptr outputted by makeScorerPtr() are Ptrs on
+   * Is for being sure Scorer::Ptrs outputted by makeScorerPtr() are Ptrs on
    * different (physically) scorers
+   * @returns a concrete scorer
    */
   virtual TScorer make() const = 0;
   virtual Scorer::Ptr makeScorerPtr() const;

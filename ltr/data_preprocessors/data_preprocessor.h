@@ -7,8 +7,6 @@
 
 #include "ltr/data/data_set.h"
 
-using ltr::DataSet;
-
 namespace ltr {
   /**
    * Preprocesses dataset without changing FeatureInfo. Shouldn't convert
@@ -22,7 +20,6 @@ namespace ltr {
     typedef boost::shared_ptr<DataPreprocessor> Ptr;
 
     virtual ~DataPreprocessor() {}
-
     /**
      * Preprocesses dataset
      * @param input - dataset to be preprocessed

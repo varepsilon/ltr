@@ -22,7 +22,8 @@ namespace ltr {
  * Produces FeatureSubsetChooser with random indices (with no duplication)
  */
 template <typename TElement>
-class RSMFeatureConverterLearner : public FeatureConverterLearner<TElement> {
+class RSMFeatureConverterLearner
+    : public FeatureConverterLearner<TElement, FeatureSubsetChooser> {
   public:
   typedef boost::shared_ptr<RSMFeatureConverterLearner> Ptr;
 
@@ -35,21 +36,20 @@ class RSMFeatureConverterLearner : public FeatureConverterLearner<TElement> {
    * By default SELECTED_PART = 0.3, RANDOM_SEED = 1339
    */
   explicit RSMFeatureConverterLearner(const ParametersContainer& parameters =
-      ParametersContainer())
-      : converter_(new FeatureSubsetChooser) {
+      ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
-  FeatureConverter::Ptr make() const;
+  FeatureSubsetChooser make() const;
 
   void setDefaultParameters();
   void checkParameters() const;
 
   private:
-  FeatureSubsetChooser::Ptr converter_;
+  FeatureSubsetChooser converter_;
 };
 
 // template realizations
@@ -82,13 +82,12 @@ void RSMFeatureConverterLearner<TElement>
   random_shuffle(all_used.begin(), all_used.end());
   copy(all_used.begin(), all_used.begin() + size, indices.begin());
 
-  converter_->setChoosedFeaturesIndices(indices);
+  converter_.setChoosedFeaturesIndices(indices);
 }
 
 template <typename TElement>
-FeatureConverter::Ptr RSMFeatureConverterLearner<TElement>::make() const {
-  FeatureSubsetChooser::Ptr output(new FeatureSubsetChooser(*converter_));
-  return output;
+FeatureSubsetChooser RSMFeatureConverterLearner<TElement>::make() const {
+  return converter_;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_RSM_FEATURE_CONVERTER_LEARNER_H_

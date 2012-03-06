@@ -13,7 +13,6 @@
 #include "ltr/feature_converters/feature_converter.h"
 
 using std::string;
-using ltr::Object;
 
 namespace ltr {
 /**
@@ -35,5 +34,5 @@ class FakeFeatureConverter : public FeatureConverter {
     return "Not implemented.";
   }
 };
-}
+};
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

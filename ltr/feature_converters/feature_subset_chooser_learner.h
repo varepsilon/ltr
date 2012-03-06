@@ -22,7 +22,8 @@ namespace ltr {
  * is denied (throws while checking parameters)
  */
 template <typename TElement>
-class FeatureSubsetChooserLearner : public FeatureConverterLearner<TElement> {
+class FeatureSubsetChooserLearner
+    : public FeatureConverterLearner<TElement, FeatureSubsetChooser> {
   public:
   typedef boost::shared_ptr<FeatureSubsetChooserLearner> Ptr;
 
@@ -34,21 +35,20 @@ class FeatureSubsetChooserLearner : public FeatureConverterLearner<TElement> {
    * By default INDICES is empty
    */
   explicit FeatureSubsetChooserLearner(const ParametersContainer& parameters =
-      ParametersContainer())
-      : converter_(new FeatureSubsetChooser) {
+      ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
-  FeatureConverter::Ptr make() const;
+  FeatureSubsetChooser make() const;
 
   void setDefaultParameters();
   void checkParameters() const;
 
   private:
-  FeatureSubsetChooser::Ptr converter_;
+  FeatureSubsetChooser converter_;
 };
 
 // template realizations
@@ -81,17 +81,16 @@ void FeatureSubsetChooserLearner<TElement>
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    converter_->setChoosedFeaturesIndices(all_used);
+    converter_.setChoosedFeaturesIndices(all_used);
   } else {
-    converter_->setChoosedFeaturesIndices(
+    converter_.setChoosedFeaturesIndices(
       this->getListParameter("INDICES"));
   }
 }
 
 template <typename TElement>
-FeatureConverter::Ptr FeatureSubsetChooserLearner<TElement>::make() const {
-  FeatureSubsetChooser::Ptr output(new FeatureSubsetChooser(*converter_));
-  return output;
+FeatureSubsetChooser FeatureSubsetChooserLearner<TElement>::make() const {
+  return converter_;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_

@@ -8,9 +8,6 @@
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/data/data_set.h"
 
-using ltr::DataSet;
-using ltr::DataPreprocessor;
-
 namespace ltr {
   /**
    * Fake data preprocessor. Does nothing with inputted dataset

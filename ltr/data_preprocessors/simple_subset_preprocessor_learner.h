@@ -11,7 +11,6 @@
 
 using std::set;
 using std::vector;
-using ltr::DataPreprocessorLearner;
 
 namespace ltr {
 /**

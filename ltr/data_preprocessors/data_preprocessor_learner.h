@@ -58,7 +58,6 @@ template <class TElement, template<class> class TDataPreprocessor>
 class DataPreprocessorLearner : public BaseDataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<DataPreprocessorLearner> Ptr;
-
   /**
    * Is for being sure DataPreprocessor<TElement>::Ptrs outputted by makePtr()
    * are Ptrs on different (physically) DataPreprocessors.
@@ -70,6 +69,6 @@ class DataPreprocessorLearner : public BaseDataPreprocessorLearner<TElement> {
       new TDataPreprocessor<TElement>(make()));
   }
 };
-}
+};
 
 #endif  // LTR_DATA_PREPROCESSORS_DATA_PREPROCESSOR_LEARNER_H_

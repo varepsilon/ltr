@@ -7,9 +7,6 @@
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/fake_data_preprocessor.h"
 
-using ltr::DataPreprocessorLearner;
-using ltr::FakeDataPreprocessor;
-
 namespace ltr {
 /**
  * Always produces fake data preprocessor

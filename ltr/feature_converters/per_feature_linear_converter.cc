@@ -14,6 +14,11 @@ FeatureInfo PerFeatureLinearConverter::convertFeatureInfo(
   return oldFeatureInfo;
 }
 
+void PerFeatureLinearConverter::setFeatureCount(size_t feature_count) {
+  coefficient_.resize(feature_count);
+  shift_.resize(feature_count);
+}
+
 double PerFeatureLinearConverter::getCoefficient(size_t feature_idx) const {
   return coefficient_[feature_idx];
 }
