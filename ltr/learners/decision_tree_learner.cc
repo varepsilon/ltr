@@ -11,7 +11,7 @@ DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
     : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner"),
       log(logger::Logger::LL_INFO, "DT_Learner ") {
   this->setDefaultParameters();
-  this->copyParameters(parameters.getParametersGroup(""));
+  this->copyParameters(parameters.getGroup(""));
 
   conditions_learner_ =
       ConditionsLearner::Ptr(new FakeConditionsLearner());

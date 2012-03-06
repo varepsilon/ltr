@@ -199,7 +199,7 @@ void LtrClient::loadMeasuresImpl() {
       client_logger_.info() << "created measure '"
                             << i->first << "', type: " << info.type
                             << " approach = " << info.approach
-                            << " parameters: " << info.parameters.getString()
+                            << " parameters: " << info.parameters.toString()
                             << std::endl;
     }
   }
@@ -220,7 +220,7 @@ void LtrClient::loadSplittersImpl() {
 
       client_logger_.info() << "created splitter '"
                             << i->first << "', type: " << info.type
-                            << " parameters: " << info.parameters.getString()
+                            << " parameters: " << info.parameters.toString()
                             << std::endl;
     }
   }

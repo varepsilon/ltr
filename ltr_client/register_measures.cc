@@ -21,7 +21,8 @@ void MeasureFactory::registerAll() {
   REGISTER_POINTWISE_MEASURE("SQUARED_ERROR", ltr::SquaredError);
   REGISTER_POINTWISE_MEASURE("TRUE_POINT", ltr::TruePoint);
 
-  REGISTER_PAIRWISE_MEASURE("PAIRWISE_ACCURACY", ltr::Accuracy<ltr::ObjectPair>);
+  REGISTER_PAIRWISE_MEASURE("PAIRWISE_ACCURACY",
+    ltr::Accuracy<ltr::ObjectPair>);
 
   REGISTER_LISTWISE_MEASURE("DCG", ltr::DCG);
   REGISTER_LISTWISE_MEASURE("YANDEX_DCG", ltr::YandexDCG);

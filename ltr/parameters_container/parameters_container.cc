@@ -10,15 +10,15 @@ using std::string;
 using std::logic_error;
 
 namespace ltr {
-  class printVisitor : public boost::static_visitor<string> {
+  class toStringVisitor : public boost::static_visitor<string> {
   public:
     template<class type>
-    string operator()(type a) const {
+    string operator()(const type& a) const {
       return boost::lexical_cast<string>(a);
     }
   };
   template<>
-  string printVisitor::operator()(List a) const {
+  string toStringVisitor::operator()<List>(const List& a) const {
     string res = "[";
     for (int i = 0; i < a.size(); i++) {
       if (i != 0)
@@ -73,39 +73,39 @@ namespace ltr {
     return get<bool>(name, group);
   };
 
-  string ParametersContainer::getString() const {
+  string ParametersContainer::toString() const {
     string output;
     for (TMap::const_iterator it = params.begin(); it != params.end(); it++) {
-      const TGroup& gr = it->second;
-      for (TGroup::const_iterator g_it = gr.begin(); g_it != gr.end(); g_it++)
+      const TGroup& group_ = it->second;
+      for (TGroup::const_iterator g_it = group_.begin();
+                                                  g_it != group_.end(); g_it++)
         if (it->first != "")
           output.append(it->first + "." + g_it->first + " = "
-            + boost::apply_visitor(printVisitor(), g_it->second) + " ");
+            + boost::apply_visitor(toStringVisitor(), g_it->second) + " ");
         else
           output.append(g_it->first + " = "
-            + boost::apply_visitor(printVisitor(), g_it->second) + " ");
+            + boost::apply_visitor(toStringVisitor(), g_it->second) + " ");
     }
     return output;
   }
 
-  void ParametersContainer::copyParameters(
-                                       const ParametersContainer& parameters) {
+  void ParametersContainer::copy(const ParametersContainer& parameters) {
     for (TMap::const_iterator it = parameters.params.begin();
                         it != parameters.params.end(); ++it) {
       if (params.find(it->first) == params.end()) {
         throw logic_error("Wrong parameter group name: " + it->first);
       }
-      const TGroup& gr = it->second;
-      TGroup& my_gr = params[it->first];
-      for (TGroup::const_iterator g_it = gr.begin();
-                                   g_it != gr.end(); g_it++) {
-        if (my_gr.find(g_it->first) != my_gr.end()) {
-          my_gr[g_it->first] = g_it->second;
+      const TGroup& group_ = it->second;
+      TGroup& my_group_ = params[it->first];
+      for (TGroup::const_iterator g_it = group_.begin();
+                                   g_it != group_.end(); g_it++) {
+        if (my_group_.find(g_it->first) != my_group_.end()) {
+          my_group_[g_it->first] = g_it->second;
         } else {
           string err = "Wrong parameter name " + g_it->first;
           err.append(". You may mean one of these:");
-          for (TGroup::const_iterator inner_it = my_gr.begin();
-              inner_it != my_gr.end(); ++inner_it) {
+          for (TGroup::const_iterator inner_it = my_group_.begin();
+              inner_it != my_group_.end(); ++inner_it) {
             err.append(" " + inner_it->first);
           }
           err.append(".");
@@ -115,13 +115,13 @@ namespace ltr {
     }
   }
 
-  ParametersContainer ParametersContainer::getParametersGroup
+  ParametersContainer ParametersContainer::getGroup
       (const string& group) const {
     ParametersContainer result;
     if (params.find(group) == params.end())
       return result;
-    const TGroup& gr = params.find(group)->second;
-    for (TGroup::const_iterator it = gr.begin(); it != gr.end(); it++)
+    const TGroup& group_ = params.find(group)->second;
+    for (TGroup::const_iterator it = group_.begin(); it != group_.end(); it++)
       result.params[""][it->first] = it->second;
     return result;
   }
