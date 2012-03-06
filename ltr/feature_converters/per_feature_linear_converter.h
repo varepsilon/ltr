@@ -33,8 +33,27 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   void apply(const Object& argument, Object* value) const;
 
-  virtual string generateCppCode(const string& function_name) const {
-    return "Not implemented.";
+  virtual std::string generateCppCode(const std::string& function_name) const {
+    string hpp_string;
+
+    hpp_string.
+      append("#include <vector>\n\nvoid ").
+      append(function_name).
+      append("(const std::vector<double>& features, ").
+      append("std::vector<double>* result) {\n").
+      append("  result->clear();\n");
+      for (size_t i = 0; i < coefficient_.size(); i++) {
+        hpp_string.
+          append("  result->push_back(features[").
+          append(boost::lexical_cast<string>(i)).
+          append("] * ").
+          append(boost::lexical_cast<string>(coefficient_[i])).
+          append(" + ").
+          append(boost::lexical_cast<string>(shift_[i])).
+          append(");\n");
+      }
+    hpp_string.append("}\n");
+    return hpp_string;
   };
 
   private:
