@@ -13,9 +13,13 @@
 
 namespace ltr {
 /**
- * An object which learns on inputted dataset and produces
- * a DataPreprocessor. May produce different preprocessors (using random)
- * for one inputted dataset as in begging. May use measure
+ * An object which learns on inputted dataset and produces a DataPreprocessor.
+ * May produce different preprocessors (using random) for one inputted dataset
+ * as in begging. May use measure. Has a descendent DataPreprocessorLearner
+ * which also can produce specific DataPreprocessors. Is used everywhere where
+ * a Ptr on DataPreprocessorLearner is needed - having Ptr on DataPreprocessorLearner
+ * is inconvenient cause DataPreprocessorLearner is also parametrised by
+ * TDataPreprocessor and inheritance tree is a forest
  */
 template <class TElement>
 class BaseDataPreprocessorLearner : public Parameterized {
@@ -41,11 +45,25 @@ class BaseDataPreprocessorLearner : public Parameterized {
   typename Measure<TElement>::Ptr measure_;
 };
 
+/**
+ * An object which learns on inputted dataset and produces a specific
+ * DataPreprocessor. May produce different preprocessors (using random)
+ * for one inputted dataset as in begging. May use measure. Everywhere where
+ * a Ptr on DataPreprocessorLearner is needed - use Ptr on
+ * BaseDataPreprocessorLearner. Having Ptr on DataPreprocessorLearner is
+ * inconvenient cause DataPreprocessorLearner is also parametrised by
+ * TDataPreprocessor and inheritance tree is a forest
+ */
 template <class TElement, template<class> class TDataPreprocessor>
 class DataPreprocessorLearner : public BaseDataPreprocessorLearner<TElement> {
   public:
   typedef boost::shared_ptr<DataPreprocessorLearner> Ptr;
 
+  /**
+   * Is for being sure DataPreprocessor<TElement>::Ptrs outputted by makePtr()
+   * are Ptrs on different (physically) DataPreprocessors.
+   * @returns a concrete DataPreprocessor
+   */
   virtual TDataPreprocessor<TElement> make() const = 0;
   virtual typename DataPreprocessor<TElement>::Ptr makePtr() const {
     return DataPreprocessor<TElement>::Ptr(
