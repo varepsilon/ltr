@@ -17,10 +17,15 @@
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/parameters_container/parameters_container.h"
 
+#include "ltr/utility/numerical.h"
+
 using std::string;
 using std::logic_error;
 using std::min;
 using std::max;
+
+using ltr::utility::DoubleLess;
+using ltr::utility::DoubleMore;
 
 namespace ltr {
 /**
@@ -42,6 +47,13 @@ class Measure : public Aliaser, public Parameterized {
    * @param element - element(single object, pair or list) for counting measure on
    */
   double operator()(const TElement& element) const;
+  /**
+   * Value of measure(quality of algorithm)
+   * @param element - element(single object, pair or list) for counting measure on
+   */
+  double value(const TElement& element) const {
+    return operator()(element);
+  }
 
   /**
    * Gets average measure value of all elements (as if all elements have equal weights)
@@ -99,10 +111,10 @@ bool Measure<TElement>::better(double expected_better,
 
 template<class TElement>
 void Measure<TElement>::checkResult(double result) const {
-  if (result > max(best(), worst())) {
+  if (DoubleMore(result, max(best(), worst()))) {
     throw logic_error(alias() + " calculated > " +
       boost::lexical_cast<string>(max(best(), worst())));
-  } else if (min(best(), worst())) {
+  } else if (DoubleLess(result, min(best(), worst()))) {
     throw logic_error(alias() + " calculated < " +
       boost::lexical_cast<string>(min(best(), worst())));
   }
