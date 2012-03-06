@@ -20,19 +20,21 @@ using std::logic_error;
 namespace ltr {
 
 template <class TElement>
-class FeatureNormalizerLearner : public FeatureConverterLearner<TElement> {
+class FeatureNormalizerLearner
+    : public FeatureConverterLearner<TElement, PerFeatureLinearConverter> {
   public:
   typedef boost::shared_ptr<FeatureNormalizerLearner> Ptr;
 
   explicit FeatureNormalizerLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
+      ParametersContainer())
+      : converter_(0) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
   }
 
   void learn(const DataSet<TElement>& data_set);
-  FeatureConverter::Ptr make() const;
+  PerFeatureLinearConverter make() const;
 
   void setDefaultParameters();
   void checkParameters() const;
@@ -41,7 +43,7 @@ class FeatureNormalizerLearner : public FeatureConverterLearner<TElement> {
   void calcCurrentConverter();
   size_t featureCount() const;
 
-  PerFeatureLinearConverter::Ptr converter_;
+  PerFeatureLinearConverter converter_;
   vector<double> feature_min_statistic_;
   vector<double> feature_max_statistic_;
 };
@@ -61,7 +63,7 @@ size_t FeatureNormalizerLearner<TElement>::featureCount() const {
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
-  converter_.reset(new PerFeatureLinearConverter(this->featureCount()));
+  converter_.setFeatureCount(this->featureCount());
 
   double normalizationIntervalBegin =
       this->getDoubleParameter("NormalizationIntervalBegin");
@@ -84,16 +86,14 @@ void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
       shift = normalizationIntervalBegin -
           coefficient * feature_min_statistic_[feature_idx];
     }
-    converter_->setCoefficient(feature_idx, coefficient);
-    converter_->setShift(feature_idx, shift);
+    converter_.setCoefficient(feature_idx, coefficient);
+    converter_.setShift(feature_idx, shift);
   }
 }
 
 template <typename TElement>
-FeatureConverter::Ptr FeatureNormalizerLearner<TElement>::make() const {
-  PerFeatureLinearConverter::Ptr output(
-    new PerFeatureLinearConverter(*converter_));
-  return output;
+PerFeatureLinearConverter FeatureNormalizerLearner<TElement>::make() const {
+  return converter_;
 }
 
 template <typename TElement>

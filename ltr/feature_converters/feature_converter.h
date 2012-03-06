@@ -42,6 +42,6 @@ class FeatureConverter : public Serializable {
 };
 
 typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
-}
+};
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

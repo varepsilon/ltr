@@ -95,7 +95,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
-  learner.addFeatureConverter(normalizerLearner.make());
+  learner.addFeatureConverter(normalizerLearner.makePtr());
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
@@ -109,7 +109,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
   ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
 
-  learner.addFeatureConverter(normalizerLearner.make());
+  learner.addFeatureConverter(normalizerLearner.makePtr());
   EXPECT_NO_THROW(learner.learn(learn_data_listwise));
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));

@@ -17,7 +17,6 @@
 using std::max_element;
 using std::vector;
 using std::string;
-using ltr::Object;
 
 namespace ltr {
 /**

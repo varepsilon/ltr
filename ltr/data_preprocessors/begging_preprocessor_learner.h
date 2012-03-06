@@ -14,7 +14,6 @@
 #include "ltr/data_preprocessors/data_preprocessor_learner.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
 
-using ltr::DataPreprocessorLearner;
 using std::vector;
 using std::random_shuffle;
 using std::copy;

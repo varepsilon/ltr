@@ -18,8 +18,6 @@ using std::max_element;
 using std::vector;
 using std::logic_error;
 using std::string;
-using ltr::DataSet;
-using ltr::DataPreprocessor;
 using ltr::utility::lightSubset;
 
 namespace ltr {

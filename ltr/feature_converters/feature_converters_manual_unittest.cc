@@ -83,7 +83,7 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
 TEST_F(FeatureConvertersManualTest, FakeFeatureConverterLearnerTest) {
   FakeFeatureConverterLearner<Object> conv_learner;
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv = conv_learner.make();
+  FeatureConverter::Ptr conv = conv_learner.makePtr();
 
   DataSet<Object> conv_data;
 
@@ -126,7 +126,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserTest) {
 TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
   FeatureSubsetChooserLearner<Object> conv_learner;
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv = conv_learner.make();
+  FeatureConverter::Ptr conv = conv_learner.makePtr();
 
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
@@ -145,7 +145,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
 
   conv_learner.setListParameter("INDICES", indices);
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv2 = conv_learner.make();
+  FeatureConverter::Ptr conv2 = conv_learner.makePtr();
 
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
   EXPECT_EQ(indices.size(), conv_data.featureInfo().getFeatureCount());
@@ -157,7 +157,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
 TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   RSMFeatureConverterLearner<Object> conv_learner;
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv = conv_learner.make();
+  FeatureConverter::Ptr conv = conv_learner.makePtr();
 
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
@@ -178,7 +178,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
 
   conv_learner.setDoubleParameter("SELECTED_PART", 0.8);
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv2 = conv_learner.make();
+  FeatureConverter::Ptr conv2 = conv_learner.makePtr();
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
 
   EXPECT_EQ(9, conv_data.featureInfo().getFeatureCount());
@@ -198,7 +198,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   EXPECT_ANY_THROW(conv_learner.setDoubleParameter("SELECTED_PART", 0.0));
   conv_learner.setDoubleParameter("SELECTED_PART", 1e-8);
   conv_learner.learn(data);
-  FeatureConverter::Ptr conv3 = conv_learner.make();
+  FeatureConverter::Ptr conv3 = conv_learner.makePtr();
   ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
   EXPECT_EQ(1, conv_data.featureInfo().getFeatureCount());
 }
@@ -242,7 +242,7 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerDefaultTest) {
   l_data.add(o4);
 
   conv_learner.learn(l_data);
-  FeatureConverter::Ptr conv = conv_learner.make();
+  FeatureConverter::Ptr conv = conv_learner.makePtr();
 
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
@@ -280,7 +280,7 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerTest) {
   l_data.add(o4);
 
   conv_learner.learn(l_data);
-  FeatureConverter::Ptr conv = conv_learner.make();
+  FeatureConverter::Ptr conv = conv_learner.makePtr();
 
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
