@@ -4,6 +4,8 @@
 
 #include "ltr/feature_converters/per_feature_linear_converter.h"
 
+using std::logic_error;
+
 namespace ltr {
 
 FeatureInfo PerFeatureLinearConverter::convertFeatureInfo(
@@ -29,8 +31,8 @@ void PerFeatureLinearConverter::setShift(size_t feature_idx, double shift) {
   shift_[feature_idx] = shift;
 }
 
-void PerFeatureLinearConverter::apply(const ltr::Object & argument,
-    ltr::Object * value) const {
+void PerFeatureLinearConverter::apply(const Object& argument,
+    Object* value) const {
   this->checkFeatureCount(argument.featureCount());
   *value = argument.deepCopy();
   for (size_t feature_idx = 0;
@@ -46,9 +48,9 @@ size_t PerFeatureLinearConverter::featureCount() const {
 }
 
 void PerFeatureLinearConverter::checkFeatureCount(
-    size_t checkedFeatureCount) const {
-  if (checkedFeatureCount != this->featureCount()) {
-    throw std::logic_error(
+    size_t checked_feature_count) const {
+  if (checked_feature_count != this->featureCount()) {
+    throw logic_error(
     "PerFeatureLinearConverter: wrong number of features in converted Object.");
   }
 }

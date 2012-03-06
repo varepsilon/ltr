@@ -7,19 +7,21 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
+using std::vector;
+
 namespace ltr {
 namespace utility {
 
 template <typename TElement>
 void ApplyFeatureConverter(
     boost::shared_ptr<const FeatureConverter> converter,
-    const DataSet<TElement> & argument,
-    DataSet<TElement> * value) {
+    const DataSet<TElement>& argument,
+    DataSet<TElement>* value) {
   DataSet<TElement> result
       (converter->convertFeatureInfo(argument.featureInfo()));
 
   for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
-    std::vector<Object> objectsInTElement;
+    vector<Object> objectsInTElement;
     for (size_t objIdx = 0;
         objIdx < argument[elementIdx].size();
         ++objIdx) {

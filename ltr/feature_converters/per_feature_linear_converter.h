@@ -10,15 +10,18 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
+using std::string;
+using std::vector;
+
 namespace ltr {
 
 class PerFeatureLinearConverter : public FeatureConverter {
   public:
-  typedef boost::shared_ptr< PerFeatureLinearConverter > Ptr;
+  typedef boost::shared_ptr<PerFeatureLinearConverter> Ptr;
 
-  explicit PerFeatureLinearConverter(size_t featureCount) :
-    coefficient_(featureCount, 1),
-    shift_(featureCount, 0) {}
+  explicit PerFeatureLinearConverter(size_t feature_count) :
+    coefficient_(feature_count, 1),
+    shift_(feature_count, 0) {}
 
   FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const;
 
@@ -27,18 +30,18 @@ class PerFeatureLinearConverter : public FeatureConverter {
   double getShift(size_t feature_idx) const;
   void setShift(size_t feature_idx, double shift);
 
-  void apply(const ltr::Object & argument, ltr::Object * value) const;
+  void apply(const Object& argument, Object* value) const;
 
-  virtual std::string generateCppCode(const std::string& function_name) const {
+  virtual string generateCppCode(const string& function_name) const {
     return "Not implemented.";
   };
 
   private:
   size_t featureCount() const;
-  void checkFeatureCount(size_t checkedFeatureCount) const;
+  void checkFeatureCount(size_t checked_feature_count) const;
 
-  std::vector<double> coefficient_;
-  std::vector<double> shift_;
+  vector<double> coefficient_;
+  vector<double> shift_;
 };
 }
 

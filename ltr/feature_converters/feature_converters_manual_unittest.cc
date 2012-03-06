@@ -8,6 +8,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/data/feature_info.h"
+#include "ltr/utility/numerical.h"
 
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/feature_converters/utility/utility.h"
@@ -16,18 +17,23 @@
 #include "ltr/feature_converters/feature_subset_chooser.h"
 #include "ltr/feature_converters/feature_subset_chooser_learner.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
+#include "ltr/feature_converters/per_feature_linear_converter.h"
+#include "ltr/feature_converters/feature_normalizer_learner.h"
 
 using std::set;
 using std::vector;
 using ltr::Object;
 using ltr::DataSet;
 using ltr::FeatureInfo;
+using ltr::utility::DoubleEqual;
 using ltr::FeatureConverter;
 using ltr::FakeFeatureConverter;
 using ltr::FakeFeatureConverterLearner;
 using ltr::FeatureSubsetChooser;
 using ltr::FeatureSubsetChooserLearner;
 using ltr::RSMFeatureConverterLearner;
+using ltr::PerFeatureLinearConverter;
+using ltr::FeatureNormalizerLearner;
 
 const int feature_size = 11;
 
@@ -67,7 +73,7 @@ bool AreEqual(const DataSet<TElement>& first,
 }
 
 TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
-  FeatureConverter::Ptr ffc(new FakeFeatureConverter);
+  FakeFeatureConverter::Ptr ffc(new FakeFeatureConverter);
   DataSet<Object> conv_data;
 
   ltr::utility::ApplyFeatureConverter(ffc, data, &conv_data);
@@ -195,4 +201,102 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
   FeatureConverter::Ptr conv3 = conv_learner.make();
   ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
   EXPECT_EQ(1, conv_data.featureInfo().getFeatureCount());
+}
+
+TEST_F(FeatureConvertersManualTest, PerFeatureLinearConverterTest) {
+  PerFeatureLinearConverter::Ptr pf_converter
+    (new PerFeatureLinearConverter(data.featureInfo().getFeatureCount()));
+
+  pf_converter->setShift(0, 1.0);
+  pf_converter->setShift(1, 0.0);
+  pf_converter->setShift(2, -1.0);
+  pf_converter->setShift(3, 0.0);
+
+  pf_converter->setCoefficient(0, 1.0);
+  pf_converter->setCoefficient(1, -0.5);
+  pf_converter->setCoefficient(2, 2.0);
+  pf_converter->setCoefficient(3, 0.0);
+
+  DataSet<Object> conv_data;
+
+  ltr::utility::ApplyFeatureConverter(pf_converter, data, &conv_data);
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[1], -0.5));
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[2], 3.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[3], 0.0));
+}
+
+TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerDefaultTest) {
+  FeatureNormalizerLearner<Object> conv_learner;
+
+  DataSet<Object> l_data(FeatureInfo(3));
+  Object o1, o2, o3, o4;
+  o1 << 1.0 << 2.0 << 3.0;
+  o2 << -2.0 << 1.0 << 1.0;
+  o3 << 0.0 << 5.0 << 2.0;
+  o4 << 1.0 << 3.0 << -1.0;
+  l_data.add(o1);
+  l_data.add(o2);
+  l_data.add(o3);
+  l_data.add(o4);
+
+  conv_learner.learn(l_data);
+  FeatureConverter::Ptr conv = conv_learner.make();
+
+  DataSet<Object> conv_data;
+  ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[0], 0.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[0], 0.66666666666666));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[0], 1.0));
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[1], 0.25));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[1], 0.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[1], 1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[1], 0.5));
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[2], 1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[2], 0.5));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[2], 0.75));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[2], 0.0));
+}
+
+TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerTest) {
+  FeatureNormalizerLearner<Object> conv_learner;
+  conv_learner.setDoubleParameter("NormalizationIntervalBegin", -2.0);
+  conv_learner.setDoubleParameter("NormalizationIntervalEnd", 2.0);
+
+  DataSet<Object> l_data(FeatureInfo(3));
+  Object o1, o2, o3, o4;
+  o1 << 1.0 << 2.0 << 3.0;
+  o2 << -2.0 << 1.0 << 1.0;
+  o3 << 0.0 << 5.0 << 2.0;
+  o4 << 1.0 << 3.0 << -1.0;
+  l_data.add(o1);
+  l_data.add(o2);
+  l_data.add(o3);
+  l_data.add(o4);
+
+  conv_learner.learn(l_data);
+  FeatureConverter::Ptr conv = conv_learner.make();
+
+  DataSet<Object> conv_data;
+  ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 2.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[0], -2.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[0], 0.66666666666666));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[0], 2.0));
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[1], -1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[1], -2.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[1], 2.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[1], 0.0));
+
+  EXPECT_TRUE(DoubleEqual(conv_data[0].features()[2], 2.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[1].features()[2], 0.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[2].features()[2], 1.0));
+  EXPECT_TRUE(DoubleEqual(conv_data[3].features()[2], -2.0));
 }

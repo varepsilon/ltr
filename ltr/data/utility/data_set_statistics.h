@@ -7,13 +7,15 @@
 
 #include "ltr/data/data_set.h"
 
+using std::vector;
+
 namespace ltr {
 namespace utility {
 
 template <typename TElement>
 void calcMinMaxStatistics(const DataSet<TElement>& data_set,
-    std::vector<double>* pMinFeatureValue,
-    std::vector<double>* pMaxFeatureValue);
+    vector<double>* pMinFeatureValue,
+    vector<double>* pMaxFeatureValue);
 }
 }
 #endif  // LTR_DATA_UTILITY_DATA_SET_STATISTICS_H_

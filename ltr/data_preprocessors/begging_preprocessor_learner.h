@@ -84,7 +84,7 @@ void BeggingPreprocessorLearner<TElement>
 
   if (size != 0) {
     vector<int> indices(size);
-    srand(unsigned(time(NULL)));
+    srand(this->getIntParameter("RANDOM_SEED"));
 
     if (this->getBoolParameter("WITH_REPLACE")) {
       for (int i = 0; i < indices.size(); ++i) {
