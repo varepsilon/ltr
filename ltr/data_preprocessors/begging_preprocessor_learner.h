@@ -31,12 +31,13 @@ class BeggingPreprocessorLearner
 
   /**
    * @param parameters Standart LTR parameter container with double parameter
-   * SELECTED_PART and bool parameter WITH_REPLACE. WITH_REPLACE is true if dublication
-   * in indices of produced SimpleSubsetPreprocessor is allowed, false otherwise.
-   * SELECTED_PART is a part of elements chosen by produced
-   * SimpleSubsetPreprocessor. Upper rounding is used, so never produces
-   * SimpleSubsetPreprocessor with 0 features.
-   * By default SELECTED_PART = 0.3, WITH_REPLACE = true
+   * SELECTED_PART, bool parameter WITH_REPLACE and int parameter RANDOM_SEED.
+   * WITH_REPLACE is true if dublication in indices of produced SimpleSubset
+   * Preprocessor is allowed, false otherwise. SELECTED_PART is a part of elements
+   * chosen by produced SimpleSubsetPreprocessor. Upper rounding is used, so
+   * never produces SimpleSubsetPreprocessor with 0 features. RANDOM_SEED is for
+   * manual control of random behavior of BeggingPreprocessorLearner
+   * By default SELECTED_PART = 0.3, WITH_REPLACE = true, RANDOM_SEED = 237
    */
   explicit BeggingPreprocessorLearner(
       const ParametersContainer& parameters = ParametersContainer())
@@ -62,6 +63,7 @@ void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
   this->addDoubleParameter("SELECTED_PART", 0.3);
   this->addBoolParameter("WITH_REPLACE", true);
+  this->addIntParameter("RANDOM_SEED", 237);
 }
 
 template <typename TElement>
@@ -71,6 +73,7 @@ void BeggingPreprocessorLearner<TElement>::checkParameters() const {
   } else {
     CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
   }
+  CHECK_INT_PARAMETER("RANDOM_SEED", X > 0);
 }
 
 template <typename TElement>

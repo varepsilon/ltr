@@ -28,10 +28,11 @@ class RSMFeatureConverterLearner : public FeatureConverterLearner<TElement> {
 
   /**
    * @param parameters Standart LTR parameter container with double parameter
-   * SELECTED_PART. SELECTED_PART is a part of features chosen by produced
-   * FeatureSubsetChooser. Upper rounding is used, so never produces
-   * FeatureSubsetChooser with 0 features.
-   * By default SELECTED_PART = 0.3
+   * SELECTED_PART and int parameter RANDOM_SEED. SELECTED_PART is a part of
+   * features chosen by produced FeatureSubsetChooser. Upper rounding is used,
+   * so never produces FeatureSubsetChooser with 0 features. RANDOM_SEED is for
+   * manual control of random behavior of RSMFeatureConverterLearner
+   * By default SELECTED_PART = 0.3, RANDOM_SEED = 1339
    */
   explicit RSMFeatureConverterLearner(const ParametersContainer& parameters =
       ParametersContainer())
@@ -56,11 +57,13 @@ template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
   this->addDoubleParameter("SELECTED_PART", 0.3);
+  this->addIntParameter("RANDOM_SEED", 1339);
 }
 
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::checkParameters() const {
   CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
+  CHECK_INT_PARAMETER("RANDOM_SEED", X > 0);
 }
 
 template <typename TElement>
@@ -70,7 +73,7 @@ void RSMFeatureConverterLearner<TElement>
     ceil(data_set.featureInfo().getFeatureCount()
       * this->getDoubleParameter("SELECTED_PART")));
   vector<int> indices(size);
-  srand(unsigned(time(NULL)));
+  srand(this->getIntParameter("RANDOM_SEED"));
 
   vector<int> all_used(data_set.featureInfo().getFeatureCount());
   for (int index = 0; index < all_used.size(); ++index) {

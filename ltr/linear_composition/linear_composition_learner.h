@@ -42,18 +42,21 @@ namespace lc {
    * for linear composition scorer
 
    * LCScorerWeightsUpdater - a strategy for setting weights to scorers in
-   * linear composition scorer.
+   * linear composition scorer. By default is fake, so every scorer in
+   * composition has 1.0 weight
 
    * DataSetWeightsUpdater - a strategy for setting weights for dataset's
    * elements before each weak learner's learn() call. Provides the variability
-   * of weak scorers
+   * of weak scorers. By default is fake, so dataset weights remain const
 
    * FeatureConverterLearner - let weak learner call learn() on dataset with
    * converted features (e. g. RSM - random subspace method). Provides the
-   * variability of weak scorers
+   * variability of weak scorers. By default is fake, so dataset is not pre-
+   * feature converted before weak learning
 
    * DataPreprocessorLearner - let weak learner call learn() on preprocessed
-   * dataset (e. g. begging). Provides the variability of weak scorers
+   * dataset (e. g. begging). Provides the variability of weak scorers. By default
+   * is fake, so dataset is not preprocessed before weak learning
    */
   template <class TElement>
   class LinearCompositionLearner
