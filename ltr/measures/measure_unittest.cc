@@ -4,8 +4,10 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/measures/abs_error.h"
+#include "ltr/measures/accuracy.h"
 #include "ltr/measures/squared_error.h"
 #include "ltr/measures/average_precision.h"
+#include "ltr/measures/normalized_measure.h"
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 #include "ltr/data/data_set.h"
@@ -19,6 +21,8 @@ using ltr::utility::DoubleEqual;
 using ltr::AbsError;
 using ltr::SquaredError;
 using ltr::AveragePrecision;
+using ltr::Accuracy;
+using ltr::NormalizedMeasure;
 
 TEST(MeasureTest, MeasureTest) {
   Object o1;
@@ -68,4 +72,29 @@ TEST(MeasureTest, MeasureTest) {
   EXPECT_FALSE(se.better(0.2, 0.1));
   EXPECT_TRUE(ap.better(1, 0.5));
   EXPECT_FALSE(ap.better(0.3, 1.5));
+}
+
+TEST(MeasureTest, NormalizedMeasureTest) {
+  NormalizedMeasure<Object> norm;
+  NormalizedMeasure<Object> norm2(1, -1);
+  Object obj;
+  obj.setActualLabel(1);
+  obj.setPredictedLabel(0);
+
+  norm.setWeakMeasure(AbsError());
+
+  EXPECT_THROW(norm.value(obj), std::logic_error);
+
+  norm.setWeakMeasure(Accuracy<Object>());
+  norm2.setWeakMeasure(Accuracy<Object>());
+  EXPECT_NO_THROW(norm.value(obj));
+  EXPECT_EQ(norm.worst(), -1);
+  EXPECT_EQ(norm.best(), 1);
+
+  EXPECT_EQ(norm.value(obj), -1);
+  EXPECT_EQ(norm2.value(obj), 1);
+
+  obj.setPredictedLabel(1);
+  EXPECT_EQ(norm.value(obj), 1);
+  EXPECT_EQ(norm2.value(obj), -1);
 }

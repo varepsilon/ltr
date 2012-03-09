@@ -31,7 +31,16 @@ class FakeFeatureConverter : public FeatureConverter {
 
   string generateCppCode(
       const string& function_name) const {
-    return "Not implemented.";
+    string hpp_string;
+
+    hpp_string.
+      append("#include <vector>\n\nvoid ").
+      append(function_name).
+      append("(const std::vector<double>& features, ").
+      append("std::vector<double>* result) {").
+      append("*result = features;}\n");
+
+    return hpp_string;
   }
 };
 };

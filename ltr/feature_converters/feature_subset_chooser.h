@@ -66,7 +66,30 @@ class FeatureSubsetChooser : public FeatureConverter {
 
   virtual string generateCppCode(
       const string& function_name) const {
-    return "Not implemented.";
+    string hpp_string;
+
+    hpp_string.
+      append("#include <vector>\n\nvoid ").
+      append(function_name).
+      append("(const std::vector<double>& features, ").
+      append("std::vector<double>* result) {\n").
+      append("  result->clear();\n").
+      append("  size_t indices[] = {");
+    for (size_t i = 0; i < indices_.size(); i++) {
+      if (i != 0)
+        hpp_string.append(",");
+      hpp_string.append(boost::lexical_cast<string>(indices_[i]));
+    }
+    hpp_string.
+      append("};\n").
+      append("  for (size_t i = 0; i < ").
+      append(boost::lexical_cast<string>(indices_.size())).
+      append("; i++) {\n").
+      append("    result->push_back(features[indices[i]]);\n").
+      append("  }\n").
+      append("}\n");
+
+    return hpp_string;
   }
 
   private:
