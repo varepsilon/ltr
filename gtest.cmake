@@ -23,3 +23,4 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
 
 
 
+MESSAGE("CMAKE_BINARY_DIR    : ${CMAKE_BINARY_DIR}")
