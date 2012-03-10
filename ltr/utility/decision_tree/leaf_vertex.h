@@ -1,12 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_DECISION_TREE_LEAF_VERTEX_H_
-#define LTR_DECISION_TREE_LEAF_VERTEX_H_
+#ifndef LTR_UTILITY_DECISION_TREE_LEAF_VERTEX_H_
+#define LTR_UTILITY_DECISION_TREE_LEAF_VERTEX_H_
 
 #include <string>
 
-#include "ltr/decision_tree/utility/utility.h"
-#include "ltr/decision_tree/decision_tree.h"
+#include "ltr/utility/decision_tree/utility/utility.h"
+#include "ltr/utility/decision_tree/decision_tree.h"
 
 namespace ltr {
 namespace decision_tree {
@@ -61,4 +61,4 @@ typename LeafVertex<TValue>::Ptr LeafVertexPtr(Condition::Ptr condition,
 }
 }
 
-#endif  // LTR_DECISION_TREE_LEAF_VERTEX_H_
+#endif  // LTR_UTILITY_DECISION_TREE_LEAF_VERTEX_H_

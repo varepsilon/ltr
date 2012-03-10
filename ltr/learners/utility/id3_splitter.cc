@@ -6,7 +6,7 @@
 #include "ltr/utility/numerical.h"
 #include "ltr/data/utility/data_set_utility.h"
 
-#include "ltr/decision_tree/compare_condition.h"
+#include "ltr/utility/decision_tree/compare_condition.h"
 
 using ltr::utility::DoubleEqual;
 using ltr::utility::DoubleLessOrEqual;
@@ -34,7 +34,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
   result->clear();
 
   if (split_idx == 0) {
-    log << "Splitting feature " << current_feature << std::endl;
+//    log << "Splitting feature " << current_feature << std::endl;
     feature_values.clear();
     numeric_split_values.clear();
     feature_values.resize(data_.size());

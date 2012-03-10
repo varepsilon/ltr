@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_DECISION_TREE_CONDITION_H_
-#define LTR_DECISION_TREE_CONDITION_H_
+#ifndef LTR_UTILITY_DECISION_TREE_CONDITION_H_
+#define LTR_UTILITY_DECISION_TREE_CONDITION_H_
 
 #include "ltr/interfaces/serializable_functor.h"
 
@@ -21,4 +21,4 @@ OneFeatureCondition::Ptr OneFeatureConditionPtr();
 OneFeatureCondition::Ptr OneFeatureConditionPtr(int feature_id);
 }
 }
-#endif  // LTR_DECISION_TREE_CONDITION_H_
+#endif  // LTR_UTILITY_DECISION_TREE_CONDITION_H_

@@ -5,13 +5,13 @@
 
 #include <string>
 #include "ltr/scorers/scorer.h"
-#include "ltr/decision_tree/decision_tree.h"
+#include "ltr/utility/decision_tree/decision_tree.h"
 
 using std::string;
-using ltr::decision_tree::Vertex;
-using ltr::decision_tree::DecisionTree;
 
 namespace ltr {
+namespace decision_tree {
+
 class DecisionTreeScorer : public Scorer {
   private:
     DecisionTree<double> tree_;
@@ -23,6 +23,7 @@ class DecisionTreeScorer : public Scorer {
     string generateCppCodeImpl(const string& function_name) const {
       return tree_.generateCppCode(function_name);
     }
+
   public:
     typedef boost::shared_ptr< DecisionTreeScorer > Ptr;
 
@@ -40,6 +41,7 @@ class DecisionTreeScorer : public Scorer {
       return "Decision of the tree";
     }
 };
+}
 }
 
 #endif  // LTR_SCORERS_DECISION_TREE_SCORER_H_

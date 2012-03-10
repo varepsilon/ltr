@@ -18,7 +18,8 @@ namespace ltr {
 class ID3_Learner : public DecisionTreeLearner {
   public:
     explicit ID3_Learner(
-      const ParametersContainer& parameters = ParametersContainer()) {
+      const ParametersContainer& parameters = ParametersContainer())
+      : DecisionTreeLearner(parameters.getGroup("")) {
       this->setConditionsLearner(
         ConditionsLearner::Ptr(
           new ID3_Splitter(
@@ -27,6 +28,7 @@ class ID3_Learner : public DecisionTreeLearner {
         SplittingQuality::Ptr(
           new SqrErrorQuality(
             parameters.getGroup("splitting quality"))));
+      copyParameters(parameters);
     }
 };
 }

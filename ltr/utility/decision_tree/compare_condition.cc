@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include "ltr/decision_tree/compare_condition.h"
+#include "ltr/utility/decision_tree/compare_condition.h"
 #include "ltr/utility/numerical.h"
 
 namespace ltr {

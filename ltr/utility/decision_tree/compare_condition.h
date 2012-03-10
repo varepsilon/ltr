@@ -1,11 +1,11 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_DECISION_TREE_COMPARE_CONDITION_H_
-#define LTR_DECISION_TREE_COMPARE_CONDITION_H_
+#ifndef LTR_UTILITY_DECISION_TREE_COMPARE_CONDITION_H_
+#define LTR_UTILITY_DECISION_TREE_COMPARE_CONDITION_H_
 
 #include <string>
 
-#include "ltr/decision_tree/condition.h"
+#include "ltr/utility/decision_tree/condition.h"
 
 using std::string;
 
@@ -61,4 +61,4 @@ CompareCondition::Ptr CompareConditionPtr(Condition::Ptr weak_condition,
 }
 }
 
-#endif  // LTR_DECISION_TREE_COMPARE_CONDITION_H_
+#endif  // LTR_UTILITY_DECISION_TREE_COMPARE_CONDITION_H_

@@ -8,9 +8,9 @@ double Scorer::score(const ltr::Object& obj) const {
   Object sourceObject = obj.deepCopy();
   Object convertedObject;
   for (size_t featureConverterIdx = 0;
-      featureConverterIdx < featureConverters_.size();
+      featureConverterIdx < feature_converters_.size();
       ++featureConverterIdx) {
-    (*featureConverters_[featureConverterIdx]).apply(sourceObject,
+    (*feature_converters_[featureConverterIdx]).apply(sourceObject,
         &convertedObject);
     sourceObject = convertedObject;
   }

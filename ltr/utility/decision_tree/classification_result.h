@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_DECISION_TREE_CLASSIFICATION_RESULT_H_
-#define LTR_DECISION_TREE_CLASSIFICATION_RESULT_H_
+#ifndef LTR_UTILITY_DECISION_TREE_CLASSIFICATION_RESULT_H_
+#define LTR_UTILITY_DECISION_TREE_CLASSIFICATION_RESULT_H_
 
 #include <vector>
 
@@ -35,4 +35,4 @@ ClassificationResult operator/(const ClassificationResult& left,
                                double right);
 }
 
-#endif  // LTR_DECISION_TREE_CLASSIFICATION_RESULT_H_
+#endif  // LTR_UTILITY_DECISION_TREE_CLASSIFICATION_RESULT_H_

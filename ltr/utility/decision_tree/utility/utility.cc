@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include "ltr/decision_tree/utility/utility.h"
+#include "ltr/utility/decision_tree/utility/utility.h"
 
 namespace ltr {
 namespace decision_tree {

@@ -9,7 +9,7 @@
 
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/parameterized.h"
-#include "ltr/decision_tree/condition.h"
+#include "ltr/utility/decision_tree/condition.h"
 
 using std::vector;
 

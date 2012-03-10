@@ -9,9 +9,9 @@
 
 #include "ltr/scorers/decision_tree_scorer.h"
 
-#include "ltr/decision_tree/utility/utility.h"
-#include "ltr/decision_tree/decision_vertex.h"
-#include "ltr/decision_tree/leaf_vertex.h"
+#include "ltr/utility/decision_tree/utility/utility.h"
+#include "ltr/utility/decision_tree/decision_vertex.h"
+#include "ltr/utility/decision_tree/leaf_vertex.h"
 
 #include "ltr/learners/utility/splitting_quality.h"
 #include "ltr/learners/utility/conditions_learner.h"
@@ -58,11 +58,17 @@ class DecisionTreeLearner
      */
     void setConditionsLearner(ConditionsLearner::Ptr conditions_learner) {
       conditions_learner_ = conditions_learner;
+      removeParametersGroup("conditions learner");
+      addParametersGroup(conditions_learner_->parameters(),
+                         "conditions learner");
     }
     /** Sets splitting quality object.
      */
     void setSplittingQuality(SplittingQuality::Ptr splitting_quality) {
       splitting_quality_ = splitting_quality;
+      removeParametersGroup("splitting quality");
+      addParametersGroup(splitting_quality_->parameters(),
+                         "splitting quality");
     }
 
     void setDefaultParameters() {
@@ -84,8 +90,8 @@ class DecisionTreeLearner
       scorer_ = DecisionTreeScorer();
     }
 
-    explicit DecisionTreeLearner
-        (const ParametersContainer& parameters = ParametersContainer());
+    explicit DecisionTreeLearner(
+      const ParametersContainer& parameters = ParametersContainer());
 };
 }
 }
