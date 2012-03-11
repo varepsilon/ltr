@@ -7,22 +7,22 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
              ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc)
 
-SET(LTR_DECISION_TREE ${Source_Path}/ltr/decision_tree/decision_tree.h
-                      ${Source_Path}/ltr/decision_tree/decision_tree.cc
-                      ${Source_Path}/ltr/decision_tree/classification_result.h
-                      ${Source_Path}/ltr/decision_tree/classification_result.cc
+SET(LTR_DECISION_TREE ${Source_Path}/ltr/utility/decision_tree/decision_tree.h
+                      ${Source_Path}/ltr/utility/decision_tree/decision_tree.cc
+                      ${Source_Path}/ltr/utility/decision_tree/classification_result.h
+                      ${Source_Path}/ltr/utility/decision_tree/classification_result.cc
                       
-                      ${Source_Path}/ltr/decision_tree/leaf_vertex.h
-                      ${Source_Path}/ltr/decision_tree/decision_vertex.h
-                      ${Source_Path}/ltr/decision_tree/regression_vertex.h
+                      ${Source_Path}/ltr/utility/decision_tree/leaf_vertex.h
+                      ${Source_Path}/ltr/utility/decision_tree/decision_vertex.h
+                      ${Source_Path}/ltr/utility/decision_tree/regression_vertex.h
                       
-                      ${Source_Path}/ltr/decision_tree/condition.h
-                      ${Source_Path}/ltr/decision_tree/condition.cc
-                      ${Source_Path}/ltr/decision_tree/compare_condition.h
-                      ${Source_Path}/ltr/decision_tree/compare_condition.cc)
+                      ${Source_Path}/ltr/utility/decision_tree/condition.h
+                      ${Source_Path}/ltr/utility/decision_tree/condition.cc
+                      ${Source_Path}/ltr/utility/decision_tree/compare_condition.h
+                      ${Source_Path}/ltr/utility/decision_tree/compare_condition.cc)
 
-SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/decision_tree/utility/utility.h
-                              ${Source_Path}/ltr/decision_tree/utility/utility.cc)
+SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/utility/decision_tree/utility/utility.h
+                              ${Source_Path}/ltr/utility/decision_tree/utility/utility.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_utility.h
@@ -79,7 +79,8 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/ndcg.h
                  ${Source_Path}/ltr/measures/reciprocal_rank.h ${Source_Path}/ltr/measures/reciprocal_rank.cc
                  ${Source_Path}/ltr/measures/pfound.h ${Source_Path}/ltr/measures/pfound.cc
-                 ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc)
+                 ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
+                 ${Source_Path}/ltr/measures/normalized_measure.h)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
@@ -144,6 +145,8 @@ SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/linear_composition/linear_composit
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
+SOURCE_GROUP(utils\\decision_tree FILES ${LTR_DECISION_TREE})
+SOURCE_GROUP(utils\\decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
 SOURCE_GROUP(data\\utils FILES ${LTR_DATA_UTILS})
 SOURCE_GROUP(data\\ioutils FILES ${LTR_IO_UTILS})
 SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES})
@@ -157,8 +160,6 @@ SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\utils FILES ${LTR_LEARNERS_UTILS})
-SOURCE_GROUP(decision_tree FILES ${LTR_DECISION_TREE})
-SOURCE_GROUP(decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 

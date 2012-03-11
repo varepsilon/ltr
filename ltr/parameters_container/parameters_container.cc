@@ -32,25 +32,25 @@ namespace ltr {
   void ParametersContainer::setDouble(const string& name,
                                      double value,
                                      const string& group) {
-    params[group][name] = value;
+    set<double>(name, value, group);
   };
 
   void ParametersContainer::setInt(const string& name,
                                    int value,
                                    const string& group) {
-    params[group][name] = value;
+    set<int>(name, value, group);
   };
 
   void ParametersContainer::setBool(const string& name,
                                     bool value,
                                     const string& group) {
-    params[group][name] = value;
+    set<bool>(name, value, group);
   };
 
   void ParametersContainer::setList(const string& name,
                                     const List& value,
                                     const string& group) {
-    params[group][name] = value;
+    set<List>(name, value, group);
   };
 
   double ParametersContainer::getDouble(const string& name,
@@ -99,9 +99,7 @@ namespace ltr {
       TGroup& my_group_ = params[it->first];
       for (TGroup::const_iterator g_it = group_.begin();
                                    g_it != group_.end(); g_it++) {
-        if (my_group_.find(g_it->first) != my_group_.end()) {
-          my_group_[g_it->first] = g_it->second;
-        } else {
+        if (my_group_.find(g_it->first) == my_group_.end()) {
           string err = "Wrong parameter name " + g_it->first;
           err.append(". You may mean one of these:");
           for (TGroup::const_iterator inner_it = my_group_.begin();
@@ -110,6 +108,10 @@ namespace ltr {
           }
           err.append(".");
           throw logic_error(err);
+        } else if (my_group_[g_it->first].type() != g_it->second.type()) {
+          throw logic_error("Wrong parameter " + g_it->first + " type");
+        } else {
+          my_group_[g_it->first] = g_it->second;
         }
       }
     }
@@ -124,6 +126,18 @@ namespace ltr {
     for (TGroup::const_iterator it = group_.begin(); it != group_.end(); it++)
       result.params[""][it->first] = it->second;
     return result;
+  }
+
+  void ParametersContainer::setGroup(const ParametersContainer& container,
+                                     const string& group) {
+    for (TMap::const_iterator it = container.params.begin();
+         it != container.params.end(); it++) {
+      const TGroup& group_ = it->second;
+      for (TGroup::const_iterator g_it = group_.begin();
+           g_it != group_.end(); g_it++) {
+        params[group][g_it->first] = g_it->second;
+      }
+    }
   }
 
   void ParametersContainer::clear() {

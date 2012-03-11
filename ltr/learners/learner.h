@@ -38,16 +38,16 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   void learn(const DataSet<TElement>& data);
 
   void addFeatureConverter(
-      typename ltr::FeatureConverter::ConstPtr p_FeatureConverter);
+      typename ltr::FeatureConverter::ConstPtr p_feature_converter);
 
   virtual void reset() = 0;
   virtual Scorer::Ptr makeScorerPtr() const = 0;
 
   const FeatureConverterArray& getFeatureConverters() const {
-    return featureConverters_;
+    return feature_converters_;
   }
   void setFeatureConverters(const FeatureConverterArray& featureConverters) {
-    this->featureConverters_ = featureConverters;
+    this->feature_converters_ = featureConverters;
   }
 
   virtual ~BaseLearner() {}
@@ -65,7 +65,7 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   private:
   virtual void learnImpl(const DataSet<TElement>& data) = 0;
 
-  FeatureConverterArray featureConverters_;
+  FeatureConverterArray feature_converters_;
 };
 
 /**
@@ -99,7 +99,7 @@ Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
 template< class TElement >
 void BaseLearner< TElement >::addFeatureConverter(
     typename ltr::FeatureConverter::ConstPtr p_FeatureConverter) {
-  featureConverters_.push_back(p_FeatureConverter);
+  feature_converters_.push_back(p_FeatureConverter);
 }
 
 template< class TElement >
@@ -107,10 +107,10 @@ void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   DataSet<TElement> sourceData = data.deepCopy();
   DataSet<TElement> convertedData;
   for (size_t featureConverterIdx = 0;
-      featureConverterIdx < featureConverters_.size();
+      featureConverterIdx < feature_converters_.size();
       ++featureConverterIdx) {
         ltr::utility::ApplyFeatureConverter(
-          featureConverters_[featureConverterIdx],
+          feature_converters_[featureConverterIdx],
           sourceData,
           &convertedData);
     sourceData = convertedData;

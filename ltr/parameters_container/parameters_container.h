@@ -35,6 +35,11 @@ namespace ltr {
     }
     explicit ParametersContainer(TMap parameters) : params(parameters) {}
 
+    template<class T>
+    void set(const string& name, const T& value, const string& group="") {
+      params[group][name] = value;
+    }
+
     void setDouble(const string& name, double value, const string& group="");
     void setInt(const string& name, int value, const string& group="");
     void setBool(const string& name, bool value, const string& group="");
@@ -42,6 +47,9 @@ namespace ltr {
 
     template<class T>
     bool has(const string& name, const string& group="") const;
+    bool hasGrouop(const string& group) const {
+      return params.find(group) != params.end();
+    }
 
     template<class T> T get(const string& name, const string& group="") const;
     double getDouble(const string& name, const string& group="") const;
@@ -52,7 +60,25 @@ namespace ltr {
     string toString() const;
 
     void copy(const ParametersContainer& parameters);
+    /**
+     * Returns parametersContainer of all parameters, which has the given group.
+     * In the resulting container all theese parameters will have the default group.
+     */
     ParametersContainer getGroup(const string& group) const;
+
+    /**
+     * Adds all the parameters from the given parametersContainer
+     * into the given group.
+     * @param container - container to copy from.
+     * @param group - group to copy parameters in.
+     */
+    void setGroup(const ParametersContainer& container, const string& group);
+    /**
+     * Removes group of parameters.
+     */
+    void removeGroup(const string& group) {
+      params.erase(group);
+    }
 
     void clear();
 

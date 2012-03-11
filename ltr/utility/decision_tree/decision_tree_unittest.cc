@@ -2,11 +2,13 @@
 
 #include "gtest/gtest.h"
 
-#include "ltr/decision_tree/decision_tree.h"
-#include "ltr/decision_tree/leaf_vertex.h"
-#include "ltr/decision_tree/decision_vertex.h"
-#include "ltr/decision_tree/regression_vertex.h"
-#include "ltr/decision_tree/compare_condition.h"
+#include "ltr/utility/numerical.h"
+
+#include "ltr/utility/decision_tree/decision_tree.h"
+#include "ltr/utility/decision_tree/leaf_vertex.h"
+#include "ltr/utility/decision_tree/decision_vertex.h"
+#include "ltr/utility/decision_tree/regression_vertex.h"
+#include "ltr/utility/decision_tree/compare_condition.h"
 
 class DecisionTreeTest : public ::testing::Test {
   protected:
@@ -33,6 +35,7 @@ using ltr::decision_tree::CompareType;
 using ltr::decision_tree::Vertex;
 
 using ltr::Object;
+using ltr::utility::DoubleEqual;
 
 #define LESS ltr::decision_tree::LESS
 #define GREATER ltr::decision_tree::GREATER
@@ -86,4 +89,58 @@ TEST_F(DecisionTreeTest, TestingBasicOperations) {
   obj.features().clear();
   obj << 15.0 << 60.0;
   EXPECT_EQ(4.0, tree.value(obj));
+}
+
+TEST_F(DecisionTreeTest, TestingRegressionVertrex) {
+  DecisionTree<double> tree;
+  typedef Vertex<double>::Ptr VertexPtr;
+  typedef ltr::decision_tree::Condition::Ptr ConditionPtr;
+
+  ConditionPtr first = OneFeatureConditionPtr(0);
+  ConditionPtr second = OneFeatureConditionPtr(1);
+  ConditionPtr third = OneFeatureConditionPtr(2);
+  ConditionPtr fourth = OneFeatureConditionPtr(3);
+  ConditionPtr fifth = OneFeatureConditionPtr(4);
+
+  VertexPtr leaf1 = LeafVertexPtr<double>(
+      first, 1.0);
+  VertexPtr leaf2 = LeafVertexPtr<double>(
+      second, 2.0);
+  VertexPtr leaf3 = LeafVertexPtr<double>(
+      third, 3.0);
+  VertexPtr leaf4 = LeafVertexPtr<double>(
+      fourth, 4.0);
+  VertexPtr leaf5 = LeafVertexPtr<double>(
+      fifth, 5.0);
+
+  VertexPtr v1 = RegressionVertexPtr<double>();
+
+  VertexPtr v2 = RegressionVertexPtr<double>(
+      CompareConditionPtr(first, GREATER, 10.0));
+
+  v1->addChild(leaf1);
+  v1->addChild(leaf2);
+  v1->addChild(leaf3);
+  v1->addChild(v2);
+
+  v2->addChild(leaf4);
+  v2->addChild(leaf5);
+
+  tree.setRoot(v1);
+
+  Object obj;
+  obj << 1 << 2 << 3 << 100 << 32;
+  EXPECT_TRUE(DoubleEqual(tree.value(obj), (1*1.0 + 2*2 + 3*3)/(1.0 + 2 + 3)));
+
+  obj.features().clear();
+  obj << 4 << 1 << 5 << 34 << 12;
+  EXPECT_EQ(tree.value(obj), (4*1 + 1*2 + 5*3)/(4.0 + 1 + 5));
+
+  obj.features().clear();
+  obj << 9 << -5 << 3.4 << 6 << 2;
+  EXPECT_EQ(tree.value(obj), (9*1 + 5*2 + 3.4*3)/(9.0 + 5 + 3.4));
+
+  obj.features().clear();
+  obj << 11 << 0 << 0 << 2 << 1;
+  EXPECT_EQ(tree.value(obj), (11*1 + (4*2.0 + 5)/3.0)/(11.0 + 1));
 }

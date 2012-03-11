@@ -28,7 +28,7 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   Scorer(const string& alias,
       const FeatureConverterArray& featureConverters = FeatureConverterArray()):
         Aliaser(alias),
-        featureConverters_(featureConverters) {}
+        feature_converters_(featureConverters) {}
 
   double value(const Object& obj) const {
     return score(obj);
@@ -39,16 +39,16 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   virtual string brief() const = 0;
 
   const FeatureConverterArray& getFeatureConverters() const {
-    return featureConverters_;
+    return feature_converters_;
   }
   void setFeatureConverters(const FeatureConverterArray& featureConverters) {
-    this->featureConverters_ = featureConverters;
+    this->feature_converters_ = featureConverters;
   }
 
   using SerializableFunctor<double>::generateCppCode;
 
   string generateCppCode(const string& function_name) const {
-    if (featureConverters_.size() == 0)
+    if (feature_converters_.size() == 0)
       return generateCppCodeImpl(function_name);
     string code;
     string implFunctionName(function_name);
@@ -56,9 +56,9 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
     code.append(generateCppCodeImpl(implFunctionName));
 
     for (size_t featureConverterIdx = 0;
-        featureConverterIdx < featureConverters_.size();
+        featureConverterIdx < feature_converters_.size();
         ++featureConverterIdx) {
-      code.append(featureConverters_.at(
+      code.append(feature_converters_.at(
           featureConverterIdx)->generateCppCode());
     }
 
@@ -69,11 +69,11 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
     string prevVectorName("feature");
 
     for (size_t featureConverterIdx = 0;
-        featureConverterIdx < featureConverters_.size();
+        featureConverterIdx < feature_converters_.size();
         ++featureConverterIdx) {
       string curVectorName = "feature" +
           boost::lexical_cast<string>(featureConverterIdx);
-      string featureConverterFunctionName(featureConverters_.at(
+      string featureConverterFunctionName(feature_converters_.at(
           featureConverterIdx)->getDefaultSerializableObjectName());
       code.append("  std::vector<double> ");
       code.append(curVectorName);
@@ -102,7 +102,7 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   virtual double scoreImpl(const Object& obj) const = 0;
   virtual string generateCppCodeImpl(const string& function_name) const = 0;
 
-  FeatureConverterArray featureConverters_;
+  FeatureConverterArray feature_converters_;
 };
 }
 #endif  // LTR_SCORERS_SCORER_H_

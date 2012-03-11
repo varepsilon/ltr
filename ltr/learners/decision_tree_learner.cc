@@ -11,12 +11,12 @@ DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
     : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner"),
       log(logger::Logger::LL_INFO, "DT_Learner ") {
   this->setDefaultParameters();
-  this->copyParameters(parameters.getGroup(""));
+  this->copyParameters(parameters);
 
-  conditions_learner_ =
-      ConditionsLearner::Ptr(new FakeConditionsLearner());
-  splitting_quality_ =
-      SplittingQuality::Ptr(new FakeSplittingQuality());
+  setConditionsLearner(
+      ConditionsLearner::Ptr(new FakeConditionsLearner()));
+  setSplittingQuality(
+      SplittingQuality::Ptr(new FakeSplittingQuality()));
 }
 
 Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(

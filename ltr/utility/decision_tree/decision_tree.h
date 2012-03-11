@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_DECISION_TREE_DECISION_TREE_H_
-#define LTR_DECISION_TREE_DECISION_TREE_H_
+#ifndef LTR_UTILITY_DECISION_TREE_DECISION_TREE_H_
+#define LTR_UTILITY_DECISION_TREE_DECISION_TREE_H_
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -12,7 +12,7 @@
 #include <vector>
 #include <stdexcept>
 
-#include "ltr/decision_tree/condition.h"
+#include "ltr/utility/decision_tree/condition.h"
 
 using std::map;
 using std::string;
@@ -186,4 +186,4 @@ void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
 }
 }
 
-#endif  // LTR_DECISION_TREE_DECISION_TREE_H_
+#endif  // LTR_UTILITY_DECISION_TREE_DECISION_TREE_H_

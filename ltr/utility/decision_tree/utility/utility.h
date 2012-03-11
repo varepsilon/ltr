@@ -1,13 +1,13 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_DECISION_TREE_UTILITY_UTILITY_H_
-#define LTR_DECISION_TREE_UTILITY_UTILITY_H_
+#ifndef LTR_UTILITY_DECISION_TREE_UTILITY_UTILITY_H_
+#define LTR_UTILITY_DECISION_TREE_UTILITY_UTILITY_H_
 
 #include <vector>
 #include <string>
 
 #include "ltr/data/data_set.h"
-#include "ltr/decision_tree/condition.h"
+#include "ltr/utility/decision_tree/condition.h"
 
 using std::string;
 
@@ -24,4 +24,4 @@ template<class T> string ClassName();
 }
 }
 
-#endif  // LTR_DECISION_TREE_UTILITY_UTILITY_H_
+#endif  // LTR_UTILITY_DECISION_TREE_UTILITY_UTILITY_H_

@@ -1,11 +1,11 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_DECISION_TREE_REGRESSION_VERTEX_H_
-#define LTR_DECISION_TREE_REGRESSION_VERTEX_H_
+#ifndef LTR_UTILITY_DECISION_TREE_REGRESSION_VERTEX_H_
+#define LTR_UTILITY_DECISION_TREE_REGRESSION_VERTEX_H_
 
 #include <string>
 
-#include "ltr/decision_tree/decision_tree.h"
+#include "ltr/utility/decision_tree/decision_tree.h"
 
 namespace ltr {
 namespace decision_tree {
@@ -71,4 +71,4 @@ TValue RegressionVertex<TValue>::value(const Object& obj) const {
 }
 }
 }
-#endif  // LTR_DECISION_TREE_REGRESSION_VERTEX_H_
+#endif  // LTR_UTILITY_DECISION_TREE_REGRESSION_VERTEX_H_
