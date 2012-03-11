@@ -76,17 +76,17 @@ TARGET_LINK_LIBRARIES (ltr_lib boost_date_time puppy ${UTILITY})
 INCLUDE_DIRECTORIES(${Source_Path}/ltr ${Source_Path})
 
 ##########################################################################################
+# lets SETup LTR_client
+INCLUDE (${Source_Path}/cmake/ltr_client.cmake NO_POLICY_SCOPE)
+ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
+TARGET_LINK_LIBRARIES (ltr_client ltr_lib tinyxml ${UTILITY})
+
+##########################################################################################
 # lets SETup Google Test
 INCLUDE (${Source_Path}/cmake/gtest.cmake NO_POLICY_SCOPE)
 
 # Google Test librariry. Leads to high warning level in entire solution. i don't know yet how to avoid it
 cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
-
-##########################################################################################
-# lets SETup LTR_client
-INCLUDE (${Source_Path}/cmake/ltr_client.cmake NO_POLICY_SCOPE)
-ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
-TARGET_LINK_LIBRARIES (ltr_client ltr_lib tinyxml ${UTILITY})
 
 ##########################################################################################
 # lets SETup our unit-tests for LTR (executed by Google Test)
