@@ -95,17 +95,4 @@ ADD_EXECUTABLE (ltr_lib_test ${LTR_TEST_ALL})
 TARGET_LINK_LIBRARIES (ltr_lib_test ltr_lib gtest boost_filesystem)
 
 # lets copy the test data to the build directory
-IF (WIN32)
-  # Copyes data in /{BUILD_TYPE}/data (e. g. /Debug/data) while building ltr_lib_test
-  # Does none if /{BUILD_TYPE}/data already exists
-  ADD_CUSTOM_COMMAND(
-    TARGET ltr_lib_test POST_BUILD COMMAND
-      if not exist ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}/data (
-        ${CMAKE_COMMAND} -E copy_directory
-          ${Source_Path}/data
-          ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}/data))
-ELSE (WIN32)
-  EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${Source_Path}/data
-    ${CMAKE_BINARY_DIR}/data)
-ENDIF (WIN32)
+INCLUDE (${Source_Path}/cmake/copy_test_data.cmake NO_POLICY_SCOPE)
