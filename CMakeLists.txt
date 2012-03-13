@@ -73,8 +73,6 @@ INCLUDE (${Source_Path}/cmake/ltr.cmake NO_POLICY_SCOPE)
 ADD_LIBRARY (ltr_lib STATIC ${LTR_ALL})
 TARGET_LINK_LIBRARIES (ltr_lib boost_date_time puppy ${UTILITY})
 
-INCLUDE_DIRECTORIES(${Source_Path}/ltr ${Source_Path})
-
 ##########################################################################################
 # lets SETup LTR_client
 INCLUDE (${Source_Path}/cmake/ltr_client.cmake NO_POLICY_SCOPE)

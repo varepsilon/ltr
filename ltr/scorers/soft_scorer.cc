@@ -1,6 +1,6 @@
 // Copyright 2011 Yandex
 
-#include "scorers/soft_scorer.h"
+#include "ltr/scorers/soft_scorer.h"
 
 #include <boost/lexical_cast.hpp>
 

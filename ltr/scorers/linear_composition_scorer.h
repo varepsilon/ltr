@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "scorers/scorer.h"
-#include "scorers/utility/scorer_utility.h"
+#include "ltr/scorers/scorer.h"
+#include "ltr/scorers/utility/scorer_utility.h"
 
 namespace ltr {
   class LinearCompositionScorer : public Scorer {

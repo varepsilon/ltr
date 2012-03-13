@@ -2,7 +2,7 @@
 
 #include <boost/lexical_cast.hpp>
 
-#include "scorers/linear_composition_scorer.h"
+#include "ltr/scorers/linear_composition_scorer.h"
 
 namespace ltr {
   double LinearCompositionScorer::scoreImpl(const Object& obj) const {

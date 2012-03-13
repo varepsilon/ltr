@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-#include "scorers/scorer.h"
+#include "ltr/scorers/scorer.h"
 
 
 namespace ltr {

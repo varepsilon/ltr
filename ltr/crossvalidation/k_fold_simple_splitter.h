@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-#include "crossvalidation/splitter.h"
+#include "ltr/crossvalidation/splitter.h"
 
 using std::vector;
 using std::logic_error;

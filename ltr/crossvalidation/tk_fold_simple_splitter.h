@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <stdexcept>
 
-#include "crossvalidation/splitter.h"
+#include "ltr/crossvalidation/splitter.h"
 
 using std::vector;
 using std::random_shuffle;

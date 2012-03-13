@@ -12,7 +12,7 @@
 
 #include "ltr/data/utility/parsers/parse_arff.h"
 
-#include "utility/numerical.h"
+#include "ltr/utility/numerical.h"
 
 using boost::algorithm::trim_copy;
 using boost::spirit::classic::parse;
