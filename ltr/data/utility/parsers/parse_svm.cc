@@ -35,11 +35,17 @@ using std::map;
 
 namespace ltr {
   namespace io_utility {
-  Object SVMParser::parse(const std::string &line_,
-                          NominalFeatureHandler::Ptr feature_handler) {
-    Object obj;
+  void SVMParser::init(std::istream* in) {
+    raw_feature_info_[raw_query_id_idx_].feature_type = META;
+    raw_feature_info_[raw_query_id_idx_].feature_name = "queryId";
+
+    raw_feature_info_[raw_relevance_idx_].feature_type = CLASS;
+    raw_feature_info_[raw_relevance_idx_].feature_name = "Label";
+  }
+
+  void SVMParser::parseRawObject(string line_, RawObject* result) {
     int qid = -1;
-    map<int, string> features;
+    RawObject& features = *result;
     int key;
     double relevance;
     string line = trim_copy(line_);
@@ -53,11 +59,9 @@ namespace ltr {
     if (!info.hit) {
       throw std::logic_error("failed parse line " + line + " as SVM");
     }
-    obj.setActualLabel(relevance);
-    feature_handler->process(features, &obj.features());
+    features[raw_relevance_idx_] = lexical_cast<string>(relevance);
     if (qid > -1)
-      obj.setMetaInfo("queryId", lexical_cast<string>(qid));
-    return obj;
+      features[raw_query_id_idx_] = lexical_cast<string>(qid);
   }
 
   void SVMParser::makeString(const Object& obj, string*result) {

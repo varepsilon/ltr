@@ -34,10 +34,8 @@ SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h                
                  ${Source_Path}/ltr/data/utility/io_utility.cc
-                 ${Source_Path}/ltr/data/utility/nominal_feature_handler.h
-                 ${Source_Path}/ltr/data/utility/nominal_feature_handler.cc
-                 ${Source_Path}/ltr/data/utility/parsers/object_parser.h
-                 ${Source_Path}/ltr/data/utility/parsers/object_parser.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parser.h
+                 ${Source_Path}/ltr/data/utility/parsers/parser.cc
                  ${Source_Path}/ltr/data/utility/parsers/parse_yandex.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_yandex.cc
                  ${Source_Path}/ltr/data/utility/parsers/parse_svm.h

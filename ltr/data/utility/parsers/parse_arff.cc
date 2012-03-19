@@ -56,14 +56,12 @@ namespace io_utility {
     throw std::logic_error("can't build listwise dataset for ARFF format");
   }
 
-  Object ARFFParser::parse(const std::string& line,
-                           NominalFeatureHandler::Ptr feature_handler) {
+  void ARFFParser::parseRawObject(string line, RawObject* result) {
     if (line[0] == '%')
-      throw IParser::comment();
+      throw Parser::bad_line();
     parseNextFeature.init(this);
     parseNextFeature.reset();
 
-    Object obj;
     rule<> number = !ch_p('-') >> +digit_p >> !('.' >> *digit_p);
     rule<> nan = lexeme_d[str_p("?")];
     rule<> string_rule = lexeme_d[*(anychar_p - ch_p('\''))];
@@ -79,23 +77,16 @@ namespace io_utility {
 
     if (!info.hit)
       throw std::logic_error("can't parse ARFF string");
-
-    feature_handler->process(features_, &obj.features());
-    obj.metaInfo() = meta_features_;
-    obj.setActualLabel(current_relevance_);
-
-    return obj;
+    *result = features_;
   }
 
   void ARFFParser::init(std::istream *in) {
     std::string line;
-    class_feature_id_ = -1;
 
-    nominal_feature_info_.feature_type_.clear();
-    nominal_feature_info_.feature_values_.clear();
+    raw_feature_info_.clear();
 
     int feature_id = 1;
-    int meta_id = 0;
+    int class_feature_id_ = -1;
 
     while (std::getline(*in, line)) {
       if (line.size() == 0 || line[0] != '@')
@@ -139,19 +130,19 @@ namespace io_utility {
         throw std::logic_error("can't parse ARFF header");
 
       boost::to_upper(attr_type);
-      nominal_feature_info_.feature_name_[feature_id] = attr_name;
+      raw_feature_info_[feature_id].feature_name = attr_name;
       if (attr_name == "class") {
-        nominal_feature_info_.feature_type_[feature_id] = CLASS;
+        raw_feature_info_[feature_id].feature_type = CLASS;
         for (int i = 0; i < values.size(); i++)
           classes_[values[i]] = i+1;
         class_feature_id_ = feature_id;
       } else if (attr_type == "NUMERIC" || attr_type == "REAL") {
-        nominal_feature_info_.feature_type_[feature_id] = NUMERIC;
+        raw_feature_info_[feature_id].feature_type = NUMERIC;
       } else if (attr_type == "STRING") {
-        nominal_feature_info_.feature_type_[feature_id] = META;
+        raw_feature_info_[feature_id].feature_type = META;
       } else if (values.size() != 0) {
-        nominal_feature_info_.feature_type_[feature_id] = NOMINAL;
-        nominal_feature_info_.feature_values_[feature_id] = values;
+        raw_feature_info_[feature_id].feature_type = NOMINAL;
+        raw_feature_info_[feature_id].feature_values = values;
       }
       feature_id++;
     }
@@ -160,7 +151,7 @@ namespace io_utility {
 }
 
   void ARFFParser::NextFeatureParser::reset() {
-    parser_->current_id_ = parser_->current_out_id_ = 1;
+    parser_->current_id_ = 1;
     parser_->current_relevance_ = 0;
     parser_->features_.clear();
     parser_->meta_features_.clear();
@@ -170,29 +161,22 @@ namespace io_utility {
                                                  const char* it) const {
     std::string feature(feature_, it);
     int cur_id = parser_->current_id_;
-    NominalFeatureType type =
-        parser_->nominal_feature_info_.feature_type_[cur_id];
-    if (type == META) {
-      parser_->meta_features_[
-              parser_->nominal_feature_info_.feature_name_[cur_id] ] = feature;
-      parser_->current_id_++;
-      return;
-    } else if (type == CLASS) {
-      parser_->current_relevance_ = parser_->classes_[feature];
-      parser_->current_id_++;
-      return;
-    }
-    parser_->current_id_++;
+    Parser::RawFeatureType type =
+        parser_->raw_feature_info_[cur_id].feature_type;
     if (feature == "?") {
-      parser_->current_out_id_++;
+      parser_->current_id_++;
       return;
     }
-    parser_->features_[parser_->current_out_id_++] = feature;
+    if (type == CLASS) {
+      parser_->features_[parser_->current_id_++] =
+        boost::lexical_cast<string>(parser_->classes_[feature]);
+      return;
+    }
+    parser_->features_[parser_->current_id_++] = feature;
   }
 
   void ARFFParser::NextFeatureParser::init(ARFFParser* parser) {
     parser_ = parser;
-    info_ = parser->info();
   }
 }
 }

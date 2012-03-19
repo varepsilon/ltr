@@ -18,10 +18,14 @@
 
 namespace ltr {
   namespace io_utility {
-    class YandexParser : public IParser {
+    class YandexParser : public Parser {
+      private:
+        void init(std::istream* in);
+        static const int raw_query_id_idx_ = 0;
+        static const int raw_relevance_idx_ = -1;
+
       public:
-        Object parse(const std::string &line_,
-                     NominalFeatureHandler::Ptr feature_handler);
+        void parseRawObject(string line, RawObject* result);
         void makeString(const Object& obj, std::string* result);
 
         DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,

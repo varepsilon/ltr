@@ -6,7 +6,7 @@ namespace ltr {
 namespace io_utility {
 
 template<>
-DataSet<Object> buildDataSet(IParser::Ptr parser,
+DataSet<Object> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info) {
   DataSet<Object> data(info);
@@ -18,14 +18,14 @@ DataSet<Object> buildDataSet(IParser::Ptr parser,
 }
 
 template<>
-DataSet<ObjectPair> buildDataSet(IParser::Ptr parser,
+DataSet<ObjectPair> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info) {
   return parser->buildPairDataSet(objects, info);
 }
 
 template<>
-DataSet<ObjectList> buildDataSet(IParser::Ptr parser,
+DataSet<ObjectList> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info) {
   return parser->buildListDataSet(objects, info);
