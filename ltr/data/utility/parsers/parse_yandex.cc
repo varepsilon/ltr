@@ -38,6 +38,8 @@ using std::map;
 
 namespace ltr {
   namespace io_utility {
+  const int YandexParser::raw_query_id_idx_ = 0;
+  const int YandexParser::raw_relevance_idx_ = -1;
   void YandexParser::init(std::istream* in) {
     raw_feature_info_[raw_query_id_idx_].feature_type = META;
     raw_feature_info_[raw_query_id_idx_].feature_name = "queryId";

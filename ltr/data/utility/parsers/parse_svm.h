@@ -21,8 +21,8 @@ namespace ltr {
   class SVMParser : public Parser {
     private:
       void init(std::istream* in);
-      static const int raw_query_id_idx_ = 0;
-      static const int raw_relevance_idx_ = -1;
+      static const int raw_query_id_idx_;
+      static const int raw_relevance_idx_;
 
     public:
       void parseRawObject(string line, RawObject* result);
