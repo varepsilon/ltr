@@ -14,7 +14,7 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
 
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 namespace ltr {
   namespace io_utility {

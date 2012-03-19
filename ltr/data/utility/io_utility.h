@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include "ltr/data/data_set.h"
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/numerical.h"

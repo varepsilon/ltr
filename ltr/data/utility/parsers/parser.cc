@@ -3,7 +3,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 #include "ltr/data/utility/parsers/parse_svm.h"
 #include "ltr/data/utility/parsers/parse_yandex.h"
 #include "ltr/data/utility/parsers/parse_arff.h"

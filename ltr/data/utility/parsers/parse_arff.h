@@ -10,7 +10,7 @@
 #include <string>
 #include <set>
 
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 using boost::spirit::classic::parser;
 using std::vector;
