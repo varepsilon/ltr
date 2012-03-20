@@ -7,7 +7,6 @@
 #include "gtest/gtest.h"
 
 #include "ltr/data/utility/io_utility.h"
-#include "ltr/data/utility/nominal_feature_handler.h"
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/data/data_set.h"
 
