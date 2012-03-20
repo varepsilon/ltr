@@ -44,7 +44,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc)
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h
-              ${Source_Path}/ltr/utility/numerical.cc)
+              ${Source_Path}/ltr/utility/numerical.cc
+              ${Source_Path}/ltr/utility/murmur_hash.h
+              ${Source_Path}/ltr/utility/murmur_hash.cc)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h

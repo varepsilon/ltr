@@ -1,7 +1,8 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
-SET(LTR_DATA_TEST ${Source_Path}/ltr/data/data_set_unittest.cc)
+SET(LTR_DATA_TEST ${Source_Path}/ltr/data/data_set_unittest.cc
+				  ${Source_Path}/ltr/data/serialization_unittest.cc)
 
 SET(LTR_IO_UILITY_TEST ${Source_Path}/ltr/data/utility/io_utility_unittest.cc)
 

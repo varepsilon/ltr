@@ -57,6 +57,13 @@ ObjectPair ObjectPair::deepCopy() const {
     result.o2_ = this->o2_.deepCopy();
     return result;
 }
+
+string ObjectPair::toString() const {
+  std::stringstream str;
+  str << '(' << first().toString() << ", " << second().toString() << ')';
+  return str.str();
+}
+
 bool operator==(const ObjectPair& p1, const ObjectPair& p2) {
   return p1.first() == p2.first() && p1.second() == p2.second();
 }

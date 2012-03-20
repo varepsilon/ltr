@@ -27,8 +27,8 @@ void NominalToBoolConverter::apply(
 
   for (size_t i = 0; i < argument.features().size(); i++)
     if (feature_info_.getFeatureType(i) == NOMINAL) {
-      map<int, string> vals = feature_info_.getFeatureValues(i);
-      for (map<int, string>::iterator it = vals.begin();
+      map<unsigned int, string> vals = feature_info_.getFeatureValues(i);
+      for (map<unsigned int, string>::iterator it = vals.begin();
            it != vals.end(); it++)
         if (argument.features()[i] == it->first)
           *value << 1.0;
@@ -63,8 +63,8 @@ string NominalToBoolConverter::generateCppCode(
 
   for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
     if (feature_info_.getFeatureType(i) == NOMINAL) {
-      map<int, string> vals = feature_info_.getFeatureValues(i);
-      for (map<int, string>::iterator it = vals.begin();
+      map<unsigned int, string> vals = feature_info_.getFeatureValues(i);
+      for (map<unsigned int, string>::iterator it = vals.begin();
            it != vals.end(); it++) {
         hpp_string.
           append("  feature_values[").

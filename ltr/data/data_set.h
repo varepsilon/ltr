@@ -4,6 +4,8 @@
 #define LTR_DATA_DATA_SET_H_
 
 #include <vector>
+#include <string>
+#include <sstream>
 
 #include "ltr/data/feature_info.h"
 #include "ltr/data/object.h"
@@ -112,6 +114,11 @@ class DataSet {
       const DataSet<TElement>& data,
       const std::vector<int>& indexes);
 
+  /** 
+   * Function for serialization data set into string.
+   */
+  string toString() const;
+
   private:
   /** Shared pointer to the actual vector, in which the elements are stored.
    */
@@ -213,6 +220,14 @@ DataSet<TElement> DataSet<TElement>::deepCopy() const {
     result << this->at(idx);
   }
   return result;
+}
+
+template< typename TElement >
+string DataSet<TElement>::toString() const {
+  std::stringstream str;
+  for (size_t i = 0; i < size(); i++)
+    str << (*this)[i].toString() << std::endl;
+  return str.str();
 }
 
 template< typename TElement >

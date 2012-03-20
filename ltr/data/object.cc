@@ -1,6 +1,7 @@
 // Copyright 2011 Yandex
 
 #include <sstream>
+#include <iomanip>
 #include <stdexcept>
 
 #include "ltr/data/object.h"
@@ -110,6 +111,20 @@ Object Object::deepCopy() const {
 size_t Object::size() const {
   return 1;
 };
+
+string Object::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << '[';
+  for (size_t i = 0; i < features().size(); i++) {
+    if (i != 0)
+      str << ", ";
+    str << features()[i];
+  }
+  str << ']';
+  return str.str();
+}
 
 bool operator==(const Object& ob1, const Object& ob2) {
   return equalWithNaN(*ob1.features_, *ob2.features_) &&

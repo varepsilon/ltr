@@ -50,4 +50,16 @@ ObjectList ObjectList::deepCopy() const {
     }
     return result;
 }
+
+string ObjectList::toString() const {
+  std::stringstream str;
+  str << '{';
+  for (size_t i = 0; i < size(); i++) {
+    if (i != 0)
+      str << ", ";
+    str << (*this)[i].toString();
+  }
+  str << '}';
+  return str.str();
+}
 }
