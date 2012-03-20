@@ -14,14 +14,18 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
 
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 namespace ltr {
   namespace io_utility {
-  class SVMParser : public IParser {
+  class SVMParser : public Parser {
+    private:
+      void init(std::istream* in);
+      static const int raw_query_id_idx_;
+      static const int raw_relevance_idx_;
+
     public:
-      Object parse(const std::string& line,
-                   NominalFeatureHandler::Ptr featureHandler);
+      void parseRawObject(string line, RawObject* result);
       void makeString(const Object& obj, std::string* result);
 
       DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,

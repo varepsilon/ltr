@@ -10,7 +10,7 @@
 #include <string>
 #include <set>
 
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 using boost::spirit::classic::parser;
 using std::vector;
@@ -18,11 +18,12 @@ using std::set;
 
 namespace ltr {
 namespace io_utility {
-  class ARFFParser : public IParser {
-    public:
+  class ARFFParser : public Parser {
+    private:
       void init(std::istream* in);
-      Object parse(const std::string& line,
-                   NominalFeatureHandler::Ptr featureHandler);
+
+    public:
+      virtual void parseRawObject(string line, RawObject* result);
       void makeString(const Object& obj, std::string* result);
 
       DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,
@@ -32,9 +33,7 @@ namespace io_utility {
 
     private:
       int current_id_;
-      int class_feature_id_;
       double current_relevance_;
-      int current_out_id_;
       map<int, string> features_;
       map<string, double> classes_;
       map<string, string> meta_features_;
@@ -62,7 +61,6 @@ namespace io_utility {
           void reset();
 
         private:
-          NominalFeatureInfo info_;
           ARFFParser* parser_;
       } parseNextFeature;
       friend class NextFeatureParser;

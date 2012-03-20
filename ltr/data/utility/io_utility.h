@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include "ltr/data/data_set.h"
-#include "ltr/data/utility/parsers/object_parser.h"
+#include "ltr/data/utility/parsers/parser.h"
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/numerical.h"
@@ -25,16 +25,13 @@ namespace io_utility {
  * Function to load data set from file.
  * @param filename - path to file
  * @param format - data format (svmlite, yandex, arff)
- * @param handler - class, converting features into vector of numbers
  * @code
  * DataSet<Object> = loadDataSet<Object>("dataset.txt", "svmlite");
  * @endcode
  */
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
-    const string& format,
-    NominalFeatureHandler::Ptr handler =
-        NominalFeatureHandler::Ptr(new RemoveHandler()));
+    const string& format);
 /**
  * Function to save data set into file.
  * @param data - data set to save
@@ -58,7 +55,7 @@ void saveDataSet(const DataSet<TElement>& data,
  * @endcode
  */
 template<class TElement>
-DataSet<TElement> buildDataSet(IParser::Ptr parser,
+DataSet<TElement> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info);
 /**
@@ -95,28 +92,26 @@ namespace io_utility {
 
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
-    const string& format,
-    NominalFeatureHandler::Ptr handler) {
+    const string& format) {
   std::ifstream file(filename.c_str());
   if (file.fail())
     throw std::logic_error("File " + filename + " not found");
-  IParser::Ptr parser = getParser(format);
-  parser->init(&file);
-  handler->init(parser->info());
+
+  Parser::Ptr parser = getParser(format);
+  parser->setStream(&file);
 
   vector<Object> objects;
-  std::string line;
-  while (std::getline(file, line))
-    try {
-      objects.push_back(parser->parse(line, handler));
-    } catch(IParser::comment err) {}
+  Object current_object;
+
+  while (parser->parseNextObject(&current_object))
+    objects.push_back(current_object);
 
   file.close();
-  int feature_cnt = handler->featureInfo().getFeatureCount();
+  int feature_cnt = parser->featureInfo().getFeatureCount();
   for (size_t i = 0; i < objects.size(); i++)
     for (size_t cn = objects[i].features().size(); cn < feature_cnt; cn++)
       objects[i] << 0.0;
-  return buildDataSet<TElement>(parser, objects, handler->featureInfo());
+  return buildDataSet<TElement>(parser, objects, parser->featureInfo());
 }
 
 
@@ -127,7 +122,7 @@ void saveDataSet(const DataSet<TElement>& data,
   std::ofstream file(filename.c_str());
   if (file.fail())
     throw std::logic_error("can't open " + filename + " for writing");
-  IParser::Ptr parser = getParser(format);
+  Parser::Ptr parser = getParser(format);
   for (size_t i = 0; i < data.size(); i++)
     for (size_t j = 0; j < data[i].size(); j++) {
       parser->writeString(data[i][j], &file);
@@ -166,7 +161,8 @@ void savePredictions(const DataSet<TElement>& data,
   file.precision(utility::DOUBLE_PRECISION);
   for (size_t i = 0; i < data.size(); i++)
     for (size_t j = 0; j < data[i].size(); j++) {
-      file << data[i][j].predictedLabel() << std::endl;
+      file << boost::lexical_cast<string>(data[i][j].predictedLabel())
+           << std::endl;
     }
   file.close();
 }
