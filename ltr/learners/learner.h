@@ -38,7 +38,7 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   void learn(const DataSet<TElement>& data);
 
   void addFeatureConverter(
-      typename ltr::FeatureConverter::ConstPtr p_feature_converter);
+      typename ltr::FeatureConverter::Ptr p_feature_converter);
 
   virtual void reset() = 0;
   virtual Scorer::Ptr makeScorerPtr() const = 0;
@@ -98,7 +98,7 @@ Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
 
 template< class TElement >
 void BaseLearner< TElement >::addFeatureConverter(
-    typename ltr::FeatureConverter::ConstPtr p_FeatureConverter) {
+    typename ltr::FeatureConverter::Ptr p_FeatureConverter) {
   feature_converters_.push_back(p_FeatureConverter);
 }
 
@@ -109,6 +109,8 @@ void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   for (size_t featureConverterIdx = 0;
       featureConverterIdx < feature_converters_.size();
       ++featureConverterIdx) {
+        feature_converters_[featureConverterIdx]->
+          setFeatureInfo(data.featureInfo());
         ltr::utility::ApplyFeatureConverter(
           feature_converters_[featureConverterIdx],
           sourceData,

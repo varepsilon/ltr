@@ -22,16 +22,15 @@ void CheckMaxUsedFeature(int max_used_feature, int argument_feature_count) {
 
 namespace ltr {
 
-FeatureInfo FeatureSubsetChooser::convertFeatureInfo(
-    const FeatureInfo& oldFeatureInfo) const {
+FeatureInfo FeatureSubsetChooser::getNewFeatureInfo() const {
   FeatureInfo convertedFeatureInfo(getChoosedFeaturesCount());
 
-  CheckMaxUsedFeature(max_used_feature_, oldFeatureInfo.getFeatureCount());
+  CheckMaxUsedFeature(max_used_feature_, feature_info_.getFeatureCount());
   for (int choosed_feature_index = 0;
       choosed_feature_index < getChoosedFeaturesCount();
       ++choosed_feature_index) {
     convertedFeatureInfo.setFeatureType(choosed_feature_index,
-        oldFeatureInfo.getFeatureType(
+        feature_info_.getFeatureType(
             indices_[choosed_feature_index]));
   }
 

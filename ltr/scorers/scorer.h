@@ -44,6 +44,10 @@ class Scorer : public Aliaser, public SerializableFunctor<double> {
   void setFeatureConverters(const FeatureConverterArray& featureConverters) {
     this->feature_converters_ = featureConverters;
   }
+  void addFeatureConverter(
+    FeatureConverter::Ptr p_feature_converter) {
+    this->feature_converters_.push_back(p_feature_converter);
+  }
 
   using SerializableFunctor<double>::generateCppCode;
 

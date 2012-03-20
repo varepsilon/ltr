@@ -22,9 +22,10 @@ class FakeFeatureConverter : public FeatureConverter {
   public:
   typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
 
-  FakeFeatureConverter() {}
+  FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
+    : FeatureConverter(feature_info) {}
 
-  FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const;
+  FeatureInfo getNewFeatureInfo() const;
 
   void apply(const Object& source_object,
     Object* preprocessed_object) const;

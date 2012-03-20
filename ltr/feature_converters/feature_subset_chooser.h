@@ -30,12 +30,14 @@ class FeatureSubsetChooser : public FeatureConverter {
   public:
   typedef boost::shared_ptr<FeatureSubsetChooser> Ptr;
 
-  FeatureSubsetChooser() {}
+  FeatureSubsetChooser(FeatureInfo feature_info = FeatureInfo())
+    : FeatureConverter(feature_info) {}
   /**
    * @param input_indices - indices of features to be chosen from inputted object
    */
-  explicit FeatureSubsetChooser(const vector<int>& input_indices)
-      : indices_(input_indices) {
+  explicit FeatureSubsetChooser(const vector<int>& input_indices,
+                                const FeatureInfo& feature_info = FeatureInfo())
+      : FeatureConverter(feature_info_), indices_(input_indices) {
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
   }
   /**
@@ -59,7 +61,7 @@ class FeatureSubsetChooser : public FeatureConverter {
     return indices_.size();
   }
 
-  FeatureInfo convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const;
+  FeatureInfo getNewFeatureInfo() const;
 
   void apply(const Object& source_object,
     Object* preprocessed_object) const;

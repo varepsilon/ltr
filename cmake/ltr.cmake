@@ -112,7 +112,13 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
-                           ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
+                           ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h
+                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.h
+                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.cc
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
+                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc)
 
 SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
                            

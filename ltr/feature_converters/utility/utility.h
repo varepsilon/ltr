@@ -18,7 +18,7 @@ void ApplyFeatureConverter(
     const DataSet<TElement>& argument,
     DataSet<TElement>* value) {
   DataSet<TElement> result
-      (converter->convertFeatureInfo(argument.featureInfo()));
+      (converter->getNewFeatureInfo());
 
   for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
     vector<Object> objectsInTElement;
