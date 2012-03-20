@@ -51,7 +51,11 @@ macro(config_compiler_and_linker)
     find_package(Threads)
   endif()
 
-  fix_default_compiler_settings_()
+  ######################################LTR_fix############################################
+  # Commented cause we don't want gtest to affect global variables such as CMAKE_CXX_FLAGS
+  # fix_default_compiler_settings_()
+  ######################################LTR_fix############################################
+  
   if (MSVC)
     # Newlines inside flags variables break CMake's NMake generator.
     # TODO(vladl@google.com): Add -RTCs and -RTCu to debug builds.

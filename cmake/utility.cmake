@@ -8,4 +8,4 @@
 SET(TIMER_SOURCES ${Source_Path}/utility/timer.h ${Source_Path}/utility/timer.cc)
 SET(LOGGER_SOURCES ${Source_Path}/utility/logger.h ${Source_Path}/utility/logger.cc)
 
-INCLUDE_DIRECTORIES(${Source_Path}/utility)
+INCLUDE_DIRECTORIES(${Source_Path})
