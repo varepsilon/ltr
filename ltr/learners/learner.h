@@ -109,8 +109,6 @@ void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   for (size_t featureConverterIdx = 0;
       featureConverterIdx < feature_converters_.size();
       ++featureConverterIdx) {
-        feature_converters_[featureConverterIdx]->
-          setFeatureInfo(data.featureInfo());
         ltr::utility::ApplyFeatureConverter(
           feature_converters_[featureConverterIdx],
           sourceData,

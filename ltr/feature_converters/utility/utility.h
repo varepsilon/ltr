@@ -14,9 +14,10 @@ namespace utility {
 
 template <typename TElement>
 void ApplyFeatureConverter(
-    boost::shared_ptr<const FeatureConverter> converter,
+    FeatureConverter::Ptr converter,
     const DataSet<TElement>& argument,
     DataSet<TElement>* value) {
+  converter->setFeatureInfo(argument.featureInfo());
   DataSet<TElement> result
       (converter->getNewFeatureInfo());
 
