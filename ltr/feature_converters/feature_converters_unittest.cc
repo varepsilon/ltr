@@ -9,12 +9,15 @@
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/feature_converters/feature_subset_chooser.h"
 #include "ltr/feature_converters/feature_normalizer_learner.h"
+#include "ltr/feature_converters/remove_nan_converter.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/learners/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/dcg.h"
 #include "ltr/parameters_container/parameters_container.h"
+
+using ltr::RemoveNaNConverter;
 
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
@@ -58,7 +61,7 @@ class FeatureConvertersTest : public ::testing::Test {
 TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   std::vector<int> indexes;
 
-  for (int featureIdx = 0;
+    for (int featureIdx = 0;
       featureIdx < learn_data_pointwise.featureCount();
       ++featureIdx) {
     if (featureIdx == bestFeatureIndex) {
@@ -70,9 +73,12 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   ltr::FeatureSubsetChooser::Ptr pSubsetChooser(
       new ltr::FeatureSubsetChooser(indexes));
 
+  RemoveNaNConverter::Ptr pRemoveNaN(new RemoveNaNConverter());
+
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
+  learner.addFeatureConverter(pRemoveNaN);
   learner.addFeatureConverter(pSubsetChooser);
 
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
@@ -81,6 +87,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   double withoutBestFeatureMeasure = pMeasure->average(learn_data_pointwise);
 
   ltr::OneFeatureScorer scorerByBestFeature(bestFeatureIndex);
+  scorerByBestFeature.addFeatureConverter(pRemoveNaN);
   ltr::utility::MarkDataSet(learn_data_pointwise, scorerByBestFeature);
 
   double bestFeatureMeasure = pMeasure->average(learn_data_pointwise);

@@ -116,6 +116,12 @@ class Object {
    */
   friend bool operator==(const Object& o1, const Object& o2);
 
+  /** 
+   * Function for serialization object.
+   * Returns string of feature values in brackets. For example: [1, 5.6, 2.3]
+   */
+  string toString() const;
+
   private:
   /** Shared pointer to feature vector.
    */

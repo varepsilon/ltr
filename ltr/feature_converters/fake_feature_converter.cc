@@ -10,9 +10,8 @@ using std::string;
 
 namespace ltr {
 
-FeatureInfo FakeFeatureConverter::convertFeatureInfo(
-    const FeatureInfo& oldFeatureInfo) const {
-  return oldFeatureInfo;
+FeatureInfo FakeFeatureConverter::getNewFeatureInfo() const {
+  return feature_info_;
 }
 
 void FakeFeatureConverter::apply(const Object& argument,

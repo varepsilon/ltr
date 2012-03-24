@@ -15,7 +15,7 @@ using std::string;
 namespace ltr {
 
 enum FeatureType {NUMERIC, NOMINAL, BOOLEAN};
-typedef map<double, string> NominalFeatureValues;
+typedef map<unsigned int, string> NominalFeatureValues;
 
 struct OneFeatureInfo {
   FeatureType type_;
@@ -50,7 +50,11 @@ class FeatureInfo {
       addFeature(OneFeatureInfo(type, values));
     }
 
-    NominalFeatureValues getFeatureValues(size_t idx) {
+    NominalFeatureValues& getFeatureValues(size_t idx) {
+      return features_info_[idx].values_;
+    }
+
+    const NominalFeatureValues& getFeatureValues(size_t idx) const {
       return features_info_[idx].values_;
     }
 

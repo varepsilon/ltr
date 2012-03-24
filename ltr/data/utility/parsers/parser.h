@@ -14,6 +14,7 @@ using std::vector;
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
+#include "ltr/utility/murmur_hash.h"
 
 namespace ltr {
   namespace io_utility {
@@ -145,7 +146,7 @@ namespace ltr {
         virtual void init(std::istream* in) {}
 
         double hash(const string str) {
-          return 0;
+          return utility::murmurHash2(str.c_str(), str.size(), 19837);
         }
     };
 

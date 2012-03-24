@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <string>
 
 #include "ltr/data/object.h"
 
@@ -73,6 +74,11 @@ class ObjectPair {
    * of the objects in the pair.
    */
   ObjectPair deepCopy() const;
+
+  /** 
+   * Function for serialization pair into string.
+   */
+  string toString() const;
 
   private:
   /** The first object in the pair.

@@ -44,7 +44,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc)
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h
-              ${Source_Path}/ltr/utility/numerical.cc)
+              ${Source_Path}/ltr/utility/numerical.cc
+              ${Source_Path}/ltr/utility/murmur_hash.h
+              ${Source_Path}/ltr/utility/murmur_hash.cc)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
@@ -112,7 +114,13 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
-                           ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h)
+                           ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h
+                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.h
+                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.cc
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
+                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc)
 
 SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
                            

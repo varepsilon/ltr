@@ -19,11 +19,20 @@ namespace ltr {
  * chooses a subset
  */
 class FeatureConverter : public Serializable {
+  protected:
+    FeatureInfo feature_info_;
+
   public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
 
+  FeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
+    : feature_info_(feature_info) {}
   virtual ~FeatureConverter() {}
+
+  void setFeatureInfo(const FeatureInfo& feature_info) {
+    feature_info_ = feature_info;
+  }
 
   /**
    * Returns converted feature info (objects before and after converting
@@ -31,7 +40,7 @@ class FeatureConverter : public Serializable {
    * may change the number of object's features)
    */
   virtual FeatureInfo
-  convertFeatureInfo(const FeatureInfo& oldFeatureInfo) const = 0;
+  getNewFeatureInfo() const = 0;
 
   /**
    * Converts object's features
@@ -41,7 +50,7 @@ class FeatureConverter : public Serializable {
   virtual void apply(const Object& argument, Object* value) const = 0;
 };
 
-typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
+typedef std::vector< FeatureConverter::Ptr > FeatureConverterArray;
 };
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

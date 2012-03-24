@@ -8,6 +8,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <string>
 
 namespace ltr {
 /** \class The class stores a number of objects. The container for number of
@@ -56,6 +57,11 @@ class ObjectList {
   /** Operator, checks whether two objects are equal.
    */
   friend bool operator==(const ObjectList& left, const ObjectList& right);
+
+  /** 
+   * Function for serialization list into string.
+   */
+  string toString() const;
 
   private:
   /** Shared pointer to the vector of Object s.
