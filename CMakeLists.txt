@@ -16,7 +16,12 @@ ENDIF (NOT DEFINED CMAKE_CURRENT_LIST_DIR)
 MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
 MESSAGE("PROJECT_BINARY_DIR    : ${PROJECT_BINARY_DIR}")
 
-SET (Source_Path ${CMAKE_CURRENT_LIST_DIR})
+# SET (Source_Path ${CMAKE_CURRENT_LIST_DIR})
+# IF(UNIX)
+	# SET (Install_Path /usr/lib)
+# ELSE(UNIX)
+	# SET (Install_Path ${Source_Path}/lib)
+# ENDIF(UNIX)
 SET (Install_Path ${Source_Path}/lib)
 
 MESSAGE("Source_Path           : ${Source_Path}")
