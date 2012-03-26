@@ -17,7 +17,11 @@ MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
 MESSAGE("PROJECT_BINARY_DIR    : ${PROJECT_BINARY_DIR}")
 
 SET (Source_Path ${CMAKE_CURRENT_LIST_DIR})
-SET (Install_Path ${Source_Path}/lib)
+IF(UNIX)
+	SET (Install_Path /usr/lib)
+ELSE(UNIX)
+	SET (Install_Path ${Source_Path}/lib)
+ENDIF(UNIX)
 
 MESSAGE("Source_Path           : ${Source_Path}")
 MESSAGE("Install_Path          : ${Install_Path}")
