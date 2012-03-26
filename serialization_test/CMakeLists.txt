@@ -24,7 +24,8 @@ FIND_LIBRARY(boost_filesystem_library boost_filesystem HINTS ${LTR_Install_Path}
 FIND_LIBRARY(boost_system_library boost_system HINTS ${LTR_Install_Path})
 
 # lets SETup Utilities
-FIND_LIBRARY(LTR_Library util_timer util_logger HINTS ${LTR_Install_Path})
+FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
+FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
 
 MESSAGE("LTR_Library           : ${LTR_Library}")
 MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
