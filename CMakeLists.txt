@@ -17,11 +17,6 @@ MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
 MESSAGE("PROJECT_BINARY_DIR    : ${PROJECT_BINARY_DIR}")
 
 SET (Source_Path ${CMAKE_CURRENT_LIST_DIR})
-# IF(UNIX)
-	# SET (Install_Path /usr/lib)
-# ELSE(UNIX)
-	# SET (Install_Path ${Source_Path}/lib)
-# ENDIF(UNIX)
 SET (Install_Path ${Source_Path}/lib)
 
 MESSAGE("Source_Path           : ${Source_Path}")
@@ -62,6 +57,8 @@ INCLUDE (${Source_Path}/cmake/utility.cmake)
 ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
 ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
 SET (UTILITY util_timer util_logger)
+
+INSTALL(TARGETS util_timer util_logger ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup tinyxml library

@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
   bf_learner->learn(generator.train_data);
   generator.setScorerTest(bf_learner, "bf_learner");
 
-  ID3_Learner<Object>::Ptr id3_learner;
+  ID3_Learner::Ptr id3_learner(new ID3_Learner);
   id3_learner->learn(generator.train_data);
   generator.setScorerTest(id3_learner, "id3_learner");
 
