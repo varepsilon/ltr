@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <ostream>
 
 using std::map;
 using std::string;
@@ -143,5 +144,8 @@ bool operator==(const Object& ob1, const Object& ob2);
 /** Operator, checks whether two objects are not equal.
  */
 bool operator!=(const Object& ob1, const Object& ob2);
+/** Operator for printing in the stream
+ */
+std::ostream& operator<<(std::ostream& stream, const Object& obj);
 }
 #endif  // LTR_DATA_OBJECT_H_

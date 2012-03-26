@@ -136,4 +136,8 @@ bool operator==(const Object& ob1, const Object& ob2) {
 bool operator!=(const Object& o1, const Object& o2) {
     return !(o1 == o2);
 }
+
+std::ostream& operator<<(std::ostream& stream, const Object& obj) {
+  return stream << obj.toString();
+}
 }

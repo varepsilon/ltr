@@ -62,4 +62,7 @@ string ObjectList::toString() const {
   str << '}';
   return str.str();
 }
+std::ostream& operator<<(std::ostream& stream, const ObjectList& list) {
+  return stream << list.toString();
+}
 }

@@ -68,5 +68,8 @@ class ObjectList {
    */
   boost::shared_ptr< std::vector<Object> > p_Elements_;
 };
+/** Operator for printing in the stream
+ */
+std::ostream& operator<<(std::ostream& stream, const ObjectList& list);
 }
 #endif  // LTR_DATA_OBJECT_LIST_H_

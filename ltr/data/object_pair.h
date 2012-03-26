@@ -94,5 +94,8 @@ bool operator==(const ObjectPair& o1, const ObjectPair& o2);
 /** Operator, checks whether two objects are not equal.
  */
 bool operator!=(const ObjectPair& o1, const ObjectPair& o2);
+/** Operator for printing in the stream
+ */
+std::ostream& operator<<(std::ostream& stream, const ObjectPair& pair);
 }
 #endif  // LTR_DATA_OBJECT_PAIR_H_
