@@ -247,5 +247,11 @@ bool operator==(const DataSet<TElement>& left,
   }
   return true;
 }
+/** Operator for printing in the stream
+ */
+template<class TElement>
+std::ostream& operator<<(std::ostream& stream, const DataSet<TElement>& data) {
+  return stream << data.toString();
+}
 }
 #endif  // LTR_DATA_DATA_SET_H_

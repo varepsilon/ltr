@@ -2,9 +2,259 @@ namespace ltr {
 /** \page TutorialData Tutorial page 1 - Data manipulation
     \ingroup Tutorial
 
-Manipulating Data
+\b Table \b of \b contents
 
-\include hello_world.cpp
+\ref TutorialDataObject
+	- \ref TutorialDataObjectFeatures
+	- \ref TutorialDataObjectLabels
+	- \ref TutorialDataObjectMetaInfo
+	- \ref TutorialDataObjectCopying
+
+\ref TutorialDataObjectPair
+
+\ref TutorialDataObjectList
+
+\ref TutorialDataDataSet
+	- \ref TutorialDataDataSetBasicOperations
+	- \ref TutorialDataDataSetFeatureInfo
+	- \ref TutorialDataDataSetSavingAndLoading
+
+\section TutorialDataObject Object.
+
+Object is main class to operate with data.
+Any object can contain several features and some meta information.
+Every feature has index and double value.
+Every Meta data has name (string) and value(string).
+Also any object has an actual and a predicted label.
+
+\subsection TutorialDataObjectFeatures Features.
+Every Object has several features with indexes 0, 1, 2... Every feature is a double value.
+
+
+You can operate with features using this functions:
+\li \link Object::featureCount() featureCount() \endlink - returns number of features
+\li \link Object::features() features() \endlink - returns vector of features
+\li Object::operator<<(double value) - adds new feature to the object
+
+<table class="example">
+<tr><td>Example: operating with features.</td></tr>
+<tr><td>
+\include tutorial_data_example1.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example1.out
+</td></tr>
+</table>
+
+\subsection TutorialDataObjectLabels Actual and predicted labels.
+
+Every object has an actual label and a predicted label. This labels are double values.
+
+
+You can manage them, using this functions:
+\li \link Object::setActualLabel(double) setActualLabel(double label) \endlink
+\li \link Object::setPredictedLabel(double) const setPredictedLabel(double label) \endlink
+\li \link Object::actualLabel() const actualLabel() \endlink
+\li \link Object::pedictedLabel() const predictedLabel() \endlink
+
+
+<table class="example">
+<tr><td>Example: operating with actual and predicted labels.</td></tr>
+<tr><td>
+\include tutorial_data_example2.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example2.out
+</td></tr>
+</table>
+
+\subsection TutorialDataObjectMetaInfo Meta info.
+
+Every Object can have some meta information. 
+You can manage it, using this functions:
+\li \link Object::getMetaInfo(string) const getMetaInfo(string name)\endlinks
+\li \link Object::setMetaInfo(string, string) setMetaInfo(string name, string value)\endlink
+\li \link Object::metaInfo() metaInfo()\endlink - returns all meta information in \link ltr::MetaInfo MetaInfo \endlink container
+
+<table class="example">
+<tr><td>Example: operating with meta info.</td></tr>
+<tr><td>
+\include tutorial_data_example3.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example3.out
+</td></tr>
+</table>
+
+\subsection TutorialDataObjectCopying Copying objects.
+
+There are two ways to copy objects.
+\li Simple copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo.
+\code Object b = a;                 // This creates a simple copy.
+\endcode
+\li Deep copy: creates real copy of the object. To use deep copy you should call \link Object::deepCopy() const deepCopy()\endlink
+\code Object b = a.deepCopy();      // This creates a full copy.
+\endcode
+
+<table class="example">
+<tr><td>Example: copying objects.</td></tr>
+<tr><td>
+\include tutorial_data_example4.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example4.out
+</td></tr>
+</table>
+
+\section TutorialDataObjectPair ObjectPair.
+
+Class to operate pairs of object. Every pair contains two objects.
+
+There are two ways of operating objects:
+\li ObjectPair::operator[](int id)
+\li ObjectPair::first(), ObjectPair::second()
+
+<table class="example">
+<tr><td>Example: manipulating ojects in pair.</td></tr>
+<tr><td>
+\include tutorial_data_example5.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example5.out
+</td></tr>
+</table>
+
+\section TutorialDataObjectList ObjectList.
+
+Class to operate pairs of object. Every list contains several objects.
+
+There are several ways to get object from a list.
+\li \link ObjectList::at(const size_t) at(const size_t id) \endlink
+\li \link ObjectList::operator[](const size_t) operator[](const size_t id) \endlink
+
+You can also add objects into list using operator<< or \link ObjectList::add(const Object& obj) add(Object) \endlink method.<br>
+List can be cleared by calling \link ObjectList::clear() clear()\endlink method.<br>
+To find out, how many elements are there in the list, call the \link ObjectList::size() size()\endlink method.
+
+<table class="example">
+<tr><td>Example: managing ObjectList.</td></tr>
+<tr><td>
+\include tutorial_data_example6.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example6.out
+</td></tr>
+</table>
+
+\section TutorialDataDataSet DataSet.
+
+DataSet is a class to operate with sets of data.
+It can contain Object, ObjectPair or ObjectList as elements.<br>Every elment can also has a double weight, default weight is 1.
+\code
+DataSet<Object>     data1;   // This data set containt objects
+DataSet<ObjectPair> data2;   // This data set contains pair
+DataSet<ObjectList> data3;   // This data set contains lists
+\endcode
+
+Ltr defines typedefs for this three types of DataSet:
+\code
+typedef DataSet<Object>     PointwiseDataSet;
+typedef DataSet<ObjectPair> PairwiseDataSet;
+typedef DataSet<ObjectList> ListwiseDataSet;
+\endcode
+
+\subsection TutorialDataDataSetBasicOperations Basic operations.
+
+Function for basic operations:
+\li DataSet::size() - returns number of elements in DataSet
+\li DataSet::clear() - cleares DataSet
+
+\li DataSet::add(const TElement&) - adds element to DataSet
+\li DataSet::operator<<(const TElement&) - adds element to DataSet
+\li DataSet::add(const TElement&, double weight) - adds element with weight to DataSet
+\li \link DataSet::setWeight(size_t, double) const Dataset::setWeight(size_t element_idx, double weight) \endlink - sets weight of element with index idx
+
+\li DataSet::at(size_t idx) - returns element with index idx
+\li DataSet::operator[](size_t idx) - returns element with index idx
+\li \link DataSet::getWeight(size_t idx) const DataSet::getWeight(size_t idx) \endlink - returns the weight of element with index idx
+\li DataSet::erase(size_t i) - removes the element from the DataSet.
+
+\li \link DataSet::deepCopy() const DataSet::deepCopy()\endlink - creates a full copy of DataSet
+
+<table class="example">
+<tr><td>Example: basic DataSet operations.</td></tr>
+<tr><td>
+\include tutorial_data_example7.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_example7.out
+</td></tr>
+</table>
+
+\subsection TutorialDataDataSetFeatureInfo Feature info.
+
+There is one more important thing in DataSet: every data set has a FeatureInfo,
+ which containes information about types and possible values of objects features in DataSet.
+ 
+It is important to set right feature info, or many things wont work right.<br>
+There is only one function in DataSet for working with FeatureInfo: DataSet::featureInfo() const. It returns a constant reference to the FeatureInfo.
+
+\subsection TutorialDataDataSetSavingAndLoading Loading and saving into files.
+
+Main think, you can do with DataSet is to load it from file or save it into file.
+
+Function for loading DataSet from file:
+\code
+template<class TElement>
+DataSet<TElement> ltr::io_utility::loadDataSet(const string& filename, const string& format);
+\endcode
+
+\li \c TElement - type of elements in DataSet.
+\li \c filename - name of file with data.
+\li \c format - format of data in the file. It can be "yandex", "svm-lite" or "Arff"
+
+Be careful: If there are some missed features in file, the features value loaded into Object will be ltr::utility::NaN.
+
+All nominal features will be converted into integer values by hash function. You can find out values and hashes using FeatureInfo::getFeatureValues(size_t idx) const, where \c idx is id of nominal feature.
+
+
+Function for saving DataSet into file.
+\code
+template<class TElement>
+void ltr::io_utility::saveDataSet(const DataSet<TElement>& data,
+                                  const string& filename,
+                                  const string& format);
+\endcode
+
+\li \c data - data to save.
+\li \c filename - name of file to save data in
+\li \c format - format to save data. Can be "smv-lite" or "yandex"
+
+<table class="example">
+<tr><td>Example: loading DataSet from file.</td></tr>
+<tr><td>
+\code
+#include "ltr/data/utility/io_utility.h"
+
+using ltr::io_utility::loadDataSet;
+using ltr::io_utility::saveDataSet;
+
+using ltr::DataSet;
+
+int main() {
+	DataSet<Object> = loadDataSet<Object>("test_file", "svm-lite");
+	return 0;
+}
+\endcode
+</tr></td>
+</table>
 
 
 **/
