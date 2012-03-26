@@ -1,0 +1,5 @@
+list.at(0) = [1.40, 5.60, 12.50, 56.88]
+list[1] = [2.40, 7.60, 42.50, 12.88]
+size of list: 2
+list cleared
+size of list: 0
