@@ -26,10 +26,13 @@ namespace ltr {
     class Parser {
       public:
         typedef int FeatureIndex;
-        typedef int RawFeatureIndex;
         typedef string FeatureValue;
+
+      protected:
+        typedef int RawFeatureIndex;
         typedef map<RawFeatureIndex, FeatureValue> RawObject;
 
+      public:
         enum RawFeatureType {
           NUMERIC,
           NOMINAL,
@@ -58,7 +61,7 @@ namespace ltr {
         /**
          * Function sets stream to parse objects from and initialize parser. 
          */
-        void setStream(std::istream* in);
+        void startParsing(std::istream* in);
 
         /**
          * Function returns FeatureInfo for the parsed DataSet.
@@ -100,27 +103,18 @@ namespace ltr {
         virtual void makeString(const Object& object, std::string* result) = 0;
 
         /**
-         * Method to write serialized object into stream.
-         * @code
-         * ofstream fout("file.txt");
-         * parser->writeString(object, &fout);
-         * @endcode
-         */
-        virtual void writeString(const Object& obj, std::ostream* out);
-
-        /**
          * Function to create Pairwise data set of given objects
          * @param objects - objects to create data set from
          * @param info - information about features in the object
          */
-        virtual DataSet<ObjectPair> buildPairDataSet(
+        virtual PairwiseDataSet buildPairwiseDataSet(
             const vector<Object>& objects, const FeatureInfo& info) = 0;
         /**
          * Function to create Listwise data set of given objects
          * @param objects - objects to create data set from
          * @param info - information about features in the object
          */
-        virtual DataSet<ObjectList> buildListDataSet(
+        virtual ListwiseDataSet buildListwiseDataSet(
             const vector<Object>& objects, const FeatureInfo& info) = 0;
 
         virtual ~Parser() {}

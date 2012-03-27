@@ -44,13 +44,13 @@ namespace io_utility {
     throw std::logic_error("it is impossible to save data in ARFF format");
   }
 
-  DataSet<ObjectPair> ARFFParser::buildPairDataSet(
+  PairwiseDataSet ARFFParser::buildPairwiseDataSet(
       const std::vector<Object>& objects,
       const FeatureInfo& info) {
     throw std::logic_error("can't build pairwise dataset for ARFF format");
   }
 
-  DataSet<ObjectList> ARFFParser::buildListDataSet(
+  ListwiseDataSet ARFFParser::buildListwiseDataSet(
       const std::vector<Object>& objects,
       const FeatureInfo& info) {
     throw std::logic_error("can't build listwise dataset for ARFF format");

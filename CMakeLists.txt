@@ -30,9 +30,10 @@ IF (OPENMP_FOUND)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 ENDIF (OPENMP_FOUND)
 
+# let use pthread on unix
 IF (UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -pthread")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread")
 ENDIF (UNIX)
 
 ##########################################################################################

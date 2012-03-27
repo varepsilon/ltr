@@ -25,13 +25,7 @@ namespace ltr {
         throw std::logic_error("unknown format " + format);
     }
 
-    void Parser::writeString(const Object& obj, std::ostream* out) {
-      std::string str;
-      makeString(obj, &str);
-      *out << str;
-    }
-
-    void Parser::setStream(std::istream* in) {
+    void Parser::startParsing(std::istream* in) {
       file_ = in;
       init(in);
 
@@ -69,6 +63,8 @@ namespace ltr {
     }
 
     int Parser::parseNextObject(ltr::Object *result) {
+      if (!file_)
+        throw std::logic_error("error: parser isn't inited with a stream.");
       string line;
       RawObject raw_object;
 

@@ -41,7 +41,7 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   void setInitialScorer(const OneFeatureScorer& initialScorer) {
     scorer_ = initialScorer;
   }
-  OneFeatureScorer make() const {
+  OneFeatureScorer makeImpl() const {
     return scorer_;
   }
   void reset() {

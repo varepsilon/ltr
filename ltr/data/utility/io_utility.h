@@ -98,7 +98,7 @@ DataSet<TElement> loadDataSet(const string& filename,
     throw std::logic_error("File " + filename + " not found");
 
   Parser::Ptr parser = getParser(format);
-  parser->setStream(&file);
+  parser->startParsing(&file);
 
   vector<Object> objects;
   Object current_object;
@@ -110,7 +110,7 @@ DataSet<TElement> loadDataSet(const string& filename,
   int feature_cnt = parser->featureInfo().getFeatureCount();
   for (size_t i = 0; i < objects.size(); i++)
     for (size_t cn = objects[i].features().size(); cn < feature_cnt; cn++)
-      objects[i] << 0.0;
+      objects[i] << ltr::utility::NaN;
   return buildDataSet<TElement>(parser, objects, parser->featureInfo());
 }
 
@@ -125,8 +125,9 @@ void saveDataSet(const DataSet<TElement>& data,
   Parser::Ptr parser = getParser(format);
   for (size_t i = 0; i < data.size(); i++)
     for (size_t j = 0; j < data[i].size(); j++) {
-      parser->writeString(data[i][j], &file);
-      file << std::endl;
+      string str;
+      parser->makeString(data[i][j], &str);
+      file << str << std::endl;
     }
   file.close();
 }

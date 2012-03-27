@@ -80,7 +80,7 @@ class DecisionTreeLearner
       CHECK_DOUBLE_PARAMETER("LABEL_EPS", X >= 0);
     }
 
-    DecisionTreeScorer make() const {
+    DecisionTreeScorer makeImpl() const {
       return scorer_;
     }
     void setInitialScorer(const DecisionTreeScorer& scorer) {
