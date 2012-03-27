@@ -23,6 +23,11 @@ ENDIF (UNIX)
 SET(Serialization_Test_Path ${CMAKE_CURRENT_LIST_DIR})
 SET(LTR_Source_Path ${Serialization_Test_Path}/..)
 SET(LTR_Install_Path ${LTR_Source_Path}/lib)
+
+INCLUDE_DIRECTORIES(${LTR_Source_Path})
+INCLUDE_DIRECTORIES(${LTR_Source_Path}/contrib)
+LINK_DIRECTORIES(${LTR_Install_Path})
+
 FIND_LIBRARY(LTR_Library ltr HINTS ${LTR_Install_Path})
 
 # lets SETup boost
@@ -33,15 +38,10 @@ FIND_LIBRARY(boost_date_time_library boost_date_time HINTS ${LTR_Install_Path})
 # lets SETup Utilities
 FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
 FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
-TARGET_LINK_LIBRARIES (util_logger util_timer)
 SET(UTILITY util_timer util_logger)
 
 MESSAGE("LTR_Library           : ${LTR_Library}")
 MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
-
-INCLUDE_DIRECTORIES(${LTR_Source_Path})
-INCLUDE_DIRECTORIES(${LTR_Source_Path}/contrib)
-LINK_DIRECTORIES(${LTR_Install_Path})
 
 ##########################################################################################
 # lets SETup generator project, which learns scorers and serialize them
