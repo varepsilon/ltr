@@ -87,7 +87,7 @@ namespace lc {
     void setInitialScorer(const LinearCompositionScorer& in_scorer) {
       scorer_ = in_scorer;
     }
-    LinearCompositionScorer make() const {
+    LinearCompositionScorer makeImpl() const {
       return scorer_;
     }
     /**

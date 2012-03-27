@@ -62,10 +62,10 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   typename Measure<TElement>::Ptr p_measure_;
   typename BaseLearner<TElement>::Ptr p_weak_learner_;
 
+  FeatureConverterArray feature_converters_;
+
   private:
   virtual void learnImpl(const DataSet<TElement>& data) = 0;
-
-  FeatureConverterArray feature_converters_;
 };
 
 /**
@@ -85,7 +85,12 @@ class Learner : public BaseLearner<TElement> {
    * different (physically) scorers
    * @returns a concrete scorer
    */
-  virtual TScorer make() const = 0;
+  virtual TScorer makeImpl() const = 0;
+  TScorer make() const {
+    TScorer scorer = makeImpl();
+    scorer.setFeatureConverters(this->feature_converters_);
+    return scorer;
+  }
   virtual Scorer::Ptr makeScorerPtr() const;
   virtual void setInitialScorer(const TScorer& in_scorer) = 0;
 };
