@@ -82,7 +82,7 @@ namespace ltr {
     *result = str.str();
   }
 
-  DataSet<ObjectList> YandexParser::buildListDataSet(
+  ListwiseDataSet YandexParser::buildListwiseDataSet(
       const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectList> data(info);
     map<int, vector<Object> > objects_;
@@ -99,7 +99,7 @@ namespace ltr {
     return data;
   }
 
-  DataSet<ObjectPair> YandexParser::buildPairDataSet(
+  PairwiseDataSet YandexParser::buildPairwiseDataSet(
       const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectPair> data(info);
     map<int, vector<Object> > objects_;
