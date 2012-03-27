@@ -40,6 +40,9 @@ FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
 FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
 SET(UTILITY util_timer util_logger)
 
+MESSAGE("util_timer_library          : ${util_timer_library}")
+
+
 MESSAGE("LTR_Library           : ${LTR_Library}")
 MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
 
