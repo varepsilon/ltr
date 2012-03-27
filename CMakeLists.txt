@@ -58,7 +58,7 @@ ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
 ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
 SET (UTILITY util_timer util_logger)
 
-INSTALL(TARGETS util_timer util_logger ARCHIVE DESTINATION ${Install_Path})
+INSTALL(TARGETS ${UTILITY} ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup tinyxml library
