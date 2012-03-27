@@ -79,7 +79,7 @@ namespace ltr {
     *result = str.str();
   }
 
-  DataSet<ObjectList> SVMParser::buildListDataSet(
+  ListwiseDataSet SVMParser::buildListwiseDataSet(
       const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectList> data(info);
     map<int, vector<Object> > objects_;
@@ -96,7 +96,7 @@ namespace ltr {
     return data;
   }
 
-  DataSet<ObjectPair> SVMParser::buildPairDataSet(
+  PairwiseDataSet SVMParser::buildPairwiseDataSet(
       const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectPair> data(info);
     map<int, vector<Object> > objects_;

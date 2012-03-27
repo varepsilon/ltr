@@ -28,9 +28,9 @@ namespace ltr {
         void parseRawObject(string line, RawObject* result);
         void makeString(const Object& obj, std::string* result);
 
-        DataSet<ObjectPair> buildPairDataSet(const std::vector<Object>& objects,
+        PairwiseDataSet buildPairwiseDataSet(const std::vector<Object>& objects,
                                              const FeatureInfo& info);
-        DataSet<ObjectList> buildListDataSet(const std::vector<Object>& objects,
+        ListwiseDataSet buildListwiseDataSet(const std::vector<Object>& objects,
                                              const FeatureInfo& info);
     };
   };

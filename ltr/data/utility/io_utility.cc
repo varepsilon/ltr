@@ -21,14 +21,14 @@ template<>
 DataSet<ObjectPair> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info) {
-  return parser->buildPairDataSet(objects, info);
+  return parser->buildPairwiseDataSet(objects, info);
 }
 
 template<>
 DataSet<ObjectList> buildDataSet(Parser::Ptr parser,
     const vector<Object>& objects,
     const FeatureInfo& info) {
-  return parser->buildListDataSet(objects, info);
+  return parser->buildListwiseDataSet(objects, info);
 }
 }
 }
