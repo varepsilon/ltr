@@ -41,7 +41,6 @@ FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
 SET(UTILITY util_timer util_logger)
 
 MESSAGE("util_timer_library          : ${util_timer_library}")
-TARGET_LINK_LIBRARIES (util_logger util_timer)
 
 MESSAGE("LTR_Library           : ${LTR_Library}")
 MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
