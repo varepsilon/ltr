@@ -44,7 +44,7 @@ ADD_LIBRARY (boost_system STATIC ${Boost_system_SOURCES})
 ADD_LIBRARY (boost_filesystem STATIC ${Boost_filesystem_SOURCES})
 TARGET_LINK_LIBRARIES (boost_filesystem boost_system)
 
-INSTALL(TARGETS boost_filesystem boost_system
+INSTALL(TARGETS boost_filesystem boost_system boost_date_time
 	ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
@@ -55,8 +55,10 @@ ADD_LIBRARY (puppy STATIC ${Puppy_SOURCES} ${Puppy_HEADERS})
 ##########################################################################################
 # lets SETup utility
 INCLUDE (${Source_Path}/cmake/utility.cmake)
-ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
 ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
+ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
+TARGET_LINK_LIBRARIES (util_timer boost_date_time)
+TARGET_LINK_LIBRARIES (util_logger util_timer)
 SET (UTILITY util_timer util_logger)
 
 INSTALL(TARGETS ${UTILITY} ARCHIVE DESTINATION ${Install_Path})

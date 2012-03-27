@@ -28,6 +28,7 @@ FIND_LIBRARY(LTR_Library ltr HINTS ${LTR_Install_Path})
 # lets SETup boost
 FIND_LIBRARY(boost_filesystem_library boost_filesystem HINTS ${LTR_Install_Path})
 FIND_LIBRARY(boost_system_library boost_system HINTS ${LTR_Install_Path})
+FIND_LIBRARY(boost_date_time_library boost_date_time HINTS ${LTR_Install_Path})
 
 # lets SETup Utilities
 FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
@@ -48,7 +49,7 @@ SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.h)
 ADD_EXECUTABLE(generator ${Generator_SOURCES})
-TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system ${UTILITY})
+TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time ${UTILITY})
 
 # lets copy the test data to the build directory
 EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
