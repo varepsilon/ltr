@@ -126,7 +126,7 @@ namespace logger {
     Logger::LogLevel level() const;
     bool echoing() const;
   private:
-    mutable Logger& logger_;
+    Logger& logger_;
     LogStream(const LogStream&);
     void operator=(const LogStream&);
     Logger::LogLevel level_;
