@@ -57,6 +57,7 @@ ADD_LIBRARY (puppy STATIC ${Puppy_SOURCES} ${Puppy_HEADERS})
 INCLUDE (${Source_Path}/cmake/utility.cmake)
 ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
 ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
+TARGET_LINK_LIBRARIES (util_logger util_timer)
 SET (UTILITY util_timer util_logger)
 
 INSTALL(TARGETS ${UTILITY} ARCHIVE DESTINATION ${Install_Path})
