@@ -118,7 +118,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
   /** The function return trained GPscorer after learning process
    */
-  GPScorer make() const {
+  GPScorer makeImpl() const {
     return GPScorer(this->population_, this->context_,
         this->featureCountInContext_, this->inPopulationBestTreeIdx_);
   }
