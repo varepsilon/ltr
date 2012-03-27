@@ -12,6 +12,12 @@ ENDIF(NOT DEFINED CMAKE_CURRENT_LIST_DIR)
 MESSAGE("CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
 MESSAGE("PROJECT_BINARY_DIR    : ${PROJECT_BINARY_DIR}")
 
+# let use pthread on unix
+IF (UNIX)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -pthread")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread")
+ENDIF (UNIX)
+
 ##########################################################################################
 # lets SETup ltr
 SET(Serialization_Test_Path ${CMAKE_CURRENT_LIST_DIR})
