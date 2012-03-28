@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <stdexcept>
 
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
