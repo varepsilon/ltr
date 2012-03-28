@@ -112,7 +112,7 @@ template< class TElement >
 void BaseLearner< TElement >::addFeatureConverter(
     typename ltr::FeatureConverter::Ptr feature_converter) {
   feature_converter_learners_.push_back(
-    ltr::BaseFeatureConverterLearner<TElement>::Ptr(
+    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr(
       new FeatureConverterWrapper<TElement>(feature_converter)));
 }
 
