@@ -53,7 +53,8 @@ SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
                    ${Source_Path}/ltr/interfaces/functor.h
                    ${Source_Path}/ltr/interfaces/serializable.h ${Source_Path}/ltr/interfaces/serializable.cc
-                   ${Source_Path}/ltr/interfaces/serializable_functor.h)
+                   ${Source_Path}/ltr/interfaces/serializable_functor.h
+                   ${Source_Path}/ltr/interfaces/printable.h ${Source_Path}/ltr/interfaces/printable.cc)
 
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
                 ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
@@ -120,7 +121,8 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
-                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc)
+                           ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
+                           ${Source_Path}/ltr/feature_converters/feature_converter_wrapper.h)
 
 SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
                            
