@@ -10,13 +10,14 @@ FeatureInfo RemoveNaNConverter::getNewFeatureInfo() const {
   return feature_info_;
 }
 
-void RemoveNaNConverter::apply(const Object& argument, Object* value) const {
-  *value = Object();
+void RemoveNaNConverter::applyImpl(const Object& argument,
+                                   Object* value) const {
+  *value = Object(getNewFeatureInfo());
   for (size_t i = 0; i < argument.features().size(); i++) {
     if (isNaN(argument.features()[i]))
-      *value << 0;
+      value->features()[i] = 0;
     else
-      *value << argument.features()[i];
+      value->features()[i] = argument.features()[i];
   }
 }
 

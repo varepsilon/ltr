@@ -9,13 +9,14 @@
 #include <string>
 
 #include "ltr/data/object.h"
+#include "ltr/interfaces/printable.h"
 
 namespace ltr {
 
 /** \class The class stores a pair of two objects. The container for two
  *  objects, can be stored in DataSet. That would represent a pairwise data set.
  */
-class ObjectPair {
+  class ObjectPair : public IPrintable {
   public:
   /** \typedef Shared pointer to an object pair.
    */
@@ -94,8 +95,5 @@ bool operator==(const ObjectPair& o1, const ObjectPair& o2);
 /** Operator, checks whether two objects are not equal.
  */
 bool operator!=(const ObjectPair& o1, const ObjectPair& o2);
-/** Operator for printing in the stream
- */
-std::ostream& operator<<(std::ostream& stream, const ObjectPair& pair);
 }
 #endif  // LTR_DATA_OBJECT_PAIR_H_

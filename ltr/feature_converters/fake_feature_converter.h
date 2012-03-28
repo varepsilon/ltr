@@ -27,7 +27,7 @@ class FakeFeatureConverter : public FeatureConverter {
 
   FeatureInfo getNewFeatureInfo() const;
 
-  void apply(const Object& source_object,
+  void applyImpl(const Object& source_object,
     Object* preprocessed_object) const;
 
   string generateCppCode(

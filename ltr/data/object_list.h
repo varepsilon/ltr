@@ -3,18 +3,19 @@
 #ifndef LTR_DATA_OBJECT_LIST_H_
 #define LTR_DATA_OBJECT_LIST_H_
 
-#include "ltr/data/object.h"
-
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
 #include <string>
 
+#include "ltr/interfaces/printable.h"
+#include "ltr/data/object.h"
+
 namespace ltr {
 /** \class The class stores a number of objects. The container for number of
  *  objects, can be stored in DataSet. That would represent a listwise data set.
  */
-class ObjectList {
+  class ObjectList : public IPrintable {
   public:
   /** \typedef Shared pointer to an object list.
    */
@@ -68,8 +69,5 @@ class ObjectList {
    */
   boost::shared_ptr< std::vector<Object> > p_Elements_;
 };
-/** Operator for printing in the stream
- */
-std::ostream& operator<<(std::ostream& stream, const ObjectList& list);
 }
 #endif  // LTR_DATA_OBJECT_LIST_H_

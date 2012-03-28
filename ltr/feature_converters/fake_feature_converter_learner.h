@@ -27,7 +27,9 @@ class FakeFeatureConverterLearner
     this->checkParameters();
   }
 
-  void learn(const DataSet<TElement>& data_set) {}
+  void learn(const DataSet<TElement>& data_set) {
+    converter_.setFeatureInfo(data_set.featureInfo());
+  }
   FakeFeatureConverter  make() const;
 
   private:

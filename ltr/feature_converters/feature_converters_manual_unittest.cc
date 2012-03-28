@@ -97,6 +97,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserTest) {
   indices.push_back(7);
   indices.push_back(4);
   FeatureSubsetChooser::Ptr conv(new FeatureSubsetChooser(indices));
+  conv->setFeatureInfo(data.featureInfo());
 
   EXPECT_EQ(3, conv->getChoosedFeaturesCount());
   EXPECT_EQ(indices, conv->getChoosedFeaturesIndices());
@@ -206,6 +207,8 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
 TEST_F(FeatureConvertersManualTest, PerFeatureLinearConverterTest) {
   PerFeatureLinearConverter::Ptr pf_converter
     (new PerFeatureLinearConverter(data.featureInfo().getFeatureCount()));
+
+  pf_converter->setFeatureInfo(data.featureInfo());
 
   pf_converter->setShift(0, 1.0);
   pf_converter->setShift(1, 0.0);
