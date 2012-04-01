@@ -14,7 +14,8 @@ using std::string;
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/scorer.h"
-#include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/feature_converter_learner.h"
+#include "ltr/feature_converters/feature_converter_wrapper.h"
 #include "ltr/feature_converters/utility/utility.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
@@ -40,6 +41,10 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   void addFeatureConverter(
       typename ltr::FeatureConverter::Ptr p_feature_converter);
 
+  void addFeatureConverter(
+      typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
+        feature_converter_learner);
+
   virtual void reset() = 0;
   virtual Scorer::Ptr makeScorerPtr() const = 0;
 
@@ -63,6 +68,8 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   typename BaseLearner<TElement>::Ptr p_weak_learner_;
 
   FeatureConverterArray feature_converters_;
+  std::vector<typename BaseFeatureConverterLearner<TElement>::Ptr>
+    feature_converter_learners_;
 
   private:
   virtual void learnImpl(const DataSet<TElement>& data) = 0;
@@ -103,19 +110,29 @@ Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
 
 template< class TElement >
 void BaseLearner< TElement >::addFeatureConverter(
-    typename ltr::FeatureConverter::Ptr p_FeatureConverter) {
-  feature_converters_.push_back(p_FeatureConverter);
+    typename ltr::FeatureConverter::Ptr feature_converter) {
+  feature_converter_learners_.push_back(
+    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr(
+      new FeatureConverterWrapper<TElement>(feature_converter)));
+}
+
+template< class TElement >
+void BaseLearner< TElement >::addFeatureConverter(
+    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
+      feature_converter_learner) {
+  feature_converter_learners_.push_back(feature_converter_learner);
 }
 
 template< class TElement >
 void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   DataSet<TElement> sourceData = data.deepCopy();
   DataSet<TElement> convertedData;
-  for (size_t featureConverterIdx = 0;
-      featureConverterIdx < feature_converters_.size();
-      ++featureConverterIdx) {
+  feature_converters_.clear();
+  for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
+    feature_converter_learners_[i]->learn(sourceData);
+    feature_converters_.push_back(feature_converter_learners_[i]->makePtr());
         ltr::utility::ApplyFeatureConverter(
-          feature_converters_[featureConverterIdx],
+          feature_converters_[i],
           sourceData,
           &convertedData);
     sourceData = convertedData;

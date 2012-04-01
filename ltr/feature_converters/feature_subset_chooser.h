@@ -63,7 +63,7 @@ class FeatureSubsetChooser : public FeatureConverter {
 
   FeatureInfo getNewFeatureInfo() const;
 
-  void apply(const Object& source_object,
+  void applyImpl(const Object& source_object,
     Object* preprocessed_object) const;
 
   virtual string generateCppCode(

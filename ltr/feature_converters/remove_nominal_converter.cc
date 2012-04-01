@@ -14,12 +14,13 @@ FeatureInfo RemoveNominalConverter::getNewFeatureInfo() const {
   return result;
 }
 
-void RemoveNominalConverter::apply(
+void RemoveNominalConverter::applyImpl(
     const Object& argument, Object* value) const {
-  *value = Object();
+  *value = Object(getNewFeatureInfo());
+  size_t result_idx = 0;
   for (size_t i = 0; i < argument.features().size(); i++)
     if (feature_info_.getFeatureType(i) != NOMINAL)
-      *value << argument.features()[i];
+      value->features()[result_idx++] = argument.features()[i];
 }
 
 string RemoveNominalConverter::generateCppCode(

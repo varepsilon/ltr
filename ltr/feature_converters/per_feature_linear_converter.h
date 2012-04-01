@@ -31,7 +31,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
   double getShift(size_t feature_idx) const;
   void setShift(size_t feature_idx, double shift);
 
-  void apply(const Object& argument, Object* value) const;
+  void applyImpl(const Object& argument, Object* value) const;
 
   virtual std::string generateCppCode(const std::string& function_name) const {
     string hpp_string;

@@ -18,12 +18,13 @@ FeatureInfo NominalToBoolConverter::getNewFeatureInfo() const {
   return result;
 }
 
-void NominalToBoolConverter::apply(
+void NominalToBoolConverter::applyImpl(
     const Object& argument, Object* value) const {
-  *value = Object();
+  *value = Object(getNewFeatureInfo());
+  size_t result_idx = 0;
   for (size_t i = 0; i < argument.features().size(); i++)
     if (feature_info_.getFeatureType(i) != NOMINAL)
-      *value << argument.features()[i];
+      value->features()[result_idx++] = argument.features()[i];
 
   for (size_t i = 0; i < argument.features().size(); i++)
     if (feature_info_.getFeatureType(i) == NOMINAL) {
@@ -31,9 +32,9 @@ void NominalToBoolConverter::apply(
       for (map<unsigned int, string>::iterator it = vals.begin();
            it != vals.end(); it++)
         if (argument.features()[i] == it->first)
-          *value << 1.0;
+          value->features()[result_idx++] = 1.0;
         else
-          *value << 0.0;
+          value->features()[result_idx++] = 0.0;
     }
 }
 

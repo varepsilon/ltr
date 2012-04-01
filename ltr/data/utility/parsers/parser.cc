@@ -78,8 +78,6 @@ namespace ltr {
     }
 
     Object Parser::makeObject(const RawObject& raw_object) {
-      Object result;
-
       if (raw_feature_info_.rbegin()->first < raw_object.rbegin()->first) {
         for (int i = raw_feature_info_.rbegin()->first + 1;
              i <= raw_object.rbegin()->first; i++) {
@@ -90,7 +88,7 @@ namespace ltr {
                                       ltr::NUMERIC);
       }
 
-      result.features().resize(feature_info_.getFeatureCount(), utility::NaN);
+      Object result(feature_info_);
 
       for (RawObject::const_iterator it = raw_object.begin();
            it != raw_object.end(); it++) {

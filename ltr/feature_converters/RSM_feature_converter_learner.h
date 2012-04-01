@@ -69,6 +69,7 @@ void RSMFeatureConverterLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
+  converter_.setFeatureInfo(data_set.featureInfo());
   int size = static_cast<int>(
     ceil(data_set.featureInfo().getFeatureCount()
       * this->getDoubleParameter("SELECTED_PART")));

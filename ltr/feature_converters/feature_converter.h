@@ -47,10 +47,14 @@ class FeatureConverter : public Serializable {
    * @param argument - object to be converted
    * @param value - output object
    */
-  virtual void apply(const Object& argument, Object* value) const = 0;
+  virtual void applyImpl(const Object& argument, Object* value) const = 0;
+
+  void apply(const Object& argument, Object* value) const {
+    applyImpl(argument, value);
+  }
 };
 
-typedef std::vector< FeatureConverter::Ptr > FeatureConverterArray;
+typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
 };
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

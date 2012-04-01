@@ -15,19 +15,29 @@ namespace ltr {
 Object::Object() : features_(new Features()),
     meta_info_(new MetaInfo()),
     actual_label_(1.0),
-    predicted_label_(utility::NaN) {}
+    predicted_label_(utility::NaN),
+    feature_info_(new FeatureInfo()) {}
 
 Object::Object(const Object& object)
-    :features_(new Features(*object.features_)),
-    meta_info_(new MetaInfo(*object.meta_info_)),
+    :features_(object.features_),
+    meta_info_(object.meta_info_),
     actual_label_(object.actual_label_),
-    predicted_label_(object.predicted_label_) {}
+    predicted_label_(object.predicted_label_),
+    feature_info_(object.feature_info_) {}
 
 Object::Object(const std::vector<Object>& objects)
     :features_(new Features(*objects[0].features_)),
     meta_info_(new MetaInfo(*objects[0].meta_info_)),
     actual_label_(objects[0].actual_label_),
-    predicted_label_(objects[0].predicted_label_) {}
+    predicted_label_(objects[0].predicted_label_),
+    feature_info_(objects[0].feature_info_)  {}
+
+Object::Object(const FeatureInfo& feature_info)
+    :meta_info_(new MetaInfo()),
+    actual_label_(1.0),
+    predicted_label_(utility::NaN),
+    feature_info_(new FeatureInfo(feature_info)),
+    features_(new Features(feature_info.getFeatureCount(), utility::NaN)) {}
 
 const Features& Object::features() const {
   return *features_;
@@ -45,6 +55,10 @@ MetaInfo& Object::metaInfo() {
   return *meta_info_;
 }
 
+const FeatureInfo& Object::feature_info() const {
+  return *feature_info_;
+}
+
 const string& Object::getMetaInfo(string name) const {
   if (meta_info_->find(name) == meta_info_->end())
     throw std::logic_error("unknown meta info " + name);
@@ -57,6 +71,7 @@ void Object::setMetaInfo(string name, string value) {
 
 Object& Object::operator<<(double feature) {
   features_->push_back(feature);
+  feature_info_->addFeature(NUMERIC);
   return *this;
 }
 
@@ -78,6 +93,7 @@ Object& Object::operator=(const Object& other)  {
   meta_info_ = other.meta_info_;
   actual_label_ = other.actual_label_;
   predicted_label_ = other.predicted_label_;
+  feature_info_ = other.feature_info_;
   return *this;
 }
 
@@ -105,6 +121,7 @@ Object Object::deepCopy() const {
   Object result = *this;
   result.features_.reset(new Features(*(this->features_)));
   result.meta_info_.reset(new map<string, string>(*(this->meta_info_)));
+  result.feature_info_.reset(new FeatureInfo(this->feature_info()));
   return result;
 }
 
@@ -129,15 +146,12 @@ string Object::toString() const {
 bool operator==(const Object& ob1, const Object& ob2) {
   return equalWithNaN(*ob1.features_, *ob2.features_) &&
          *ob1.meta_info_ == *ob2.meta_info_ &&
+         *ob1.feature_info_ == *ob2.feature_info_ &&
          utility::equalWithNaN(ob1.actualLabel(), ob2.actualLabel()) &&
          utility::equalWithNaN(ob1.predictedLabel(), ob2.predictedLabel());
 }
 
 bool operator!=(const Object& o1, const Object& o2) {
     return !(o1 == o2);
-}
-
-std::ostream& operator<<(std::ostream& stream, const Object& obj) {
-  return stream << obj.toString();
 }
 }
