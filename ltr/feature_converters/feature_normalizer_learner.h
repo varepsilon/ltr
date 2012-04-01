@@ -53,6 +53,7 @@ void
 FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
   utility::calcMinMaxStatistics(data_set, &feature_min_statistic_,
       &feature_max_statistic_);
+  converter_.setFeatureInfo(data_set.featureInfo());
   this->calcCurrentConverter();
 }
 

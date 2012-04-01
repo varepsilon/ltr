@@ -24,6 +24,7 @@ template <class TElement>
 class BaseFeatureConverterLearner : public Parameterized {
   public:
   typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
+  typedef boost::shared_ptr<const BaseFeatureConverterLearner> ConstPtr;
   /**
    * Learns from inputted dataset. E. g. remembers number of features
    * in dataset and e.t.c.

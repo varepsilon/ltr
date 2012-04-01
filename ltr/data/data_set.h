@@ -6,8 +6,8 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <stdexcept>
 
-#include "ltr/data/feature_info.h"
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
@@ -41,7 +41,7 @@ typedef DataSet<ObjectList> ListwiseDataSet;
  *  Object, ObjectPair or ObjectList.
  */
 template <typename TElement>
-class DataSet {
+class DataSet : public IPrintable {
   public:
   /** Shared pointer type to the DataSet.
    */
@@ -56,6 +56,7 @@ class DataSet {
    * stored in the DataSet.
    */
   const FeatureInfo& featureInfo() const;
+  FeatureInfo::Ptr featureInfoPtr() const;
   /** Returns the number of features in objects of the DataSet.
    */
   size_t featureCount() const;
@@ -145,6 +146,11 @@ const FeatureInfo& DataSet< TElement >::featureInfo() const {
   return *featureInfo_;
 }
 
+template< typename TElement >
+FeatureInfo::Ptr DataSet<TElement>::featureInfoPtr() const {
+  return featureInfo_;
+}
+
 template <typename TElement>
 size_t DataSet< TElement >::featureCount() const {
   return this->featureInfo().getFeatureCount();
@@ -163,7 +169,17 @@ void DataSet<TElement>::add(const TElement& element) {
 
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
-  (*p_Elements_).push_back(element.deepCopy());
+  TElement element_to_add = element.deepCopy();
+  if (featureInfo_ == NULL || featureInfo_->getFeatureCount() == 0) {
+    featureInfo_ = FeatureInfo::Ptr(
+      new FeatureInfo(element[0].feature_info()));
+  }
+  for (size_t i = 0; i < element_to_add.size(); i++) {
+    if (element[i].feature_info() != featureInfo())
+      throw std::logic_error("can't add objects with another FeatureInfo.");
+    element_to_add[i].feature_info_ = featureInfo_;
+  }
+  (*p_Elements_).push_back(element_to_add);
   (*p_Weights_).push_back(weight);
 }
 
@@ -175,6 +191,7 @@ size_t DataSet<TElement>::size() const {
 template <typename TElement>
 void DataSet<TElement>::clear() {
   (*p_Elements_).clear();
+  (*p_Weights_).clear();
 }
 
 template <typename TElement>
@@ -233,6 +250,8 @@ string DataSet<TElement>::toString() const {
 template< typename TElement >
 bool operator==(const DataSet<TElement>& left,
                 const DataSet<TElement>& right) {
+  if (left.featureInfo() != right.featureInfo())
+    return false;
   if (left.size() != right.size())
     return false;
   for (int i = 0; i < left.size(); ++i) {
@@ -246,12 +265,6 @@ bool operator==(const DataSet<TElement>& left,
     }
   }
   return true;
-}
-/** Operator for printing in the stream
- */
-template<class TElement>
-std::ostream& operator<<(std::ostream& stream, const DataSet<TElement>& data) {
-  return stream << data.toString();
 }
 }
 #endif  // LTR_DATA_DATA_SET_H_

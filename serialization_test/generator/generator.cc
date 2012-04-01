@@ -14,24 +14,25 @@ using ltr::AbsError;
 using ltr::Measure;
 using ltr::ID3_Learner;
 
-using namespace serialization_test;
+// using namespace serialization_test;
 
 #include "utility/logger.h"
 
 int main(int argc, char* argv[]) {
   logger::LogStream log;
-/*  Generator generator;
+  // Generator generator;
 
-  Measure<Object>::Ptr abs_error(new AbsError());
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>(abs_error));
-  bf_learner->learn(generator.train_data);
-  generator.setScorerTest(bf_learner, "bf_learner");
+  // Measure<Object>::Ptr abs_error(new AbsError());
+  // BestFeatureLearner<Object>::Ptr bf_learner(
+  //    new BestFeatureLearner<Object>(abs_error));
+  // bf_learner->learn(generator.train_data);
+  // generator.setScorerTest(bf_learner, "bf_learner");
 
-  ID3_Learner::Ptr id3_learner(new ID3_Learner);
-  id3_learner->learn(generator.train_data);
-  generator.setScorerTest(id3_learner, "id3_learner");
+  // ID3_Learner::Ptr id3_learner(new ID3_Learner);
+  // id3_learner->learn(generator.train_data);
+  // generator.setScorerTest(id3_learner, "id3_learner");
 
-  generator.setMainCode();
-  generator.write(argv[1]);
-*/  return 0;
+  // generator.setMainCode();
+  // generator.write(argv[1]);
+  return 0;
 }

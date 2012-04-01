@@ -76,6 +76,7 @@ void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
+  converter_.setFeatureInfo(data_set.featureInfo());
   if (this->getListParameter("INDICES").size() == 0) {
     vector<int> all_used(data_set.featureInfo().getFeatureCount());
     for (int index = 0; index < all_used.size(); ++index) {

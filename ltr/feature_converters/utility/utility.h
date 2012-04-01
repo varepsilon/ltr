@@ -14,10 +14,9 @@ namespace utility {
 
 template <typename TElement>
 void ApplyFeatureConverter(
-    FeatureConverter::Ptr converter,
+    FeatureConverter::ConstPtr converter,
     const DataSet<TElement>& argument,
     DataSet<TElement>* value) {
-  converter->setFeatureInfo(argument.featureInfo());
   DataSet<TElement> result
       (converter->getNewFeatureInfo());
 

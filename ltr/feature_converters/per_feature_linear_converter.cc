@@ -35,7 +35,7 @@ void PerFeatureLinearConverter::setShift(size_t feature_idx, double shift) {
   shift_[feature_idx] = shift;
 }
 
-void PerFeatureLinearConverter::apply(const Object& argument,
+void PerFeatureLinearConverter::applyImpl(const Object& argument,
     Object* value) const {
   this->checkFeatureCount(argument.featureCount());
   *value = argument.deepCopy();

@@ -16,7 +16,7 @@ class NominalToBoolConverter : public FeatureConverter {
     : FeatureConverter(feature_info) {}
 
     virtual FeatureInfo getNewFeatureInfo() const;
-    virtual void apply(const Object& argument, Object* value) const;
+    virtual void applyImpl(const Object& argument, Object* value) const;
     string generateCppCode(const std::string &) const;
 };
 }

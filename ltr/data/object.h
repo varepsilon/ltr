@@ -4,11 +4,14 @@
 #define LTR_DATA_OBJECT_H_
 
 #include <boost/shared_ptr.hpp>
+#include <ostream>
 
 #include <vector>
 #include <map>
 #include <string>
-#include <ostream>
+
+#include "ltr/data/feature_info.h"
+#include "ltr/interfaces/printable.h"
 
 using std::map;
 using std::string;
@@ -28,7 +31,7 @@ typedef map<string, string> MetaInfo;
 /** \class Base class for storing information in a DataSet. An object consist of
  * feature vector and meta information;
  */
-class Object {
+class Object : public IPrintable {
   public:
   /** \typedef Shared pointer to an object.
    */
@@ -42,6 +45,9 @@ class Object {
   /** Constructor, that makes object from the first object in the vector.
    */
   explicit Object(const std::vector<Object>& objects);
+  /** Constructor, that makes object with given FeatureInfo.
+  */
+  explicit Object(const FeatureInfo& feature_info);
   /** Returns constant link to the feature vector of an object.
    */
   const Features& features() const;
@@ -123,7 +129,12 @@ class Object {
    */
   string toString() const;
 
+  const FeatureInfo& feature_info() const;
+
   private:
+  /** Shared pointer to FeatureInfo.
+   */
+  FeatureInfo::Ptr feature_info_;
   /** Shared pointer to feature vector.
    */
   boost::shared_ptr<Features> features_;
@@ -137,6 +148,9 @@ class Object {
    * thought it's mutable.
    */
   mutable double predicted_label_;
+
+  template<class TElement>
+  friend class DataSet;
 };
 /** Operator, checks whether two objects are equal.
  */
@@ -144,8 +158,5 @@ bool operator==(const Object& ob1, const Object& ob2);
 /** Operator, checks whether two objects are not equal.
  */
 bool operator!=(const Object& ob1, const Object& ob2);
-/** Operator for printing in the stream
- */
-std::ostream& operator<<(std::ostream& stream, const Object& obj);
 }
 #endif  // LTR_DATA_OBJECT_H_

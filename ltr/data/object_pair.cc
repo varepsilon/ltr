@@ -71,7 +71,4 @@ bool operator==(const ObjectPair& p1, const ObjectPair& p2) {
 bool operator!=(const ObjectPair& p1, const ObjectPair& p2) {
   return !(p1 == p2);
 }
-std::ostream& operator<<(std::ostream& stream, const ObjectPair& pair) {
-  return stream << pair.toString();
-}
 }
