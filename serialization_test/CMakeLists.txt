@@ -54,21 +54,21 @@ SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
 ADD_EXECUTABLE(generator ${Generator_SOURCES})
 TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time ${UTILITY})
 
-# lets copy the test data to the build directory
-EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${LTR_Source_Path}/data/serialization_tests
-    ${CMAKE_BINARY_DIR}/data)
+# # lets copy the test data to the build directory
+# EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
+    # ${LTR_Source_Path}/data/serialization_tests
+    # ${CMAKE_BINARY_DIR}/data)
 
-# making tester.cc with scorer saved in code
-ADD_CUSTOM_COMMAND(
-  OUTPUT ${Serialization_Test_Path}/tester/tester.cc
-  DEPENDS generator
-  COMMAND generator ${Serialization_Test_Path}/tester/tester.cc)
+# # making tester.cc with scorer saved in code
+# ADD_CUSTOM_COMMAND(
+  # OUTPUT ${Serialization_Test_Path}/tester/tester.cc
+  # DEPENDS generator
+  # COMMAND generator ${Serialization_Test_Path}/tester/tester.cc)
 
-##########################################################################################
-# lets SETup tester project, which tests scorers, serializated by generator
-SET(Tester_SOURCES ${Serialization_Test_Path}/tester/tester.cc
-				   ${Serialization_Test_Path}/tester/tester_utility.cc
-				   ${Serialization_Test_Path}/tester/tester_utility.h)
-ADD_EXECUTABLE(tester ${Tester_SOURCES})
-TARGET_LINK_LIBRARIES(tester ltr boost_filesystem boost_system)
+# ##########################################################################################
+# # lets SETup tester project, which tests scorers, serializated by generator
+# SET(Tester_SOURCES ${Serialization_Test_Path}/tester/tester.cc
+				   # ${Serialization_Test_Path}/tester/tester_utility.cc
+				   # ${Serialization_Test_Path}/tester/tester_utility.h)
+# ADD_EXECUTABLE(tester ${Tester_SOURCES})
+# TARGET_LINK_LIBRARIES(tester ltr boost_filesystem boost_system)

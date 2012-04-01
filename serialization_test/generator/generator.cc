@@ -16,8 +16,11 @@ using ltr::ID3_Learner;
 
 using namespace serialization_test;
 
+#include "utility/logger.h"
+
 int main(int argc, char* argv[]) {
-  Generator generator;
+  logger::LogStream log;
+/*  Generator generator;
 
   Measure<Object>::Ptr abs_error(new AbsError());
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>(abs_error));
@@ -30,5 +33,5 @@ int main(int argc, char* argv[]) {
 
   generator.setMainCode();
   generator.write(argv[1]);
-  return 0;
+*/  return 0;
 }
