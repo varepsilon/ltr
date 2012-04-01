@@ -52,7 +52,7 @@ SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.h)
 ADD_EXECUTABLE(generator ${Generator_SOURCES})
-TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time ${UTILITY})
+TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time util_timer)
 
 # # lets copy the test data to the build directory
 # EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
