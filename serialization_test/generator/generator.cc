@@ -1,17 +1,17 @@
 // Copyright 2012 Yandex
 
-#include <boost/lexical_cast.hpp>
+// #include <boost/lexical_cast.hpp>
 
-#include "serialization_test/generator/generator_utility.h"
+// #include "serialization_test/generator/generator_utility.h"
 
-#include "ltr/measures/measure.h"
-#include "ltr/learners/best_feature_learner.h"
+// #include "ltr/measures/measure.h"
+// #include "ltr/learners/best_feature_learner.h"
 // #include "ltr/learners/id3_learner.h"
-#include "ltr/measures/abs_error.h"
+// #include "ltr/measures/abs_error.h"
 
-using ltr::BestFeatureLearner;
-using ltr::AbsError;
-using ltr::Measure;
+// using ltr::BestFeatureLearner;
+// using ltr::AbsError;
+// using ltr::Measure;
 // using ltr::ID3_Learner;
 
 // using namespace serialization_test;
