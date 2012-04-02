@@ -40,7 +40,8 @@ FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
 FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
 SET(UTILITY util_timer util_logger)
 
-MESSAGE("util_timer_library          : ${util_timer_library}")
+# lets SETup Puppy
+FIND_LIBRARY(puppy_library puppy HINTS ${LTR_Install_Path})
 
 MESSAGE("LTR_Library           : ${LTR_Library}")
 MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
@@ -52,7 +53,7 @@ SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.cc
 					  ${Serialization_Test_Path}/generator/generator_utility.h)
 ADD_EXECUTABLE(generator ${Generator_SOURCES})
-TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time ${UTILITY})
+TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time puppy ${UTILITY})
 
 # lets copy the test data to the build directory
 EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 #include "serialization_test/generator/generator_utility.h"
 #include "serialization_test/generator/config.h"
@@ -18,6 +19,7 @@ using std::string;
 using std::vector;
 using std::cout;
 using std::ofstream;
+using std::copy;
 
 using ltr::DataSet;
 using ltr::Object;
@@ -30,12 +32,14 @@ namespace serialization_test {
     string output;
     output.append("// Copyright 2012 Yandex\n\n").
       append("#include <vector>\n").
+      append("#include <string>\n").
       append("#include <iostream>\n\n");
     output.append("#include \"serialization_test/generator/config.h\"\n").
       append("#include \"serialization_test/tester/tester_utility.h\"\n\n").
       append("#include \"ltr/data/data_set.h\"\n").
       append("#include \"ltr/data/utility/io_utility.h\"\n\n");
     output.append("using std::vector;\n").
+      append("using std::string;\n").
       append("using std::cout;\n").
       append("using ltr::Object;\n").
       append("using ltr::DataSet;\n").
@@ -54,7 +58,7 @@ namespace serialization_test {
     string output;
     output.append("vector<double> " + function_name + "() {\n");
     output.append(tab + "vector<double> test_labels;\n");
-    for(int i = 0; i < labels.size(); ++i) {
+    for (int i = 0; i < labels.size(); ++i) {
       output.append(tab + "test_labels.push_back(" +
         boost::lexical_cast<string>(labels[i]) + ");\n");
     }
@@ -66,8 +70,8 @@ namespace serialization_test {
   string Generator::setMessageFunction(string function_name,
       string error_message) const {
     string output;
-    output.append("void " + function_name +
-      "() { cout << \"" + error_message + " \"; }\n\n");
+    output.append("string " + function_name +
+      "() { return \"" + error_message + " \"; }\n\n");
     return output;
   }
 
@@ -101,12 +105,28 @@ namespace serialization_test {
       tester_code.append(tab + "serializated_labels = ").
         append("ApplySerializatedScorerToDataSet(test_data, &SavedScorer" +
         function_number + ");\n");
-      tester_code.append(tab + "test_labels = SetupTestLabels" + function_number + "();\n");
-      tester_code.append(tab + "Message" + function_number + "();\n");
-      tester_code.append(tab + "ok = ok && CompareReport(test_labels, serializated_labels);\n\n");
+      tester_code.append(tab + "test_labels = SetupTestLabels"
+        + function_number + "();\n");
+      tester_code.append(tab + "ok = ok && CompareReport(").
+        append("test_labels, serializated_labels, ").
+        append("Message" + function_number + "());\n\n");
     }
 
     tester_code.append(tab + "return TotalReport(ok);\n}\n");
+  }
+
+  string Generator::setBeginBlockComment(string message) const {
+    string slashes(100, '#');
+    string inserted = message + "_block_begin";
+    copy(inserted.begin(), inserted.end(), slashes.begin() + 35);
+    return "//" + slashes + "\n";
+  }
+
+  string Generator::setEndBlockComment(string message) const {
+    string slashes(100, '#');
+    string inserted = message + "_block_end";
+    copy(inserted.begin(), inserted.end(), slashes.begin() + 35);
+    return "//" + slashes + "\n\n";
   }
 
   void Generator::setScorerTest(BaseLearner<Object>::Ptr learner,
@@ -115,10 +135,15 @@ namespace serialization_test {
     MarkDataSet(test_data, *tested_scorer);
 
     string function_number = boost::lexical_cast<string>(scorers_to_test);
-    tester_code.append(setTestLabelsFunction("SetupTestLabels" + function_number));
-    tester_code.append(setMessageFunction("Message" + function_number, error_message));
+
+    tester_code.append(setBeginBlockComment(error_message));
+    tester_code.append(setTestLabelsFunction("SetupTestLabels"
+      + function_number));
+    tester_code.append(setMessageFunction("Message"
+      + function_number, error_message));
     tester_code.append(tested_scorer->generateCppCode(
-      "SavedScorer" + function_number) + "\n\n");
+      "SavedScorer" + function_number) + "\n");
+    tester_code.append(setEndBlockComment(error_message));
 
     ++scorers_to_test;
   }

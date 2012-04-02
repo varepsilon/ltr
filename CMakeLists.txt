@@ -52,6 +52,8 @@ INSTALL(TARGETS boost_filesystem boost_system boost_date_time
 INCLUDE (${Source_Path}/cmake/puppy.cmake)
 ADD_LIBRARY (puppy STATIC ${Puppy_SOURCES} ${Puppy_HEADERS})
 
+INSTALL(TARGETS puppy ARCHIVE DESTINATION ${Install_Path})
+
 ##########################################################################################
 # lets SETup utility
 INCLUDE (${Source_Path}/cmake/utility.cmake)

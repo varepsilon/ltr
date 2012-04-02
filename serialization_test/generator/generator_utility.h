@@ -29,6 +29,8 @@ namespace serialization_test {
     string setTestLabelsFunction(string function_name) const;
     string setMessageFunction(string function_name,
       string error_message) const;
+    string setBeginBlockComment(string message) const;
+    string setEndBlockComment(string message) const;
 
     string tester_code;
     int scorers_to_test;

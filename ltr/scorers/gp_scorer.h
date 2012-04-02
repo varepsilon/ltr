@@ -94,7 +94,7 @@ class GPScorer : public Scorer {
     // generate scoring function
     code.append("double ");
     code.append(function_name);
-    code.append("(std::vector< double >& feature) {\n");
+    code.append("(const std::vector< double >& feature) {\n");
     code.append("  return ");
     code.append(sstreamForCalls.str());
     code.append(";\n");
