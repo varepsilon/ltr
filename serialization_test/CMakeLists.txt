@@ -47,11 +47,11 @@ MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
 
 ##########################################################################################
 # lets SETup generator project, which learns scorers and serialize them
-# SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
-                      # ${Serialization_Test_Path}/generator/config.h
-					  # ${Serialization_Test_Path}/generator/generator_utility.cc
-					  # ${Serialization_Test_Path}/generator/generator_utility.h)
-ADD_EXECUTABLE(generator ${Serialization_Test_Path}/generator/generator.cc)
+SET(Generator_SOURCES ${Serialization_Test_Path}/generator/generator.cc
+                      ${Serialization_Test_Path}/generator/config.h
+					  ${Serialization_Test_Path}/generator/generator_utility.cc
+					  ${Serialization_Test_Path}/generator/generator_utility.h)
+ADD_EXECUTABLE(generator ${Generator_SOURCES})
 TARGET_LINK_LIBRARIES(generator ltr boost_filesystem boost_system boost_date_time ${UTILITY})
 
 # # lets copy the test data to the build directory
