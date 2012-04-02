@@ -6,13 +6,13 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/learners/best_feature_learner.h"
-// #include "ltr/learners/id3_learner.h"
+#include "ltr/learners/id3_learner.h"
 #include "ltr/measures/abs_error.h"
 
 using ltr::BestFeatureLearner;
 using ltr::AbsError;
 using ltr::Measure;
-// using ltr::ID3_Learner;
+using ltr::ID3_Learner;
 
 using serialization_test::Generator;
 
@@ -29,11 +29,11 @@ int main(int argc, char* argv[]) {
   BestFeatureLearner<Object>::Ptr bf_learner(
       new BestFeatureLearner<Object>(abs_error));
   bf_learner->learn(generator.train_data);
-  // generator.setScorerTest(bf_learner, "bf_learner");
+  generator.setScorerTest(bf_learner, "bf_learner");
 
-  // ID3_Learner::Ptr id3_learner(new ID3_Learner);
-  // id3_learner->learn(generator.train_data);
-  // generator.setScorerTest(id3_learner, "id3_learner");
+  ID3_Learner::Ptr id3_learner(new ID3_Learner);
+  id3_learner->learn(generator.train_data);
+  generator.setScorerTest(id3_learner, "id3_learner");
 
   // generator.setMainCode();
   // generator.write(argv[1]);
