@@ -17,9 +17,10 @@
 // using namespace serialization_test;
 
 #include "utility/timer.h"
+#include "utility/logger.h"
 
 int main(int argc, char* argv[]) {
-  // logger::LogStream log;
+  logger::LogStream log;
   timer::Timer t;
 
   // Generator generator;
