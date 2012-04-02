@@ -30,9 +30,9 @@ int main(int argc, char* argv[]) {
   bf_learner->learn(generator.train_data);
   generator.setScorerTest(bf_learner, "bf_learner");
 
-  GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
-  gp_learner->learn(generator.train_data);
-  generator.setScorerTest(gp_learner, "gp_learner");
+  // GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
+  // gp_learner->learn(generator.train_data);
+  // generator.setScorerTest(gp_learner, "gp_learner");
 
   ID3_Learner::Ptr id3_learner(new ID3_Learner);
   id3_learner->learn(generator.train_data);
@@ -40,11 +40,11 @@ int main(int argc, char* argv[]) {
 
   // may be a problem with function name conflicts in code generated,
   // when id3 is used as weak learner
-  LinearCompositionLearner<Object>::Ptr simple_lc_learner(
-    new LinearCompositionLearner<Object>);
-  simple_lc_learner->setMeasure(abs_error);
-  simple_lc_learner->setWeakLearner(bf_learner);
-  simple_lc_learner->learn(generator.train_data);
+  // LinearCompositionLearner<Object>::Ptr simple_lc_learner(
+  //  new LinearCompositionLearner<Object>);
+  // simple_lc_learner->setMeasure(abs_error);
+  // simple_lc_learner->setWeakLearner(bf_learner);
+  // simple_lc_learner->learn(generator.train_data);
   // generator.setScorerTest(simple_lc_learner, "simple_lc_learner");
 
   generator.setMainCode();
