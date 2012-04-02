@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
   id3_learner->learn(generator.train_data);
   generator.setScorerTest(id3_learner, "id3_learner");
 
-  // generator.setMainCode();
-  // generator.write(argv[1]);
+  generator.setMainCode();
+  generator.write(argv[1]);
   return 0;
 }
