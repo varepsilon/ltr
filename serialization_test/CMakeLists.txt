@@ -38,7 +38,7 @@ FIND_LIBRARY(boost_date_time_library boost_date_time HINTS ${LTR_Install_Path})
 # lets SETup Utilities
 FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
 FIND_LIBRARY(util_logger_library util_logger HINTS ${LTR_Install_Path})
-SET(UTILITY util_timer util_logger)
+SET(UTILITY util_logger util_timer)
 
 # lets SETup Puppy
 FIND_LIBRARY(puppy_library puppy HINTS ${LTR_Install_Path})

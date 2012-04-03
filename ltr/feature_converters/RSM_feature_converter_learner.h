@@ -40,6 +40,7 @@ class RSMFeatureConverterLearner
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
+    srand(this->getIntParameter("RANDOM_SEED"));
   }
 
   void learn(const DataSet<TElement>& data_set);
@@ -74,7 +75,6 @@ void RSMFeatureConverterLearner<TElement>
     ceil(data_set.featureInfo().getFeatureCount()
       * this->getDoubleParameter("SELECTED_PART")));
   vector<int> indices(size);
-  srand(this->getIntParameter("RANDOM_SEED"));
 
   vector<int> all_used(data_set.featureInfo().getFeatureCount());
   for (int index = 0; index < all_used.size(); ++index) {

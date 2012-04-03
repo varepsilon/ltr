@@ -71,7 +71,7 @@ namespace serialization_test {
       string error_message) const {
     string output;
     output.append("string " + function_name +
-      "() { return \"" + error_message + " \"; }\n\n");
+      "() { return \"" + error_message + "\"; }\n\n");
     return output;
   }
 

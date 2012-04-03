@@ -61,7 +61,7 @@ ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
 ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
 TARGET_LINK_LIBRARIES (util_timer boost_date_time)
 TARGET_LINK_LIBRARIES (util_logger util_timer)
-SET (UTILITY util_timer util_logger)
+SET (UTILITY util_logger util_timer)
 
 INSTALL(TARGETS ${UTILITY} ARCHIVE DESTINATION ${Install_Path})
 

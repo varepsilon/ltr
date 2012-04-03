@@ -43,6 +43,7 @@ class BeggingPreprocessorLearner
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
+    srand(this->getIntParameter("RANDOM_SEED"));
   }
 
   void learn(const DataSet<TElement>& data_set);
@@ -82,7 +83,6 @@ void BeggingPreprocessorLearner<TElement>
 
   if (size != 0) {
     vector<int> indices(size);
-    srand(this->getIntParameter("RANDOM_SEED"));
 
     if (this->getBoolParameter("WITH_REPLACE")) {
       for (int i = 0; i < indices.size(); ++i) {

@@ -30,6 +30,12 @@ class Serializable {
   Serializable() {
     id_ = serializable_objects_counter_++;
   }
+  /** Copy constructor. Counts all serializable objects and assigns them
+   * unique id.
+   */
+  Serializable(const Serializable&) {
+    id_ = serializable_objects_counter_++;
+  }
   /** The function creates cpp code for serializable object using given name.
    * \param serrializable_object_name name that should be used for naming the
    * object (function or class) within the generated cpp code.
