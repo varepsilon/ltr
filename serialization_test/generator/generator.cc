@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
   generator.setScorerTest(id3_learner, "id3_learner");
 
   LinearCompositionLearner<Object>::Ptr simple_lc_learner(
-    new LinearCompositionLearner<Object>); 
+    new LinearCompositionLearner<Object>);
   simple_lc_learner->setMeasure(abs_error);
   simple_lc_learner->setWeakLearner(bf_learner);
   simple_lc_learner->learn(generator.train_data);
