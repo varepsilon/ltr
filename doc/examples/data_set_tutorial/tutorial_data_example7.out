@@ -1,9 +1,0 @@
-data.size() = 4
-data[0] = [12.00, 54.11]
-data.at(1) = [1.30, 4.15]
-data.getWeight(2) = 2.12
-data.getWeight(2) = 0.01
-called data.erase(1)
-data[1] = [10.30, 14.30]
-called data.clear()
-data.size() = 0
