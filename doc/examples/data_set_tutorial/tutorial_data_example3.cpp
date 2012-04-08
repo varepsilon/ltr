@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "ltr/data/object.h"
 
 using std::cout;
