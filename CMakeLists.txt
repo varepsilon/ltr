@@ -50,13 +50,10 @@ INSTALL(TARGETS puppy ARCHIVE DESTINATION ${Install_Path})
 ##########################################################################################
 # lets SETup utility
 INCLUDE (${Source_Path}/cmake/utility.cmake)
-ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
-ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
-TARGET_LINK_LIBRARIES (util_timer ${Boost_LIBRARIES})
-TARGET_LINK_LIBRARIES (util_logger util_timer)
-SET (UTILITY util_logger util_timer)
+ADD_LIBRARY (ltr_utility STATIC ${TIMER_SOURCES} ${LOGGER_SOURCES})
+TARGET_LINK_LIBRARIES (ltr_utility ${Boost_LIBRARIES})
 
-INSTALL(TARGETS ${UTILITY} ARCHIVE DESTINATION ${Install_Path})
+INSTALL(TARGETS ltr_utility ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup tinyxml library
@@ -67,7 +64,7 @@ ADD_LIBRARY (tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE (${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY (ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES (ltr puppy ${UTILITY} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES (ltr puppy ltr_utility ${Boost_LIBRARIES})
 
 INSTALL(TARGETS ltr ARCHIVE DESTINATION ${Install_Path})
 
@@ -75,7 +72,7 @@ INSTALL(TARGETS ltr ARCHIVE DESTINATION ${Install_Path})
 # lets SETup LTR_client
 INCLUDE (${Source_Path}/cmake/ltr_client.cmake)
 ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
-TARGET_LINK_LIBRARIES (ltr_client ltr tinyxml ${UTILITY})
+TARGET_LINK_LIBRARIES (ltr_client ltr tinyxml ltr_utility)
 
 ##########################################################################################
 # lets SETup Google Test
