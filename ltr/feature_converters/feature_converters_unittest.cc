@@ -11,7 +11,7 @@
 #include "ltr/feature_converters/feature_normalizer_learner.h"
 #include "ltr/feature_converters/remove_nan_converter.h"
 #include "ltr/data/utility/io_utility.h"
-#include "ltr/learners/best_feature_learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/dcg.h"

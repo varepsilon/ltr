@@ -5,7 +5,7 @@
 
 #include <string>
 #include "ltr/scorers/scorer.h"
-#include "ltr/utility/decision_tree/decision_tree.h"
+#include "ltr/learners/decision_tree/decision_tree.h"
 
 using std::string;
 

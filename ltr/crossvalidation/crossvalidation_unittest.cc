@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "ltr/crossvalidation/crossvalidation.h"
-#include "ltr/learners/best_feature_learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/data/object.h"
 #include "ltr/data/feature_info.h"
 #include "ltr/measures/abs_error.h"

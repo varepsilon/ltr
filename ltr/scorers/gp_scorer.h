@@ -11,8 +11,8 @@
 
 #include "contrib/puppy/Puppy.hpp"
 
-#include "ltr/learners/utility/gp_functions.h"
-#include "ltr/learners/utility/gp_primitives.h"
+#include "ltr/learners/gp_learner/gp_functions.h"
+#include "ltr/learners/gp_learner/gp_primitives.h"
 #include "ltr/interfaces/serializable.h"
 
 using std::vector;

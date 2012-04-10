@@ -2,12 +2,12 @@
 
 #include "ltr_client/learner_factory.h"
 
-#include "ltr/learners/best_feature_learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
 
-#include "ltr/learners/gp_learner.h"
-#include "ltr/learners/gp_learner_determinant_strategy.h"
+#include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
 
-#include "ltr/learners/id3_learner.h"
+#include "ltr/learners/decision_tree/id3_learner.h"
 
 using ltr::Object;
 using ltr::ObjectPair;
