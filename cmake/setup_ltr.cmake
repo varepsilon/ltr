@@ -5,6 +5,10 @@ macro(SetUpLTR LTR_Source_Path)
 		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread")
 	ENDIF (UNIX)
 
+	########################################################################################
+	# lets SETup boost 
+	INCLUDE (${LTR_Source_Path}/cmake/boost.cmake)
+
 	##########################################################################################
 	# lets SETup ltr
 	SET(LTR_Install_Path ${LTR_Source_Path}/lib)
@@ -14,11 +18,6 @@ macro(SetUpLTR LTR_Source_Path)
 	LINK_DIRECTORIES(${LTR_Install_Path})
 
 	FIND_LIBRARY(LTR_Library ltr HINTS ${LTR_Install_Path})
-
-	# lets SETup boost
-	FIND_LIBRARY(boost_filesystem_library boost_filesystem HINTS ${LTR_Install_Path})
-	FIND_LIBRARY(boost_system_library boost_system HINTS ${LTR_Install_Path})
-	FIND_LIBRARY(boost_date_time_library boost_date_time HINTS ${LTR_Install_Path})
 
 	# lets SETup Utilities
 	FIND_LIBRARY(util_timer_library util_timer HINTS ${LTR_Install_Path})
@@ -31,5 +30,5 @@ macro(SetUpLTR LTR_Source_Path)
 	MESSAGE("LTR_Library           : ${LTR_Library}")
 	MESSAGE("LTR_Source_Path       : ${LTR_Source_Path}")
 	
-	SET(LTR_libs ltr boost_filesystem boost_system puppy ${UTILITY} boost_date_time)
+	SET(LTR_libs ltr puppy ${UTILITY} ${Boost_LIBRARIES})
 endmacro()

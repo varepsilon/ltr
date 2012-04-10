@@ -36,16 +36,9 @@ IF (UNIX)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread")
 ENDIF (UNIX)
 
-##########################################################################################
-# lets SETup boost manually (1.48.0 used)
+########################################################################################
+# lets SETup boost 
 INCLUDE (${Source_Path}/cmake/boost.cmake)
-ADD_LIBRARY (boost_date_time STATIC ${Boost_date_time_SOURCES})
-ADD_LIBRARY (boost_system STATIC ${Boost_system_SOURCES})
-ADD_LIBRARY (boost_filesystem STATIC ${Boost_filesystem_SOURCES})
-TARGET_LINK_LIBRARIES (boost_filesystem boost_system)
-
-INSTALL(TARGETS boost_filesystem boost_system boost_date_time
-	ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup Puppy library
@@ -59,7 +52,7 @@ INSTALL(TARGETS puppy ARCHIVE DESTINATION ${Install_Path})
 INCLUDE (${Source_Path}/cmake/utility.cmake)
 ADD_LIBRARY (util_timer STATIC ${TIMER_SOURCES})
 ADD_LIBRARY (util_logger STATIC ${LOGGER_SOURCES})
-TARGET_LINK_LIBRARIES (util_timer boost_date_time)
+TARGET_LINK_LIBRARIES (util_timer ${Boost_LIBRARIES})
 TARGET_LINK_LIBRARIES (util_logger util_timer)
 SET (UTILITY util_logger util_timer)
 
@@ -74,7 +67,7 @@ ADD_LIBRARY (tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE (${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY (ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES (ltr boost_date_time puppy ${UTILITY})
+TARGET_LINK_LIBRARIES (ltr puppy ${UTILITY} ${Boost_LIBRARIES})
 
 INSTALL(TARGETS ltr ARCHIVE DESTINATION ${Install_Path})
 
@@ -93,7 +86,7 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 # lets SETup our unit-tests for LTR (executed by Google Test)
 INCLUDE (${Source_Path}/cmake/utests.cmake)
 ADD_EXECUTABLE (ltr_test ${LTR_TEST_ALL})
-TARGET_LINK_LIBRARIES (ltr_test ltr gtest boost_filesystem)
+TARGET_LINK_LIBRARIES (ltr_test ltr gtest ${Boost_LIBRARIES})
 
 # lets copy the test data to the build directory
 INCLUDE (${Source_Path}/cmake/copy_test_data.cmake)

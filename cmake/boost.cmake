@@ -1,35 +1,26 @@
-SET (Boost_SOURCE_DIR ${Source_Path}/contrib/boost_libs)
-SET (Boost_INCLUDE_DIR ${Source_Path}/contrib)
-SET (Boost_BINARY_DIR ${PROJECT_BINARY_DIR})
+SET(Boost_USE_STATIC_LIBS ON)
+SET(Boost_USE_STATIC_RUNTIME OFF)
+SET(Boost_ADDITIONAL_VERSIONS "1.47" "1.47.0" "1.48" "1.48.0")
 
-SET(Boost_date_time_SOURCE_DIR ${Boost_SOURCE_DIR}/date_time)
-SET(Boost_date_time_SOURCES
-  ${Boost_date_time_SOURCE_DIR}/posix_time/posix_time_types.cpp
-  ${Boost_date_time_SOURCE_DIR}/gregorian/date_generators.cpp
-  ${Boost_date_time_SOURCE_DIR}/gregorian/greg_month.cpp
-  ${Boost_date_time_SOURCE_DIR}/gregorian/greg_names.hpp
-  ${Boost_date_time_SOURCE_DIR}/gregorian/greg_weekday.cpp
-  ${Boost_date_time_SOURCE_DIR}/gregorian/gregorian_types.cpp
-)
+FIND_PACKAGE(Boost)
 
-SET(Boost_filesystem_SOURCE_DIR ${Boost_SOURCE_DIR}/filesystem)
-SET(Boost_filesystem_SOURCES
-  ${Boost_filesystem_SOURCE_DIR}/codecvt_error_category.cpp
-  ${Boost_filesystem_SOURCE_DIR}/operations.cpp
-  ${Boost_filesystem_SOURCE_DIR}/path.cpp
-  ${Boost_filesystem_SOURCE_DIR}/path_traits.cpp
-  ${Boost_filesystem_SOURCE_DIR}/portability.cpp
-  ${Boost_filesystem_SOURCE_DIR}/unique_path.cpp
-  ${Boost_filesystem_SOURCE_DIR}/utf8_codecvt_facet.cpp
-  ${Boost_filesystem_SOURCE_DIR}/windows_file_codecvt.cpp
-  ${Boost_filesystem_SOURCE_DIR}/windows_file_codecvt.hpp
-)
+IF (NOT Boost_FOUND)
+    MESSAGE("Boost wasn't found, install it.")
+    IF (WIN32)
+        MESSAGE(
+			"Use BoostPro intaller (http://www.boostpro.com/download/)
+			and set the BOOST_ROOT environment variable to installation path 
+			(My Computer->Advanced Settings).")
+    ENDIF (WIN32)
+ENDIF (NOT Boost_FOUND)
 
-SET(Boost_system_SOURCE_DIR ${Boost_SOURCE_DIR}/system)
-SET(Boost_system_SOURCES
-  ${Boost_system_SOURCE_DIR}/error_code.cpp
-  ${Boost_system_SOURCE_DIR}/local_free_on_destruction.hpp
-)
+FIND_PACKAGE(Boost COMPONENTS filesystem system date_time REQUIRED)
 
+IF (NOT DEFINED Boost_LIBRARYDIR)
+    IF (WIN32)
+        SET(Boost_LIBRARYDIR "$ENV{BOOST_ROOT}/lib")
+    ENDIF (WIN32)
+ENDIF (NOT DEFINED Boost_LIBRARYDIR)
+
+LINK_DIRECTORIES(${Boost_LIBRARYDIR})
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-LINK_DIRECTORIES(${Boost_BINARY_DIR})
