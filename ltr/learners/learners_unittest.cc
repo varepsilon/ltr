@@ -8,7 +8,7 @@
 #include <limits>
 
 #include "ltr/data/object.h"
-#include "ltr/learners/best_feature_learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/ndcg.h"
@@ -17,8 +17,8 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/scorers/gp_scorer.h"
-#include "ltr/learners/gp_learner.h"
-#include "ltr/learners/gp_learner_determinant_strategy.h"
+#include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {

@@ -5,11 +5,11 @@
 #include "serialization_test/generator/generator_utility.h"
 
 #include "ltr/measures/measure.h"
-#include "ltr/learners/best_feature_learner.h"
-#include "ltr/learners/id3_learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
+#include "ltr/learners/decision_tree/id3_learner.h"
 #include "ltr/measures/abs_error.h"
-#include "ltr/learners/gp_learner.h"
-#include "ltr/linear_composition/linear_composition_learner.h"
+#include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/learners/linear_composition/linear_composition_learner.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
 
 using ltr::BestFeatureLearner;
