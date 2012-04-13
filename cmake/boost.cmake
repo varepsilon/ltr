@@ -7,10 +7,9 @@ FIND_PACKAGE(Boost)
 IF (NOT Boost_FOUND)
     MESSAGE("Boost wasn't found, install it.")
     IF (WIN32)
-        MESSAGE(
-			"Use BoostPro intaller (http://www.boostpro.com/download/)
-			and set the BOOST_ROOT environment variable to installation path 
-			(My Computer->Advanced Settings).")
+		MESSAGE("")
+        MESSAGE("Use BoostPro intaller (http://www.boostpro.com/download/) and set the BOOST_ROOT environment variable to installation path (My Computer->Advanced Settings).")
+		MESSAGE("")
     ENDIF (WIN32)
 ENDIF (NOT Boost_FOUND)
 
