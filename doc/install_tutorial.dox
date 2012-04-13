@@ -1,0 +1,94 @@
+namespace ltr {
+/** \page HowToInstall How To Install
+	\ingroup Tutorial
+
+\tableofcontents
+	
+\section InstallingLTR Installing LTR
+
+Assume you already have downloaded LTR to you computer.
+LTR's root directory is supposed to contain CMakeLists.txt file and the following
+folders: cmake, contrib, data, doc, ltr, ltr_client, serialization_test and utility.
+
+\subsection InstallingBoost Installing Boost
+
+%The simpliest way to install boost under Windows is to use an installer from
+<a href=http://www.boostpro.com/download>http://www.boostpro.com/download</a>.
+
+Now LTR uses only multithreaded and multithreaded debug versions of boost, but it is recommended to install DLL variants too.
+
+\subsection InstallingCMake Installing CMake
+
+Install CMake from <a href=www.cmake.org/cmake/resources/software.html>www.cmake.org/cmake/resources/software.html</a>
+and add CMake to the system PATH.
+
+\subsection ConfiguringLTR Configuring LTR
+
+Make a directory for building, the default is <LTR_root>/build. Further shell commands have been written as if you've chosen
+the default <LTR_root>/build directory for building.
+From the directory chosen run the following shell command:
+
+\code
+cmake ../
+\endcode
+
+Here ../ is a relative path to <LTR_root>. This command will configure LTR and generate makefiles or project files,
+depending on you system and IDE installed. You can specify what to generate manually, as here:
+
+\code
+cmake ../ -G "Visual Studio 9 2008"
+\endcode
+
+For the list of all supported generators, simply write
+
+\code
+cmake
+\endcode
+
+If you are the LTR's developer, it might be useful to have a shell-script file like following (windows example):
+\include make_project.bat
+
+\subsection BuildingLTR Building LTR
+
+As you already have your favorite IDE's project, compiling is simple. (For example in Visual Studio
+one just have to build ALL_BUILD project.)
+
+After build you can run unittests from <LTR_root>/build, or, in Visual Studio, by setting ltr_test as a startup project
+and using Ctrl+F5.
+
+Important is that after sucessful build you should build INSTALL project, or (depending on your system an IDE) run
+
+\code
+make install
+\endcode
+
+This will create an <LTR_root>/lib directory with 3 static libraries in there: ltr, ltr_utility and puppy. If you want
+to use LTR in your project, you have to link to these libraries.
+
+\section LinkingtoLTR Linking to LTR
+
+Lets start from a rather simple test project, that uses LTR. Here is an example of the test project's CMakeLists.txt:
+
+\includelineno CMakeLists.txt
+
+Here the Test_Source_Path variable is a path to the sources of the test project. Usually it equals to the CMAKE_CURRENT_SOURCE_DIR
+variable, i. e., the path to the current CMakeLists.txt file.
+
+Then the LTR_Source_Path is specified as a relative path from the Test_Source_Path. Absolute path can also be used:
+
+\code
+SET(LTR_Source_Path "C:/Data/Ltr1")
+\endcode
+
+Strings no.7-8 include a cmake file, which specifies a SetUpLTR macro, and run it with LTR_Source_Path parameter.
+This will set all nesessary variables for using LTR (and also Boost).
+
+Strings no.10-12 specify a directory for header files of the test project and list test's source files.
+
+Finally, the ADD_EXECUTABLE command creates an executable project called test_executable from sources listed in the
+Test_SOURCES variable. Then, the TARGET_LINK_LIBRARIES command sets that test_executable project uses LTR by invoking
+LTR_libs variable, defined in SetUpLTR macro.
+
+
+**/
+}

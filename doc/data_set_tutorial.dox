@@ -2,22 +2,7 @@ namespace ltr {
 /** \page TutorialData Tutorial page 1 - Data manipulation
     \ingroup Tutorial
 
-\b Table \b of \b contents
-
-\ref TutorialDataObject
-	- \ref TutorialDataObjectFeatures
-	- \ref TutorialDataObjectLabels
-	- \ref TutorialDataObjectMetaInfo
-	- \ref TutorialDataObjectCopying
-
-\ref TutorialDataObjectPair
-
-\ref TutorialDataObjectList
-
-\ref TutorialDataDataSet
-	- \ref TutorialDataDataSetBasicOperations
-	- \ref TutorialDataDataSetFeatureInfo
-	- \ref TutorialDataDataSetSavingAndLoading
+\tableofcontents
 
 \section TutorialDataObject Object.
 

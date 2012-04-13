@@ -5,6 +5,7 @@ namespace ltr {
 
 \b Table \b of \b contents
   - \b Tutorial
+    - \ref HowToInstall
     - \ref TutorialData
   - \b Advanced \b topics
   
