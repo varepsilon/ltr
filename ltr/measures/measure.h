@@ -26,6 +26,7 @@ using std::max;
 
 using ltr::utility::DoubleLess;
 using ltr::utility::DoubleMore;
+using ltr::utility::isNaN;
 
 namespace ltr {
 /**
@@ -111,7 +112,9 @@ bool Measure<TElement>::better(double expected_better,
 
 template<class TElement>
 void Measure<TElement>::checkResult(double result) const {
-  if (DoubleMore(result, max(best(), worst()))) {
+  if (isNaN(result)) {
+    throw logic_error(alias() + " NaN calculated");
+  } else if (DoubleMore(result, max(best(), worst()))) {
     throw logic_error(alias() + " calculated > " +
       boost::lexical_cast<string>(max(best(), worst())));
   } else if (DoubleLess(result, min(best(), worst()))) {
