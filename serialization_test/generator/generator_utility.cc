@@ -107,9 +107,9 @@ namespace serialization_test {
         function_number + ");\n");
       tester_code.append(tab + "test_labels = SetupTestLabels"
         + function_number + "();\n");
-      tester_code.append(tab + "ok = ok && CompareReport(").
+      tester_code.append(tab + "ok = CompareReport(").
         append("test_labels, serializated_labels, ").
-        append("Message" + function_number + "());\n\n");
+        append("Message" + function_number + "()) && ok;\n\n");
     }
 
     tester_code.append(tab + "return TotalReport(ok);\n}\n");

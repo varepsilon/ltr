@@ -37,7 +37,7 @@ bool CompareReport(const vector<double>& expected,
                    const string& message) {
   bool result = Equal(expected, actual);
   if (!result) {
-    cout << "[FAILED]";
+    cout << "[FAILED] " << message << "\n";
     if (expected.size() != actual.size()) {
       cout << "Compared vectors have different sizes\n";
     } else {
@@ -46,10 +46,10 @@ bool CompareReport(const vector<double>& expected,
         cout << expected[i] << " " << actual[i] << "\n";
       }
     }
+    cout << "\n";
   } else {
-    cout << "[OK]";
+    cout << "[OK] " << message << "\n";
   }
-  cout << " " << message << "\n";
   return result;
 }
 
