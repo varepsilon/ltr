@@ -73,7 +73,8 @@ bool AreEqual(const DataSet<TElement>& first,
 }
 
 TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
-  FakeFeatureConverter::Ptr ffc(new FakeFeatureConverter);
+  FakeFeatureConverter::Ptr ffc
+    (new FakeFeatureConverter(data.featureInfo()));
   DataSet<Object> conv_data;
 
   ltr::utility::ApplyFeatureConverter(ffc, data, &conv_data);

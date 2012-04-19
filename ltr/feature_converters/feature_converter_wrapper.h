@@ -6,27 +6,21 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
-template <class TElement>
-class FeatureConverterWrapper : public BaseFeatureConverterLearner<TElement> {
+template <class TElement, class TFeatureConverter>
+class FeatureConverterWrapper
+    : public FeatureConverterLearner<TElement, TFeatureConverter> {
   private:
-    FeatureConverter::Ptr converter_;
+    FeatureInfo feature_info_;
 
   public:
     typedef boost::shared_ptr<FeatureConverterWrapper> Ptr;
 
-    explicit FeatureConverterWrapper(FeatureConverter::Ptr converter) :
-      converter_(converter) {}
-
-    void setConverter(FeatureConverter::Ptr converter) {
-      converter_ = converter;
-    }
-
     virtual void learn(const DataSet<TElement>& data_set) {
-      converter_->setFeatureInfo(data_set.featureInfo());
+      feature_info_ = data_set.featureInfo();
     }
 
-    FeatureConverter::Ptr makePtr() const {
-      return converter_;
+    virtual TFeatureConverter make() const {
+      return TFeatureConverter(feature_info_);
     }
 
     void setDefaultParameters() {}

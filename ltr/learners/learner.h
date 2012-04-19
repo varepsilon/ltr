@@ -15,7 +15,6 @@ using std::string;
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/feature_converters/feature_converter_learner.h"
-#include "ltr/feature_converters/feature_converter_wrapper.h"
 #include "ltr/feature_converters/utility/utility.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
@@ -37,9 +36,6 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   explicit BaseLearner(const string& alias) : Aliaser(alias) {}
 
   void learn(const DataSet<TElement>& data);
-
-  void addFeatureConverter(
-      typename ltr::FeatureConverter::Ptr p_feature_converter);
 
   void addFeatureConverter(
       typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
@@ -106,14 +102,6 @@ template< class TElement, class TScorer >
 Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
   Scorer *scr = new TScorer(make());
   return Scorer::Ptr(scr);
-}
-
-template< class TElement >
-void BaseLearner< TElement >::addFeatureConverter(
-    typename ltr::FeatureConverter::Ptr feature_converter) {
-  feature_converter_learners_.push_back(
-    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr(
-      new FeatureConverterWrapper<TElement>(feature_converter)));
 }
 
 template< class TElement >

@@ -9,13 +9,12 @@
 using std::string;
 
 namespace ltr {
-
-FeatureInfo FakeFeatureConverter::getNewFeatureInfo() const {
-  return feature_info_;
-}
-
 void FakeFeatureConverter::applyImpl(const Object& argument,
     Object* value) const {
   *value = argument.deepCopy();
+}
+
+FeatureInfo FakeFeatureConverter::getNewFeatureInfo() const {
+  return feature_info_;
 }
 }

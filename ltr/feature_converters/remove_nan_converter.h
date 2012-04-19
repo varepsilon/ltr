@@ -6,6 +6,7 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/feature_converter_wrapper.h"
 
 namespace ltr {
 class RemoveNaNConverter : public FeatureConverter {
@@ -18,6 +19,11 @@ class RemoveNaNConverter : public FeatureConverter {
     virtual FeatureInfo getNewFeatureInfo() const;
     virtual void applyImpl(const Object& argument, Object* value) const;
     string generateCppCode(const std::string &) const;
+};
+
+template <typename TElement>
+class RemoveNaNConverterLearner
+    : public FeatureConverterWrapper<TElement, RemoveNaNConverter> {
 };
 }
 

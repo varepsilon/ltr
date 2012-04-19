@@ -19,6 +19,12 @@
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
+#include "ltr/feature_converters/remove_nan_converter.h"
+#include "ltr/feature_converters/utility/utility.h"
+
+using ltr::FeatureConverter;
+using ltr::RemoveNaNConverterLearner;
+using ltr::utility::ApplyFeatureConverter;
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -55,8 +61,14 @@ class LearnersTest : public ::testing::Test {
   ltr::DataSet<ltr::ObjectList> learn_data_listwise;
 };
 
-// tests.
+
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
+  RemoveNaNConverterLearner<ltr::Object> remove_NaN_learner;
+  remove_NaN_learner.learn(learn_data);
+  FeatureConverter::Ptr remove_NaN = remove_NaN_learner.makePtr();
+  ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
+  ApplyFeatureConverter(remove_NaN, test_data, &test_data);
+
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
   learner.learn(learn_data);
@@ -92,4 +104,3 @@ TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
 
   std::cout << scorer.generateCppCode();
 };
-

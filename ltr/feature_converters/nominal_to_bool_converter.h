@@ -6,6 +6,7 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/feature_converter_wrapper.h"
 
 namespace ltr {
 class NominalToBoolConverter : public FeatureConverter {
@@ -18,6 +19,11 @@ class NominalToBoolConverter : public FeatureConverter {
     virtual FeatureInfo getNewFeatureInfo() const;
     virtual void applyImpl(const Object& argument, Object* value) const;
     string generateCppCode(const std::string &) const;
+};
+
+template <typename TElement>
+class NominalToBoolConverterLearner
+    : public FeatureConverterWrapper<TElement, NominalToBoolConverter> {
 };
 }
 
