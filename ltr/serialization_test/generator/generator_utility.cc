@@ -49,14 +49,14 @@ namespace serialization_test {
   string Generator::setFixture() const {
     string output;
     output.append("class SerializationTest : public ::testing::Test {\n").
-      append(tab + "protected:\n").
-      append(tab + "DataSet<Object> test_data;\n").
-      append(tab + "vector<double> serializated_labels;\n").
-      append(tab + "vector<double> test_labels;\n\n").
-      append(tab + "virtual void SetUp() {\n").
-      append(tab + tab + "test_data = loadDataSet<Object>" +
-        "(TestDataPath(), \"SVMLITE\");\n").
-      append(tab + "}\n").
+      append("\tprotected:\n").
+      append("\tDataSet<Object> test_data;\n").
+      append("\tvector<double> serializated_labels;\n").
+      append("\tvector<double> test_labels;\n\n").
+      append("\tvirtual void SetUp() {\n").
+      append("\t\ttest_data = loadDataSet<Object>").
+      append("(TestDataPath(), \"SVMLITE\");\n").
+      append("\t}\n").
       append("};\n\n");
       return output;
   }
@@ -69,12 +69,12 @@ namespace serialization_test {
 
     string output;
     output.append("vector<double> " + function_name + "() {\n");
-    output.append(tab + "vector<double> test_labels;\n");
+    output.append("\tvector<double> test_labels;\n");
     for (int i = 0; i < labels.size(); ++i) {
-      output.append(tab + "test_labels.push_back(" +
+      output.append("\ttest_labels.push_back(" +
         boost::lexical_cast<string>(labels[i]) + ");\n");
     }
-    output.append(tab + "return test_labels;\n}\n\n");
+    output.append("\treturn test_labels;\n}\n\n");
 
     return output;
   }
@@ -86,19 +86,18 @@ namespace serialization_test {
       ") {\n");
 
     string function_number = boost::lexical_cast<string>(index);
-    output.append(tab + "serializated_labels = ").
+    output.append("\tserializated_labels = ").
       append("ApplySerializatedScorerToDataSet(test_data, &SavedScorer" +
       function_number + ");\n");
-    output.append(tab + "test_labels = SetupTestLabels"
+    output.append("\ttest_labels = SetupTestLabels"
       + function_number + "();\n");
-    output.append(tab + "EXPECT_TRUE(Equal(").
+    output.append("\tEXPECT_TRUE(Equal(").
       append("test_labels, serializated_labels));\n").
       append("}\n\n");
     return output;
   }
 
   Generator::Generator():
-      tab("  "),
       train_data(loadDataSet<Object>(TrainDataPath(), "SVMLITE")),
       test_data(loadDataSet<Object>(TestDataPath(), "SVMLITE")),
       tester_code(setIncludes()),

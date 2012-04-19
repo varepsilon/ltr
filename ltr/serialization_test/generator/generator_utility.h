@@ -34,8 +34,6 @@ namespace serialization_test {
 
     string tester_code;
     int scorers_to_test;
-
-    const string tab;
   };
 };
 
