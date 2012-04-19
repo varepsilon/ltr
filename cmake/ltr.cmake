@@ -73,7 +73,8 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
                 ${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
                 ${Source_Path}/ltr/scorers/soft_scorer.h ${Source_Path}/ltr/scorers/soft_scorer.cc
                 ${Source_Path}/ltr/scorers/gp_scorer.h
-                ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc)
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
+				${Source_Path}/ltr/scorers/linear_scorer.h ${Source_Path}/ltr/scorers/linear_scorer.cc)
             
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
                       ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
