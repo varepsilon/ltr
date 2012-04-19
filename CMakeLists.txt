@@ -75,6 +75,15 @@ ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
 TARGET_LINK_LIBRARIES (ltr_client ltr tinyxml ltr_utility)
 
 ##########################################################################################
+# lets SETup generator project, which learns scorers and serialize them
+INCLUDE (${Source_Path}/cmake/serialization.cmake)
+ADD_EXECUTABLE(serialization_generator ${Serialization_generator_SOURCES})
+TARGET_LINK_LIBRARIES(serialization_generator ltr puppy ltr_utility ${Boost_LIBRARIES})
+
+# making tester.cc with scorer saved in code
+MakeTester()
+
+##########################################################################################
 # lets SETup Google Test
 INCLUDE (${Source_Path}/cmake/gtest.cmake)
 cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
@@ -82,7 +91,7 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 ##########################################################################################
 # lets SETup our unit-tests for LTR (executed by Google Test)
 INCLUDE (${Source_Path}/cmake/utests.cmake)
-ADD_EXECUTABLE (ltr_test ${LTR_TEST_ALL})
+ADD_EXECUTABLE (ltr_test ${LTR_TEST_ALL} ${Serialization_tester_SOURCES})
 TARGET_LINK_LIBRARIES (ltr_test ltr gtest ${Boost_LIBRARIES})
 
 # lets copy the test data to the build directory

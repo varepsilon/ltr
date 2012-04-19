@@ -2,4 +2,4 @@ build
 doc/html
 *.out
 lib
-serialization_test/tester/tester.cc
+ltr/serialization_test/tester/tester.cc

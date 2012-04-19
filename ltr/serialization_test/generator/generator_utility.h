@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
-#define SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
+#ifndef LTR_SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
+#define LTR_SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
 
 #include <string>
 #include "ltr/data/data_set.h"
@@ -18,17 +18,17 @@ namespace serialization_test {
     Generator();
     string code() const;
     void write(const char* filename) const;
-    void setMainCode();
     void setScorerTest(BaseLearner<Object>::Ptr learner,
-      string error_message);
+      string test_name);
 
     const DataSet<Object> train_data;
     const DataSet<Object> test_data;
   private:
     string setIncludes() const;
+    string setFixture() const;
     string setTestLabelsFunction(string function_name) const;
-    string setMessageFunction(string function_name,
-      string error_message) const;
+    string setTestCode(int index,
+      string test_name) const;
     string setBeginBlockComment(string message) const;
     string setEndBlockComment(string message) const;
 
@@ -39,4 +39,4 @@ namespace serialization_test {
   };
 };
 
-#endif  // SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
+#endif  // LTR_SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_

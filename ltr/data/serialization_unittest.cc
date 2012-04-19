@@ -16,7 +16,7 @@ using ltr::ObjectList;
 using ltr::DataSet;
 
 // The fixture for testing (contains data for tests).
-class SerializationTest : public ::testing::Test {
+class ManualSerializationTest : public ::testing::Test {
     protected:
     virtual void SetUp() {
         // Code here will be called immediately after the constructor (right
@@ -31,13 +31,13 @@ class SerializationTest : public ::testing::Test {
 
 // tests.
 
-TEST_F(SerializationTest, SerializingObject) {
+TEST_F(ManualSerializationTest, SerializingObject) {
   Object obj;
   obj << 1 << 2.2444444 << 3.5555;
   EXPECT_EQ(obj.toString(), "[1.00, 2.24, 3.56]");
 }
 
-TEST_F(SerializationTest, SerializingObjectPair) {
+TEST_F(ManualSerializationTest, SerializingObjectPair) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;
@@ -47,7 +47,7 @@ TEST_F(SerializationTest, SerializingObjectPair) {
   EXPECT_EQ(pair.toString(), "([1.00, 2.24, 3.56], [3.56, 2.24, 1.00])");
 }
 
-TEST_F(SerializationTest, SerializingObjectList) {
+TEST_F(ManualSerializationTest, SerializingObjectList) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;
@@ -58,7 +58,7 @@ TEST_F(SerializationTest, SerializingObjectList) {
   EXPECT_EQ(lst.toString(), "{[1.00, 2.24, 3.56], [3.56, 2.24, 1.00]}");
 }
 
-TEST_F(SerializationTest, SerializingDataSet) {
+TEST_F(ManualSerializationTest, SerializingDataSet) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;

@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
-#define SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
+#ifndef LTR_SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
+#define LTR_SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
 
 #include <vector>
 #include <string>
@@ -22,12 +22,6 @@ namespace serialization_test {
     double (*scorer)(const vector<double>& features));
 
   bool Equal(const vector<double>& left, const vector<double>& right);
-
-  bool CompareReport(const vector<double>& expected,
-    const vector<double>& actual,
-    const string& message);
-
-  int TotalReport(bool ok);
 };
 
-#endif  // SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
+#endif  // LTR_SERIALIZATION_TEST_TESTER_TESTER_UTILITY_H_
