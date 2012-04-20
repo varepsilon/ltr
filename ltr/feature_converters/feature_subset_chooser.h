@@ -37,7 +37,7 @@ class FeatureSubsetChooser : public FeatureConverter {
    */
   explicit FeatureSubsetChooser(const vector<int>& input_indices,
                                 const FeatureInfo& feature_info = FeatureInfo())
-      : FeatureConverter(feature_info_), indices_(input_indices) {
+      : FeatureConverter(feature_info), indices_(input_indices) {
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
   }
   /**
