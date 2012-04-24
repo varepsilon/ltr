@@ -15,9 +15,9 @@ string LinearScorer::brief() const {
 }
 
 double LinearScorer::scoreImpl(const Object& obj) const {
-  double output;
-  for (int i = 0; i < obj.size(); ++i) {
-    output += obj.features()[i] * weights(i);
+  double output = weights[0];
+  for (int i = 0; i < obj.features().size(); ++i) {
+    output += obj.features()[i] * weights[i + 1];
   }
   return output;
 }
@@ -26,10 +26,10 @@ string LinearScorer::generateCppCodeImpl(const string& function_name) const {
   string code;
   code.append("double " + function_name +
       "(const std::vector<double>& features) {\n").
-    append("\tdouble output = 0.0;\n");
-  for (int i = 0; i < weights.size(); ++i) {
-    code.append("\toutput += features[" + lexical_cast<string>(i) +
-       "] * " + lexical_cast<string>(weights(i)) + ";\n");
+    append("\tdouble output = " + lexical_cast<string>(weights[0]) + ";\n");
+  for (int i = 1; i < weights.size(); ++i) {
+    code.append("\toutput += " + lexical_cast<string>(weights[i]) +
+      " * features[" + lexical_cast<string>(i - 1) +"];\n");
   }
   code.append("\treturn output;\n").
     append("}\n");

@@ -92,7 +92,8 @@ namespace serialization_test {
     output.append("\ttest_labels = SetupTestLabels"
       + function_number + "();\n");
     output.append("\tEXPECT_TRUE(Equal(").
-      append("test_labels, serializated_labels));\n").
+      append("test_labels, serializated_labels)) << Report(test_labels,").
+      append(" serializated_labels);\n").
       append("}\n\n");
     return output;
   }

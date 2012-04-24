@@ -31,4 +31,11 @@ bool Equal(const vector<double>& left, const vector<double>& right) {
 
   return true;
 }
+
+ostream& operator<<(ostream& output, const Report& rep) {
+  for (int i = 0; i < rep.first.size(); ++i) {
+    output << rep.first[i] << "\t\t" << rep.second[i] << "\n";
+  }
+  return output;
+}
 };

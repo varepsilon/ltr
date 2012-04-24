@@ -11,6 +11,7 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/linear_composition/linear_composition_learner.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
 
 using ltr::BestFeatureLearner;
 using ltr::AbsError;
@@ -19,6 +20,7 @@ using ltr::ID3_Learner;
 using ltr::gp::GPLearner;
 using ltr::lc::LinearCompositionLearner;
 using ltr::RSMFeatureConverterLearner;
+using ltr::LinearLearner;
 
 using serialization_test::Generator;
 
@@ -41,6 +43,10 @@ int main(int argc, char* argv[]) {
   ID3_Learner::Ptr id3_learner(new ID3_Learner);
   id3_learner->learn(generator.train_data);
   generator.setScorerTest(id3_learner, "ID3Learner");
+
+  LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
+  linear_learner->learn(generator.train_data);
+  generator.setScorerTest(linear_learner, "LinearLearner");
 
   LinearCompositionLearner<Object>::Ptr simple_lc_learner(
     new LinearCompositionLearner<Object>);

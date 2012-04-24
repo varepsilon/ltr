@@ -98,7 +98,8 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
-                 ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h)
+                 ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h
+				 ${Source_Path}/ltr/learners/linear_learner/linear_learner.h ${Source_Path}/ltr/learners/linear_learner/linear_learner.cc)
 
 SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc

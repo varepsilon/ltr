@@ -3,19 +3,20 @@
 #ifndef LTR_SCORERS_LINEAR_SCORER_H_
 #define LTR_SCORERS_LINEAR_SCORER_H_
 
-#include <Eigen/Dense>
 #include <string>
+#include <vector>
 
 #include "ltr/scorers/scorer.h"
 
-using Eigen::VectorXd;
+using std::string;
+using std::vector;
 
 namespace ltr {
 class LinearScorer : public Scorer {
  public:
   typedef boost::shared_ptr<LinearScorer> Ptr;
 
-  explicit LinearScorer(const VectorXd& in_weights)
+  explicit LinearScorer(const vector<double>& in_weights)
     : Scorer("Linear scorer"), weights(in_weights) {}
 
   string brief() const;
@@ -23,7 +24,7 @@ class LinearScorer : public Scorer {
   virtual double scoreImpl(const Object& obj) const;
   virtual string generateCppCodeImpl(const string& function_name) const;
 
-  VectorXd weights;
+  vector<double> weights;
 };
 };
 
