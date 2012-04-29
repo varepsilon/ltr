@@ -10,9 +10,11 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <string>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 
+using std::string;
 using std::vector;
 using std::random_shuffle;
 using std::copy;
