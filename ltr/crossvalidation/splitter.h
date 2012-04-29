@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 
+#include "ltr/interfaces/printable.h"
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/aliaser.h"
@@ -36,7 +37,7 @@ namespace ltr {
      * Splits data set into training + testing sets.
      */
     template<class TElement>
-    class Splitter : public Parameterized, public Aliaser {
+    class Splitter : public Parameterized, public Aliaser, public Printable {
     public:
       typedef boost::shared_ptr<Splitter> Ptr;
       typedef boost::shared_ptr<Splitter> BasePtr;

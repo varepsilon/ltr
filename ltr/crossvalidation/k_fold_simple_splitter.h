@@ -7,9 +7,12 @@
 #include <vector>
 #include <stdexcept>
 #include <algorithm>
+#include <sstream>
+#include <string>
 
 #include "ltr/crossvalidation/splitter.h"
 
+using std::string;
 using std::vector;
 using std::logic_error;
 
@@ -44,6 +47,7 @@ namespace ltr {
 
       int splitCount(const DataSet<TElement>& base_set) const;
 
+      string toString() const;
     protected:
       virtual void splitImpl(
         int split_index,
@@ -53,6 +57,14 @@ namespace ltr {
     };
 
     // template realizations
+    template<class TElement>
+    string KFoldSimpleSplitter<TElement>::toString() const {
+      std::stringstream str;
+      str << this->getIntParameter("K");
+      str << "-fold sequent splitter";
+      return str.str();
+    }
+
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
       this->clearParameters();

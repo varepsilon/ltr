@@ -8,9 +8,12 @@
 #include <vector>
 #include <cstdlib>
 #include <stdexcept>
+#include <sstream>
+#include <string>
 
 #include "ltr/crossvalidation/splitter.h"
 
+using std::string;
 using std::vector;
 using std::random_shuffle;
 using std::logic_error;
@@ -47,6 +50,7 @@ namespace ltr {
 
       int splitCount(const DataSet<TElement>& base_set) const;
 
+      string toString() const;
     protected:
       virtual void splitImpl(
         int split_index,
@@ -65,6 +69,16 @@ namespace ltr {
     };
 
     // template realizations
+    template<class TElement>
+    string TKFoldSimpleSplitter<TElement>::toString() const {
+      std::stringstream str;
+      str << "TK-fold splitter with parameters: T = ";
+      str << this->getIntParameter("T");
+      str << ", K = ";
+      str << this->getIntParameter("K");
+      return str.str();
+    }
+
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
       this->clearParameters();

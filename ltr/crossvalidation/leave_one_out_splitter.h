@@ -6,9 +6,11 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <stdexcept>
+#include <string>
 
 #include "ltr/crossvalidation/splitter.h"
 
+using std::string;
 using std::vector;
 using std::logic_error;
 
@@ -34,6 +36,7 @@ namespace ltr {
         this->copyParameters(parameters);
       }
 
+      string toString() const;
     protected:
       virtual void splitImpl(
         int split_index,
@@ -43,6 +46,11 @@ namespace ltr {
     };
 
     // template realizations
+    template<class TElement>
+    string LeaveOneOutSplitter<TElement>::toString() const {
+      return "Leave-one-out splitter";
+    }
+
     template<class TElement>
     int LeaveOneOutSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
