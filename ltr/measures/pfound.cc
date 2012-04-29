@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <stdexcept>
+#include <sstream>
 
 #include "ltr/data/object_list.h"
 #include "ltr/measures/pfound.h"

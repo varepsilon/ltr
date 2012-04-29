@@ -10,6 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
+#include <set>
 
 #include "ltr/data/data_set.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"
@@ -18,6 +19,7 @@ using std::max_element;
 using std::vector;
 using std::logic_error;
 using std::string;
+using std::set;
 using ltr::utility::lightSubset;
 
 namespace ltr {

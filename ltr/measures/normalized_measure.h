@@ -4,6 +4,7 @@
 #define LTR_MEASURES_NORMALIZED_MEASURE_H_
 
 #include <sstream>
+#include <string>
 
 #include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"

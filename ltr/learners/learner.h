@@ -78,7 +78,7 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   protected:
   typename Measure<TElement>::Ptr p_measure_;
   typename BaseLearner<TElement>::Ptr p_weak_learner_;
-  
+
   std::vector<typename DataPreprocessor<TElement>::Ptr> data_preprocessors_;
 
   FeatureConverterArray feature_converters_;

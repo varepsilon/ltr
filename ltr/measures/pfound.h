@@ -4,7 +4,7 @@
 #define LTR_MEASURES_PFOUND_H_
 
 #include <stdexcept>
-#include <sstream>
+#include <string>
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/object_list.h"

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <cmath>
+#include <sstream>
 
 #include "ltr/measures/gmrr.h"
 #include "ltr/data/object_list.h"

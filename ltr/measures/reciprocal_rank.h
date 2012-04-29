@@ -3,7 +3,7 @@
 #ifndef LTR_MEASURES_RECIPROCAL_RANK_H_
 #define LTR_MEASURES_RECIPROCAL_RANK_H_
 
-#include <sstream>
+#include <string>
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/object_list.h"

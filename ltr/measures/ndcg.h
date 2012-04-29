@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <vector>
+#include <string>
 
 #include "ltr/data/object_list.h"
 #include "ltr/measures/measure.h"

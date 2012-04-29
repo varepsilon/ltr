@@ -2,8 +2,8 @@
 
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
-#include <string>
 #include <stdexcept>
+#include <sstream>
 
 #include "ltr/measures/reciprocal_rank.h"
 #include "ltr/measures/utils/measure_utility.h"
