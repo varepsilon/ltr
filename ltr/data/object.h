@@ -31,7 +31,7 @@ typedef map<string, string> MetaInfo;
 /** \class Base class for storing information in a DataSet. An object consist of
  * feature vector and meta information;
  */
-class Object : public IPrintable {
+class Object : public Printable {
   public:
   /** \typedef Shared pointer to an object.
    */

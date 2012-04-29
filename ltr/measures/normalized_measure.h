@@ -3,8 +3,12 @@
 #ifndef LTR_MEASURES_NORMALIZED_MEASURE_H_
 #define LTR_MEASURES_NORMALIZED_MEASURE_H_
 
+#include <sstream>
+
 #include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"
+
+using std::string;
 
 namespace ltr {
 /**
@@ -40,13 +44,13 @@ class NormalizedMeasure : public Measure<TElement> {
 
     explicit NormalizedMeasure(
         const ParametersContainer& parameters = ParametersContainer())
-        : Measure<TElement>("Normalised measure") {
+        : Measure<TElement>("Normalized measure") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
 
     NormalizedMeasure(double worst, double best)
-        : Measure<TElement>("Normalised measure") {
+        : Measure<TElement>("Normalized measure") {
       this->setDefaultParameters();
       this->setDoubleParameter("WORST", worst);
       this->setDoubleParameter("BEST", best);
@@ -97,6 +101,24 @@ class NormalizedMeasure : public Measure<TElement> {
     }
     virtual double best() const {
       return this->getDoubleParameter("BEST");
+    }
+
+    string toString() const {
+      std::stringstream str;
+      std::fixed(str);
+      str.precision(2);
+      if (weak_measure_ == NULL) {
+        str << "Normalized measure without setted weak measure";
+      } else {
+        str << "Normalized measure over { ";
+        str << *weak_measure_;
+        str << " }";
+      }
+      str << " with parameters: BEST = ";
+      str << this->getDoubleParameter("BEST");
+      str << ", WORST = ";
+      str << this->getDoubleParameter("WORST");
+      return str.str();
     }
 };
 }

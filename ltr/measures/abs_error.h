@@ -4,12 +4,14 @@
 #define LTR_MEASURES_ABS_ERROR_H_
 
 #include <cmath>
+#include <string>
 
 #include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"
 #include "ltr/data/object.h"
 
 using std::fabs;
+using std::string;
 using ltr::Object;
 using ltr::utility::Inf;
 
@@ -30,6 +32,10 @@ namespace ltr {
     }
     double best() const {
       return 0.0;
+    }
+
+    string toString() const {
+      return "Absolute error measure";
     }
 
     private:

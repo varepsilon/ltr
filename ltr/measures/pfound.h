@@ -4,10 +4,12 @@
 #define LTR_MEASURES_PFOUND_H_
 
 #include <stdexcept>
+#include <sstream>
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/object_list.h"
 
+using std::string;
 using std::logic_error;
 using ltr::ObjectList;
 
@@ -52,6 +54,7 @@ namespace ltr {
     double worst() const {
       return 0.0;
     }
+    string toString() const;
   private:
     double get_measure(const ObjectList& objects) const;
   };

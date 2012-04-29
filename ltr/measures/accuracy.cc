@@ -40,4 +40,14 @@ namespace ltr {
       return 0;
     }
   }
+
+  template<>
+  string Accuracy<Object>::toString() const {
+    return "Pointwise accuracy measure";
+  }
+
+  template<>
+  string Accuracy<ObjectPair>::toString() const {
+    return "Pairwise accuracy measure";
+  }
 };

@@ -3,9 +3,12 @@
 #ifndef LTR_MEASURES_GMRR_H_
 #define LTR_MEASURES_GMRR_H_
 
+#include <sstream>
+
 #include "ltr/measures/measure.h"
 #include "ltr/data/object_list.h"
 
+using std::string;
 using ltr::ObjectList;
 
 namespace ltr {
@@ -40,6 +43,7 @@ namespace ltr {
     double worst() const {
       return 0.0;
     }
+    string toString() const;
   private:
     double get_measure(const ObjectList& objects) const;
     /**

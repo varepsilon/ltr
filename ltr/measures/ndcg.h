@@ -56,6 +56,8 @@ namespace ltr {
     double best() const;
     double worst() const;
 
+    string toString() const;
+
     private:
     double get_measure(const ObjectList& objects) const;
   };
@@ -72,6 +74,15 @@ namespace ltr {
   template<class TDCGFormula>
   double BaseNDCG<TDCGFormula>::worst() const {
     return 0.0;
+  }
+
+  template<class TDCGFormula>
+  string BaseNDCG<TDCGFormula>::toString() const {
+    std::stringstream str;
+    str << this->alias();
+    str << " measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
+    str << this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    return str.str();
   }
 
   template<class TDCGFormula>

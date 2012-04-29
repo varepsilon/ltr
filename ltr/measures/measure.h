@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "ltr/interfaces/printable.h"
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 #include "ltr/data/object_pair.h"
@@ -36,7 +37,7 @@ namespace ltr {
  * http://en.wikipedia.org/wiki/Learning_to_rank#Evaluation_measures (English)
  */
 template <class TElement>
-class Measure : public Aliaser, public Parameterized {
+class Measure : public Aliaser, public Parameterized, public Printable {
   public:
   typedef boost::shared_ptr<Measure> Ptr;
   typedef boost::shared_ptr<Measure> BasePtr;

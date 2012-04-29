@@ -52,4 +52,11 @@ namespace ltr {
     }
     return result;
   }
+
+  string GMRR::toString() const {
+    std::stringstream str;
+    str << "GMRR measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
+    str << this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    return str.str();
+  }
 };

@@ -43,4 +43,13 @@ namespace ltr {
     }
     return result;
   }
+
+  string ReciprocalRank::toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "Reciprocal Rank measure with parameter SCORE_FOR_RELEVANT = ";
+    str << this->getDoubleParameter("SCORE_FOR_RELEVANT");
+    return str.str();
+  }
 };

@@ -3,7 +3,7 @@
 #include "ltr/interfaces/printable.h"
 namespace ltr {
 
-std::ostream& operator<<(std::ostream& stream, const IPrintable& printable) {
+std::ostream& operator<<(std::ostream& stream, const Printable& printable) {
   return stream << printable.toString();
 }
 }

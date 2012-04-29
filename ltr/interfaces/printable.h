@@ -10,12 +10,12 @@ using std::string;
 
 namespace ltr {
 
-class IPrintable {
+class Printable {
   public:
     virtual string toString() const = 0;
-    virtual ~IPrintable() {}
+    virtual ~Printable() {}
 };
-std::ostream& operator<<(std::ostream& stream, const IPrintable& printable);
+std::ostream& operator<<(std::ostream& stream, const Printable& printable);
 }
 
 #endif  // LTR_INTERFACES_PRINTABLE_H_

@@ -15,7 +15,7 @@ namespace ltr {
 /** \class The class stores a number of objects. The container for number of
  *  objects, can be stored in DataSet. That would represent a listwise data set.
  */
-  class ObjectList : public IPrintable {
+  class ObjectList : public Printable {
   public:
   /** \typedef Shared pointer to an object list.
    */

@@ -3,7 +3,11 @@
 #ifndef LTR_MEASURES_ACCURACY_H_
 #define LTR_MEASURES_ACCURACY_H_
 
+#include <string>
+
 #include "ltr/measures/measure.h"
+
+using std::string;
 
 namespace ltr {
 /**
@@ -26,6 +30,7 @@ class Accuracy : public Measure<TElement> {
   double worst() const {
     return 0.0;
   }
+  string toString() const;
   private:
   double get_measure(const TElement& object) const;
 };

@@ -2,6 +2,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <string>
+#include <sstream>
 #include <algorithm>
 #include <stdexcept>
 
@@ -38,5 +39,14 @@ namespace ltr {
       metric = ans / relevant_amount;
     }
     return metric;
+  }
+
+  string AveragePrecision::toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "Average precision measure with parameter SCORE_FOR_RELEVANT = ";
+    str << this->getDoubleParameter("SCORE_FOR_RELEVANT");
+    return str.str();
   }
 };

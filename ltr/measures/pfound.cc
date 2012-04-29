@@ -47,4 +47,17 @@ namespace ltr {
     }
     return result;
   }
+
+  string PFound::toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "PFound measure with parameters: P_BREAK = ";
+    str << this->getDoubleParameter("P_BREAK");
+    str << ", MAX_LABEL = ";
+    str << this->getDoubleParameter("MAX_LABEL");
+    str << ", NUMBER_OF_OBJECTS_TO_CONSIDER = ";
+    str << getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    return str.str();
+  }
 };

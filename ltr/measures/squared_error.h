@@ -4,11 +4,13 @@
 #define LTR_MEASURES_SQUARED_ERROR_H_
 
 #include <cmath>
+#include <string>
 
 #include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"
 #include "ltr/data/object.h"
 
+using std::string;
 using ltr::Object;
 using ltr::utility::Inf;
 
@@ -29,6 +31,9 @@ namespace ltr {
     }
     double worst() const {
       return Inf;
+    }
+    string toString() const {
+      return "Squared error measure";
     }
     private:
     double get_measure(const Object& object) const {

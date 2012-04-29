@@ -41,7 +41,7 @@ typedef DataSet<ObjectList> ListwiseDataSet;
  *  Object, ObjectPair or ObjectList.
  */
 template <typename TElement>
-class DataSet : public IPrintable {
+class DataSet : public Printable {
   public:
   /** Shared pointer type to the DataSet.
    */
