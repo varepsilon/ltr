@@ -12,19 +12,13 @@
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
 
-#include "ltr/feature_converters/feature_converter_learner.h"
-
-#include "ltr/feature_converters/fake_feature_converter_learner.h"
-
 
 using ltr::Measure;
 using ltr::DataSet;
-using ltr::FeatureConverterArray;
 using ltr::LinearCompositionScorer;
 using ltr::Learner;
 using ltr::lc::FakeDataSetWeightsUpdater;
 using ltr::lc::FakeLCScorerWeightsUpdater;
-using ltr::FakeFeatureConverterLearner;
 using ltr::lc::LCScorerWeightsUpdater;
 using ltr::lc::DataSetWeightsUpdater;
 
@@ -64,8 +58,7 @@ namespace lc {
      */
     LinearCompositionLearner(
         const ParametersContainer& parameters = ParametersContainer())
-        : feature_converter_learner(new FakeFeatureConverterLearner<TElement>),
-        data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
+        : data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
         linear_composition_scorer_weights_updater
           (new FakeLCScorerWeightsUpdater<TElement>),
         Learner<TElement, LinearCompositionScorer>("LinearCompositionLearner") {
@@ -104,11 +97,7 @@ namespace lc {
     }
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
-    void setFeatureConverterLearner(
-        typename BaseFeatureConverterLearner<TElement>::Ptr
-          in_feature_converter_learner) {
-      feature_converter_learner = in_feature_converter_learner;
-    }
+
     void setDataSetWeightsUpdater(
       typename DataSetWeightsUpdater<TElement>::Ptr
         in_data_set_weights_updater) {
@@ -127,9 +116,6 @@ namespace lc {
       linear_composition_scorer_weights_updater;
     typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater;
 
-    typename BaseFeatureConverterLearner<TElement>::Ptr
-      feature_converter_learner;
-
     void learnImpl(const DataSet<TElement>& data);
   };
 
@@ -146,19 +132,9 @@ namespace lc {
         iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
         ++iteration) {
       this->p_weak_learner_->reset();
-      DataSet<TElement> train_data;
 
-      feature_converter_learner->learn(data);
-      FeatureConverter::Ptr feature_converter
-        = feature_converter_learner->makePtr();
-      ltr::utility::ApplyFeatureConverter(feature_converter,
-                                          data, &train_data);
-
-      this->p_weak_learner_->learn(train_data);
+      this->p_weak_learner_->learn(data);
       Scorer::Ptr current_scorer = this->p_weak_learner_->makeScorerPtr();
-      ltr::FeatureConverterArray in_scorer_converters;
-      in_scorer_converters.push_back(feature_converter);
-      current_scorer->setFeatureConverters(in_scorer_converters);
       scorer_.add(current_scorer, 1.0);
 
       linear_composition_scorer_weights_updater->updateWeights(data, &scorer_);

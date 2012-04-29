@@ -135,9 +135,9 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
 
   RSMFeatureConverterLearner<Object>::Ptr
     rsm(new RSMFeatureConverterLearner<Object>);
-  lc_learner.setFeatureConverterLearner(rsm);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  bf_learner->addFeatureConverter(rsm);
   lc_learner.setWeakLearner(bf_learner);
 
   lc_learner.learn(data);
@@ -203,7 +203,7 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
 
   RSMFeatureConverterLearner<Object>::Ptr
     rsm(new RSMFeatureConverterLearner<Object>);
-  ada_lc_learner.setFeatureConverterLearner(rsm);
+  bf_learner->addFeatureConverter(rsm);
 
   BeggingPreprocessor<Object>::Ptr begging(new BeggingPreprocessor<Object>);
   bf_learner->addDataPreprocessor(begging);

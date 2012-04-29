@@ -76,7 +76,7 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
     }
   }
 
-  scorer_ = OneFeatureScorer(bestFeatureIdx, this->getFeatureConverters());
+  scorer_ = OneFeatureScorer(bestFeatureIdx);
 }
 }
 #endif  // LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_

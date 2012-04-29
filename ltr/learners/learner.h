@@ -71,6 +71,7 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   void setMeasure(typename Measure<TElement>::Ptr measure) {
     p_measure_ = measure;
   }
+  // atavism
   void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner) {
     p_weak_learner_ = weak_learner;
   }

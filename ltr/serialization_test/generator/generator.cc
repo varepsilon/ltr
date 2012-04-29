@@ -58,10 +58,10 @@ int main(int argc, char* argv[]) {
   LinearCompositionLearner<Object>::Ptr rsm_lc_learner(
     new LinearCompositionLearner<Object>);
   rsm_lc_learner->setMeasure(abs_error);
-  rsm_lc_learner->setWeakLearner(bf_learner);
   RSMFeatureConverterLearner<Object>::Ptr
     rsm(new RSMFeatureConverterLearner<Object>);
-  rsm_lc_learner->setFeatureConverterLearner(rsm);
+  bf_learner->addFeatureConverter(rsm);
+  rsm_lc_learner->setWeakLearner(bf_learner);
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 
