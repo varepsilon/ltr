@@ -6,7 +6,7 @@
 #include <set>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
-#include "ltr/data_preprocessors/simple_subset_preprocessor.h"
+#include "ltr/data_preprocessors/subset_preprocessor.h"
 #include "ltr/data_preprocessors/begging_preprocessor.h"
 #include "ltr/data_preprocessors/fake_preprocessor.h"
 
@@ -19,7 +19,7 @@ using std::set;
 using ltr::Object;
 using ltr::DataSet;
 using ltr::DataPreprocessor;
-using ltr::SimpleSubsetPreprocessor;
+using ltr::SubsetPreprocessor;
 using ltr::BeggingPreprocessor;
 using ltr::FakePreprocessor;
 
@@ -63,12 +63,12 @@ TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
   EXPECT_TRUE(AreEqual(data, prep_data));
 }
 
-TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorTest) {
+TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   vector<int> indices;
   indices.push_back(3);
   indices.push_back(7);
   indices.push_back(4);
-  SimpleSubsetPreprocessor<Object> prep;
+  SubsetPreprocessor<Object> prep;
   prep.setListParameter("INDICES", indices);
 
   DataSet<Object> prep_data;

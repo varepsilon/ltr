@@ -9,6 +9,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 
@@ -19,7 +20,8 @@ using ltr::utility::lightSubset;
 
 namespace ltr {
 /**
- * Produces SimpleSubsetPreprocessor with random indices (duplication allowed)
+ * Acts as SubsetPreprocessor with random indices each new applying
+ * (duplication allowed)
  */
 template <typename TElement>
 class BeggingPreprocessor : public DataPreprocessor<TElement> {
@@ -31,8 +33,8 @@ class BeggingPreprocessor : public DataPreprocessor<TElement> {
    * SELECTED_PART, bool parameter WITH_REPLACE and int parameter RANDOM_SEED.
    * WITH_REPLACE is true if dublication in indices of produced SimpleSubset
    * Preprocessor is allowed, false otherwise. SELECTED_PART is a part of elements
-   * chosen by produced SimpleSubsetPreprocessor. Upper rounding is used, so
-   * never produces SimpleSubsetPreprocessor with 0 features. RANDOM_SEED is for
+   * chosen by produced SubsetPreprocessor. Upper rounding is used, so
+   * never produces SubsetPreprocessor with 0 features. RANDOM_SEED is for
    * manual control of random behavior of BeggingPreprocessorLearner
    * By default SELECTED_PART = 0.3, WITH_REPLACE = true, RANDOM_SEED = 237
    */
@@ -47,9 +49,25 @@ class BeggingPreprocessor : public DataPreprocessor<TElement> {
   void checkParameters() const;
   void apply(const DataSet<TElement>& input,
       DataSet<TElement>* output) const;
+
+  string toString() const;
 };
 
 // template realizations
+template <typename TElement>
+string BeggingPreprocessor<TElement>::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "Begging data preprocessor with parameters: SELECTED_PART = ";
+  str << this->getDoubleParameter("SELECTED_PART");
+  str << ", WITH_REPLACE = ";
+  str << this->getBoolParameter("WITH_REPLACE");
+  str << ", RANDOM_SEED = ";
+  str << this->getIntParameter("RANDOM_SEED");
+  return str.str();
+}
+
 template <typename TElement>
 void BeggingPreprocessor<TElement>::setDefaultParameters() {
   this->clearParameters();

@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include "ltr/interfaces/printable.h"
 #include "ltr/data/data_set.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/interfaces/parameterized.h"
@@ -17,7 +18,7 @@ namespace ltr {
    * and generate new elements from it
    */
   template <class TElement>
-  class DataPreprocessor : public Parameterized {
+  class DataPreprocessor : public Parameterized, public Printable {
   public:
     typedef boost::shared_ptr<DataPreprocessor> Ptr;
 

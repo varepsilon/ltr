@@ -1,11 +1,12 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_H_
-#define LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_H_
+#ifndef LTR_DATA_PREPROCESSORS_SUBSET_PREPROCESSOR_H_
+#define LTR_DATA_PREPROCESSORS_SUBSET_PREPROCESSOR_H_
 
 #include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -31,11 +32,11 @@ namespace ltr {
    * more elements than original dataset. Is used in begging.)
    */
   template <class TElement>
-  class SimpleSubsetPreprocessor : public DataPreprocessor<TElement> {
+  class SubsetPreprocessor : public DataPreprocessor<TElement> {
   public:
-    typedef boost::shared_ptr<SimpleSubsetPreprocessor> Ptr;
+    typedef boost::shared_ptr<SubsetPreprocessor> Ptr;
 
-    explicit SimpleSubsetPreprocessor(
+    explicit SubsetPreprocessor(
         const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
@@ -46,11 +47,13 @@ namespace ltr {
 
     void apply(const DataSet<TElement>& input,
       DataSet<TElement>* output) const;
+
+    string toString() const;
   };
 
   // template realizations
   template <class TElement>
-  void SimpleSubsetPreprocessor<TElement>::apply(
+  void SubsetPreprocessor<TElement>::apply(
       const DataSet<TElement>& input_dataset,
       DataSet<TElement>* output_dataset) const {
     vector<int> indices = this->getListParameter("INDICES");
@@ -72,14 +75,29 @@ namespace ltr {
   }
 
   template <typename TElement>
-  void SimpleSubsetPreprocessor<TElement>::setDefaultParameters() {
+  string SubsetPreprocessor<TElement>::toString() const {
+    std::stringstream str;
+    str << "Subset data preprocessor with parameter INDICES = {";
+    vector<int> indices = this->getListParameter("INDICES");
+    for (int i = 0; i < indices.size(); ++i) {
+      if (i != 0) {
+        str << ", ";
+      }
+      str << indices[i];
+    }
+    str << "}";
+    return str.str();
+  }
+
+  template <typename TElement>
+  void SubsetPreprocessor<TElement>::setDefaultParameters() {
     this->clearParameters();
     vector<int> empty;
     this->addListParameter("INDICES", empty);
   }
 
   template <typename TElement>
-  void SimpleSubsetPreprocessor<TElement>::checkParameters() const {
+  void SubsetPreprocessor<TElement>::checkParameters() const {
     vector<int> indices = this->getListParameter("INDICES");
     set<int> used_elements;
     for (int index = 0; index < indices.size(); ++index) {
@@ -93,4 +111,4 @@ namespace ltr {
   }
 };
 
-#endif  // LTR_DATA_PREPROCESSORS_SIMPLE_SUBSET_PREPROCESSOR_H_
+#endif  // LTR_DATA_PREPROCESSORS_SUBSET_PREPROCESSOR_H_

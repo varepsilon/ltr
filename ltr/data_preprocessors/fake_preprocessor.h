@@ -4,9 +4,12 @@
 #define LTR_DATA_PREPROCESSORS_FAKE_PREPROCESSOR_H_
 
 #include <boost/shared_ptr.hpp>
+#include <string>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/data/data_set.h"
+
+using std::string;
 
 namespace ltr {
   /**
@@ -26,6 +29,10 @@ namespace ltr {
     void apply(const DataSet<TElement>& input_dataset,
         DataSet<TElement>* output_dataset) const {
       *output_dataset = input_dataset;
+    }
+
+    string toString() const {
+      return "Fake data preprocessor";
     }
   };
 };
