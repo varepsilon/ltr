@@ -4,9 +4,12 @@
 #define LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_LEARNER_H_
 
 #include <boost/shared_ptr.hpp>
+#include <string>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
+
+using std::string;
 
 namespace ltr {
 /**
@@ -31,7 +34,7 @@ class FakeFeatureConverterLearner
     converter_.setFeatureInfo(data_set.featureInfo());
   }
   FakeFeatureConverter make() const;
-
+  string toString() const;
   private:
   FakeFeatureConverter converter_;
 };
@@ -40,6 +43,11 @@ class FakeFeatureConverterLearner
 template <typename TElement>
 FakeFeatureConverter FakeFeatureConverterLearner<TElement>::make() const {
   return converter_;
+}
+
+template <typename TElement>
+string FakeFeatureConverterLearner<TElement>::toString() const {
+  return "Fake feature converter learner";
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_LEARNER_H_

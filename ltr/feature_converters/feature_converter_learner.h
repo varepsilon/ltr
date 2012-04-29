@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include "ltr/interfaces/printable.h"
 #include "ltr/data/data_set.h"
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/parameters_container/parameters_container.h"
@@ -21,7 +22,7 @@ namespace ltr {
  * TFeatureConverter and inheritance tree is a forest
  */
 template <class TElement>
-class BaseFeatureConverterLearner : public Parameterized {
+class BaseFeatureConverterLearner : public Parameterized, public Printable {
   public:
   typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
   typedef boost::shared_ptr<const BaseFeatureConverterLearner> ConstPtr;

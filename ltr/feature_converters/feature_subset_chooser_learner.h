@@ -8,10 +8,13 @@
 #include <set>
 #include <vector>
 #include <stdexcept>
+#include <string>
+#include <sstream>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_subset_chooser.h"
 
+using std::string;
 using std::set;
 using std::logic_error;
 using std::vector;
@@ -47,6 +50,7 @@ class FeatureSubsetChooserLearner
   void setDefaultParameters();
   void checkParameters() const;
 
+  string toString() const;
   private:
   FeatureSubsetChooser converter_;
 };
@@ -71,6 +75,22 @@ void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
       throw logic_error("Indicies array contains equal elements");
     }
   }
+}
+
+template <typename TElement>
+string FeatureSubsetChooserLearner<TElement>::toString() const {
+  std::stringstream str;
+    str << "Feature subset chooser feature converter learner"
+      << "with parameter INDICES = {";
+    vector<int> indices = this->getListParameter("INDICES");
+    for (int i = 0; i < indices.size(); ++i) {
+      if (i != 0) {
+        str << ", ";
+      }
+      str << indices[i];
+    }
+    str << "}";
+    return str.str();
 }
 
 template <typename TElement>

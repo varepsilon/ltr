@@ -8,6 +8,8 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <string>
+#include <sstream>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/per_feature_linear_converter.h"
@@ -15,6 +17,7 @@
 #include "ltr/data/utility/data_set_statistics.h"
 
 using std::vector;
+using std::string;
 using std::logic_error;
 
 namespace ltr {
@@ -39,6 +42,7 @@ class FeatureNormalizerLearner
   void setDefaultParameters();
   void checkParameters() const;
 
+  string toString() const;
   private:
   void calcCurrentConverter();
   size_t featureCount() const;
@@ -55,6 +59,19 @@ FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
       &feature_max_statistic_);
   converter_.setFeatureInfo(data_set.featureInfo());
   this->calcCurrentConverter();
+}
+
+template <typename TElement>
+string FeatureNormalizerLearner<TElement>::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "Feature normalizer feature converter learner with parameters:";
+  str << " NormalizationIntervalBegin = ";
+  str << this->getDoubleParameter("NormalizationIntervalBegin");
+  str << ", NormalizationIntervalEnd = ";
+  str << this->getDoubleParameter("NormalizationIntervalEnd");
+  return str.str();
 }
 
 template <typename TElement>

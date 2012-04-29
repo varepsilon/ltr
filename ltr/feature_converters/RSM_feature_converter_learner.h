@@ -9,10 +9,13 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <string>
+#include <sstream>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_subset_chooser.h"
 
+using std::string;
 using std::vector;
 using std::random_shuffle;
 using std::copy;
@@ -49,6 +52,7 @@ class RSMFeatureConverterLearner
   void setDefaultParameters();
   void checkParameters() const;
 
+  string toString() const;
   private:
   FeatureSubsetChooser converter_;
 };
@@ -65,6 +69,18 @@ template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::checkParameters() const {
   CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
   CHECK_INT_PARAMETER("RANDOM_SEED", X > 0);
+}
+
+template <typename TElement>
+string RSMFeatureConverterLearner<TElement>::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "RSM feature converter learner with parameters: SELECTED_PART = ";
+  str << this->getDoubleParameter("SELECTED_PART");
+  str << ", RANDOM_SEED = ";
+  str << this->getIntParameter("RANDOM_SEED");
+  return str.str();
 }
 
 template <typename TElement>
