@@ -18,6 +18,7 @@ using std::string;
 #include "ltr/feature_converters/utility/utility.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
+#include "ltr/data_preprocessors/data_preprocessor.h"
 
 namespace ltr {
 /**
@@ -37,18 +38,33 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
 
   void learn(const DataSet<TElement>& data);
 
+  virtual void reset() = 0;
+  virtual Scorer::Ptr makeScorerPtr() const = 0;
+
   void addFeatureConverter(
       typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
         feature_converter_learner);
-
-  virtual void reset() = 0;
-  virtual Scorer::Ptr makeScorerPtr() const = 0;
 
   const FeatureConverterArray& getFeatureConverters() const {
     return feature_converters_;
   }
   void setFeatureConverters(const FeatureConverterArray& featureConverters) {
     this->feature_converters_ = featureConverters;
+  }
+
+  void addDataPreprocessor(
+      typename DataPreprocessor<TElement>::Ptr data_preprocessor) {
+    data_preprocessors_.push_back(data_preprocessor);
+  }
+
+  const std::vector<typename DataPreprocessor<TElement>::Ptr>&
+      getDataPreprocessors() const {
+    return data_preprocessors_;
+  }
+  void setDataPreprocessors(
+      const std::vector<typename DataPreprocessor<TElement>::Ptr>&
+      data_preprocessors) {
+    this->data_preprocessors_ = data_preprocessors;
   }
 
   virtual ~BaseLearner() {}
@@ -62,6 +78,8 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   protected:
   typename Measure<TElement>::Ptr p_measure_;
   typename BaseLearner<TElement>::Ptr p_weak_learner_;
+  
+  std::vector<typename DataPreprocessor<TElement>::Ptr> data_preprocessors_;
 
   FeatureConverterArray feature_converters_;
   std::vector<typename BaseFeatureConverterLearner<TElement>::Ptr>
@@ -115,6 +133,12 @@ template< class TElement >
 void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   DataSet<TElement> sourceData = data.deepCopy();
   DataSet<TElement> convertedData;
+
+  for (int i = 0; i < data_preprocessors_.size(); ++i) {
+    data_preprocessors_[i]->apply(sourceData, &convertedData);
+    sourceData = convertedData;
+  }
+
   feature_converters_.clear();
   for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
     feature_converter_learners_[i]->learn(sourceData);

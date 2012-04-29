@@ -13,10 +13,8 @@
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
 
 #include "ltr/feature_converters/feature_converter_learner.h"
-#include "ltr/data_preprocessors/data_preprocessor_learner.h"
 
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
-#include "ltr/data_preprocessors/fake_preprocessor_learner.h"
 
 
 using ltr::Measure;
@@ -27,7 +25,6 @@ using ltr::Learner;
 using ltr::lc::FakeDataSetWeightsUpdater;
 using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::FakeFeatureConverterLearner;
-using ltr::FakePreprocessorLearner;
 using ltr::lc::LCScorerWeightsUpdater;
 using ltr::lc::DataSetWeightsUpdater;
 
@@ -53,10 +50,6 @@ namespace lc {
    * converted features (e. g. RSM - random subspace method). Provides the
    * variability of weak scorers. By default is fake, so dataset is not pre-
    * feature converted before weak learning
-
-   * DataPreprocessorLearner - let weak learner call learn() on preprocessed
-   * dataset (e. g. begging). Provides the variability of weak scorers. By default
-   * is fake, so dataset is not preprocessed before weak learning
    */
   template <class TElement>
   class LinearCompositionLearner
@@ -72,7 +65,6 @@ namespace lc {
     LinearCompositionLearner(
         const ParametersContainer& parameters = ParametersContainer())
         : feature_converter_learner(new FakeFeatureConverterLearner<TElement>),
-        data_preprocessor_learner(new FakePreprocessorLearner<TElement>),
         data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
         linear_composition_scorer_weights_updater
           (new FakeLCScorerWeightsUpdater<TElement>),
@@ -117,11 +109,6 @@ namespace lc {
           in_feature_converter_learner) {
       feature_converter_learner = in_feature_converter_learner;
     }
-    void setDataPreprocessorLearner(
-      typename BaseDataPreprocessorLearner<TElement>::Ptr
-        in_data_preprocessor_learner) {
-      data_preprocessor_learner = in_data_preprocessor_learner;
-    }
     void setDataSetWeightsUpdater(
       typename DataSetWeightsUpdater<TElement>::Ptr
         in_data_set_weights_updater) {
@@ -142,8 +129,6 @@ namespace lc {
 
     typename BaseFeatureConverterLearner<TElement>::Ptr
       feature_converter_learner;
-    typename BaseDataPreprocessorLearner<TElement>::Ptr
-      data_preprocessor_learner;
 
     void learnImpl(const DataSet<TElement>& data);
   };
@@ -155,25 +140,19 @@ namespace lc {
       learnImpl(const DataSet<TElement>& data) {
     linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
     data_set_weights_updater->setMeasure(this->p_measure_);
-    data_preprocessor_learner->setMeasure(this->p_measure_);
     this->p_weak_learner_->setMeasure(this->p_measure_);
 
     for (int iteration = 0;
         iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
         ++iteration) {
       this->p_weak_learner_->reset();
-      DataSet<TElement> train_data, buf_data;
-
-      data_preprocessor_learner->learn(data);
-      typename DataPreprocessor<TElement>::Ptr data_preprocessor
-        = data_preprocessor_learner->makePtr();
-      data_preprocessor->apply(data, &buf_data);
+      DataSet<TElement> train_data;
 
       feature_converter_learner->learn(data);
       FeatureConverter::Ptr feature_converter
         = feature_converter_learner->makePtr();
       ltr::utility::ApplyFeatureConverter(feature_converter,
-                                          buf_data, &train_data);
+                                          data, &train_data);
 
       this->p_weak_learner_->learn(train_data);
       Scorer::Ptr current_scorer = this->p_weak_learner_->makeScorerPtr();

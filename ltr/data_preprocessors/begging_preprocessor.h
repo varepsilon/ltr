@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_LEARNER_H_
-#define LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_LEARNER_H_
+#ifndef LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_H_
+#define LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -10,23 +10,21 @@
 #include <vector>
 #include <algorithm>
 
-
-#include "ltr/data_preprocessors/data_preprocessor_learner.h"
-#include "ltr/data_preprocessors/simple_subset_preprocessor.h"
+#include "ltr/data_preprocessors/data_preprocessor.h"
 
 using std::vector;
 using std::random_shuffle;
 using std::copy;
+using ltr::utility::lightSubset;
 
 namespace ltr {
 /**
  * Produces SimpleSubsetPreprocessor with random indices (duplication allowed)
  */
 template <typename TElement>
-class BeggingPreprocessorLearner
-    : public DataPreprocessorLearner<TElement, SimpleSubsetPreprocessor> {
+class BeggingPreprocessor : public DataPreprocessor<TElement> {
   public:
-  typedef boost::shared_ptr<BeggingPreprocessorLearner> Ptr;
+  typedef boost::shared_ptr<BeggingPreprocessor> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with double parameter
@@ -38,27 +36,22 @@ class BeggingPreprocessorLearner
    * manual control of random behavior of BeggingPreprocessorLearner
    * By default SELECTED_PART = 0.3, WITH_REPLACE = true, RANDOM_SEED = 237
    */
-  explicit BeggingPreprocessorLearner(
+  explicit BeggingPreprocessor(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
-    this->checkParameters();
     srand(this->getIntParameter("RANDOM_SEED"));
   }
 
-  void learn(const DataSet<TElement>& data_set);
-  SimpleSubsetPreprocessor<TElement> make() const;
-
   void setDefaultParameters();
   void checkParameters() const;
-
-  private:
-    SimpleSubsetPreprocessor<TElement> preprocessor_;
+  void apply(const DataSet<TElement>& input,
+      DataSet<TElement>* output) const;
 };
 
 // template realizations
 template <typename TElement>
-void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
+void BeggingPreprocessor<TElement>::setDefaultParameters() {
   this->clearParameters();
   this->addDoubleParameter("SELECTED_PART", 0.3);
   this->addBoolParameter("WITH_REPLACE", true);
@@ -66,7 +59,7 @@ void BeggingPreprocessorLearner<TElement>::setDefaultParameters() {
 }
 
 template <typename TElement>
-void BeggingPreprocessorLearner<TElement>::checkParameters() const {
+void BeggingPreprocessor<TElement>::checkParameters() const {
   if (this->getBoolParameter("WITH_REPLACE")) {
     CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0);
   } else {
@@ -76,9 +69,10 @@ void BeggingPreprocessorLearner<TElement>::checkParameters() const {
 }
 
 template <typename TElement>
-void BeggingPreprocessorLearner<TElement>
-    ::learn(const DataSet<TElement>& data_set) {
-  int size = static_cast<int>(ceil(data_set.size()
+void BeggingPreprocessor<TElement>::apply(
+      const DataSet<TElement>& input_dataset,
+      DataSet<TElement>* output_dataset) const {
+  int size = static_cast<int>(ceil(input_dataset.size()
     * this->getDoubleParameter("SELECTED_PART")));
 
   if (size != 0) {
@@ -86,25 +80,21 @@ void BeggingPreprocessorLearner<TElement>
 
     if (this->getBoolParameter("WITH_REPLACE")) {
       for (int i = 0; i < indices.size(); ++i) {
-        indices[i] = (rand() % data_set.size());
+        indices[i] = (rand() % input_dataset.size());
       }
     } else {
-      vector<int> all_used(data_set.size());
+      vector<int> all_used(input_dataset.size());
       for (int index = 0; index < all_used.size(); ++index) {
         all_used[index] = index;
       }
       random_shuffle(all_used.begin(), all_used.end());
       copy(all_used.begin(), all_used.begin() + size, indices.begin());
     }
-    preprocessor_.setChoosedElementsIndices(indices);
+    *output_dataset = lightSubset(input_dataset, indices);
+  } else {
+    *output_dataset = input_dataset;
   }
-}
-
-template <typename TElement>
-SimpleSubsetPreprocessor<TElement>
-    BeggingPreprocessorLearner<TElement>::make() const {
-  return preprocessor_;
 }
 };
 
-#endif  // LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_LEARNER_H_
+#endif  // LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_H_

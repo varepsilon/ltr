@@ -7,11 +7,8 @@
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/data_preprocessors/simple_subset_preprocessor.h"
-#include "ltr/data_preprocessors/data_preprocessor_learner.h"
-#include "ltr/data_preprocessors/simple_subset_preprocessor_learner.h"
-#include "ltr/data_preprocessors/begging_preprocessor_learner.h"
-#include "ltr/data_preprocessors/fake_data_preprocessor.h"
-#include "ltr/data_preprocessors/fake_preprocessor_learner.h"
+#include "ltr/data_preprocessors/begging_preprocessor.h"
+#include "ltr/data_preprocessors/fake_preprocessor.h"
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
@@ -23,10 +20,8 @@ using ltr::Object;
 using ltr::DataSet;
 using ltr::DataPreprocessor;
 using ltr::SimpleSubsetPreprocessor;
-using ltr::SimpleSubsetPreprocessorLearner;
-using ltr::BeggingPreprocessorLearner;
-using ltr::FakeDataPreprocessor;
-using ltr::FakePreprocessorLearner;
+using ltr::BeggingPreprocessor;
+using ltr::FakePreprocessor;
 
 const int data_size = 11;
 
@@ -60,18 +55,7 @@ bool AreEqual(const DataSet<TElement>& first,
 }
 
 TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
-  FakeDataPreprocessor<Object> prep;
-
-  DataSet<Object> prep_data;
-  prep.apply(data, &prep_data);
-
-  EXPECT_TRUE(AreEqual(data, prep_data));
-}
-
-TEST_F(DataPreprocessorsTest, FakePreprocessorLearnerTest) {
-  FakePreprocessorLearner<Object> prep_learner;
-  prep_learner.learn(data);
-  FakeDataPreprocessor<Object> prep = prep_learner.make();
+  FakePreprocessor<Object> prep;
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -84,10 +68,8 @@ TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorTest) {
   indices.push_back(3);
   indices.push_back(7);
   indices.push_back(4);
-  SimpleSubsetPreprocessor<Object> prep(indices);
-
-  EXPECT_EQ(3, prep.getChoosedElementsCount());
-  EXPECT_EQ(indices, prep.getChoosedElementsIndices());
+  SimpleSubsetPreprocessor<Object> prep;
+  prep.setListParameter("INDICES", indices);
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -98,7 +80,7 @@ TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorTest) {
   }
 
   indices.push_back(1);
-  prep.setChoosedElementsIndices(indices);
+  prep.setListParameter("INDICES", indices);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(4, prep_data.size());
@@ -107,45 +89,22 @@ TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorTest) {
   }
 
   indices.push_back(103);
-  prep.setChoosedElementsIndices(indices);
+  prep.setListParameter("INDICES", indices);
   EXPECT_ANY_THROW(prep.apply(data, &prep_data));
-}
 
-TEST_F(DataPreprocessorsTest, SimpleSubsetPreprocessorLearnerTest) {
-  SimpleSubsetPreprocessorLearner<Object> prep_learner;
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep = prep_learner.make();
-
-  DataSet<Object> prep_data;
+  prep.setDefaultParameters();
   prep.apply(data, &prep_data);
-
   EXPECT_TRUE(AreEqual(data, prep_data));
 
   vector<int> unequal;
   unequal.push_back(3);
   unequal.push_back(5);
   unequal.push_back(3);
-  EXPECT_ANY_THROW(prep_learner.setListParameter("INDICES", unequal));
-
-  vector<int> indices;
-  indices.push_back(3);
-  indices.push_back(5);
-
-  prep_learner.setListParameter("INDICES", indices);
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep2 = prep_learner.make();
-
-  prep2.apply(data, &prep_data);
-  EXPECT_EQ(indices.size(), prep_data.size());
-  for (int i = 0; i < indices.size(); ++i) {
-    EXPECT_EQ(indices[i], prep_data[i].features()[0]);
-  }
+  EXPECT_ANY_THROW(prep.setListParameter("INDICES", unequal));
 }
 
-TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
-  BeggingPreprocessorLearner<Object> prep_learner;
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep = prep_learner.make();
+TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
+  BeggingPreprocessor<Object> prep;
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -156,12 +115,9 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  prep_learner.setBoolParameter("WITH_REPLACE", false);
-  prep_learner.setDoubleParameter("SELECTED_PART", 0.8);
-
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep2 = prep_learner.make();
-  prep2.apply(data, &prep_data);
+  prep.setBoolParameter("WITH_REPLACE", false);
+  prep.setDoubleParameter("SELECTED_PART", 0.8);
+  prep.apply(data, &prep_data);
 
   EXPECT_EQ(9, prep_data.size());
   set<int> used_elements;
@@ -177,12 +133,9 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
     }
   }
 
-  prep_learner.setBoolParameter("WITH_REPLACE", true);
-  prep_learner.setDoubleParameter("SELECTED_PART", 1.5);
-
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep3 = prep_learner.make();
-  prep3.apply(data, &prep_data);
+  prep.setBoolParameter("WITH_REPLACE", true);
+  prep.setDoubleParameter("SELECTED_PART", 1.5);
+  prep.apply(data, &prep_data);
 
   EXPECT_EQ(17, prep_data.size());
   for (int i = 0; i < prep_data.size(); ++i) {
@@ -190,14 +143,12 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorLearnerTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
-  prep_learner.setDoubleParameter("SELECTED_PART", 0.5);
-  prep_learner.setBoolParameter("WITH_REPLACE", false);
-  EXPECT_ANY_THROW(prep_learner.setDoubleParameter("SELECTED_PART", 0.0));
+  EXPECT_ANY_THROW(prep.setDoubleParameter("SELECTED_PART", 0.0));
+  prep.setDoubleParameter("SELECTED_PART", 0.5);
+  prep.setBoolParameter("WITH_REPLACE", false);
+  EXPECT_ANY_THROW(prep.setDoubleParameter("SELECTED_PART", 0.0));
 
-  prep_learner.setDoubleParameter("SELECTED_PART", 1e-8);
-  prep_learner.learn(data);
-  SimpleSubsetPreprocessor<Object> prep4 = prep_learner.make();
-  prep4.apply(data, &prep_data);
+  prep.setDoubleParameter("SELECTED_PART", 1e-8);
+  prep.apply(data, &prep_data);
   EXPECT_EQ(1, prep_data.size());
 }

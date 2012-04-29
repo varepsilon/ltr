@@ -19,7 +19,7 @@
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/true_point.h"
-#include "ltr/data_preprocessors/begging_preprocessor_learner.h"
+#include "ltr/data_preprocessors/begging_preprocessor.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
 
 using ltr::Object;
@@ -34,7 +34,7 @@ using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::lc::AdaRankDataSetWeightsUpdater;
 using ltr::lc::AdaRankLCScorerWeightsUpdater;
 using ltr::RSMFeatureConverterLearner;
-using ltr::BeggingPreprocessorLearner;
+using ltr::BeggingPreprocessor;
 using ltr::BestFeatureLearner;
 using ltr::lc::LinearCompositionLearner;
 using ltr::AbsError;
@@ -99,11 +99,9 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   AbsError::Ptr abs_error(new AbsError);
   lc_learner.setMeasure(abs_error);
 
-  BeggingPreprocessorLearner<Object>::Ptr
-    begging(new BeggingPreprocessorLearner<Object>);
-  lc_learner.setDataPreprocessorLearner(begging);
-
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BeggingPreprocessor<Object>::Ptr begging(new BeggingPreprocessor<Object>);
+  bf_learner->addDataPreprocessor(begging);
   lc_learner.setWeakLearner(bf_learner);
 
   lc_learner.learn(data);
@@ -117,7 +115,6 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   }
 
   begging->setDoubleParameter("SELECTED_PART", 2);
-  lc_learner.setDataPreprocessorLearner(begging);
   lc_learner.setIntParameter("NUMBER_OF_ITERATIONS", 15);
   lc_learner.learn(data);
   lin_scorer = lc_learner.make();
@@ -208,9 +205,8 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
     rsm(new RSMFeatureConverterLearner<Object>);
   ada_lc_learner.setFeatureConverterLearner(rsm);
 
-  BeggingPreprocessorLearner<Object>::Ptr
-    begging(new BeggingPreprocessorLearner<Object>);
-  ada_lc_learner.setDataPreprocessorLearner(begging);
+  BeggingPreprocessor<Object>::Ptr begging(new BeggingPreprocessor<Object>);
+  bf_learner->addDataPreprocessor(begging);
 
   ada_lc_learner.learn(data);
   LinearCompositionScorer lin_scorer = ada_lc_learner.make();
