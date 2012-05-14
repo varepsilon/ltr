@@ -23,8 +23,8 @@ class FakeScorer : public Scorer {
   :Scorer("FakeScorer", featureConverters),
   score_value_(scoreValue) {}
 
-  string brief() const {
-    return "All ranks are constant (" +
+  string toString() const {
+    return "All scores are constant (" +
     boost::lexical_cast<std::string>(score_value_) + ")";
   }
 

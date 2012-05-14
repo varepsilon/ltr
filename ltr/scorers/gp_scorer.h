@@ -49,14 +49,14 @@ class GPScorer : public Scorer {
       size_t inPopulationBestTreeIdx,
       const FeatureConverterArray& featureConverters =
           FeatureConverterArray())
-  :Scorer("GPScorer", featureConverters),
+  : Scorer("GPScorer", featureConverters),
   population_(population),
   context_(context),
   featureCountInContext_(featureCountInContext),
   inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
 
-  string brief() const {
-    return "GPScorer";
+  string toString() const {
+    return "Genetic programming scorer";
   }
 
   private:

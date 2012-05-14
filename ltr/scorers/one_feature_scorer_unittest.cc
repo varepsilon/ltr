@@ -26,5 +26,5 @@ TEST(OneFeatureScorerTest, OneFeatureScorerScoringTest) {
   ofs1.setIndex(2);
   EXPECT_EQ(5, ofs1(obj));
 
-  ofs1.brief();
+  ofs1.toString();
 };

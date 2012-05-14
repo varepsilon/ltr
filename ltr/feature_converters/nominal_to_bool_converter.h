@@ -14,7 +14,7 @@ class NominalToBoolConverter : public FeatureConverter {
     typedef boost::shared_ptr<NominalToBoolConverter> Ptr;
 
     NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter(feature_info) {}
+    : FeatureConverter("NominalToBoolConverter", feature_info) {}
 
     virtual FeatureInfo getNewFeatureInfo() const;
     virtual void applyImpl(const Object& argument, Object* value) const;

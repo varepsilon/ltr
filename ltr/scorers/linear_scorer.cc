@@ -4,14 +4,25 @@
 
 #include <boost/lexical_cast.hpp>
 #include <string>
+#include <sstream>
 
 using std::string;
 using boost::lexical_cast;
 
 namespace ltr {
-string LinearScorer::brief() const {
-  return string("Linear scorer - uses vector of feature's").
-    append(" weights and calculate result via <w, f>");
+string LinearScorer::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "Linear scorer with coefficients: [";
+  for (size_t i = 0; i < weights.size(); ++i) {
+    if (i != 0) {
+      str << ", ";
+    }
+    str << weights[i];
+  }
+  str << "]";
+  return str.str();
 }
 
 double LinearScorer::scoreImpl(const Object& obj) const {

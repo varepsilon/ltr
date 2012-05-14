@@ -13,6 +13,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/serializable.h"
+#include "ltr/interfaces/aliaser.h"
 
 using std::logic_error;
 
@@ -21,7 +22,7 @@ namespace ltr {
  * Converts object's features. E. g. normalizes each of them or
  * chooses a subset
  */
-class FeatureConverter : public Serializable {
+class FeatureConverter : public Serializable, public Aliaser {
  protected:
   // a feature info that an inputted object is supposed to have
   FeatureInfo feature_info_;
@@ -30,8 +31,9 @@ class FeatureConverter : public Serializable {
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
 
-  FeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : feature_info_(feature_info) {}
+  FeatureConverter(const string& alias,
+    const FeatureInfo& feature_info = FeatureInfo())
+      : Aliaser(alias), feature_info_(feature_info) {}
   virtual ~FeatureConverter() {}
 
   void setFeatureInfo(const FeatureInfo& feature_info) {

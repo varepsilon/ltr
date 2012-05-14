@@ -19,7 +19,7 @@ class LinearScorer : public Scorer {
   explicit LinearScorer(const vector<double>& in_weights)
     : Scorer("Linear scorer"), weights(in_weights) {}
 
-  string brief() const;
+  string toString() const;
  private:
   virtual double scoreImpl(const Object& obj) const;
   virtual string generateCppCodeImpl(const string& function_name) const;

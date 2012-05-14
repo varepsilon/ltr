@@ -37,7 +37,8 @@ namespace ltr {
     typedef boost::shared_ptr<SubsetPreprocessor> Ptr;
 
     explicit SubsetPreprocessor(
-        const ParametersContainer& parameters = ParametersContainer()) {
+        const ParametersContainer& parameters = ParametersContainer())
+        : DataPreprocessor<TElement>("SubsetPreprocessor") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

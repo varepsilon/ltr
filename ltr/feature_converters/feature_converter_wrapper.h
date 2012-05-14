@@ -30,8 +30,8 @@ class FeatureConverterWrapper
     void setDefaultParameters() {}
     void checkParameters() const {}
     string toString() const {
-      string s = "Feature converter learner (wrapper) for";
-      s.append(" <!need alias to be implemented!>");
+      string s = "Feature converter learner (wrapper) for ";
+      s.append(TFeatureConverter().alias());
       return s;
     }
 };

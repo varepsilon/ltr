@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#include <boost/lexical_cast.hpp>
 #include <string>
+#include <sstream>
 
 #include "ltr/scorers/one_feature_scorer.h"
 
@@ -9,10 +9,10 @@ using std::string;
 
 namespace ltr {
 
-  string OneFeatureScorer::brief() const {
-    string result = "takes feature " +
-      boost::lexical_cast<string>(index_);
-    return result;
+  string OneFeatureScorer::toString() const {
+    std::stringstream str;
+    str << "Scorer, which takes feature no. " << index_;
+    return str.str();
   }
 
   string OneFeatureScorer::generateCppCodeImpl(

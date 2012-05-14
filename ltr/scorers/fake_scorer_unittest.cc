@@ -19,5 +19,5 @@ TEST(FakeScorerTest, FakeScorerScoringTest) {
   EXPECT_EQ(0, fs(obj));
   EXPECT_EQ(0, fs.score(obj));
 
-  fs.brief();
+  fs.toString();
 };

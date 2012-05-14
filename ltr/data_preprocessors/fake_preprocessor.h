@@ -21,7 +21,8 @@ namespace ltr {
     typedef boost::shared_ptr<FakePreprocessor> Ptr;
 
     explicit FakePreprocessor(
-        const ParametersContainer& parameters = ParametersContainer()) {
+        const ParametersContainer& parameters = ParametersContainer())
+        : DataPreprocessor<TElement>("FakePreprocessor") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

@@ -37,7 +37,7 @@ class DecisionTreeScorer : public Scorer {
       tree_.setRoot(root);
     }
 
-    string brief() const {
+    string toString() const {
       return "Decision of the tree";
     }
 };

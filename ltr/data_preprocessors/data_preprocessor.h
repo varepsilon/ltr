@@ -4,11 +4,15 @@
 #define LTR_DATA_PREPROCESSORS_DATA_PREPROCESSOR_H_
 
 #include <boost/shared_ptr.hpp>
+#include <string>
 
 #include "ltr/interfaces/printable.h"
 #include "ltr/data/data_set.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/aliaser.h"
+
+using std::string;
 
 namespace ltr {
   /**
@@ -18,9 +22,15 @@ namespace ltr {
    * and generate new elements from it
    */
   template <class TElement>
-  class DataPreprocessor : public Parameterized, public Printable {
+  class DataPreprocessor : public Parameterized,
+    public Printable,
+    public Aliaser {
   public:
     typedef boost::shared_ptr<DataPreprocessor> Ptr;
+    /**
+     * Sets DataPreprocessor's alias
+     */
+    explicit DataPreprocessor(const string& alias) : Aliaser(alias) {}
 
     virtual ~DataPreprocessor() {}
     /**

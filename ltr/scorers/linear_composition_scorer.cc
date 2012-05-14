@@ -1,8 +1,10 @@
 // Copyright 2011 Yandex
 
-#include <boost/lexical_cast.hpp>
+#include <sstream>
 
 #include "ltr/scorers/linear_composition_scorer.h"
+
+using std::string;
 
 namespace ltr {
   double LinearCompositionScorer::scoreImpl(const Object& obj) const {
@@ -15,7 +17,7 @@ namespace ltr {
 
   string LinearCompositionScorer::generateCppCodeImpl
       (const string& function_name) const {
-    std::string hpp_code;
+    string hpp_code;
 
     for (size_t i = 0; i < scorers_.size(); ++i)
       hpp_code.append(scorers_[i].scorer->generateCppCode());
@@ -29,7 +31,7 @@ namespace ltr {
     for (size_t i = 0; i < scorers_.size(); ++i) {
       hpp_code.
         append("\tresult += ").
-        append(boost::lexical_cast< std::string >(scorers_[i].weight)).
+        append(boost::lexical_cast< string >(scorers_[i].weight)).
         append(" * ").
         append(scorers_[i].scorer->getDefaultSerializableObjectName()).
         append("(features);\n");
@@ -42,16 +44,17 @@ namespace ltr {
     return hpp_code;
   }
 
-  std::string LinearCompositionScorer::brief() const {
-    std::string result =
-      boost::lexical_cast<std::string>(scorers_.size())
-      + " scorers combination.";
-    for (size_t i = 0; i < scorers_.size(); ++i) {
-      result.append("\n" + boost::lexical_cast<std::string>(i) + ": "
-        + scorers_[i].scorer->brief() + "\n"
-        + "    weight=" + boost::lexical_cast<std::string>(scorers_[i].weight));
+  string LinearCompositionScorer::toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "Linear composition of " << scorers_.size() << "scorers: {\n";
+    for (int i = 0; i < scorers_.size(); ++i) {
+      str << scorers_[i].scorer->toString();
+      str << " with weight " << scorers_[i].weight << "\n";
     }
-    return result;
+    str << "}";
+    return str.str();
   }
 
   void LinearCompositionScorer::clear() {

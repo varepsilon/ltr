@@ -41,7 +41,8 @@ class BeggingPreprocessor : public DataPreprocessor<TElement> {
    * By default SELECTED_PART = 0.3, WITH_REPLACE = true, RANDOM_SEED = 237
    */
   explicit BeggingPreprocessor(
-      const ParametersContainer& parameters = ParametersContainer()) {
+      const ParametersContainer& parameters = ParametersContainer())
+      : DataPreprocessor<TElement>("BeggingPreprocessor") {
     this->setDefaultParameters();
     this->copyParameters(parameters);
     srand(this->getIntParameter("RANDOM_SEED"));

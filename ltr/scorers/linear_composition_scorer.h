@@ -11,6 +11,9 @@
 #include "ltr/scorers/scorer.h"
 #include "ltr/scorers/utility/scorer_utility.h"
 
+using std::string;
+using std::vector;
+
 namespace ltr {
   class LinearCompositionScorer : public Scorer {
   public:
@@ -42,12 +45,12 @@ namespace ltr {
     void add(const ScorerAndWeight& scorer);
     void add(Scorer::Ptr scorer, double weight);
 
-    virtual std::string brief() const;
+    string toString() const;
     virtual double scoreImpl(const Object& obj) const;
 
   private:
     virtual string generateCppCodeImpl(const string& function_name) const;
-    std::vector< ScorerAndWeight > scorers_;
+    vector< ScorerAndWeight > scorers_;
   };
 };
 

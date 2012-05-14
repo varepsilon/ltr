@@ -14,7 +14,7 @@ class RemoveNaNConverter : public FeatureConverter {
     typedef boost::shared_ptr<RemoveNaNConverter> Ptr;
 
     RemoveNaNConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter(feature_info) {}
+    : FeatureConverter("RemoveNaNConverter", feature_info) {}
 
     virtual FeatureInfo getNewFeatureInfo() const;
     virtual void applyImpl(const Object& argument, Object* value) const;

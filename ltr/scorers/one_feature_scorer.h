@@ -31,7 +31,7 @@ namespace ltr {
       index_ = new_index;
     }
 
-    virtual string brief() const;
+    virtual string toString() const;
 
   private:
     double scoreImpl(const Object& obj) const {

@@ -23,7 +23,7 @@ class FakeFeatureConverter : public FeatureConverter {
   typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter(feature_info) {}
+    : FeatureConverter("FakeFeatureConverter", feature_info) {}
 
   FeatureInfo getNewFeatureInfo() const;
 
