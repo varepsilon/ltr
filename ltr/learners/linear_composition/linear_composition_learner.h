@@ -124,9 +124,11 @@ namespace lc {
   template <class TElement>
   void LinearCompositionLearner<TElement>::
       learnImpl(const DataSet<TElement>& data) {
-    linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
-    data_set_weights_updater->setMeasure(this->p_measure_);
-    this->p_weak_learner_->setMeasure(this->p_measure_);
+    if (this->p_measure_) {
+      linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
+      data_set_weights_updater->setMeasure(this->p_measure_);
+      this->p_weak_learner_->setMeasure(this->p_measure_);
+    }
 
     for (int iteration = 0;
         iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
