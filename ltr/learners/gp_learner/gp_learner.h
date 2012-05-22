@@ -309,10 +309,6 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * the context_ is constructed for.
    */
 };
-
-template class GPLearner<Object>;
-template class GPLearner<ObjectPair>;
-template class GPLearner<ObjectList>;
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
