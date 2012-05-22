@@ -155,9 +155,6 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     }
   }
 };
-template class GPLearnerWithDeterminantStrategy<Object>;
-template class GPLearnerWithDeterminantStrategy<ObjectPair>;
-template class GPLearnerWithDeterminantStrategy<ObjectList>;
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_DETERMINANT_STRATEGY_H_
