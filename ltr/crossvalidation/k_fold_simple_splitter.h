@@ -5,6 +5,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
+#include <functional>
 #include <stdexcept>
 #include <algorithm>
 #include <sstream>
@@ -60,7 +61,7 @@ namespace ltr {
     template<class TElement>
     string KFoldSimpleSplitter<TElement>::toString() const {
       std::stringstream str;
-      str << this->getIntParameter("K");
+      str << this->parameters().template Get<int>("K");
       str << "-fold sequent splitter";
       return str.str();
     }
@@ -68,18 +69,19 @@ namespace ltr {
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
       this->clearParameters();
-      this->addIntParameter("K", 10);
+      this->addNewParam("K", 10);
     }
 
     template<class TElement>
     void KFoldSimpleSplitter<TElement>::checkParameters() const {
-      CHECK_INT_PARAMETER("K", X >= 2);
+      Parameterized::checkParameter<int>("K",
+                                   std::bind2nd(std::greater_equal<int>(), 2));
     }
 
     template<class TElement>
     int KFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return this->getIntParameter("K");
+      return this->parameters().template Get<int>("K");
     }
 
     template<class TElement>
@@ -96,8 +98,10 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int block_size = base_set.size() / this->getIntParameter("K");
-      int extra_length = base_set.size() % this->getIntParameter("K");
+      const ParametersContainer &params = this->parameters();
+
+      int block_size = base_set.size() / params.Get<int>("K");
+      int extra_length = base_set.size() % params.Get<int>("K");
 
       int test_begin = block_size * split_index +
         std::min(split_index, extra_length);

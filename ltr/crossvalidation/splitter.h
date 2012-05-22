@@ -58,6 +58,7 @@ namespace ltr {
         const DataSet<TElement>& base_set) const;
 
       virtual ~Splitter() {}
+
     protected:
       /**
        * Perform split into training + testing sets by operating objects' indices

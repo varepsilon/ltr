@@ -60,12 +60,13 @@ template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
   vector<int> empty;
-  this->addListParameter("INDICES", empty);
+  this->addNewParam("INDICES", empty);
 }
 
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
-  vector<int> indices = this->getListParameter("INDICES");
+  vector<int> indices = this->parameters().
+                        template Get<std::vector<int> >("INDICES");
   set<int> used_features;
   for (int index = 0; index < indices.size(); ++index) {
     int current_object = indices[index];
@@ -82,7 +83,8 @@ string FeatureSubsetChooserLearner<TElement>::toString() const {
   std::stringstream str;
     str << "Feature subset chooser feature converter learner"
       << "with parameter INDICES = {";
-    vector<int> indices = this->getListParameter("INDICES");
+    vector<int> indices = this->parameters().template GetRef<std::vector<int> >(
+                "INDICES");
     for (int i = 0; i < indices.size(); ++i) {
       if (i != 0) {
         str << ", ";
@@ -97,7 +99,8 @@ template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
   converter_.setFeatureInfo(data_set.featureInfo());
-  if (this->getListParameter("INDICES").size() == 0) {
+  const ParametersContainer &params = this->parameters();
+  if (params.GetRef<std::vector<int> >("INDICES").size() == 0) {
     vector<int> all_used(data_set.featureInfo().getFeatureCount());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
@@ -105,7 +108,7 @@ void FeatureSubsetChooserLearner<TElement>
     converter_.setChoosedFeaturesIndices(all_used);
   } else {
     converter_.setChoosedFeaturesIndices(
-      this->getListParameter("INDICES"));
+      params.GetRef<std::vector<int> >("INDICES"));
   }
 }
 

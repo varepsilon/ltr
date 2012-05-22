@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <functional>
 
 #include "ltr/learners/decision_tree/conditions_learner.h"
 
@@ -45,15 +46,18 @@ For nominal features splits by value of the feature.
     int getNextConditions(vector<Condition::Ptr>* result);
 
     void setDefaultParameters() {
-      this->addBoolParameter("SPLIT_FEATURE_N_TIMES", false);
-      this->addIntParameter("FEATURE_SPLIT_COUNT", 100);
-      this->addIntParameter("HALF_SUMMS_STEP", 5);
+      this->addNewParam("SPLIT_FEATURE_N_TIMES", false);
+      this->addNewParam("FEATURE_SPLIT_COUNT", 100);
+      this->addNewParam("HALF_SUMMS_STEP", 5);
     }
     void checkParameters() {
-      CHECK_INT_PARAMETER("FEATURE_SPLIT_COUNT", X >= 1);
-      CHECK_INT_PARAMETER("HALF_SUMMS_STEP", X >= 1);
-      int n = this->getBoolParameter("SPLIT_FEATURE_N_TIMES");
-      n += this->getBoolParameter("USE_HALF_SUMMS_SPLIT");
+      this->checkParameter<int>("FEATURE_SPLIT_COUNT",
+                                std::bind2nd(std::greater_equal<int>(), 1));
+      this->checkParameter<int>("HALF_SUMMS_STEP",
+                                std::bind2nd(std::greater_equal<int>(), 1));
+
+      int n = this->parameters().Get<bool>("SPLIT_FEATURE_N_TIMES");
+      n += this->parameters().Get<bool>("USE_HALF_SUMMS_SPLIT");
       if (n > 1)
         throw std::logic_error("you can use only one splitting type");
     }

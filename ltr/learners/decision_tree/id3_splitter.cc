@@ -17,15 +17,16 @@ namespace decision_tree {
 
 void ID3_Splitter::init() {
   current_feature = 0;
+  const ParametersContainer &params = this->parameters();
   split_idx = 0;
   log << "Inited. ";
-  if (this->getBoolParameter("SPLIT_FEATURE_N_TIMES"))
+  if (params.Get<bool>("SPLIT_FEATURE_N_TIMES"))
     log << "Splitting every feature "
-        << this->getIntParameter("FEATURE_SPLIT_COUNT") << " times"
+        << params.Get<int>("FEATURE_SPLIT_COUNT") << " times"
         << std::endl;
   else
     log << "Using half summs splitting. Step = "
-        << this->getIntParameter("HALF_SUMMS_STEP");
+        << params.Get<int>("HALF_SUMMS_STEP");
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
@@ -55,8 +56,10 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       return getNextConditions(result);
     }
 
-    if (this->getBoolParameter("SPLIT_FEATURE_N_TIMES")) {
-      int split_cnt = this->getIntParameter("FEATURE_SPLIT_COUNT");
+    const ParametersContainer &params = this->parameters();
+
+    if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
+      int split_cnt = params.Get<int>("FEATURE_SPLIT_COUNT");
       if (split_cnt <= feature_values.size() - 1) {
         for (int i = 0; i < split_cnt; i++)
           numeric_split_values.
@@ -68,7 +71,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       }
     } else {
       for (int i = 0; i < feature_values.size() - 1;
-          i+= this->getIntParameter("HALF_SUMMS_STEP"))
+          i+= params.Get<int>("HALF_SUMMS_STEP"))
         numeric_split_values.
           push_back((feature_values[i] + feature_values[i+1]) / 2);
     }

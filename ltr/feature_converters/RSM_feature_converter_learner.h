@@ -7,6 +7,7 @@
 
 #include <ctime>
 #include <cmath>
+#include <functional>
 #include <vector>
 #include <algorithm>
 #include <string>
@@ -43,7 +44,7 @@ class RSMFeatureConverterLearner
     this->setDefaultParameters();
     this->copyParameters(parameters);
     this->checkParameters();
-    srand(this->getIntParameter("RANDOM_SEED"));
+    srand(this->parameters().template Get<int>("RANDOM_SEED"));
   }
 
   void learn(const DataSet<TElement>& data_set);
@@ -54,6 +55,17 @@ class RSMFeatureConverterLearner
 
   string toString() const;
   private:
+  template <class T>
+  struct Belongs: public std::unary_function<T, bool> {
+    Belongs(const T &min, const T &max): min_(min), max_(max) { }
+    bool operator()(const T& x) const {
+      return x > min_ && x <= max_;
+    }
+  private:
+    const T &min_;
+    const T &max_;
+  };
+
   FeatureSubsetChooser converter_;
 };
 
@@ -61,14 +73,16 @@ class RSMFeatureConverterLearner
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
-  this->addDoubleParameter("SELECTED_PART", 0.3);
-  this->addIntParameter("RANDOM_SEED", 1339);
+  this->addNewParam("SELECTED_PART", 0.3);
+  this->addNewParam("RANDOM_SEED", 1339);
 }
 
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>::checkParameters() const {
-  CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
-  CHECK_INT_PARAMETER("RANDOM_SEED", X > 0);
+  const Belongs<double> G0L1(0, 1);
+  Parameterized::checkParameter<double>("SELECTED_PART", Belongs<double>(0, 1));
+  Parameterized::checkParameter<int>("RANDOM_SEED",
+                                     std::bind2nd(std::greater<int>(), 0));
 }
 
 template <typename TElement>
@@ -77,19 +91,20 @@ string RSMFeatureConverterLearner<TElement>::toString() const {
   std::fixed(str);
   str.precision(2);
   str << "RSM feature converter learner with parameters: SELECTED_PART = ";
-  str << this->getDoubleParameter("SELECTED_PART");
+  str << this->parameters().template Get<double>("SELECTED_PART");
   str << ", RANDOM_SEED = ";
-  str << this->getIntParameter("RANDOM_SEED");
+  str << this->parameters().template Get<int>("RANDOM_SEED");
   return str.str();
 }
 
 template <typename TElement>
 void RSMFeatureConverterLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
+  const ParametersContainer &params = this->parameters();
   converter_.setFeatureInfo(data_set.featureInfo());
   int size = static_cast<int>(
     ceil(data_set.featureInfo().getFeatureCount()
-      * this->getDoubleParameter("SELECTED_PART")));
+      * params.Get<double>("SELECTED_PART")));
   vector<int> indices(size);
 
   vector<int> all_used(data_set.featureInfo().getFeatureCount());

@@ -139,13 +139,13 @@ TEST_F(FeatureConvertersManualTest, FeatureSubsetChooserLearnerTest) {
   unequal.push_back(3);
   unequal.push_back(5);
   unequal.push_back(3);
-  EXPECT_ANY_THROW(conv_learner.setListParameter("INDICES", unequal));
+  EXPECT_ANY_THROW(conv_learner.setExistingParameter("INDICES", unequal));
 
   vector<int> indices;
   indices.push_back(3);
   indices.push_back(5);
 
-  conv_learner.setListParameter("INDICES", indices);
+  conv_learner.setExistingParameter("INDICES", indices);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.makePtr();
 
@@ -178,7 +178,7 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
     }
   }
 
-  conv_learner.setDoubleParameter("SELECTED_PART", 0.8);
+  conv_learner.setExistingParameter("SELECTED_PART", 0.8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.makePtr();
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
@@ -197,8 +197,8 @@ TEST_F(FeatureConvertersManualTest, RSMFeatureConverterLearnerTest) {
     }
   }
 
-  EXPECT_ANY_THROW(conv_learner.setDoubleParameter("SELECTED_PART", 0.0));
-  conv_learner.setDoubleParameter("SELECTED_PART", 1e-8);
+  EXPECT_ANY_THROW(conv_learner.setExistingParameter("SELECTED_PART", 0.0));
+  conv_learner.setExistingParameter("SELECTED_PART", 1e-8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv3 = conv_learner.makePtr();
   ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
@@ -269,8 +269,8 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerDefaultTest) {
 
 TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerTest) {
   FeatureNormalizerLearner<Object> conv_learner;
-  conv_learner.setDoubleParameter("NormalizationIntervalBegin", -2.0);
-  conv_learner.setDoubleParameter("NormalizationIntervalEnd", 2.0);
+  conv_learner.setExistingParameter("NormalizationIntervalBegin", -2.0);
+  conv_learner.setExistingParameter("NormalizationIntervalEnd", 2.0);
 
   DataSet<Object> l_data(FeatureInfo(3));
   Object o1, o2, o3, o4;

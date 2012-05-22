@@ -22,8 +22,8 @@ namespace ltr {
   public:
     TruePoint(const ParametersContainer& parameters = ParametersContainer())
         : PointwiseMeasure("TruePoint") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
+      setDefaultParameters();
+      copyParameters(parameters);
     }
 
     double best() const {

@@ -19,15 +19,20 @@ class ID3_Learner : public DecisionTreeLearner {
   public:
     explicit ID3_Learner(
       const ParametersContainer& parameters = ParametersContainer())
-      : DecisionTreeLearner(parameters.getGroup("")) {
+    : DecisionTreeLearner(parameters.Contains("") &&
+                          parameters.TypeCoincides<ParametersContainer>("") ?
+                          parameters.Get<ParametersContainer>("") :
+                          ParametersContainer()) {
+      // : DecisionTreeLearner(parameters.getGroup(""))
+      // {  //variant->any_TODO it is very ugly! fix it!
       this->setConditionsLearner(
         ConditionsLearner::Ptr(
           new ID3_Splitter(
-            parameters.getGroup("conditions learner"))));
+            parameters.Get<ParametersContainer>("conditions learner"))));
       this->setSplittingQuality(
         SplittingQuality::Ptr(
           new SqrErrorQuality(
-            parameters.getGroup("splitting quality"))));
+            parameters.Get<ParametersContainer>("splitting quality"))));
       copyParameters(parameters);
     }
 };

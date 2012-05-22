@@ -55,6 +55,7 @@ namespace ltr {
        * are held in ValidationResult
        */
       const vector<string>& getMeasureNames() const;
+
     private:
       /**
        * Holds whole information about one split

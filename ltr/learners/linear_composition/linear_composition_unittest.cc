@@ -114,8 +114,8 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
       << abs_error->average(data);
   }
 
-  begging->setDoubleParameter("SELECTED_PART", 2);
-  lc_learner.setIntParameter("NUMBER_OF_ITERATIONS", 15);
+  begging->setExistingParameter("SELECTED_PART", 2.);
+  lc_learner.setExistingParameter("NUMBER_OF_ITERATIONS", 15);
   lc_learner.learn(data);
   lin_scorer = lc_learner.make();
 

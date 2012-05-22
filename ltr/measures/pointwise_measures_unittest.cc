@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "ltr/utility/numerical.h"
 #include "ltr/data/object.h"
 #include "ltr/parameters_container/parameters_container.h"

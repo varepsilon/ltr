@@ -3,6 +3,7 @@
 #ifndef LTR_MEASURES_GMRR_H_
 #define LTR_MEASURES_GMRR_H_
 
+#include <functional>
 #include <string>
 
 #include "ltr/measures/measure.h"
@@ -29,12 +30,14 @@ namespace ltr {
     */
     void setDefaultParameters() {
       this->clearParameters();
-      this->addDoubleParameter("MAX_LABEL", 5.0);
-      this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+      this->addNewParam("MAX_LABEL", 5.0);
+      this->addNewParam("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
     void checkParameters() const {
-      CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
-      CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
+      this->checkParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER",
+                                   std::bind2nd(std::greater_equal<int>(), 0));
+      this->checkParameter<double>("MAX_LABEL",
+                             std::bind2nd(std::greater_equal<double>(), 0));
     }
 
     double best() const {
@@ -44,6 +47,7 @@ namespace ltr {
       return 0.0;
     }
     string toString() const;
+
   private:
     double get_measure(const ObjectList& objects) const;
     /**

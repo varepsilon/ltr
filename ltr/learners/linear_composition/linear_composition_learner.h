@@ -5,6 +5,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <functional>
+
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
@@ -87,13 +89,14 @@ namespace lc {
      */
     void setDefaultParameters() {
       this->clearParameters();
-      this->addIntParameter("NUMBER_OF_ITERATIONS", 10);
+      this->addNewParam("NUMBER_OF_ITERATIONS", 10);
     }
     /**
      * Checks if NUMBER_OF_ITERATIONS > 0 (should be true)
      */
     void checkParameters() const {
-      CHECK_INT_PARAMETER("NUMBER_OF_ITERATIONS", X > 0);
+      Parameterized::checkParameter<int>("NUMBER_OF_ITERATIONS",
+                                         std::bind2nd(std::greater<int>(), 0));
     }
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
@@ -129,7 +132,8 @@ namespace lc {
     this->p_weak_learner_->setMeasure(this->p_measure_);
 
     for (int iteration = 0;
-        iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
+        iteration < this->parameters().
+         template Get<int>("NUMBER_OF_ITERATIONS");
         ++iteration) {
       this->p_weak_learner_->reset();
 

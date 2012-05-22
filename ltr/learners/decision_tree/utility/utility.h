@@ -15,8 +15,8 @@ namespace ltr {
 namespace decision_tree {
 
 void split(DataSet<Object> data,
-           vector<Condition::Ptr> conditions,
-           vector<DataSet<Object> >* datas);
+           std::vector<Condition::Ptr> conditions,
+           std::vector<DataSet<Object> >* datas);
 
 /** Function returns the string name of the given class
  */

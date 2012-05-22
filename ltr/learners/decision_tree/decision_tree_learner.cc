@@ -1,6 +1,8 @@
 // Copyright 2012 Yandex
 
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 #include "ltr/learners/decision_tree/decision_tree_learner.h"
 
@@ -39,15 +41,16 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     max_label = std::max(max_label, data[i].actualLabel());
   }
 
-  if (max_label - min_label <= this->getDoubleParameter("LABEL_EPS")) {
+  const ParametersContainer &params = this->parameters();
+  if (max_label - min_label <= params.Get<double>("LABEL_EPS")) {
     log << "All objects has the same label. Leaf vertex created."
         << std::endl;
     generate_leaf = 1;
   }
   if (!generate_leaf &&
-       data.size() <= this->getIntParameter("MIN_VERTEX_SIZE")) {
+       data.size() <= params.Get<int>("MIN_VERTEX_SIZE")) {
     log << "Objects count is less than "
-        << this->getIntParameter("MIN_VERTEX_SIZE")
+        << params.Get<int>("MIN_VERTEX_SIZE")
         << ". Leaf vertex created." << std::endl;
     generate_leaf = 1;
   }

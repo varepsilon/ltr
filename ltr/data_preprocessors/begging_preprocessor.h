@@ -7,6 +7,7 @@
 
 #include <ctime>
 #include <cmath>
+#include <functional>
 #include <vector>
 #include <algorithm>
 #include <sstream>
@@ -45,13 +46,25 @@ class BeggingPreprocessor : public DataPreprocessor<TElement> {
       : DataPreprocessor<TElement>("BeggingPreprocessor") {
     this->setDefaultParameters();
     this->copyParameters(parameters);
-    srand(this->getIntParameter("RANDOM_SEED"));
+    srand(this->parameters().template Get<int>("RANDOM_SEED"));
   }
 
   void setDefaultParameters();
   void checkParameters() const;
   void apply(const DataSet<TElement>& input,
       DataSet<TElement>* output) const;
+
+ private:
+  template <class T>
+  struct Belongs: public std::unary_function<T, bool> {
+    Belongs(const T &min, const T &max): min_(min), max_(max) { }
+    bool operator()(const T& x) const {
+      return x > min_ && x <= max_;
+    }
+   private:
+    const T &min_;
+    const T &max_;
+  };
 
   string toString() const;
 };
@@ -63,45 +76,50 @@ string BeggingPreprocessor<TElement>::toString() const {
   std::fixed(str);
   str.precision(2);
   str << "Begging data preprocessor with parameters: SELECTED_PART = ";
-  str << this->getDoubleParameter("SELECTED_PART");
+  str << this->parameters().template Get<double>("SELECTED_PART");
   str << ", WITH_REPLACE = ";
-  str << this->getBoolParameter("WITH_REPLACE");
+  str << this->parameters().template Get<bool>("WITH_REPLACE");
   str << ", RANDOM_SEED = ";
-  str << this->getIntParameter("RANDOM_SEED");
+  str << this->parameters().template Get<int>("RANDOM_SEED");
   return str.str();
 }
 
 template <typename TElement>
 void BeggingPreprocessor<TElement>::setDefaultParameters() {
   this->clearParameters();
-  this->addDoubleParameter("SELECTED_PART", 0.3);
-  this->addBoolParameter("WITH_REPLACE", true);
-  this->addIntParameter("RANDOM_SEED", 237);
+  this->addNewParam("SELECTED_PART", 0.3);
+  this->addNewParam("WITH_REPLACE", true);
+  this->addNewParam("RANDOM_SEED", 237);
 }
 
 template <typename TElement>
 void BeggingPreprocessor<TElement>::checkParameters() const {
-  if (this->getBoolParameter("WITH_REPLACE")) {
-    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0);
+  if (this->parameters().template Get<bool>("WITH_REPLACE")) {
+      Parameterized::checkParameter<double>("SELECTED_PART",
+                                  std::bind2nd(std::greater_equal<double>(),
+                                               0));
   } else {
-    CHECK_DOUBLE_PARAMETER("SELECTED_PART", X > 0 && X <= 1);
+    Parameterized::checkParameter<double>("SELECTED_PART",
+                                                         Belongs<double>(0, 1));
   }
-  CHECK_INT_PARAMETER("RANDOM_SEED", X > 0);
+  Parameterized::checkParameter<int>("RANDOM_SEED",
+                                         std::bind2nd(std::greater<int>(), 0));
 }
 
 template <typename TElement>
 void BeggingPreprocessor<TElement>::apply(
       const DataSet<TElement>& input_dataset,
       DataSet<TElement>* output_dataset) const {
+  const ParametersContainer &params = this->parameters();
   int size = static_cast<int>(ceil(input_dataset.size()
-    * this->getDoubleParameter("SELECTED_PART")));
+    * params.Get<double>("SELECTED_PART")));
 
+  unsigned int seedp;
   if (size != 0) {
     vector<int> indices(size);
-
-    if (this->getBoolParameter("WITH_REPLACE")) {
+    if (params.Get<bool>("WITH_REPLACE")) {
       for (int i = 0; i < indices.size(); ++i) {
-        indices[i] = (rand() % input_dataset.size());
+        indices[i] = (rand_r(&seedp) % input_dataset.size());
       }
     } else {
       vector<int> all_used(input_dataset.size());

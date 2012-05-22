@@ -1,3 +1,7 @@
+#FreeBSD Note
+# Use cmake -DCMAKE_CXX_COMPILER=g++46 /mnt/freedata/home/Void/Yandex/ltr1
+# to compile via gcc46
+
 ##########################################################################################
 # CMake build script for LTR.
 ##########################################################################################
@@ -8,6 +12,9 @@ OPTION(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." OFF)
 ##########################################################################################
 PROJECT(LTRdevelop CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+add_definitions(-DTIXML_USE_STL)
+
 
 IF (NOT DEFINED CMAKE_CURRENT_LIST_DIR)
     SET(CMAKE_CURRENT_LIST_DIR ${CMAKE_CURRENT_SOURCE_DIR})

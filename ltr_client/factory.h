@@ -1,122 +1,66 @@
 // Copyright 2012 Yandex
 
-#include <string>
-#include <stdexcept>
-#include <map>
-#include <vector>
-
-#include "ltr/parameters_container/parameters_container.h"
-#include "ltr_client/constants.h"
-
-using std::string;
-using ltr::ParametersContainer;
-
 #ifndef LTR_CLIENT_FACTORY_H_
 #define LTR_CLIENT_FACTORY_H_
-/**
- * Class is used to create initers T
- */
-template<class T>
-class SimpleFactory {
-  public:
-    /**
-     * Static function to create object, inited by ParametersContainer
-     * @param parameters - parameters to create object
-     */
-    static typename T::BasePtr create
-        (const ltr::ParametersContainer& parameters) {
-      return typename T::BasePtr(new T(parameters));
-    }
-};
 
-/**
-This class is used to init Measures, Learners and Splitters.
-Has 3 instantations MeasureFactory, LearnerFactory, SplitterFactory
-*/
-template<template<class T> class TObject>
+#include <string>
+#include <iostream>
+#include <cassert>
+#include <tr1/unordered_map> //NOLINT
+
+#include "ltr/interfaces/parameterized.h"
+#include "ltr/parameters_container/parameters_container.h"
+
 class Factory {
-  private:
-    template<class TElement>
-      class Initer {
-        typedef typename TObject<TElement>::BasePtr (*TFunct)
-            (const ParametersContainer&);
-        TFunct function;
+ public:
+  Factory() {
+    assert(!self_);
+    self_ = this;
+  }
+  ~Factory() { }
+  static Factory *instance() {
+    assert(self_);
+    return self_;
+  }
 
-        public:
-          Initer() {}
-          typename TObject<TElement>::BasePtr operator()
-              (const ParametersContainer& params) {
-            return function(params);
-          }
-          explicit Initer(TFunct function) : function(function) {}
-      };
-      map<std::string, map<std::string,
-            boost::variant<Initer<ltr::Object>,
-                           Initer<ltr::ObjectPair>,
-                           Initer<ltr::ObjectList> > > >initers;
-      map<std::string, vector<std::string> > approaches;
+  template <class T>
+  void registerType(const std::string &name) {
+    assert(name_creators_.find(name) == name_creators_.end());
+    name_creators_[name] = new TCreator<T>;
+  }
+  ltr::Parameterized *Create(const std::string &name,
+                             const ltr::ParametersContainer &parameters) const {
+    std::cout << "Factory::Create: Requested creating of " << name << std::endl;
+    TNameCreatorHash::const_iterator it = name_creators_.find(name);
+    assert(it != name_creators_.end());
+    const TAbstractCreator *creator = it->second;
+    return creator->create(parameters);
+  }
 
-      /**
-       * Function registers all your classes in this factory.
-       * Add your classes in it
-       */
-      void registerAll();
-
-  public:
-    Factory() {
-      registerAll();
+ private:
+  class TAbstractCreator {
+   public:
+    virtual ~TAbstractCreator() { }
+    virtual ltr::Parameterized *create(
+        const ltr::ParametersContainer &parameters) const =0;
+  };
+  template <class T>
+  class TCreator: public TAbstractCreator {
+   public:
+    virtual ltr::Parameterized *create(
+        const ltr::ParametersContainer &parameters) const {
+      return new T(parameters);
     }
-    /**
-     Function inits object.
-     @param type - object type(name of measure, learnes, splitter etc. used)
-     @param parameters - parameters for creation object
-     */
-    template<class TElement>
-    typename TObject<TElement>::BasePtr init(string type,
-        const ParametersContainer& parameters) {
-      getApproach(type, Approach<TElement>::name());
-      typename TObject<TElement>::Ptr object_ptr =
-        boost::get<Initer<TElement> >
-              (initers[type][Approach<TElement>::name()])(parameters);
+  };
 
-      return object_ptr;
-    }
-    /**
-     Function returns approach for object with given type and approach.
-     Throws if impossible.
-     @param type - type of object.
-     @param approach - approach of object, can be "" if unknown.
-     */
-    string getApproach(string type, string approach="") {
-      if (approaches.find(type) == approaches.end())
-        throw std::logic_error("unknown type " + type);
-      if (approach == "") {
-        if (approaches[type].size() > 1)
-          throw std::logic_error("can't determine approach for " + type);
-        return approaches[type][0];
-      } else {
-        std::vector<string> v = approaches[type];
-        if (std::find(v.begin(), v.end(), approach) != v.end())
-          return approach;
-        else
-          throw std::logic_error(type + " can't be " + approach);
-      }
-      return "";
-    }
+  typedef std::tr1::unordered_map<std::string, TAbstractCreator *>
+                                                              TNameCreatorHash;
 
-    /**
-     * Registers new class of object
-     * @param type - type of object
-     * @param func - pointer to the function,
-     * which will be used to create object.
-     */
-    template<class TElement>
-    void registerClass(string type,
-        typename TObject<TElement>::BasePtr(*func)
-          (const ParametersContainer&)) {
-      approaches[type].push_back(Approach<TElement>::name());
-      initers[type][Approach<TElement>::name()] = Initer<TElement>(func);
-    }
+  Factory(const Factory &);
+  Factory &operator=(const Factory &);
+
+  static Factory *self_;
+  TNameCreatorHash name_creators_;
 };
 
 #endif  // LTR_CLIENT_FACTORY_H_

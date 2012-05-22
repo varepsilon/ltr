@@ -95,7 +95,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
 
   ltr::FeatureSubsetChooserLearner<ltr::Object>::Ptr pSubsetChooserL(
     new ltr::FeatureSubsetChooserLearner<ltr::Object>);
-  pSubsetChooserL->setListParameter("INDICES", indexes);
+  pSubsetChooserL->addNewParam("INDICES", indexes);
 
   // remove NaN here is a code-dublicate from gtest fixture SetUp function
   RemoveNaNConverterLearner<ltr::Object>::Ptr remove_NaN_learner

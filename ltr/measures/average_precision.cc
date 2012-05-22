@@ -5,6 +5,7 @@
 #include <sstream>
 #include <algorithm>
 #include <stdexcept>
+#include <vector>
 
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/utils/measure_utility.h"
@@ -26,7 +27,8 @@ namespace ltr {
     for (vector<PredictedAndActualLabels>::const_iterator labels_it
         = labels.begin(); labels_it != labels.end();
         ++labels_it, total_amount += 1) {
-      if (labels_it->actual >= getDoubleParameter("SCORE_FOR_RELEVANT")) {
+      if (labels_it->actual >=
+          this->parameters().Get<double>("SCORE_FOR_RELEVANT")) {
         relevant_amount += 1;
         ans += static_cast<double>(relevant_amount)/total_amount;
       }
@@ -46,7 +48,7 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "Average precision measure with parameter SCORE_FOR_RELEVANT = ";
-    str << this->getDoubleParameter("SCORE_FOR_RELEVANT");
+    str << this->parameters().Get<double>("SCORE_FOR_RELEVANT");
     return str.str();
   }
 };

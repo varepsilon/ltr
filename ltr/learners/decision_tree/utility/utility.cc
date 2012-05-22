@@ -6,8 +6,8 @@ namespace ltr {
 namespace decision_tree {
 
 void split(DataSet<Object> data,
-           vector<Condition::Ptr> conditions,
-           vector<DataSet<Object> >* datas) {
+           std::vector<Condition::Ptr> conditions,
+           std::vector<DataSet<Object> >* datas) {
   datas->clear();
   for (size_t j = 0; j < conditions.size(); j++)
     datas->push_back(DataSet<Object>((data.featureInfo())));

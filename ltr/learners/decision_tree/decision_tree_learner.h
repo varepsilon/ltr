@@ -4,6 +4,7 @@
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_LEARNER_H_
 
 #include <vector>
+#include <functional>
 
 #include "ltr/learners/learner.h"
 
@@ -58,26 +59,26 @@ class DecisionTreeLearner
      */
     void setConditionsLearner(ConditionsLearner::Ptr conditions_learner) {
       conditions_learner_ = conditions_learner;
-      removeParametersGroup("conditions learner");
-      addParametersGroup(conditions_learner_->parameters(),
-                         "conditions learner");
+      this->setExistingParameter("conditions learner",
+                          conditions_learner_->parameters());
     }
     /** Sets splitting quality object.
      */
     void setSplittingQuality(SplittingQuality::Ptr splitting_quality) {
       splitting_quality_ = splitting_quality;
-      removeParametersGroup("splitting quality");
-      addParametersGroup(splitting_quality_->parameters(),
-                         "splitting quality");
+      this->setExistingParameter("splitting quality",
+                          splitting_quality_->parameters());
     }
 
     void setDefaultParameters() {
-      this->addIntParameter("MIN_VERTEX_SIZE", 3);
-      this->addDoubleParameter("LABEL_EPS", 0.001);
+      this->addNewParam("MIN_VERTEX_SIZE", 3);
+      this->addNewParam("LABEL_EPS", 0.001);
     }
     void checkParameters() const {
-      CHECK_INT_PARAMETER("MIN_VERTEX_SIZE", X > 0);
-      CHECK_DOUBLE_PARAMETER("LABEL_EPS", X >= 0);
+      this->checkParameter<int>("MIN_VERTEX_SIZE",
+                                         std::bind2nd(std::greater<int>(), 0) );
+      this->checkParameter<double>("LABEL_EPS",
+                              std::bind2nd(std::greater_equal<double>(), 0) );
     }
 
     DecisionTreeScorer makeImpl() const {

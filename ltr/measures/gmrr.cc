@@ -21,14 +21,16 @@ using ltr::ObjectList;
 namespace ltr {
   double GMRR::GMRRFormula(double label) const {
     return (pow(2.0, label) - 1)
-      / pow(2.0, this->getDoubleParameter("MAX_LABEL"));
+      / pow(2.0, this->parameters().Get<double>("MAX_LABEL"));
   }
 
   double GMRR::get_measure(const ObjectList& objects) const {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    const ParametersContainer &params = this->parameters();
+
+    size_t n = params.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -42,10 +44,10 @@ namespace ltr {
         labels[labels_index].actual = 0;
       }
       if (labels[labels_index].actual
-          > this->getDoubleParameter("MAX_LABEL")) {
+          > params.Get<double>("MAX_LABEL")) {
         // todo: log here!
         // throw logic_error(alias() + " some actual object label > MAX_LABEL");
-        labels[labels_index].actual = this->getDoubleParameter("MAX_LABEL");
+        labels[labels_index].actual = params.Get<double>("MAX_LABEL");
       }
       p_relevance = GMRRFormula(labels[labels_index].actual);
       result += (1.0 / pos) * p_look * p_relevance;
@@ -57,7 +59,7 @@ namespace ltr {
   string GMRR::toString() const {
     std::stringstream str;
     str << "GMRR measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->parameters().Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 };

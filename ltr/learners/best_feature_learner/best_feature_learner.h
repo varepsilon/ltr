@@ -48,6 +48,17 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
     scorer_ = OneFeatureScorer(0);
   }
 
+  void setDefaultParameters() {
+    Parameterized::addNewParam<Measure<TElement> *>("measure", NULL);
+  }
+  void updateParameters() {
+    Measure<TElement> *msr =
+        this->parameters().
+        template Get<Parameterized *, Measure<TElement> *>("measure");
+    this->p_measure_ = typename Measure<TElement>::Ptr(msr);
+  }
+
+
 
   private:
   OneFeatureScorer scorer_;

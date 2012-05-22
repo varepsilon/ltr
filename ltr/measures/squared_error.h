@@ -22,8 +22,8 @@ namespace ltr {
     public:
     SquaredError(const ParametersContainer& parameters = ParametersContainer())
         : PointwiseMeasure("Squared error") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
+      setDefaultParameters();
+      copyParameters(parameters);
     }
 
     double best() const {

@@ -24,7 +24,7 @@ namespace ltr {
     AbsError(const ParametersContainer& parameters = ParametersContainer())
         : PointwiseMeasure("Absolute error") {
       this->setDefaultParameters();
-      this->copyParameters(parameters);
+      copyParameters(parameters);
     }
 
     double worst() const {

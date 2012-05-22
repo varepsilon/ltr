@@ -68,9 +68,9 @@ string FeatureNormalizerLearner<TElement>::toString() const {
   str.precision(2);
   str << "Feature normalizer feature converter learner with parameters:";
   str << " NormalizationIntervalBegin = ";
-  str << this->getDoubleParameter("NormalizationIntervalBegin");
+  str << this->parameters().template Get<double>("NormalizationIntervalBegin");
   str << ", NormalizationIntervalEnd = ";
-  str << this->getDoubleParameter("NormalizationIntervalEnd");
+  str << this->parameters().template Get<double>("NormalizationIntervalEnd");
   return str.str();
 }
 
@@ -84,9 +84,9 @@ void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
   converter_.setFeatureCount(this->featureCount());
 
   double normalizationIntervalBegin =
-      this->getDoubleParameter("NormalizationIntervalBegin");
+      this->parameters().template Get<double>("NormalizationIntervalBegin");
   double normalizationIntervalEnd =
-      this->getDoubleParameter("NormalizationIntervalEnd");
+      this->parameters().template Get<double>("NormalizationIntervalEnd");
 
   for (size_t feature_idx = 0;
       feature_idx < this->featureCount();
@@ -117,14 +117,15 @@ PerFeatureLinearConverter FeatureNormalizerLearner<TElement>::make() const {
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
-  this->addDoubleParameter("NormalizationIntervalBegin", 0.0);
-  this->addDoubleParameter("NormalizationIntervalEnd", 1.0);
+  this->addNewParam("NormalizationIntervalBegin", 0.0);
+  this->addNewParam("NormalizationIntervalEnd", 1.0);
 }
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::checkParameters() const {
-  if (this->getDoubleParameter("NormalizationIntervalBegin") >=
-      this->getDoubleParameter("NormalizationIntervalEnd")) {
+  const ParametersContainer &params = this->parameters();
+  if (params.Get<double>("NormalizationIntervalBegin") >=
+      params.Get<double>("NormalizationIntervalEnd")) {
     throw logic_error("Bad parameters for FeatureNormalizerLearner");
   }
 }

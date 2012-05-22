@@ -3,122 +3,167 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
-#include <boost/variant.hpp>
-
-#include <map>
-#include <string>
-#include <vector>
+#include <tr1/unordered_map>
+#include <boost/any.hpp>
 #include <stdexcept>
-
-// I don't need it. It is for Hook!!!
-#include <algorithm>
-
-using std::string;
-using std::vector;
-using std::map;
+#include <string>
+#include <list>
 
 namespace ltr {
-  typedef vector<int> List;
-  /**
-   * ParametersContainer holds parameters of types int, double and bool
-   * with their names
-   */
-  class ParametersContainer {
-  public:
-    typedef map<string,
-                boost::variant<int, double, bool, List> > TGroup;
 
-    typedef map<string, TGroup> TMap;
+class ParametersContainer {
+ public:
+  typedef std::tr1::unordered_map<std::string, boost::any> StringAnyHash;
 
-    ParametersContainer() {
-      params[""] = TGroup();
-    }
-    explicit ParametersContainer(TMap parameters) : params(parameters) {}
+  ParametersContainer();
+  ParametersContainer(const ParametersContainer &other);
+  ParametersContainer &operator=(const ParametersContainer &other);
 
-    template<class T>
-    void set(const string& name, const T& value, const string& group="") {
-      params[group][name] = value;
-    }
+  void Clear();
 
-    void setDouble(const string& name, double value, const string& group="");
-    void setInt(const string& name, int value, const string& group="");
-    void setBool(const string& name, bool value, const string& group="");
-    void setList(const string& name, const List& value, const string& group="");
+  StringAnyHash::const_iterator begin() const {
+    return name_value_hash_.begin();
+  }
+  StringAnyHash::const_iterator end() const {
+    return name_value_hash_.end();
+  }
 
-    template<class T>
-    bool has(const string& name, const string& group="") const;
-    bool hasGrouop(const string& group) const {
-      return params.find(group) != params.end();
-    }
-
-    template<class T> T get(const string& name, const string& group="") const;
-    double getDouble(const string& name, const string& group="") const;
-    int getInt(const string& name, const string& group="") const;
-    bool getBool(const string& name, const string& group="") const;
-    List getList(const string& name, const string& group="") const;
-
-    string toString() const;
-
-    void copy(const ParametersContainer& parameters);
-    /**
-     * Returns parametersContainer of all parameters, which has the given group.
-     * In the resulting container all theese parameters will have the default group.
-     */
-    ParametersContainer getGroup(const string& group) const;
-
-    /**
-     * Adds all the parameters from the given parametersContainer
-     * into the given group.
-     * @param container - container to copy from.
-     * @param group - group to copy parameters in.
-     */
-    void setGroup(const ParametersContainer& container, const string& group);
-    /**
-     * Removes group of parameters.
-     */
-    void removeGroup(const string& group) {
-      params.erase(group);
-    }
-
-    void clear();
-
-  protected:
-    TMap params;
+  template <class T>
+  struct NameValue {
+    NameValue(const std::string &nm, const T &v): name(nm), value(v) { }
+    std::string name;
+    T value;
   };
-
-  // Template realization
   template <class T>
-  bool ParametersContainer::has(const string& name,
-                                const string& group) const {
-    if (params.find(group) == params.end())
-      return 0;
-    const TGroup& group_ = params.find(group)->second;
+  std::list<NameValue<T> > getValuesByType() const {
+    std::list<NameValue<T> > result;
+    for (StringAnyHash::const_iterator it = name_value_hash_.begin();
+        it != name_value_hash_.end();
+        ++it) {
+      T *value = boost::any_cast<T>(&it->second);
+      if (!value) continue;
+      result.push_back(NameValue<T>(it->first, *value));
+    }
+    return result;
+  }
 
-    if (group_.find(name) == group_.end())
-      return 0;
+  bool Contains(const std::string &name) const;
+
+  template <class T>
+  bool TypeCoincides(const std::string &name) const {
+    const StringAnyHash::const_iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+    return It->second.type() == typeid(T);
+  }
+
+  template<class T>
+  T Get(const std::string &name) const
+      throw(std::logic_error, std::bad_cast) {
+    const StringAnyHash::const_iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+
     try {
-      boost::get<T>(group_.find(name)->second);
-      return 1;
-    } catch(...) {
-      return 0;
+      return boost::any_cast<T>(It->second);
+    } catch(const boost::bad_any_cast &exc) {
+      throw std::logic_error(std::string(exc.what()) +
+                                         "\nParameter name: " + name +
+                                      "\nRequested type: " + typeid(T).name() +
+                             "\nactual type: " + It->second.type().name());
     }
   }
 
-  template <class T>
-  T ParametersContainer::get(const string& name,
-                             const string& group) const {
-    if (params.find(group) == params.end()) {
-      throw std::logic_error("no such group: " + group);
-    }
-    const TGroup& group_ = params.find(group)->second;
-    if (group_.find(name) == group_.end()) {
-      throw std::logic_error("no such parameter: " + name);
-    }
+  template<class StoredType, class DesiredType>
+  DesiredType Get(const std::string &name) const
+      throw(std::logic_error, std::bad_cast) {
+    const StringAnyHash::const_iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+
     try {
-      return boost::get<T>(group_.find(name)->second);
-    } catch(...) {
-      throw std::logic_error("parameter " + name + " has another type");
+      const StoredType &stored = boost::any_cast<StoredType>(It->second);
+      DesiredType desired = dynamic_cast<DesiredType>(stored); //NOLINT
+      return desired;
+    } catch(const boost::bad_any_cast &exc) {
+      throw std::logic_error(std::string(exc.what()) +
+                                         "\nParameter name: " + name +
+                                      "\nRequested type: " +
+                             typeid(StoredType).name() +
+                             "\nactual type: " + It->second.type().name());
+    } catch(const std::bad_cast &exc) {
+      throw std::logic_error(std::string(exc.what()) +
+                                         "\nParameter name: " + name);
     }
   }
+
+  template<class T>
+  const T &GetRef(const std::string &name) const
+      throw(std::logic_error, std::bad_cast) {
+    const StringAnyHash::const_iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+
+    try {
+      return *boost::any_cast<T>(&It->second);
+    }
+    catch(const boost::bad_any_cast &exc) {
+      throw std::logic_error(std::string(exc.what()) +
+                                         "\nParameter name: " + name +
+                                      "\nRequested type: " + typeid(T).name());
+    }
+  }
+
+  template<class T>
+  T &GetRef(const std::string &name)
+      throw(std::logic_error, std::bad_cast) {
+    const StringAnyHash::iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+
+    try {
+      return *boost::any_cast<T>(&It->second);
+    }
+    catch(const boost::bad_any_cast &exc) {
+      throw std::logic_error(std::string(exc.what()) +
+                                         "\nParameter name: " + name +
+                                      "\nRequested type: " + typeid(T).name());
+    }
+  }
+
+
+  // Without checks
+  template<class T>
+  void Set(const std::string &name, const T &value) {
+    name_value_hash_[name] = value;
+  }
+
+  // Perform check
+  template<class T>
+  void SetExisting(const std::string &name, const T &value) {
+    const StringAnyHash::iterator It = name_value_hash_.find(name);
+    if (It == name_value_hash_.end())
+      throw std::logic_error("No such paramater name: " + name);
+    It->second = value;
+  }
+
+  // Perform check
+  template<class T>
+  void AddNew(const std::string &name, const T &value) {
+    const StringAnyHash::const_iterator It = name_value_hash_.find(name);
+    if (It != name_value_hash_.end())
+      throw std::logic_error("There is already exist such parameter: " + name);
+    name_value_hash_[name] = value;
+  }
+
+  void Copy(const ParametersContainer &parameters);
+
+  std::string ToString() const;
+
+ private:
+  StringAnyHash name_value_hash_;
+};
 }
+
+
 #endif  // LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_

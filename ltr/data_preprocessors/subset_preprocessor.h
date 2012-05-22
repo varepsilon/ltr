@@ -57,7 +57,8 @@ namespace ltr {
   void SubsetPreprocessor<TElement>::apply(
       const DataSet<TElement>& input_dataset,
       DataSet<TElement>* output_dataset) const {
-    vector<int> indices = this->getListParameter("INDICES");
+    vector<int> indices = this->parameters().template GetRef<std::vector<int> >(
+                "INDICES");
     if (indices.size() != 0) {
       int max_used_element = *max_element(indices.begin(), indices.end());
 
@@ -79,7 +80,8 @@ namespace ltr {
   string SubsetPreprocessor<TElement>::toString() const {
     std::stringstream str;
     str << "Subset data preprocessor with parameter INDICES = {";
-    vector<int> indices = this->getListParameter("INDICES");
+    vector<int> indices = this->parameters().template Get<std::vector<int> >(
+                "INDICES");
     for (int i = 0; i < indices.size(); ++i) {
       if (i != 0) {
         str << ", ";
@@ -94,12 +96,13 @@ namespace ltr {
   void SubsetPreprocessor<TElement>::setDefaultParameters() {
     this->clearParameters();
     vector<int> empty;
-    this->addListParameter("INDICES", empty);
+    this->addNewParam("INDICES", empty);
   }
 
   template <typename TElement>
   void SubsetPreprocessor<TElement>::checkParameters() const {
-    vector<int> indices = this->getListParameter("INDICES");
+    vector<int> indices = this->parameters().template Get<std::vector<int> >(
+                "INDICES");
     set<int> used_elements;
     for (int index = 0; index < indices.size(); ++index) {
       int current_object = indices[index];

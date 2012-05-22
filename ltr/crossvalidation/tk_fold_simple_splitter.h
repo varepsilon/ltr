@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 #include <algorithm>
 #include <vector>
+#include <functional>
 #include <cstdlib>
 #include <stdexcept>
 #include <sstream>
@@ -73,29 +74,32 @@ namespace ltr {
     string TKFoldSimpleSplitter<TElement>::toString() const {
       std::stringstream str;
       str << "TK-fold splitter with parameters: T = ";
-      str << this->getIntParameter("T");
+      str << this->parameters().template Get<int>("T");
       str << ", K = ";
-      str << this->getIntParameter("K");
+      str << this->parameters().template Get<int>("K");
       return str.str();
     }
 
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
       this->clearParameters();
-      this->addIntParameter("K", 10);
-      this->addIntParameter("T", 10);
+      this->addNewParam("K", 10);
+      this->addNewParam("T", 10);
     }
 
     template<class TElement>
     void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-      CHECK_INT_PARAMETER("K", X > 1);
-      CHECK_INT_PARAMETER("T", X > 0);
+      Parameterized::checkParameter<int>("K",
+                                         std::bind2nd(std::greater<int>(), 1));
+      Parameterized::checkParameter<int>("T",
+                                         std::bind2nd(std::greater<int>(), 0));
     }
 
     template<class TElement>
     int TKFoldSimpleSplitter<TElement>::splitCount(
         const DataSet<TElement>& base_set) const {
-      return this->getIntParameter("K") * this->getIntParameter("T");
+      return this->parameters().template Get<int>("K") *
+             this->parameters().template Get<int>("T");
     }
 
     template<class TElement>
@@ -112,14 +116,16 @@ namespace ltr {
       train_set_indexes->clear();
       test_set_indexes->clear();
 
-      int blocksplit_index = split_index / this->getIntParameter("K");
-      int block_index = split_index % this->getIntParameter("K");
+      const ParametersContainer &params = this->parameters();
+
+      int blocksplit_index = split_index / params.Get<int>("K");
+      int block_index = split_index % params.Get<int>("K");
 
       Permutation current_perm =
         getRandomPermutation(blocksplit_index, base_set.size());
 
-      int block_size = base_set.size() / this->getIntParameter("K");
-      int extra_length = base_set.size() % this->getIntParameter("K");
+      int block_size = base_set.size() / params.Get<int>("K");
+      int extra_length = base_set.size() % params.Get<int>("K");
 
       int test_begin = block_size * block_index +
         std::min(block_index, extra_length);

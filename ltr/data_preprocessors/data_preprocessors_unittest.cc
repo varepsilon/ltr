@@ -69,7 +69,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   indices.push_back(7);
   indices.push_back(4);
   SubsetPreprocessor<Object> prep;
-  prep.setListParameter("INDICES", indices);
+  prep.addNewParam("INDICES", indices);
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -80,7 +80,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   }
 
   indices.push_back(1);
-  prep.setListParameter("INDICES", indices);
+  prep.addNewParam("INDICES", indices);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(4, prep_data.size());
@@ -89,7 +89,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   }
 
   indices.push_back(103);
-  prep.setListParameter("INDICES", indices);
+  prep.addNewParam("INDICES", indices);
   EXPECT_ANY_THROW(prep.apply(data, &prep_data));
 
   prep.setDefaultParameters();
@@ -100,7 +100,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   unequal.push_back(3);
   unequal.push_back(5);
   unequal.push_back(3);
-  EXPECT_ANY_THROW(prep.setListParameter("INDICES", unequal));
+  EXPECT_ANY_THROW(prep.setExistingParameter("INDICES", unequal));
 }
 
 TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
@@ -115,8 +115,8 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  prep.setBoolParameter("WITH_REPLACE", false);
-  prep.setDoubleParameter("SELECTED_PART", 0.8);
+  prep.setExistingParameter("WITH_REPLACE", false);
+  prep.setExistingParameter("SELECTED_PART", 0.8);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(9, prep_data.size());
@@ -133,8 +133,8 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     }
   }
 
-  prep.setBoolParameter("WITH_REPLACE", true);
-  prep.setDoubleParameter("SELECTED_PART", 1.5);
+  prep.setExistingParameter("WITH_REPLACE", true);
+  prep.setExistingParameter("SELECTED_PART", 1.5);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(17, prep_data.size());
@@ -143,12 +143,12 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  EXPECT_ANY_THROW(prep.setDoubleParameter("SELECTED_PART", 0.0));
-  prep.setDoubleParameter("SELECTED_PART", 0.5);
-  prep.setBoolParameter("WITH_REPLACE", false);
-  EXPECT_ANY_THROW(prep.setDoubleParameter("SELECTED_PART", 0.0));
+  EXPECT_ANY_THROW(prep.setExistingParameter("SELECTED_PART", 0.0));
+  prep.setExistingParameter("SELECTED_PART", 0.5);
+  prep.setExistingParameter("WITH_REPLACE", false);
+  EXPECT_ANY_THROW(prep.setExistingParameter("SELECTED_PART", 0.0));
 
-  prep.setDoubleParameter("SELECTED_PART", 1e-8);
+  prep.setExistingParameter("SELECTED_PART", 1e-8);
   prep.apply(data, &prep_data);
   EXPECT_EQ(1, prep_data.size());
 }
