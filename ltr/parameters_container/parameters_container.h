@@ -3,7 +3,7 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
-#include <tr1/unordered_map>
+#include <boost/unordered_map.hpp>
 #include <boost/any.hpp>
 #include <stdexcept>
 #include <string>
@@ -13,7 +13,7 @@ namespace ltr {
 
 class ParametersContainer {
  public:
-  typedef std::tr1::unordered_map<std::string, boost::any> StringAnyHash;
+  typedef boost::unordered_map<std::string, boost::any> StringAnyHash;
 
   ParametersContainer();
   ParametersContainer(const ParametersContainer &other);

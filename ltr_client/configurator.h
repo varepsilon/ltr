@@ -4,8 +4,8 @@
 #define LTR_CLIENT_CONFIGURATOR_H_
 
 #include <string>
-#include <tr1/unordered_map> //NOLINT Stupid cpplint considers this header as pure C header
-#include <tr1/unordered_set> //NOLINT Stupid cpplint considers this header as pure C header
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 #include <list>
 
 #include "ltr/parameters_container/parameters_container.h"
@@ -68,7 +68,7 @@ struct TTrainInfo {
   std::string name;
   std::string data;
   std::string learner;
-  std::tr1::unordered_set<std::string> predicts;
+  boost::unordered_set<std::string> predicts;
   bool gen_cpp;
 };
 std::string ToString(const TTrainInfo &Info);
@@ -80,9 +80,9 @@ struct TCrossvalidationInfo {
   // conctructor manually
   explicit TCrossvalidationInfo(const std::string &fd):fold(fd) { }
   std::string fold;
-  std::tr1::unordered_set<std::string> learners;
-  std::tr1::unordered_set<std::string> measures;
-  std::tr1::unordered_set<std::string> datas;
+  boost::unordered_set<std::string> learners;
+  boost::unordered_set<std::string> measures;
+  boost::unordered_set<std::string> datas;
 };
 std::string ToString(const TCrossvalidationInfo &Info);
 
@@ -90,10 +90,10 @@ std::string ToString(const TCrossvalidationInfo &Info);
 class ConfiguratorPrivate;
 class Configurator {
  public:
-  typedef std::tr1::unordered_map<std::string, TDataInfo> TDataInfos;
-  typedef std::tr1::unordered_map<std::string, TXmlTokenSpec> TXmlTokenSpecs;
-  typedef std::tr1::unordered_map<std::string, TTrainInfo> TTrainInfos;
-  typedef std::tr1::unordered_map<std::string, TCrossvalidationInfo>
+  typedef boost::unordered_map<std::string, TDataInfo> TDataInfos;
+  typedef boost::unordered_map<std::string, TXmlTokenSpec> TXmlTokenSpecs;
+  typedef boost::unordered_map<std::string, TTrainInfo> TTrainInfos;
+  typedef boost::unordered_map<std::string, TCrossvalidationInfo>
                                                           TCrossvalidationInfos;
 
   Configurator();

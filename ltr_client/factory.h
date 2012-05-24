@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <tr1/unordered_map> //NOLINT
+#include <boost/unordered_map.hpp>
 
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/parameters_container/parameters_container.h"
@@ -53,7 +53,7 @@ class Factory {
     }
   };
 
-  typedef std::tr1::unordered_map<std::string, TAbstractCreator *>
+  typedef boost::unordered_map<std::string, TAbstractCreator *>
                                                               TNameCreatorHash;
 
   Factory(const Factory &);

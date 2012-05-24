@@ -176,7 +176,7 @@ void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
   std::cout << "\n\nTrain " << data_info.file_name << " finished. Report:"
                         << learner->report() << std::endl;
 
-  for (std::tr1::unordered_set<std::string>::const_iterator predict_it =
+  for (boost::unordered_set<std::string>::const_iterator predict_it =
       train_info.predicts.begin();
       predict_it != train_info.predicts.end();
       ++predict_it) {

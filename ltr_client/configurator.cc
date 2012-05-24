@@ -7,7 +7,7 @@
 #include <sstream>
 
 #include "boost/lexical_cast.hpp"
-#include "boost/algorithm/string.hpp"
+#include "boost/algorithm/string/predicate.hpp"
 
 #include "tinyxml/tinyxml.h"
 #include "utility/logger.h"
@@ -38,10 +38,10 @@ static const char * const MEASURE         = "measure";
 // =========================== various helpers =================================
 
 template <class Key, class Value>
-static inline void DeleteAll(std::tr1::unordered_map<Key, Value> *container) {
+static inline void DeleteAll(boost::unordered_map<Key, Value> *container) {
   assert(container);
   // C++11 We have no unique_ptr so we MUST delete pointers manually
-  for (typename std::tr1::unordered_map<Key, Value>::const_iterator It =
+  for (typename boost::unordered_map<Key, Value>::const_iterator It =
       container->begin();
       It != container->end(); ++It)
     delete It->second;
@@ -56,7 +56,7 @@ class TExecutor {
   ConfiguratorPrivate *d;
 };
 
-typedef std::tr1::unordered_map<std::string, TExecutor *> TStrExecMap;
+typedef boost::unordered_map<std::string, TExecutor *> TStrExecMap;
 
 static inline void GenericParse(const TStrExecMap &handlers,
                                 TiXmlNode *node,
@@ -90,7 +90,7 @@ static inline bool Contains(const TCont &cont,
 
 template <class ValueType>
 static inline ValueType &SafeInsert(
-    std::tr1::unordered_map<std::string, ValueType> &container,
+    boost::unordered_map<std::string, ValueType> &container,
     const char *key) {
   if (!key) {
     throw std::logic_error("empty name!!!!");
@@ -102,7 +102,7 @@ static inline ValueType &SafeInsert(
 }
 
 static inline void SafeInsert(
-    std::tr1::unordered_set<std::string> &cont,
+    boost::unordered_set<std::string> &cont,
     const char *key) {
   if (!key) {
     return;
@@ -114,8 +114,8 @@ static inline void SafeInsert(
 }
 
 template <class Key, class Value>
-inline std::string ToString(const std::tr1::unordered_map<Key, Value> &cont) {
-  typedef typename std::tr1::unordered_map<Key, Value>::const_iterator TIter;
+inline std::string ToString(const boost::unordered_map<Key, Value> &cont) {
+  typedef typename boost::unordered_map<Key, Value>::const_iterator TIter;
   std::stringstream out(std::stringstream::out);
   size_t i = 0;
   for (TIter It = cont.begin(); It != cont.end(); ++It)
@@ -124,8 +124,8 @@ inline std::string ToString(const std::tr1::unordered_map<Key, Value> &cont) {
 }
 
 template <class Value>
-inline std::string ToString(const std::tr1::unordered_set<Value> &cont) {
-  typedef typename std::tr1::unordered_set<Value>::const_iterator TIter;
+inline std::string ToString(const boost::unordered_set<Value> &cont) {
+  typedef typename boost::unordered_set<Value>::const_iterator TIter;
   std::stringstream out(std::stringstream::out);
   out << "set(";
   for (TIter It = cont.begin(); It != cont.end(); ++It)
@@ -373,8 +373,8 @@ class TOnParameterExecutor: public TExecutor {
 
  private:
   static bool ToBool(const std::string &value) {
-    if (boost::is_iequal()(value, std::string("true"))) return true;
-    else if (boost::is_iequal()(value, std::string("false"))) return false;
+    if (boost::iequals(value, std::string("true"))) return true;
+    else if (boost::iequals(value, std::string("false"))) return false;
     else
       throw std::logic_error("Can not convert " + value + " to bool!");
   }

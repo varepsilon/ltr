@@ -3,15 +3,17 @@
 #ifndef LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_H_
 #define LTR_DATA_PREPROCESSORS_BEGGING_PREPROCESSOR_H_
 
-#include <boost/shared_ptr.hpp>
-
+#include <algorithm>
 #include <ctime>
 #include <cmath>
-#include <functional>
-#include <vector>
-#include <algorithm>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <functional>
+
+#include <boost/random.hpp>
+#include <boost/random/random_number_generator.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 
@@ -113,13 +115,15 @@ void BeggingPreprocessor<TElement>::apply(
   const ParametersContainer &params = this->parameters();
   int size = static_cast<int>(ceil(input_dataset.size()
     * params.Get<double>("SELECTED_PART")));
+  
+  boost::mt19937 generator;  
+  boost::random_number_generator<boost::mt19937> random(generator);
 
-  unsigned int seedp;
   if (size != 0) {
     vector<int> indices(size);
     if (params.Get<bool>("WITH_REPLACE")) {
       for (int i = 0; i < indices.size(); ++i) {
-        indices[i] = (rand_r(&seedp) % input_dataset.size());
+        indices[i] = random(input_dataset.size());
       }
     } else {
       vector<int> all_used(input_dataset.size());
