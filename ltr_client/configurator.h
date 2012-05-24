@@ -4,8 +4,8 @@
 #define LTR_CLIENT_CONFIGURATOR_H_
 
 #include <string>
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
+#include <boost/unordered_map.hpp>  //NOLINT
+#include <boost/unordered_set.hpp>  //NOLINT
 #include <list>
 
 #include "ltr/parameters_container/parameters_container.h"

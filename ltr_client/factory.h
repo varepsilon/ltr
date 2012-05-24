@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <boost/unordered_map.hpp>
+#include <boost/unordered_map.hpp>  //NOLINT
 
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/parameters_container/parameters_container.h"

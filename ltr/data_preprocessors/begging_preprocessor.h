@@ -11,9 +11,9 @@
 #include <vector>
 #include <functional>
 
-#include <boost/random.hpp>
-#include <boost/random/random_number_generator.hpp>
-#include <boost/shared_ptr.hpp>
+#include "boost/random.hpp"  //NOLINT
+#include "boost/random/random_number_generator.hpp"  //NOLINT
+#include "boost/shared_ptr.hpp"  //NOLINT
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 
@@ -115,8 +115,8 @@ void BeggingPreprocessor<TElement>::apply(
   const ParametersContainer &params = this->parameters();
   int size = static_cast<int>(ceil(input_dataset.size()
     * params.Get<double>("SELECTED_PART")));
-  
-  boost::mt19937 generator;  
+
+  boost::mt19937 generator;
   boost::random_number_generator<boost::mt19937> random(generator);
 
   if (size != 0) {
