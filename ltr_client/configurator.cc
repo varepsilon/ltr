@@ -582,7 +582,8 @@ class TOnCrossvalidationExecutor: public TExecutor {
         return;
     }
 
-    d->crossvalidation_infos[fold] = TCrossvalidationInfo(fold);
+    TCrossvalidationInfo new_fold_info(fold);
+    d->crossvalidation_infos[fold] = new_fold_info;
     learner_executor->setInfo(&d->crossvalidation_infos[fold]);
     measure_executor->setInfo(&d->crossvalidation_infos[fold]);
     data_executor->setInfo(&d->crossvalidation_infos[fold]);
@@ -668,7 +669,8 @@ class TOnTrainExecutor: public TExecutor {
         return;
     }
 
-    d->train_infos[name] = TTrainInfo(name, data, learner);
+    TTrainInfo new_train_info(name, data, learner);
+    d->train_infos[name] = new_train_info;
 
     cpp_gen_executor->setTrainInfo(&d->train_infos[name]);
     predict_executor->setTrainInfo(&d->train_infos[name]);
