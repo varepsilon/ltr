@@ -33,7 +33,7 @@ class LearnersTest : public ::testing::Test {
     // Code here will be called immediately after the constructor (right
     // before each test).
     std::string learn_data_file_name =
-        boost::filesystem::path("data/imat2009/imat2009_learning.txt")
+        boost::filesystem::path("data/imat2009/imat2009_learning_small.txt")
     .string();
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
         learn_data_file_name, "YANDEX");
@@ -43,7 +43,7 @@ class LearnersTest : public ::testing::Test {
 
 
     std::string test_data_file_name =
-        boost::filesystem::path("data/imat2009/imat2009_test.txt")
+        boost::filesystem::path("data/imat2009/imat2009_test_small.txt")
     .string();
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
         test_data_file_name, "YANDEX");

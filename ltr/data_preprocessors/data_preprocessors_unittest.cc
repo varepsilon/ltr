@@ -69,7 +69,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   indices.push_back(7);
   indices.push_back(4);
   SubsetPreprocessor<Object> prep;
-  prep.addNewParam("INDICES", indices);
+  prep.setExistingParameter("INDICES", indices);
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -80,7 +80,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   }
 
   indices.push_back(1);
-  prep.addNewParam("INDICES", indices);
+  prep.setExistingParameter("INDICES", indices);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(4, prep_data.size());
@@ -89,7 +89,7 @@ TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
   }
 
   indices.push_back(103);
-  prep.addNewParam("INDICES", indices);
+  prep.setExistingParameter("INDICES", indices);
   EXPECT_ANY_THROW(prep.apply(data, &prep_data));
 
   prep.setDefaultParameters();

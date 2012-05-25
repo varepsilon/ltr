@@ -80,8 +80,8 @@ TEST_F(DataSetTest, DataSetConvertersTest) {
 TEST_F(DataSetTest, DataSetAlignTest) {
   ltr::DataSet<ltr::Object> test_data; 
 
-  std::string test_data_file_name = //"data/imat2009/imat2009_test.txt";
-      boost::filesystem::path("data/imat2009/imat2009_test.txt")
+  std::string test_data_file_name = //"data/imat2009/imat2009_test_small.txt";
+      boost::filesystem::path("data/imat2009/imat2009_test_small.txt")
       .string();
 
   test_data = ltr::io_utility::loadDataSet<ltr::Object>(test_data_file_name,

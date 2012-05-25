@@ -27,8 +27,8 @@ using ltr::RemoveNaNConverterLearner;
 class FeatureConvertersTest : public ::testing::Test {
   public:
   FeatureConvertersTest()
-    :path_to_learndata("data/imat2009/imat2009_learning.txt"),
-     path_to_testdata("data/imat2009/imat2009_test.txt") {}
+    :path_to_learndata("data/imat2009/imat2009_learning_small.txt"),
+     path_to_testdata("data/imat2009/imat2009_test_small.txt") {}
 
   protected:
   virtual void SetUp() {
@@ -95,7 +95,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
 
   ltr::FeatureSubsetChooserLearner<ltr::Object>::Ptr pSubsetChooserL(
     new ltr::FeatureSubsetChooserLearner<ltr::Object>);
-  pSubsetChooserL->addNewParam("INDICES", indexes);
+  pSubsetChooserL->setExistingParameter("INDICES", indexes);
 
   // remove NaN here is a code-dublicate from gtest fixture SetUp function
   RemoveNaNConverterLearner<ltr::Object>::Ptr remove_NaN_learner

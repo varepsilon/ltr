@@ -20,8 +20,9 @@ class Parameterized {
   void checkParameter(const std::string &name, TPred pred) const
       throw(std::logic_error, std::bad_cast) {
     const T &value = parameters_.Get<T>(name);
-    if (!pred(value)) throw
-      std::logic_error("Error in parameter " + name + " check");
+    if (!pred(value)) {
+      throw std::logic_error("Error in parameter " + name + " check");
+    }
   }
 
   template<class T>

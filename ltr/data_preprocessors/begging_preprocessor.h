@@ -98,8 +98,7 @@ template <typename TElement>
 void BeggingPreprocessor<TElement>::checkParameters() const {
   if (this->parameters().template Get<bool>("WITH_REPLACE")) {
       Parameterized::checkParameter<double>("SELECTED_PART",
-                                  std::bind2nd(std::greater_equal<double>(),
-                                               0));
+                                  std::bind2nd(std::greater<double>(), 0));
   } else {
     Parameterized::checkParameter<double>("SELECTED_PART",
                                                          Belongs<double>(0, 1));
