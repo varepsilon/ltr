@@ -15,6 +15,8 @@
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/ndcg.h"
 
+#include "contrib/logog/include/logog.hpp"
+
 class LtrClientPrivate {
  public:
   template <class TElement>
@@ -236,12 +238,18 @@ void LtrClient::launch() {
   }
 }
 
+// #define LOGOG_GROUP NULL
 
 // ===========================================================================
 
 int main(int argc, char* argv[]) {
+  LOGOG_INITIALIZE();
+  logog::Cout out;
+  logog::LogFile outFile("ltr_client.log");
+  logog::GetDefaultFormatter().SetShowTimeOfDay(true);
+
   if (argc < 2) {
-      std::cerr << "config file  missing\n";
+      ERR("config file  missing");
       return 1;
   }
   Factory factory;
@@ -254,7 +262,8 @@ int main(int argc, char* argv[]) {
       client.initFrom(argv[1]);
       client.launch();
   } catch(const std::logic_error &err) {
-      std::cerr << "Failed: " << err.what();
+      ERR("Failed: %s", err.what());
   }
+  LOGOG_SHUTDOWN();
   return 0;
 }

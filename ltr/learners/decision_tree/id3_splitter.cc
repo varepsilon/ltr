@@ -19,14 +19,14 @@ void ID3_Splitter::init() {
   current_feature = 0;
   const ParametersContainer &params = this->parameters();
   split_idx = 0;
-  log << "Inited. ";
-  if (params.Get<bool>("SPLIT_FEATURE_N_TIMES"))
-    log << "Splitting every feature "
-        << params.Get<int>("FEATURE_SPLIT_COUNT") << " times"
-        << std::endl;
-  else
-    log << "Using half summs splitting. Step = "
-        << params.Get<int>("HALF_SUMMS_STEP");
+  INFO("Inited. ");
+  if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
+    INFO("Splitting every feature %d times",
+         params.Get<int>("FEATURE_SPLIT_COUNT"));
+  } else {
+    INFO("Using half summs splitting. Step = %d",
+         params.Get<int>("HALF_SUMMS_STEP"));
+  }
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {

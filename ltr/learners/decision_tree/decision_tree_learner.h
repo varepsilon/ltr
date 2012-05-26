@@ -17,8 +17,7 @@
 #include "ltr/learners/decision_tree/splitting_quality.h"
 #include "ltr/learners/decision_tree/conditions_learner.h"
 
-#include "utility/logger.h"
-using logger::LogStream;
+#include "contrib/logog/include/logog.hpp"
 
 namespace ltr {
 namespace decision_tree {
@@ -32,9 +31,7 @@ class DecisionTreeLearner
   : public Learner<Object, DecisionTreeScorer> {
   private:
     DecisionTreeScorer scorer_;
-    /** Stream used for logging during learning.
-     */
-    LogStream log;
+
     /** Object, used to generate different conditions for splitting data set
      */
     ConditionsLearner::Ptr conditions_learner_;
@@ -49,7 +46,7 @@ class DecisionTreeLearner
     Vertex<double>::Ptr createOneVertex(const DataSet<Object>& data);
 
     void learnImpl(const DataSet<Object>& data) {
-      log << "Learn started. Data set size: " << data.size() << std::endl;
+      INFO("Learn started. Data set size: %d" , data.size());
       scorer_.setTree(DecisionTree<double>());
       scorer_.setTreeRoot(createOneVertex(data));
     }

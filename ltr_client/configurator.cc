@@ -9,8 +9,9 @@
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string/predicate.hpp"
 
+#include "contrib/logog/include/logog.hpp"
+
 #include "tinyxml/tinyxml.h"
-#include "utility/logger.h"
 
 // ==========================  XML tokens  =====================================
 namespace {
@@ -285,7 +286,6 @@ class ConfiguratorPrivate {
   std::auto_ptr<TiXmlDocument> document_;
   TiXmlElement *root_;
   std::string root_path_;
-  logger::PrintLogger client_logger_;
 
   Configurator::TDataInfos data_infos_;
   Configurator::TXmlTokenSpecs xml_token_specs;
@@ -325,8 +325,8 @@ class TOnDataExecutor: public TExecutor {
         throw std::logic_error("data '" +
                             std::string(name) + "' has no file path");
     if (!approach) {
-        d->client_logger_.warning() << "No approach defined for data '"
-                << name << "'. It will be used as listwise." << std::endl;
+        WARN("No approach defined for data '%s'. It will be used as listwise.",
+             name);
         approach = "listwise";
     }
 
@@ -361,8 +361,7 @@ class TOnParameterExecutor: public TExecutor {
     }
 
     if (val.empty()) {
-        d->client_logger_.warning() << "parameter "
-                                    << name << " has no value" << std::endl;
+        WARN("parameter %s has no value", name.c_str());
         return;
     }
     const std::string *type = element->Attribute(std::string(TYPE_ATTR));
@@ -479,10 +478,8 @@ class TOnGeneralXmlToken: public TExecutor {
 
     const char *approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
-        d->client_logger_.warning() << "No approach defined '" << name
-                      << "'. It will be defined automatically if possible."
-                      << std::endl;
-        approach = "";
+      WARN("No approach defined '%s'. Try to define automatically.", name);
+      approach = "";
     }
     const char *tag_name = element->Value();
     if (!tag_name) throw std::logic_error("no tag name");
@@ -577,8 +574,7 @@ class TOnCrossvalidationExecutor: public TExecutor {
 
     const char *fold = element->Attribute(FOLD_ATTR);
     if (!fold) {
-        d->client_logger_.error() << "Failed: <crossvalidation> with no fold"
-                                  << std::endl;
+        ERR("Failed: <crossvalidation> with no fold");
         return;
     }
 
@@ -649,23 +645,19 @@ class TOnTrainExecutor: public TExecutor {
     const char *data = element->Attribute("data");
     const char *learner = element->Attribute("learner");
     if (!name) {
-        d->client_logger_.error() << "Failed: <train> without name attribute"
-                                  << std::endl;
+        ERR("Failed: <train> without name attribute");
         return;
     }
     if (!data) {
-        d->client_logger_.error() << "Failed: <train> without data attribute"
-                                  << std::endl;
+        ERR("Failed: <train> without data attribute");
         return;
     }
     if (!learner) {
-        d->client_logger_.error() << "Failed: <train> without learner attribute"
-                                  << std::endl;
+        ERR("Failed: <train> without learner attribute");
         return;
     }
     if (d->train_infos.find(name) != d->train_infos.end()) {
-        d->client_logger_.error() << "Failed: dublicate train name "
-                                  << name << std::endl;
+        ERR("Failed: dublicate train name ");
         return;
     }
 
@@ -735,13 +727,9 @@ void Configurator::loadConfig(const std::string &file_name) {
   if (!root_dir || !root_dir->GetText())
       throw std::logic_error("no root directory specified");
   d->root_path_ = root_dir->GetText();
-  logger::Logger::Get().Init(d->root_path_ + "ltr_client.log");
 
-  d->client_logger_.info() << std::endl << std::string(80, '-') << std::endl
-                        << " LTR Client. Copyright 2011 Yandex" << std::endl
-                        << " Experiment started "
-                        << timer::formatTime() << std::endl
-                        << std::string(80, '-') << std::endl;
+  INFO(" LTR Client. Copyright 2011 Yandex");
+  INFO(" Experiment started ");
 
   GenericParse(d->handlers_,
                d->root_->FirstChildElement(),

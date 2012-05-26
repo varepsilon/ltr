@@ -30,6 +30,10 @@ MESSAGE("Source_Path           : ${Source_Path}")
 MESSAGE("Install_Path          : ${Install_Path}")
 
 ##########################################################################################
+# lets setup loggog
+ADD_SUBDIRECTORY(${Source_Path}/contrib/logog)
+
+##########################################################################################
 # lets SETup OpenMP flags
 FIND_PACKAGE(OpenMP)
 IF (OPENMP_FOUND)
@@ -55,14 +59,6 @@ ADD_LIBRARY (puppy STATIC ${Puppy_SOURCES} ${Puppy_HEADERS})
 INSTALL(TARGETS puppy ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
-# lets SETup utility
-INCLUDE (${Source_Path}/cmake/utility.cmake)
-ADD_LIBRARY (ltr_utility STATIC ${TIMER_SOURCES} ${LOGGER_SOURCES})
-TARGET_LINK_LIBRARIES (ltr_utility ${Boost_LIBRARIES})
-
-INSTALL(TARGETS ltr_utility ARCHIVE DESTINATION ${Install_Path})
-
-##########################################################################################
 # lets SETup tinyxml library
 INCLUDE (${Source_Path}/cmake/tinyxml.cmake)
 ADD_LIBRARY (tinyxml STATIC ${TINYXML_SOURCES})
@@ -71,7 +67,7 @@ ADD_LIBRARY (tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE (${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY (ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES (ltr puppy ltr_utility ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES (ltr puppy ${Boost_LIBRARIES} logog)
 
 INSTALL(TARGETS ltr ARCHIVE DESTINATION ${Install_Path})
 
@@ -79,13 +75,13 @@ INSTALL(TARGETS ltr ARCHIVE DESTINATION ${Install_Path})
 # lets SETup LTR_client
 INCLUDE (${Source_Path}/cmake/ltr_client.cmake)
 ADD_EXECUTABLE (ltr_client ${LTR_CLIENT_SRC})
-TARGET_LINK_LIBRARIES (ltr_client ltr tinyxml ltr_utility)
+TARGET_LINK_LIBRARIES (ltr_client ltr tinyxml)
 
 ##########################################################################################
 # lets SETup generator project, which learns scorers and serialize them
 INCLUDE (${Source_Path}/cmake/serialization.cmake)
 ADD_EXECUTABLE(serialization_generator ${Serialization_generator_SOURCES})
-TARGET_LINK_LIBRARIES(serialization_generator ltr puppy ltr_utility ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(serialization_generator ltr puppy ${Boost_LIBRARIES})
 
 # making tester.cc with scorer saved in code
 MakeTester()

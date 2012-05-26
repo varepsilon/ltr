@@ -6,12 +6,13 @@
 
 #include "ltr/learners/decision_tree/decision_tree_learner.h"
 
+using std::stringstream;
+
 namespace ltr {
 namespace decision_tree {
 
 DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
-    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner"),
-      log(logger::Logger::LL_INFO, "DT_Learner ") {
+    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner") {
   this->setDefaultParameters();
   this->copyParameters(parameters);
 
@@ -23,7 +24,7 @@ DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
 
 Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     const DataSet<Object>& data) {
-  log << "Creating vertex for " << data.size() << " objects." << std::endl;
+  INFO("Creating vertex for %d objects.", data.size());
   if (data.size() == 0) {
     throw std::logic_error("no objects given to decision tree learner");
   }
@@ -43,15 +44,13 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
 
   const ParametersContainer &params = this->parameters();
   if (max_label - min_label <= params.Get<double>("LABEL_EPS")) {
-    log << "All objects has the same label. Leaf vertex created."
-        << std::endl;
+    INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;
   }
   if (!generate_leaf &&
        data.size() <= params.Get<int>("MIN_VERTEX_SIZE")) {
-    log << "Objects count is less than "
-        << params.Get<int>("MIN_VERTEX_SIZE")
-        << ". Leaf vertex created." << std::endl;
+    INFO("Objects count is less than %d. Leaf vertex created.",
+         params.Get<int>("MIN_VERTEX_SIZE"));
     generate_leaf = 1;
   }
   if (!generate_leaf &&
@@ -59,7 +58,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     split(data, best_conditions, &datas);
     best_quality = splitting_quality_->value(data, datas);
   } else {
-    log << "Can't generate any splits for data set. Leaf vertex created.";
+    INFO("Can't generate any splits for data set. Leaf vertex created.");
     generate_leaf = 1;
   }
 
@@ -86,12 +85,12 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     }
   }
   split(data, best_conditions, &datas);
-  log << "Data set splitted into " << datas.size()
-      << " sets. Sizes: ";
+  INFO("Data set splitted into %d sets.", datas.size());
+  stringstream sizes;
   for (size_t i = 0; i < datas.size(); i++)
     if (datas[i].size() != 0)
-      log << datas[i].size() << " ";
-  log << std::endl;
+      sizes << datas[i].size() << " ";
+  INFO("Sizes: %s", sizes.str().c_str());
   for (size_t i = 0; i < datas.size(); i++) {
     if (datas[i].size() != 0) {
       Vertex<double>::Ptr tmp = createOneVertex(datas[i]);

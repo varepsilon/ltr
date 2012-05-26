@@ -10,8 +10,7 @@
 
 #include "ltr/learners/decision_tree/conditions_learner.h"
 
-#include "utility/logger.h"
-using logger::LogStream;
+#include "contrib/logog/include/logog.hpp"
 
 using std::vector;
 
@@ -31,14 +30,12 @@ For nominal features splits by value of the feature.
     int split_idx;
     vector<double> feature_values;
     vector<double> numeric_split_values;
-    LogStream log;
 
   public:
     typedef boost::shared_ptr<ID3_Splitter> Ptr;
 
     explicit ID3_Splitter(
-        const ParametersContainer& parameters = ParametersContainer())
-        : log(logger::Logger::LL_INFO, "ID3_splitter ") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
