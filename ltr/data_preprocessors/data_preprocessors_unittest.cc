@@ -6,9 +6,9 @@
 #include <set>
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
-#include "ltr/data_preprocessors/subset_preprocessor.h"
-#include "ltr/data_preprocessors/begging_preprocessor.h"
-#include "ltr/data_preprocessors/fake_preprocessor.h"
+#include "ltr/data_preprocessors/data_sampler.h"
+#include "ltr/data_preprocessors/data_random_sampler.h"
+#include "ltr/data_preprocessors/fake_data_preprocessor.h"
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"

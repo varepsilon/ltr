@@ -19,7 +19,7 @@
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/true_point.h"
-#include "ltr/data_preprocessors/begging_preprocessor.h"
+#include "ltr/data_preprocessors/data_random_sampler.h"
 #include "ltr/feature_converters/RSM_feature_converter_learner.h"
 
 using ltr::Object;
