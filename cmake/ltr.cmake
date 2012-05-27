@@ -57,7 +57,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
 SET(LTR_UTILS ${Source_Path}/ltr/utility/numerical.h
               ${Source_Path}/ltr/utility/numerical.cc
               ${Source_Path}/ltr/utility/murmur_hash.h
-              ${Source_Path}/ltr/utility/murmur_hash.cc)
+              ${Source_Path}/ltr/utility/murmur_hash.cc
+              ${Source_Path}/ltr/utility/indices.h
+              ${Source_Path}/ltr/utility/indices.cc)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h

@@ -39,7 +39,7 @@ class TestParameterized : public Parameterized {
       addNewParam("INT1", 10);
       // parameters().AddNew("INT2", 5, "GROUP1"); //variant->any_TODO
     }
-    void updateParameters() {
+    void parametersUpdateCallback() {
       update_n++;
     }
 

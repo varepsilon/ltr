@@ -34,7 +34,7 @@ using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::lc::AdaRankDataSetWeightsUpdater;
 using ltr::lc::AdaRankLCScorerWeightsUpdater;
 using ltr::RSMFeatureConverterLearner;
-using ltr::BeggingPreprocessor;
+using ltr::DataRandomSampler;
 using ltr::BestFeatureLearner;
 using ltr::lc::LinearCompositionLearner;
 using ltr::AbsError;
@@ -100,7 +100,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   lc_learner.setMeasure(abs_error);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
-  BeggingPreprocessor<Object>::Ptr begging(new BeggingPreprocessor<Object>);
+  DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
   bf_learner->addDataPreprocessor(begging);
   lc_learner.setWeakLearner(bf_learner);
 
@@ -114,7 +114,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
       << abs_error->average(data);
   }
 
-  begging->setExistingParameter("SELECTED_PART", 2.);
+  begging->set_sampling_fraction(2.);
   lc_learner.setExistingParameter("NUMBER_OF_ITERATIONS", 15);
   lc_learner.learn(data);
   lin_scorer = lc_learner.make();
@@ -205,7 +205,7 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
     rsm(new RSMFeatureConverterLearner<Object>);
   bf_learner->addFeatureConverter(rsm);
 
-  BeggingPreprocessor<Object>::Ptr begging(new BeggingPreprocessor<Object>);
+  DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
   bf_learner->addDataPreprocessor(begging);
 
   ada_lc_learner.learn(data);

@@ -31,7 +31,7 @@ void Parameterized::checkParameters() const {
 * This function is called after updation of any parameter.
 * By default does nothing.
 */
-void Parameterized::updateParameters() {
+void Parameterized::parametersUpdateCallback() {
 }
 
 /**
@@ -41,9 +41,18 @@ const ParametersContainer& Parameterized::parameters() const {
   return parameters_;
 }
 
-void Parameterized::copyParameters(const ParametersContainer &params) {
-  parameters_.Copy(params);
+void Parameterized::copyParameters(const ParametersContainer &parameters) {
+  parameters_.Copy(parameters);
   checkParameters();
-  updateParameters();
+  parametersUpdateCallback();
+}
+
+void Parameterized::setParameters(const ParametersContainer &parameters) {
+  setParametersImpl(parameters);
+  checkParameters();
+  parametersUpdateCallback();
+}
+
+void Parameterized::setParametersImpl(const ParametersContainer &parameters) {
 }
 }

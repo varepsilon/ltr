@@ -13,15 +13,20 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 
+#include "ltr/utility/indices.h"
+
 using std::vector;
 using std::set;
 
 using ltr::Object;
 using ltr::DataSet;
 using ltr::DataPreprocessor;
-using ltr::SubsetPreprocessor;
-using ltr::BeggingPreprocessor;
+using ltr::DataSampler;
+using ltr::DataRandomSampler;
 using ltr::FakePreprocessor;
+
+using ltr::utility::Indices;
+using ltr::utility::IndicesPtr;
 
 const int data_size = 11;
 
@@ -63,48 +68,42 @@ TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
   EXPECT_TRUE(AreEqual(data, prep_data));
 }
 
-TEST_F(DataPreprocessorsTest, SubsetPreprocessorTest) {
-  vector<int> indices;
-  indices.push_back(3);
-  indices.push_back(7);
-  indices.push_back(4);
-  SubsetPreprocessor<Object> prep;
-  prep.setExistingParameter("INDICES", indices);
+TEST_F(DataPreprocessorsTest, DataSamplerTest) {
+  IndicesPtr indices(new Indices());
+  indices->push_back(3);
+  indices->push_back(7);
+  indices->push_back(4);
+  DataSampler<Object> prep;
+  prep.set_indices(indices);
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(3, prep_data.size());
-  for (int i = 0; i < indices.size(); ++i) {
-    EXPECT_EQ(indices[i], prep_data[i].features()[0]);
+  for (int i = 0; i < indices->size(); ++i) {
+    EXPECT_EQ(indices->at(i), prep_data[i].features()[0]);
   }
 
-  indices.push_back(1);
-  prep.setExistingParameter("INDICES", indices);
+  indices->push_back(1);
+  prep.set_indices(indices);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(4, prep_data.size());
-  for (int i = 0; i < indices.size(); ++i) {
-    EXPECT_EQ(indices[i], prep_data[i].features()[0]);
+  for (int i = 0; i < indices->size(); ++i) {
+    EXPECT_EQ(indices->at(i), prep_data[i].features()[0]);
   }
 
-  indices.push_back(103);
-  prep.setExistingParameter("INDICES", indices);
+  indices->push_back(103);
+  prep.set_indices(indices);
   EXPECT_ANY_THROW(prep.apply(data, &prep_data));
 
   prep.setDefaultParameters();
   prep.apply(data, &prep_data);
   EXPECT_TRUE(AreEqual(data, prep_data));
-
-  vector<int> unequal;
-  unequal.push_back(3);
-  unequal.push_back(5);
-  unequal.push_back(3);
-  EXPECT_ANY_THROW(prep.setExistingParameter("INDICES", unequal));
 }
 
-TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
-  BeggingPreprocessor<Object> prep;
+TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
+  DataRandomSampler<Object> prep;
 
   DataSet<Object> prep_data;
   prep.apply(data, &prep_data);
@@ -115,8 +114,8 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  prep.setExistingParameter("WITH_REPLACE", false);
-  prep.setExistingParameter("SELECTED_PART", 0.8);
+  prep.set_with_replacement(false);
+  prep.set_sampling_fraction(0.8);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(9, prep_data.size());
@@ -133,8 +132,8 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     }
   }
 
-  prep.setExistingParameter("WITH_REPLACE", true);
-  prep.setExistingParameter("SELECTED_PART", 1.5);
+  prep.set_with_replacement(true);
+  prep.set_sampling_fraction(1.5);
   prep.apply(data, &prep_data);
 
   EXPECT_EQ(17, prep_data.size());
@@ -143,12 +142,12 @@ TEST_F(DataPreprocessorsTest, BeggingPreprocessorTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  EXPECT_ANY_THROW(prep.setExistingParameter("SELECTED_PART", 0.0));
-  prep.setExistingParameter("SELECTED_PART", 0.5);
-  prep.setExistingParameter("WITH_REPLACE", false);
-  EXPECT_ANY_THROW(prep.setExistingParameter("SELECTED_PART", 0.0));
+  EXPECT_ANY_THROW(prep.set_sampling_fraction(0.));
+  prep.set_sampling_fraction(0.5);
+  prep.set_with_replacement(false);
+  EXPECT_ANY_THROW(prep.set_sampling_fraction(0.));
 
-  prep.setExistingParameter("SELECTED_PART", 1e-8);
+  prep.set_sampling_fraction(1e-8);
   prep.apply(data, &prep_data);
   EXPECT_EQ(1, prep_data.size());
 }

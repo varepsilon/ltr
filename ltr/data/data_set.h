@@ -12,6 +12,8 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
 
+using std::vector;
+
 namespace ltr {
 /** The default weight for an element in data set.
  */
