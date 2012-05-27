@@ -52,9 +52,11 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
                            DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
-  MAKE_GET_SET(double, sampling_fraction);
-  MAKE_GET_SET(bool, with_replacement);
-  MAKE_GET(int, seed);
+  GETTER(double, sampling_fraction);
+  GETTER(bool, with_replacement);
+  GETTER(int, seed);
+  SETTER_WITH_CHECK(double, sampling_fraction);
+  SETTER_WITH_CHECK(bool, with_replacement);
   void set_seed(int seed);
  private:
   double sampling_fraction_;

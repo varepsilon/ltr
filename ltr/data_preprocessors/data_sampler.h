@@ -53,7 +53,8 @@ class DataSampler : public DataPreprocessor<TElement> {
                            DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
-  MAKE_GET_SET(IndicesPtr, indices);
+  GETTER(IndicesPtr, indices);
+  SETTER(IndicesPtr, indices);
  private:
   IndicesPtr indices_;
 };
