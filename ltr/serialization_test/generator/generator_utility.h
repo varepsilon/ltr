@@ -4,10 +4,12 @@
 #define LTR_SERIALIZATION_TEST_GENERATOR_GENERATOR_UTILITY_H_
 
 #include <string>
+
 #include "ltr/data/data_set.h"
 #include "ltr/learners/learner.h"
 
 using std::string;
+
 using ltr::DataSet;
 using ltr::Object;
 using ltr::BaseLearner;

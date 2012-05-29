@@ -24,6 +24,7 @@ using std::swap;
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
+using ltr::utility::DoubleEps;
 using ltr::utility::MarkDataSet;
 using ltr::Scorer;
 
@@ -76,11 +77,11 @@ namespace lc {
       denominator += data.getWeight(i) * (1 - normalized_measure_value);
     }
 
-    if (denominator < std::numeric_limits<double>::epsilon()) {
+    if (denominator < DoubleEps) {
       Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
       lin_scorer->clear();
       lin_scorer->add(best_scorer, 1.0);
-      // report_ = "AdaRank on mertic " +
+      // report_ = "AdaRank on metric " +
       //  measure_.Alias() + ". Best ranker found!";
       return;
     }

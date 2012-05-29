@@ -16,29 +16,23 @@ bool equalWithNaN(double a, double b) {
 }
 
 bool DoubleMore(double lhs, double rhs) {
-  return lhs - rhs > (abs(lhs) + abs(rhs)) *
-                     numeric_limits<double>::epsilon();
+  return lhs - rhs > (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 
 bool DoubleLess(double lhs, double rhs) {
-  return lhs - rhs < - (abs(lhs) + abs(rhs)) *
-                       numeric_limits<double>::epsilon();
+  return lhs - rhs < - (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 bool DoubleEqual(double lhs, double rhs) {
-  return abs(lhs - rhs) <= (abs(lhs) + abs(rhs)) *
-                           numeric_limits<double>::epsilon();
+  return abs(lhs - rhs) <= (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 bool DoubleMoreOrEqual(double lhs, double rhs) {
-  return lhs - rhs >= - (abs(lhs) + abs(rhs)) *
-                        numeric_limits<double>::epsilon();
+  return lhs - rhs >= - (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 bool DoubleLessOrEqual(double lhs, double rhs) {
-  return lhs - rhs <= (abs(lhs) + abs(rhs)) *
-                      numeric_limits<double>::epsilon();
+  return lhs - rhs <= (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 bool DoubleNotEqual(double lhs, double rhs) {
-  return abs(lhs - rhs) > (abs(lhs) + abs(rhs)) *
-                          numeric_limits<double>::epsilon();
+  return abs(lhs - rhs) > (abs(lhs) + abs(rhs)) * DoubleEps;
 }
 };
 };

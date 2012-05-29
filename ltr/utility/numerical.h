@@ -18,6 +18,11 @@ const int DOUBLE_PRECISION = 16;
 const double ln_2 = std::log(2.0);
 
 /**
+ * Very small double positive value.
+ */
+const double DoubleEps = 1e-14;
+
+/**
  * Very big double positive value.
  */
 const double Inf = numeric_limits<double>::max();

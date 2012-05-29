@@ -13,20 +13,17 @@ namespace ltr {
 namespace utility {
 
 template <typename TElement>
-void ApplyFeatureConverter(
-    FeatureConverter::ConstPtr converter,
-    const DataSet<TElement>& argument,
-    DataSet<TElement>* value) {
-  DataSet<TElement> result
-      (converter->getNewFeatureInfo());
-
+void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
+                           const DataSet<TElement>& argument,
+                           DataSet<TElement>* value) {
+  DataSet<TElement> result(converter->getNewFeatureInfo());
   for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
     vector<Object> objectsInTElement;
-    for (size_t objIdx = 0;
-        objIdx < argument[elementIdx].size();
-        ++objIdx) {
+    for (int object_index = 0;
+         object_index < (int)argument[elementIdx].size();
+         ++object_index) {
       Object objToAdd;
-      converter->apply(argument[elementIdx][objIdx], &objToAdd);
+      converter->apply(argument[elementIdx][object_index], &objToAdd);
       objectsInTElement.push_back(objToAdd);
     }
     TElement telementToAdd(objectsInTElement);

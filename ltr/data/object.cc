@@ -26,11 +26,11 @@ Object::Object(const Object& object)
     feature_info_(object.feature_info_) {}
 
 Object::Object(const std::vector<Object>& objects)
-    :features_(new Features(*objects[0].features_)),
+  : features_(new Features(*objects[0].features_)),
     meta_info_(new MetaInfo(*objects[0].meta_info_)),
     actual_label_(objects[0].actual_label_),
     predicted_label_(objects[0].predicted_label_),
-    feature_info_(objects[0].feature_info_)  {}
+    feature_info_(objects[0].feature_info_) {}
 
 Object::Object(const FeatureInfo& feature_info)
     :meta_info_(new MetaInfo()),
@@ -47,11 +47,11 @@ Features& Object::features() {
   return *features_;
 }
 
-const MetaInfo& Object::metaInfo() const {
+const MetaInfo& Object::meta_info() const {
   return *meta_info_;
 }
 
-MetaInfo& Object::metaInfo() {
+MetaInfo& Object::meta_info() {
   return *meta_info_;
 }
 
@@ -59,13 +59,13 @@ const FeatureInfo& Object::feature_info() const {
   return *feature_info_;
 }
 
-const string& Object::getMetaInfo(string name) const {
+const string& Object::getMetaInfo(const string& name) const {
   if (meta_info_->find(name) == meta_info_->end())
     throw std::logic_error("unknown meta info " + name);
   return meta_info_->find(name)->second;
 }
 
-void Object::setMetaInfo(string name, string value) {
+void Object::setMetaInfo(const string& name, const string& value) {
   meta_info_->operator[](name) = value;
 }
 

@@ -105,7 +105,7 @@ namespace ltr {
                 boost::lexical_cast<double>(it->second);
               break;
             case META:
-              result.metaInfo()[raw_feature_info_[raw_idx].feature_name] =
+              result.meta_info()[raw_feature_info_[raw_idx].feature_name] =
                 it->second;
               break;
             case CLASS:

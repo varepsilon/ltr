@@ -3,50 +3,50 @@
 #ifndef LTR_DATA_OBJECT_H_
 #define LTR_DATA_OBJECT_H_
 
-#include <boost/shared_ptr.hpp>
-#include <ostream>
-
-#include <vector>
 #include <map>
+#include <ostream> //NOLINT
 #include <string>
+#include <vector>
+
+#include <boost/shared_ptr.hpp> //NOLINT
 
 #include "ltr/data/feature_info.h"
 #include "ltr/interfaces/printable.h"
 
 using std::map;
 using std::string;
+using std::vector;
 
 namespace ltr {
 
 /** \typedef
  * Type for feature vector.
  */
-typedef std::vector< double > Features;
+typedef vector<double> Features;
 
 /** \typedef
  * Type for meta information.
+ * Just map from info field name to info field value
  */
 typedef map<string, string> MetaInfo;
 
-/** \class Base class for storing information in a DataSet. An object consist of
+/** \class Base class for storing information in a Dataset. An object consist of
  * feature vector and meta information;
  */
 class Object : public Printable {
   public:
   /** \typedef Shared pointer to an object.
    */
-  typedef boost::shared_ptr< Object > Ptr;
+  typedef boost::shared_ptr<Object> Ptr;
   /** Default constructor, creates an object with empty feature vector.
    */
   Object();
   /** Default constructor, creates an deep copy of an object.
    */
   Object(const Object& object);
-  /** Constructor, that makes object from the first object in the vector.
-   */
-  explicit Object(const std::vector<Object>& objects);
-  /** Constructor, that makes object with given FeatureInfo.
+  /** Constructor, that makes default object with given FeatureInfo.
   */
+  explicit Object(const std::vector<Object>& objects);
   explicit Object(const FeatureInfo& feature_info);
   /** Returns constant link to the feature vector of an object.
    */
@@ -56,19 +56,19 @@ class Object : public Printable {
   Features& features();
   /** Gets a piece of meta information by name.
    */
-  const string& getMetaInfo(string name) const;
+  const string& getMetaInfo(const string& name) const;
   /** Sets a meta information with given name.
    */
-  void setMetaInfo(string name, string value);
+  void setMetaInfo(const string& name, const string& value);
   /** Returns constant link to meta information of the object.
    */
-  const MetaInfo& metaInfo() const;
+  const MetaInfo& meta_info() const;
   /** Returns a link to meta information of the object.
    */
-  MetaInfo& metaInfo();
+  MetaInfo& meta_info();
   /** Append a feature to the feature vector of the object.
    */
-  Object& operator<<(double feature);
+  Object& operator<<(double feature_value);
 
   /** Always returns constant link to an object itself. This method is
    *  needed to follow object container interface.
@@ -127,7 +127,7 @@ class Object : public Printable {
    * Function for serialization object.
    * Returns string of feature values in brackets. For example: [1, 5.6, 2.3]
    */
-  string toString() const;
+  virtual string toString() const;
 
   const FeatureInfo& feature_info() const;
 
