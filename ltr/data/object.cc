@@ -37,7 +37,7 @@ Object::Object(const FeatureInfo& feature_info)
                 actual_label_(1.0),
                 predicted_label_(utility::NaN),
                 feature_info_(new FeatureInfo(feature_info)),
-                features_(new Features(feature_info.getFeatureCount(),
+                features_(new Features(feature_info.get_feature_count(),
                                        utility::NaN)) {}
 
 const Features& Object::features() const {
@@ -152,15 +152,15 @@ string Object::toString() const {
   return str.str();
 }
 
-bool operator==(const Object& ob1, const Object& ob2) {
-  return equalWithNaN(*ob1.features_, *ob2.features_) &&
-         *ob1.meta_info_ == *ob2.meta_info_ &&
-         *ob1.feature_info_ == *ob2.feature_info_ &&
-         utility::equalWithNaN(ob1.actual_label(), ob2.actual_label()) &&
-         utility::equalWithNaN(ob1.predicted_label(), ob2.predicted_label());
+bool operator==(const Object& lhs, const Object& rhs) {
+  return equalWithNaN(*lhs.features_, *rhs.features_) &&
+         *lhs.meta_info_ == *rhs.meta_info_ &&
+         *lhs.feature_info_ == *rhs.feature_info_ &&
+         utility::equalWithNaN(lhs.actual_label(), rhs.actual_label()) &&
+         utility::equalWithNaN(lhs.predicted_label(), rhs.predicted_label());
 }
 
-bool operator!=(const Object& o1, const Object& o2) {
-    return !(o1 == o2);
+bool operator!=(const Object& lhs, const Object& rhs) {
+    return !(lhs == rhs);
 }
 }

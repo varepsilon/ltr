@@ -6,43 +6,58 @@
 #include "ltr/utility/numerical.h"
 
 namespace ltr {
-
-bool equalWithNaN(const Features& a, const Features& b) {
-    if (a.size() != b.size()) {
-        return false;
+  /**
+   * Function checks the sameness of two vectors of features
+   */
+bool equalWithNaN(const Features& lhs, const Features& rhs) {
+  if (lhs.size() != rhs.size()) {
+      return false;
+  }
+  for (int feature_index = 0;
+       feature_index < (int)lhs.size();
+       ++feature_index) {
+    if (!utility::equalWithNaN(lhs[feature_index],
+                               rhs[feature_index])) {
+      return false;
     }
-    for (size_t i = 0; i < a.size(); ++i) {
-        if (!utility::equalWithNaN(a[i], b[i])) return false;
-    }
-    return true;
+  }
+  return true;
 }
-
+  /**
+   * Less-comparator by predicted label
+   */
 class LessPredicted {
-    public:
-    bool operator()(const Object& first, const Object& second) const {
-        return first.predicted_label() < second.predicted_label();
-    };
+ public:
+  bool operator()(const Object& lhs, const Object& rhs) const {
+    return lhs.predicted_label() < rhs.predicted_label();
+  };
 };
-
+/**
+  * Less-comparator by actual label
+  */
 class LessActual {
-    public:
-    bool operator()(const Object& first, const Object& second) const {
-        return first.actual_label() < second.actual_label();
-    };
+ public:
+  bool operator()(const Object& lhs, const Object& rhs) const {
+    return lhs.actual_label() < rhs.actual_label();
+  };
 };
-
+/**
+ * Greater-comparator by predicted label
+ */
 class GreaterPredicted {
-    public:
-    bool operator()(const Object& first, const Object& second) const {
-        return first.predicted_label() > second.predicted_label();
-    };
+ public:
+  bool operator()(const Object& lhs, const Object& rhs) const {
+    return lhs.predicted_label() > rhs.predicted_label();
+  };
 };
-
+/**
+  * Greater-comparator by actual label
+  */
 class GreaterActual {
-    public:
-    bool operator()(const Object& first, const Object& second) const {
-        return first.actual_label() > second.actual_label();
-    };
+ public:
+  bool operator()(const Object& lhs, const Object& rhs) const {
+    return lhs.actual_label() > rhs.actual_label();
+  };
 };
 }
 

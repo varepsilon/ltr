@@ -8,7 +8,7 @@ namespace ltr {
 
 FeatureInfo RemoveNominalConverter::getNewFeatureInfo() const {
   FeatureInfo result;
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
     if (feature_info_.getFeatureType(i) != NOMINAL)
       result.addFeature(feature_info_.getFeatureType(i));
   return result;
@@ -33,7 +33,7 @@ string RemoveNominalConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
   append("  bool nominal[] = {");
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++) {
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++) {
     if (i != 0)
       hpp_string.append(",");
     if (feature_info_.getFeatureType(i) == NOMINAL)

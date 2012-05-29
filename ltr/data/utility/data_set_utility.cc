@@ -16,7 +16,7 @@ DataSet<TElement> lightSubset(const DataSet<TElement>& data,
     if (indexes[indexIdx] > data.size()) {
       throw std::logic_error("Index is too large");
     }
-    resultDataSet.p_Elements_->push_back(data[indexes[indexIdx]]);
+    resultDataSet.objects_->push_back(data[indexes[indexIdx]]);
     resultDataSet.p_Weights_->push_back(data.getWeight(indexes[indexIdx]));
   }
   return resultDataSet;

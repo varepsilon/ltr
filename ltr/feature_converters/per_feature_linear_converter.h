@@ -26,7 +26,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   FeatureInfo getNewFeatureInfo() const;
 
-  void setFeatureCount(size_t feature_count);
+  void resize(size_t feature_count);
   double getCoefficient(size_t feature_idx) const;
   void setCoefficient(size_t feature_idx, double coefficient);
   double getShift(size_t feature_idx) const;

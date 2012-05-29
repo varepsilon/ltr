@@ -10,52 +10,59 @@ namespace ltr {
 
 ObjectPair::ObjectPair() {}
 
-ObjectPair::ObjectPair(const Object& o1, const Object& o2)
-    :o1_(o1),
-    o2_(o2) {}
+ObjectPair::ObjectPair(const Object& first, const Object& second)
+                      : first_(first),
+                        second_(second) {}
 
 ObjectPair::ObjectPair(const std::vector<Object>& objects)
-    :o1_(objects[0]),
-    o2_(objects[1]) {}
+                      : first_(objects[0]),
+                        second_(objects[1]) {}
 
 
 const Object& ObjectPair::first() const {
-    return o1_;
+  return first_;
 }
 Object& ObjectPair::first() {
-    return o1_;
+  return first_;
 }
 const Object& ObjectPair::second() const {
-    return o2_;
+  return second_;
 }
 Object& ObjectPair::second() {
-    return o2_;
+  return second_;
 }
 
 const Object& ObjectPair::operator[](size_t i) const {
-    return at(i);
+  return at(i);
 }
+
 Object& ObjectPair::operator[](size_t i) {
-    return at(i);
+  return at(i);
 }
-const Object& ObjectPair::at(const size_t j) const {
-    if (j < 1) return this->o1_;
-    return this->o2_;
+
+const Object& ObjectPair::at(size_t i) const {
+  if (i != 0 && i != 1) {
+    throw std::logic_error("Error: pair indexation with index > 1");
+  }
+  return (i == 0) ? this->first_ : this->second_;
 }
-Object& ObjectPair::at(const size_t j) {
-    if (j < 1) return this->o1_;
-    return this->o2_;
+
+Object& ObjectPair::at(size_t i) {
+  if (i != 0 && i != 1) {
+    throw std::logic_error("Error: pair indexation with index > 1");
+  }
+  return (i == 0) ? this->first_ : this->second_;
 }
 
 size_t ObjectPair::size() const {
-    return 2;
+  return 2;
 };
 
 ObjectPair ObjectPair::deepCopy() const {
-    ObjectPair result = *this;
-    result.o1_ = this->o1_.deepCopy();
-    result.o2_ = this->o2_.deepCopy();
-    return result;
+  ObjectPair result = *this;
+  result.first_ = this->first_.deepCopy();
+  result.second_ = this->second_.deepCopy();
+  return result;
 }
 
 string ObjectPair::toString() const {
@@ -64,11 +71,11 @@ string ObjectPair::toString() const {
   return str.str();
 }
 
-bool operator==(const ObjectPair& p1, const ObjectPair& p2) {
-  return p1.first() == p2.first() && p1.second() == p2.second();
+bool operator==(const ObjectPair& lhs, const ObjectPair& rhs) {
+  return lhs.first() == rhs.first() && lhs.second() == rhs.second();
 }
 
-bool operator!=(const ObjectPair& p1, const ObjectPair& p2) {
-  return !(p1 == p2);
+bool operator!=(const ObjectPair& lhs, const ObjectPair& rhs) {
+  return !(lhs == rhs);
 }
 }

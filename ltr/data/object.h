@@ -123,7 +123,7 @@ class Object : public Printable {
   size_t size() const;
   /** Friend operator, checks whether two objects are equal.
    */
-  friend bool operator==(const Object& o1, const Object& o2);
+  friend bool operator==(const Object& lhs, const Object& rhs);
 
   /** 
    * Function for serialization of object.
@@ -156,9 +156,9 @@ class Object : public Printable {
 };
 /** Operator, checks whether two objects are equal.
  */
-bool operator==(const Object& ob1, const Object& ob2);
+bool operator==(const Object& lhs, const Object& rhs);
 /** Operator, checks whether two objects are not equal.
  */
-bool operator!=(const Object& ob1, const Object& ob2);
+bool operator!=(const Object& lhs, const Object& rhs);
 }
 #endif  // LTR_DATA_OBJECT_H_

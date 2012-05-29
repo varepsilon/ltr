@@ -9,11 +9,11 @@ using std::logic_error;
 namespace ltr {
 
 FeatureInfo PerFeatureLinearConverter::getNewFeatureInfo() const {
-  this->checkFeatureCount(feature_info_.getFeatureCount());
+  this->checkFeatureCount(feature_info_.get_feature_count());
   return feature_info_;
 }
 
-void PerFeatureLinearConverter::setFeatureCount(size_t feature_count) {
+void PerFeatureLinearConverter::resize(size_t feature_count) {
   coefficient_.resize(feature_count);
   shift_.resize(feature_count);
 }

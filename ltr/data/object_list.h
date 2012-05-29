@@ -3,13 +3,15 @@
 #ifndef LTR_DATA_OBJECT_LIST_H_
 #define LTR_DATA_OBJECT_LIST_H_
 
-#include <boost/shared_ptr.hpp>
-
-#include <vector>
 #include <string>
+#include <vector>
 
-#include "ltr/interfaces/printable.h"
+#include <boost/shared_ptr.hpp> //NOLINT
+
 #include "ltr/data/object.h"
+#include "ltr/interfaces/printable.h"
+
+using std::vector;
 
 namespace ltr {
 /** \class The class stores a number of objects. The container for number of
@@ -26,7 +28,7 @@ namespace ltr {
   /** The constructor creates an list of objects from the copies of objects in
    *  the given vector.
    */
-  explicit ObjectList(const std::vector<Object>& objects);
+  explicit ObjectList(const vector<Object>& objects);
   /** Returns a constant link to the ith object in the object list.
    */
   const Object& operator[](size_t i) const;
@@ -35,16 +37,16 @@ namespace ltr {
   Object& operator[](size_t i);
   /** Returns a constant link to the ith object in the object list.
    */
-  const Object& at(const size_t j) const;
+  const Object& at(size_t i) const;
   /** Returns a link to the ith object in the object list.
    */
-  Object& at(const size_t j);
+  Object& at(size_t i);
   /** Adds a deep copy of the given object to the object list.
    */
-  ObjectList& operator<<(const Object& obj);
+  ObjectList& operator<<(const Object& object);
   /** Adds a deep copy of the given object to the object list.
    */
-  void add(const Object& obj);
+  void add(const Object& object);
   /** Returns the number of objects in the object list.
    */
   size_t size() const;
@@ -57,7 +59,7 @@ namespace ltr {
   ObjectList deepCopy() const;
   /** Operator, checks whether two objects are equal.
    */
-  friend bool operator==(const ObjectList& left, const ObjectList& right);
+  friend bool operator==(const ObjectList& lhs, const ObjectList& rhs);
 
   /** 
    * Function for serialization list into string.
@@ -67,7 +69,7 @@ namespace ltr {
   private:
   /** Shared pointer to the vector of Object s.
    */
-  boost::shared_ptr< std::vector<Object> > p_Elements_;
+  boost::shared_ptr<vector<Object>> objects_;
 };
 }
 #endif  // LTR_DATA_OBJECT_LIST_H_

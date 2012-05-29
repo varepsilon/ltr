@@ -84,7 +84,7 @@ namespace ltr {
           feature_id_[i] = ++last_feature_idx_;
           raw_feature_info_[i].feature_type = NUMERIC;
         }
-        feature_info_.setFeatureCount(raw_object.rbegin()->first,
+        feature_info_.resize(raw_object.rbegin()->first,
                                       ltr::NUMERIC);
       }
 

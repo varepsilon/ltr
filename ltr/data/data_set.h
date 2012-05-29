@@ -125,7 +125,7 @@ class DataSet : public Printable {
   private:
   /** Shared pointer to the actual vector, in which the elements are stored.
    */
-  boost::shared_ptr< std::vector<TElement> > p_Elements_;
+  boost::shared_ptr< std::vector<TElement> > objects_;
   /** The information about objects that are stored in the DataSet.
    */
   FeatureInfo::Ptr featureInfo_;
@@ -137,7 +137,7 @@ class DataSet : public Printable {
 template <typename TElement>
 DataSet<TElement>::DataSet(const FeatureInfo& featureInfo)
   :featureInfo_(new FeatureInfo(featureInfo)),
-  p_Elements_(new std::vector<TElement>()),
+  objects_(new std::vector<TElement>()),
   p_Weights_(new std::vector<double>()) {}
 
 template< typename TElement >
@@ -155,7 +155,7 @@ FeatureInfo::Ptr DataSet<TElement>::featureInfoPtr() const {
 
 template <typename TElement>
 size_t DataSet<TElement>::featureCount() const {
-  return this->featureInfo().getFeatureCount();
+  return this->featureInfo().get_feature_count();
 }
 
 template <typename TElement>
@@ -172,7 +172,7 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   TElement element_to_add = element.deepCopy();
-  if (featureInfo_ == NULL || featureInfo_->getFeatureCount() == 0) {
+  if (featureInfo_ == NULL || featureInfo_->get_feature_count() == 0) {
     featureInfo_ = FeatureInfo::Ptr(
       new FeatureInfo(element[0].feature_info()));
   }
@@ -181,35 +181,35 @@ void DataSet<TElement>::add(const TElement& element, double weight) {
       throw std::logic_error("can't add objects with another FeatureInfo.");
     element_to_add[i].feature_info_ = featureInfo_;
   }
-  (*p_Elements_).push_back(element_to_add);
+  (*objects_).push_back(element_to_add);
   (*p_Weights_).push_back(weight);
 }
 
 template <typename TElement>
 size_t DataSet<TElement>::size() const {
-  return (*p_Elements_).size();
+  return (*objects_).size();
 }
 
 template <typename TElement>
 void DataSet<TElement>::clear() {
-  (*p_Elements_).clear();
+  (*objects_).clear();
   (*p_Weights_).clear();
 }
 
 template <typename TElement>
 void DataSet<TElement>::erase(size_t i) {
-  (*p_Elements_).erase((*p_Elements_).begin() + i);
+  (*objects_).erase((*objects_).begin() + i);
   (*p_Weights_).erase((*p_Weights_).begin() + i);
 }
 
 template <typename TElement>
 const TElement& DataSet< TElement >::at(size_t i) const {
-  return (*p_Elements_)[i];
+  return (*objects_)[i];
 }
 
 template <typename TElement>
 TElement& DataSet< TElement >::at(size_t i) {
-  return (*p_Elements_)[i];
+  return (*objects_)[i];
 }
 
 template <typename TElement>

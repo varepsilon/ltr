@@ -103,11 +103,11 @@ void RSMFeatureConverterLearner<TElement>
   const ParametersContainer &params = this->parameters();
   converter_.setFeatureInfo(data_set.featureInfo());
   int size = static_cast<int>(
-    ceil(data_set.featureInfo().getFeatureCount()
+    ceil(data_set.featureInfo().get_feature_count()
       * params.Get<double>("SELECTED_PART")));
   vector<int> indices(size);
 
-  vector<int> all_used(data_set.featureInfo().getFeatureCount());
+  vector<int> all_used(data_set.featureInfo().get_feature_count());
   for (int index = 0; index < all_used.size(); ++index) {
     all_used[index] = index;
   }

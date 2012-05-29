@@ -5,11 +5,11 @@
 namespace ltr {
 FeatureInfo NominalToBoolConverter::getNewFeatureInfo() const {
   FeatureInfo result;
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
     if (feature_info_.getFeatureType(i) != NOMINAL)
       result.addFeature(feature_info_.getFeatureType(i));
 
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
     if (feature_info_.getFeatureType(i) == NOMINAL) {
       int values_cnt = feature_info_.getFeatureValues(i).size();
       result.addFeature(BOOLEAN);
@@ -48,7 +48,7 @@ string NominalToBoolConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
     append("  bool nominal[] = {");
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++) {
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++) {
     if (i != 0)
       hpp_string.append(",");
     if (feature_info_.getFeatureType(i) == NOMINAL)
@@ -59,10 +59,10 @@ string NominalToBoolConverter::generateCppCode(
   hpp_string.
     append("};\n").
     append("  vector<int> feature_values[").
-    append(boost::lexical_cast<string>(feature_info_.getFeatureCount())).
+    append(boost::lexical_cast<string>(feature_info_.get_feature_count())).
     append("];\n");
 
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
+  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
     if (feature_info_.getFeatureType(i) == NOMINAL) {
       map<unsigned int, string> vals = feature_info_.getFeatureValues(i);
       for (map<unsigned int, string>::iterator it = vals.begin();

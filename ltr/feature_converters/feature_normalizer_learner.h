@@ -81,7 +81,7 @@ size_t FeatureNormalizerLearner<TElement>::featureCount() const {
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::calcCurrentConverter() {
-  converter_.setFeatureCount(this->featureCount());
+  converter_.resize(this->featureCount());
 
   double normalizationIntervalBegin =
       this->parameters().template Get<double>("NormalizationIntervalBegin");

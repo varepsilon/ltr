@@ -25,7 +25,7 @@ namespace ltr {
 FeatureInfo FeatureSubsetChooser::getNewFeatureInfo() const {
   FeatureInfo convertedFeatureInfo(getChoosedFeaturesCount());
 
-  CheckMaxUsedFeature(max_used_feature_, feature_info_.getFeatureCount());
+  CheckMaxUsedFeature(max_used_feature_, feature_info_.get_feature_count());
   for (int choosed_feature_index = 0;
       choosed_feature_index < getChoosedFeaturesCount();
       ++choosed_feature_index) {
