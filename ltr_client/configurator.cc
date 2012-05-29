@@ -47,7 +47,9 @@ static const char * const MEASURE         = "measure";
 // =========================== various helpers =================================
 
 template <class Key, class Value>
-static inline void deleteAllFromUnorderedMap(boost::unordered_map<Key, Value> *container) {
+static inline void deleteAllFromUnorderedMap(
+    boost::unordered_map<Key, Value> *container
+    ) {
   assert(container);
   // C++11 We have no unique_ptr so we MUST delete pointers manually
   for (typename boost::unordered_map<Key, Value>::const_iterator it =
