@@ -3,8 +3,8 @@
 #ifndef LTR_INTERFACES_PARAMETERIZED_H_
 #define LTR_INTERFACES_PARAMETERIZED_H_
 
-#include <string>
 #include <stdexcept>
+#include <string>
 
 #include "ltr/parameters_container/parameters_container.h"
 
@@ -38,7 +38,7 @@ class Parameterized {
   virtual void setDefaultParameters();
   virtual void checkParameters() const;
   void setParameters(const ParametersContainer &parameters);
-  // \depricated
+  // \deprecated
   template <class T, class TPred>
   void checkParameter(const std::string &name, TPred pred) const
       throw(std::logic_error, std::bad_cast) {
@@ -47,31 +47,31 @@ class Parameterized {
       throw std::logic_error("Error in parameter " + name + " check");
     }
   }
-  // \depricated
+  // \deprecated
   template<class T>
   void setExistingParameter(const std::string &name, T value) {
     parameters_.SetExisting(name, value);
     checkParameters();
     parametersUpdateCallback();
   }
-  // \depricated
+  // \deprecated
   void clearParameters() {
     parameters_.Clear();
   }
-  // \depricated
+  // \deprecated
   template<class T>
   void addNewParam(const std::string &name, const T &value) {
     parameters_.AddNew(name, value);
   }
-  // \depricated
+  // \deprecated
   const ParametersContainer& parameters() const;
-  // \depricated
+  // \deprecated
   void copyParameters(const ParametersContainer &parameters);
  protected:
   virtual void setParametersImpl(const ParametersContainer &parameters);
   virtual void parametersUpdateCallback();
  private:
-  // \depricated
+  // \deprecated
   ParametersContainer parameters_;
 };
 };

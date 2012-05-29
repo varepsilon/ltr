@@ -223,7 +223,7 @@ void LtrClient::launch() {
                                                learner_info.parameters(),
                                                d->configurator.xmlTokenSpecs());
     std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
-                 parameters.ToString() << "\n";
+                 parameters.toString() << "\n";
     ltr::Parameterized *parameterized =
                                Factory::instance()->Create(learner_info.type() +
                                                         learner_info.approach(),
