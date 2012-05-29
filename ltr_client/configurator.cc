@@ -293,24 +293,6 @@ string ToString(const TXmlTokenSpec& info) {
   return out.str();
 }
 
-//class ConfiguratorPrivate {
-// public:
-//  ConfiguratorPrivate();
-//  ~ConfiguratorPrivate();
-
-//  TStrExecMap handlers_;
-//  TExecutor* general_xml_token;
-
-//  auto_ptr<TiXmlDocument> document_;
-//  TiXmlElement* root_;
-//  string root_path_;
-
-//  Configurator::TDataInfos data_infos_;
-//  Configurator::TXmlTokenSpecs xml_token_specs;
-//  Configurator::TTrainInfos train_infos;
-//  Configurator::TCrossvalidationInfos crossvalidation_infos;
-//};
-
 // =============================== Config parsing ============================
 
 class TOnConfigExecutor: public TExecutor {
