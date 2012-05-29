@@ -47,7 +47,7 @@ static const char * const MEASURE         = "measure";
 // =========================== various helpers =================================
 
 template <class Key, class Value>
-static inline void deleteAllFromUnorderedMap(
+static inline void DeleteAllFromUnorderedMap(
     boost::unordered_map<Key, Value> *container
     ) {
   assert(container);
@@ -72,7 +72,7 @@ class TExecutor {
 
 typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
 
-static inline void genericParse(const TStrExecMap& handlers,
+static inline void GenericParse(const TStrExecMap& handlers,
                                 TiXmlNode* node,
                                 TExecutor* on_unknown_token = NULL) {
   for (; node; node = node->NextSibling()) {
@@ -133,17 +133,17 @@ static inline void SafeInsert(
 }
 
 template <class Key, class Value>
-inline string toString(const boost::unordered_map<Key, Value>& cont) {
+inline string ToString(const boost::unordered_map<Key, Value>& cont) {
   typedef typename boost::unordered_map<Key, Value>::const_iterator TIter;
   stringstream out(stringstream::out);
   size_t i = 0;
   for (TIter it = cont.begin(); it != cont.end(); ++it)
-    out << ++i << ")" << it->first << " " << toString(it->second) << '\n';
+    out << ++i << ")" << it->first << " " << ToString(it->second) << '\n';
   return out.str();
 }
 
 template <class Value>
-inline string toString(const boost::unordered_set<Value>& cont) {
+inline string ToString(const boost::unordered_set<Value>& cont) {
   typedef typename boost::unordered_set<Value>::const_iterator TIter;
   stringstream out(stringstream::out);
   out << "set(";
@@ -153,7 +153,7 @@ inline string toString(const boost::unordered_set<Value>& cont) {
   return out.str();
 }
 
-string toString(const TDataInfo& info) {;
+string ToString(const TDataInfo& info) {;
   stringstream out(stringstream::out);
   out << "TDataInfo(name=" << info.name
       << ", approach=" << info.approach
@@ -163,23 +163,23 @@ string toString(const TDataInfo& info) {;
   return out.str();
 }
 
-string toString(const TTrainInfo& info) {
+string ToString(const TTrainInfo& info) {
   stringstream out(stringstream::out);
   out << "TTrainInfo(name=" << info.name
       << ", data=" << info.data
       << ", leatner=" << info.learner
-      << ", predicts=" << toString(info.predicts)
+      << ", predicts=" << ToString(info.predicts)
       << ", gen_cpp=" << info.gen_cpp
       << ")";
   return out.str();
 }
 
-string toString(const TCrossvalidationInfo& info) {
+string ToString(const TCrossvalidationInfo& info) {
   stringstream out(stringstream::out);
   out << "TCrossvalidationInfo(fold=" << info.fold
-      << ", learners=" << toString(info.learners)
-      << ", measures=" << toString(info.measures)
-      << ", datas=" << toString(info.datas)
+      << ", learners=" << ToString(info.learners)
+      << ", measures=" << ToString(info.measures)
+      << ", datas=" << ToString(info.datas)
       << ")";
   return out.str();
 }
@@ -277,7 +277,7 @@ const TXmlTokenSpecList& TXmlTokenSpec::dependencySpecs() const {
   return d->dependency_specs;
 }
 
-string toString(const TXmlTokenSpec& info) {
+string ToString(const TXmlTokenSpec& info) {
   stringstream out(stringstream::out);
   out << "TXmlTokenSpec(name=" << info.name()
       << ", type=" << info.type()
@@ -482,6 +482,7 @@ class TOnParameterExecutor: public TExecutor {
 
   ltr::ParametersContainer *container;
 };
+
 const char* TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
     string("TXmlTokenDependency");
 
@@ -522,7 +523,7 @@ class TOnGeneralXmlToken: public TExecutor {
     spec.d->approach = approach;
 
     parameters_executor->setContainer(&spec.d->parameters);
-    genericParse(TStrExecMap(),
+    GenericParse(TStrExecMap(),
                  element->FirstChildElement(),
                  parameters_executor);
   }
@@ -601,7 +602,7 @@ class TOnCrossvalidationExecutor: public TExecutor {
     handlers_[DATA] = data_executor = new TOnCVDataExecutor(impl);
   }
   ~TOnCrossvalidationExecutor() {
-    deleteAllFromUnorderedMap(&handlers_);
+    DeleteAllFromUnorderedMap(&handlers_);
   }
   virtual void operator()(TiXmlElement* element) {
     cout << "TOnCrossvalidationExecutor" << endl;
@@ -617,7 +618,7 @@ class TOnCrossvalidationExecutor: public TExecutor {
     learner_executor->setInfo(&d->crossvalidation_infos[fold]);
     measure_executor->setInfo(&d->crossvalidation_infos[fold]);
     data_executor->setInfo(&d->crossvalidation_infos[fold]);
-    genericParse(handlers_, element->FirstChildElement());
+    GenericParse(handlers_, element->FirstChildElement());
   }
 
  private:
@@ -676,7 +677,7 @@ class TOnTrainExecutor: public TExecutor {
     handlers_[CPP_GEN] = cpp_gen_executor;
     handlers_[PREDICT] = predict_executor;
   }
-  ~TOnTrainExecutor() { deleteAllFromUnorderedMap(&handlers_); }
+  ~TOnTrainExecutor() { DeleteAllFromUnorderedMap(&handlers_); }
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnTrainExecutor" << endl;
     const char* name = element->Attribute("name");
@@ -704,7 +705,7 @@ class TOnTrainExecutor: public TExecutor {
 
     cpp_gen_executor->setTrainInfo(&d->train_infos[name]);
     predict_executor->setTrainInfo(&d->train_infos[name]);
-    genericParse(handlers_, element->FirstChildElement());
+    GenericParse(handlers_, element->FirstChildElement());
   }
 
  private:
@@ -719,10 +720,10 @@ class TOnLaunchExecutor: public TExecutor {
     handlers_[TRAIN] = new TOnTrainExecutor(impl);
     handlers_[CROSSVALIDATION] = new TOnCrossvalidationExecutor(impl);
   }
-  ~TOnLaunchExecutor() { deleteAllFromUnorderedMap(&handlers_); }
+  ~TOnLaunchExecutor() { DeleteAllFromUnorderedMap(&handlers_); }
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnLaunchExecutor" << endl;
-    genericParse(handlers_, element->FirstChildElement());
+    GenericParse(handlers_, element->FirstChildElement());
   }
 
  private:
@@ -739,7 +740,7 @@ ConfiguratorPrivate::ConfiguratorPrivate() {
   handlers_[LAUNCH] = new TOnLaunchExecutor(this);
 }
 ConfiguratorPrivate::~ConfiguratorPrivate() {
-  deleteAllFromUnorderedMap(&handlers_);
+  DeleteAllFromUnorderedMap(&handlers_);
   delete general_xml_token;
 }
 
@@ -776,15 +777,15 @@ void Configurator::loadConfig(const string& file_name) {
   INFO(" LTR Client. Copyright 2011 Yandex");
   INFO(" Experiment started ");
 
-  genericParse(d->handlers_,
+  GenericParse(d->handlers_,
                d->root_->FirstChildElement(),
                d->general_xml_token);
 
   cout << "\n\nEnd of loadConfig. Collected data:\n";
-  cout << "data_infos_\n" << toString(d->data_infos_) << endl;
-  cout << "xml_token_specs\n" << toString(d->xml_token_specs) << endl;
-  cout << "train_infos\n" << toString(d->train_infos) << endl;
-  cout << "crossvalidation_infos\n" << toString(d->crossvalidation_infos)
+  cout << "data_infos_\n" << ToString(d->data_infos_) << endl;
+  cout << "xml_token_specs\n" << ToString(d->xml_token_specs) << endl;
+  cout << "train_infos\n" << ToString(d->train_infos) << endl;
+  cout << "crossvalidation_infos\n" << ToString(d->crossvalidation_infos)
        << endl;
 
   for (TXmlTokenSpecs::iterator it = d->xml_token_specs.begin();
