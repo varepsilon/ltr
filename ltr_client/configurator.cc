@@ -418,7 +418,7 @@ class TOnParameterExecutor: public TExecutor {
       throw logic_error("Can not convert " + value + " to double!");
     }
   }
-  static const string XML_TOKEN_DEPENDENCY_TYPE;
+  static const char* XML_TOKEN_DEPENDENCY_TYPE;
 
   void addParameter(const string &name,
                     const string &type,
@@ -484,7 +484,7 @@ class TOnParameterExecutor: public TExecutor {
 };
 
 const char* TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
-    string("TXmlTokenDependency");
+    "TXmlTokenDependency";
 
 
 class TOnGeneralXmlToken: public TExecutor {
