@@ -16,7 +16,7 @@ bool equalWithNaN(double a, double b) {
 }
 
 bool DoubleMore(double lhs, double rhs) {
-  return lhs - rhs > (abs(lhs) + abs(rhs)) * 
+  return lhs - rhs > (abs(lhs) + abs(rhs)) *
                      numeric_limits<double>::epsilon();
 }
 
@@ -29,11 +29,11 @@ bool DoubleEqual(double lhs, double rhs) {
                            numeric_limits<double>::epsilon();
 }
 bool DoubleMoreOrEqual(double lhs, double rhs) {
-  return lhs - rhs >= - (abs(lhs) + abs(rhs)) * 
+  return lhs - rhs >= - (abs(lhs) + abs(rhs)) *
                         numeric_limits<double>::epsilon();
 }
 bool DoubleLessOrEqual(double lhs, double rhs) {
-  return lhs - rhs <= (abs(lhs) + abs(rhs)) * 
+  return lhs - rhs <= (abs(lhs) + abs(rhs)) *
                       numeric_limits<double>::epsilon();
 }
 bool DoubleNotEqual(double lhs, double rhs) {

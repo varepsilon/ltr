@@ -48,7 +48,7 @@ string CompareCondition::generateCppCode(const string& function_name) const {
       append(function_name).
       append("(const std::vector<double>& features) {\n").
       append("  double eps = ").
-      append(boost::lexical_cast<string>(std::numeric_limits<double>::epsilon())).
+      append(boost::lexical_cast<string>(numeric_limits<double>::epsilon())).
       append(";\n").
       append("  double weak_val = ").
       append(weak_condition_->getDefaultSerializableObjectName()).

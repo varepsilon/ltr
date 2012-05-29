@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <algorithm>
+#include <limits>
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
@@ -17,6 +18,7 @@
 
 using std::exp;
 using std::log;
+using std::numeric_limits;
 using std::swap;
 
 using ltr::Measure;
