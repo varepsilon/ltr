@@ -5,6 +5,7 @@
 
 #include <map>
 #include <ostream> //NOLINT
+#include <stdexcept>
 #include <string>
 #include <vector>
 

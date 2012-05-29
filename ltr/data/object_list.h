@@ -3,6 +3,7 @@
 #ifndef LTR_DATA_OBJECT_LIST_H_
 #define LTR_DATA_OBJECT_LIST_H_
 
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -69,7 +70,7 @@ namespace ltr {
   private:
   /** Shared pointer to the vector of Object s.
    */
-  boost::shared_ptr<vector<Object>> objects_;
+  boost::shared_ptr<vector<Object> > objects_;
 };
 }
 #endif  // LTR_DATA_OBJECT_LIST_H_

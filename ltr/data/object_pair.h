@@ -3,6 +3,7 @@
 #ifndef LTR_DATA_OBJECT_PAIR_H_
 #define LTR_DATA_OBJECT_PAIR_H_
 
+#include <stdexcept>
 #include <string>
 #include <vector>
 
