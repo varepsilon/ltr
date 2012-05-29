@@ -31,10 +31,11 @@ void NominalToBoolConverter::applyImpl(
       map<size_t, string> vals = feature_info_.getFeatureValues(i);
       for (map<size_t, string>::iterator it = vals.begin();
            it != vals.end(); it++)
-        if (argument.features()[i] == it->first)
+        if (argument.features()[i] == it->first) {
           value->features()[result_idx++] = 1.0;
-        else
+        } else {
           value->features()[result_idx++] = 0.0;
+        }
     }
 }
 
