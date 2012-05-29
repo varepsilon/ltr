@@ -140,7 +140,7 @@ namespace ltr {
         virtual void init(std::istream* in) {}
 
         double hash(const string str) {
-          return utility::murmurHash2(str.c_str(), str.size(), 19837);
+          return utility::murmurHash(str.c_str(), str.size(), 19837);
         }
     };
 

@@ -8,31 +8,37 @@ namespace ltr {
 namespace utility {
 
 bool isNaN(double x) {
-    return x != x;
+  return x != x;
 }
 
 bool equalWithNaN(double a, double b) {
-    return DoubleEqual(a, b) || (isNaN(a) && isNaN(b));
+  return DoubleEqual(a, b) || (isNaN(a) && isNaN(b));
 }
 
-bool DoubleMore(const double lhs, const double rhs) {
-    return lhs - rhs > (abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleMore(double lhs, double rhs) {
+  return lhs - rhs > (abs(lhs) + abs(rhs)) * 
+                     numeric_limits<double>::epsilon();
 }
 
-bool DoubleLess(const double lhs, const double rhs) {
-    return lhs - rhs < -(abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleLess(double lhs, double rhs) {
+  return lhs - rhs < - (abs(lhs) + abs(rhs)) *
+                       numeric_limits<double>::epsilon();
 }
-bool DoubleEqual(const double lhs, const double rhs) {
-    return abs(lhs - rhs) <= (abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleEqual(double lhs, double rhs) {
+  return abs(lhs - rhs) <= (abs(lhs) + abs(rhs)) *
+                           numeric_limits<double>::epsilon();
 }
-bool DoubleMoreOrEqual(const double lhs, const double rhs) {
-    return lhs - rhs >= -(abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleMoreOrEqual(double lhs, double rhs) {
+  return lhs - rhs >= - (abs(lhs) + abs(rhs)) * 
+                        numeric_limits<double>::epsilon();
 }
-bool DoubleLessOrEqual(const double lhs, const double rhs) {
-    return lhs - rhs <= (abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleLessOrEqual(double lhs, double rhs) {
+  return lhs - rhs <= (abs(lhs) + abs(rhs)) * 
+                      numeric_limits<double>::epsilon();
 }
-bool DoubleNotEqual(const double lhs, const double rhs) {
-    return abs(lhs - rhs) > (abs(lhs)+abs(rhs))*DoubleEps;
+bool DoubleNotEqual(double lhs, double rhs) {
+  return abs(lhs - rhs) > (abs(lhs) + abs(rhs)) *
+                          numeric_limits<double>::epsilon();
 }
 };
 };

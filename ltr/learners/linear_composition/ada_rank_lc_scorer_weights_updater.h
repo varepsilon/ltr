@@ -23,7 +23,6 @@ using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
 using ltr::utility::MarkDataSet;
-using ltr::utility::DoubleEps;
 using ltr::Scorer;
 
 namespace ltr {
@@ -75,7 +74,7 @@ namespace lc {
       denominator += data.getWeight(i) * (1 - normalized_measure_value);
     }
 
-    if (denominator < DoubleEps) {
+    if (denominator < std::numeric_limits<double>::epsilon()) {
       Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
       lin_scorer->clear();
       lin_scorer->add(best_scorer, 1.0);

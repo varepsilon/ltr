@@ -18,11 +18,6 @@ const int DOUBLE_PRECISION = 16;
 const double ln_2 = std::log(2.0);
 
 /**
- * Very small double positive value.
- */
-const double DoubleEps = 1e-14;
-
-/**
  * Very big double positive value.
  */
 const double Inf = numeric_limits<double>::max();
@@ -45,12 +40,12 @@ bool equalWithNaN(double a, double b);
 /**
  * Functions for comparison of two doubles (proper processing with small diferences)
  */
-bool DoubleMore(const double lhs, const double rhs);
-bool DoubleLess(const double lhs, const double rhs);
-bool DoubleEqual(const double lhs, const double rhs);
-bool DoubleMoreOrEqual(const double lhs, const double rhs);
-bool DoubleLessOrEqual(const double lhs, const double rhs);
-bool DoubleNotEqual(const double lhs, const double rhs);
+bool DoubleMore(double lhs, double rhs);
+bool DoubleLess(double lhs, double rhs);
+bool DoubleEqual(double lhs, double rhs);
+bool DoubleMoreOrEqual(double lhs, double rhs);
+bool DoubleLessOrEqual(double lhs, double rhs);
+bool DoubleNotEqual(double lhs, double rhs);
 };
 };
 

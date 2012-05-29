@@ -41,6 +41,6 @@ TEST(ParametersContainerTest, AllInParametersContainerTest) {
   EXPECT_EQ(2, pc2.Get<int>("int2"));
   EXPECT_EQ(true, pc2.Get<bool>("bool1"));
 
-  pc2.ToString();
+  pc2.toString();
   pc1.Clear();
 };

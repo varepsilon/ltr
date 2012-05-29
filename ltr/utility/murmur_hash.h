@@ -6,7 +6,7 @@
 namespace ltr {
 namespace utility {
 
-unsigned int murmurHash2(const void *, int , unsigned int);
+unsigned int murmurHash(const void* key, int len, unsigned int seed);
 }
 }
 

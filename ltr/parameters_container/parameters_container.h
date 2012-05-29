@@ -49,7 +49,7 @@ class ParametersContainer: public Printable {
 
   template <class T>
   struct NameValue {
-    NameValue(const string& parameter_name, const T& parameter_value):
+    NameValue(const string& parameter_name, const T& parameter_value)
              : name(parameter_name), value(parameter_value) { }
     string name;
     T value;
@@ -128,7 +128,7 @@ class ParametersContainer: public Printable {
                              "\nParameter name: " + name +
                              "\nRequested type: " +
                              typeid(StoredType).name() +
-                             "\nactual type: " + It->second.type().name());
+                             "\nactual type: " + it->second.type().name());
     } catch(const std::bad_cast &exc) {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
