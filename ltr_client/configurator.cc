@@ -13,6 +13,14 @@
 
 #include "tinyxml/tinyxml.h"
 
+using std::string;
+using std::stringstream;
+using std::logic_error;
+using std::list;
+using std::cout;
+using std::auto_ptr;
+using std::endl;
+
 // ==========================  XML tokens  =====================================
 namespace {
 static const char * const CONFIG          = "config";
@@ -39,129 +47,138 @@ static const char * const MEASURE         = "measure";
 // =========================== various helpers =================================
 
 template <class Key, class Value>
-static inline void DeleteAll(boost::unordered_map<Key, Value> *container) {
+static inline void deleteAllFromUnorderedMap(boost::unordered_map<Key, Value> *container) {
   assert(container);
   // C++11 We have no unique_ptr so we MUST delete pointers manually
-  for (typename boost::unordered_map<Key, Value>::const_iterator It =
-      container->begin();
-      It != container->end(); ++It)
-    delete It->second;
+  for (typename boost::unordered_map<Key, Value>::const_iterator it =
+       container->begin();
+       it != container->end();
+       ++it) {
+    delete it->second;
+  }
 }
 
 class TExecutor {
  public:
-  explicit TExecutor(ConfiguratorPrivate *impl): d(impl) { }
-  virtual ~TExecutor() { }
-  virtual void operator()(TiXmlElement *element) = 0;
+  explicit TExecutor(ConfiguratorPrivate* impl)
+    : d(impl) {}
+  virtual ~TExecutor() {}
+  virtual void operator()(TiXmlElement* element) = 0;
  protected:
-  ConfiguratorPrivate *d;
+  ConfiguratorPrivate* d;
 };
 
-typedef boost::unordered_map<std::string, TExecutor *> TStrExecMap;
+typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
 
-static inline void GenericParse(const TStrExecMap &handlers,
-                                TiXmlNode *node,
-                                TExecutor *on_unknown_token = NULL) {
+static inline void genericParse(const TStrExecMap& handlers,
+                                TiXmlNode* node,
+                                TExecutor* on_unknown_token = NULL) {
   for (; node; node = node->NextSibling()) {
-    if (node->Type() != TiXmlNode::TINYXML_ELEMENT) continue;
+    if (node->Type() != TiXmlNode::TINYXML_ELEMENT) {
+      continue;
+    }
 
-    TiXmlElement *element = node->ToElement();
-    if (!element)
-      throw std::logic_error("Can not convert node to element");
+    TiXmlElement* element = node->ToElement();
+    if (!element) {
+      throw logic_error("Can not convert node to element");
+    }
 
-    const TStrExecMap::const_iterator It = handlers.find(node->Value());
-    if (It == handlers.end()) {
-      if (on_unknown_token) (*on_unknown_token)(element);
-      else
-        throw std::logic_error(std::string("Unknown token Value: ") +
-                               node->Value() + ", Type: " +
-                               boost::lexical_cast<std::string>(node->Type()) +
-                               "\n");
+    const TStrExecMap::const_iterator it = handlers.find(node->Value());
+    if (it == handlers.end()) {
+      if (on_unknown_token) {
+        (*on_unknown_token)(element);
+      }
+      else {
+        throw logic_error(string("Unknown token Value: ") +
+                          node->Value() + ", Type: " +
+                          boost::lexical_cast<string>(node->Type()) +
+                          "\n");
+      }
     } else {
-      (*It->second)(element);
+      (*it->second)(element);
     }
   }
 }
 
 template <class TCont>
-static inline bool Contains(const TCont &cont,
-                            const typename TCont::key_type &key) {
+static inline bool Contains(const TCont& cont,
+                            const typename TCont::key_type& key) {
   return cont.find(key) != cont.end();
 }
 
 template <class ValueType>
 static inline ValueType &SafeInsert(
-    boost::unordered_map<std::string, ValueType> &container,
-    const char *key) {
+    boost::unordered_map<string, ValueType> &container,
+    const char* key) {
   if (!key) {
-    throw std::logic_error("empty name!!!!");
+    throw logic_error("empty name!!!!");
   }
-  if (Contains(container, key))
-    throw std::logic_error(std::string("Container already contains ") +
-                           key + "!!!");
+  if (Contains(container, key)) {
+    throw logic_error("Container already contains " + string(key) + "!!!");
+  }
   return container[key];
 }
 
 static inline void SafeInsert(
-    boost::unordered_set<std::string> &cont,
-    const char *key) {
+    boost::unordered_set<string>& cont,
+    const char* key) {
   if (!key) {
     return;
   }
-  if (Contains(cont, key))
-    throw std::logic_error(std::string("Container already contains ") +
-                           key + "!!!");
+  if (Contains(cont, key)) {
+    throw logic_error("Container already contains " + string(key) + "!!!");
+  }
   cont.insert(key);
 }
 
 template <class Key, class Value>
-inline std::string ToString(const boost::unordered_map<Key, Value> &cont) {
+inline string toString(const boost::unordered_map<Key, Value>& cont) {
   typedef typename boost::unordered_map<Key, Value>::const_iterator TIter;
-  std::stringstream out(std::stringstream::out);
+  stringstream out(stringstream::out);
   size_t i = 0;
-  for (TIter It = cont.begin(); It != cont.end(); ++It)
-    out << ++i << ")" << It->first << " " << ToString(It->second) << '\n';
+  for (TIter it = cont.begin(); it != cont.end(); ++it)
+    out << ++i << ")" << it->first << " " << toString(it->second) << '\n';
   return out.str();
 }
 
 template <class Value>
-inline std::string ToString(const boost::unordered_set<Value> &cont) {
+inline string toString(const boost::unordered_set<Value>& cont) {
   typedef typename boost::unordered_set<Value>::const_iterator TIter;
-  std::stringstream out(std::stringstream::out);
+  stringstream out(stringstream::out);
   out << "set(";
-  for (TIter It = cont.begin(); It != cont.end(); ++It)
-    out << *It << "; ";
+  for (TIter it = cont.begin(); it != cont.end(); ++it)
+    out << *it << "; ";
   out << ")";
   return out.str();
 }
 
-std::string ToString(const TDataInfo &Info) {;
-  std::stringstream out(std::stringstream::out);
-  out << "TDataInfo(name=" << Info.name
-      << ", approach=" << Info.approach
-      << ", format=" << Info.format
-      << ", file_name=" << Info.file_name
+string toString(const TDataInfo& info) {;
+  stringstream out(stringstream::out);
+  out << "TDataInfo(name=" << info.name
+      << ", approach=" << info.approach
+      << ", format=" << info.format
+      << ", file_name=" << info.file_name
       << ")";
   return out.str();
 }
 
-std::string ToString(const TTrainInfo &Info) {
-  std::stringstream out(std::stringstream::out);
-  out << "TTrainInfo(name=" << Info.name
-      << ", data=" << Info.data
-      << ", leatner=" << Info.learner
-      << ", predicts=" << ToString(Info.predicts)
-      << ", gen_cpp=" << Info.gen_cpp
+string toString(const TTrainInfo& info) {
+  stringstream out(stringstream::out);
+  out << "TTrainInfo(name=" << info.name
+      << ", data=" << info.data
+      << ", leatner=" << info.learner
+      << ", predicts=" << toString(info.predicts)
+      << ", gen_cpp=" << info.gen_cpp
       << ")";
   return out.str();
 }
 
-std::string ToString(const TCrossvalidationInfo &Info) {
-  std::stringstream out(std::stringstream::out);
-  out << "TCrossvalidationInfo(fold=" << Info.fold
-      << ", learners=" << ToString(Info.learners)
-      << ", measures=" << ToString(Info.measures)
-      << ", datas=" << ToString(Info.datas)
+string toString(const TCrossvalidationInfo& info) {
+  stringstream out(stringstream::out);
+  out << "TCrossvalidationInfo(fold=" << info.fold
+      << ", learners=" << toString(info.learners)
+      << ", measures=" << toString(info.measures)
+      << ", datas=" << toString(info.datas)
       << ")";
   return out.str();
 }
@@ -170,60 +187,63 @@ std::string ToString(const TCrossvalidationInfo &Info) {
 
 class TXmlTokenSpecPrivate {
  public:
-  void checkAvailability(const Configurator::TXmlTokenSpecs &token_specs);
+  void checkAvailability(const Configurator::TXmlTokenSpecs& token_specs);
 
-  std::string tag_name;
-  std::string name;
-  std::string type;
-  std::string approach;
+  string tag_name;
+  string name;
+  string type;
+  string approach;
   ltr::ParametersContainer parameters;
   TXmlTokenSpecList dependency_specs;
 };
 void TXmlTokenSpecPrivate::checkAvailability(
-    const Configurator::TXmlTokenSpecs &token_specs) {
+    const Configurator::TXmlTokenSpecs& token_specs) {
   dependency_specs.clear();
 
   typedef ltr::ParametersContainer::NameValue<const TXmlTokenDependency>
       TNameValue;
-  typedef std::list<TNameValue> TDependencies;
-  const TDependencies &my_dependencies =
+  typedef list<TNameValue> TDependencies;
+  const TDependencies& my_dependencies =
       parameters.getValuesByType<const TXmlTokenDependency>();
 
   for (TDependencies::const_iterator my_dependency_it = my_dependencies.begin();
       my_dependency_it != my_dependencies.end();
       ++my_dependency_it) {
-    const TNameValue &dependency = *my_dependency_it;
-    const TXmlTokenSpec *found = NULL;
+    const TNameValue& dependency = *my_dependency_it;
+    const TXmlTokenSpec* found = NULL;
 
     for (Configurator::TXmlTokenSpecs::const_iterator it = token_specs.begin();
         it != token_specs.end();
         ++it) {
-      const std::string &name = it->first;
-      const TXmlTokenSpec &spec = it->second;
+      const string& name = it->first;
+      const TXmlTokenSpec& spec = it->second;
       if (dependency.value.parameter_name == name) {
         found = &spec;
         break;
       }
     }
 
-    if (!found)
-      throw std::logic_error(
-          std::string("TXmlTokenSpecPrivate::checkAvailability: "
-                      "Could not resolve dependency ") +
-                      dependency.value.parameter_name);
+    if (!found) {
+      throw logic_error("TXmlTokenSpecPrivate::checkAvailability: "
+                        "Could not resolve dependency " +
+                        dependency.value.parameter_name);
+    }
     dependency_specs.push_back(found);
   }
 }
 
-TXmlTokenSpec::TXmlTokenSpec(): d(new TXmlTokenSpecPrivate) {
-}
-TXmlTokenSpec::TXmlTokenSpec(const TXmlTokenSpec &other)
+TXmlTokenSpec::TXmlTokenSpec()
+  : d(new TXmlTokenSpecPrivate) {}
+
+TXmlTokenSpec::TXmlTokenSpec(const TXmlTokenSpec& other)
   : d(new TXmlTokenSpecPrivate) {
   *this = other;
 }
 
-TXmlTokenSpec &TXmlTokenSpec::operator=(const TXmlTokenSpec &other) {
-  if (this == &other) return *this;
+TXmlTokenSpec& TXmlTokenSpec::operator= (const TXmlTokenSpec& other) {
+  if (this == &other) {
+    return *this;
+  }
   d->name = other.name();
   d->type = other.type();
   d->approach = other.approach();
@@ -237,35 +257,34 @@ TXmlTokenSpec::~TXmlTokenSpec() {
   delete d;
 }
 
-const std::string &TXmlTokenSpec::tagName() const {
+const string& TXmlTokenSpec::tagName() const {
   return d->tag_name;
 }
-const std::string &TXmlTokenSpec::name() const {
+const string& TXmlTokenSpec::name() const {
   return d->name;
 }
-const std::string &TXmlTokenSpec::type() const {
+const string& TXmlTokenSpec::type() const {
   return d->type;
 }
-const std::string &TXmlTokenSpec::approach() const {
+const string& TXmlTokenSpec::approach() const {
   return d->approach;
 }
-const ltr::ParametersContainer &TXmlTokenSpec::parameters() const {
+const ltr::ParametersContainer& TXmlTokenSpec::parameters() const {
   return d->parameters;
 }
-
-const TXmlTokenSpecList &TXmlTokenSpec::dependencySpecs() const {
+const TXmlTokenSpecList& TXmlTokenSpec::dependencySpecs() const {
   return d->dependency_specs;
 }
 
-std::string ToString(const TXmlTokenSpec &Info) {
-  std::stringstream out(std::stringstream::out);
-  out << "TXmlTokenSpec(name=" << Info.name()
-      << ", type=" << Info.type()
-      << ", approach=" << Info.approach()
-      << ", parameters=" << Info.parameters().ToString()
+string toString(const TXmlTokenSpec& info) {
+  stringstream out(stringstream::out);
+  out << "TXmlTokenSpec(name=" << info.name()
+      << ", type=" << info.type()
+      << ", approach=" << info.approach()
+      << ", parameters=" << info.parameters().toString()
          << ", my dependencies=(";
-  for (TXmlTokenSpecList::const_iterator it = Info.dependencySpecs().begin();
-      it != Info.dependencySpecs().end();
+  for (TXmlTokenSpecList::const_iterator it = info.dependencySpecs().begin();
+      it != info.dependencySpecs().end();
       ++it) {
     out << (*it)->name() << ", ";
   }
@@ -273,19 +292,17 @@ std::string ToString(const TXmlTokenSpec &Info) {
   return out.str();
 }
 
-
-
 class ConfiguratorPrivate {
  public:
   ConfiguratorPrivate();
   ~ConfiguratorPrivate();
 
   TStrExecMap handlers_;
-  TExecutor *general_xml_token;
+  TExecutor* general_xml_token;
 
-  std::auto_ptr<TiXmlDocument> document_;
-  TiXmlElement *root_;
-  std::string root_path_;
+  auto_ptr<TiXmlDocument> document_;
+  TiXmlElement* root_;
+  string root_path_;
 
   Configurator::TDataInfos data_infos_;
   Configurator::TXmlTokenSpecs xml_token_specs;
@@ -297,9 +314,9 @@ class ConfiguratorPrivate {
 
 class TOnConfigExecutor: public TExecutor {
  public:
-  explicit TOnConfigExecutor(ConfiguratorPrivate *impl): TExecutor(impl) { }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnConfigExecutor" << std::endl;
+  explicit TOnConfigExecutor(ConfiguratorPrivate* impl): TExecutor(impl) { }
+  virtual void operator()(TiXmlElement* element) {
+    cout << "TOnConfigExecutor" << endl;
   }  // We already read it
 };
 
@@ -307,31 +324,35 @@ class TOnConfigExecutor: public TExecutor {
 
 class TOnDataExecutor: public TExecutor {
  public:
-  explicit TOnDataExecutor(ConfiguratorPrivate *impl): TExecutor(impl) { }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnDataExecutor" << std::endl;
+  explicit TOnDataExecutor(ConfiguratorPrivate* impl): TExecutor(impl) { }
+  virtual void operator()(TiXmlElement* element) {
+    cout << "TOnDataExecutor" << endl;
 
     assert(element);
-    const char *name = element->Attribute(NAME_ATTR);
-    const char *format = element->Attribute(FORMAT_ATTR);
-    const char *approach = element->Attribute(APPROACH_ATTR);
-    const char *file_name = element->GetText();
+    const char* name = element->Attribute(NAME_ATTR);
+    const char* format = element->Attribute(FORMAT_ATTR);
+    const char* approach = element->Attribute(APPROACH_ATTR);
+    const char* file_name = element->GetText();
 
-    if (!name)
-        throw std::logic_error("<data> with no 'name' attribute");
-    if (!format)
-        throw std::logic_error("<data> with no 'format' attribute");
-    if (!file_name)
-        throw std::logic_error("data '" +
-                            std::string(name) + "' has no file path");
+    if (!name) {
+        throw logic_error("<data> with no 'name' attribute");
+    }
+    if (!format) {
+        throw logic_error("<data> with no 'format' attribute");
+    }
+    if (!file_name) {
+        throw logic_error("data '" +
+                            string(name) + "' has no file path");
+    }
     if (!approach) {
         WARN("No approach defined for data '%s'. It will be used as listwise.",
              name);
         approach = "listwise";
     }
 
-    if (d->data_infos_.find(name) != d->data_infos_.end())
-        throw std::logic_error("dublicate data name " + std::string(name));
+    if (d->data_infos_.find(name) != d->data_infos_.end()) {
+        throw logic_error("dublicate data name " + string(name));
+    }
 
     d->data_infos_[name] = TDataInfo(name, approach, format, file_name);
   }
@@ -341,19 +362,21 @@ class TOnDataExecutor: public TExecutor {
 
 class TOnParameterExecutor: public TExecutor {
  public:
-  explicit TOnParameterExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
-  container = NULL;
-  }
+  explicit TOnParameterExecutor(ConfiguratorPrivate *impl)
+    : TExecutor(impl)
+    , container(NULL) {}
+
   void setContainer(ltr::ParametersContainer *cont) {
     container = cont;
   }
+
   virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnParametersExecutor" << std::endl;
+    cout << "TOnParametersExecutor" << endl;
 
     assert(container);
 
-    const std::string name = element->Value();
-    const std::string val = element->GetText();
+    const string name = element->Value();
+    const string val = element->GetText();
 
     if (element->FirstChildElement()) {
       assert(false && "parameters in parameters is not implemented yet...");
@@ -364,78 +387,82 @@ class TOnParameterExecutor: public TExecutor {
         WARN("parameter %s has no value", name.c_str());
         return;
     }
-    const std::string *type = element->Attribute(std::string(TYPE_ATTR));
-    std::cout << "TOnParametersExecutor: name:" << name <<
-                 " val: " << val << " type: " << type << std::endl;
-    AddParameter(name, type ? *type : guessType(val), val);
+    const string *type = element->Attribute(string(TYPE_ATTR));
+    cout << "TOnParametersExecutor: name:" << name <<
+            " val: " << val << " type: " << type << endl;
+    addParameter(name, type ? *type : guessType(val), val);
   }
 
  private:
-  static bool ToBool(const std::string &value) {
-    if (boost::iequals(value, std::string("true"))) return true;
-    else if (boost::iequals(value, std::string("false"))) return false;
-    else
-      throw std::logic_error("Can not convert " + value + " to bool!");
+  static bool toBool(const string &value) {
+    if (boost::iequals(value, string("true"))) {
+      return true;
+    } else if (boost::iequals(value, string("false"))) {
+      return false;
+    } else {
+      throw logic_error("Can not convert " + value + " to bool!");
+    }
   }
-  static int ToInt(const std::string &value) {
+  static int toInt(const string &value) {
     try {
       return boost::lexical_cast<int>(value);
     } catch(boost::bad_lexical_cast &) {
-      throw std::logic_error("Can not convert " + value + " to int!");
+      throw logic_error("Can not convert " + value + " to int!");
     }
   }
-  static double ToDouble(const std::string &value) {
+  static double toDouble(const string &value) {
     try {
       return boost::lexical_cast<double>(value);
     } catch(boost::bad_lexical_cast &) {
-      throw std::logic_error("Can not convert " + value + " to double!");
+      throw logic_error("Can not convert " + value + " to double!");
     }
   }
-  static const std::string XML_TOKEN_DEPENDENCY_TYPE;
+  static const string XML_TOKEN_DEPENDENCY_TYPE;
 
-  void AddParameter(const std::string &name,
-                    const std::string &type,
-                    const std::string &value) {
+  void addParameter(const string &name,
+                    const string &type,
+                    const string &value) {
     if (type == "bool") {
-      container->AddNew(name, ToBool(value));
-      std::cout << "TOnParametersExecutor: Added bool " <<
-                   name << " " << ToBool(value) << std::endl;
+      container->AddNew(name, toBool(value));
+      cout << "TOnParametersExecutor: Added bool " <<
+                   name << " " << toBool(value) << endl;
     } else if (type == "double") {
-      container->AddNew(name, ToDouble(value));
-      std::cout << "TOnParametersExecutor: Added double " <<
-                   name << " " << ToDouble(value) << std::endl;
+      container->AddNew(name, toDouble(value));
+      cout << "TOnParametersExecutor: Added double " <<
+                   name << " " << toDouble(value) << endl;
     } else if (type == "int") {
-      container->AddNew(name, ToInt(value));
-      std::cout << "TOnParametersExecutor: Added int " <<
-                   name << " " << ToInt(value) << std::endl;
+      container->AddNew(name, toInt(value));
+      cout << "TOnParametersExecutor: Added int " <<
+                   name << " " << toInt(value) << endl;
     } else if (type == XML_TOKEN_DEPENDENCY_TYPE) {
       container->AddNew(name, TXmlTokenDependency(value));
-      std::cout << "TOnParametersExecutor: Added TXmlTokenDependency " <<
-                   name << " " << value << std::endl;
+      cout << "TOnParametersExecutor: Added TXmlTokenDependency " <<
+                   name << " " << value << endl;
     } else {
       assert(false && ("Adding " + type +
                           " is not implemented yet...").c_str());
     }
   }
-  static std::string guessType(const std::string &value) {
-    const std::string::size_type pos_of_space = value.find(' ');
-    std::cout << "TOnParametersExecutor: guessing type of " <<
-                 value << " " << pos_of_space << " " << std::endl;
+  static string guessType(const string &value) {
+    const string::size_type pos_of_space = value.find(' ');
+    cout << "TOnParametersExecutor: guessing type of " <<
+                 value << " " << pos_of_space << " " << endl;
 
-    if (pos_of_space != std::string::npos) {  // some kind of list
-      const std::string first_element = value.substr(0, pos_of_space);
+    if (pos_of_space != string::npos) {  // some kind of list
+      const string first_element = value.substr(0, pos_of_space);
       // TODO(dimanne) check type of other elements and promote it if needed
       return "list of " + guessTypeOfOneElement(first_element);
     }
     return guessTypeOfOneElement(value);
   }
-  static std::string guessTypeOfOneElement(const std::string &value) {
-    if (boost::iequals(value, std::string("true")) ||
-       boost::iequals(value, std::string("false")))
+  static string guessTypeOfOneElement(const string &value) {
+    if (boost::iequals(value, string("true")) ||
+       boost::iequals(value, string("false"))) {
       return "bool";
+    }
 
-    const std::string::size_type pos_of_decimal_point = value.find('.');
-    if (pos_of_decimal_point != std::string::npos) {
+    const string::size_type pos_of_decimal_point = value.find('.');
+    if (pos_of_decimal_point != string::npos) {
       try {
         boost::lexical_cast<double>(value);
       } catch(boost::bad_lexical_cast &) {
@@ -454,8 +481,8 @@ class TOnParameterExecutor: public TExecutor {
 
   ltr::ParametersContainer *container;
 };
-const std::string TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
-    std::string("TXmlTokenDependency");
+const string TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
+    string("TXmlTokenDependency");
 
 
 class TOnGeneralXmlToken: public TExecutor {
@@ -468,13 +495,15 @@ class TOnGeneralXmlToken: public TExecutor {
   }
 
   virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnGeneralXmlToken" << std::endl;
+    cout << "TOnGeneralXmlToken" << endl;
 
-    const char *name = element->Attribute(NAME_ATTR);
-    TXmlTokenSpec &spec = SafeInsert(d->xml_token_specs,
+    const char* name = element->Attribute(NAME_ATTR);
+    TXmlTokenSpec& spec = SafeInsert(d->xml_token_specs,
                                      name);
-    const char *type = element->Attribute(TYPE_ATTR);
-    if (!type) throw std::logic_error("no 'type' attribute");
+    const char* type = element->Attribute(TYPE_ATTR);
+    if (!type) {
+      throw logic_error("no 'type' attribute");
+    }
 
     const char *approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
@@ -482,7 +511,9 @@ class TOnGeneralXmlToken: public TExecutor {
       approach = "";
     }
     const char *tag_name = element->Value();
-    if (!tag_name) throw std::logic_error("no tag name");
+    if (!tag_name) {
+      throw logic_error("no tag name");
+    }
 
     spec.d->tag_name = tag_name;
     spec.d->name = name;
@@ -490,7 +521,7 @@ class TOnGeneralXmlToken: public TExecutor {
     spec.d->approach = approach;
 
     parameters_executor->setContainer(&spec.d->parameters);
-    GenericParse(TStrExecMap(),
+    genericParse(TStrExecMap(),
                  element->FirstChildElement(),
                  parameters_executor);
   }
@@ -511,7 +542,7 @@ class TOnCVLearnerExecutor: public TExecutor {
     info = ti;
   }
   virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnCVLearnerExecutor" << std::endl;
+    cout << "TOnCVLearnerExecutor" << endl;
     assert(info);
     SafeInsert(info->learners, element->GetText());
   }
@@ -530,7 +561,7 @@ class TOnCVMeasureExecutor: public TExecutor {
     info = ti;
   }
   virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnCVMeasureExecutor" << std::endl;
+    cout << "TOnCVMeasureExecutor" << endl;
     assert(info);
     SafeInsert(info->measures, element->GetText());
   }
@@ -541,15 +572,15 @@ class TOnCVMeasureExecutor: public TExecutor {
 
 class TOnCVDataExecutor: public TExecutor {
   public:
-  explicit TOnCVDataExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
-    info = NULL;
-  }
+  explicit TOnCVDataExecutor(ConfiguratorPrivate* impl)
+    : TExecutor(impl)
+    , info (NULL) {}
   ~TOnCVDataExecutor() { }
-  void setInfo(TCrossvalidationInfo *ti) {
-    info = ti;
+  void setInfo(TCrossvalidationInfo* trainInfo) {
+    info = trainInfo;
   }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnCVDataExecutor" << std::endl;
+  virtual void operator() (TiXmlElement* element) {
+    cout << "TOnCVDataExecutor" << endl;
     assert(info);
     SafeInsert(info->datas, element->GetText());
   }
@@ -562,17 +593,19 @@ class TOnCVDataExecutor: public TExecutor {
 
 class TOnCrossvalidationExecutor: public TExecutor {
  public:
-  explicit TOnCrossvalidationExecutor(ConfiguratorPrivate *impl):
+  explicit TOnCrossvalidationExecutor(ConfiguratorPrivate* impl):
     TExecutor(impl) {
     handlers_[LEARNER] = learner_executor = new TOnCVLearnerExecutor(impl);
     handlers_[MEASURE] = measure_executor = new TOnCVMeasureExecutor(impl);
     handlers_[DATA] = data_executor = new TOnCVDataExecutor(impl);
   }
-  ~TOnCrossvalidationExecutor() { DeleteAll(&handlers_); }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnCrossvalidationExecutor" << std::endl;
+  ~TOnCrossvalidationExecutor() {
+    deleteAllFromUnorderedMap(&handlers_);
+  }
+  virtual void operator()(TiXmlElement* element) {
+    cout << "TOnCrossvalidationExecutor" << endl;
 
-    const char *fold = element->Attribute(FOLD_ATTR);
+    const char* fold = element->Attribute(FOLD_ATTR);
     if (!fold) {
         ERR("Failed: <crossvalidation> with no fold");
         return;
@@ -583,27 +616,29 @@ class TOnCrossvalidationExecutor: public TExecutor {
     learner_executor->setInfo(&d->crossvalidation_infos[fold]);
     measure_executor->setInfo(&d->crossvalidation_infos[fold]);
     data_executor->setInfo(&d->crossvalidation_infos[fold]);
-    GenericParse(handlers_, element->FirstChildElement());
+    genericParse(handlers_, element->FirstChildElement());
   }
 
  private:
-  TOnCVLearnerExecutor *learner_executor;
-  TOnCVMeasureExecutor *measure_executor;
-  TOnCVDataExecutor *data_executor;
+  TOnCVLearnerExecutor* learner_executor;
+  TOnCVMeasureExecutor* measure_executor;
+  TOnCVDataExecutor* data_executor;
   TStrExecMap handlers_;
 };
 
 class TOnPredictExecutor: public TExecutor {
   public:
-  explicit TOnPredictExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
-    info = NULL;
+  explicit TOnPredictExecutor(ConfiguratorPrivate* impl)
+    : TExecutor(impl)
+    , info(NULL) {}
+
+  ~TOnPredictExecutor() {}
+  void setTrainInfo(TTrainInfo* trainInfo) {
+    info = trainInfo;
   }
-  ~TOnPredictExecutor() { }
-  void setTrainInfo(TTrainInfo *ti) {
-    info = ti;
-  }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnPredictExecutor" << std::endl;
+
+  virtual void operator() (TiXmlElement* element) {
+    cout << "TOnPredictExecutor" << endl;
     assert(info);
     SafeInsert(info->predicts, element->GetText());
   }
@@ -614,14 +649,16 @@ class TOnPredictExecutor: public TExecutor {
 
 class TOnCppGenExecutor: public TExecutor {
   public:
-  explicit TOnCppGenExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
-    info = NULL;
+  explicit TOnCppGenExecutor(ConfiguratorPrivate* impl)
+    : TExecutor(impl)
+    , info(NULL){}
+
+  ~TOnCppGenExecutor() {}
+  void setTrainInfo(TTrainInfo* trainInfo) {
+    info = trainInfo;
   }
-  ~TOnCppGenExecutor() { }
-  void setTrainInfo(TTrainInfo *ti) {
-    info = ti;
-  }
-  virtual void operator()(TiXmlElement *element) {
+
+  virtual void operator() (TiXmlElement* element) {
     assert(info);
     info->gen_cpp = true;
   }
@@ -632,18 +669,18 @@ class TOnCppGenExecutor: public TExecutor {
 
 class TOnTrainExecutor: public TExecutor {
  public:
-  explicit TOnTrainExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
+  explicit TOnTrainExecutor(ConfiguratorPrivate* impl): TExecutor(impl) {
     cpp_gen_executor =  new TOnCppGenExecutor(impl);
     predict_executor = new TOnPredictExecutor(impl);
     handlers_[CPP_GEN] = cpp_gen_executor;
     handlers_[PREDICT] = predict_executor;
   }
-  ~TOnTrainExecutor() { DeleteAll(&handlers_); }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnTrainExecutor" << std::endl;
-    const char *name = element->Attribute("name");
-    const char *data = element->Attribute("data");
-    const char *learner = element->Attribute("learner");
+  ~TOnTrainExecutor() { deleteAllFromUnorderedMap(&handlers_); }
+  virtual void operator() (TiXmlElement* element) {
+    cout << "TOnTrainExecutor" << endl;
+    const char* name = element->Attribute("name");
+    const char* data = element->Attribute("data");
+    const char* learner = element->Attribute("learner");
     if (!name) {
         ERR("Failed: <train> without name attribute");
         return;
@@ -666,25 +703,25 @@ class TOnTrainExecutor: public TExecutor {
 
     cpp_gen_executor->setTrainInfo(&d->train_infos[name]);
     predict_executor->setTrainInfo(&d->train_infos[name]);
-    GenericParse(handlers_, element->FirstChildElement());
+    genericParse(handlers_, element->FirstChildElement());
   }
 
  private:
   TStrExecMap handlers_;
-  TOnCppGenExecutor *cpp_gen_executor;
-  TOnPredictExecutor *predict_executor;
+  TOnCppGenExecutor* cpp_gen_executor;
+  TOnPredictExecutor* predict_executor;
 };
 
 class TOnLaunchExecutor: public TExecutor {
  public:
-  explicit TOnLaunchExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
+  explicit TOnLaunchExecutor(ConfiguratorPrivate* impl): TExecutor(impl) {
     handlers_[TRAIN] = new TOnTrainExecutor(impl);
     handlers_[CROSSVALIDATION] = new TOnCrossvalidationExecutor(impl);
   }
-  ~TOnLaunchExecutor() { DeleteAll(&handlers_); }
-  virtual void operator()(TiXmlElement *element) {
-    std::cout << "TOnLaunchExecutor" << std::endl;
-    GenericParse(handlers_, element->FirstChildElement());
+  ~TOnLaunchExecutor() { deleteAllFromUnorderedMap(&handlers_); }
+  virtual void operator() (TiXmlElement* element) {
+    cout << "TOnLaunchExecutor" << endl;
+    genericParse(handlers_, element->FirstChildElement());
   }
 
  private:
@@ -701,46 +738,53 @@ ConfiguratorPrivate::ConfiguratorPrivate() {
   handlers_[LAUNCH] = new TOnLaunchExecutor(this);
 }
 ConfiguratorPrivate::~ConfiguratorPrivate() {
-  DeleteAll(&handlers_);
+  deleteAllFromUnorderedMap(&handlers_);
   delete general_xml_token;
 }
 
-Configurator::Configurator(): d(new ConfiguratorPrivate) {
-}
+Configurator::Configurator()
+  : d(new ConfiguratorPrivate) {}
 
 Configurator::~Configurator() {
   delete d;
 }
 
-void Configurator::loadConfig(const std::string &file_name) {
-  d->document_ = std::auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
-  if (!d->document_->LoadFile())
-    throw std::logic_error("not valid config in " + file_name);
+void Configurator::loadConfig(const string& file_name) {
+  d->document_ = auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
+  if (!d->document_->LoadFile()) {
+    throw logic_error("not valid config in " + file_name);
+  }
 
   d->root_ = d->document_->FirstChildElement(ROOT);
-  if (!d->root_) throw std::logic_error("can't find <LTR_experiment>");
+  if (!d->root_) {
+    throw logic_error("can't find <LTR_experiment>");
+  }
 
-  TiXmlElement *config = d->root_->FirstChildElement(CONFIG);
-  if (!config) throw std::logic_error("can't find <config>");
+  TiXmlElement* config = d->root_->FirstChildElement(CONFIG);
+  if (!config) {
+    throw logic_error("can't find <config>");
+  }
 
-  TiXmlElement *root_dir = config->FirstChildElement(ROOT_DIR);
-  if (!root_dir || !root_dir->GetText())
-      throw std::logic_error("no root directory specified");
+  TiXmlElement* root_dir = config->FirstChildElement(ROOT_DIR);
+  if (!root_dir || !root_dir->GetText()) {
+      throw logic_error("no root directory specified");
+  }
+
   d->root_path_ = root_dir->GetText();
 
   INFO(" LTR Client. Copyright 2011 Yandex");
   INFO(" Experiment started ");
 
-  GenericParse(d->handlers_,
+  genericParse(d->handlers_,
                d->root_->FirstChildElement(),
                d->general_xml_token);
 
-  std::cout << "\n\nEnd of loadConfig. Collected data:\n";
-  std::cout << "data_infos_\n" << ToString(d->data_infos_) << std::endl;
-  std::cout << "xml_token_specs\n" << ToString(d->xml_token_specs) << std::endl;
-  std::cout << "train_infos\n" << ToString(d->train_infos) << std::endl;
-  std::cout << "crossvalidation_infos\n" << ToString(d->crossvalidation_infos)
-            << std::endl;
+  cout << "\n\nEnd of loadConfig. Collected data:\n";
+  cout << "data_infos_\n" << toString(d->data_infos_) << endl;
+  cout << "xml_token_specs\n" << toString(d->xml_token_specs) << endl;
+  cout << "train_infos\n" << toString(d->train_infos) << endl;
+  cout << "crossvalidation_infos\n" << toString(d->crossvalidation_infos)
+       << endl;
 
   for (TXmlTokenSpecs::iterator it = d->xml_token_specs.begin();
       it != d->xml_token_specs.end();
@@ -750,40 +794,44 @@ void Configurator::loadConfig(const std::string &file_name) {
   }
 }
 
-const Configurator::TDataInfos &Configurator::dataInfos() const {
+const Configurator::TDataInfos& Configurator::dataInfos() const {
   return d->data_infos_;
 }
-const Configurator::TXmlTokenSpecs &Configurator::xmlTokenSpecs() const {
+const Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() const {
   return d->xml_token_specs;
 }
-const Configurator::TTrainInfos &Configurator::trainInfos() const {
+const Configurator::TTrainInfos& Configurator::trainInfos() const {
   return d->train_infos;
 }
-const Configurator::TCrossvalidationInfos &
+const Configurator::TCrossvalidationInfos&
                                   Configurator::crossvalidationInfos() const {
   return d->crossvalidation_infos;
 }
 
-const TXmlTokenSpec &Configurator::findLearner(const std::string &name) const {
+const TXmlTokenSpec& Configurator::findLearner(const string& name) const {
   for (TXmlTokenSpecs::const_iterator it = d->xml_token_specs.begin();
-      it != d->xml_token_specs.end();
-      ++it) {
-    const TXmlTokenSpec &spec = it->second;
-    if (spec.tagName() == "learner" && spec.name() == name) return spec;
+       it != d->xml_token_specs.end();
+       ++it) {
+    const TXmlTokenSpec& spec = it->second;
+    if (spec.tagName() == "learner" && spec.name() == name) {
+      return spec;
+    }
   }
-  throw std::logic_error("Can not find learner!");
+  throw logic_error("Can not find learner!");
 }
-const TDataInfo &Configurator::findData(const std::string &name) const {
+const TDataInfo& Configurator::findData(const string& name) const {
   for (TDataInfos::const_iterator it = d->data_infos_.begin();
-      it != d->data_infos_.end();
-      ++it) {
-    const TDataInfo &data_info = it->second;
-    if (data_info.name == name) return data_info;
+       it != d->data_infos_.end();
+       ++it) {
+    const TDataInfo& data_info = it->second;
+    if (data_info.name == name) {
+      return data_info;
+    }
   }
-  throw std::logic_error("Can not find data!");
+  throw logic_error("Can not find data!");
 }
 
-const std::string &Configurator::rootPath() const {
+const string& Configurator::rootPath() const {
   return d->root_path_;
 }
 
