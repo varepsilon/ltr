@@ -162,7 +162,7 @@ void savePredictions(const DataSet<TElement>& data,
   file.precision(utility::DOUBLE_PRECISION);
   for (size_t i = 0; i < data.size(); i++)
     for (size_t j = 0; j < data[i].size(); j++) {
-      file << boost::lexical_cast<string>(data[i][j].predictedLabel())
+      file << boost::lexical_cast<string>(data[i][j].predicted_label())
            << std::endl;
     }
   file.close();

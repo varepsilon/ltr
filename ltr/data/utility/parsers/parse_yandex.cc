@@ -72,8 +72,8 @@ namespace ltr {
   void YandexParser::makeString(const Object& obj, string* result) {
     stringstream str;
     str.precision(utility::DOUBLE_PRECISION);
-    str << obj.actualLabel() << " ";
-    for (size_t k = 0; k < obj.featureCount(); k++) {
+    str << obj.actual_label() << " ";
+    for (size_t k = 0; k < obj.feature_count(); k++) {
       str << k+1 << ":" << obj.features()[k] << " ";
     }
     try {

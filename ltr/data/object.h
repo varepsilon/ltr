@@ -44,9 +44,11 @@ class Object : public Printable {
   /** Default constructor, creates an deep copy of an object.
    */
   Object(const Object& object);
-  /** Constructor, that makes default object with given FeatureInfo.
+  /** Constructor that makes object from first object in vector.
   */
   explicit Object(const std::vector<Object>& objects);
+  /** Constructor that makes default object with given FeatureInfo.
+  */
   explicit Object(const FeatureInfo& feature_info);
   /** Returns constant link to the feature vector of an object.
    */
@@ -81,11 +83,11 @@ class Object : public Printable {
   /** Always returns constant link to an object itself. This method is
    *  needed to follow object container interface.
    */
-  const Object& at(const size_t i)const;
+  const Object& at(size_t i) const;
   /** Always returns a link to an object itself. This method is
    *  needed to follow object container interface.
    */
-  Object& at(const size_t i);
+  Object& at(size_t i);
   /** Easy weighted operator=. Makes the object to use the feature vector and
    * meta information of the other object. If it is needed, the resources of
    * the object (feature vector and meta information) are destroyed.
@@ -93,29 +95,29 @@ class Object : public Printable {
   Object& operator=(const Object& other);
   /** Returns the number of features in the object.
    */
-  size_t featureCount() const;
+  size_t feature_count() const;
   /** Returns actual (that means, the label was read from input file or any
    * other way is known) scoring label of the object.
    */
-  double actualLabel() const;
+  double actual_label() const;
   /** Returns predicted (that means, the label set by a scoring algorithm)
    * label of the object.
    */
-  double predictedLabel() const;
+  double predicted_label() const;
   /** Sets actual (that means, the label was read from input file or any
    * other way is known) scoring label of the object.
    */
-  void setActualLabel(double label);
+  void set_actual_label(double label);
   /** Sets predicted (that means, the label set by a scoring algorithm)
    * label of the object.
    */
-  void setPredictedLabel(double label) const;
-  /** Creates a deep copy of the object, this copies the object's resources and
+  void set_predicted_label(double label) const;
+  /** Creates a deep copy of the object, this copies the object resources and
    * creates a new object with these copied resources. The new object is
    * returned.
    */
   Object deepCopy() const;
-  /** Returns always 1. This method is
+  /** Always returns 1. This method is
    * needed to follow object container interface.
    */
   size_t size() const;
@@ -124,7 +126,7 @@ class Object : public Printable {
   friend bool operator==(const Object& o1, const Object& o2);
 
   /** 
-   * Function for serialization object.
+   * Function for serialization of object.
    * Returns string of feature values in brackets. For example: [1, 5.6, 2.3]
    */
   virtual string toString() const;
@@ -140,7 +142,7 @@ class Object : public Printable {
   boost::shared_ptr<Features> features_;
   /** Shared pointer to meta information container.
    */
-  boost::shared_ptr<map<string, string> > meta_info_;
+  boost::shared_ptr<MetaInfo> meta_info_;
   /** Actual label.
    */
   double actual_label_;

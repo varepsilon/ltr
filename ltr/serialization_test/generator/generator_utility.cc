@@ -64,7 +64,7 @@ namespace serialization_test {
   string Generator::setTestLabelsFunction(string function_name) const {
     vector<double> labels;
     for (int i = 0; i < test_data.size(); ++i) {
-      labels.push_back(test_data[i].predictedLabel());
+      labels.push_back(test_data[i].predicted_label());
     }
 
     string output;

@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#include <sstream>
 #include <iomanip>
+#include <sstream>
 #include <stdexcept>
 
 #include "ltr/data/object.h"
@@ -13,31 +13,32 @@ using ltr::utility::equalWithNaN;
 namespace ltr {
 
 Object::Object() : features_(new Features()),
-    meta_info_(new MetaInfo()),
-    actual_label_(1.0),
-    predicted_label_(utility::NaN),
-    feature_info_(new FeatureInfo()) {}
+                   meta_info_(new MetaInfo()),
+                   actual_label_(1.0),
+                   predicted_label_(utility::NaN),
+                   feature_info_(new FeatureInfo()) {}
 
 Object::Object(const Object& object)
-    :features_(object.features_),
-    meta_info_(object.meta_info_),
-    actual_label_(object.actual_label_),
-    predicted_label_(object.predicted_label_),
-    feature_info_(object.feature_info_) {}
+              : features_(object.features_),
+                meta_info_(object.meta_info_),
+                actual_label_(object.actual_label_),
+                predicted_label_(object.predicted_label_),
+                feature_info_(object.feature_info_) {}
 
 Object::Object(const std::vector<Object>& objects)
-  : features_(new Features(*objects[0].features_)),
-    meta_info_(new MetaInfo(*objects[0].meta_info_)),
-    actual_label_(objects[0].actual_label_),
-    predicted_label_(objects[0].predicted_label_),
-    feature_info_(objects[0].feature_info_) {}
+              : features_(new Features(*objects[0].features_)),
+                meta_info_(new MetaInfo(*objects[0].meta_info_)),
+                actual_label_(objects[0].actual_label_),
+                predicted_label_(objects[0].predicted_label_),
+                feature_info_(objects[0].feature_info_) {}
 
 Object::Object(const FeatureInfo& feature_info)
-    :meta_info_(new MetaInfo()),
-    actual_label_(1.0),
-    predicted_label_(utility::NaN),
-    feature_info_(new FeatureInfo(feature_info)),
-    features_(new Features(feature_info.getFeatureCount(), utility::NaN)) {}
+              : meta_info_(new MetaInfo()),
+                actual_label_(1.0),
+                predicted_label_(utility::NaN),
+                feature_info_(new FeatureInfo(feature_info)),
+                features_(new Features(feature_info.getFeatureCount(),
+                                       utility::NaN)) {}
 
 const Features& Object::features() const {
   return *features_;
@@ -81,10 +82,16 @@ const Object& Object::operator[](size_t i) const {
 Object& Object::operator[](size_t i) {
   return at(i);
 }
-const Object& Object::at(const size_t i) const {
+const Object& Object::at(size_t i) const {
+  if (i != 0) {
+    throw std::logic_error("Error: object indexation with non-zero index");
+  }
   return *this;
 }
-Object& Object::at(const size_t i) {
+Object& Object::at(size_t i) {
+  if (i != 0) {
+    throw std::logic_error("Error: object indexation with non-zero index");
+  }
   return *this;
 }
 
@@ -97,23 +104,23 @@ Object& Object::operator=(const Object& other)  {
   return *this;
 }
 
-size_t Object::featureCount() const {
+size_t Object::feature_count() const {
   return (*features_).size();
 }
 
-double Object::actualLabel() const {
+double Object::actual_label() const {
   return actual_label_;
 }
 
-double Object::predictedLabel() const {
+double Object::predicted_label() const {
   return predicted_label_;
 }
 
-void Object::setActualLabel(double actual_label) {
+void Object::set_actual_label(double actual_label) {
   actual_label_ = actual_label;
 }
 
-void Object::setPredictedLabel(double predicted_label) const {
+void Object::set_predicted_label(double predicted_label) const {
   predicted_label_ = predicted_label;
 }
 
@@ -134,10 +141,12 @@ string Object::toString() const {
   std::fixed(str);
   str.precision(2);
   str << '[';
-  for (size_t i = 0; i < features().size(); i++) {
-    if (i != 0)
+  for (int feature_index = 0;
+       feature_index < (int)features().size();
+       ++feature_index) {
+    if (feature_index != 0)
       str << ", ";
-    str << features()[i];
+    str << features()[feature_index];
   }
   str << ']';
   return str.str();
@@ -147,8 +156,8 @@ bool operator==(const Object& ob1, const Object& ob2) {
   return equalWithNaN(*ob1.features_, *ob2.features_) &&
          *ob1.meta_info_ == *ob2.meta_info_ &&
          *ob1.feature_info_ == *ob2.feature_info_ &&
-         utility::equalWithNaN(ob1.actualLabel(), ob2.actualLabel()) &&
-         utility::equalWithNaN(ob1.predictedLabel(), ob2.predictedLabel());
+         utility::equalWithNaN(ob1.actual_label(), ob2.actual_label()) &&
+         utility::equalWithNaN(ob1.predicted_label(), ob2.predicted_label());
 }
 
 bool operator!=(const Object& o1, const Object& o2) {

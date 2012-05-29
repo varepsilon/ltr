@@ -40,7 +40,7 @@ FeatureInfo FeatureSubsetChooser::getNewFeatureInfo() const {
 void FeatureSubsetChooser::applyImpl(const Object& argument,
     Object* value) const {
   Object result(getNewFeatureInfo());
-  CheckMaxUsedFeature(max_used_feature_, argument.featureCount());
+  CheckMaxUsedFeature(max_used_feature_, argument.feature_count());
   for (int choosed_feature_index = 0;
       choosed_feature_index < getChoosedFeaturesCount();
       ++choosed_feature_index) {

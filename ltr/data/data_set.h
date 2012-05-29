@@ -154,7 +154,7 @@ FeatureInfo::Ptr DataSet<TElement>::featureInfoPtr() const {
 }
 
 template <typename TElement>
-size_t DataSet< TElement >::featureCount() const {
+size_t DataSet<TElement>::featureCount() const {
   return this->featureInfo().getFeatureCount();
 }
 

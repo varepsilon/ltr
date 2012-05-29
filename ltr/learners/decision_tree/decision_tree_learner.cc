@@ -38,8 +38,8 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   bool generate_leaf = 0;
 
   for (int i = 1; i < data.size(); i++) {
-    min_label = std::min(min_label, data[i].actualLabel());
-    max_label = std::max(max_label, data[i].actualLabel());
+    min_label = std::min(min_label, data[i].actual_label());
+    max_label = std::max(max_label, data[i].actual_label());
   }
 
   const ParametersContainer &params = this->parameters();
@@ -67,7 +67,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     double average = 0;
     double sum = 0;
     for (int i = 0; i < data.size(); i++) {
-      average += data[i].actualLabel() * data.getWeight(i);
+      average += data[i].actual_label() * data.getWeight(i);
       sum += data.getWeight(i);
     }
     if (sum != 0)

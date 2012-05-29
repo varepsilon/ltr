@@ -69,11 +69,11 @@ namespace ltr {
   void SVMParser::makeString(const Object& obj, string*result) {
     stringstream str;
     str.precision(utility::DOUBLE_PRECISION);
-    str << obj.actualLabel() << " ";
+    str << obj.actual_label() << " ";
     try {
       str << "qid:" << obj.getMetaInfo("queryId") << " ";
     } catch(std::logic_error err) { }
-    for (size_t k = 0; k < obj.featureCount(); k++) {
+    for (size_t k = 0; k < obj.feature_count(); k++) {
       str << k+1 << ":" << obj.features()[k] << " ";
     }
     *result = str.str();

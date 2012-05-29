@@ -20,28 +20,28 @@ bool equalWithNaN(const Features& a, const Features& b) {
 class LessPredicted {
     public:
     bool operator()(const Object& first, const Object& second) const {
-        return first.predictedLabel() < second.predictedLabel();
+        return first.predicted_label() < second.predicted_label();
     };
 };
 
 class LessActual {
     public:
     bool operator()(const Object& first, const Object& second) const {
-        return first.actualLabel() < second.actualLabel();
+        return first.actual_label() < second.actual_label();
     };
 };
 
 class GreaterPredicted {
     public:
     bool operator()(const Object& first, const Object& second) const {
-        return first.predictedLabel() > second.predictedLabel();
+        return first.predicted_label() > second.predicted_label();
     };
 };
 
 class GreaterActual {
     public:
     bool operator()(const Object& first, const Object& second) const {
-        return first.actualLabel() > second.actualLabel();
+        return first.actual_label() > second.actual_label();
     };
 };
 }

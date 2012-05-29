@@ -32,18 +32,18 @@ class ListwiseMeasuresTest : public ::testing::Test {
   virtual void SetUp() {
     Object o1;
     o1 << 1;
-    o1.setActualLabel(1);
-    o1.setPredictedLabel(2);
+    o1.set_actual_label(1);
+    o1.set_predicted_label(2);
 
     Object o2;
     o2 << 2;
-    o2.setActualLabel(2);
-    o2.setPredictedLabel(2);
+    o2.set_actual_label(2);
+    o2.set_predicted_label(2);
 
     Object o3;
     o3 << 3;
-    o3.setActualLabel(4);
-    o3.setPredictedLabel(3);
+    o3.set_actual_label(4);
+    o3.set_predicted_label(3);
 
     olist << o1;
     olist << o2;
@@ -51,8 +51,8 @@ class ListwiseMeasuresTest : public ::testing::Test {
 
     Object o4;
     o4 << 4;
-    o4.setActualLabel(1);
-    o4.setPredictedLabel(3);
+    o4.set_actual_label(1);
+    o4.set_predicted_label(3);
 
     olist2 << o1;
     olist2 << o2;

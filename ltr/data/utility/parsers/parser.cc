@@ -109,7 +109,7 @@ namespace ltr {
                 it->second;
               break;
             case CLASS:
-              result.setActualLabel(boost::lexical_cast<double>(it->second));
+              result.set_actual_label(boost::lexical_cast<double>(it->second));
               break;
             default: throw std::logic_error("Unknown raw feature type");
           }

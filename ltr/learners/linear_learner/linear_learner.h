@@ -52,7 +52,7 @@ template<class TElement>
 void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
   VectorXd Y(data.size());
   for (int i = 0; i < Y.size(); ++i) {
-    Y(i) = data[i].actualLabel();
+    Y(i) = data[i].actual_label();
   }
 
   MatrixXd X(data.size(), data.featureCount() + 1);

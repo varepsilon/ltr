@@ -40,8 +40,8 @@ namespace ltr {
 
     private:
     double get_measure(const Object& element) const {
-      return fabs(element.actualLabel() -
-            element.predictedLabel());
+      return fabs(element.actual_label() -
+                  element.predicted_label());
     }
   };
 };

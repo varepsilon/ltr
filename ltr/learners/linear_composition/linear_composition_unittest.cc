@@ -52,8 +52,8 @@ class LinearCompositionTest : public ::testing::Test {
     for (int i = 0; i < data_size; ++i) {
       Object obj;
       obj << i << data_size - i << i * i << i * (data_size - i);
-      obj.setActualLabel(i);
-      obj.setPredictedLabel(data_size - i);
+      obj.set_actual_label(i);
+      obj.set_predicted_label(data_size - i);
       data.add(obj);
     }
   }
