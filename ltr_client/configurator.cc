@@ -89,8 +89,7 @@ static inline void genericParse(const TStrExecMap& handlers,
     if (it == handlers.end()) {
       if (on_unknown_token) {
         (*on_unknown_token)(element);
-      }
-      else {
+      } else {
         throw logic_error(string("Unknown token Value: ") +
                           node->Value() + ", Type: " +
                           boost::lexical_cast<string>(node->Type()) +
@@ -483,7 +482,7 @@ class TOnParameterExecutor: public TExecutor {
 
   ltr::ParametersContainer *container;
 };
-const string TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
+const char* TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
     string("TXmlTokenDependency");
 
 
@@ -576,8 +575,8 @@ class TOnCVDataExecutor: public TExecutor {
   public:
   explicit TOnCVDataExecutor(ConfiguratorPrivate* impl)
     : TExecutor(impl)
-    , info (NULL) {}
-  ~TOnCVDataExecutor() { }
+    , info(NULL) {}
+  ~TOnCVDataExecutor() {}
   void setInfo(TCrossvalidationInfo* trainInfo) {
     info = trainInfo;
   }
@@ -653,7 +652,7 @@ class TOnCppGenExecutor: public TExecutor {
   public:
   explicit TOnCppGenExecutor(ConfiguratorPrivate* impl)
     : TExecutor(impl)
-    , info(NULL){}
+    , info(NULL) {}
 
   ~TOnCppGenExecutor() {}
   void setTrainInfo(TTrainInfo* trainInfo) {
