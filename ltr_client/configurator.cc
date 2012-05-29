@@ -782,23 +782,27 @@ void Configurator::loadConfig(const string& file_name) {
                d->general_xml_token);
 
   cout << "\n\nEnd of loadConfig. Collected data:\n";
-  cout << "data_infos_\n" << ToString(d->data_infos_) << endl;
-  cout << "xml_token_specs\n" << ToString(d->xml_token_specs) << endl;
-  cout << "train_infos\n" << ToString(d->train_infos) << endl;
-  cout << "crossvalidation_infos\n" << ToString(d->crossvalidation_infos)
+  cout << "data_infos_\n" << ToString(dataInfos()) << endl;
+  cout << "xml_token_specs\n" << ToString(xmlTokenSpecs()) << endl;
+  cout << "train_infos\n" << ToString(trainInfos()) << endl;
+  cout << "crossvalidation_infos\n" << ToString(crossvalidationInfos())
        << endl;
 
-  for (TXmlTokenSpecs::iterator it = d->xml_token_specs.begin();
-      it != d->xml_token_specs.end();
+  for (TXmlTokenSpecs::const_iterator it = xmlTokenSpecs().begin();
+      it != xmlTokenSpecs().end();
       ++it) {
-    TXmlTokenSpec &spec = it->second;
-    spec.d->checkAvailability(d->xml_token_specs);
+    const TXmlTokenSpec& spec = it->second;
+    spec.d->checkAvailability(xmlTokenSpecs());
   }
 }
 
 const Configurator::TDataInfos& Configurator::dataInfos() const {
   return d->data_infos_;
 }
+Configurator::TDataInfos& Configurator::dataInfos() {
+  return d->data_infos_;
+}
+
 const Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() const {
   return d->xml_token_specs;
 }
@@ -822,8 +826,8 @@ const TXmlTokenSpec& Configurator::findLearner(const string& name) const {
   throw logic_error("Can not find learner!");
 }
 const TDataInfo& Configurator::findData(const string& name) const {
-  for (TDataInfos::const_iterator it = d->data_infos_.begin();
-       it != d->data_infos_.end();
+  for (TDataInfos::const_iterator it = dataInfos().begin();
+       it != dataInfos().end();
        ++it) {
     const TDataInfo& data_info = it->second;
     if (data_info.name == name) {
