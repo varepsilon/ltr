@@ -8,9 +8,16 @@
 #include <boost/unordered_set.hpp>  //NOLINT
 #include <list>
 
+#include "tinyxml/tinyxml.h"
+
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::string;
+using std::auto_ptr;
+
+class TExecutor;
+
+typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
 
 struct TDataInfo {
   TDataInfo() { }
@@ -107,16 +114,28 @@ class Configurator {
   const TDataInfos& dataInfos() const;
   TDataInfos& dataInfos();
   const TXmlTokenSpecs& xmlTokenSpecs() const;
+  TXmlTokenSpecs& xmlTokenSpecs();
   const TTrainInfos& trainInfos() const;
+  TTrainInfos& trainInfos();
   const TCrossvalidationInfos& crossvalidationInfos() const;
-
+  TCrossvalidationInfos& crossvalidationInfos();
   const TXmlTokenSpec& findLearner(const string &name) const;
   const TDataInfo& findData(const string &name) const;
 
   const string& rootPath() const;
 
  private:
-  ConfiguratorPrivate* const d;
+  TStrExecMap handlers_;
+  TExecutor* general_xml_token;
+
+  auto_ptr<TiXmlDocument> document_;
+  TiXmlElement* root_;
+  string root_path_;
+
+  Configurator::TDataInfos data_infos_;
+  Configurator::TXmlTokenSpecs xml_token_specs;
+  Configurator::TTrainInfos train_infos;
+  Configurator::TCrossvalidationInfos crossvalidation_infos;
 };
 
 #endif  // LTR_CLIENT_CONFIGURATOR_H_

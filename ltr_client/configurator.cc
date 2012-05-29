@@ -62,12 +62,12 @@ static inline void DeleteAllFromUnorderedMap(
 
 class TExecutor {
  public:
-  explicit TExecutor(ConfiguratorPrivate* impl)
+  explicit TExecutor(Configurator* impl)
     : d(impl) {}
   virtual ~TExecutor() {}
   virtual void operator()(TiXmlElement* element) = 0;
  protected:
-  ConfiguratorPrivate* d;
+  Configurator* d;
 };
 
 typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
@@ -293,29 +293,29 @@ string ToString(const TXmlTokenSpec& info) {
   return out.str();
 }
 
-class ConfiguratorPrivate {
- public:
-  ConfiguratorPrivate();
-  ~ConfiguratorPrivate();
+//class ConfiguratorPrivate {
+// public:
+//  ConfiguratorPrivate();
+//  ~ConfiguratorPrivate();
 
-  TStrExecMap handlers_;
-  TExecutor* general_xml_token;
+//  TStrExecMap handlers_;
+//  TExecutor* general_xml_token;
 
-  auto_ptr<TiXmlDocument> document_;
-  TiXmlElement* root_;
-  string root_path_;
+//  auto_ptr<TiXmlDocument> document_;
+//  TiXmlElement* root_;
+//  string root_path_;
 
-  Configurator::TDataInfos data_infos_;
-  Configurator::TXmlTokenSpecs xml_token_specs;
-  Configurator::TTrainInfos train_infos;
-  Configurator::TCrossvalidationInfos crossvalidation_infos;
-};
+//  Configurator::TDataInfos data_infos_;
+//  Configurator::TXmlTokenSpecs xml_token_specs;
+//  Configurator::TTrainInfos train_infos;
+//  Configurator::TCrossvalidationInfos crossvalidation_infos;
+//};
 
 // =============================== Config parsing ============================
 
 class TOnConfigExecutor: public TExecutor {
  public:
-  explicit TOnConfigExecutor(ConfiguratorPrivate* impl): TExecutor(impl) { }
+  explicit TOnConfigExecutor(Configurator* impl): TExecutor(impl) { }
   virtual void operator()(TiXmlElement* element) {
     cout << "TOnConfigExecutor" << endl;
   }  // We already read it
@@ -325,7 +325,7 @@ class TOnConfigExecutor: public TExecutor {
 
 class TOnDataExecutor: public TExecutor {
  public:
-  explicit TOnDataExecutor(ConfiguratorPrivate* impl): TExecutor(impl) { }
+  explicit TOnDataExecutor(Configurator* impl): TExecutor(impl) { }
   virtual void operator()(TiXmlElement* element) {
     cout << "TOnDataExecutor" << endl;
 
@@ -351,11 +351,11 @@ class TOnDataExecutor: public TExecutor {
         approach = "listwise";
     }
 
-    if (d->data_infos_.find(name) != d->data_infos_.end()) {
+    if (d->dataInfos().find(name) != d->dataInfos().end()) {
         throw logic_error("dublicate data name " + string(name));
     }
 
-    d->data_infos_[name] = TDataInfo(name, approach, format, file_name);
+    d->dataInfos()[name] = TDataInfo(name, approach, format, file_name);
   }
 };
 
@@ -363,7 +363,7 @@ class TOnDataExecutor: public TExecutor {
 
 class TOnParameterExecutor: public TExecutor {
  public:
-  explicit TOnParameterExecutor(ConfiguratorPrivate *impl)
+  explicit TOnParameterExecutor(Configurator *impl)
     : TExecutor(impl)
     , container(NULL) {}
 
@@ -489,7 +489,7 @@ const char* TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
 
 class TOnGeneralXmlToken: public TExecutor {
  public:
-  explicit TOnGeneralXmlToken(ConfiguratorPrivate *impl): TExecutor(impl) {
+  explicit TOnGeneralXmlToken(Configurator *impl): TExecutor(impl) {
     parameters_executor = new TOnParameterExecutor(impl);
   }
   ~TOnGeneralXmlToken() {
@@ -500,7 +500,7 @@ class TOnGeneralXmlToken: public TExecutor {
     cout << "TOnGeneralXmlToken" << endl;
 
     const char* name = element->Attribute(NAME_ATTR);
-    TXmlTokenSpec& spec = SafeInsert(d->xml_token_specs,
+    TXmlTokenSpec& spec = SafeInsert(d->xmlTokenSpecs(),
                                      name);
     const char* type = element->Attribute(TYPE_ATTR);
     if (!type) {
@@ -536,7 +536,7 @@ class TOnGeneralXmlToken: public TExecutor {
 
 class TOnCVLearnerExecutor: public TExecutor {
   public:
-  explicit TOnCVLearnerExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
+  explicit TOnCVLearnerExecutor(Configurator* impl): TExecutor(impl) {
     info = NULL;
   }
   ~TOnCVLearnerExecutor() { }
@@ -555,7 +555,7 @@ class TOnCVLearnerExecutor: public TExecutor {
 
 class TOnCVMeasureExecutor: public TExecutor {
   public:
-  explicit TOnCVMeasureExecutor(ConfiguratorPrivate *impl): TExecutor(impl) {
+  explicit TOnCVMeasureExecutor(Configurator* impl): TExecutor(impl) {
     info = NULL;
   }
   ~TOnCVMeasureExecutor() { }
@@ -574,7 +574,7 @@ class TOnCVMeasureExecutor: public TExecutor {
 
 class TOnCVDataExecutor: public TExecutor {
   public:
-  explicit TOnCVDataExecutor(ConfiguratorPrivate* impl)
+  explicit TOnCVDataExecutor(Configurator* impl)
     : TExecutor(impl)
     , info(NULL) {}
   ~TOnCVDataExecutor() {}
@@ -595,7 +595,7 @@ class TOnCVDataExecutor: public TExecutor {
 
 class TOnCrossvalidationExecutor: public TExecutor {
  public:
-  explicit TOnCrossvalidationExecutor(ConfiguratorPrivate* impl):
+  explicit TOnCrossvalidationExecutor(Configurator* impl):
     TExecutor(impl) {
     handlers_[LEARNER] = learner_executor = new TOnCVLearnerExecutor(impl);
     handlers_[MEASURE] = measure_executor = new TOnCVMeasureExecutor(impl);
@@ -614,10 +614,10 @@ class TOnCrossvalidationExecutor: public TExecutor {
     }
 
     TCrossvalidationInfo new_fold_info(fold);
-    d->crossvalidation_infos[fold] = new_fold_info;
-    learner_executor->setInfo(&d->crossvalidation_infos[fold]);
-    measure_executor->setInfo(&d->crossvalidation_infos[fold]);
-    data_executor->setInfo(&d->crossvalidation_infos[fold]);
+    d->crossvalidationInfos()[fold] = new_fold_info;
+    learner_executor->setInfo(&d->crossvalidationInfos()[fold]);
+    measure_executor->setInfo(&d->crossvalidationInfos()[fold]);
+    data_executor->setInfo(&d->crossvalidationInfos()[fold]);
     GenericParse(handlers_, element->FirstChildElement());
   }
 
@@ -630,7 +630,7 @@ class TOnCrossvalidationExecutor: public TExecutor {
 
 class TOnPredictExecutor: public TExecutor {
   public:
-  explicit TOnPredictExecutor(ConfiguratorPrivate* impl)
+  explicit TOnPredictExecutor(Configurator* impl)
     : TExecutor(impl)
     , info(NULL) {}
 
@@ -651,7 +651,7 @@ class TOnPredictExecutor: public TExecutor {
 
 class TOnCppGenExecutor: public TExecutor {
   public:
-  explicit TOnCppGenExecutor(ConfiguratorPrivate* impl)
+  explicit TOnCppGenExecutor(Configurator* impl)
     : TExecutor(impl)
     , info(NULL) {}
 
@@ -671,7 +671,7 @@ class TOnCppGenExecutor: public TExecutor {
 
 class TOnTrainExecutor: public TExecutor {
  public:
-  explicit TOnTrainExecutor(ConfiguratorPrivate* impl): TExecutor(impl) {
+  explicit TOnTrainExecutor(Configurator* impl): TExecutor(impl) {
     cpp_gen_executor =  new TOnCppGenExecutor(impl);
     predict_executor = new TOnPredictExecutor(impl);
     handlers_[CPP_GEN] = cpp_gen_executor;
@@ -695,16 +695,16 @@ class TOnTrainExecutor: public TExecutor {
         ERR("Failed: <train> without learner attribute");
         return;
     }
-    if (d->train_infos.find(name) != d->train_infos.end()) {
+    if (d->trainInfos().find(name) != d->trainInfos().end()) {
         ERR("Failed: dublicate train name ");
         return;
     }
 
     TTrainInfo new_train_info(name, data, learner);
-    d->train_infos[name] = new_train_info;
+    d->trainInfos()[name] = new_train_info;
 
-    cpp_gen_executor->setTrainInfo(&d->train_infos[name]);
-    predict_executor->setTrainInfo(&d->train_infos[name]);
+    cpp_gen_executor->setTrainInfo(&d->trainInfos()[name]);
+    predict_executor->setTrainInfo(&d->trainInfos()[name]);
     GenericParse(handlers_, element->FirstChildElement());
   }
 
@@ -716,7 +716,7 @@ class TOnTrainExecutor: public TExecutor {
 
 class TOnLaunchExecutor: public TExecutor {
  public:
-  explicit TOnLaunchExecutor(ConfiguratorPrivate* impl): TExecutor(impl) {
+  explicit TOnLaunchExecutor(Configurator* impl): TExecutor(impl) {
     handlers_[TRAIN] = new TOnTrainExecutor(impl);
     handlers_[CROSSVALIDATION] = new TOnCrossvalidationExecutor(impl);
   }
@@ -732,37 +732,30 @@ class TOnLaunchExecutor: public TExecutor {
 
 // ====================== ConfiguratorPrivate impl =============================
 
-ConfiguratorPrivate::ConfiguratorPrivate() {
+Configurator::Configurator() {
   root_ = NULL;
   general_xml_token = new TOnGeneralXmlToken(this);
   handlers_[CONFIG] = new TOnConfigExecutor(this);
   handlers_[DATA] = new TOnDataExecutor(this);
   handlers_[LAUNCH] = new TOnLaunchExecutor(this);
 }
-ConfiguratorPrivate::~ConfiguratorPrivate() {
+Configurator::~Configurator() {
   DeleteAllFromUnorderedMap(&handlers_);
   delete general_xml_token;
 }
 
-Configurator::Configurator()
-  : d(new ConfiguratorPrivate) {}
-
-Configurator::~Configurator() {
-  delete d;
-}
-
 void Configurator::loadConfig(const string& file_name) {
-  d->document_ = auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
-  if (!d->document_->LoadFile()) {
+  document_ = auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
+  if (!document_->LoadFile()) {
     throw logic_error("not valid config in " + file_name);
   }
 
-  d->root_ = d->document_->FirstChildElement(ROOT);
-  if (!d->root_) {
+  root_ = document_->FirstChildElement(ROOT);
+  if (!root_) {
     throw logic_error("can't find <LTR_experiment>");
   }
 
-  TiXmlElement* config = d->root_->FirstChildElement(CONFIG);
+  TiXmlElement* config = root_->FirstChildElement(CONFIG);
   if (!config) {
     throw logic_error("can't find <config>");
   }
@@ -772,14 +765,14 @@ void Configurator::loadConfig(const string& file_name) {
       throw logic_error("no root directory specified");
   }
 
-  d->root_path_ = root_dir->GetText();
+  root_path_ = root_dir->GetText();
 
   INFO(" LTR Client. Copyright 2011 Yandex");
   INFO(" Experiment started ");
 
-  GenericParse(d->handlers_,
-               d->root_->FirstChildElement(),
-               d->general_xml_token);
+  GenericParse(handlers_,
+               root_->FirstChildElement(),
+               general_xml_token);
 
   cout << "\n\nEnd of loadConfig. Collected data:\n";
   cout << "data_infos_\n" << ToString(dataInfos()) << endl;
@@ -797,26 +790,40 @@ void Configurator::loadConfig(const string& file_name) {
 }
 
 const Configurator::TDataInfos& Configurator::dataInfos() const {
-  return d->data_infos_;
+  return data_infos_;
 }
 Configurator::TDataInfos& Configurator::dataInfos() {
-  return d->data_infos_;
+  return data_infos_;
 }
 
 const Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() const {
-  return d->xml_token_specs;
+  return xml_token_specs;
 }
+
+Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() {
+  return xml_token_specs;
+}
+
 const Configurator::TTrainInfos& Configurator::trainInfos() const {
-  return d->train_infos;
+  return train_infos;
 }
+
+Configurator::TTrainInfos& Configurator::trainInfos() {
+  return train_infos;
+}
+
 const Configurator::TCrossvalidationInfos&
                                   Configurator::crossvalidationInfos() const {
-  return d->crossvalidation_infos;
+  return crossvalidation_infos;
+}
+
+Configurator::TCrossvalidationInfos& Configurator::crossvalidationInfos() {
+  return crossvalidation_infos;
 }
 
 const TXmlTokenSpec& Configurator::findLearner(const string& name) const {
-  for (TXmlTokenSpecs::const_iterator it = d->xml_token_specs.begin();
-       it != d->xml_token_specs.end();
+  for (TXmlTokenSpecs::const_iterator it = xml_token_specs.begin();
+       it != xml_token_specs.end();
        ++it) {
     const TXmlTokenSpec& spec = it->second;
     if (spec.tagName() == "learner" && spec.name() == name) {
@@ -838,7 +845,7 @@ const TDataInfo& Configurator::findData(const string& name) const {
 }
 
 const string& Configurator::rootPath() const {
-  return d->root_path_;
+  return root_path_;
 }
 
 
