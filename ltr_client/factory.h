@@ -11,6 +11,8 @@
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/parameters_container/parameters_container.h"
 
+using std::cout;
+
 class Factory {
  public:
   Factory() {

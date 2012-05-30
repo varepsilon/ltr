@@ -131,7 +131,6 @@ class Configurator {
   auto_ptr<TiXmlDocument> document_;
   TiXmlElement* root_;
   string root_path_;
-
   Configurator::TDataInfos data_infos_;
   Configurator::TXmlTokenSpecs xml_token_specs;
   Configurator::TTrainInfos train_infos;

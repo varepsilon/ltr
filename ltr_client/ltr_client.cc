@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+using std::cout;
+
 #include "boost/algorithm/string.hpp"
 #include "ltr_client/configurator.h"
 #include "ltr_client/factory.h"
@@ -224,10 +226,12 @@ void LtrClient::launch() {
                                                d->configurator.xmlTokenSpecs());
     std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
                  parameters.toString() << "\n";
+    //Here is an error
     ltr::Parameterized *parameterized =
                                Factory::instance()->Create(learner_info.type() +
                                                         learner_info.approach(),
                                                                     parameters);
+
     if (learner_info.approach() == "listwise") {
       d->executeTrain<ltr::ObjectList>(parameterized, train_info);
     } else if (learner_info.approach() == "pairwise") {
@@ -253,10 +257,10 @@ int main(int argc, char* argv[]) {
       return 1;
   }
   Factory factory;
+
   factory.registerType<ltr::BestFeatureLearner<ltr::ObjectList> >
       ("BEST_FEATURElistwise");
   factory.registerType<ltr::NDCG>("NDCG");
-
   LtrClient client;
   try {
       client.initFrom(argv[1]);
