@@ -226,7 +226,6 @@ void LtrClient::launch() {
                                                d->configurator.xmlTokenSpecs());
     std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
                  parameters.toString() << "\n";
-    //Here is an error
     ltr::Parameterized *parameterized =
                                Factory::instance()->Create(learner_info.type() +
                                                         learner_info.approach(),
