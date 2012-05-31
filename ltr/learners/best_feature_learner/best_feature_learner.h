@@ -51,7 +51,7 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   void setDefaultParameters() {
     Parameterized::addNewParam<Measure<TElement>*>("measure", NULL);
   }
-  void updateParameters() {
+  virtual void parametersUpdateCallback() {
     Measure<TElement> *msr =
         this->parameters().
         template Get<Parameterized*, Measure<TElement>*>("measure");
