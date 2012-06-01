@@ -27,6 +27,6 @@ int main() {
   new_meta_info["test1"] = "new_value1";
   new_meta_info["test2"] = "new_value2";
 
-  obj.metaInfo() = new_meta_info;       // You can also set all meta info at once.
+  obj.meta_info() = new_meta_info;       // You can also set all meta info at once.
   return 0;
 }

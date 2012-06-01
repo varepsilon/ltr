@@ -9,10 +9,10 @@ using ltr::Object;
 int main() {
   Object obj;
 
-  obj.setActualLabel(23.65);
-  cout << obj.actualLabel() << endl;
+  obj.set_actual_label(23.65);
+  cout << obj.actual_label() << endl;
 
-  obj.setPredictedLabel(21.12);
-  cout << obj.predictedLabel();
+  obj.set_predicted_label(21.12);
+  cout << obj.predicted_label();
   return 0;
 }
