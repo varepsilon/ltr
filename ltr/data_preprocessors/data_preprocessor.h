@@ -36,12 +36,27 @@ class DataPreprocessor : public Parameterized,
   virtual ~DataPreprocessor() {}
   /**
    * Preprocesses DataSet.
-   * @param old_dataset - DataSet to be preprocessed
-   * @param new_dataset - preprocessed DataSet
+   * \param old_dataset DataSet to be preprocessed
+   * \param new_dataset preprocessed DataSet
   */
-  virtual void apply(const DataSet<TElement>& old_dataset,
-                           DataSet<TElement>* new_dataset) const = 0;
-};
+  void apply(const DataSet<TElement>& old_dataset,
+                   DataSet<TElement>* new_dataset,
+             bool check_parameters) const;
+ private:
+  virtual void applyImpl(const DataSet<TElement>& old_dataset,
+                               DataSet<TElement>* new_dataset) const = 0;
 };
 
+// template realization
+
+template <class TElement>
+void DataPreprocessor<TElement>::apply(const DataSet<TElement>& old_dataset,
+                                             DataSet<TElement>* new_dataset,
+                                       bool check_parameters = true) const {
+  if (check_parameters) {
+    checkParameters();
+  }
+  applyImpl(old_dataset, new_dataset);
+}
+};
 #endif  // LTR_DATA_PREPROCESSORS_DATA_PREPROCESSOR_H_

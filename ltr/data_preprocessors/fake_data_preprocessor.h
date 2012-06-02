@@ -14,7 +14,7 @@ using std::string;
 
 namespace ltr {
 /**
-* Does nothing with input DataSet.
+* \brief Does nothing with input DataSet.
 */
 template <class TElement>
 class FakePreprocessor : public DataPreprocessor<TElement> {
@@ -22,12 +22,12 @@ class FakePreprocessor : public DataPreprocessor<TElement> {
   typedef boost::shared_ptr<FakePreprocessor> Ptr;
   explicit FakePreprocessor()
     : DataPreprocessor<TElement>("FakeDataPreprocessor") {}
-  virtual void apply(const DataSet<TElement>& old_dataset,
-                           DataSet<TElement>* new_dataset) const {
+  virtual void applyImpl(const DataSet<TElement>& old_dataset,
+                               DataSet<TElement>* new_dataset) const {
     *new_dataset = old_dataset;
   }
   virtual string toString() const {
-    return "Fake data preprocessor";
+    return "FakeDataPreprocessor";
   }
 };
 };

@@ -142,10 +142,12 @@ TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
     EXPECT_LE(0, prep_data[i].features()[0]);
   }
 
-  EXPECT_ANY_THROW(prep.set_sampling_fraction(0.));
+  prep.set_sampling_fraction(0.);
+  EXPECT_ANY_THROW(prep.checkParameters());
   prep.set_sampling_fraction(0.5);
   prep.set_with_replacement(false);
-  EXPECT_ANY_THROW(prep.set_sampling_fraction(0.));
+  prep.set_sampling_fraction(0.);
+  EXPECT_ANY_THROW(prep.checkParameters());
 
   prep.set_sampling_fraction(1e-8);
   prep.apply(data, &prep_data);

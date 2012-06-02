@@ -28,35 +28,36 @@ using ltr::utility::getRandomIndices;
 
 namespace ltr {
 /**
- * Acts as DataSampler with random indices each new applying
- * (duplication allowed)
+ * \brief Acts as DataSampler with random indices each new applying
+ * (duplication may be allowed).
  */
-template <typename TElement>
+template <class TElement>
 class DataRandomSampler : public DataPreprocessor<TElement> {
-  public:
+ public:
   typedef boost::shared_ptr<DataRandomSampler> Ptr;
 
-  explicit DataRandomSampler()
-      : DataPreprocessor<TElement>("DataRandomSampler") {
-    this->setDefaultParameters();
-  }
-  explicit DataRandomSampler(const ParametersContainer& parameters)
-      : DataPreprocessor<TElement>("DataRandomSampler") {
-    this->setParameters(parameters);
-  }
+  /**
+  * \param sampling_fraction ratio of chosen objects count to dataset size,
+  * may be more than 1.0 in case of sampling with replacement
+  * \param with_replacement determines whether duplication of objects is allowed 
+  * \param seed seed for random numbers generator 
+  */
+  explicit DataRandomSampler(double sampling_fraction,
+                             bool with_replacement,
+                             int seed);
+  explicit DataRandomSampler(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
   virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void checkParameters() const;
-  virtual void apply(const DataSet<TElement>& old_dataset,
-                           DataSet<TElement>* new_dataset) const;
+
+  virtual void applyImpl(const DataSet<TElement>& old_dataset,
+                               DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
-  GETTER(double, sampling_fraction);
-  GETTER(bool, with_replacement);
-  GETTER(int, seed);
-  SETTER_WITH_CHECK(double, sampling_fraction);
-  SETTER_WITH_CHECK(bool, with_replacement);
+  GET_SET(double, sampling_fraction);
+  GET_SET(bool, with_replacement);
+  GET(int, seed);
   void set_seed(int seed);
  private:
   double sampling_fraction_;
@@ -67,25 +68,39 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
 };
 
 // template realizations
-template <typename TElement>
-string DataRandomSampler<TElement>::toString() const {
-  std::stringstream str;
-  std::fixed(str);
-  str.precision(2);
-  str << "Begging data preprocessor with parameters: sampling_fraction = ";
-  str << sampling_fraction_ << ", with_replacment = " << with_replacement_;
-  str << ", seed = " << seed_;
-  return str.str();
+
+template <class TElement>
+void DataRandomSampler<TElement>::set_seed(int seed) {
+  CHECK(seed >= 0);  //NOLINT
+  seed_ = seed;
+  srand(seed_);
+  generator_.seed(seed_);
 }
 
-template <typename TElement>
+template <class TElement>
+DataRandomSampler<TElement>::DataRandomSampler(
+    const ParametersContainer& parameters)
+    : DataPreprocessor<TElement>("DataRandomSampler") {
+  this->setParameters(parameters);
+}
+template <class TElement>
+DataRandomSampler<TElement>::DataRandomSampler(double sampling_fraction = 0.3,
+                                               bool with_replacement = true,
+                                               int seed = 42)
+    : DataPreprocessor<TElement>("DataRandomSampler") {
+  set_sampling_fraction(sampling_fraction);
+  set_with_replacement(with_replacement);
+  set_seed(seed);
+}
+
+template <class TElement>
 void DataRandomSampler<TElement>::setDefaultParameters() {
-  sampling_fraction_ = 0.3;
-  with_replacement_ = true;
+  set_sampling_fraction(0.3);
+  set_with_replacement(true);
   set_seed(42);
 }
 
-template <typename TElement>
+template <class TElement>
 void DataRandomSampler<TElement>::checkParameters() const {
   if (with_replacement_) {
     CHECK(sampling_fraction_ > 0.);
@@ -95,8 +110,18 @@ void DataRandomSampler<TElement>::checkParameters() const {
   CHECK(seed_ >= 0); //NOLINT
 }
 
-template <typename TElement>
-void DataRandomSampler<TElement>::apply(const DataSet<TElement>& old_dataset,
+template <class TElement>
+void DataRandomSampler<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  with_replacement_ = parameters.Get<bool>("WITH_REPLACMENT");
+  sampling_fraction_ = parameters.Get<double>("SAMPLING_FRACTION");
+  set_seed(parameters.Get<int>("SEED"));
+}
+
+
+template <class TElement>
+void DataRandomSampler<TElement>::applyImpl(
+    const DataSet<TElement>& old_dataset,
     DataSet<TElement>* new_dataset) const {
   int sample_size = ceilf(old_dataset.size() * sampling_fraction_);
   Indices indices(sample_size);
@@ -106,27 +131,22 @@ void DataRandomSampler<TElement>::apply(const DataSet<TElement>& old_dataset,
       indices[i] = random(old_dataset.size());
     }
   } else {
-    // TODO(sameg) Not thread safe.
+    // \TODO(sameg) Not thread safe.
     // Lets think about using custom random numbers generator
     getRandomIndices(&indices, old_dataset.size(), sample_size);
   }
   *new_dataset = lightSubset(old_dataset, indices);
 }
 
-template <typename TElement>
-void DataRandomSampler<TElement>::set_seed(int seed) {
-  CHECK(seed >= 0);  //NOLINT
-  seed_ = seed;
-  srand(seed_);
-  generator_.seed(seed_);
-}
-
-template <typename TElement>
-void DataRandomSampler<TElement>::setParametersImpl(
-    const ParametersContainer& parameters) {
-  with_replacement_ = parameters.Get<bool>("WITH_REPLACMENT");
-  sampling_fraction_ = parameters.Get<double>("SAMPLING_FRACTION");
-  set_seed(parameters.Get<int>("SEED"));
+template <class TElement>
+string DataRandomSampler<TElement>::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "RandomSampler: sampling_fraction = ";
+  str << sampling_fraction_ << ", with_replacment = " << with_replacement_;
+  str << ", seed = " << seed_;
+  return str.str();
 }
 };
 

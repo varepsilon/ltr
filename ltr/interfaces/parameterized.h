@@ -12,23 +12,25 @@ using std::logic_error;
 
 namespace ltr {
 
-#define SETTER(type, name) \
+#define GET_SET(type, name) \
+  void set_##name(type name) { \
+    name##_ = name; \
+  }; \
+  type name() { \
+    return name##_; \
+  };
+#define SET(type, name) \
   void set_##name(type name) { \
     name##_ = name; \
   };
-#define SETTER_WITH_CHECK(type, name) \
-  void set_##name(type name) { \
-    name##_ = name; \
-    checkParameters(); \
-  };
-#define GETTER(type, name) \
+#define GET(type, name) \
   type name() { \
     return name##_; \
   };
 
 #define CHECK(expr) \
   if (!(expr)) { \
-    throw logic_error("Wrong parameter: need " #expr); \
+    throw logic_error("Expected: " #expr); \
   }
 
 

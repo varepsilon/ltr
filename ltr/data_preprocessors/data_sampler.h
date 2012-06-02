@@ -29,7 +29,7 @@ using ltr::utility::IndicesPtr;
 
 namespace ltr {
 /**
-* Samples elements with specififed indices from input DataSet.
+* \brief Samples elements with specififed indices from input DataSet.
 * Duplication of indices leads to duplication of elements in the result sample.
 */
 template <class TElement>
@@ -37,51 +37,38 @@ class DataSampler : public DataPreprocessor<TElement> {
  public:
   typedef boost::shared_ptr<DataSampler> Ptr;
 
-  explicit DataSampler() : DataPreprocessor<TElement>("DataSampler") {
-    this->setDefaultParameters();
-  }
-  explicit DataSampler(const ParametersContainer& parameters)
-      : DataPreprocessor<TElement>("DataSampler") {
-    this->setParameters(parameters);
-  }
+  /**
+  * \param indices indices of elements to sample,
+  * duplication of indices leads to duplication of elements in the result sample
+  */
+  explicit DataSampler(IndicesPtr indices);
+  explicit DataSampler(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
   virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void checkParameters() const;
 
-  virtual void apply(const DataSet<TElement>& old_dataset,
-                           DataSet<TElement>* new_dataset) const;
+  virtual void applyImpl(const DataSet<TElement>& old_dataset,
+                               DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
-  GETTER(IndicesPtr, indices);
-  SETTER(IndicesPtr, indices);
+  GET_SET(IndicesPtr, indices);
  private:
   IndicesPtr indices_;
 };
 
 // template realizations
-template <class TElement>
-void DataSampler<TElement>::apply(const DataSet<TElement>& old_dataset,
-                                        DataSet<TElement>* new_dataset) const {
-  if (indices_->size() != 0) {
-    *new_dataset = lightSubset(old_dataset, *indices_);
-  } else {
-    *new_dataset = old_dataset;
-  }
-}
 
 template <typename TElement>
-string DataSampler<TElement>::toString() const {
-  std::stringstream str;
-  str << "Subset data preprocessor with parameter INDICES = {";
-  for (int i = 0; i < indices_->size(); ++i) {
-    if (i != 0) {
-      str << ", ";
-    }
-    str << indices_->at(i);
-  }
-  str << "}";
-  return str.str();
+DataSampler<TElement>::DataSampler(
+    IndicesPtr indices = IndicesPtr(new Indices))
+    : DataPreprocessor<TElement>("DataSampler") {
+  set_indices(indices);
+}
+template <typename TElement>
+DataSampler<TElement>::DataSampler(const ParametersContainer& parameters)
+    : DataPreprocessor<TElement>("DataSampler") {
+  this->setParameters(parameters);
 }
 
 template <typename TElement>
@@ -99,6 +86,30 @@ void DataSampler<TElement>::setParametersImpl(
     const ParametersContainer& parameters) {
   // \TODO(sameg) Create indices from string representation like [1:3], 5, 6
   indices_ = parameters.Get<IndicesPtr>("INDICES");
+}
+
+template <class TElement>
+void DataSampler<TElement>::applyImpl(const DataSet<TElement>& old_dataset,
+    DataSet<TElement>* new_dataset) const {
+  if (indices_->size() != 0) {
+    *new_dataset = lightSubset(old_dataset, *indices_);
+  } else {
+    *new_dataset = old_dataset;
+  }
+}
+
+template <typename TElement>
+string DataSampler<TElement>::toString() const {
+  std::stringstream str;
+  str << "Sampler: indices = {";
+  for (int i = 0; i < indices_->size(); ++i) {
+    if (i != 0) {
+      str << ", ";
+    }
+    str << indices_->at(i);
+  }
+  str << "}";
+  return str.str();
 }
 };
 
