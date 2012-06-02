@@ -42,17 +42,14 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
   * \param with_replacement determines whether duplication of objects is allowed 
   * \param seed seed for random numbers generator 
   */
-  explicit DataRandomSampler(double sampling_fraction,
-                             bool with_replacement,
-                             int seed);
+  explicit DataRandomSampler(double sampling_fraction = 0.3,
+                             bool with_replacement = true,
+                             int seed = 42);
   explicit DataRandomSampler(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
-  virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void checkParameters() const;
 
-  virtual void applyImpl(const DataSet<TElement>& old_dataset,
-                               DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
   GET_SET(double, sampling_fraction);
@@ -60,6 +57,9 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
   GET(int, seed);
   void set_seed(int seed);
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual void applyImpl(const DataSet<TElement>& input,
+                               DataSet<TElement>* output) const;
   double sampling_fraction_;
   bool with_replacement_;
   int seed_;
@@ -84,9 +84,9 @@ DataRandomSampler<TElement>::DataRandomSampler(
   this->setParameters(parameters);
 }
 template <class TElement>
-DataRandomSampler<TElement>::DataRandomSampler(double sampling_fraction = 0.3,
-                                               bool with_replacement = true,
-                                               int seed = 42)
+DataRandomSampler<TElement>::DataRandomSampler(double sampling_fraction,
+                                               bool with_replacement,
+                                               int seed)
     : DataPreprocessor<TElement>("DataRandomSampler") {
   set_sampling_fraction(sampling_fraction);
   set_with_replacement(with_replacement);
@@ -121,21 +121,21 @@ void DataRandomSampler<TElement>::setParametersImpl(
 
 template <class TElement>
 void DataRandomSampler<TElement>::applyImpl(
-    const DataSet<TElement>& old_dataset,
-    DataSet<TElement>* new_dataset) const {
-  int sample_size = ceilf(old_dataset.size() * sampling_fraction_);
+    const DataSet<TElement>& input,
+    DataSet<TElement>* output) const {
+  int sample_size = ceilf(input.size() * sampling_fraction_);
   Indices indices(sample_size);
   if (with_replacement_) {
     boost::random_number_generator<boost::mt19937> random(generator_);
     for (int i = 0; i < indices.size(); ++i) {
-      indices[i] = random(old_dataset.size());
+      indices[i] = random(input.size());
     }
   } else {
     // \TODO(sameg) Not thread safe.
     // Lets think about using custom random numbers generator
-    getRandomIndices(&indices, old_dataset.size(), sample_size);
+    getRandomIndices(&indices, input.size(), sample_size);
   }
-  *new_dataset = lightSubset(old_dataset, indices);
+  *output = lightSubset(input, indices);
 }
 
 template <class TElement>

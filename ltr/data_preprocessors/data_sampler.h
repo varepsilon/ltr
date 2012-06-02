@@ -41,27 +41,26 @@ class DataSampler : public DataPreprocessor<TElement> {
   * \param indices indices of elements to sample,
   * duplication of indices leads to duplication of elements in the result sample
   */
-  explicit DataSampler(IndicesPtr indices);
+  explicit DataSampler(IndicesPtr indices = IndicesPtr(new Indices));
   explicit DataSampler(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
-  virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void checkParameters() const;
 
-  virtual void applyImpl(const DataSet<TElement>& old_dataset,
-                               DataSet<TElement>* new_dataset) const;
   virtual string toString() const;
 
   GET_SET(IndicesPtr, indices);
  private:
+  virtual void applyImpl(const DataSet<TElement>& input,
+                               DataSet<TElement>* output) const;
+  virtual void setParametersImpl(const ParametersContainer& parameters);
   IndicesPtr indices_;
 };
 
 // template realizations
 
 template <typename TElement>
-DataSampler<TElement>::DataSampler(
-    IndicesPtr indices = IndicesPtr(new Indices))
+DataSampler<TElement>::DataSampler(IndicesPtr indices)
     : DataPreprocessor<TElement>("DataSampler") {
   set_indices(indices);
 }
@@ -89,12 +88,12 @@ void DataSampler<TElement>::setParametersImpl(
 }
 
 template <class TElement>
-void DataSampler<TElement>::applyImpl(const DataSet<TElement>& old_dataset,
-    DataSet<TElement>* new_dataset) const {
+void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
+    DataSet<TElement>* output) const {
   if (indices_->size() != 0) {
-    *new_dataset = lightSubset(old_dataset, *indices_);
+    *output = lightSubset(input, *indices_);
   } else {
-    *new_dataset = old_dataset;
+    *output = input;
   }
 }
 

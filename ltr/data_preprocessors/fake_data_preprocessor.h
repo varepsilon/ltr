@@ -22,12 +22,14 @@ class FakePreprocessor : public DataPreprocessor<TElement> {
   typedef boost::shared_ptr<FakePreprocessor> Ptr;
   explicit FakePreprocessor()
     : DataPreprocessor<TElement>("FakeDataPreprocessor") {}
-  virtual void applyImpl(const DataSet<TElement>& old_dataset,
-                               DataSet<TElement>* new_dataset) const {
-    *new_dataset = old_dataset;
-  }
+
   virtual string toString() const {
     return "FakeDataPreprocessor";
+  }
+ private:
+  virtual void applyImpl(const DataSet<TElement>& input,
+                               DataSet<TElement>* output) const {
+    *output = input;
   }
 };
 };
