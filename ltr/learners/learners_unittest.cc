@@ -66,8 +66,8 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   RemoveNaNConverterLearner<ltr::Object> remove_NaN_learner;
   remove_NaN_learner.learn(learn_data);
   FeatureConverter::Ptr remove_NaN = remove_NaN_learner.makePtr();
-  ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
-  ApplyFeatureConverter(remove_NaN, test_data, &test_data);
+  ltr::utility::ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
+  ltr::utility::ApplyFeatureConverter(remove_NaN, test_data, &test_data);
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);

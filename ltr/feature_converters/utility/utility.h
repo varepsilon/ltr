@@ -7,30 +7,37 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
-using std::vector;
-
 namespace ltr {
 namespace utility {
-
-template <typename TElement>
+/** Function converts all objects in PointwiseDataSet
+ * @param converter - Converter to apply
+ * @param source_dataset - Dataset to convert
+ * @param converted_dataset - Dataset with converted objects
+ * 
+ */
 void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
-                           const DataSet<TElement>& argument,
-                           DataSet<TElement>* value) {
-  DataSet<TElement> result(converter->getNewFeatureInfo());
-  for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
-    vector<Object> objectsInTElement;
-    for (int object_index = 0;
-         object_index < (int)argument[elementIdx].size();
-         ++object_index) {
-      Object objToAdd;
-      converter->apply(argument[elementIdx][object_index], &objToAdd);
-      objectsInTElement.push_back(objToAdd);
-    }
-    TElement telementToAdd(objectsInTElement);
-    result.add(telementToAdd, argument.getWeight(elementIdx));
-  }
-  *value = result;
-}
+                           const PointwiseDataSet& source_dataset,
+                           PointwiseDataSet* converted_dataset);
+
+/** Function converts all objects in PairwiseDataSet
+ * @param converter - Converter to apply
+ * @param source_dataset - Dataset to convert
+ * @param converted_dataset - Dataset with converted object pairs
+ * 
+ */
+void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
+                           const PairwiseDataSet& source_dataset,
+                           PairwiseDataSet* converted_dataset);
+
+/** Function converts all objects in ListwiseDataSet
+ * @param converter - Converter to apply
+ * @param source_dataset - Dataset to convert
+ * @param converted_dataset - Dataset with converted object lists
+ * 
+ */
+void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
+                           const ListwiseDataSet& source_dataset,
+                           ListwiseDataSet* converted_dataset);
 }
 }
 #endif  // LTR_FEATURE_CONVERTERS_UTILITY_UTILITY_H_

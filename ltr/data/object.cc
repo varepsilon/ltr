@@ -25,13 +25,6 @@ Object::Object(const Object& object)
                 predicted_label_(object.predicted_label_),
                 feature_info_(object.feature_info_) {}
 
-Object::Object(const std::vector<Object>& objects)
-              : features_(new Features(*objects[0].features_)),
-                meta_info_(new MetaInfo(*objects[0].meta_info_)),
-                actual_label_(objects[0].actual_label_),
-                predicted_label_(objects[0].predicted_label_),
-                feature_info_(objects[0].feature_info_) {}
-
 Object::Object(const FeatureInfo& feature_info)
               : meta_info_(new MetaInfo()),
                 actual_label_(1.0),
