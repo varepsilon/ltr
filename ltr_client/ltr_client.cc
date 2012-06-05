@@ -226,10 +226,10 @@ void LtrClient::launch() {
                                                d->configurator.xmlTokenSpecs());
     std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
                  parameters.toString() << "\n";
-    ltr::Parameterized *parameterized =
-                               Factory::instance()->Create(learner_info.getType() +
-                                                        learner_info.getApproach(),
-                                                                    parameters);
+    ltr::Parameterized*
+        parameterized = Factory::instance()->Create(learner_info.getType() +
+                                                    learner_info.getApproach(),
+                                                    parameters);
 
     if (learner_info.getApproach() == "listwise") {
       d->executeTrain<ltr::ObjectList>(parameterized, train_info);
