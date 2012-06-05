@@ -88,7 +88,6 @@ class Configurator {
   TDataInfos& dataInfos();
   const TXmlTokenSpecs& xmlTokenSpecs() const;
   TXmlTokenSpecs& xmlTokenSpecs();
-  //const TXmlTokenSpecs& xmlTokenSpecs();
   const TTrainInfos& trainInfos() const;
   TTrainInfos& trainInfos();
   const TCrossvalidationInfos& crossvalidationInfos() const;
@@ -128,7 +127,8 @@ class TXmlTokenSpec {
   const ltr::ParametersContainer& getParameters() const;
 
   const TXmlTokenSpecList& dependencySpecs() const;
-  void checkAvailability(const Configurator::TXmlTokenSpecs& token_specifications);
+  void checkAvailability(
+      const Configurator::TXmlTokenSpecs& token_specifications);
 
  private:
   string tag_name;
