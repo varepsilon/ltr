@@ -6,20 +6,21 @@
 using ltr::utility::isNaN;
 namespace ltr {
 
-FeatureInfo RemoveNominalConverter::getNewFeatureInfo() const {
-  FeatureInfo result;
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
-      result.addFeature(feature_info_.getFeatureType(i));
-  return result;
+void RemoveNominalConverter::fillOutputFeatureInfo()  {
+  output_feature_info_.clear();
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++) {
+    if (input_feature_info_.getFeatureType(i) != NOMINAL) {
+      output_feature_info_.addFeature(input_feature_info_.getFeatureType(i));
+    }
+  }
 }
 
 void RemoveNominalConverter::applyImpl(
     const Object& argument, Object* value) const {
-  *value = Object(getNewFeatureInfo());
+  *value = Object(output_feature_info());
   size_t result_idx = 0;
   for (size_t i = 0; i < argument.features().size(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
+    if (input_feature_info_.getFeatureType(i) != NOMINAL)
       value->features()[result_idx++] = argument.features()[i];
 }
 
@@ -33,10 +34,10 @@ string RemoveNominalConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
   append("  bool nominal[] = {");
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++) {
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++) {
     if (i != 0)
       hpp_string.append(",");
-    if (feature_info_.getFeatureType(i) == NOMINAL)
+    if (input_feature_info_.getFeatureType(i) == NOMINAL)
       hpp_string.append("1");
     else
       hpp_string.append("0");

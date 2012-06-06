@@ -18,6 +18,7 @@ using std::string;
 namespace ltr {
 /**
 * \brief A base class for data preprocessors.
+*
 * Preprocesses DataSet, e.g. delete or replicate elements in DataSet.
 * This can be usefull for better learning (see BaseLearner<TElement>::addDataPreprocessor ).
 * Should not change Object features and FeatureInfo as it won't be saved in Scorer. 
@@ -27,17 +28,16 @@ namespace ltr {
 */
 template <class TElement>
 class DataPreprocessor : public Parameterized,
-                         public Printable,
-                         public Aliaser {
+                         public Printable {
  public:
   typedef boost::shared_ptr<DataPreprocessor> BasePtr;
   typedef boost::shared_ptr<DataPreprocessor> Ptr;
-  explicit DataPreprocessor(const string& alias) : Aliaser(alias) {}
   virtual ~DataPreprocessor() {}
   /**
    * Preprocesses DataSet.
    * \param input DataSet to be preprocessed
    * \param output preprocessed DataSet
+   * \param check_parameters whether perform Parameterized::CheckParameters() before launch
   */
   void apply(const DataSet<TElement>& input,
                    DataSet<TElement>* output,

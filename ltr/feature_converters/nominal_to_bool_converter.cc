@@ -3,32 +3,32 @@
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
 
 namespace ltr {
-FeatureInfo NominalToBoolConverter::getNewFeatureInfo() const {
-  FeatureInfo result;
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
-      result.addFeature(feature_info_.getFeatureType(i));
-
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
-    if (feature_info_.getFeatureType(i) == NOMINAL) {
-      int values_cnt = feature_info_.getFeatureValues(i).size();
-      result.addFeature(BOOLEAN);
+void NominalToBoolConverter::fillOutputFeatureInfo()  {
+  output_feature_info_.clear();
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++) {
+    if (input_feature_info_.getFeatureType(i) != NOMINAL) {
+      output_feature_info_.addFeature(input_feature_info_.getFeatureType(i));
     }
-
-  return result;
+  }
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++) {
+    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
+      int values_cnt = input_feature_info_.getFeatureValues(i).size();
+      output_feature_info_.addFeature(BOOLEAN);
+    }
+  }
 }
 
 void NominalToBoolConverter::applyImpl(
     const Object& argument, Object* value) const {
-  *value = Object(getNewFeatureInfo());
+  *value = Object(output_feature_info());
   size_t result_idx = 0;
   for (size_t i = 0; i < argument.features().size(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
+    if (input_feature_info_.getFeatureType(i) != NOMINAL)
       value->features()[result_idx++] = argument.features()[i];
 
   for (size_t i = 0; i < argument.features().size(); i++)
-    if (feature_info_.getFeatureType(i) == NOMINAL) {
-      map<size_t, string> vals = feature_info_.getFeatureValues(i);
+    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
+      map<size_t, string> vals = input_feature_info_.getFeatureValues(i);
       for (map<size_t, string>::iterator it = vals.begin();
            it != vals.end(); it++)
         if (argument.features()[i] == it->first) {
@@ -49,10 +49,10 @@ string NominalToBoolConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
     append("  bool nominal[] = {");
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++) {
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++) {
     if (i != 0)
       hpp_string.append(",");
-    if (feature_info_.getFeatureType(i) == NOMINAL)
+    if (input_feature_info_.getFeatureType(i) == NOMINAL)
       hpp_string.append("1");
     else
       hpp_string.append("0");
@@ -60,12 +60,14 @@ string NominalToBoolConverter::generateCppCode(
   hpp_string.
     append("};\n").
     append("  vector<int> feature_values[").
-    append(boost::lexical_cast<string>(feature_info_.get_feature_count())).
+    append(
+      boost::lexical_cast<string>(input_feature_info_.get_feature_count())
+    ).
     append("];\n");
 
-  for (size_t i = 0; i < feature_info_.get_feature_count(); i++)
-    if (feature_info_.getFeatureType(i) == NOMINAL) {
-      map<size_t, string> vals = feature_info_.getFeatureValues(i);
+  for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++)
+    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
+      map<size_t, string> vals = input_feature_info_.getFeatureValues(i);
       for (map<size_t, string>::iterator it = vals.begin();
            it != vals.end(); it++) {
         hpp_string.

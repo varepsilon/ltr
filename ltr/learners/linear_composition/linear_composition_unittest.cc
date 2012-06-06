@@ -20,7 +20,7 @@
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/true_point.h"
 #include "ltr/data_preprocessors/data_random_sampler.h"
-#include "ltr/feature_converters/RSM_feature_converter_learner.h"
+#include "ltr/feature_converters/feature_random_sampler_learner.h"
 
 using ltr::Object;
 using ltr::DataSet;
@@ -33,7 +33,7 @@ using ltr::lc::FakeDataSetWeightsUpdater;
 using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::lc::AdaRankDataSetWeightsUpdater;
 using ltr::lc::AdaRankLCScorerWeightsUpdater;
-using ltr::RSMFeatureConverterLearner;
+using ltr::FeatureRandomSamplerLearner;
 using ltr::DataRandomSampler;
 using ltr::BestFeatureLearner;
 using ltr::lc::LinearCompositionLearner;
@@ -133,8 +133,8 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   AbsError::Ptr abs_error(new AbsError);
   lc_learner.setMeasure(abs_error);
 
-  RSMFeatureConverterLearner<Object>::Ptr
-    rsm(new RSMFeatureConverterLearner<Object>);
+  FeatureRandomSamplerLearner<Object>::Ptr
+    rsm(new FeatureRandomSamplerLearner<Object>);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
   bf_learner->addFeatureConverter(rsm);
@@ -201,8 +201,8 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
   ada_lc_learner.setWeakLearner(bf_learner);
 
-  RSMFeatureConverterLearner<Object>::Ptr
-    rsm(new RSMFeatureConverterLearner<Object>);
+  FeatureRandomSamplerLearner<Object>::Ptr
+    rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverter(rsm);
 
   DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);

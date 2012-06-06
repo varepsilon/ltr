@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_H_
-#define LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_H_
+#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_
+#define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -24,22 +24,22 @@ namespace ltr {
  * if inputted object has too little features (if one of features to be chosen
  * has index with no feature for this index in inputted object). Duplication of
  * resulted feature's indices is allowed, but FeatureConverterLearners usually
- * produces FeatureSubsetChooser with no dublication in feature's indices
+ * produces FeatureSampler with no dublication in feature's indices
  */
-class FeatureSubsetChooser : public FeatureConverter {
+class FeatureSampler : public FeatureConverter {
   public:
-  typedef boost::shared_ptr<FeatureSubsetChooser> Ptr;
+  typedef boost::shared_ptr<FeatureSampler> Ptr;
 
-  FeatureSubsetChooser(FeatureInfo feature_info = FeatureInfo())
-    : FeatureConverter("FeatureSubsetChooser", feature_info) {}
+  FeatureSampler(FeatureInfo feature_info = FeatureInfo())
+      : FeatureConverter(feature_info) {}
   /**
    * @param input_indices - indices of features to be chosen from inputted object
    */
-  explicit FeatureSubsetChooser(const vector<int>& input_indices,
-                                const FeatureInfo& feature_info = FeatureInfo())
-      : FeatureConverter("FeatureSubsetChooser", feature_info),
-      indices_(input_indices) {
+  explicit FeatureSampler(const vector<int>& input_indices,
+                          const FeatureInfo& feature_info = FeatureInfo())
+      : FeatureConverter(feature_info), indices_(input_indices) {
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
+    fillOutputFeatureInfo();
   }
   /**
    * Sets indices of features to be chosen
@@ -48,6 +48,7 @@ class FeatureSubsetChooser : public FeatureConverter {
   void setChoosedFeaturesIndices(const vector<int>& input_indices) {
     indices_ = input_indices;
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
+    fillOutputFeatureInfo();
   }
   /**
    * Returns indices of features to be chosen
@@ -61,11 +62,6 @@ class FeatureSubsetChooser : public FeatureConverter {
   int getChoosedFeaturesCount() const {
     return indices_.size();
   }
-
-  FeatureInfo getNewFeatureInfo() const;
-
-  void applyImpl(const Object& source_object,
-    Object* preprocessed_object) const;
 
   virtual string generateCppCode(
       const string& function_name) const {
@@ -95,9 +91,14 @@ class FeatureSubsetChooser : public FeatureConverter {
     return hpp_string;
   }
 
-  private:
+ private:
   vector<int> indices_;
   int max_used_feature_;
+
+  virtual void fillOutputFeatureInfo();
+  void applyImpl(const Object& source_object, 
+                 Object* preprocessed_object) const;
+
 };
 }
-#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_H_
+#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_

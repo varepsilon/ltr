@@ -1,18 +1,18 @@
 // Copyright 2012 Yandex
 
-#include "ltr/feature_converters/remove_nan_converter.h"
+#include "ltr/feature_converters/nan_to_zero_converter.h"
 #include "ltr/utility/numerical.h"
 
 using ltr::utility::isNaN;
 namespace ltr {
 
-FeatureInfo RemoveNaNConverter::getNewFeatureInfo() const {
-  return feature_info_;
+void NanToZeroConverter::fillOutputFeatureInfo()  {
+  output_feature_info_ = input_feature_info_;
 }
 
-void RemoveNaNConverter::applyImpl(const Object& argument,
+void NanToZeroConverter::applyImpl(const Object& argument,
                                    Object* value) const {
-  *value = Object(getNewFeatureInfo());
+  *value = Object(output_feature_info());
   for (size_t i = 0; i < argument.features().size(); i++) {
     if (isNaN(argument.features()[i]))
       value->features()[i] = 0;
@@ -21,7 +21,7 @@ void RemoveNaNConverter::applyImpl(const Object& argument,
   }
 }
 
-string RemoveNaNConverter::generateCppCode(
+string NanToZeroConverter::generateCppCode(
     const std::string &function_name) const {
   string hpp_string;
   hpp_string.

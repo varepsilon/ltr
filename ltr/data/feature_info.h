@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "ltr/interfaces/parameterized.h"
 #include <boost/shared_ptr.hpp> //NOLINT
 
 using std::map;
@@ -84,22 +85,32 @@ class FeatureInfo {
   /** Returns possible values of feature with given index
    */
   NominalFeatureValues& getFeatureValues(size_t feature_index) {
+    CHECK(feature_index < feature_info_.size() && feature_index >= 0);
     return feature_info_[feature_index].values_;
   }
   /** Returns possible values of feature with given index
    */
   const NominalFeatureValues& getFeatureValues(size_t feature_index) const {
+    CHECK(feature_index < feature_info_.size() && feature_index >= 0);
     return feature_info_[feature_index].values_;
   }
   /** Returns type of feature with given index
    */
   FeatureType getFeatureType(size_t feature_index) const {
+    CHECK(feature_index < feature_info_.size() && feature_index >= 0);
     return feature_info_[feature_index].type_;
   }
   /** Changes type of feature with given index
    */
   void setFeatureType(size_t feature_index, FeatureType type) {
+    CHECK(feature_index < feature_info_.size() && feature_index >= 0);
     feature_info_[feature_index].type_ = type;
+  }
+  void clear() {
+    feature_info_.clear();
+  }
+  bool empty() {
+    return feature_info_.empty();
   }
 
   friend bool operator==(const FeatureInfo& lhs, const FeatureInfo& rhs);

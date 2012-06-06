@@ -35,7 +35,7 @@ typedef map<string, string> MetaInfo;
  * feature vector and meta information;
  */
 class Object : public Printable {
-  public:
+ public:
   /** \typedef Shared pointer to an object.
    */
   typedef boost::shared_ptr<Object> Ptr;
@@ -134,7 +134,7 @@ class Object : public Printable {
 
   const FeatureInfo& feature_info() const;
 
-  private:
+ private:
   /** Shared pointer to FeatureInfo.
    */
   FeatureInfo::Ptr feature_info_;

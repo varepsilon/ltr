@@ -16,7 +16,7 @@ template <typename TElement>
 void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
                            const DataSet<TElement>& argument,
                            DataSet<TElement>* value) {
-  DataSet<TElement> result(converter->getNewFeatureInfo());
+  DataSet<TElement> result(converter->output_feature_info());
   for (size_t elementIdx = 0; elementIdx < argument.size(); ++elementIdx) {
     vector<Object> objectsInTElement;
     for (int object_index = 0;

@@ -60,13 +60,11 @@ class DataSampler : public DataPreprocessor<TElement> {
 // template realizations
 
 template <typename TElement>
-DataSampler<TElement>::DataSampler(IndicesPtr indices)
-    : DataPreprocessor<TElement>("DataSampler") {
+DataSampler<TElement>::DataSampler(IndicesPtr indices) {
   set_indices(indices);
 }
 template <typename TElement>
-DataSampler<TElement>::DataSampler(const ParametersContainer& parameters)
-    : DataPreprocessor<TElement>("DataSampler") {
+DataSampler<TElement>::DataSampler(const ParametersContainer& parameters) {
   this->setParameters(parameters);
 }
 
@@ -100,14 +98,14 @@ void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
 template <typename TElement>
 string DataSampler<TElement>::toString() const {
   std::stringstream str;
-  str << "Sampler: indices = {";
+  str << "DataSampler: indices = [";
   for (int i = 0; i < indices_->size(); ++i) {
     if (i != 0) {
       str << ", ";
     }
     str << indices_->at(i);
   }
-  str << "}";
+  str << "]";
   return str.str();
 }
 };

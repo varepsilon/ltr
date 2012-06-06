@@ -10,15 +10,17 @@
 
 namespace ltr {
 class RemoveNominalConverter : public FeatureConverter {
-  public:
-    typedef boost::shared_ptr<RemoveNominalConverter> Ptr;
+ public:
+  typedef boost::shared_ptr<RemoveNominalConverter> Ptr;
 
-    RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter("RemoveNominalConverter", feature_info) {}
-
-    virtual FeatureInfo getNewFeatureInfo() const;
-    virtual void applyImpl(const Object& argument, Object* value) const;
-    string generateCppCode(const std::string &) const;
+  RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())
+      : FeatureConverter(feature_info) {
+    fillOutputFeatureInfo();
+  }
+  string generateCppCode(const std::string &) const;
+ private:
+  virtual void fillOutputFeatureInfo();
+  virtual void applyImpl(const Object& argument, Object* value) const;
 };
 
 template <typename TElement>

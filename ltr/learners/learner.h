@@ -143,7 +143,7 @@ void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
   feature_converters_.clear();
   for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
     feature_converter_learners_[i]->learn(sourceData);
-    feature_converters_.push_back(feature_converter_learners_[i]->makePtr());
+    feature_converters_.push_back(feature_converter_learners_[i]->make());
         ltr::utility::ApplyFeatureConverter(
           feature_converters_[i],
           sourceData,

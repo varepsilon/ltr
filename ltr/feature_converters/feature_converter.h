@@ -18,50 +18,66 @@
 using std::logic_error;
 
 namespace ltr {
-/**
- * Converts object's features. E. g. normalizes each of them or
- * chooses a subset
- */
-class FeatureConverter : public Serializable, public Aliaser {
- protected:
-  // a feature info that an inputted object is supposed to have
-  FeatureInfo feature_info_;
 
+/**
+* \brief A base class for feature converters.
+* Preprocesses Object, e.g. sample or linear transform features.
+*
+* Can be applied to each Object in DataSet but before doing this
+* FeatureConverter should be trained by FeatureConverterLearner.
+* This can be usefull for better training of Scorer
+* (see BaseLearner<TElement>::addFeatureConverterLearner).
+*
+* Feature converters wich were used during training of Scorer 
+* will be added in the result Scorer (see Scorer::addFeatureConverter) 
+* and consequently must be Serializable.
+* 
+* \note In most cases you don't need to create FeatureConverter directly,
+* normally it is the result of FeatureConverterLearner work.
+* 
+* \sa FeatureConverterLearner, Learner, Scorer
+*/
+class FeatureConverter : public Serializable {
  public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
 
-  FeatureConverter(const string& alias,
-    const FeatureInfo& feature_info = FeatureInfo())
-      : Aliaser(alias), feature_info_(feature_info) {}
+  FeatureConverter(const FeatureInfo& input_feature_info = FeatureInfo()) {
+    input_feature_info_ =  input_feature_info;
+  }
   virtual ~FeatureConverter() {}
 
-  void setFeatureInfo(const FeatureInfo& feature_info) {
-    feature_info_ = feature_info;
+  GET(FeatureInfo, input_feature_info);
+  void set_input_feature_info(const FeatureInfo &input_feature_info) { 
+    input_feature_info_ = input_feature_info;
+    fillOutputFeatureInfo();
   }
-  /**
-   * Returns converted feature info (objects before and after converting
-   * by FeatureConverter may have different FeatureInfo, e. g. FeatureConverter
-   * may change the number of object's features)
-   */
-  virtual FeatureInfo getNewFeatureInfo() const = 0;
-  /**
-   * Converts object's features
-   * @param argument - object to be converted
-   * @param value - output object
-   */
-  virtual void applyImpl(const Object& input, Object* output) const = 0;
+  GET(FeatureInfo, output_feature_info);
 
+  /**
+   * Converts object features
+   * \param input object to be converted
+   * \param output coverted object
+   */
   void apply(const Object& input, Object* output) const {
-    if (input.feature_info() != feature_info_) {
-      throw logic_error
-        ("A feature converter can't be applied to an inputted object");
-    }
+    CHECK(input.feature_info() == input_feature_info_);
     applyImpl(input, output);
   }
+ private:
+  /**
+  * Fills output_feature_info_ (Object may have another FeatureInfo
+  * after convertion, e.g. FeatureConverter may change the number of Object features)
+  */
+  virtual void fillOutputFeatureInfo() = 0;
+  virtual void applyImpl(const Object& input, Object* output) const = 0;
+ protected:
+  /// A FeatureInfo that an input Object is supposed to have
+  FeatureInfo input_feature_info_;
+  /// A FeatureInfo that an output Object will have
+  FeatureInfo output_feature_info_;
 };
 
-typedef std::vector< FeatureConverter::ConstPtr > FeatureConverterArray;
+typedef std::vector<FeatureConverter::Ptr> FeatureConverterArray;
 };
 
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
