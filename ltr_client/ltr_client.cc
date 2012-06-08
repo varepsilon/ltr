@@ -267,7 +267,7 @@ int main(int argc, char* argv[]) {
       client.launch();
   } catch(const std::logic_error &err) {
       ERR("Failed: %s", err.what());
-  } catch (...) {
+  } catch(...) {
       ERR("Caught exception");
   }
 
