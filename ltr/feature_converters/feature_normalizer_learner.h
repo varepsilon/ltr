@@ -103,7 +103,8 @@ size_t FeatureNormalizerLearner<TElement>::featureCount() const {
 }
 
 template <typename TElement>
-PerFeatureLinearConverter::Ptr FeatureNormalizerLearner<TElement>::makeSpecific() const {
+PerFeatureLinearConverter::Ptr
+FeatureNormalizerLearner<TElement>::makeSpecific() const {
   return converter_;
 }
 

@@ -11,8 +11,6 @@ namespace ltr {
 
 ObjectList::ObjectList() : objects_(new vector<Object>()) {}
 
-ObjectList::ObjectList(const vector<Object>& objects)
-                      : objects_(new vector<Object>(objects)) {}
 
 const Object& ObjectList::operator[](size_t i) const {
   return at(i);

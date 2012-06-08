@@ -48,7 +48,7 @@ class FeatureConverter : public Serializable {
   virtual ~FeatureConverter() {}
 
   GET(FeatureInfo, input_feature_info);
-  void set_input_feature_info(const FeatureInfo &input_feature_info) { 
+  void set_input_feature_info(const FeatureInfo &input_feature_info) {
     input_feature_info_ = input_feature_info;
     fillOutputFeatureInfo();
   }
@@ -71,9 +71,13 @@ class FeatureConverter : public Serializable {
   virtual void fillOutputFeatureInfo() = 0;
   virtual void applyImpl(const Object& input, Object* output) const = 0;
  protected:
-  /// A FeatureInfo that an input Object is supposed to have
+  /**
+  * A FeatureInfo that an input Object is supposed to have
+  */
   FeatureInfo input_feature_info_;
-  /// A FeatureInfo that an output Object will have
+  /**
+  * A FeatureInfo that an output Object will have
+  */
   FeatureInfo output_feature_info_;
 };
 

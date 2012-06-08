@@ -96,9 +96,8 @@ class FeatureSampler : public FeatureConverter {
   int max_used_feature_;
 
   virtual void fillOutputFeatureInfo();
-  void applyImpl(const Object& source_object, 
+  void applyImpl(const Object& source_object,
                  Object* preprocessed_object) const;
-
 };
 }
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_

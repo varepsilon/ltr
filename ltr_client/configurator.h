@@ -40,32 +40,6 @@ struct TXmlTokenDependency {
   string parameter_name;
 };
 
-class TXmlTokenSpec;
-typedef std::list<const TXmlTokenSpec*> TXmlTokenSpecList;
-class TXmlTokenSpecPrivate;
-class TXmlTokenSpec {
- public:
-  TXmlTokenSpec();
-  TXmlTokenSpec(const TXmlTokenSpec& other);
-  TXmlTokenSpec& operator=(const TXmlTokenSpec& other);
-  ~TXmlTokenSpec();
-
-  const string& tagName() const;
-  const string& name() const;
-  const string& type() const;
-  const string& approach() const;
-  const ltr::ParametersContainer& parameters() const;
-
-  const TXmlTokenSpecList& dependencySpecs() const;
-
- private:
-  TXmlTokenSpecPrivate* const d;
-
-  friend class Configurator;
-  friend class TOnGeneralXmlToken;
-};
-string ToString(const TXmlTokenSpec& Info);
-
 
 struct TTrainInfo {
   TTrainInfo() {}
@@ -96,8 +70,7 @@ struct TCrossvalidationInfo {
 };
 string ToString(const TCrossvalidationInfo& Info);
 
-
-class ConfiguratorPrivate;
+class TXmlTokenSpec;
 class Configurator {
  public:
   typedef boost::unordered_map<string, TDataInfo> TDataInfos;
@@ -136,5 +109,38 @@ class Configurator {
   Configurator::TTrainInfos train_infos;
   Configurator::TCrossvalidationInfos crossvalidation_infos;
 };
+
+
+class TXmlTokenSpec;
+typedef std::list<const TXmlTokenSpec*> TXmlTokenSpecList;
+class TXmlTokenSpec {
+ public:
+  TXmlTokenSpec();
+  TXmlTokenSpec(const TXmlTokenSpec& other);
+  TXmlTokenSpec& operator=(const TXmlTokenSpec& other);
+  ~TXmlTokenSpec();
+
+  const string& getTagName() const;
+  const string& getName() const;
+  const string& getType() const;
+  const string& getApproach() const;
+  const ltr::ParametersContainer& getParameters() const;
+
+  const TXmlTokenSpecList& dependencySpecs() const;
+  void checkAvailability(
+      const Configurator::TXmlTokenSpecs& token_specifications);
+
+ private:
+  string tag_name;
+  string name;
+  string type;
+  string approach;
+  ltr::ParametersContainer parameters;
+  TXmlTokenSpecList dependency_specs;
+
+  friend class Configurator;
+  friend class TOnGeneralXmlToken;
+};
+string ToString(const TXmlTokenSpec& Info);
 
 #endif  // LTR_CLIENT_CONFIGURATOR_H_

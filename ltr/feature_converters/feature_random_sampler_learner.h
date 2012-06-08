@@ -28,7 +28,7 @@ namespace ltr {
 template <typename TElement>
 class FeatureRandomSamplerLearner
     : public FeatureConverterLearner<TElement, FeatureSampler> {
-  friend FeatureSampler;
+  friend class FeatureSampler;
  public:
   typedef boost::shared_ptr<FeatureRandomSamplerLearner> Ptr;
 
@@ -119,7 +119,8 @@ void FeatureRandomSamplerLearner<TElement>::learn(
 }
 
 template <typename TElement>
-FeatureSampler::Ptr FeatureRandomSamplerLearner<TElement>::makeSpecific() const {
+FeatureSampler::Ptr
+FeatureRandomSamplerLearner<TElement>::makeSpecific() const {
   return converter_;
 }
 };

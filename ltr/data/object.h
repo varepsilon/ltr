@@ -45,9 +45,6 @@ class Object : public Printable {
   /** Default constructor, creates an deep copy of an object.
    */
   Object(const Object& object);
-  /** Constructor that makes object from first object in vector.
-  */
-  explicit Object(const std::vector<Object>& objects);
   /** Constructor that makes default object with given FeatureInfo.
   */
   explicit Object(const FeatureInfo& feature_info);
