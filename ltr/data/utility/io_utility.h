@@ -83,6 +83,36 @@ void savePredictions(const DataSet<TElement>& data,
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
                      const string& filename);
+/**
+ * Function groups objects in lists, each having same
+ * meta-parameter
+ * @param objects - objects to group
+ * @param group_parameter - meta-parameter name
+ * @param result - result lists
+ */
+void groupByMeta(const vector<Object>& objects,
+                 const string& group_parameter,
+                 map<string, vector<Object> >* result);
+/**
+ * Function groups objects in lists, each having same
+ * integer meta-parameter
+ * @param objects - objects to group
+ * @param group_parameter - meta-parameter name
+ * @param result - result lists
+ */
+void groupByIntMeta(const vector<Object>& objects,
+                    const string& group_parameter,
+                    map<int, vector<Object> >* result);
+/**
+ * Function groups objects in lists, each having same
+ * float meta-parameter
+ * @param objects - objects to group
+ * @param group_parameter - meta-parameter name
+ * @param result - result lists
+ */
+void groupByFloatMeta(const vector<Object>& objects,
+                      const string& group_parameter,
+                      map<float, vector<Object> >* result);
 };
 };
 

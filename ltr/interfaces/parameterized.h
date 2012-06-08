@@ -13,31 +13,42 @@ using std::logic_error;
 namespace ltr {
 
 #define GET_SET(type, name) \
-  void set_##name(type name) { \
+  void set_##name(const type &name) { \
     name##_ = name; \
   }; \
-  type name() { \
+  type name() const { \
     return name##_; \
   };
 #define SET(type, name) \
-  void set_##name(type name) { \
+  void set_##name(const type &name) { \
     name##_ = name; \
   };
 #define GET(type, name) \
-  type name() { \
+  type name() const { \
     return name##_; \
   };
 
-#define CHECK(expr) \
-  if (!(expr)) { \
-    throw logic_error("Expected: " #expr); \
+#define CHECK(expression) \
+  if (!(expression)) { \
+    throw logic_error("Expected: " #expression); \
   }
 
-
+/**
+ * Parameterized is a class that provides derived subclasses hold their
+ * different-type parameters (int, double and bool) in convenient
+ * way. E.g. a derived subclass knows it's default parameters
+ */
 class Parameterized {
  public:
   virtual ~Parameterized();
+  /**
+   * Set default values of parameters
+   */
   virtual void setDefaultParameters();
+  /**
+   * Perform checks of parameters. In case of wrong parameters
+   * std::logic_error will be thrown.
+   */
   virtual void checkParameters() const;
   void setParameters(const ParametersContainer &parameters);
   // \deprecated

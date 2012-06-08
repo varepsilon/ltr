@@ -35,7 +35,7 @@ typedef map<string, string> MetaInfo;
  * feature vector and meta information;
  */
 class Object : public Printable {
-  public:
+ public:
   /** \typedef Shared pointer to an object.
    */
   typedef boost::shared_ptr<Object> Ptr;
@@ -45,9 +45,6 @@ class Object : public Printable {
   /** Default constructor, creates an deep copy of an object.
    */
   Object(const Object& object);
-  /** Constructor that makes object from first object in vector.
-  */
-  explicit Object(const std::vector<Object>& objects);
   /** Constructor that makes default object with given FeatureInfo.
   */
   explicit Object(const FeatureInfo& feature_info);
@@ -63,12 +60,6 @@ class Object : public Printable {
   /** Sets a meta information with given name.
    */
   void setMetaInfo(const string& name, const string& value);
-  /** Returns constant link to meta information of the object.
-   */
-  const MetaInfo& meta_info() const;
-  /** Returns a link to meta information of the object.
-   */
-  MetaInfo& meta_info();
   /** Append a feature to the feature vector of the object.
    */
   Object& operator<<(double feature_value);
@@ -134,7 +125,7 @@ class Object : public Printable {
 
   const FeatureInfo& feature_info() const;
 
-  private:
+ private:
   /** Shared pointer to FeatureInfo.
    */
   FeatureInfo::Ptr feature_info_;

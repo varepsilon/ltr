@@ -11,9 +11,9 @@ using std::string;
 namespace ltr {
 
 class Printable {
-  public:
-    virtual string toString() const = 0;
-    virtual ~Printable() {}
+ public:
+  virtual string toString() const = 0;
+  virtual ~Printable() {}
 };
 std::ostream& operator<<(std::ostream& stream, const Printable& printable);
 }

@@ -4,13 +4,12 @@
 
 #include "ltr/learners/decision_tree/id3_splitter.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/data/utility/data_set_utility.h"
+#include "ltr/data/utility/io_utility.h"
 
 #include "ltr/learners/decision_tree/compare_condition.h"
 
 using ltr::utility::DoubleEqual;
 using ltr::utility::DoubleLessOrEqual;
-using ltr::utility::lightSubset;
 
 namespace ltr {
 namespace decision_tree {
@@ -30,7 +29,7 @@ void ID3_Splitter::init() {
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
-  if (current_feature >= data_.featureInfo().get_feature_count())
+  if (current_feature >= data_.feature_info().get_feature_count())
     return 0;
   result->clear();
 
@@ -76,8 +75,8 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
           push_back((feature_values[i] + feature_values[i+1]) / 2);
     }
   }
-  if (data_.featureInfo().getFeatureType(current_feature) == BOOLEAN ||
-      data_.featureInfo().getFeatureType(current_feature) == NOMINAL) {
+  if (data_.feature_info().getFeatureType(current_feature) == BOOLEAN ||
+      data_.feature_info().getFeatureType(current_feature) == NOMINAL) {
     for (int j = 0; j < feature_values.size(); j++)
       result->push_back(
         CompareConditionPtr(OneFeatureConditionPtr(current_feature),

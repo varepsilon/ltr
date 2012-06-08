@@ -10,7 +10,7 @@
 #include "ltr/measures/abs_error.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/linear_composition/linear_composition_learner.h"
-#include "ltr/feature_converters/RSM_feature_converter_learner.h"
+#include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
 
 using ltr::BestFeatureLearner;
@@ -19,7 +19,7 @@ using ltr::Measure;
 using ltr::ID3_Learner;
 using ltr::gp::GPLearner;
 using ltr::lc::LinearCompositionLearner;
-using ltr::RSMFeatureConverterLearner;
+using ltr::FeatureRandomSamplerLearner;
 using ltr::LinearLearner;
 
 using serialization_test::Generator;
@@ -61,8 +61,8 @@ int main(int argc, char* argv[]) {
   LinearCompositionLearner<Object>::Ptr rsm_lc_learner(
     new LinearCompositionLearner<Object>);
   rsm_lc_learner->setMeasure(abs_error);
-  RSMFeatureConverterLearner<Object>::Ptr
-    rsm(new RSMFeatureConverterLearner<Object>);
+  FeatureRandomSamplerLearner<Object>::Ptr
+    rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverter(rsm);
   rsm_lc_learner->setWeakLearner(bf_learner);
   rsm_lc_learner->learn(generator.train_data);

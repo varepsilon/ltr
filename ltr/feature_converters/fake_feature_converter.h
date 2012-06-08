@@ -16,16 +16,16 @@ using std::string;
 
 namespace ltr {
 /**
- * Fake feature converter. Does nothing with inputted object
+ * Fake feature converter. Does nothing with input object
  */
 class FakeFeatureConverter : public FeatureConverter {
-  public:
+ public:
   typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter("FakeFeatureConverter", feature_info) {}
-
-  FeatureInfo getNewFeatureInfo() const;
+      : FeatureConverter(feature_info) {
+    fillOutputFeatureInfo();
+  }
 
   void applyImpl(const Object& source_object,
     Object* preprocessed_object) const;
@@ -43,6 +43,8 @@ class FakeFeatureConverter : public FeatureConverter {
 
     return hpp_string;
   }
+ private:
+  virtual void fillOutputFeatureInfo();
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

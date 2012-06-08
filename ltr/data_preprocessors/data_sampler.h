@@ -23,7 +23,6 @@ using std::vector;
 using std::logic_error;
 using std::max_element;
 
-using ltr::utility::lightSubset;
 using ltr::utility::Indices;
 using ltr::utility::IndicesPtr;
 
@@ -60,13 +59,11 @@ class DataSampler : public DataPreprocessor<TElement> {
 // template realizations
 
 template <typename TElement>
-DataSampler<TElement>::DataSampler(IndicesPtr indices)
-    : DataPreprocessor<TElement>("DataSampler") {
+DataSampler<TElement>::DataSampler(IndicesPtr indices) {
   set_indices(indices);
 }
 template <typename TElement>
-DataSampler<TElement>::DataSampler(const ParametersContainer& parameters)
-    : DataPreprocessor<TElement>("DataSampler") {
+DataSampler<TElement>::DataSampler(const ParametersContainer& parameters) {
   this->setParameters(parameters);
 }
 
@@ -91,7 +88,7 @@ template <class TElement>
 void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
   if (indices_->size() != 0) {
-    *output = lightSubset(input, *indices_);
+    *output = input.lightSubset(*indices_);
   } else {
     *output = input;
   }
@@ -100,14 +97,14 @@ void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
 template <typename TElement>
 string DataSampler<TElement>::toString() const {
   std::stringstream str;
-  str << "Sampler: indices = {";
+  str << "DataSampler: indices = [";
   for (int i = 0; i < indices_->size(); ++i) {
     if (i != 0) {
       str << ", ";
     }
     str << indices_->at(i);
   }
-  str << "}";
+  str << "]";
   return str.str();
 }
 };

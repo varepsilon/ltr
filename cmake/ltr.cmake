@@ -36,8 +36,6 @@ SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/learners/decision_tree/utility/
                               ${Source_Path}/ltr/learners/decision_tree/utility/utility.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
-                   ${Source_Path}/ltr/data/utility/data_set_utility.h
-                   ${Source_Path}/ltr/data/utility/data_set_utility.cc
                    ${Source_Path}/ltr/data/utility/data_set_converters.h
                    ${Source_Path}/ltr/data/utility/data_set_converters.cc
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
@@ -113,26 +111,27 @@ SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
 
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
-                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.h
-                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser.cc
+                           ${Source_Path}/ltr/feature_converters/feature_sampler.h
+                           ${Source_Path}/ltr/feature_converters/feature_sampler.cc
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.h
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
-                           ${Source_Path}/ltr/feature_converters/feature_subset_chooser_learner.h
-                           ${Source_Path}/ltr/feature_converters/RSM_feature_converter_learner.h
+                           ${Source_Path}/ltr/feature_converters/feature_sampler_learner.h
+                           ${Source_Path}/ltr/feature_converters/feature_random_sampler_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.cc
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h
-                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.h
-                           ${Source_Path}/ltr/feature_converters/remove_nan_converter.cc
-                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
-                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.h
+                           ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.cc
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_wrapper.h)
 
-SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
+SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h
+                                   ${Source_Path}/ltr/feature_converters/utility/utility.cc)
                            
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/data_sampler.h

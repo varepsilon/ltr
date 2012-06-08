@@ -30,10 +30,6 @@ namespace ltr {
   /** Constructor creates a new pair of two copies of the two given objects.
    */
   ObjectPair(const Object& first, const Object& second);
-  /** Creates a ObjectPair from copies of objects[0] and objects[1] from the
-   * given vector.
-   */
-  explicit ObjectPair(const std::vector<Object>& objects);
   /** Returns a constant link to the first object in the pair.
    */
   const Object& first() const;

@@ -10,7 +10,7 @@
 #include <sstream>
 
 #include "ltr/data/utility/parsers/parse_svm.h"
-#include "ltr/data/utility/data_set_utility.h"
+#include "ltr/data/utility/io_utility.h"
 #include "ltr/utility/numerical.h"
 
 using boost::algorithm::trim_copy;
@@ -85,7 +85,7 @@ namespace ltr {
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
-    utility::groupByIntMeta(objects, "queryId", &objects_);
+    groupByIntMeta(objects, "queryId", &objects_);
 
     for (object_iterator i = objects_.begin(); i != objects_.end(); i++) {
       ObjectList list;
@@ -102,7 +102,7 @@ namespace ltr {
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
-    utility::groupByIntMeta(objects, "queryId", &objects_);
+    groupByIntMeta(objects, "queryId", &objects_);
 
     for (object_iterator i = objects_.begin(); i != objects_.end(); i++)
       for (int j = 0; j < i->second.size(); j++)

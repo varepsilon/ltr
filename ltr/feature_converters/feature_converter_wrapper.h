@@ -13,27 +13,26 @@ namespace ltr {
 template <class TElement, class TFeatureConverter>
 class FeatureConverterWrapper
     : public FeatureConverterLearner<TElement, TFeatureConverter> {
-  private:
-    FeatureInfo feature_info_;
-
   public:
     typedef boost::shared_ptr<FeatureConverterWrapper> Ptr;
 
     virtual void learn(const DataSet<TElement>& data_set) {
-      feature_info_ = data_set.featureInfo();
+      feature_info_ = data_set.feature_info();
     }
 
-    virtual TFeatureConverter make() const {
-      return TFeatureConverter(feature_info_);
+    virtual typename TFeatureConverter::Ptr makeSpecific() const {
+      return typename TFeatureConverter::Ptr(
+          new TFeatureConverter(feature_info_));
     }
 
     void setDefaultParameters() {}
     void checkParameters() const {}
     string toString() const {
-      string s = "Feature converter learner (wrapper) for ";
-      s.append(TFeatureConverter().alias());
+      string s = "Feature converter learner (wrapper)";
       return s;
     }
+  private:
+    FeatureInfo feature_info_;
 };
 }
 

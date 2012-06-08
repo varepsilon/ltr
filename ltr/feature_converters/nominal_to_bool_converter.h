@@ -10,15 +10,17 @@
 
 namespace ltr {
 class NominalToBoolConverter : public FeatureConverter {
-  public:
-    typedef boost::shared_ptr<NominalToBoolConverter> Ptr;
+ public:
+  typedef boost::shared_ptr<NominalToBoolConverter> Ptr;
 
-    NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter("NominalToBoolConverter", feature_info) {}
-
-    virtual FeatureInfo getNewFeatureInfo() const;
-    virtual void applyImpl(const Object& argument, Object* value) const;
-    string generateCppCode(const std::string &) const;
+  NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
+      : FeatureConverter(feature_info) {
+    fillOutputFeatureInfo();
+  }
+  string generateCppCode(const std::string &) const;
+ private:
+  virtual void fillOutputFeatureInfo();
+  virtual void applyImpl(const Object& argument, Object* value) const;
 };
 
 template <typename TElement>

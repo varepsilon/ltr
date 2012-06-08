@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
-#define LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
+#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
+#define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -12,7 +12,7 @@
 #include <sstream>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
-#include "ltr/feature_converters/feature_subset_chooser.h"
+#include "ltr/feature_converters/feature_sampler.h"
 
 using std::string;
 using std::set;
@@ -21,14 +21,15 @@ using std::vector;
 
 namespace ltr {
 /**
- * Produces FeatureSubsetChooser with specific indices. Duplication of indices
+ * Produces FeatureSampler with specific indices. Duplication of indices
  * is denied (throws while checking parameters)
  */
 template <typename TElement>
-class FeatureSubsetChooserLearner
-    : public FeatureConverterLearner<TElement, FeatureSubsetChooser> {
-  public:
-  typedef boost::shared_ptr<FeatureSubsetChooserLearner> Ptr;
+class FeatureSamplerLearner
+    : public FeatureConverterLearner<TElement, FeatureSampler> {
+  friend class FeatureSampler;
+ public:
+  typedef boost::shared_ptr<FeatureSamplerLearner> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with list parameter
@@ -37,7 +38,7 @@ class FeatureSubsetChooserLearner
    * for train dataset is produced.
    * By default INDICES is empty
    */
-  explicit FeatureSubsetChooserLearner(const ParametersContainer& parameters =
+  explicit FeatureSamplerLearner(const ParametersContainer& parameters =
       ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
@@ -45,26 +46,26 @@ class FeatureSubsetChooserLearner
   }
 
   void learn(const DataSet<TElement>& data_set);
-  FeatureSubsetChooser make() const;
+  virtual FeatureSampler::Ptr makeSpecific() const;
 
   void setDefaultParameters();
   void checkParameters() const;
 
   string toString() const;
   private:
-  FeatureSubsetChooser converter_;
+  FeatureSampler::Ptr converter_;
 };
 
 // template realizations
 template <typename TElement>
-void FeatureSubsetChooserLearner<TElement>::setDefaultParameters() {
+void FeatureSamplerLearner<TElement>::setDefaultParameters() {
   this->clearParameters();
   vector<int> empty;
   this->addNewParam("INDICES", empty);
 }
 
 template <typename TElement>
-void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
+void FeatureSamplerLearner<TElement>::checkParameters() const {
   vector<int> indices = this->parameters().
                         template Get<std::vector<int> >("INDICES");
   set<int> used_features;
@@ -79,7 +80,7 @@ void FeatureSubsetChooserLearner<TElement>::checkParameters() const {
 }
 
 template <typename TElement>
-string FeatureSubsetChooserLearner<TElement>::toString() const {
+string FeatureSamplerLearner<TElement>::toString() const {
   std::stringstream str;
     str << "Feature subset chooser feature converter learner"
       << "with parameter INDICES = {";
@@ -96,25 +97,26 @@ string FeatureSubsetChooserLearner<TElement>::toString() const {
 }
 
 template <typename TElement>
-void FeatureSubsetChooserLearner<TElement>
+void FeatureSamplerLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  converter_.setFeatureInfo(data_set.featureInfo());
+  converter_ = FeatureSampler::Ptr(new FeatureSampler);
+  converter_->set_input_feature_info(data_set.feature_info());
   const ParametersContainer &params = this->parameters();
   if (params.GetRef<std::vector<int> >("INDICES").size() == 0) {
-    vector<int> all_used(data_set.featureInfo().get_feature_count());
+    vector<int> all_used(data_set.feature_info().get_feature_count());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    converter_.setChoosedFeaturesIndices(all_used);
+    converter_->setChoosedFeaturesIndices(all_used);
   } else {
-    converter_.setChoosedFeaturesIndices(
+    converter_->setChoosedFeaturesIndices(
       params.GetRef<std::vector<int> >("INDICES"));
   }
 }
 
 template <typename TElement>
-FeatureSubsetChooser FeatureSubsetChooserLearner<TElement>::make() const {
+FeatureSampler::Ptr FeatureSamplerLearner<TElement>::makeSpecific() const {
   return converter_;
 }
 };
-#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
+#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
