@@ -56,11 +56,11 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "PFound measure with parameters: P_BREAK = ";
-    str << this->parameters().Get<double>("P_BREAK");
+    str << this->getParameter<double>("P_BREAK");
     str << ", MAX_LABEL = ";
-    str << this->parameters().Get<double>("MAX_LABEL");
+    str << this->getParameter<double>("MAX_LABEL");
     str << ", NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->parameters().Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->getParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 };

@@ -126,7 +126,7 @@ class Object : public Printable {
    */
   friend bool operator==(const Object& lhs, const Object& rhs);
 
-  /** 
+  /**
    * Function for serialization of object.
    * Returns string of feature values in brackets. For example: [1, 5.6, 2.3]
    */

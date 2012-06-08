@@ -48,13 +48,13 @@ static const char * const MEASURE         = "measure";
 
 template <class Key, class Value>
 static inline void DeleteAllFromUnorderedMap(
-    boost::unordered_map<Key, Value> *container
+    boost::unordered_map<Key, Value> *unorderedMapInstance
     ) {
-  assert(container);
+  assert(unorderedMapInstance);
   // C++11 We have no unique_ptr so we MUST delete pointers manually
   for (typename boost::unordered_map<Key, Value>::const_iterator it =
-       container->begin();
-       it != container->end();
+       unorderedMapInstance->begin();
+       it != unorderedMapInstance->end();
        ++it) {
     delete it->second;
   }
@@ -62,37 +62,37 @@ static inline void DeleteAllFromUnorderedMap(
 
 class TExecutor {
  public:
-  explicit TExecutor(Configurator* impl)
-    : d(impl) {}
+  explicit TExecutor(Configurator* configuratorInstance)
+    : d(configuratorInstance) {}
   virtual ~TExecutor() {}
-  virtual void operator()(TiXmlElement* element) = 0;
+  virtual void operator()(TiXmlElement* xmlElement) = 0;
  protected:
   Configurator* d;
 };
 
 typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
 
-static inline void GenericParse(const TStrExecMap& handlers,
-                                TiXmlNode* node,
+static inline void GenericParse(const TStrExecMap& executors,
+                                TiXmlNode* xmlNode,
                                 TExecutor* on_unknown_token = NULL) {
-  for (; node; node = node->NextSibling()) {
-    if (node->Type() != TiXmlNode::TINYXML_ELEMENT) {
+  for (; xmlNode; xmlNode = xmlNode->NextSibling()) {
+    if (xmlNode->Type() != TiXmlNode::TINYXML_ELEMENT) {
       continue;
     }
 
-    TiXmlElement* element = node->ToElement();
+    TiXmlElement* element = xmlNode->ToElement();
     if (!element) {
       throw logic_error("Can not convert node to element");
     }
 
-    const TStrExecMap::const_iterator it = handlers.find(node->Value());
-    if (it == handlers.end()) {
+    const TStrExecMap::const_iterator it = executors.find(xmlNode->Value());
+    if (it == executors.end()) {
       if (on_unknown_token) {
         (*on_unknown_token)(element);
       } else {
         throw logic_error(string("Unknown token Value: ") +
-                          node->Value() + ", Type: " +
-                          boost::lexical_cast<string>(node->Type()) +
+                          xmlNode->Value() + ", Type: " +
+                          boost::lexical_cast<string>(xmlNode->Type()) +
                           "\n");
       }
     } else {

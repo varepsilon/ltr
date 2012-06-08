@@ -20,7 +20,7 @@ namespace ltr {
 * \brief This class is a storage for parameters of different types.
 * Is able to store POD-type parameters and user-defined-type parameters.
 * This class is needed for unified initialization in ltr-client.
-* 
+*
 * \sa Parameterized
 */
 class ParametersContainer: public Printable {

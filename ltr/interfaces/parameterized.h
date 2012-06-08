@@ -67,6 +67,8 @@ class Parameterized {
   }
   // \deprecated
   const ParametersContainer& parameters() const;
+  template <typename DesiredType>
+  DesiredType getParameter(const string& name) const;
   // \deprecated
   void copyParameters(const ParametersContainer &parameters);
  protected:
@@ -76,6 +78,41 @@ class Parameterized {
   // \deprecated
   ParametersContainer parameters_;
 };
-};
 
+// template realization
+
+template <class DesiredType>
+DesiredType Parameterized::getParameter(const string& name) const {
+  try {
+    return parameters_.Get<DesiredType>(name);
+  } catch (std::logic_error error) {
+    try {
+      return parameters_.Get<Parameterized*, DesiredType>(name);
+    } catch (std::logic_error error) {
+      throw;
+    }
+  }
+}
+
+template<>
+inline double Parameterized::getParameter<double>(const string& name) const {
+  return parameters_.Get<double>(name);
+}
+
+template<>
+inline int Parameterized::getParameter<int>(const string& name) const {
+  return parameters_.Get<int>(name);
+}
+
+template<>
+inline bool Parameterized::getParameter<bool>(const string& name) const {
+  return parameters_.Get<bool>(name);
+}
+
+template<>
+inline float Parameterized::getParameter<float>(const string& name) const {
+  return parameters_.Get<float>(name);
+}
+
+};
 #endif  // LTR_INTERFACES_PARAMETERIZED_H_
