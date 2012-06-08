@@ -21,7 +21,8 @@ class FeatureConverterWrapper
     }
 
     virtual typename TFeatureConverter::Ptr makeSpecific() const {
-      return TFeatureConverter::Ptr(new TFeatureConverter(feature_info_));
+      return typename TFeatureConverter::Ptr(
+          new TFeatureConverter(feature_info_));
     }
 
     void setDefaultParameters() {}
