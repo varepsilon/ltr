@@ -22,7 +22,7 @@ using std::cout;
 class LtrClientPrivate {
  public:
   template <class TElement>
-  void executeTrain(ltr::Parameterized *parameterized,
+  void executeTrain(ltr::Parameterized* parameterized,
                 const TTrainInfo &train_info);
 
   Configurator configurator;
@@ -247,9 +247,9 @@ void LtrClient::launch() {
 
 int main(int argc, char* argv[]) {
   LOGOG_INITIALIZE();
-  logog::Cout out;
-  logog::LogFile outFile("ltr_client.log");
-  logog::GetDefaultFormatter().SetShowTimeOfDay(true);
+//  logog::Cout out;
+//  logog::LogFile outFile("ltr_client.log");
+//  logog::GetDefaultFormatter().SetShowTimeOfDay(true);
 
   if (argc < 2) {
       ERR("config file  missing");
@@ -260,13 +260,17 @@ int main(int argc, char* argv[]) {
   factory.registerType<ltr::BestFeatureLearner<ltr::ObjectList> >
       ("BEST_FEATURElistwise");
   factory.registerType<ltr::NDCG>("NDCG");
+  cout << "!!!!!!!!";
   LtrClient client;
   try {
       client.initFrom(argv[1]);
       client.launch();
   } catch(const std::logic_error &err) {
       ERR("Failed: %s", err.what());
+  } catch(...) {
+      ERR("Caught exception");
   }
+
   LOGOG_SHUTDOWN();
   return 0;
 }
