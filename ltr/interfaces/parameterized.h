@@ -96,10 +96,10 @@ template <class DesiredType>
 DesiredType Parameterized::getParameter(const string& name) const {
   try {
     return parameters_.Get<DesiredType>(name);
-  } catch (std::logic_error error) {
+  } catch(std::logic_error error) {
     try {
       return parameters_.Get<Parameterized*, DesiredType>(name);
-    } catch (std::logic_error error) {
+    } catch(std::logic_error error) {
       throw;
     }
   }
@@ -124,6 +124,5 @@ template<>
 inline float Parameterized::getParameter<float>(const string& name) const {
   return parameters_.Get<float>(name);
 }
-
 };
 #endif  // LTR_INTERFACES_PARAMETERIZED_H_
