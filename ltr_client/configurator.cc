@@ -186,18 +186,7 @@ string ToString(const TCrossvalidationInfo& info) {
 
 // =============================== TXmlTokenSpec ============================
 
-class TXmlTokenSpecPrivate {
- public:
-  void checkAvailability(const Configurator::TXmlTokenSpecs& token_specs);
-
-  string tag_name;
-  string name;
-  string type;
-  string approach;
-  ltr::ParametersContainer parameters;
-  TXmlTokenSpecList dependency_specs;
-};
-void TXmlTokenSpecPrivate::checkAvailability(
+void TXmlTokenSpec::checkAvailability(
     const Configurator::TXmlTokenSpecs& token_specs) {
   dependency_specs.clear();
 
@@ -225,7 +214,7 @@ void TXmlTokenSpecPrivate::checkAvailability(
     }
 
     if (!found) {
-      throw logic_error("TXmlTokenSpecPrivate::checkAvailability: "
+      throw logic_error("TXmlTokenSpec::checkAvailability: "
                         "Could not resolve dependency " +
                         dependency.value.parameter_name);
     }
@@ -234,10 +223,14 @@ void TXmlTokenSpecPrivate::checkAvailability(
 }
 
 TXmlTokenSpec::TXmlTokenSpec()
-  : d(new TXmlTokenSpecPrivate) {}
+  : tag_name()
+  , name()
+  , type()
+  , approach()
+  , parameters()
+  , dependency_specs() {}
 
-TXmlTokenSpec::TXmlTokenSpec(const TXmlTokenSpec& other)
-  : d(new TXmlTokenSpecPrivate) {
+TXmlTokenSpec::TXmlTokenSpec(const TXmlTokenSpec& other) {
   *this = other;
 }
 
@@ -245,49 +238,48 @@ TXmlTokenSpec& TXmlTokenSpec::operator= (const TXmlTokenSpec& other) {
   if (this == &other) {
     return *this;
   }
-  d->name = other.name();
-  d->type = other.type();
-  d->approach = other.approach();
-  d->parameters = other.parameters();
-  d->dependency_specs = other.dependencySpecs();
+  name = other.getName();
+  type = other.getType();
+  approach = other.getApproach();
+  parameters = other.getParameters();
+  dependency_specs = other.dependencySpecs();
   return *this;
 }
 
 
 TXmlTokenSpec::~TXmlTokenSpec() {
-  delete d;
 }
 
-const string& TXmlTokenSpec::tagName() const {
-  return d->tag_name;
+const string& TXmlTokenSpec::getTagName() const {
+  return tag_name;
 }
-const string& TXmlTokenSpec::name() const {
-  return d->name;
+const string& TXmlTokenSpec::getName() const {
+  return name;
 }
-const string& TXmlTokenSpec::type() const {
-  return d->type;
+const string& TXmlTokenSpec::getType() const {
+  return type;
 }
-const string& TXmlTokenSpec::approach() const {
-  return d->approach;
+const string& TXmlTokenSpec::getApproach() const {
+  return approach;
 }
-const ltr::ParametersContainer& TXmlTokenSpec::parameters() const {
-  return d->parameters;
+const ltr::ParametersContainer& TXmlTokenSpec::getParameters() const {
+  return parameters;
 }
 const TXmlTokenSpecList& TXmlTokenSpec::dependencySpecs() const {
-  return d->dependency_specs;
+  return dependency_specs;
 }
 
 string ToString(const TXmlTokenSpec& info) {
   stringstream out(stringstream::out);
-  out << "TXmlTokenSpec(name=" << info.name()
-      << ", type=" << info.type()
-      << ", approach=" << info.approach()
-      << ", parameters=" << info.parameters().toString()
+  out << "TXmlTokenSpec(name=" << info.getName()
+      << ", type=" << info.getType()
+      << ", approach=" << info.getApproach()
+      << ", parameters=" << info.getParameters().toString()
          << ", my dependencies=(";
   for (TXmlTokenSpecList::const_iterator it = info.dependencySpecs().begin();
       it != info.dependencySpecs().end();
       ++it) {
-    out << (*it)->name() << ", ";
+    out << (*it)->getName() << ", ";
   }
   out << "))";
   return out.str();
@@ -499,12 +491,12 @@ class TOnGeneralXmlToken: public TExecutor {
       throw logic_error("no tag name");
     }
 
-    spec.d->tag_name = tag_name;
-    spec.d->name = name;
-    spec.d->type = type;
-    spec.d->approach = approach;
+    spec.tag_name = tag_name;
+    spec.name = name;
+    spec.type = type;
+    spec.approach = approach;
 
-    parameters_executor->setContainer(&spec.d->parameters);
+    parameters_executor->setContainer(&spec.parameters);
     GenericParse(TStrExecMap(),
                  element->FirstChildElement(),
                  parameters_executor);
@@ -763,11 +755,11 @@ void Configurator::loadConfig(const string& file_name) {
   cout << "crossvalidation_infos\n" << ToString(crossvalidationInfos())
        << endl;
 
-  for (TXmlTokenSpecs::const_iterator it = xmlTokenSpecs().begin();
+  for (TXmlTokenSpecs::iterator it = xmlTokenSpecs().begin();
       it != xmlTokenSpecs().end();
       ++it) {
-    const TXmlTokenSpec& spec = it->second;
-    spec.d->checkAvailability(xmlTokenSpecs());
+    TXmlTokenSpec& spec = it->second;
+    spec.checkAvailability(xmlTokenSpecs());
   }
 }
 
@@ -808,7 +800,7 @@ const TXmlTokenSpec& Configurator::findLearner(const string& name) const {
        it != xml_token_specs.end();
        ++it) {
     const TXmlTokenSpec& spec = it->second;
-    if (spec.tagName() == "learner" && spec.name() == name) {
+    if (spec.getTagName() == "learner" && spec.getName() == name) {
       return spec;
     }
   }

@@ -49,18 +49,18 @@ class FeatureConvertersTest : public ::testing::Test {
       (new NanToZeroConverterLearner<ltr::Object>);
     nan_to_zero_converter->learn(learn_data_pointwise);
     FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
-    ApplyFeatureConverter(remove_NaN,
+    ltr::utility::ApplyFeatureConverter(remove_NaN,
       learn_data_pointwise, &learn_data_pointwise);
-    ApplyFeatureConverter(remove_NaN,
+    ltr::utility::ApplyFeatureConverter(remove_NaN,
       test_data_pointwise, &test_data_pointwise);
 
     NanToZeroConverterLearner<ltr::ObjectList>::Ptr nan_to_zero_converter2
       (new NanToZeroConverterLearner<ltr::ObjectList>);
     nan_to_zero_converter2->learn(learn_data_listwise);
     FeatureConverter::Ptr remove_NaN2 = nan_to_zero_converter2->make();
-    ApplyFeatureConverter(remove_NaN2,
+    ltr::utility::ApplyFeatureConverter(remove_NaN2,
       learn_data_listwise, &learn_data_listwise);
-    ApplyFeatureConverter(remove_NaN2,
+    ltr::utility::ApplyFeatureConverter(remove_NaN2,
       test_data_listwise, &test_data_listwise);
   }
 

@@ -16,8 +16,8 @@ namespace ltr {
  * Produces FakeFeatureConverter
  */
 template <class TElement>
-class FakeFeatureConverterLearner :
-    public FeatureConverterLearner<TElement, FakeFeatureConverter> {
+class FakeFeatureConverterLearner
+: public FeatureConverterLearner<TElement, FakeFeatureConverter> {
  public:
   typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
 
@@ -31,7 +31,7 @@ class FakeFeatureConverterLearner :
 // template realizations
 
 template <class TElement>
-FakeFeatureConverter::Ptr 
+FakeFeatureConverter::Ptr
 FakeFeatureConverterLearner<TElement>::makeSpecific() const {
   return FakeFeatureConverter::Ptr(new FakeFeatureConverter(feature_info_));
 }

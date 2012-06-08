@@ -119,7 +119,8 @@ void FeatureRandomSamplerLearner<TElement>::learn(
 }
 
 template <typename TElement>
-FeatureSampler::Ptr FeatureRandomSamplerLearner<TElement>::makeSpecific() const {
+FeatureSampler::Ptr
+FeatureRandomSamplerLearner<TElement>::makeSpecific() const {
   return converter_;
 }
 };

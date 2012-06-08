@@ -61,8 +61,7 @@ string NominalToBoolConverter::generateCppCode(
     append("};\n").
     append("  vector<int> feature_values[").
     append(
-      boost::lexical_cast<string>(input_feature_info_.get_feature_count())
-    ).
+      boost::lexical_cast<string>(input_feature_info_.get_feature_count())).
     append("];\n");
 
   for (size_t i = 0; i < input_feature_info_.get_feature_count(); i++)

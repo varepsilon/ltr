@@ -132,7 +132,8 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_wrapper.h)
 
-SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h)
+SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h
+                                   ${Source_Path}/ltr/feature_converters/utility/utility.cc)
                            
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/data_sampler.h

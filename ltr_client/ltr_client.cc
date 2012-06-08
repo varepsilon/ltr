@@ -101,8 +101,8 @@ static ltr::Parameterized *Create(const std::string &name,
   assert(it != all_specs.end());
   const TXmlTokenSpec *spec = &it->second;
   const ltr::ParametersContainer &parameters =
-      Create(spec->parameters(), all_specs);
-  return Factory::instance()->Create(spec->type(), parameters);
+      Create(spec->getParameters(), all_specs);
+  return Factory::instance()->Create(spec->getType(), parameters);
 }
 static ltr::ParametersContainer Create(
     const ltr::ParametersContainer &src_parameters,
@@ -167,7 +167,7 @@ void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
                                                            train_info.learner);
 
   const TDataInfo &data_info = configurator.findData(train_info.data);
-  if (learner_info.approach() != data_info.approach)
+  if (learner_info.getApproach() != data_info.approach)
     throw std::logic_error("Approach of learner and data does not coincide!");
 
   const ltr::DataSet<TElement> &data_set =
@@ -191,7 +191,7 @@ void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
       return;
     }
     const std::string &predict_file_path = configurator.rootPath() +
-                                   learner_info.name() + "."
+                                   learner_info.getName() + "."
                                    + predict + ".predicts";
 
     ltr::Scorer::Ptr scorer = learner->makeScorerPtr();
@@ -202,10 +202,10 @@ void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
 
     if (train_info.gen_cpp) {
         std::string cpp_file_path = configurator.rootPath() +
-                                    learner_info.name() +
+                                    learner_info.getName() +
                                     ".cpp";
         std::ofstream fout(cpp_file_path.c_str());
-        fout << scorer->generateCppCode(learner_info.name());
+        fout << scorer->generateCppCode(learner_info.getName());
         fout.close();
         std::cout  << "cpp code saved into " << cpp_file_path << std::endl;
     }
@@ -222,18 +222,18 @@ void LtrClient::launch() {
                                           train_info.learner);
 
     const ltr::ParametersContainer &parameters = Create(
-                                               learner_info.parameters(),
+                                               learner_info.getParameters(),
                                                d->configurator.xmlTokenSpecs());
     std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
                  parameters.toString() << "\n";
-    ltr::Parameterized *parameterized =
-                               Factory::instance()->Create(learner_info.type() +
-                                                        learner_info.approach(),
-                                                                    parameters);
+    ltr::Parameterized*
+        parameterized = Factory::instance()->Create(learner_info.getType() +
+                                                    learner_info.getApproach(),
+                                                    parameters);
 
-    if (learner_info.approach() == "listwise") {
+    if (learner_info.getApproach() == "listwise") {
       d->executeTrain<ltr::ObjectList>(parameterized, train_info);
-    } else if (learner_info.approach() == "pairwise") {
+    } else if (learner_info.getApproach() == "pairwise") {
       d->executeTrain<ltr::ObjectPair>(parameterized, train_info);
     } else {
       assert(false && "Not implemented yet");

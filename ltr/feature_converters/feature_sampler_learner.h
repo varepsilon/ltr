@@ -1,7 +1,7 @@
 // Copyright 2011 Yandex
 
-#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
-#define LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
+#ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
+#define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -27,7 +27,7 @@ namespace ltr {
 template <typename TElement>
 class FeatureSamplerLearner
     : public FeatureConverterLearner<TElement, FeatureSampler> {
- friend FeatureSampler;
+  friend FeatureSampler;
  public:
   typedef boost::shared_ptr<FeatureSamplerLearner> Ptr;
 
@@ -119,4 +119,4 @@ FeatureSampler::Ptr FeatureSamplerLearner<TElement>::makeSpecific() const {
   return converter_;
 }
 };
-#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SUBSET_CHOOSER_LEARNER_H_
+#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_

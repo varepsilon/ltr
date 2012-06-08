@@ -14,11 +14,6 @@ ObjectPair::ObjectPair(const Object& first, const Object& second)
                       : first_(first),
                         second_(second) {}
 
-ObjectPair::ObjectPair(const std::vector<Object>& objects)
-                      : first_(objects[0]),
-                        second_(objects[1]) {}
-
-
 const Object& ObjectPair::first() const {
   return first_;
 }
