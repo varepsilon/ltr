@@ -3,20 +3,21 @@
 #ifndef LTR_DATA_UTILITY_IO_UTILITY_H_
 #define LTR_DATA_UTILITY_IO_UTILITY_H_
 
-#include <string>
-#include <vector>
+#include <fstream>
 #include <map>
 #include <stdexcept>
-#include <fstream>
+#include <string>
+#include <vector>
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/parsers/parser.h"
-
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/numerical.h"
 
-using std::string;
+using std::ifstream;
 using std::map;
+using std::ofstream;
+using std::string;
 using std::vector;
 
 namespace ltr {
@@ -31,7 +32,7 @@ namespace io_utility {
  */
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
-    const string& format);
+                              const string& format);
 /**
  * Function to save data set into file.
  * @param data - data set to save
@@ -43,8 +44,8 @@ DataSet<TElement> loadDataSet(const string& filename,
  */
 template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,
-    const string& filename,
-    const string& format);
+                 const string& filename,
+                 const string& format);
 /**
  * Function to build data set of given objects
  * @param parser - parser, which will build data set
@@ -56,8 +57,8 @@ void saveDataSet(const DataSet<TElement>& data,
  */
 template<class TElement>
 DataSet<TElement> buildDataSet(Parser::Ptr parser,
-    const vector<Object>& objects,
-    const FeatureInfo& info);
+                               const vector<Object>& objects,
+                               const FeatureInfo& info);
 /**
  * Function to save predicted labeles for given data set
  * @param data - data set for prediction
@@ -122,25 +123,31 @@ namespace io_utility {
 
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
-    const string& format) {
-  std::ifstream file(filename.c_str());
-  if (file.fail())
+                              const string& format) {
+  ifstream file(filename.c_str());
+  if (file.fail()) {
     throw std::logic_error("File " + filename + " not found");
-
+  }
   Parser::Ptr parser = getParser(format);
   parser->startParsing(&file);
 
   vector<Object> objects;
   Object current_object;
 
-  while (parser->parseNextObject(&current_object))
+  while (parser->parseNextObject(&current_object)) {
     objects.push_back(current_object);
-
+  }
   file.close();
-  int feature_cnt = parser->featureInfo().get_feature_count();
-  for (size_t i = 0; i < objects.size(); i++)
-    for (size_t cn = objects[i].features().size(); cn < feature_cnt; cn++)
-      objects[i] << ltr::utility::NaN;
+  int feature_count = parser->featureInfo().get_feature_count();
+  for (int object_index = 0;
+       object_index < (int)objects.size();
+       ++object_index) {
+    for (int count = objects[object_index].features().size();
+         count < feature_count;
+         ++count) {
+      objects[object_index] << ltr::utility::NaN;
+    }
+  }
   return buildDataSet<TElement>(parser, objects, parser->featureInfo());
 }
 
@@ -149,16 +156,22 @@ template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,
                  const string& filename,
                  const string& format) {
-  std::ofstream file(filename.c_str());
-  if (file.fail())
+  ofstream file(filename.c_str());
+  if (file.fail()) {
     throw std::logic_error("can't open " + filename + " for writing");
+  }
   Parser::Ptr parser = getParser(format);
-  for (size_t i = 0; i < data.size(); i++)
-    for (size_t j = 0; j < data[i].size(); j++) {
+  for (int element_index = 0;
+       element_index < (int)data.size();
+       ++element_index) {
+    for (int object_index = 0;
+         object_index < data[element_index].size();
+         ++object_index) {
       string str;
-      parser->makeString(data[i][j], &str);
+      parser->makeString(data[element_index][object_index], &str);
       file << str << std::endl;
     }
+  }
   file.close();
 }
 
@@ -166,37 +179,48 @@ template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
                      Scorer::Ptr scorer,
                      const string& filename) {
-  std::ofstream file(filename.c_str());
+  ofstream file(filename.c_str());
 
   if (file.fail()) {
     throw std::logic_error("can't open " + filename + " for writing");
   }
 
   file.precision(utility::DOUBLE_PRECISION);
-  for (size_t i = 0; i < data.size(); i++)
-    for (size_t j = 0; j < data[i].size(); j++) {
-      file << (*scorer)(data[i][j]) << std::endl;
+  for (int element_index = 0;
+       element_index < (int)data.size();
+       ++element_index) {
+    for (int object_index = 0;
+         object_index < data[element_index].size();
+         ++object_index) {
+      file << (*scorer)(data[element_index][object_index]) << std::endl;
     }
+  }
   file.close();
 }
 
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
                      const string& filename) {
-  std::ofstream file(filename.c_str());
+  ofstream file(filename.c_str());
 
   if (file.fail()) {
     throw std::logic_error("can't open " + filename + " for writing");
   }
 
   file.precision(utility::DOUBLE_PRECISION);
-  for (size_t i = 0; i < data.size(); i++)
-    for (size_t j = 0; j < data[i].size(); j++) {
-      file << boost::lexical_cast<string>(data[i][j].predicted_label())
+  for (int element_index = 0;
+       element_index < (int)data.size();
+       ++element_index) {
+    for (int object_index = 0;
+         object_index < data[element_index].size();
+         ++object_index) {
+      file << boost::lexical_cast<string>(data[element_index][object_index].predicted_label())
            << std::endl;
     }
+  }
   file.close();
 }
+
 };
-}
+};
 #endif  // LTR_DATA_UTILITY_IO_UTILITY_H_
