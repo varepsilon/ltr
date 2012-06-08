@@ -4,13 +4,6 @@
 
 namespace ltr {
 
-/**
- * Parameterized is a class that provides derived subclasses hold their
- * different-type parameters (int, double and bool) in convenient
- * way. E.g. a derived subclass knows it's default parameters
- */
-
-
 Parameterized::~Parameterized() { }
 
 /**
@@ -20,10 +13,6 @@ void Parameterized::setDefaultParameters() {
   parameters_.Clear();
 }
 
-/**
-* checks, if current parameters are valid.
-* If invalid parameters found - logic_error is thrown.
-*/
 void Parameterized::checkParameters() const {
 }
 

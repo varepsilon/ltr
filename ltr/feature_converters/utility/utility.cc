@@ -8,7 +8,7 @@ namespace utility {
 void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
                            const PointwiseDataSet& source_dataset,
                            PointwiseDataSet* converted_dataset) {
-  PointwiseDataSet result(converter->getNewFeatureInfo());
+  PointwiseDataSet result(converter->output_feature_info());
   for (int object_index = 0;
        object_index < (int)source_dataset.size();
        ++object_index) {
@@ -22,7 +22,7 @@ void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
 void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
                            const PairwiseDataSet& source_dataset,
                            PairwiseDataSet* converted_dataset) {
-  PairwiseDataSet result(converter->getNewFeatureInfo());
+  PairwiseDataSet result(converter->output_feature_info());
   for (int pair_index = 0; pair_index < source_dataset.size(); ++pair_index) {
     Object first_converted_object;
     Object second_converted_object;
@@ -38,7 +38,7 @@ void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
 void ApplyFeatureConverter(FeatureConverter::ConstPtr converter,
                            const ListwiseDataSet& source_dataset,
                            ListwiseDataSet* converted_dataset) {
-  ListwiseDataSet result(converter->getNewFeatureInfo());
+  ListwiseDataSet result(converter->output_feature_info());
   for (int list_index = 0; list_index < source_dataset.size(); ++list_index) {
     ObjectList converted_list;
     for (int object_index = 0;

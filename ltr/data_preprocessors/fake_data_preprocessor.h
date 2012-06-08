@@ -20,8 +20,6 @@ template <class TElement>
 class FakePreprocessor : public DataPreprocessor<TElement> {
  public:
   typedef boost::shared_ptr<FakePreprocessor> Ptr;
-  explicit FakePreprocessor()
-    : DataPreprocessor<TElement>("FakeDataPreprocessor") {}
 
   virtual string toString() const {
     return "FakeDataPreprocessor";

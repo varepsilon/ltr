@@ -19,11 +19,11 @@
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
-#include "ltr/feature_converters/remove_nan_converter.h"
+#include "ltr/feature_converters/nan_to_zero_converter.h"
 #include "ltr/feature_converters/utility/utility.h"
 
 using ltr::FeatureConverter;
-using ltr::RemoveNaNConverterLearner;
+using ltr::NanToZeroConverterLearner;
 using ltr::utility::ApplyFeatureConverter;
 
 // The fixture for testing (contains data for tests).
@@ -63,11 +63,11 @@ class LearnersTest : public ::testing::Test {
 
 
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-  RemoveNaNConverterLearner<ltr::Object> remove_NaN_learner;
-  remove_NaN_learner.learn(learn_data);
-  FeatureConverter::Ptr remove_NaN = remove_NaN_learner.makePtr();
-  ltr::utility::ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
-  ltr::utility::ApplyFeatureConverter(remove_NaN, test_data, &test_data);
+  NanToZeroConverterLearner<ltr::Object> nan_to_zero_converter;
+  nan_to_zero_converter.learn(learn_data);
+  FeatureConverter::Ptr remove_NaN = nan_to_zero_converter.make();
+  ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
+  ApplyFeatureConverter(remove_NaN, test_data, &test_data);
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);

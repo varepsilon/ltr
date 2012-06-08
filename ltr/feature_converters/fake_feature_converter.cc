@@ -14,7 +14,7 @@ void FakeFeatureConverter::applyImpl(const Object& argument,
   *value = argument.deepCopy();
 }
 
-FeatureInfo FakeFeatureConverter::getNewFeatureInfo() const {
-  return feature_info_;
+void FakeFeatureConverter::fillOutputFeatureInfo() {
+  output_feature_info_ = input_feature_info_;
 }
 }

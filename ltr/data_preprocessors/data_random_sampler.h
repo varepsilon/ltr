@@ -78,15 +78,13 @@ void DataRandomSampler<TElement>::set_seed(int seed) {
 
 template <class TElement>
 DataRandomSampler<TElement>::DataRandomSampler(
-    const ParametersContainer& parameters)
-    : DataPreprocessor<TElement>("DataRandomSampler") {
+    const ParametersContainer& parameters) {
   this->setParameters(parameters);
 }
 template <class TElement>
 DataRandomSampler<TElement>::DataRandomSampler(double sampling_fraction,
                                                bool with_replacement,
-                                               int seed)
-    : DataPreprocessor<TElement>("DataRandomSampler") {
+                                               int seed) {
   set_sampling_fraction(sampling_fraction);
   set_with_replacement(with_replacement);
   set_seed(seed);

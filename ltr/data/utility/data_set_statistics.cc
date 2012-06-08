@@ -17,7 +17,6 @@ template <typename TElement>
 void getFeaturesValuesRanges(const DataSet<TElement>& dataset,
                              vector<double>* min_features_values,
                              vector<double>* max_features_values) {
-
   min_features_values->resize(dataset.featureCount());
   max_features_values->resize(dataset.featureCount());
 

@@ -49,7 +49,8 @@ void groupByIntMeta(const vector<Object>& objects,
   for (int object_index = 0; object_index < objects.size(); ++object_index) {
     try {
       string value = objects[object_index].getMetaInfo(group_parameter);
-      (*result)[boost::lexical_cast<int>(value)].push_back(objects[object_index]);
+      (*result)[boost::lexical_cast<int>(value)]
+                       .push_back(objects[object_index]);
     } catch(boost::bad_lexical_cast) {
       throw std::logic_error("can't group objects by " + group_parameter);
     }
@@ -63,7 +64,8 @@ void groupByFloatMeta(const vector<Object>& objects,
   for (int object_index = 0; object_index < objects.size(); ++object_index)
     try {
       string value = objects[object_index].getMetaInfo(group_parameter);
-      (*result)[boost::lexical_cast<float>(value)].push_back(objects[object_index]);
+      (*result)[boost::lexical_cast<float>(value)]
+                       .push_back(objects[object_index]);
     } catch(boost::bad_lexical_cast) {
       throw std::logic_error("can't group objects by " + group_parameter);
     }
