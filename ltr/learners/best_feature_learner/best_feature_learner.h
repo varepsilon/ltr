@@ -53,8 +53,9 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   }
   virtual void parametersUpdateCallback() {
     Measure<TElement> *msr =
-        this->parameters().
-        template Get<Measure<TElement>*>("measure");
+//        this->parameters().
+//        template Get<Parameterized*, Measure<TElement>*>("measure");
+        Parameterized::getParameter<Measure<TElement>*>("measure");
     this->p_measure_ = typename Measure<TElement>::Ptr(msr);
   }
 

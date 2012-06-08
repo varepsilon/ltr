@@ -214,13 +214,13 @@ void savePredictions(const DataSet<TElement>& data,
     for (int object_index = 0;
          object_index < data[element_index].size();
          ++object_index) {
-      file << boost::lexical_cast<string>(data[element_index][object_index].predicted_label())
+      double label = data[element_index][object_index].predicted_label();
+      file << boost::lexical_cast<string>(label)
            << std::endl;
     }
   }
   file.close();
 }
-
 };
 };
 #endif  // LTR_DATA_UTILITY_IO_UTILITY_H_

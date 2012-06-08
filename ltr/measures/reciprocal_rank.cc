@@ -32,7 +32,7 @@ namespace ltr {
         = labels.begin(); labels_it != labels.end();
         ++labels_it, pos += 1) {
       if (labels_it->actual >=
-          this->parameters().Get<double>("SCORE_FOR_RELEVANT")) {
+          this->getParameter<double>("SCORE_FOR_RELEVANT")) {
         result = RRFormula(pos);
         relevant_found = true;
         break;
@@ -50,7 +50,7 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "Reciprocal Rank measure with parameter SCORE_FOR_RELEVANT = ";
-    str << this->parameters().Get<double>("SCORE_FOR_RELEVANT");
+    str << this->getParameter<double>("SCORE_FOR_RELEVANT");
     return str.str();
   }
 };

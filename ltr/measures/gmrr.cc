@@ -21,7 +21,7 @@ using ltr::ObjectList;
 namespace ltr {
   double GMRR::GMRRFormula(double label) const {
     return (pow(2.0, label) - 1)
-      / pow(2.0, this->parameters().Get<double>("MAX_LABEL"));
+      / pow(2.0, getParameter<double>("MAX_LABEL"));
   }
 
   double GMRR::get_measure(const ObjectList& objects) const {
@@ -59,7 +59,7 @@ namespace ltr {
   string GMRR::toString() const {
     std::stringstream str;
     str << "GMRR measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->parameters().Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->getParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 };

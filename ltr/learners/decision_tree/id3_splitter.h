@@ -53,8 +53,8 @@ For nominal features splits by value of the feature.
       this->checkParameter<int>("HALF_SUMMS_STEP",
                                 std::bind2nd(std::greater_equal<int>(), 1));
 
-      int n = this->parameters().Get<bool>("SPLIT_FEATURE_N_TIMES");
-      n += this->parameters().Get<bool>("USE_HALF_SUMMS_SPLIT");
+      int n = getParameter<bool>("SPLIT_FEATURE_N_TIMES");
+      n += getParameter<bool>("USE_HALF_SUMMS_SPLIT");
       if (n > 1)
         throw std::logic_error("you can use only one splitting type");
     }
