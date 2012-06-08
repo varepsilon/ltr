@@ -7,29 +7,29 @@
 namespace ltr {
 namespace utility {
 
-template <typename TElement>
-DataSet<TElement> lightSubset(const DataSet<TElement>& data,
-    const std::vector<int>& indexes) {
-  DataSet<TElement> resultDataSet(data.featureInfo());
-
-  for (size_t indexIdx = 0; indexIdx < indexes.size(); ++indexIdx) {
-    if (indexes[indexIdx] > data.size()) {
-      throw std::logic_error("Index is too large");
-    }
-    resultDataSet.objects_->push_back(data[indexes[indexIdx]]);
-    resultDataSet.p_Weights_->push_back(data.getWeight(indexes[indexIdx]));
-  }
-  return resultDataSet;
-}
-
-template DataSet<Object> lightSubset<Object>(const DataSet<Object>& data,
-    const std::vector<int>& indexes);
-template DataSet<ObjectPair> lightSubset<ObjectPair>(
-    const DataSet<ObjectPair>& data,
-    const std::vector<int>& indexes);
-template DataSet<ObjectList> lightSubset<ObjectList>(
-    const DataSet<ObjectList>& data,
-    const std::vector<int>& indexes);
+//template <typename TElement>
+//DataSet<TElement> lightSubset(const DataSet<TElement>& data,
+//                              const vector<int>& indices) {
+//  DataSet<TElement> resultDataSet(data.feature_info());
+//
+//  for (size_t indexIdx = 0; indexIdx < indices.size(); ++indexIdx) {
+//    if (indices[indexIdx] > data.size()) {
+//      throw std::logic_error("Index is too large");
+//    }
+//    resultDataSet.elements_->push_back(data[indices[indexIdx]]);
+//    resultDataSet.weights_->push_back(data.getWeight(indices[indexIdx]));
+//  }
+//  return resultDataSet;
+//}
+//
+//template DataSet<Object> lightSubset<Object>(const DataSet<Object>& data,
+//    const std::vector<int>& indexes);
+//template DataSet<ObjectPair> lightSubset<ObjectPair>(
+//    const DataSet<ObjectPair>& data,
+//    const std::vector<int>& indexes);
+//template DataSet<ObjectList> lightSubset<ObjectList>(
+//    const DataSet<ObjectList>& data,
+//    const std::vector<int>& indexes);
 
 void groupByMeta(const vector<Object>& objects,
     string group_parameter,

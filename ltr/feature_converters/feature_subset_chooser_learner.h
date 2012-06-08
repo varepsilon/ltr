@@ -98,10 +98,10 @@ string FeatureSubsetChooserLearner<TElement>::toString() const {
 template <typename TElement>
 void FeatureSubsetChooserLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
-  converter_.setFeatureInfo(data_set.featureInfo());
+  converter_.setFeatureInfo(data_set.feature_info());
   const ParametersContainer &params = this->parameters();
   if (params.GetRef<std::vector<int> >("INDICES").size() == 0) {
-    vector<int> all_used(data_set.featureInfo().get_feature_count());
+    vector<int> all_used(data_set.feature_info().get_feature_count());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }

@@ -20,7 +20,7 @@ class FeatureConverterWrapper
     typedef boost::shared_ptr<FeatureConverterWrapper> Ptr;
 
     virtual void learn(const DataSet<TElement>& data_set) {
-      feature_info_ = data_set.featureInfo();
+      feature_info_ = data_set.feature_info();
     }
 
     virtual TFeatureConverter make() const {

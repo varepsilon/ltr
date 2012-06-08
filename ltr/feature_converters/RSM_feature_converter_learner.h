@@ -101,13 +101,13 @@ template <typename TElement>
 void RSMFeatureConverterLearner<TElement>
     ::learn(const DataSet<TElement>& data_set) {
   const ParametersContainer &params = this->parameters();
-  converter_.setFeatureInfo(data_set.featureInfo());
+  converter_.setFeatureInfo(data_set.feature_info());
   int size = static_cast<int>(
-    ceil(data_set.featureInfo().get_feature_count()
+    ceil(data_set.feature_info().get_feature_count()
       * params.Get<double>("SELECTED_PART")));
   vector<int> indices(size);
 
-  vector<int> all_used(data_set.featureInfo().get_feature_count());
+  vector<int> all_used(data_set.feature_info().get_feature_count());
   for (int index = 0; index < all_used.size(); ++index) {
     all_used[index] = index;
   }

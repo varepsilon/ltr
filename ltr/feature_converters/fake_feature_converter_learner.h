@@ -31,7 +31,7 @@ class FakeFeatureConverterLearner
   }
 
   void learn(const DataSet<TElement>& data_set) {
-    converter_.setFeatureInfo(data_set.featureInfo());
+    converter_.setFeatureInfo(data_set.feature_info());
   }
   FakeFeatureConverter make() const;
   string toString() const;

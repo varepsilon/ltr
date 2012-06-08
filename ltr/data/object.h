@@ -60,12 +60,6 @@ class Object : public Printable {
   /** Sets a meta information with given name.
    */
   void setMetaInfo(const string& name, const string& value);
-  /** Returns constant link to meta information of the object.
-   */
-  const MetaInfo& meta_info() const;
-  /** Returns a link to meta information of the object.
-   */
-  MetaInfo& meta_info();
   /** Append a feature to the feature vector of the object.
    */
   Object& operator<<(double feature_value);

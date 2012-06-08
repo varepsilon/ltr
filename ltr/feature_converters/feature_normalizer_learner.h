@@ -55,9 +55,9 @@ class FeatureNormalizerLearner
 template <typename TElement>
 void
 FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
-  utility::calcMinMaxStatistics(data_set, &feature_min_statistic_,
+  utility::getFeaturesValuesRanges(data_set, &feature_min_statistic_,
       &feature_max_statistic_);
-  converter_.setFeatureInfo(data_set.featureInfo());
+  converter_.setFeatureInfo(data_set.feature_info());
   this->calcCurrentConverter();
 }
 
