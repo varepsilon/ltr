@@ -45,15 +45,13 @@ class FeatureSamplerLearner
     this->checkParameters();
   }
 
-  void learn(const DataSet<TElement>& data_set);
-  virtual FeatureSampler::Ptr makeSpecific() const;
-
   void setDefaultParameters();
   void checkParameters() const;
 
   string toString() const;
-  private:
-  FeatureSampler::Ptr converter_;
+ private:
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         FeatureSampler *feature_sampler);
 };
 
 // template realizations
@@ -97,26 +95,19 @@ string FeatureSamplerLearner<TElement>::toString() const {
 }
 
 template <typename TElement>
-void FeatureSamplerLearner<TElement>
-    ::learn(const DataSet<TElement>& data_set) {
-  converter_ = FeatureSampler::Ptr(new FeatureSampler);
-  converter_->set_input_feature_info(data_set.featureInfo());
+void FeatureSamplerLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data_set, FeatureSampler *feature_sampler) {
   const ParametersContainer &params = this->parameters();
   if (params.GetRef<std::vector<int> >("INDICES").size() == 0) {
     vector<int> all_used(data_set.featureInfo().get_feature_count());
     for (int index = 0; index < all_used.size(); ++index) {
       all_used[index] = index;
     }
-    converter_->setChoosedFeaturesIndices(all_used);
+    feature_sampler->setChoosedFeaturesIndices(all_used);
   } else {
-    converter_->setChoosedFeaturesIndices(
+    feature_sampler->setChoosedFeaturesIndices(
       params.GetRef<std::vector<int> >("INDICES"));
   }
-}
-
-template <typename TElement>
-FeatureSampler::Ptr FeatureSamplerLearner<TElement>::makeSpecific() const {
-  return converter_;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_

@@ -28,7 +28,7 @@ class BaseFeatureConverterLearner : public Parameterized,
  public:
   typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
   /**
-   * Learns from inputted dataset. E. g. remembers number of features
+   * Learns from input dataset. E. g. remembers number of features
    * in dataset and e.t.c.
    */
   virtual void learn(const DataSet<TElement>& data_set) = 0;
@@ -53,15 +53,21 @@ template <class TElement, class TFeatureConverter>
 class FeatureConverterLearner : public BaseFeatureConverterLearner<TElement> {
  public:
   typedef boost::shared_ptr<FeatureConverterLearner> Ptr;
-  /**
-   * Is for being sure FeatureConverter::Ptrs outputted by makePtr()
-   * are Ptrs on different (physically) FeatureConverters.
-   * \returns a concrete FeatureConverter
-   */
-  virtual typename TFeatureConverter::Ptr makeSpecific() const = 0;
+  typename TFeatureConverter::Ptr makeSpecific() const {
+    return TFeatureConverter::Ptr(new TFeatureConverter(feature_converter_));
+  }
   virtual FeatureConverter::Ptr make() const {
     return FeatureConverter::Ptr(makeSpecific());
   }
+  virtual void learn(const DataSet<TElement>& data_set) {
+    feature_converter_.set_input_feature_info(data_set.featureInfo());
+    learnImpl(data_set, &feature_converter_);
+    feature_converter_.fillOutputFeatureInfo();
+  }
+ private:
+  virtual void learnImpl(const DataSet<TElement>& data_set, 
+                         TFeatureConverter* feature_converter) = 0;
+  TFeatureConverter feature_converter_;
 };
 };
 

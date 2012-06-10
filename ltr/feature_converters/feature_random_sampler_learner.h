@@ -48,9 +48,6 @@ class FeatureRandomSamplerLearner
     srand(this->parameters().template Get<int>("RANDOM_SEED"));
   }
 
-  virtual void learn(const DataSet<TElement>& data_set);
-  virtual FeatureSampler::Ptr makeSpecific() const;
-
   void setDefaultParameters();
   void checkParameters() const;
 
@@ -67,7 +64,8 @@ class FeatureRandomSamplerLearner
     const T &max_;
   };
 
-  FeatureSampler::Ptr converter_;
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         FeatureSampler* feature_sampler);
 };
 
 // template realizations
@@ -99,11 +97,10 @@ string FeatureRandomSamplerLearner<TElement>::toString() const {
 }
 
 template <typename TElement>
-void FeatureRandomSamplerLearner<TElement>::learn(
-    const DataSet<TElement>& data_set) {
-  converter_ = FeatureSampler::Ptr(new FeatureSampler);
+void FeatureRandomSamplerLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data_set, FeatureSampler* feature_sampler) {
   const ParametersContainer &params = this->parameters();
-  converter_->set_input_feature_info(data_set.featureInfo());
+  feature_sampler->set_input_feature_info(data_set.featureInfo());
   int size = static_cast<int>(
     ceil(data_set.featureInfo().get_feature_count()
       * params.Get<double>("SELECTED_PART")));
@@ -115,13 +112,7 @@ void FeatureRandomSamplerLearner<TElement>::learn(
   }
   random_shuffle(all_used.begin(), all_used.end());
   copy(all_used.begin(), all_used.begin() + size, indices.begin());
-  converter_->setChoosedFeaturesIndices(indices);
-}
-
-template <typename TElement>
-FeatureSampler::Ptr
-FeatureRandomSamplerLearner<TElement>::makeSpecific() const {
-  return converter_;
+  feature_sampler->setChoosedFeaturesIndices(indices);
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_RANDOM_SAMPLER_LEARNER_H_

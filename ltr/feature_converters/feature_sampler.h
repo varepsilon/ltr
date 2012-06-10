@@ -41,6 +41,9 @@ class FeatureSampler : public FeatureConverter {
     max_used_feature_ = *max_element(indices_.begin(), indices_.end());
     fillOutputFeatureInfo();
   }
+
+  virtual void fillOutputFeatureInfo();
+
   /**
    * Sets indices of features to be chosen
    * @param input_indices - indices of features to be chosen from inputted object
@@ -95,7 +98,6 @@ class FeatureSampler : public FeatureConverter {
   vector<int> indices_;
   int max_used_feature_;
 
-  virtual void fillOutputFeatureInfo();
   void applyImpl(const Object& source_object,
                  Object* preprocessed_object) const;
 };

@@ -16,7 +16,7 @@ using std::vector;
 namespace ltr {
 
 class PerFeatureLinearConverter : public FeatureConverter {
-  public:
+ public:
   typedef boost::shared_ptr<PerFeatureLinearConverter> Ptr;
 
   explicit PerFeatureLinearConverter(size_t feature_count = 0) :
@@ -59,7 +59,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
     return hpp_string;
   };
 
-  private:
+ private:
   size_t featureCount() const;
   void checkFeatureCount(size_t checked_feature_count) const;
 

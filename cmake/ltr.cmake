@@ -129,8 +129,7 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
-                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc
-                           ${Source_Path}/ltr/feature_converters/feature_converter_wrapper.h)
+                           ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc)
 
 SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h
                                    ${Source_Path}/ltr/feature_converters/utility/utility.cc)

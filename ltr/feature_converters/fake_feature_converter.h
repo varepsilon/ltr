@@ -26,10 +26,9 @@ class FakeFeatureConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
-
+  virtual void fillOutputFeatureInfo();
   void applyImpl(const Object& source_object,
-    Object* preprocessed_object) const;
-
+                 Object* preprocessed_object) const;
   string generateCppCode(
       const string& function_name) const {
     string hpp_string;
@@ -43,8 +42,6 @@ class FakeFeatureConverter : public FeatureConverter {
 
     return hpp_string;
   }
- private:
-  virtual void fillOutputFeatureInfo();
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

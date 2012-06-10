@@ -53,6 +53,11 @@ class FeatureConverter : public Serializable {
     fillOutputFeatureInfo();
   }
   GET(FeatureInfo, output_feature_info);
+  /**
+  * Fills output_feature_info_ (Object may have another FeatureInfo
+  * after convertion, e.g. FeatureConverter may change the number of Object features)
+  */
+  virtual void fillOutputFeatureInfo() = 0;
 
   /**
    * Converts object features
@@ -64,11 +69,6 @@ class FeatureConverter : public Serializable {
     applyImpl(input, output);
   }
  private:
-  /**
-  * Fills output_feature_info_ (Object may have another FeatureInfo
-  * after convertion, e.g. FeatureConverter may change the number of Object features)
-  */
-  virtual void fillOutputFeatureInfo() = 0;
   virtual void applyImpl(const Object& input, Object* output) const = 0;
  protected:
   /**

@@ -6,7 +6,7 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_converter_wrapper.h"
+#include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
 class RemoveNominalConverter : public FeatureConverter {
@@ -18,14 +18,22 @@ class RemoveNominalConverter : public FeatureConverter {
     fillOutputFeatureInfo();
   }
   string generateCppCode(const std::string &) const;
- private:
   virtual void fillOutputFeatureInfo();
+ private:
   virtual void applyImpl(const Object& argument, Object* value) const;
 };
 
 template <typename TElement>
 class RemoveNominalConverterLearner
-    : public FeatureConverterWrapper<TElement, RemoveNominalConverter> {
+    : public FeatureConverterLearner<TElement, RemoveNominalConverter> {
+ public:
+  virtual void learnImpl(const DataSet<TElement>& data_set, 
+                         RemoveNominalConverter* feature_converter) {
+    // DO NOTHING                      
+  }
+  virtual string toString() const {
+    return "RemoveNominalConverterLearner";
+  }
 };
 }
 

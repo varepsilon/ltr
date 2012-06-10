@@ -21,25 +21,19 @@ class FakeFeatureConverterLearner
  public:
   typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
 
-  virtual void learn(const DataSet<TElement>& data_set);
-  virtual FakeFeatureConverter::Ptr makeSpecific() const;
   string toString() const;
  private:
-  FeatureInfo feature_info_;
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         FakeFeatureConverter *feature_converter);
 };
 
 // template realizations
 
 template <class TElement>
-FakeFeatureConverter::Ptr
-FakeFeatureConverterLearner<TElement>::makeSpecific() const {
-  return FakeFeatureConverter::Ptr(new FakeFeatureConverter(feature_info_));
-}
-
-template <class TElement>
-void FakeFeatureConverterLearner<TElement>::learn(
-    const DataSet<TElement>& data_set) {
-  feature_info_ = data_set.featureInfo();
+void FakeFeatureConverterLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data_set, 
+    FakeFeatureConverter* feature_converter) {
+  // DO NOTHING
 }
 
 template <class TElement>

@@ -35,28 +35,28 @@ class FeatureNormalizerLearner
     this->checkParameters();
   }
 
-  void learn(const DataSet<TElement>& data_set);
-  PerFeatureLinearConverter::Ptr makeSpecific() const;
-
   void setDefaultParameters();
   void checkParameters() const;
 
   string toString() const;
  private:
-  size_t featureCount() const;
-
-  PerFeatureLinearConverter::Ptr converter_;
   vector<double> feature_min_statistic_;
   vector<double> feature_max_statistic_;
+
+  size_t featureCount() const;  
+  virtual void learnImpl(
+      const DataSet<TElement>& data_set,
+      PerFeatureLinearConverter* per_feature_linear_converter);
 };
 
 template <typename TElement>
 void
-FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
-  converter_ = PerFeatureLinearConverter::Ptr(new PerFeatureLinearConverter);
+FeatureNormalizerLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data_set, 
+    PerFeatureLinearConverter* per_feature_linear_converter) {
   utility::calcMinMaxStatistics(data_set, &feature_min_statistic_,
       &feature_max_statistic_);
-  converter_->resize(this->featureCount());
+  per_feature_linear_converter->resize(this->featureCount());
   double normalizationIntervalBegin =
       this->parameters().template Get<double>("NormalizationIntervalBegin");
   double normalizationIntervalEnd =
@@ -78,10 +78,9 @@ FeatureNormalizerLearner<TElement>::learn(const DataSet<TElement>& data_set) {
       shift = normalizationIntervalBegin -
           coefficient * feature_min_statistic_[feature_idx];
     }
-    converter_->setCoefficient(feature_idx, coefficient);
-    converter_->setShift(feature_idx, shift);
+    per_feature_linear_converter->setCoefficient(feature_idx, coefficient);
+    per_feature_linear_converter->setShift(feature_idx, shift);
   }
-  converter_->set_input_feature_info(data_set.featureInfo());
 }
 
 template <typename TElement>
@@ -100,12 +99,6 @@ string FeatureNormalizerLearner<TElement>::toString() const {
 template <typename TElement>
 size_t FeatureNormalizerLearner<TElement>::featureCount() const {
   return feature_min_statistic_.size();
-}
-
-template <typename TElement>
-PerFeatureLinearConverter::Ptr
-FeatureNormalizerLearner<TElement>::makeSpecific() const {
-  return converter_;
 }
 
 template <typename TElement>
