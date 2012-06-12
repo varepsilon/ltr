@@ -22,7 +22,6 @@ using std::vector;
 using std::string;
 using std::vector;
 
-using ltr::utility::lightSubset;
 using ltr::utility::Indices;
 using ltr::utility::getRandomIndices;
 
@@ -133,7 +132,7 @@ void DataRandomSampler<TElement>::applyImpl(
     // Lets think about using custom random numbers generator
     getRandomIndices(&indices, input.size(), sample_size);
   }
-  *output = lightSubset(input, indices);
+  *output = input.lightSubset(indices);
 }
 
 template <class TElement>

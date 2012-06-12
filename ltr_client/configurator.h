@@ -82,7 +82,6 @@ class Configurator {
   Configurator();
   ~Configurator();
   void loadConfig(const string& file_name);
-  // bool isValid() const;
 
   const TDataInfos& dataInfos() const;
   TDataInfos& dataInfos();

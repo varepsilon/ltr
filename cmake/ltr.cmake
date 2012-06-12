@@ -36,8 +36,6 @@ SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/learners/decision_tree/utility/
                               ${Source_Path}/ltr/learners/decision_tree/utility/utility.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
-                   ${Source_Path}/ltr/data/utility/data_set_utility.h
-                   ${Source_Path}/ltr/data/utility/data_set_utility.cc
                    ${Source_Path}/ltr/data/utility/data_set_converters.h
                    ${Source_Path}/ltr/data/utility/data_set_converters.cc
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h

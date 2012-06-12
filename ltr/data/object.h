@@ -65,12 +65,6 @@ class Object : public Printable {
   /** Sets a meta information with given name.
    */
   void setMetaInfo(const string& name, const string& value);
-  /** Returns constant link to meta information of the object.
-   */
-  const MetaInfo& meta_info() const;
-  /** Returns a link to meta information of the object.
-   */
-  MetaInfo& meta_info();
   /** Append a feature to the feature vector of the object.
    */
   Object& operator<<(double feature_value);
@@ -102,7 +96,7 @@ class Object : public Printable {
   /** Clear object features and FeaturesInfo
   */
   void clear();
-  
+
   /** Resize object features and FeatureInfo (feature type will be numerical).
   */
   void resize(size_t feature_count);
@@ -147,7 +141,7 @@ class Object : public Printable {
    */
   friend bool operator==(const Object& lhs, const Object& rhs);
 
-  /** 
+  /**
    * Function for serialization of object.
    * Returns string of feature values in brackets. For example: [1, 5.6, 2.3]
    */

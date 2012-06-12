@@ -29,7 +29,7 @@ namespace ltr {
 class FeatureSampler : public FeatureConverter {
   public:
   typedef boost::shared_ptr<FeatureSampler> Ptr;
-  
+
   /**
   * \param indices indices of features to sample
   */

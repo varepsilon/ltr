@@ -42,14 +42,6 @@ Features& Object::features() {
   return *features_;
 }
 
-const MetaInfo& Object::meta_info() const {
-  return *meta_info_;
-}
-
-MetaInfo& Object::meta_info() {
-  return *meta_info_;
-}
-
 const FeatureInfo& Object::feature_info() const {
   return *feature_info_;
 }

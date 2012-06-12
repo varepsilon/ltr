@@ -32,9 +32,9 @@ template <typename TElement>
 class RemoveNominalConverterLearner
     : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
  public:
-  virtual void learnImpl(const DataSet<TElement>& data_set, 
+  virtual void learnImpl(const DataSet<TElement>& data_set,
                          RemoveNominalConverter* feature_converter) {
-    // DO NOTHING                      
+    // DO NOTHING
   }
   virtual string toString() const {
     return "RemoveNominalConverterLearner";

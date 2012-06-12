@@ -11,11 +11,13 @@ using std::vector;
 
 namespace ltr {
 namespace utility {
-
+/** This function calculates min and max features for
+ * given dataset. Used in normalizing converter and decision trees.
+ */
 template <typename TElement>
-void calcMinMaxStatistics(const DataSet<TElement>& data_set,
-    vector<double>* pMinFeatureValue,
-    vector<double>* pMaxFeatureValue);
+void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
+                             vector<double>* min_features_values,
+                             vector<double>* max_features_values);
 }
 }
 #endif  // LTR_DATA_UTILITY_DATA_SET_STATISTICS_H_

@@ -38,7 +38,7 @@ void PerFeatureLinearConverter::set_shift(size_t feature_index, double shift) {
 void PerFeatureLinearConverter::applyImpl(const Object& input,
                                                 Object* output) const {
   *output = input.deepCopy();
-  for (size_t feature_index = 0; 
+  for (size_t feature_index = 0;
       feature_index < output->features().size(); ++feature_index) {
     output->features()[feature_index] *= factors_[feature_index];
     output->features()[feature_index] += shifts_[feature_index];

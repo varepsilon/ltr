@@ -85,12 +85,12 @@ string NominalToBoolConverter::generateCppCode(
     append("  }\n");
 
   code.
-    append("  for (size_t i = 0; i < features.size(); i++) {\n").
-    append("    if (nominal[i]) {\n").
-    append("      for (size_t j = 0; j < feature_outputs[i].size(); j++)\n").
-    append("        result->push_back(features[i] == feature_outputs[i][j]);\n").
-    append("    }\n").
+    append("for (size_t i = 0; i < features.size(); i++) {\n").
+    append("  if (nominal[i]) {\n").
+    append("    for (size_t j = 0; j < feature_outputs[i].size(); j++)\n").
+    append("      result->push_back(features[i] == feature_outputs[i][j]);\n").
     append("  }\n").
+    append("}\n").
     append("}\n");
   return code;
 }

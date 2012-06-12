@@ -45,14 +45,14 @@ class FeatureConverterLearner : public Parameterized,
 };
 
 /**
- * \brief A base class for FeatureConverter learners.
- *
- * If you want to make your own FeatureConverterLearner you should
- * inherit from BaseFeatureConverterLearner and implement learnImpl().
- *
- * \sa FeatureConverterLearner, Learner
- */
- // \TODO(sameg) Learner -> Trainer ?
+* \brief A base class for FeatureConverter learners.
+*
+* If you want to make your own FeatureConverterLearner you should
+* inherit from BaseFeatureConverterLearner and implement learnImpl().
+*
+* \sa FeatureConverterLearner, Learner
+*/
+// \TODO(sameg) Learner -> Trainer ?
 template <class TElement, class TFeatureConverter>
 class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
  public:
@@ -72,7 +72,7 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
     if (check_parameters) {
       checkParameters();
     }
-    feature_converter_.set_input_feature_info(data_set.featureInfo());
+    feature_converter_.set_input_feature_info(data_set.feature_info());
     learnImpl(data_set, &feature_converter_);
     feature_converter_.fillOutputFeatureInfo();
   }
@@ -82,7 +82,7 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   * \param[in] data_set dataset to study
   * \param[out] feature_converter feature converter to train
   */
-  virtual void learnImpl(const DataSet<TElement>& data_set, 
+  virtual void learnImpl(const DataSet<TElement>& data_set,
                          TFeatureConverter* feature_converter) = 0;
   TFeatureConverter feature_converter_;
 };

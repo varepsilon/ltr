@@ -23,7 +23,6 @@ using std::vector;
 using std::logic_error;
 using std::max_element;
 
-using ltr::utility::lightSubset;
 using ltr::utility::Indices;
 using ltr::utility::IndicesPtr;
 
@@ -90,7 +89,7 @@ void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
   // \TODO(sameg) Is it logic?
   if (indices_->size() != 0) {
-    *output = lightSubset(input, *indices_);
+    *output = input.lightSubset(*indices_);
   } else {
     *output = input;
   }

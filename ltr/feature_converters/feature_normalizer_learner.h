@@ -20,7 +20,7 @@ using std::vector;
 using std::string;
 using std::logic_error;
 
-using ltr::utility::calcMinMaxStatistics;
+using ltr::utility::getFeaturesMinMaxValues;
 
 namespace ltr {
 
@@ -53,7 +53,7 @@ class FeatureNormalizerLearner
   virtual void learnImpl(const DataSet<TElement>& data_set,
       PerFeatureLinearConverter* per_feature_linear_converter);
   virtual void setParametersImpl(const ParametersContainer& parameters);
-  
+
   double min_;
   double max_;
 };
@@ -73,11 +73,11 @@ FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::learnImpl(
-    const DataSet<TElement>& data_set, 
+    const DataSet<TElement>& data_set,
     PerFeatureLinearConverter* per_feature_linear_converter) {
-  per_feature_linear_converter->resize(data_set.featureInfo());
+  per_feature_linear_converter->resize(data_set.feature_info());
   Features input_min, input_max;
-  calcMinMaxStatistics(data_set, &input_min, &input_max);
+  getFeaturesMinMaxValues(data_set, &input_min, &input_max);
 
   for (size_t feature_index = 0;
       feature_index < data_set.feature_count(); ++feature_index) {

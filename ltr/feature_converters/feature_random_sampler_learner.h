@@ -48,7 +48,7 @@ class FeatureRandomSamplerLearner
   virtual void checkParameters() const;
 
   virtual string toString() const;
-  
+
   GET_SET(double, sampling_fraction);
   GET(int, seed);
   void set_seed(int seed);

@@ -55,7 +55,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
   */
   void set_shift(size_t feature_index, double shift);
 
-  virtual string generateCppCode(const string& function_name) const; 
+  virtual string generateCppCode(const string& function_name) const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
 

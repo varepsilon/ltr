@@ -30,9 +30,9 @@ template <typename TElement>
 class NanToZeroConverterLearner
     : public BaseFeatureConverterLearner<TElement, NanToZeroConverter> {
  public:
-  virtual void learnImpl(const DataSet<TElement>& data_set, 
+  virtual void learnImpl(const DataSet<TElement>& data_set,
                          NanToZeroConverter* feature_converter) {
-    // DO NOTHING                      
+    // DO NOTHING
   }
   string toString() const {
     return "NanToZeroConverterLearner";

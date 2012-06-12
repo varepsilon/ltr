@@ -33,9 +33,9 @@ template <typename TElement>
 class NominalToBoolConverterLearner
     : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
  public:
-  virtual void learnImpl(const DataSet<TElement>& data_set, 
+  virtual void learnImpl(const DataSet<TElement>& data_set,
                          NominalToBoolConverter* feature_converter) {
-    // DO NOTHING                      
+    // DO NOTHING
   }
   virtual string toString() const {
     return "NominalToBoolConverterLearner";

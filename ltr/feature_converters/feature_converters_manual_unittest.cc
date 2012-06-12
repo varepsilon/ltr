@@ -65,7 +65,7 @@ bool AreEqual(const DataSet<TElement>& first,
   if (first.size() != second.size()) {
     return false;
   }
-  if (first.featureInfo() != second.featureInfo()) {
+  if (first.feature_info() != second.feature_info()) {
     return false;
   }
   for (int i = 0; i < first.size(); ++i) {
@@ -78,7 +78,7 @@ bool AreEqual(const DataSet<TElement>& first,
 
 TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
   FakeFeatureConverter::Ptr ffc
-    (new FakeFeatureConverter(data.featureInfo()));
+    (new FakeFeatureConverter(data.feature_info()));
   DataSet<Object> conv_data;
 
   ltr::utility::ApplyFeatureConverter(ffc, data, &conv_data);
@@ -102,7 +102,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
   indices.push_back(7);
   indices.push_back(4);
   FeatureSampler::Ptr conv(new FeatureSampler(indices));
-  conv->set_input_feature_info(data.featureInfo());
+  conv->set_input_feature_info(data.feature_info());
 
   EXPECT_EQ(3, conv->indices().size());
   EXPECT_EQ(indices, conv->indices());
@@ -110,7 +110,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(3, conv_data.featureInfo().feature_count());
+  EXPECT_EQ(3, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
     EXPECT_EQ(indices[i], conv_data[0].features()[i]);
   }
@@ -119,7 +119,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
   conv->set_indices(indices);
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(4, conv_data.featureInfo().feature_count());
+  EXPECT_EQ(4, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
     EXPECT_EQ(indices[i], conv_data[0].features()[i]);
   }
@@ -147,7 +147,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerLearnerTest) {
   FeatureConverter::Ptr conv2 = conv_learner.make();
 
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
-  EXPECT_EQ(indices->size(), conv_data.featureInfo().feature_count());
+  EXPECT_EQ(indices->size(), conv_data.feature_count());
   for (int i = 0; i < indices->size(); ++i) {
     EXPECT_EQ((*indices)[i], conv_data[0].features()[i]);
   }
@@ -161,9 +161,9 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(4, conv_data.featureInfo().feature_count());
+  EXPECT_EQ(4, conv_data.feature_count());
   set<int> used_features;
-  for (int i = 0; i < conv_data.featureInfo().feature_count(); ++i) {
+  for (int i = 0; i < conv_data.feature_count(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
     EXPECT_LE(0, conv_data[0].features()[i]);
 
@@ -180,9 +180,9 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   FeatureConverter::Ptr conv2 = conv_learner.make();
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
 
-  EXPECT_EQ(9, conv_data.featureInfo().feature_count());
+  EXPECT_EQ(9, conv_data.feature_count());
   used_features.clear();
-  for (int i = 0; i < conv_data.featureInfo().feature_count(); ++i) {
+  for (int i = 0; i < conv_data.feature_count(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
     EXPECT_LE(0, conv_data[0].features()[i]);
 
@@ -200,14 +200,14 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   conv_learner.learn(data);
   FeatureConverter::Ptr conv3 = conv_learner.make();
   ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
-  EXPECT_EQ(1, conv_data.featureInfo().feature_count());
+  EXPECT_EQ(1, conv_data.feature_count());
 }
 
 TEST_F(FeatureConvertersManualTest, PerFeatureLinearConverterTest) {
   PerFeatureLinearConverter::Ptr pf_converter
-    (new PerFeatureLinearConverter(data.featureInfo().feature_count()));
+    (new PerFeatureLinearConverter(data.feature_count()));
 
-  pf_converter->set_input_feature_info(data.featureInfo());
+  pf_converter->set_input_feature_info(data.feature_info());
 
   pf_converter->set_shift(0, 1.0);
   pf_converter->set_shift(1, 0.0);

@@ -16,7 +16,6 @@
 using std::vector;
 using std::string;
 using ltr::Aliaser;
-using ltr::utility::lightSubset;
 
 namespace ltr {
   namespace cv {
@@ -84,9 +83,9 @@ namespace ltr {
       vector<int> test_set_indexes;
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);
 
-      SplittedDataSet<TElement> output(base_set.featureInfo());
-      output.train_set = lightSubset(base_set, train_set_indexes);
-      output.test_set = lightSubset(base_set, test_set_indexes);
+      SplittedDataSet<TElement> output(base_set.feature_info());
+      output.train_set = base_set.lightSubset(train_set_indexes);
+      output.test_set = base_set.lightSubset(test_set_indexes);
 
       return output;
     }
