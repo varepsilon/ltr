@@ -223,8 +223,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * learning procedure.
    */
   void learnImpl(const DataSet<TElement>& data) {
-    if (data.featureCount() != featureCountInContext_) {
-      featureCountInContext_ = data.featureCount();
+    if (data.feature_count() != featureCountInContext_) {
+      featureCountInContext_ = data.feature_count();
       reset();
     }
 

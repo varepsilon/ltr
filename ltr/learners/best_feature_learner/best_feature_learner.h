@@ -66,7 +66,7 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
-  if (data.featureCount() == 0) {
+  if (data.feature_count() == 0) {
     throw std::logic_error("There are no features for BF learner.");
   }
 
@@ -75,7 +75,7 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
   utility::MarkDataSet(data, scorer);
   double bestMeasureValue = this->p_measure_->average(data);
 
-  for (size_t featureIdx = 1; featureIdx < data.featureCount(); ++featureIdx) {
+  for (size_t featureIdx = 1; featureIdx < data.feature_count(); ++featureIdx) {
     OneFeatureScorer scorer(featureIdx);
     utility::MarkDataSet(data, scorer);
     double measureValue = this->p_measure_->average(data);

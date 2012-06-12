@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
   rsm_lc_learner->setMeasure(abs_error);
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
-  bf_learner->addFeatureConverter(rsm);
+  bf_learner->addFeatureConverterLearner(rsm);
   rsm_lc_learner->setWeakLearner(bf_learner);
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");

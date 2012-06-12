@@ -15,73 +15,90 @@
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"
+#include "ltr/utility/indices.h"
 
 using std::string;
 using std::vector;
-using std::random_shuffle;
-using std::copy;
+
+using ltr::utility::Indices;
+using ltr::utility::getRandomIndices;
 
 namespace ltr {
 /**
- * Produces FeatureSampler with random indices (with no duplication)
- */
+* \brief Produces FeatureSampler with random indices
+* \param sampling_fraction portion of features to sample, must be in (0,1]
+* \param seed seed for random numbers generator
+*/
 template <typename TElement>
 class FeatureRandomSamplerLearner
-    : public FeatureConverterLearner<TElement, FeatureSampler> {
+    : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
   friend class FeatureSampler;
  public:
   typedef boost::shared_ptr<FeatureRandomSamplerLearner> Ptr;
 
   /**
-   * @param parameters Standart LTR parameter container with double parameter
-   * SELECTED_PART and int parameter RANDOM_SEED. SELECTED_PART is a part of
-   * features chosen by produced FeatureSampler. Upper rounding is used,
-   * so never produces FeatureSampler with 0 features. RANDOM_SEED is for
-   * manual control of random behavior of FeatureRandomSamplerLearner
-   * By default SELECTED_PART = 0.3, RANDOM_SEED = 1339
-   */
-  explicit FeatureRandomSamplerLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
-    this->checkParameters();
-    srand(this->parameters().template Get<int>("RANDOM_SEED"));
-  }
+  * \param sampling_fraction portion of features to sample, must be in (0,1]
+  * \param seed seed for random numbers generator 
+  */
+  explicit FeatureRandomSamplerLearner(double sampling_fraction = 0.3,
+                                       int seed = 42);
+  explicit FeatureRandomSamplerLearner(const ParametersContainer& parameters);
 
-  void setDefaultParameters();
-  void checkParameters() const;
+  virtual void setDefaultParameters();
+  virtual void checkParameters() const;
 
-  string toString() const;
+  virtual string toString() const;
+  
+  GET_SET(double, sampling_fraction);
+  GET(int, seed);
+  void set_seed(int seed);
  private:
-  template <class T>
-  struct Belongs: public std::unary_function<T, bool> {
-    Belongs(const T &min, const T &max): min_(min), max_(max) { }
-    bool operator()(const T& x) const {
-      return x > min_ && x <= max_;
-    }
-   private:
-    const T &min_;
-    const T &max_;
-  };
-
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FeatureSampler* feature_sampler);
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  double sampling_fraction_;
+  int seed_;
 };
 
 // template realizations
-template <typename TElement>
-void FeatureRandomSamplerLearner<TElement>::setDefaultParameters() {
-  this->clearParameters();
-  this->addNewParam("SELECTED_PART", 0.3);
-  this->addNewParam("RANDOM_SEED", 1339);
-}
 
 template <typename TElement>
+void FeatureRandomSamplerLearner<TElement>::set_seed(int seed) {
+  CHECK(seed >= 0);  //NOLINT
+  seed_ = seed;
+  srand(seed_);
+}
+
+template <class TElement>
+FeatureRandomSamplerLearner<TElement>::FeatureRandomSamplerLearner(
+    const ParametersContainer& parameters) {
+  setParameters(parameters);
+}
+
+template <class TElement>
+FeatureRandomSamplerLearner<TElement>::FeatureRandomSamplerLearner(
+    double sampling_fraction, int seed) {
+  set_sampling_fraction(sampling_fraction);
+  set_seed(seed);
+}
+
+template <class TElement>
+void FeatureRandomSamplerLearner<TElement>::setDefaultParameters() {
+  set_sampling_fraction(0.3);
+  set_seed(42);
+}
+
+template <class TElement>
 void FeatureRandomSamplerLearner<TElement>::checkParameters() const {
-  const Belongs<double> G0L1(0, 1);
-  Parameterized::checkParameter<double>("SELECTED_PART", Belongs<double>(0, 1));
-  Parameterized::checkParameter<int>("RANDOM_SEED",
-                                     std::bind2nd(std::greater<int>(), 0));
+  CHECK(sampling_fraction_ > 0. && sampling_fraction_ <= 1.);
+  CHECK(seed_ >= 0); //NOLINT
+}
+
+template <class TElement>
+void FeatureRandomSamplerLearner<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  sampling_fraction_ = parameters.Get<double>("SAMPLING_FRACTION");
+  set_seed(parameters.Get<int>("SEED"));
 }
 
 template <typename TElement>
@@ -89,30 +106,18 @@ string FeatureRandomSamplerLearner<TElement>::toString() const {
   std::stringstream str;
   std::fixed(str);
   str.precision(2);
-  str << "RSM feature converter learner with parameters: SELECTED_PART = ";
-  str << this->parameters().template Get<double>("SELECTED_PART");
-  str << ", RANDOM_SEED = ";
-  str << this->parameters().template Get<int>("RANDOM_SEED");
+  str << "FeatureRandomSamplerLearner: sampling_fraction = ";
+  str << sampling_fraction_ << ", seed = " << seed_;
   return str.str();
 }
 
 template <typename TElement>
 void FeatureRandomSamplerLearner<TElement>::learnImpl(
     const DataSet<TElement>& data_set, FeatureSampler* feature_sampler) {
-  const ParametersContainer &params = this->parameters();
-  feature_sampler->set_input_feature_info(data_set.featureInfo());
-  int size = static_cast<int>(
-    ceil(data_set.featureInfo().get_feature_count()
-      * params.Get<double>("SELECTED_PART")));
-  vector<int> indices(size);
-
-  vector<int> all_used(data_set.featureInfo().get_feature_count());
-  for (int index = 0; index < all_used.size(); ++index) {
-    all_used[index] = index;
-  }
-  random_shuffle(all_used.begin(), all_used.end());
-  copy(all_used.begin(), all_used.begin() + size, indices.begin());
-  feature_sampler->setChoosedFeaturesIndices(indices);
+  int sample_size = ceil(data_set.feature_count() * sampling_fraction_);
+  Indices indices;
+  getRandomIndices(&indices, data_set.feature_count(), sample_size);
+  feature_sampler->set_indices(indices);
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_RANDOM_SAMPLER_LEARNER_H_

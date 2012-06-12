@@ -88,6 +88,6 @@ TEST_F(DataSetTest, DataSetAlignTest) {
       "YANDEX");
 
   for (size_t objIdx = 0; objIdx < test_data.size(); ++objIdx) {
-    EXPECT_EQ(test_data.featureCount(), test_data.at(objIdx).featureCount());
+    EXPECT_EQ(test_data.feature_count(), test_data.at(objIdx).feature_count());
   }
 }*/

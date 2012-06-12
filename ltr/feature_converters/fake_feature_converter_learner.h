@@ -17,7 +17,7 @@ namespace ltr {
  */
 template <class TElement>
 class FakeFeatureConverterLearner
-: public FeatureConverterLearner<TElement, FakeFeatureConverter> {
+: public BaseFeatureConverterLearner<TElement, FakeFeatureConverter> {
  public:
   typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
 

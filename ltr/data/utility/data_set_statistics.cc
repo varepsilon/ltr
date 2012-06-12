@@ -19,8 +19,8 @@ void calcMinMaxStatistics(const DataSet<TElement>& data_set,
     vector<double>* pMinFeatureValue,
     vector<double>* pMaxFeatureValue) {
 
-  pMinFeatureValue->resize(data_set.featureCount());
-  pMaxFeatureValue->resize(data_set.featureCount());
+  pMinFeatureValue->resize(data_set.feature_count());
+  pMaxFeatureValue->resize(data_set.feature_count());
 
   fill(pMinFeatureValue->begin(),
       pMinFeatureValue->end(),
@@ -34,15 +34,15 @@ void calcMinMaxStatistics(const DataSet<TElement>& data_set,
     for (size_t obj_idx = 0;
         obj_idx < data_set[element_idx].size();
         ++obj_idx) {
-      for (size_t feature_idx = 0;
-          feature_idx < data_set.featureCount();
-          ++feature_idx) {
-        pMinFeatureValue->at(feature_idx) = min(
-            pMinFeatureValue->at(feature_idx),
-            data_set[element_idx][obj_idx].features()[feature_idx]);
-        pMaxFeatureValue->at(feature_idx) = max(
-            pMaxFeatureValue->at(feature_idx),
-            data_set[element_idx][obj_idx].features()[feature_idx]);
+      for (size_t feature_index = 0;
+          feature_index < data_set.feature_count();
+          ++feature_index) {
+        pMinFeatureValue->at(feature_index) = min(
+            pMinFeatureValue->at(feature_index),
+            data_set[element_idx][obj_idx].features()[feature_index]);
+        pMaxFeatureValue->at(feature_index) = max(
+            pMaxFeatureValue->at(feature_index),
+            data_set[element_idx][obj_idx].features()[feature_index]);
       }
     }
   }

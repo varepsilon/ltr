@@ -63,7 +63,7 @@ class FeatureInfo {
              : feature_info_(feature_count, type) {}
   /** Returns count of features
    */
-  size_t get_feature_count() const {
+  size_t feature_count() const {
       return feature_info_.size();
   }
   /** Changes number of features

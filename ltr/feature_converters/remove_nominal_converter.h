@@ -8,7 +8,12 @@
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/feature_converters/feature_converter_learner.h"
 
+using std::string;
+
 namespace ltr {
+/**
+* \brief Remove all nominal features.
+*/
 class RemoveNominalConverter : public FeatureConverter {
  public:
   typedef boost::shared_ptr<RemoveNominalConverter> Ptr;
@@ -17,15 +22,15 @@ class RemoveNominalConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
-  string generateCppCode(const std::string &) const;
+  string generateCppCode(const std::string &function_name) const;
   virtual void fillOutputFeatureInfo();
  private:
-  virtual void applyImpl(const Object& argument, Object* value) const;
+  virtual void applyImpl(const Object& input, Object* output) const;
 };
 
 template <typename TElement>
 class RemoveNominalConverterLearner
-    : public FeatureConverterLearner<TElement, RemoveNominalConverter> {
+    : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set, 
                          RemoveNominalConverter* feature_converter) {

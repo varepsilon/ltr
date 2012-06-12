@@ -30,7 +30,7 @@ void ID3_Splitter::init() {
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
-  if (current_feature >= data_.featureInfo().get_feature_count())
+  if (current_feature >= data_.featureInfo().feature_count())
     return 0;
   result->clear();
 

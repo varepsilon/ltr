@@ -107,7 +107,7 @@ DataSet<TElement> loadDataSet(const string& filename,
     objects.push_back(current_object);
 
   file.close();
-  int feature_cnt = parser->featureInfo().get_feature_count();
+  int feature_cnt = parser->featureInfo().feature_count();
   for (size_t i = 0; i < objects.size(); i++)
     for (size_t cn = objects[i].features().size(); cn < feature_cnt; cn++)
       objects[i] << ltr::utility::NaN;

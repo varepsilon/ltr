@@ -9,6 +9,12 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
+
+/**
+* \brief Converts nominal features to boolean.
+*
+* Nominal feature with k values will be converted to k boolean features.
+*/
 class NominalToBoolConverter : public FeatureConverter {
  public:
   typedef boost::shared_ptr<NominalToBoolConverter> Ptr;
@@ -18,14 +24,14 @@ class NominalToBoolConverter : public FeatureConverter {
     fillOutputFeatureInfo();
   }
   virtual void fillOutputFeatureInfo();
-  string generateCppCode(const std::string &) const;
+  string generateCppCode(const std::string &function_name) const;
  private:
-  virtual void applyImpl(const Object& argument, Object* value) const;
+  virtual void applyImpl(const Object& input, Object* output) const;
 };
 
 template <typename TElement>
 class NominalToBoolConverterLearner
-    : public FeatureConverterLearner<TElement, NominalToBoolConverter> {
+    : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set, 
                          NominalToBoolConverter* feature_converter) {

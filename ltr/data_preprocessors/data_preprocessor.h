@@ -37,7 +37,7 @@ class DataPreprocessor : public Parameterized,
    * Preprocesses DataSet.
    * \param input DataSet to be preprocessed
    * \param output preprocessed DataSet
-   * \param check_parameters whether perform Parameterized::CheckParameters() before launch
+   * \param check_parameters whether perform Parameterized::checkParameters() before launch
   */
   void apply(const DataSet<TElement>& input,
                    DataSet<TElement>* output,

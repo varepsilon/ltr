@@ -65,7 +65,7 @@ DataSampler<TElement>::DataSampler(IndicesPtr indices) {
 }
 template <typename TElement>
 DataSampler<TElement>::DataSampler(const ParametersContainer& parameters) {
-  this->setParameters(parameters);
+  setParameters(parameters);
 }
 
 template <typename TElement>
@@ -88,6 +88,7 @@ void DataSampler<TElement>::setParametersImpl(
 template <class TElement>
 void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
+  // \TODO(sameg) Is it logic?
   if (indices_->size() != 0) {
     *output = lightSubset(input, *indices_);
   } else {

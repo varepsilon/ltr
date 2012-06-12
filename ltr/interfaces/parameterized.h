@@ -12,6 +12,9 @@ using std::logic_error;
 
 namespace ltr {
 
+/**
+* Simple getter and setter
+*/
 #define GET_SET(type, name) \
   void set_##name(const type &name) { \
     name##_ = name; \
@@ -19,15 +22,26 @@ namespace ltr {
   type name() const { \
     return name##_; \
   };
+
+/**
+* Simple setter
+*/
 #define SET(type, name) \
   void set_##name(const type &name) { \
     name##_ = name; \
   };
+
+/**
+* Simple getter
+*/
 #define GET(type, name) \
   type name() const { \
     return name##_; \
   };
 
+/**
+* Throw an exception if expression is false
+*/
 #define CHECK(expression) \
   if (!(expression)) { \
     throw logic_error("Expected: " #expression); \

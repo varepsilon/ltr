@@ -137,7 +137,7 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
     rsm(new FeatureRandomSamplerLearner<Object>);
 
   BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
-  bf_learner->addFeatureConverter(rsm);
+  bf_learner->addFeatureConverterLearner(rsm);
   lc_learner.setWeakLearner(bf_learner);
 
   lc_learner.learn(data);
@@ -203,7 +203,7 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
 
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
-  bf_learner->addFeatureConverter(rsm);
+  bf_learner->addFeatureConverterLearner(rsm);
 
   DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
   bf_learner->addDataPreprocessor(begging);

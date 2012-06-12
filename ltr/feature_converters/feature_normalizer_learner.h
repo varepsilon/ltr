@@ -20,66 +20,78 @@ using std::vector;
 using std::string;
 using std::logic_error;
 
+using ltr::utility::calcMinMaxStatistics;
+
 namespace ltr {
 
+/**
+* \brief Independently normalize each feature component to the specified range.
+* \param min desired minimum values
+* \param max desired maximum values
+*/
 template <class TElement>
 class FeatureNormalizerLearner
-    : public FeatureConverterLearner<TElement, PerFeatureLinearConverter> {
+    : public BaseFeatureConverterLearner<TElement, PerFeatureLinearConverter> {
  public:
   typedef boost::shared_ptr<FeatureNormalizerLearner> Ptr;
 
-  explicit FeatureNormalizerLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
-    this->checkParameters();
-  }
+  /**
+  * \param min desired minimum values
+  * \param max desired maximum values
+  */
+  explicit FeatureNormalizerLearner(double min = 0.0, double max = 1.0);
+  explicit FeatureNormalizerLearner(const ParametersContainer& parameters);
 
-  void setDefaultParameters();
-  void checkParameters() const;
+  virtual void setDefaultParameters();
+  virtual void checkParameters() const;
 
-  string toString() const;
+  virtual string toString() const;
+
+  GET_SET(double, min);
+  GET_SET(double, max);
  private:
-  vector<double> feature_min_statistic_;
-  vector<double> feature_max_statistic_;
-
-  size_t featureCount() const;  
-  virtual void learnImpl(
-      const DataSet<TElement>& data_set,
+  virtual void learnImpl(const DataSet<TElement>& data_set,
       PerFeatureLinearConverter* per_feature_linear_converter);
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  
+  double min_;
+  double max_;
 };
 
 template <typename TElement>
-void
-FeatureNormalizerLearner<TElement>::learnImpl(
+FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
+    double min = 0.0, double max = 1.0) {
+  min_ = min;
+  max_ = max;
+}
+
+template <typename TElement>
+FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
+    const ParametersContainer& parameters) {
+  setParameters(parameters);
+}
+
+template <typename TElement>
+void FeatureNormalizerLearner<TElement>::learnImpl(
     const DataSet<TElement>& data_set, 
     PerFeatureLinearConverter* per_feature_linear_converter) {
-  utility::calcMinMaxStatistics(data_set, &feature_min_statistic_,
-      &feature_max_statistic_);
-  per_feature_linear_converter->resize(this->featureCount());
-  double normalizationIntervalBegin =
-      this->parameters().template Get<double>("NormalizationIntervalBegin");
-  double normalizationIntervalEnd =
-      this->parameters().template Get<double>("NormalizationIntervalEnd");
+  per_feature_linear_converter->resize(data_set.featureInfo());
+  Features input_min, input_max;
+  calcMinMaxStatistics(data_set, &input_min, &input_max);
 
-  for (size_t feature_idx = 0;
-      feature_idx < this->featureCount();
-      ++feature_idx) {
-    double delta = feature_max_statistic_[feature_idx]
-                                          - feature_min_statistic_[feature_idx];
-    double coefficient;
-    double shift;
+  for (size_t feature_index = 0;
+      feature_index < data_set.feature_count(); ++feature_index) {
+    double delta = input_max[feature_index] - input_min[feature_index];
+    double coefficient, shift;
     if (utility::DoubleEqual(delta, 0)) {
       coefficient = 0.0;
-      shift = (normalizationIntervalEnd - normalizationIntervalBegin) / 2;
+      shift = (max_ - min_) / 2;
     } else {
-      coefficient =
-          (normalizationIntervalEnd - normalizationIntervalBegin) / delta;
-      shift = normalizationIntervalBegin -
-          coefficient * feature_min_statistic_[feature_idx];
+      coefficient = (max_ - min_) / delta;
+      shift = min_ - coefficient * input_min[feature_index];
     }
-    per_feature_linear_converter->setCoefficient(feature_idx, coefficient);
-    per_feature_linear_converter->setShift(feature_idx, shift);
+    per_feature_linear_converter->set_factor(feature_index, coefficient);
+    per_feature_linear_converter->set_shift(feature_index, shift);
   }
 }
 
@@ -88,33 +100,29 @@ string FeatureNormalizerLearner<TElement>::toString() const {
   std::stringstream str;
   std::fixed(str);
   str.precision(2);
-  str << "Feature normalizer feature converter learner with parameters:";
-  str << " NormalizationIntervalBegin = ";
-  str << this->parameters().template Get<double>("NormalizationIntervalBegin");
-  str << ", NormalizationIntervalEnd = ";
-  str << this->parameters().template Get<double>("NormalizationIntervalEnd");
+  str << "FeatureNormalizerLearner:";
+  str << " min = " << min_;
+  str << ", max = " << max_;
   return str.str();
 }
 
 template <typename TElement>
-size_t FeatureNormalizerLearner<TElement>::featureCount() const {
-  return feature_min_statistic_.size();
+void FeatureNormalizerLearner<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  min_ = parameters.Get<double>("MIN");
+  max_ = parameters.Get<double>("MAX");
 }
+
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::setDefaultParameters() {
-  this->clearParameters();
-  this->addNewParam("NormalizationIntervalBegin", 0.0);
-  this->addNewParam("NormalizationIntervalEnd", 1.0);
+  min_ = 0.0;
+  max_ = 1.0;
 }
 
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::checkParameters() const {
-  const ParametersContainer &params = this->parameters();
-  if (params.Get<double>("NormalizationIntervalBegin") >=
-      params.Get<double>("NormalizationIntervalEnd")) {
-    throw logic_error("Bad parameters for FeatureNormalizerLearner");
-  }
+  CHECK(min_ < max_);
 }
 }
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_

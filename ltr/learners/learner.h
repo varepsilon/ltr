@@ -41,8 +41,8 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   virtual void reset() = 0;
   virtual Scorer::Ptr makeScorerPtr() const = 0;
 
-  void addFeatureConverter(
-      typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
+  void addFeatureConverterLearner(
+      typename ltr::FeatureConverterLearner<TElement>::Ptr
         feature_converter_learner);
 
   const FeatureConverterArray& getFeatureConverters() const {
@@ -83,7 +83,7 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   std::vector<typename DataPreprocessor<TElement>::Ptr> data_preprocessors_;
 
   FeatureConverterArray feature_converters_;
-  std::vector<typename BaseFeatureConverterLearner<TElement>::Ptr>
+  std::vector<typename FeatureConverterLearner<TElement>::Ptr>
     feature_converter_learners_;
 
   private:
@@ -124,8 +124,8 @@ Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
 }
 
 template< class TElement >
-void BaseLearner< TElement >::addFeatureConverter(
-    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
+void BaseLearner< TElement >::addFeatureConverterLearner(
+    typename ltr::FeatureConverterLearner<TElement>::Ptr
       feature_converter_learner) {
   feature_converter_learners_.push_back(feature_converter_learner);
 }

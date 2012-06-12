@@ -26,6 +26,11 @@ namespace ltr {
 typedef vector<double> Features;
 
 /** \typedef
+ * Type for pointer to feature vector.
+ */
+typedef boost::shared_ptr<Features> FeaturesPtr;
+
+/** \typedef
  * Type for meta information.
  * Just map from info field name to info field value
  */
@@ -70,6 +75,8 @@ class Object : public Printable {
    */
   Object& operator<<(double feature_value);
 
+  // \TODO(sameg) Don't like the next 3 operators
+
   /** Always returns constant link to an object itself. This method is
    *  needed to follow object container interface.
    */
@@ -91,6 +98,23 @@ class Object : public Printable {
    * the object (feature vector and meta information) are destroyed.
    */
   Object& operator=(const Object& other);
+
+  /** Clear object features and FeaturesInfo
+  */
+  void clear();
+  
+  /** Resize object features and FeatureInfo (feature type will be numerical).
+  */
+  void resize(size_t feature_count);
+
+  /** Set FeatureInfo and resize object features.
+  */
+  void resize(const FeatureInfo &feature_info);
+
+  /** Set FeatureInfo and resize object features.
+  */
+  void resize(const FeatureInfo::Ptr &feature_info);
+
   /** Returns the number of features in the object.
    */
   size_t feature_count() const;
@@ -130,14 +154,13 @@ class Object : public Printable {
   virtual string toString() const;
 
   const FeatureInfo& feature_info() const;
-
  private:
   /** Shared pointer to FeatureInfo.
    */
   FeatureInfo::Ptr feature_info_;
   /** Shared pointer to feature vector.
    */
-  boost::shared_ptr<Features> features_;
+  FeaturesPtr features_;
   /** Shared pointer to meta information container.
    */
   boost::shared_ptr<MetaInfo> meta_info_;

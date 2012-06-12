@@ -61,7 +61,7 @@ class DataSet : public Printable {
   FeatureInfo::Ptr featureInfoPtr() const;
   /** Returns the number of features in objects of the DataSet.
    */
-  size_t featureCount() const;
+  size_t feature_count() const;
   /** Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
    */
   DataSet& operator<<(const TElement& element);
@@ -154,8 +154,8 @@ FeatureInfo::Ptr DataSet<TElement>::featureInfoPtr() const {
 }
 
 template <typename TElement>
-size_t DataSet<TElement>::featureCount() const {
-  return this->featureInfo().get_feature_count();
+size_t DataSet<TElement>::feature_count() const {
+  return this->featureInfo().feature_count();
 }
 
 template <typename TElement>
@@ -172,7 +172,7 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   TElement element_to_add = element.deepCopy();
-  if (featureInfo_ == NULL || featureInfo_->get_feature_count() == 0) {
+  if (featureInfo_ == NULL || featureInfo_->feature_count() == 0) {
     featureInfo_ = FeatureInfo::Ptr(
       new FeatureInfo(element[0].feature_info()));
   }
