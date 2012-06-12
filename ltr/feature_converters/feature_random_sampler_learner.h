@@ -72,7 +72,7 @@ void FeatureRandomSamplerLearner<TElement>::set_seed(int seed) {
 template <class TElement>
 FeatureRandomSamplerLearner<TElement>::FeatureRandomSamplerLearner(
     const ParametersContainer& parameters) {
-  setParameters(parameters);
+  this->setParameters(parameters);
 }
 
 template <class TElement>

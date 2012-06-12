@@ -59,8 +59,8 @@ class FeatureNormalizerLearner
 };
 
 template <typename TElement>
-FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
-    double min = 0.0, double max = 1.0) {
+FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(double min,
+                                                             double max) {
   min_ = min;
   max_ = max;
 }
@@ -68,7 +68,7 @@ FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
 template <typename TElement>
 FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
     const ParametersContainer& parameters) {
-  setParameters(parameters);
+  this->setParameters(parameters);
 }
 
 template <typename TElement>

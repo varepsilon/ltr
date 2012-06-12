@@ -62,7 +62,8 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   * \return pointer to <em>new instance</em> of feature converter
   */
   typename TFeatureConverter::Ptr makeSpecific() const {
-    return TFeatureConverter::Ptr(new TFeatureConverter(feature_converter_));
+    return typename TFeatureConverter::Ptr(
+        new TFeatureConverter(feature_converter_));
   }
   virtual FeatureConverter::Ptr make() const {
     return FeatureConverter::Ptr(makeSpecific());
@@ -70,7 +71,7 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   virtual void learn(const DataSet<TElement>& data_set,
                      bool check_parameters = true) {
     if (check_parameters) {
-      checkParameters();
+      this->checkParameters();
     }
     feature_converter_.set_input_feature_info(data_set.feature_info());
     learnImpl(data_set, &feature_converter_);

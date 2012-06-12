@@ -64,7 +64,7 @@ DataSampler<TElement>::DataSampler(IndicesPtr indices) {
 }
 template <typename TElement>
 DataSampler<TElement>::DataSampler(const ParametersContainer& parameters) {
-  setParameters(parameters);
+  this->setParameters(parameters);
 }
 
 template <typename TElement>

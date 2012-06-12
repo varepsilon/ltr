@@ -64,7 +64,7 @@ FeatureSamplerLearner<TElement>::FeatureSamplerLearner(IndicesPtr indices) {
 template <typename TElement>
 FeatureSamplerLearner<TElement>::FeatureSamplerLearner(
     const ParametersContainer& parameters) {
-  setParameters(parameters);
+  this->setParameters(parameters);
 }
 
 template <typename TElement>
