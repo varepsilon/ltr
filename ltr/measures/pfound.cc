@@ -28,7 +28,6 @@ namespace ltr {
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
     double p_break = this->getDoubleParameter("P_BREAK");
     double max_label = this->getDoubleParameter("MAX_LABEL");
-    size_t cur = 1;
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       if (labels[labels_index].actual < 0) {

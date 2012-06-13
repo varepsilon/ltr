@@ -109,6 +109,18 @@ namespace lc {
      linear_composition_scorer_weights_updater
        = in_linear_composition_scorer_weights_updater;
     }
+
+    string toString() const {
+      std::stringstream str;
+      str << "Linear composition learner with parameter NUMBER_OF_ITERATIONS = "
+        << this->getIntParameter("NUMBER_OF_ITERATIONS");
+      str << ", [" << p_weak_learner_->toString() << "] as weak learner, ["
+        << data_set_weights_updater->toString()
+        << "] as dataset weights updeter and ["
+        << linear_composition_scorer_weights_updater->toString()
+        << "] as composition scorer weights updater";
+      return str.str();
+    }
   private:
     LinearCompositionScorer scorer_;
 
@@ -124,7 +136,7 @@ namespace lc {
   template <class TElement>
   void LinearCompositionLearner<TElement>::
       learnImpl(const DataSet<TElement>& data) {
-    if (this->p_measure_) {
+    if (!this->p_measure_) {
       linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
       data_set_weights_updater->setMeasure(this->p_measure_);
       this->p_weak_learner_->setMeasure(this->p_measure_);

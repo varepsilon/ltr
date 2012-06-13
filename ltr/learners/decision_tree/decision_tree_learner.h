@@ -52,8 +52,9 @@ class DecisionTreeLearner
       scorer_.setTree(DecisionTree<double>());
       scorer_.setTreeRoot(createOneVertex(data));
     }
-
   public:
+    string toString() const;
+
     /** Sets conditiona learner object.
      */
     void setConditionsLearner(ConditionsLearner::Ptr conditions_learner) {

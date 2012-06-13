@@ -7,6 +7,16 @@
 namespace ltr {
 namespace decision_tree {
 
+string DecisionTreeLearner::toString() const {
+  std::stringstream str;
+  std::fixed(str);
+  str.precision(2);
+  str << "Decision tree learner with parameters: MIN_VERTEX_SIZE = ";
+  str << this->getIntParameter("MIN_VERTEX_SIZE") << ", LABEL_EPS = ";
+  str << this->getDoubleParameter("LABEL_EPS");
+  return str.str();
+}
+
 DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
     : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner"),
       log(logger::Logger::LL_INFO, "DT_Learner ") {

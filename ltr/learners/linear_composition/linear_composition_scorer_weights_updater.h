@@ -11,6 +11,7 @@
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/printable.h"
 
 using std::string;
 using ltr::Measure;
@@ -26,7 +27,10 @@ namespace lc {
    * whereas gradient boosting updates all weights in composition
    */
   template <class TElement>
-  class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
+  class LCScorerWeightsUpdater :
+    public Aliaser,
+    public Parameterized,
+    public Printable {
   public:
     typedef boost::shared_ptr<LCScorerWeightsUpdater> Ptr;
 
@@ -39,7 +43,7 @@ namespace lc {
      * Has last scorer (just added) with weight 1.0
      */
     virtual void updateWeights(const DataSet<TElement>& data,
-        LinearCompositionScorer* lin_scorer) const =0;
+        LinearCompositionScorer* lin_scorer) const = 0;
     /**
      * Sets measure, used in LCScorerWeightsUpdater. Note that some
      * LCScorerWeightsUpdaters don't use measures, so they ignore 
@@ -70,6 +74,10 @@ namespace lc {
         : LCScorerWeightsUpdater<TElement>("FakeLCScorerWeightsUpdater") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
+    }
+
+    string toString() const {
+      return "Fake composition scorer weights updater";
     }
 
     void updateWeights(const DataSet<TElement>& data,

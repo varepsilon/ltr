@@ -30,6 +30,8 @@ class LinearLearner : public Learner<TElement, LinearScorer> {
   void reset() {}
   void setInitialScorer(const LinearScorer& in_scorer) {}
 
+  string toString() const;
+
   LinearScorer makeImpl() const;
  private:
   void learnImpl(const DataSet<TElement>& data);
@@ -38,6 +40,11 @@ class LinearLearner : public Learner<TElement, LinearScorer> {
   VectorXd b;
 };
 
+
+template<class TElement>
+string LinearLearner<TElement>::toString() const {
+  return "Linear learner";
+}
 
 template<class TElement>
 LinearScorer LinearLearner<TElement>::makeImpl() const {

@@ -112,7 +112,7 @@ class NormalizedMeasure : public Measure<TElement> {
         str << "Normalized measure without setted weak measure";
       } else {
         str << "Normalized measure over { ";
-        str << *weak_measure_;
+        str << weak_measure_->toString();
         str << " }";
       }
       str << " with parameters: BEST = ";

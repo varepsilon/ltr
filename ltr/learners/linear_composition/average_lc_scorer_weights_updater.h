@@ -46,6 +46,10 @@ namespace lc {
       this->copyParameters(parameters);
     }
 
+    string toString() const {
+      return "Average composition scorer weights updater";
+    }
+
     void updateWeights(const DataSet<TElement>& data,
         LinearCompositionScorer* lin_scorer) const;
   };

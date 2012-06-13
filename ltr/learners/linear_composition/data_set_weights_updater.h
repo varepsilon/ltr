@@ -12,6 +12,7 @@
 #include "ltr/scorers/linear_composition_scorer.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/printable.h"
 
 using std::string;
 using ltr::Measure;
@@ -29,7 +30,10 @@ namespace lc {
    * primary on bad elements and level the limitations of previous scorers
    */
   template <class TElement>
-  class DataSetWeightsUpdater : public Aliaser, public Parameterized {
+  class DataSetWeightsUpdater :
+    public Aliaser,
+    public Parameterized,
+    public Printable {
   public:
     typedef boost::shared_ptr<DataSetWeightsUpdater> Ptr;
 
@@ -72,6 +76,10 @@ namespace lc {
         : DataSetWeightsUpdater<TElement>("FakeDataSetWeightsUpdater") {
       this->setDefaultParameters();
       this->copyParameters(parameters);
+    }
+
+    string toString() const {
+      return "Fake dataset weights updater";
     }
 
     void updateWeights(const DataSet<TElement>* data,

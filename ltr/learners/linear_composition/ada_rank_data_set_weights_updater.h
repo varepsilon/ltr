@@ -44,6 +44,11 @@ namespace lc {
       this->copyParameters(parameters);
     }
 
+    string toString() const {
+      return "AdaRank dataset weights updater with "
+        + this->measure_->toString();
+    }
+
     void updateWeights(const DataSet<TElement>* data,
         const LinearCompositionScorer& lin_scorer) const;
   };

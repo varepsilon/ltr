@@ -35,8 +35,8 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
       size_t initialScorerIdx = 0) :
         scorer_(initialScorerIdx),
         Learner<TElement, OneFeatureScorer>("BestFeatureLearner") {
-          this->setMeasure(pMeasure);
-        }
+      this->setMeasure(pMeasure);
+    }
 
   void setInitialScorer(const OneFeatureScorer& initialScorer) {
     scorer_ = initialScorer;
@@ -48,12 +48,19 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
     scorer_ = OneFeatureScorer(0);
   }
 
+  string toString() const;
 
   private:
   OneFeatureScorer scorer_;
 
   void learnImpl(const DataSet<TElement>& data);
 };
+
+
+template<class TElement>
+string BestFeatureLearner<TElement>::toString() const {
+  return "Best feature learner with " + this->p_measure_->toString();
+}
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {

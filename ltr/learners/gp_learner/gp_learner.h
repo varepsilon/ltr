@@ -107,6 +107,40 @@ class GPLearner : public Learner<TElement, GPScorer> {
     this->initPopulation();
   }
 
+  string toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "Genetic programming learner with parameters: POP_SIZE = ";
+    str << this->getIntParameter("POP_SIZE") << ", NBR_GEN = ";
+    str << this->getIntParameter("NBR_GEN") << ", NBR_PART = ";
+    str << this->getIntParameter("NBR_PART") << ", MAX_DEPTH = ";
+    str << this->getIntParameter("MAX_DEPTH") << ", MIN_INIT_DEPTH = ";
+    str << this->getIntParameter("MIN_INIT_DEPTH") << ", MAX_INIT_DEPTH = ";
+    str << this->getIntParameter("MAX_INIT_DEPTH") << ", INIT_GROW_PROBA = ";
+    str << this->getDoubleParameter("INIT_GROW_PROBA")
+      << ", CROSSOVER_PROBA = ";
+    str << this->getDoubleParameter("CROSSOVER_PROBA")
+      << ", CROSSOVER_DISTRIB_PROBA = ";
+    str << this->getDoubleParameter("CROSSOVER_DISTRIB_PROBA")
+      << ", MUT_STD_PROBA = ";
+    str << this->getDoubleParameter("MUT_STD_PROBA")
+      << ", MUT_MAX_REGEN_DEPTH = ";
+    str << this->getIntParameter("MUT_MAX_REGEN_DEPTH")
+      << ", MUT_SWAP_PROBA = ";
+    str << this->getDoubleParameter("MUT_SWAP_PROBA")
+      << ", MUT_SWAP_DISTRIB_PROBA = ";
+    str << this->getDoubleParameter("MUT_SWAP_DISTRIB_PROBA") << ", SEED = ";
+    str << this->getIntParameter("SEED") << ", USE_ADD = ";
+    str << this->getBoolParameter("USE_ADD") << ", USE_SUB = ";
+    str << this->getBoolParameter("USE_SUB") << ", USE_MUL = ";
+    str << this->getBoolParameter("USE_MUL") << ", USE_DIV = ";
+    str << this->getBoolParameter("USE_DIV") << ", USE_IF = ";
+    str << this->getBoolParameter("USE_IF") << ", USE_EFEM = ";
+    str << this->getBoolParameter("USE_EFEM");
+    return str.str();
+  }
+
   /** The function sets up context and population from the given GPScorer.
    * \param in_scorer GPScorer whose population and context would be set up.
    */

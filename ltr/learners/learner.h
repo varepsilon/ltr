@@ -19,6 +19,7 @@ using std::string;
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"
+#include "ltr/interfaces/printable.h"
 
 namespace ltr {
 /**
@@ -29,7 +30,10 @@ namespace ltr {
  * and inheritance tree is a forest
  */
 template<class TElement>
-class BaseLearner : public Reporter, public Aliaser, public Parameterized {
+class BaseLearner : public Reporter,
+    public Aliaser,
+    public Parameterized,
+    public Printable {
   public:
   typedef boost::shared_ptr<BaseLearner> Ptr;
   typedef boost::shared_ptr<BaseLearner> BasePtr;
