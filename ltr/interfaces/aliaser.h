@@ -15,7 +15,7 @@ namespace ltr {
 */
 class Aliaser {
  public:
-  virtual ~Aliaser();
+  virtual ~Aliaser() {}
   /**
   * \return alias if it's was set or class name otherwise
   */
