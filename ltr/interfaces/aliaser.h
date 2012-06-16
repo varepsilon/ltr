@@ -15,6 +15,7 @@ namespace ltr {
 */
 class Aliaser {
  public:
+  virtual ~Aliaser();
   /**
   * \return alias if it's was set or class name otherwise
   */
@@ -30,7 +31,7 @@ class Aliaser {
   */
   void set_alias(const string& alias) {
     alias_ = alias;
-  }  
+  }
  private:
   string alias_;
 };
