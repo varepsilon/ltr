@@ -33,8 +33,6 @@ namespace lc {
   public:
     typedef boost::shared_ptr<DataSetWeightsUpdater> Ptr;
 
-    explicit DataSetWeightsUpdater(const string& alias) : Aliaser(alias) {}
-
     /**
      * Updates dataset's weights
      * @param data - dataset to update it's weights
@@ -68,8 +66,7 @@ namespace lc {
      * @param parameters Standart LTR parameter container with no parameters
      */
     explicit FakeDataSetWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : DataSetWeightsUpdater<TElement>("FakeDataSetWeightsUpdater") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

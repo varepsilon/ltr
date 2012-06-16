@@ -34,8 +34,6 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
   typedef boost::shared_ptr<BaseLearner> Ptr;
   typedef boost::shared_ptr<BaseLearner> BasePtr;
 
-  explicit BaseLearner(const string& alias) : Aliaser(alias) {}
-
   void learn(const DataSet<TElement>& data);
 
   virtual void reset() = 0;
@@ -100,7 +98,6 @@ class BaseLearner : public Reporter, public Aliaser, public Parameterized {
 template<class TElement, class TScorer>
 class Learner : public BaseLearner<TElement> {
   public:
-  explicit Learner(const string& alias) : BaseLearner<TElement>(alias) {}
 
   /**
    * Is for being sure Scorer::Ptrs outputted by makeScorerPtr() are Ptrs on

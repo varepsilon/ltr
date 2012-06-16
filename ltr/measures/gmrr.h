@@ -19,8 +19,7 @@ namespace ltr {
    */
   class GMRR: public ListwiseMeasure {
   public:
-    GMRR(const ParametersContainer& parameters = ParametersContainer())
-        : ListwiseMeasure("GMRR") {
+    GMRR(const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

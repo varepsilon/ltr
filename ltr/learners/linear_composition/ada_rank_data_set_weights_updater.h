@@ -38,8 +38,7 @@ namespace lc {
      * @param parameters Standart LTR parameter container with no parameters
      */
     explicit AdaRankDataSetWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : DataSetWeightsUpdater<TElement>("AdaRankDataSetWeightsUpdater") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

@@ -62,8 +62,7 @@ namespace lc {
         const ParametersContainer& parameters = ParametersContainer())
         : data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
         linear_composition_scorer_weights_updater
-          (new FakeLCScorerWeightsUpdater<TElement>),
-        Learner<TElement, LinearCompositionScorer>("LinearCompositionLearner") {
+          (new FakeLCScorerWeightsUpdater<TElement>) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
       this->checkParameters();

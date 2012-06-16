@@ -20,8 +20,7 @@ namespace ltr {
    */
   class TruePoint : public PointwiseMeasure {
   public:
-    TruePoint(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("TruePoint") {
+    TruePoint(const ParametersContainer& parameters = ParametersContainer()) {
       setDefaultParameters();
       copyParameters(parameters);
     }

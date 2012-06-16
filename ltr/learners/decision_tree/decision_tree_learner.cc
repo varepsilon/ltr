@@ -11,8 +11,7 @@ using std::stringstream;
 namespace ltr {
 namespace decision_tree {
 
-DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
-    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner") {
+DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters) {
   this->setDefaultParameters();
   this->copyParameters(parameters);
 

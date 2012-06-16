@@ -19,7 +19,7 @@ namespace ltr {
   public:
     typedef boost::shared_ptr<LinearCompositionScorer> Ptr;
 
-    LinearCompositionScorer() : Scorer("LinearCompositionScorer") {
+    LinearCompositionScorer() {
     }
 
     struct ScorerAndWeight {

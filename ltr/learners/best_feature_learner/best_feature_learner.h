@@ -25,16 +25,14 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   typedef boost::shared_ptr<BestFeatureLearner> Ptr;
 
   BestFeatureLearner
-      (const ParametersContainer& parameters = ParametersContainer())
-      : Learner<TElement, OneFeatureScorer>("BestFeatureLearner") {
+      (const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
 
   BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure,
       size_t initialScorerIdx = 0) :
-        scorer_(initialScorerIdx),
-        Learner<TElement, OneFeatureScorer>("BestFeatureLearner") {
+        scorer_(initialScorerIdx) {
           this->setMeasure(pMeasure);
         }
 

@@ -27,7 +27,7 @@ class DecisionTreeScorer : public Scorer {
   public:
     typedef boost::shared_ptr< DecisionTreeScorer > Ptr;
 
-    DecisionTreeScorer() : Scorer("Decision tree scorer") {}
+    DecisionTreeScorer() {}
 
     void setTree(const DecisionTree<double>& tree) {
       tree_ = tree;

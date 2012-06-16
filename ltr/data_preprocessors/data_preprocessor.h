@@ -28,7 +28,8 @@ namespace ltr {
 */
 template <class TElement>
 class DataPreprocessor : public Parameterized,
-                         public Printable {
+                         public Printable,
+                         public Aliaser {
  public:
   typedef boost::shared_ptr<DataPreprocessor> BasePtr;
   typedef boost::shared_ptr<DataPreprocessor> Ptr;

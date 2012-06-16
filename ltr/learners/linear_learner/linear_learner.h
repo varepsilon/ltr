@@ -21,8 +21,7 @@ class LinearLearner : public Learner<TElement, LinearScorer> {
  public:
   typedef boost::shared_ptr<LinearLearner> Ptr;
 
-  LinearLearner(const ParametersContainer& parameters = ParametersContainer())
-      : Learner<TElement, LinearScorer>("LinearScorer") {
+  LinearLearner(const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }

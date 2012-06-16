@@ -20,8 +20,7 @@ class FakeScorer : public Scorer {
 
   FakeScorer(double scoreValue = 0.0,
       const FeatureConverterArray& featureConverters = FeatureConverterArray())
-  :Scorer("FakeScorer", featureConverters),
-  score_value_(scoreValue) {}
+  : Scorer(featureConverters), score_value_(scoreValue) {}
 
   string toString() const {
     return "All scores are constant (" +

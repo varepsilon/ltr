@@ -24,8 +24,7 @@ namespace ltr {
      * SCORE_FOR_RELEVANT, by default SCORE_FOR_RELEVANT = 3.0
      */
     ReciprocalRank(const ParametersContainer&
-        parameters = ParametersContainer())
-        : ListwiseMeasure("Reciprocal Rank") {
+        parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

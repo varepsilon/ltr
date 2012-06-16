@@ -27,7 +27,8 @@ namespace ltr {
  */
 template <class TElement>
 class FeatureConverterLearner : public Parameterized,
-                                public Printable {
+                                public Printable,
+                                public Aliaser {
  public:
   typedef boost::shared_ptr<FeatureConverterLearner> Ptr;
   /**

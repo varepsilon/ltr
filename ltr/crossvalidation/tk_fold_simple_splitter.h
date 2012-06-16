@@ -35,8 +35,7 @@ namespace ltr {
        * K and T, by default K = T = 10
        */
       explicit TKFoldSimpleSplitter
-          (const ParametersContainer& parameters = ParametersContainer())
-          : Splitter<TElement>("TKFoldSimpleSplitter") {
+          (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->copyParameters(parameters);
       }

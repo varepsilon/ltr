@@ -17,8 +17,7 @@ namespace ltr {
   class AveragePrecision: public ListwiseMeasure {
   public:
     AveragePrecision(const ParametersContainer&
-        parameters = ParametersContainer())
-        : ListwiseMeasure("Average precision") {
+        parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

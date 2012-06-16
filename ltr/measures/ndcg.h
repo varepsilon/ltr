@@ -38,8 +38,7 @@ namespace ltr {
      * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
      * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
-    BaseNDCG(const ParametersContainer& parameters = ParametersContainer())
-      : ListwiseMeasure("NDCG with " + TDCGFormula::alias()) {
+    BaseNDCG(const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

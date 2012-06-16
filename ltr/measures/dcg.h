@@ -11,6 +11,7 @@
 #include <functional>
 
 #include "ltr/data/object_list.h"
+#include "ltr/interfaces/aliaser.h"
 #include "ltr/measures/measure.h"
 #include "ltr/measures/utils/measure_utility.h"
 
@@ -29,7 +30,7 @@ namespace ltr {
    * Also it contains information if resulted DCG measure is MoreIsBetter of LessIsBetter
    * and what bounds has DCG result (e.g. it must be non-negative)
    */
-  class DCGFormula {
+  class DCGFormula : public Aliaser {
   public:
     /**
      * The result of this function is added to the DCG for each position.
@@ -37,7 +38,6 @@ namespace ltr {
      * @param position - the position number 0..size() - 1
      */
     static double count(double relevance, size_t position);
-    static string alias();
     static double best();
     static double worst();
   };
@@ -45,10 +45,9 @@ namespace ltr {
   /**
    * Yandex DCG formula from http://imat2009.yandex.ru/datasets
    */
-  class YandexDCGFormula {
+  class YandexDCGFormula : public Aliaser {
   public:
     static double count(double relevance, size_t position);
-    static string alias();
     static double best();
     static double worst();
   };
@@ -65,8 +64,7 @@ namespace ltr {
      * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
      * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
      */
-    BaseDCG(const ParametersContainer& parameters = ParametersContainer())
-      : ListwiseMeasure("DCG with " + TDCGFormula::alias()) {
+    BaseDCG(const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

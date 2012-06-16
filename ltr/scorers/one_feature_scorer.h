@@ -20,7 +20,7 @@ namespace ltr {
 
     explicit OneFeatureScorer(size_t feature_index = 0,
       FeatureConverterArray featureConverterArray = FeatureConverterArray()) :
-        Scorer("OneFeatureScorer", featureConverterArray),
+        Scorer(featureConverterArray),
         index_(feature_index) {}
 
     size_t getIndex() const {

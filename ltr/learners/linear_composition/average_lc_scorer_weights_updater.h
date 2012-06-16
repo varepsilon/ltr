@@ -38,9 +38,7 @@ namespace lc {
      * @param parameters Standart LTR parameter container with no parameters
      */
     explicit AverageLCScorerWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : LCScorerWeightsUpdater<TElement>
-          ("AverageLCScorerWeightsUpdater") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

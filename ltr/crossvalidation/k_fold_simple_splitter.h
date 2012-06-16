@@ -32,8 +32,7 @@ namespace ltr {
        * K, by default K = 10
        */
       explicit KFoldSimpleSplitter
-          (const ParametersContainer& parameters = ParametersContainer())
-          : Splitter<TElement>("KFoldSimpleSplitter") {
+          (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->copyParameters(parameters);
       }

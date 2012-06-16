@@ -21,8 +21,7 @@ namespace ltr {
    */
   class AbsError : public PointwiseMeasure {
     public:
-    AbsError(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("Absolute error") {
+    AbsError(const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       copyParameters(parameters);
     }

@@ -49,7 +49,7 @@ class GPScorer : public Scorer {
       size_t inPopulationBestTreeIdx,
       const FeatureConverterArray& featureConverters =
           FeatureConverterArray())
-  : Scorer("GPScorer", featureConverters),
+  : Scorer(featureConverters),
   population_(population),
   context_(context),
   featureCountInContext_(featureCountInContext),

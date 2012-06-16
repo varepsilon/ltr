@@ -44,14 +44,12 @@ class NormalizedMeasure : public Measure<TElement> {
     typedef boost::shared_ptr<NormalizedMeasure> Ptr;
 
     explicit NormalizedMeasure(
-        const ParametersContainer& parameters = ParametersContainer())
-        : Measure<TElement>("Normalized measure") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
 
-    NormalizedMeasure(double worst, double best)
-        : Measure<TElement>("Normalized measure") {
+    NormalizedMeasure(double worst, double best) {
       this->setDefaultParameters();
       this->setExistingParameter("WORST", worst);
       this->setExistingParameter("BEST", best);

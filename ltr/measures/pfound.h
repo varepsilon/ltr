@@ -21,8 +21,7 @@ namespace ltr {
      * Yandex pFound listwise measure. See http://romip.ru/romip2010/20_appendix_a_metrics.pdf pp 186.
      * Here pRel = object's score / MAX_LABEL
      */
-    PFound(const ParametersContainer& parameters = ParametersContainer())
-        : ListwiseMeasure("PFound") {
+    PFound(const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

@@ -42,8 +42,6 @@ class Measure : public Aliaser, public Parameterized, public Printable {
   typedef boost::shared_ptr<Measure> Ptr;
   typedef boost::shared_ptr<Measure> BasePtr;
 
-  explicit Measure(const string& alias) : Aliaser(alias) {}
-
   /**
    * Value of measure(quality of algorithm)
    * @param element - element(single object, pair or list) for counting measure on

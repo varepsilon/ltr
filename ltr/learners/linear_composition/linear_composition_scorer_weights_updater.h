@@ -30,7 +30,6 @@ namespace lc {
   public:
     typedef boost::shared_ptr<LCScorerWeightsUpdater> Ptr;
 
-    explicit LCScorerWeightsUpdater(const string& alias) : Aliaser(alias) {}
     /**
      * Updates linear composition's weights
      * @param data - dataset, not upadated by DataSetWeightsUpdater on
@@ -66,8 +65,7 @@ namespace lc {
      * @param parameters Standart LTR parameter container with no parameters
      */
     explicit FakeLCScorerWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : LCScorerWeightsUpdater<TElement>("FakeLCScorerWeightsUpdater") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }

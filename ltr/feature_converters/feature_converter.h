@@ -38,7 +38,8 @@ namespace ltr {
 * 
 * \see FeatureConverterLearner, BaseFeatureConverterLearner, Learner, Scorer
 */
-class FeatureConverter : public Serializable {
+class FeatureConverter : public Serializable,
+                         public Aliaser {
  public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;

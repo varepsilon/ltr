@@ -20,8 +20,7 @@ namespace ltr {
    */
   class SquaredError : public PointwiseMeasure {
     public:
-    SquaredError(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("Squared error") {
+    SquaredError(const ParametersContainer& parameters = ParametersContainer()) {
       setDefaultParameters();
       copyParameters(parameters);
     }

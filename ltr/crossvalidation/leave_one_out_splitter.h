@@ -30,8 +30,7 @@ namespace ltr {
        * (LeaveOneOutSplitter has no parameters at all)
        */
       explicit LeaveOneOutSplitter
-          (const ParametersContainer& parameters = ParametersContainer())
-          : Splitter<TElement>("LeaveOneOutSplitter") {
+          (const ParametersContainer& parameters = ParametersContainer()) {
         this->setDefaultParameters();
         this->copyParameters(parameters);
       }
