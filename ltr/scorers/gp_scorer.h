@@ -102,6 +102,7 @@ class GPScorer : public Scorer {
 
     return code;
   }
+  virtual string getDefaultAlias() const {return "GPScorer";}
 
   /** the current population of  genetic programming's
    * evolution process, vector of Puppy::tree.

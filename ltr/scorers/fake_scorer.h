@@ -35,6 +35,7 @@ class FakeScorer : public Scorer {
   string generateCppCodeImpl(const string& function_name) const {
     return "Not implemented.";
   }
+  virtual string getDefaultAlias() const {return "FakeScorer";}
 
   double score_value_;
 };

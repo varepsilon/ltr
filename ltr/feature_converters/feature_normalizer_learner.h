@@ -53,6 +53,7 @@ class FeatureNormalizerLearner
   virtual void learnImpl(const DataSet<TElement>& data_set,
       PerFeatureLinearConverter* per_feature_linear_converter);
   virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual string getDefaultAlias() const {return "FeatureNormalizerLearner";}
 
   double min_;
   double max_;

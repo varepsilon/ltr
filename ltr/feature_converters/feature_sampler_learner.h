@@ -51,6 +51,7 @@ class FeatureSamplerLearner
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FeatureSampler *feature_sampler);
   virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual string getDefaultAlias() const {return "FeatureSamplerLearner";}
   IndicesPtr indices_;
 };
 

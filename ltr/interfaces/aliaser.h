@@ -17,13 +17,13 @@ class Aliaser {
  public:
   virtual ~Aliaser() {}
   /**
-  * \return alias if it's was set or class name otherwise
+  * \return alias if it's was set or default alias otherwise
   */
   virtual string alias() const {
     if (!alias_.empty()) {
       return alias_;
     } else {
-      return typeid(*this).name();
+      return getDefaultAlias();
     }
   }
   /**
@@ -33,6 +33,7 @@ class Aliaser {
     alias_ = alias;
   }
  private:
+  virtual string getDefaultAlias() const = 0;
   string alias_;
 };
 };

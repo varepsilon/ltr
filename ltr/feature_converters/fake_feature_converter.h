@@ -31,6 +31,7 @@ class FakeFeatureConverter : public FeatureConverter {
  private:
   virtual void applyImpl(const Object& input,
                                Object* output) const;
+  virtual string getDefaultAlias() const {return "FakeFeatureConverter";}
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

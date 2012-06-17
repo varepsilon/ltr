@@ -6,7 +6,9 @@
 #include <boost/shared_ptr.hpp>
 
 #include <stdexcept>
+#include <string>
 #include <limits>
+
 
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/one_feature_scorer.h"
@@ -17,11 +19,13 @@ using ltr::DataSet;
 using ltr::OneFeatureScorer;
 using ltr::Measure;
 
+using std::string;
+
 namespace ltr {
 
 template< class TElement >
 class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
-  public:
+ public:
   typedef boost::shared_ptr<BestFeatureLearner> Ptr;
 
   BestFeatureLearner
@@ -57,10 +61,11 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
     this->p_measure_ = typename Measure<TElement>::Ptr(msr);
   }
 
-  private:
+ private:
   OneFeatureScorer scorer_;
 
   void learnImpl(const DataSet<TElement>& data);
+  virtual string getDefaultAlias() const {return "BestFeatureLeaner";}
 };
 
 template< class TElement >

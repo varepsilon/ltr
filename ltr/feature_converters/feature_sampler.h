@@ -47,6 +47,8 @@ class FeatureSampler : public FeatureConverter {
   void set_indices(const Indices& indices);
  private:
   void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "FeatureSampler";}
+
   Indices indices_;
 };
 }

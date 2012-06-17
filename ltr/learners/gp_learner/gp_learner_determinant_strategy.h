@@ -6,14 +6,17 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 
 #include <algorithm>
+#include <string>
 #include <functional>
+
+using std::string;
 
 namespace ltr {
 namespace gp {
 
 template <typename TElement>
 class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
-  public:
+ public:
   /** Constructor creates a GPLearnerWithDeterminantStrategy.
    * \param p_Measure shared pointer to the measure that would be maximized on
    * a dataset within learning.
@@ -106,6 +109,9 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
       const T &max_;
     };
 
+  virtual string getDefaultAlias() const {
+    return "GPLearnerWithDeterminantStrategy";
+  }
 
   /** \brief This function implements the changes made in the population at each
    *  algorithm's iteration.

@@ -25,6 +25,9 @@ class FakeFeatureConverterLearner
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FakeFeatureConverter *feature_converter);
+  virtual string getDefaultAlias() const {
+    return "FakeFeatureConverterLearner";
+  }
 };
 
 // template realizations

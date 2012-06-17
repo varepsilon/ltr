@@ -6,12 +6,15 @@
 #include <boost/shared_ptr.hpp>
 #include <Eigen/Dense>
 
+#include <string>
 #include <vector>
 
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/linear_scorer.h"
 
+using std::string;
 using std::vector;
+
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 
@@ -32,6 +35,7 @@ class LinearLearner : public Learner<TElement, LinearScorer> {
   LinearScorer makeImpl() const;
  private:
   void learnImpl(const DataSet<TElement>& data);
+  virtual string getDefaultAlias() const {return "LinearLearner";}
   // min (Y - Xb)^T W (Y - Xb)
   // b = (X^T W X)^-1 X^T W Y
   VectorXd b;

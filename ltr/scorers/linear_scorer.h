@@ -23,6 +23,7 @@ class LinearScorer : public Scorer {
  private:
   virtual double scoreImpl(const Object& obj) const;
   virtual string generateCppCodeImpl(const string& function_name) const;
+  virtual string getDefaultAlias() const {return "LinearScorer";}
 
   vector<double> weights;
 };

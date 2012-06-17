@@ -29,6 +29,7 @@ class FakePreprocessor : public DataPreprocessor<TElement> {
                                DataSet<TElement>* output) const {
     *output = input;
   }
+  virtual string getDefaultAlias() const {return "FakePreprocessor";}
 };
 };
 

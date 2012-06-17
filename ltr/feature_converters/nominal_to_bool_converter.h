@@ -27,6 +27,7 @@ class NominalToBoolConverter : public FeatureConverter {
   string generateCppCode(const std::string &function_name) const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "NominalToBoolConverter";}
 };
 
 template <typename TElement>

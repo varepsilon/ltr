@@ -59,6 +59,7 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
   virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void applyImpl(const DataSet<TElement>& input,
                                DataSet<TElement>* output) const;
+  virtual string getDefaultAlias() const {return "DataRandomSampler";}
   double sampling_fraction_;
   bool with_replacement_;
   int seed_;

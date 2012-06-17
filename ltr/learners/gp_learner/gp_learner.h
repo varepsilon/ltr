@@ -31,7 +31,7 @@ namespace gp {
  */
 template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
-  public:
+ public:
   /** Constructor creates a GPLearner.
    * \param p_Measure shared pointer to the measure that would be maximized on
    * a dataset within learning.
@@ -136,7 +136,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
         this->featureCountInContext_, this->inPopulationBestTreeIdx_);
   }
 
-  private:
+ private:
   template <class T>
   struct Belongs: public std::unary_function<T, bool> {
     Belongs(const T &min, const T &max): min_(min), max_(max) { }
@@ -148,7 +148,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
     const T &min_;
     const T &max_;
   };
-
+  virtual string getDefaultAlias() const {return "GPLeaner";}
   /** Method clears and adds primitives to the context.
    */
   void initContext() {

@@ -58,6 +58,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
   virtual string generateCppCode(const string& function_name) const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "PerFeatureLinearConverter";}
 
   vector<double> factors_;
   vector<double> shifts_;
