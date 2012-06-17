@@ -27,7 +27,7 @@ typedef vector<Puppy::Tree> Population;
  * population of genetic programming's evolution process.
  */
 class GPScorer : public Scorer {
-  public:
+ public:
   /** \typedef boost shared pointer to GPScorer;
    */
   typedef boost::shared_ptr< GPScorer > Ptr;
@@ -36,39 +36,39 @@ class GPScorer : public Scorer {
    * evolution process, vector of Puppy::tree.
    * \param context the context upon which the Puppy::trees in the population
    * are constructed.
-   * \param featureCountInContext the number of features for those the context
+   * \param feature_count the number of features for those the context
    * was created.
-   * \param inPopulationBestTreeIdx the index of best Puppy::tree(formula,
+   * \param best_tree_index the index of best Puppy::tree(formula,
    * individ) in the population.
    * \param featureConverters the vector of featureConverters to be applied
    * to the dataset before scoring.
    */
   GPScorer(const Population& population,
       const Puppy::Context& context,
-      size_t featureCountInContext,
-      size_t inPopulationBestTreeIdx,
+      size_t feature_count,
+      size_t best_tree_index,
       const FeatureConverterArray& featureConverters =
           FeatureConverterArray())
   : Scorer(featureConverters),
   population_(population),
   context_(context),
-  featureCountInContext_(featureCountInContext),
-  inPopulationBestTreeIdx_(inPopulationBestTreeIdx) {}
+  feature_count_(feature_count),
+  best_tree_index_(best_tree_index) {}
 
   string toString() const {
     return "Genetic programming scorer";
   }
 
-  private:
+ private:
   /** The implementation of scoring function. It scores using the best
    *  Puppy::tree in the population.
    */
-  double scoreImpl(const Object& obj) const {
-    assert(featureCountInContext_ == obj.feature_count());
-    setContextToObject(&context_, obj);
-    double resultScore;
-    population_[inPopulationBestTreeIdx_].interpret(&resultScore, context_);
-    return resultScore;
+  double scoreImpl(const Object& object) const {
+    assert(feature_count_ == object.feature_count());
+    setContextToObject(&context_, object);
+    double score;
+    population_[best_tree_index_].interpret(&score, context_);
+    return score;
   }
   /** the function generates code for the scorer as cpp code function
    * \param class_name the name for the class that would be created.
@@ -80,17 +80,17 @@ class GPScorer : public Scorer {
     vector<Puppy::PrimitiveHandle>::const_iterator functionItr =
         context_.mFunctionSet.begin();
     for (; functionItr != context_.mFunctionSet.end(); ++functionItr) {
-      const Serializable* pSerializable = puppyPrimitiveHandleToPSerializable(
+      const Serializable* serializable = puppyPrimitiveHandleToPSerializable(
           *functionItr);
       string primiriveFunctionName =
-          pSerializable->getDefaultSerializableObjectName();
+          serializable->getDefaultSerializableObjectName();
       primiriveFunctionName += (*functionItr)->getName();
-      code.append(pSerializable->generateCppCode(primiriveFunctionName));
+      code.append(serializable->generateCppCode(primiriveFunctionName));
     }
     // generate the function from tree.
     stringstream sstreamForCalls;
-    writeTreeAsStringOfCppCalls(population_[inPopulationBestTreeIdx_],
-        &sstreamForCalls, 0);
+    writeTreeAsStringOfCppCalls(population_[best_tree_index_],
+        sstreamForCalls, 0);
     // generate scoring function
     code.append("double ");
     code.append(function_name);
@@ -115,11 +115,11 @@ class GPScorer : public Scorer {
   /** the number of features for those the context
     * was created.
     */
-  size_t inPopulationBestTreeIdx_;
+  size_t best_tree_index_;
   /** the index of best Puppy::tree(formula,
    * individ) in the population.
    */
-  size_t featureCountInContext_;
+  size_t feature_count_;
   /** GPlearner can access the class private data to set up the scorer as the
    * starting point of GP evolution process.
    */

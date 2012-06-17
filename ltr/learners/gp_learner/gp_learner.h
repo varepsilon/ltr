@@ -16,15 +16,12 @@
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/measures/measure.h"
 
-
-
 #include "ltr/parameters_container/parameters_container.h"
-
 
 namespace ltr {
 namespace gp {
 /**
- \class GPLearner
+ \brief GPLearner
  Implements genetic programming approach applied to learning to rank.
  \tparam TElement object container of those the dataset consists (it can be
  Object, ObjectPair, ObjectList).
@@ -33,16 +30,16 @@ template <typename TElement>
 class GPLearner : public Learner<TElement, GPScorer> {
  public:
   /** Constructor creates a GPLearner.
-   * \param p_Measure shared pointer to the measure that would be maximized on
+   * \param measure shared pointer to the measure that would be maximized on
    * a dataset within learning.
    * \param parameters the ParametersContainer parameters from which would
    * overwrite the default parameters.
    */
-  GPLearner(typename Measure<TElement>::Ptr p_Measure,
+  GPLearner(typename Measure<TElement>::Ptr measure,
       const ParametersContainer& parameters = ParametersContainer())
-  : featureCountInContext_(0),
-  inPopulationBestTreeIdx_(0) {
-    this->setMeasure(p_Measure);
+  : feature_count_(0),
+  best_tree_index_(0) {
+    this->setMeasure(measure);
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
@@ -51,8 +48,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * overwrite the default parameters.
    */
   GPLearner(const ParametersContainer& parameters = ParametersContainer())
-  : featureCountInContext_(0),
-  inPopulationBestTreeIdx_(0) {
+  : feature_count_(0),
+  best_tree_index_(0) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
@@ -121,19 +118,19 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
 
   /** The function sets up context and population from the given GPScorer.
-   * \param in_scorer GPScorer whose population and context would be set up.
+   * \param scorer GPScorer whose population and context would be set up.
    */
-  void setInitialScorer(const GPScorer& in_scorer) {
-    population_ = in_scorer.population_;
-    context_ = in_scorer.context_;
-    featureCountInContext_ = in_scorer.featureCountInContext_;
-    inPopulationBestTreeIdx_ = in_scorer.inPopulationBestTreeIdx_;
+  void setInitialScorer(const GPScorer& scorer) {
+    population_ = scorer.population_;
+    context_ = scorer.context_;
+    feature_count_ = scorer.feature_count_;
+    best_tree_index_ = scorer.best_tree_index_;
   }
   /** The function return trained GPscorer after learning process
    */
   GPScorer makeImpl() const {
-    return GPScorer(this->population_, this->context_,
-        this->featureCountInContext_, this->inPopulationBestTreeIdx_);
+    return GPScorer(population_, context_,
+        feature_count_, best_tree_index_);
   }
 
  private:
@@ -165,13 +162,13 @@ class GPLearner : public Learner<TElement, GPScorer> {
     if (params.template Get<bool>("USE_IF"))  context_.insert(new IfThenFunc);
     if (params.template Get<bool>("USE_EFEM")) context_.insert(new Ephemeral);
 
-    for (int featureIdx = 0;
-        featureIdx < featureCountInContext_;
-        ++featureIdx) {
-      std::string featureName = "feature[";
-      featureName += boost::lexical_cast<string>(featureIdx);
-      featureName += "]";
-      context_.insert(new Puppy::TokenT<double>(featureName));
+    for (int feature_index = 0;
+        feature_index < feature_count_;
+        ++feature_index) {
+      std::string feature_name = "feature[";
+      feature_name += boost::lexical_cast<string>(feature_index);
+      feature_name += "]";
+      context_.insert(new Puppy::TokenT<double>(feature_name));
     }
   }
 
@@ -217,12 +214,12 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
 
   /** The implementation of genetic programming optimization approach.
-   * \param data DataSet on which the p_Measure would be maximized within the
+   * \param data DataSet on which the measure would be maximized within the
    * learning procedure.
    */
   void learnImpl(const DataSet<TElement>& data) {
-    if (data.feature_count() != featureCountInContext_) {
-      featureCountInContext_ = data.feature_count();
+    if (data.feature_count() != feature_count_) {
+      feature_count_ = data.feature_count();
       reset();
     }
 
@@ -230,9 +227,9 @@ class GPLearner : public Learner<TElement, GPScorer> {
     this->evaluatePopulation(data);
 
     std::cout << "The population looks like: \n";
-    for (size_t treeIdx = 0; treeIdx < population_.size(); ++treeIdx) {
+    for (size_t tree_index = 0; tree_index < population_.size(); ++tree_index) {
       using ::operator <<;
-      std::cout << population_[treeIdx] << std::endl;
+      std::cout << population_[tree_index] << std::endl;
     }
 
     std::cout << "Evolution begins.\n";
@@ -247,20 +244,21 @@ class GPLearner : public Learner<TElement, GPScorer> {
       std::cout << "Evaluation.\n";
       this->evaluatePopulation(data);
 
-      inPopulationBestTreeIdx_ = 0;
-      for (size_t treeIdx = 1; treeIdx < population_.size(); ++treeIdx) {
-        if (population_[inPopulationBestTreeIdx_].mFitness <
-            population_[treeIdx].mFitness) {
-          inPopulationBestTreeIdx_ = treeIdx;
+      best_tree_index_ = 0;
+      for (size_t tree_index = 1;
+          tree_index < population_.size(); ++tree_index) {
+        if (population_[best_tree_index_].mFitness <
+            population_[tree_index].mFitness) {
+          best_tree_index_ = tree_index;
         }
       }
 
       std::cout
-      << "The best one is number " << inPopulationBestTreeIdx_ << ".\n";
+      << "The best one is number " << best_tree_index_ << ".\n";
       using ::operator <<;
-      std::cout << population_[inPopulationBestTreeIdx_] << std::endl;
+      std::cout << population_[best_tree_index_] << std::endl;
       std::cout << "with fitness " <<
-          population_[inPopulationBestTreeIdx_].mFitness << "\n";
+          population_[best_tree_index_].mFitness << "\n";
     }
   }
 
@@ -269,30 +267,30 @@ class GPLearner : public Learner<TElement, GPScorer> {
    *  @param data data set for calculation of the average metric value
    */
   void evaluatePopulation(const DataSet<TElement>& data) {
-    for (size_t treeIdx = 0; treeIdx < population_.size(); ++treeIdx) {
-      if (population_[treeIdx].mValid) {
+    for (size_t tree_index = 0; tree_index < population_.size(); ++tree_index) {
+      if (population_[tree_index].mValid) {
         continue;
       }
-      markDataSetWithTree<TElement>(data, &context_, &population_[treeIdx]);
+      markDataSetWithTree<TElement>(data, &context_, &population_[tree_index]);
 
       // This line yields a topic for research. Why so?
       //
       double measureVal = this->p_measure_->weightedAverage(data);
 
-      population_[treeIdx].mFitness = static_cast<float>(measureVal);
-      population_[treeIdx].mValid = true;
+      population_[tree_index].mFitness = static_cast<float>(measureVal);
+      population_[tree_index].mValid = true;
     }
   }
 
   /** Smart pointer to the measure object, the measure would be maximized
    * within the learning procedure.
    */
-  typename Measure<TElement>::Ptr p_Measure_;
-  size_t featureCountInContext_;
+  typename Measure<TElement>::Ptr measure_;
+  size_t feature_count_;
   /** The index of the best Puppy::tree (formula, individ) in current
    * population.
    */
-  size_t inPopulationBestTreeIdx_;
+  size_t best_tree_index_;
 
   protected:
   /** The set of Puppy::trees (formulas that represent the optimization space),
