@@ -117,32 +117,33 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
    *  algorithm's iteration.
    */
   virtual void evaluationStepImpl() {
-    assert(population_.size() > 0);
+    assert(this->population_.size() > 0);
 
     std::cout << "Population looks like:\n";
     for (size_t tree_index = 0;
-        tree_index < population_.size(); ++tree_index) {
-      std::cout << population_.at(tree_index).mFitness
-          << "(" << population_.at(tree_index).mValid <<") ";
+        tree_index < this->population_.size(); ++tree_index) {
+      std::cout << this->population_.at(tree_index).mFitness
+          << "(" << this->population_.at(tree_index).mValid <<") ";
     }
     std::cout << std::endl;
 
     std::cout << "Sorting population.\n";
-    std::sort(population_.begin(), population_.end());
+    std::sort(this->population_.begin(), this->population_.end());
 
     const ParametersContainer &params = this->parameters();
     size_t top_bound_index =
         (1 - params.template Get<double>("TOP_FOR_NEXT_GENERATION_PART")) *
-        population_.size();
-    if (top_bound_index == population_.size()) {
+        this->population_.size();
+    if (top_bound_index == this->population_.size()) {
       top_bound_index -= 1;
     }
 
     size_t currrent_top_tree_index = top_bound_index;
     for (size_t tree_index = 0; tree_index < top_bound_index; ++tree_index) {
-      population_.at(tree_index) = population_.at(currrent_top_tree_index);
+      this->population_.at(tree_index)
+        = this->population_.at(currrent_top_tree_index);
       ++currrent_top_tree_index;
-      if (currrent_top_tree_index >= population_.size()) {
+      if (currrent_top_tree_index >= this->population_.size()) {
         currrent_top_tree_index = top_bound_index;
       }
     }
@@ -156,25 +157,25 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
 
     for (size_t tree_index = 0;
         tree_index < crossover_bound_index; tree_index += 2) {
-      Puppy::mateTrees(population_[tree_index],
-                       population_[tree_index + 1],
-                       context_,
+      Puppy::mateTrees(this->population_[tree_index],
+                       this->population_[tree_index + 1],
+                       this->context_,
                        params.template Get<double>("CROSSOVER_DISTRIB_PROBA"),
                        params.template Get<int>("MAX_DEPTH"));
     }
 
     for (size_t tree_index = crossover_bound_index;
         tree_index < top_bound_index; ++tree_index) {
-      if (context_.mRandom.rollUniform() <=
+      if (this->context_.mRandom.rollUniform() <=
           params.template Get<double>(
               "STANDART_MUTATION_VS_SWAP_MUTATION_PROBA")) {
-        Puppy::mutateStandard(population_[tree_index],
-            context_,
+        Puppy::mutateStandard(this->population_[tree_index],
+            this->context_,
             params.template Get<int>("MUT_MAX_REGEN_DEPTH"),
             params.template Get<int>("MAX_DEPTH"));
       } else {
-        Puppy::mutateSwap(population_[tree_index],
-            context_,
+        Puppy::mutateSwap(this->population_[tree_index],
+            this->context_,
             params.template Get<double>("MUT_SWAP_DISTRIB_PROBA"));
       }
     }
