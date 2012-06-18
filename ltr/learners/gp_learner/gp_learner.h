@@ -188,7 +188,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
   /** \brief This function implements the changes made in the population at each
    *  algorithm's iteration.
    */
-  virtual void evaluationStrategyStepImpl() {
+  virtual void evaluationStepImpl() {
     std::cout << "Tournament.\n";
     const ParametersContainer &params = this->parameters();
 
@@ -239,7 +239,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
       std::cout << "Generation "<< generationIdx << ".\n";
 
       std::cout << "Calling strategy\n";
-      this->evaluationStrategyStepImpl();
+      this->evaluationStepImpl();
 
       std::cout << "Evaluation.\n";
       this->evaluatePopulation(data);
