@@ -123,6 +123,12 @@ class BaseLearner : public Learner<TElement> {
   */
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          TScorer* scorer) = 0;
+
+  using Learner<TElement>::data_preprocessors_;
+
+  using Learner<TElement>::feature_converters_;
+  using Learner<TElement>::feature_converter_learners_;
+
   TScorer scorer_;
 };
 
