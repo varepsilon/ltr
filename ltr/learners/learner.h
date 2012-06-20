@@ -172,7 +172,7 @@ void BaseLearner<TElement, TScorer>::setInitialScorer(const TScorer& scorer) {
 
 template<class TElement, class TScorer>
 void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
-                                           bool check_parameters = true) {
+                                           bool check_parameters) {
   if (check_parameters) {
     this->checkParameters();
   }
