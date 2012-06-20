@@ -47,8 +47,8 @@ class DataSetWeightsUpdater : public Aliaser, public Parameterized {
    * DataSetWeightsUpdaters don't use measures, so they ignore 
    * the mesure setted
    */
-  void setMeasure(typename Measure<TElement>::Ptr in_measure) {
-    measure_ = in_measure;
+  void set_measure(typename Measure<TElement>::Ptr measure) {
+    measure_ = measure;
   }
  protected:
   typename Measure<TElement>::Ptr measure_;

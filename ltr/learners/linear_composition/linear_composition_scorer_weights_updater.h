@@ -44,7 +44,7 @@ class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
    * LCScorerWeightsUpdaters don't use measures, so they ignore 
    * the mesure setted
    */
-  void setMeasure(typename Measure<TElement>::Ptr in_measure) {
+  void set_measure(typename Measure<TElement>::Ptr in_measure) {
     measure_ = in_measure;
   }
  protected:

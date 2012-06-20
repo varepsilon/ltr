@@ -5,11 +5,15 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <vector>
+
 #include "ltr/data/data_set.h"
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/printable.h"
 #include "ltr/parameters_container/parameters_container.h"
+
+using std::vector;
 
 namespace ltr {
 /**
@@ -17,13 +21,13 @@ namespace ltr {
  *
  * Sometimes before training a Scorer it's usefull to make some preprocessing
  * of object features, e.g. normalize, filter out non significant features, etc. \n
- * In order to do this one need to add FeatureConverterLearner into the Learner
- * (see BaseLearner<TElement>::addFeatureConverterLearner).
+ * In order to do this one need to add FeatureConverterLearner into the BaseLearner
+ * (see Learner<TElement>::addFeatureConverterLearner).
  *
  * If you want to make your own FeatureConverterLearner it's more convinient
  * to inherit from BaseFeatureConverterLearner.
  *
- * \see BaseLearner, FeatureConverterLearner, BaseFeatureConverterLearner
+ * \see Learner, FeatureConverterLearner, BaseFeatureConverterLearner
  */
 template <class TElement>
 class FeatureConverterLearner : public Parameterized,
@@ -51,9 +55,9 @@ class FeatureConverterLearner : public Parameterized,
 * If you want to make your own FeatureConverterLearner you should
 * inherit from BaseFeatureConverterLearner and implement learnImpl().
 *
-* \sa FeatureConverterLearner, Learner
+* \sa FeatureConverterLearner, BaseLearner
 */
-// \TODO(sameg) Learner -> Trainer ?
+// \TODO(sameg) BaseLearner -> Trainer ?
 template <class TElement, class TFeatureConverter>
 class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
  public:

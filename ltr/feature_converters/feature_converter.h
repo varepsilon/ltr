@@ -27,7 +27,7 @@ namespace ltr {
 * Can be applied to each Object in DataSet (see ltr::utility::ApplyFeatureConverter).
 * But before doing this FeatureConverter should be trained by some FeatureConverterLearner.
 * This can be usefull for better training of Scorer
-* (BaseLearner<TElement>::addFeatureConverterLearner).
+* (Learner<TElement>::addFeatureConverterLearner).
 *
 * Feature converters wich were used during training of Scorer 
 * will be added in the result Scorer (see Scorer::addFeatureConverter) 
@@ -36,7 +36,7 @@ namespace ltr {
 * \note In most cases you don't need to create FeatureConverter directly,
 * normally it is the result of some FeatureConverterLearner work.
 * 
-* \see FeatureConverterLearner, BaseFeatureConverterLearner, Learner, Scorer
+* \see FeatureConverterLearner, BaseFeatureConverterLearner, BaseLearner, Scorer
 */
 class FeatureConverter : public Serializable,
                          public Aliaser {

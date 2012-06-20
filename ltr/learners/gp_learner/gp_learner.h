@@ -27,7 +27,7 @@ namespace gp {
  Object, ObjectPair, ObjectList).
  */
 template <typename TElement>
-class GPLearner : public Learner<TElement, GPScorer> {
+class GPLearner : public BaseLearner<TElement, GPScorer> {
  public:
   /** Constructor creates a GPLearner.
    * \param measure shared pointer to the measure that would be maximized on
@@ -39,7 +39,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
       const ParametersContainer& parameters = ParametersContainer())
   : feature_count_(0),
   best_tree_index_(0) {
-    this->setMeasure(measure);
+    this->set_measure(measure);
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
@@ -49,7 +49,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   GPLearner(const ParametersContainer& parameters = ParametersContainer())
   : feature_count_(0),
-  best_tree_index_(0) {
+    best_tree_index_(0) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
@@ -126,13 +126,6 @@ class GPLearner : public Learner<TElement, GPScorer> {
     feature_count_ = scorer.feature_count_;
     best_tree_index_ = scorer.best_tree_index_;
   }
-  /** The function return trained GPscorer after learning process
-   */
-  GPScorer makeImpl() const {
-    return GPScorer(population_, context_,
-        feature_count_, best_tree_index_);
-  }
-
  private:
   template <class T>
   struct Belongs: public std::unary_function<T, bool> {
@@ -217,7 +210,7 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * \param data DataSet on which the measure would be maximized within the
    * learning procedure.
    */
-  void learnImpl(const DataSet<TElement>& data) {
+  void learnImpl(const DataSet<TElement>& data, GPScorer* scorer) {
     if (data.feature_count() != feature_count_) {
       feature_count_ = data.feature_count();
       reset();
@@ -260,6 +253,9 @@ class GPLearner : public Learner<TElement, GPScorer> {
       std::cout << "with fitness " <<
           population_[best_tree_index_].mFitness << "\n";
     }
+    // \TODO ? rewrite with setters and getters
+    *scorer = GPScorer(population_, context_,
+                       feature_count_, best_tree_index_);
   }
 
   /** Method evaluates the population, it sets individ tree fitness to the
@@ -275,24 +271,20 @@ class GPLearner : public Learner<TElement, GPScorer> {
 
       // This line yields a topic for research. Why so?
       //
-      double measureVal = this->p_measure_->weightedAverage(data);
+      double measureVal = this->measure_->weightedAverage(data);
 
       population_[tree_index].mFitness = static_cast<float>(measureVal);
       population_[tree_index].mValid = true;
     }
   }
 
-  /** Smart pointer to the measure object, the measure would be maximized
-   * within the learning procedure.
-   */
-  typename Measure<TElement>::Ptr measure_;
   size_t feature_count_;
   /** The index of the best Puppy::tree (formula, individ) in current
    * population.
    */
   size_t best_tree_index_;
 
-  protected:
+ protected:
   /** The set of Puppy::trees (formulas that represent the optimization space),
    * that represent a population within the learning procedure.
    */

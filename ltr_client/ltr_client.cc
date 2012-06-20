@@ -159,8 +159,8 @@ void LtrClient::initFrom(const std::string &file_name) {
 template <class TElement>
 void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
                                 const TTrainInfo &train_info) {
-  ltr::BaseLearner<TElement> *learner =                           //NOLINT
-      dynamic_cast<ltr::BaseLearner<TElement> *>(parameterized);  //NOLINT
+  ltr::Learner<TElement> *learner =                           //NOLINT
+      dynamic_cast<ltr::Learner<TElement> *>(parameterized);  //NOLINT
   assert(learner);
 
   const TXmlTokenSpec &learner_info = configurator.findLearner(
@@ -194,7 +194,7 @@ void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
                                    learner_info.getName() + "."
                                    + predict + ".predicts";
 
-    ltr::Scorer::Ptr scorer = learner->makeScorerPtr();
+    ltr::Scorer::Ptr scorer = learner->make();
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
     std::cout << "\nsaved predictions for '" << predict
                                     << "' into " << predict_file_path

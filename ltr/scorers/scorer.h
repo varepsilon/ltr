@@ -29,8 +29,8 @@ class Scorer : public Aliaser,
   typedef boost::shared_ptr<Scorer> BasePtr;
 
   Scorer(const FeatureConverterArray&
-            featureConverters = FeatureConverterArray()):
-        feature_converters_(featureConverters) {}
+            feature_converters = FeatureConverterArray()):
+        feature_converters_(feature_converters) {}
 
   double value(const Object& obj) const {
     return score(obj);
@@ -38,13 +38,13 @@ class Scorer : public Aliaser,
 
   double score(const Object& obj) const;
 
-  const FeatureConverterArray& getFeatureConverters() const {
+  const FeatureConverterArray& feature_converters() const {
     return feature_converters_;
   }
-  void setFeatureConverters(const FeatureConverterArray& featureConverters) {
-    this->feature_converters_ = featureConverters;
+  void set_feature_converters(const FeatureConverterArray& feature_converters) {
+    this->feature_converters_ = feature_converters;
   }
-  void addFeatureConverterLearner(
+  void addFeatureConverter(
     FeatureConverter::Ptr p_feature_converter) {
     this->feature_converters_.push_back(p_feature_converter);
   }

@@ -28,6 +28,8 @@ typedef vector<Puppy::Tree> Population;
  */
 class GPScorer : public Scorer {
  public:
+  GPScorer() {}
+
   /** \typedef boost shared pointer to GPScorer;
    */
   typedef boost::shared_ptr< GPScorer > Ptr;
@@ -40,16 +42,16 @@ class GPScorer : public Scorer {
    * was created.
    * \param best_tree_index the index of best Puppy::tree(formula,
    * individ) in the population.
-   * \param featureConverters the vector of featureConverters to be applied
+   * \param feature_converters the vector of feature_converters to be applied
    * to the dataset before scoring.
    */
   GPScorer(const Population& population,
       const Puppy::Context& context,
       size_t feature_count,
       size_t best_tree_index,
-      const FeatureConverterArray& featureConverters =
+      const FeatureConverterArray& feature_converters =
           FeatureConverterArray())
-  : Scorer(featureConverters),
+  : Scorer(feature_converters),
   population_(population),
   context_(context),
   feature_count_(feature_count),

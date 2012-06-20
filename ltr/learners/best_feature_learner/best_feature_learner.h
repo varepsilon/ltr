@@ -24,7 +24,7 @@ using std::string;
 namespace ltr {
 
 template< class TElement >
-class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
+class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
   typedef boost::shared_ptr<BestFeatureLearner> Ptr;
 
@@ -34,20 +34,8 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
     this->copyParameters(parameters);
   }
 
-  BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure,
-      size_t initialScorerIdx = 0) :
-        scorer_(initialScorerIdx) {
-          this->setMeasure(pMeasure);
-        }
-
-  void setInitialScorer(const OneFeatureScorer& initialScorer) {
-    scorer_ = initialScorer;
-  }
-  OneFeatureScorer makeImpl() const {
-    return scorer_;
-  }
-  void reset() {
-    scorer_ = OneFeatureScorer(0);
+  explicit BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure) {
+    this->set_measure(pMeasure);
   }
 
   void setDefaultParameters() {
@@ -55,41 +43,39 @@ class BestFeatureLearner : public Learner<TElement, OneFeatureScorer> {
   }
   virtual void parametersUpdateCallback() {
     Measure<TElement> *msr =
-//        this->parameters().
-//        template Get<Parameterized*, Measure<TElement>*>("measure");
         Parameterized::getParameter<Measure<TElement>*>("measure");
-    this->p_measure_ = typename Measure<TElement>::Ptr(msr);
+    this->measure_ = typename Measure<TElement>::Ptr(msr);
   }
 
  private:
-  OneFeatureScorer scorer_;
-
-  void learnImpl(const DataSet<TElement>& data);
+  virtual void learnImpl(const DataSet<TElement>& data,
+                         OneFeatureScorer* scorer);
   virtual string getDefaultAlias() const {return "BestFeatureLeaner";}
 };
 
 template< class TElement >
-void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
+void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
+                                             OneFeatureScorer* scorer) {
   if (data.feature_count() == 0) {
     throw std::logic_error("There are no features for BF learner.");
   }
 
+  // \TODO Rewrite using setter and getters
   size_t bestFeatureIdx = 0;
-  OneFeatureScorer scorer(bestFeatureIdx);
-  utility::MarkDataSet(data, scorer);
-  double bestMeasureValue = this->p_measure_->average(data);
+  OneFeatureScorer current_scorer(bestFeatureIdx);
+  utility::MarkDataSet(data, current_scorer);
+  double bestMeasureValue = this->measure_->average(data);
 
   for (size_t featureIdx = 1; featureIdx < data.feature_count(); ++featureIdx) {
-    OneFeatureScorer scorer(featureIdx);
-    utility::MarkDataSet(data, scorer);
-    double measureValue = this->p_measure_->average(data);
-    if (this->p_measure_->better(measureValue, bestMeasureValue)) {
+    OneFeatureScorer current_scorer(featureIdx);
+    utility::MarkDataSet(data, current_scorer);
+    double measureValue = this->measure_->average(data);
+    if (this->measure_->better(measureValue, bestMeasureValue)) {
       bestMeasureValue = measureValue;
       bestFeatureIdx = featureIdx;
     }
   }
-
-  scorer_ = OneFeatureScorer(bestFeatureIdx);
+  *scorer = OneFeatureScorer(bestFeatureIdx);
 }
 }
 #endif  // LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_

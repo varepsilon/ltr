@@ -53,18 +53,18 @@ int main(int argc, char* argv[]) {
 
   LinearCompositionLearner<Object>::Ptr simple_lc_learner(
     new LinearCompositionLearner<Object>);
-  simple_lc_learner->setMeasure(abs_error);
-  simple_lc_learner->setWeakLearner(bf_learner);
+  simple_lc_learner->set_measure(abs_error);
+  simple_lc_learner->set_weak_learner(bf_learner);
   simple_lc_learner->learn(generator.train_data);
   generator.setScorerTest(simple_lc_learner, "SimpleLCLearner");
 
   LinearCompositionLearner<Object>::Ptr rsm_lc_learner(
     new LinearCompositionLearner<Object>);
-  rsm_lc_learner->setMeasure(abs_error);
+  rsm_lc_learner->set_measure(abs_error);
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverterLearner(rsm);
-  rsm_lc_learner->setWeakLearner(bf_learner);
+  rsm_lc_learner->set_weak_learner(bf_learner);
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 

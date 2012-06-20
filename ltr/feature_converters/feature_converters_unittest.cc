@@ -116,11 +116,11 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
 
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
 
-  ltr::utility::MarkDataSet(learn_data_pointwise, learner.make());
+  ltr::utility::MarkDataSet(learn_data_pointwise, *learner.make());
   double withoutBestFeatureMeasure = pMeasure->average(learn_data_pointwise);
 
   ltr::OneFeatureScorer scorerByBestFeature(bestFeatureIndex);
-  scorerByBestFeature.addFeatureConverterLearner(remove_NaN);
+  scorerByBestFeature.addFeatureConverter(remove_NaN);
   ltr::utility::MarkDataSet(learn_data_pointwise, scorerByBestFeature);
 
   double bestFeatureMeasure = pMeasure->average(learn_data_pointwise);
@@ -139,7 +139,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
   learner.addFeatureConverterLearner(normalizerLearner);
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
   EXPECT_NO_THROW(
-      ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
+      ltr::utility::MarkDataSet(learn_data_pointwise, *learner.make()));
 };
 
 
@@ -154,5 +154,5 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   learner.addFeatureConverterLearner(normalizerLearner);
   EXPECT_NO_THROW(learner.learn(learn_data_listwise));
   EXPECT_NO_THROW(
-      ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));
+      ltr::utility::MarkDataSet(learn_data_listwise, *learner.make()));
 };

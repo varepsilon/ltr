@@ -51,7 +51,7 @@ class LinearCompositionScorer : public Scorer {
  private:
   virtual string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "LinearCompositionScorer";}
-  vector< ScorerAndWeight > scorers_;
+  vector<ScorerAndWeight> scorers_;
 };
 };
 

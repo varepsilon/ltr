@@ -16,6 +16,8 @@ class LinearScorer : public Scorer {
  public:
   typedef boost::shared_ptr<LinearScorer> Ptr;
 
+  LinearScorer() {}
+
   explicit LinearScorer(const vector<double>& in_weights)
   : weights(in_weights) {}
 

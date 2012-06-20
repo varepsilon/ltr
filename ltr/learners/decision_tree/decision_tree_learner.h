@@ -31,10 +31,8 @@ namespace decision_tree {
  */
 
 class DecisionTreeLearner
-  : public Learner<Object, DecisionTreeScorer> {
+  : public BaseLearner<Object, DecisionTreeScorer> {
  private:
-  DecisionTreeScorer scorer_;
-
   /** Object, used to generate different conditions for splitting data set
    */
   ConditionsLearner::Ptr conditions_learner_;
@@ -48,10 +46,10 @@ class DecisionTreeLearner
    */
   Vertex<double>::Ptr createOneVertex(const DataSet<Object>& data);
 
-  void learnImpl(const DataSet<Object>& data) {
+  void learnImpl(const DataSet<Object>& data, DecisionTreeScorer* scorer) {
     INFO("Learn started. Data set size: %d" , data.size());
-    scorer_.setTree(DecisionTree<double>());
-    scorer_.setTreeRoot(createOneVertex(data));
+    scorer->setTree(DecisionTree<double>());
+    scorer->setTreeRoot(createOneVertex(data));
   }
   virtual string getDefaultAlias() const {return "DecisionTreeLearner";}
 
@@ -80,16 +78,6 @@ class DecisionTreeLearner
                                        std::bind2nd(std::greater<int>(), 0) );
     this->checkParameter<double>("LABEL_EPS",
                             std::bind2nd(std::greater_equal<double>(), 0) );
-  }
-
-  DecisionTreeScorer makeImpl() const {
-    return scorer_;
-  }
-  void setInitialScorer(const DecisionTreeScorer& scorer) {
-    scorer_ = scorer;
-  }
-  void reset() {
-    scorer_ = DecisionTreeScorer();
   }
 
   explicit DecisionTreeLearner(
