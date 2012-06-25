@@ -19,7 +19,7 @@ class CrossValidator {
   vector<vector<vector<vector<vector<double> > > > > crossValidationResults_;
   vector<typename ltr::DataSet<ObjectType>::Ptr > dataSets_;
   vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
-  vector<typename ltr::Learner<ObjectType, ScorerType>::Ptr> learners_;
+  vector<typename ltr::Learner<ObjectType>::Ptr> learners_;
   vector<typename ltr::cv::Splitter<ObjectType>::Ptr > splitters_;
  public:
   CrossValidator()
@@ -38,7 +38,7 @@ class CrossValidator {
   }
 
   void addLearner(
-      const typename Learner<ObjectType, ScorerType>::Ptr& learner
+      const typename Learner<ObjectType>::Ptr& learner
       ) {
     learners_.push_back(learner);
   }
@@ -83,7 +83,7 @@ class CrossValidator {
               learners_[learnerIndex]->learn(splittedData.train_set);
 
               Scorer::Ptr currentScorer = (
-                    learners_[learnerIndex])->makeScorerPtr();
+                    learners_[learnerIndex])->make();
               MarkDataSet(splittedData.test_set, *currentScorer);
 
               crossValidationResults_
