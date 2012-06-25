@@ -39,7 +39,9 @@ public:
     measures_.push_back(measure);
   }
 
-  void addLearner(const typename Learner<ObjectType, ScorerType>::Ptr& learner) {
+  void addLearner(
+      const typename Learner<ObjectType, ScorerType>::Ptr& learner
+      ) {
     learners_.push_back(learner);
   }
 
@@ -50,30 +52,48 @@ public:
   void launch() {
     crossValidationResults_.clear();
     crossValidationResults_.resize(dataSets_.size());
-    for (size_t datasetIndex = 0; datasetIndex < dataSets_.size(); ++datasetIndex) {
+    for (size_t datasetIndex = 0;
+         datasetIndex < dataSets_.size();
+         ++datasetIndex) {
       crossValidationResults_[datasetIndex].resize(measures_.size());
-      for (size_t measureIndex = 0; measureIndex < measures_.size(); ++measureIndex) {
-        crossValidationResults_[datasetIndex][measureIndex].resize(learners_.size());
-        for (size_t learnerIndex = 0; learnerIndex < learners_.size(); ++learnerIndex) {
+      for (size_t measureIndex = 0;
+           measureIndex < measures_.size();
+           ++measureIndex) {
+        crossValidationResults_[datasetIndex]
+            [measureIndex].resize(learners_.size());
+        for (size_t learnerIndex = 0;
+             learnerIndex < learners_.size();
+             ++learnerIndex) {
           crossValidationResults_
-              [datasetIndex][measureIndex][learnerIndex].resize(splitters_.size());
-          for (size_t splitterIndex = 0; splitterIndex < splitters_.size(); ++splitterIndex) {
+              [datasetIndex][measureIndex]
+              [learnerIndex].resize(splitters_.size());
+          for (size_t splitterIndex = 0;
+               splitterIndex < splitters_.size();
+               ++splitterIndex) {
             for (size_t splitIndex = 0;
-                 splitIndex < (*splitters_[splitterIndex]).splitCount(*dataSets_[datasetIndex]);
+                 splitIndex < (*splitters_[splitterIndex]).
+                 splitCount(*dataSets_[datasetIndex]);
                  ++splitIndex) {
               crossValidationResults_
                   [datasetIndex][measureIndex][learnerIndex][splitterIndex].
-                  resize((*splitters_[splitterIndex]).splitCount(*dataSets_[datasetIndex]));
+                  resize((*splitters_[splitterIndex]).splitCount(
+                           *dataSets_[datasetIndex])
+                         );
               SplittedDataSet<ObjectType> splittedData(
-                    splitters_[splitterIndex]->split(splitIndex, *dataSets_[datasetIndex]));
+                    splitters_[splitterIndex]->split(
+                      splitIndex, *dataSets_[datasetIndex])
+                    );
               learners_[learnerIndex]->reset();
               learners_[learnerIndex]->learn(splittedData.train_set);
 
-              Scorer::Ptr currentScorer = (learners_[learnerIndex])->makeScorerPtr();
-              MarkDataSet(splittedData.test_set, *currentScorer); //вот тут надо как-то по-другому
+              Scorer::Ptr currentScorer = (
+                    learners_[learnerIndex]
+                    )->makeScorerPtr();
+              MarkDataSet(splittedData.test_set, *currentScorer);
 
               crossValidationResults_
-                  [datasetIndex][measureIndex][learnerIndex][splitterIndex][splitIndex] =
+                  [datasetIndex][measureIndex][learnerIndex]
+                  [splitterIndex][splitIndex] =
                   measures_[measureIndex]->average(splittedData.test_set);
               cout << measures_[measureIndex]->average(splittedData.test_set);
             }
@@ -103,7 +123,8 @@ public:
            measureIndex < crossValidationResults_[dataSetIndex].size();
            ++measureIndex) {
         for (size_t learnerIndex = 0;
-             learnerIndex < crossValidationResults_[dataSetIndex][measureIndex].size();
+             learnerIndex < crossValidationResults_[dataSetIndex]
+             [measureIndex].size();
              ++learnerIndex) {
           for (size_t splitterIndex = 0;
                splitterIndex < crossValidationResults_
@@ -111,10 +132,12 @@ public:
                ++splitterIndex) {
             for (size_t splitIndex = 0;
                  splitIndex < crossValidationResults_
-                 [dataSetIndex][measureIndex][learnerIndex][splitterIndex].size();
+                 [dataSetIndex][measureIndex][learnerIndex]
+                 [splitterIndex].size();
                  ++splitIndex) {
               cout << crossValidationResults_
-                      [dataSetIndex][measureIndex][learnerIndex][splitterIndex][splitIndex] << "\n";
+                      [dataSetIndex][measureIndex][learnerIndex]
+                      [splitterIndex][splitIndex] << "\n";
             }
           }
         }
