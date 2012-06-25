@@ -21,7 +21,7 @@ class CrossValidator {
   vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
   vector<typename ltr::Learner<ObjectType, ScorerType>::Ptr> learners_;
   vector<typename ltr::cv::Splitter<ObjectType>::Ptr > splitters_;
-public:
+ public:
   CrossValidator()
     : crossValidationResults_()
     , dataSets_()
@@ -75,8 +75,7 @@ public:
               crossValidationResults_
                   [datasetIndex][measureIndex][learnerIndex][splitterIndex].
                   resize((*splitters_[splitterIndex]).splitCount(
-                           *dataSets_[datasetIndex])
-                         );
+                           *dataSets_[datasetIndex]));
               SplittedDataSet<ObjectType> splittedData(
                     splitters_[splitterIndex]->split(
                       splitIndex, *dataSets_[datasetIndex]));
@@ -84,8 +83,7 @@ public:
               learners_[learnerIndex]->learn(splittedData.train_set);
 
               Scorer::Ptr currentScorer = (
-                    learners_[learnerIndex]
-                    )->makeScorerPtr();
+                    learners_[learnerIndex])->makeScorerPtr();
               MarkDataSet(splittedData.test_set, *currentScorer);
 
               crossValidationResults_
@@ -145,4 +143,4 @@ public:
 }
 }
 
-#endif // LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
+#endif  // LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
