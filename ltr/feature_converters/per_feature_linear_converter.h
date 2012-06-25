@@ -15,56 +15,53 @@ using std::vector;
 
 namespace ltr {
 
+/**
+* \brief Perform linear transformation of each feature.
+*
+* features[i] ->  factors[i] * features[i] + shifts[i]
+* \param factors vector of factors
+* \param shifts vector of shifts
+*/
 class PerFeatureLinearConverter : public FeatureConverter {
-  public:
+ public:
   typedef boost::shared_ptr<PerFeatureLinearConverter> Ptr;
 
-  explicit PerFeatureLinearConverter(size_t feature_count = 0) :
-      FeatureConverter(FeatureInfo(feature_count)),
-      coefficient_(feature_count, 1),
-      shift_(feature_count, 0) {
-    fillOutputFeatureInfo();
+  explicit PerFeatureLinearConverter(
+    const FeatureInfo& input_feature_info = FeatureInfo()) {
+    resize(input_feature_info);
   }
 
-  void fillOutputFeatureInfo();
+  virtual void fillOutputFeatureInfo();
 
-  void resize(size_t feature_count);
-  double getCoefficient(size_t feature_idx) const;
-  void setCoefficient(size_t feature_idx, double coefficient);
-  double getShift(size_t feature_idx) const;
-  void setShift(size_t feature_idx, double shift);
+  /**
+  * change expected feature info of input object and resizes 
+  * factors and shifts vectors
+  */
+  void resize(const FeatureInfo& input_feature_info);
+  /**
+  * get component of factors vector
+  */
+  double factor(size_t feature_index) const;
+  /**
+  * set component of factors vector
+  */
+  void set_factor(size_t feature_index, double coefficient);
+  /**
+  * get component of shifts vector
+  */
+  double shift(size_t feature_index) const;
+  /**
+  * set component of shifts vector
+  */
+  void set_shift(size_t feature_index, double shift);
 
-  void applyImpl(const Object& argument, Object* value) const;
+  virtual string generateCppCode(const string& function_name) const;
+ private:
+  virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "PerFeatureLinearConverter";}
 
-  virtual std::string generateCppCode(const std::string& function_name) const {
-    string hpp_string;
-
-    hpp_string.
-      append("#include <vector>\n\nvoid ").
-      append(function_name).
-      append("(const std::vector<double>& features, ").
-      append("std::vector<double>* result) {\n").
-      append("  result->clear();\n");
-      for (size_t i = 0; i < coefficient_.size(); i++) {
-        hpp_string.
-          append("  result->push_back(features[").
-          append(boost::lexical_cast<string>(i)).
-          append("] * ").
-          append(boost::lexical_cast<string>(coefficient_[i])).
-          append(" + ").
-          append(boost::lexical_cast<string>(shift_[i])).
-          append(");\n");
-      }
-    hpp_string.append("}\n");
-    return hpp_string;
-  };
-
-  private:
-  size_t featureCount() const;
-  void checkFeatureCount(size_t checked_feature_count) const;
-
-  vector<double> coefficient_;
-  vector<double> shift_;
+  vector<double> factors_;
+  vector<double> shifts_;
 };
 }
 

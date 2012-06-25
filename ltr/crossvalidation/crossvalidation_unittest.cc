@@ -54,8 +54,7 @@ TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
   EXPECT_EQ(data_lenght, vr.getSplitCount());
   EXPECT_EQ(1, vr.getMeasureValues(0).size());
   EXPECT_EQ(1, vr.getMeasureNames().size());
-  string expected_str = "Absolute error";
-  EXPECT_EQ(expected_str, vr.getMeasureNames().at(0));
+  EXPECT_EQ(ab_measure->alias(), vr.getMeasureNames().at(0));
 
   for (int split = 0; split < vr.getSplitCount(); ++split) {
     Object test_obj;

@@ -12,7 +12,7 @@ using std::string;
 
 using ltr::DataSet;
 using ltr::Object;
-using ltr::BaseLearner;
+using ltr::Learner;
 
 namespace serialization_test {
   class Generator {
@@ -20,7 +20,7 @@ namespace serialization_test {
     Generator();
     string code() const;
     void write(const char* filename) const;
-    void setScorerTest(BaseLearner<Object>::Ptr learner,
+    void setScorerTest(Learner<Object>::Ptr learner,
       string test_name);
 
     const DataSet<Object> train_data;

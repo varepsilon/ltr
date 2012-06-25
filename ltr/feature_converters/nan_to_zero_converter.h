@@ -6,9 +6,12 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_converter_wrapper.h"
+#include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
+/**
+* Converts NaN features to zero values.
+*/
 class NanToZeroConverter : public FeatureConverter {
  public:
   typedef boost::shared_ptr<NanToZeroConverter> Ptr;
@@ -17,15 +20,26 @@ class NanToZeroConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
-  string generateCppCode(const std::string &) const;
- private:
   virtual void fillOutputFeatureInfo();
-  virtual void applyImpl(const Object& argument, Object* value) const;
+  virtual string generateCppCode(const string& function_name) const;
+ private:
+  virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "NanToZeroConverter";}
 };
 
 template <typename TElement>
 class NanToZeroConverterLearner
-    : public FeatureConverterWrapper<TElement, NanToZeroConverter> {
+    : public BaseFeatureConverterLearner<TElement, NanToZeroConverter> {
+ public:
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         NanToZeroConverter* feature_converter) {
+    // DO NOTHING
+  }
+  virtual string toString() const {
+    return "NanToZeroConverterLearner";
+  }
+ private:
+  virtual string getDefaultAlias() const {return "NanToZeroConverterLearner";}
 };
 }
 

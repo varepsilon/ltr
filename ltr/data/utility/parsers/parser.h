@@ -122,7 +122,7 @@ namespace ltr {
       protected:
         map<RawFeatureIndex, FeatureIndex> feature_id_;
         RawFeatureInfo raw_feature_info_;
-        int last_feature_idx_;
+        int last_feature_index_;
         FeatureInfo feature_info_;
 
         /**

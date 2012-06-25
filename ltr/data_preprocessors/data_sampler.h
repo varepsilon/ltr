@@ -53,6 +53,7 @@ class DataSampler : public DataPreprocessor<TElement> {
   virtual void applyImpl(const DataSet<TElement>& input,
                                DataSet<TElement>* output) const;
   virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual string getDefaultAlias() const {return "DataSampler";}
   IndicesPtr indices_;
 };
 
@@ -87,6 +88,7 @@ void DataSampler<TElement>::setParametersImpl(
 template <class TElement>
 void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
+  // \TODO(sameg) Is it logic?
   if (indices_->size() != 0) {
     *output = input.lightSubset(*indices_);
   } else {

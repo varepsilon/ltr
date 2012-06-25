@@ -20,107 +20,106 @@ namespace ltr {
  */
 template<class TElement>
 class NormalizedMeasure : public Measure<TElement> {
-  private:
-    typename Measure<TElement>::Ptr weak_measure_;
+ private:
+  typename Measure<TElement>::Ptr weak_measure_;
 
-    virtual double get_measure(const TElement& element) const {
-      if (weak_measure_ == NULL)
-        throw std::logic_error("No weak measure");
-      if (weak_measure_->best() == utility::Inf ||
-          weak_measure_->best() == -utility::Inf ||
-          weak_measure_->worst() == utility::Inf ||
-          weak_measure_->worst() == -utility::Inf) {
-        throw std::logic_error("can't normalize infinity measure");
-      }
-      double best = this->parameters().template Get<double>("BEST");
-      double worst = this->parameters().template Get<double>("WORST");
-      return (weak_measure_->value(element) - weak_measure_->worst()) *
-                (best - worst) /
-                  (weak_measure_->best() - weak_measure_->worst())
-              + worst;
+  virtual double get_measure(const TElement& element) const {
+    if (weak_measure_ == NULL)
+      throw std::logic_error("No weak measure");
+    if (weak_measure_->best() == utility::Inf ||
+        weak_measure_->best() == -utility::Inf ||
+        weak_measure_->worst() == utility::Inf ||
+        weak_measure_->worst() == -utility::Inf) {
+      throw std::logic_error("can't normalize infinity measure");
     }
+    double best = this->parameters().template Get<double>("BEST");
+    double worst = this->parameters().template Get<double>("WORST");
+    return (weak_measure_->value(element) - weak_measure_->worst()) *
+              (best - worst) /
+                (weak_measure_->best() - weak_measure_->worst())
+            + worst;
+  }
 
-  public:
-    typedef boost::shared_ptr<NormalizedMeasure> Ptr;
+ public:
+  typedef boost::shared_ptr<NormalizedMeasure> Ptr;
 
-    explicit NormalizedMeasure(
-        const ParametersContainer& parameters = ParametersContainer())
-        : Measure<TElement>("Normalized measure") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
+  explicit NormalizedMeasure(
+      const ParametersContainer& parameters = ParametersContainer()) {
+    this->setDefaultParameters();
+    this->copyParameters(parameters);
+  }
 
-    NormalizedMeasure(double worst, double best)
-        : Measure<TElement>("Normalized measure") {
-      this->setDefaultParameters();
-      this->setExistingParameter("WORST", worst);
-      this->setExistingParameter("BEST", best);
-      this->checkParameters();
-    }
+  NormalizedMeasure(double worst, double best) {
+    this->setDefaultParameters();
+    this->setExistingParameter("WORST", worst);
+    this->setExistingParameter("BEST", best);
+    this->checkParameters();
+  }
 
-    explicit NormalizedMeasure(
-        typename Measure<TElement>::Ptr weak_measure,
-        const ParametersContainer& parameters = ParametersContainer())
-        : Measure<TElement>("Normalised measure") {
-      this->setWeakMeasure(weak_measure);
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
+  explicit NormalizedMeasure(
+      typename Measure<TElement>::Ptr weak_measure,
+      const ParametersContainer& parameters = ParametersContainer())
+      : Measure<TElement>("Normalised measure") {
+    this->setWeakMeasure(weak_measure);
+    this->setDefaultParameters();
+    this->copyParameters(parameters);
+  }
 
-    NormalizedMeasure(
-        typename Measure<TElement>::Ptr weak_measure,
-        double worst, double best) {
-      this->setWeakMeasure(weak_measure);
-      this->setDefaultParameters();
-      this->setDoubleParameter("BEST", best);
-      this->setDoubleParameter("WORST", worst);
-    }
+  NormalizedMeasure(
+      typename Measure<TElement>::Ptr weak_measure,
+      double worst, double best) {
+    this->setWeakMeasure(weak_measure);
+    this->setDefaultParameters();
+    this->setDoubleParameter("BEST", best);
+    this->setDoubleParameter("WORST", worst);
+  }
 
-    void setWeakMeasure(typename Measure<TElement>::Ptr weak_measure) {
-      weak_measure_ = weak_measure;
-    }
+  void setWeakMeasure(typename Measure<TElement>::Ptr weak_measure) {
+    weak_measure_ = weak_measure;
+  }
 
-    template<class TMeasure>
-    void setWeakMeasure(const TMeasure& weak_measure) {
-      weak_measure_ =
-        typename Measure<TElement>::Ptr(new TMeasure(weak_measure));
-    }
+  template<class TMeasure>
+  void setWeakMeasure(const TMeasure& weak_measure) {
+    weak_measure_ =
+      typename Measure<TElement>::Ptr(new TMeasure(weak_measure));
+  }
 
-    virtual void checkParameters() {
-      if (this->parameters().template Get<double>("BEST") ==
-          this->parameters().template Get<double>("WORST"))
-        throw std::logic_error("Best and worst values must be different");
-    }
+  virtual void checkParameters() {
+    if (this->parameters().template Get<double>("BEST") ==
+        this->parameters().template Get<double>("WORST"))
+      throw std::logic_error("Best and worst values must be different");
+  }
 
-    virtual void setDefaultParameters() {
-      this->addNewParam("BEST", 1.);
-      this->addNewParam("WORST", -1.);
-    }
+  virtual void setDefaultParameters() {
+    this->addNewParam("BEST", 1.);
+    this->addNewParam("WORST", -1.);
+  }
 
-    virtual double worst() const {
-      return this->parameters().template Get<double>("WORST");
-    }
-    virtual double best() const {
-      return this->parameters().template Get<double>("BEST");
-    }
+  virtual double worst() const {
+    return this->parameters().template Get<double>("WORST");
+  }
+  virtual double best() const {
+    return this->parameters().template Get<double>("BEST");
+  }
 
-    string toString() const {
-      std::stringstream str;
-      std::fixed(str);
-      str.precision(2);
-      if (weak_measure_ == NULL) {
-        str << "Normalized measure without setted weak measure";
-      } else {
-        str << "Normalized measure over { ";
-        str << *weak_measure_;
-        str << " }";
-      }
-      str << " with parameters: BEST = ";
-      str << this->parameters().template Get<double>("BEST");
-      str << ", WORST = ";
-      str << this->parameters().template Get<double>("WORST");
-      return str.str();
+  string toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    if (weak_measure_ == NULL) {
+      str << "Normalized measure without setted weak measure";
+    } else {
+      str << "Normalized measure over { ";
+      str << *weak_measure_;
+      str << " }";
     }
+    str << " with parameters: BEST = ";
+    str << this->parameters().template Get<double>("BEST");
+    str << ", WORST = ";
+    str << this->parameters().template Get<double>("WORST");
+    return str.str();
+  }
+  virtual string getDefaultAlias() const {return "NormalizedMeasure";}
 };
 }
 #endif  // LTR_MEASURES_NORMALIZED_MEASURE_H_

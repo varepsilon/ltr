@@ -4,153 +4,206 @@
 #define LTR_LEARNERS_LEARNER_H_
 
 #include <boost/shared_ptr.hpp>
+
 #include <vector>
 #include <string>
 
-using std::string;
-
+#include "ltr/data/data_set.h"
+#include "ltr/data_preprocessors/data_preprocessor.h"
+#include "ltr/feature_converters/feature_converter_learner.h"
+#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/interfaces/reporter.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"
-#include "ltr/data/data_set.h"
-#include "ltr/scorers/scorer.h"
-#include "ltr/feature_converters/feature_converter_learner.h"
-#include "ltr/feature_converters/utility/utility.h"
-#include "ltr/parameters_container/parameters_container.h"
 #include "ltr/measures/measure.h"
-#include "ltr/data_preprocessors/data_preprocessor.h"
+#include "ltr/parameters_container/parameters_container.h"
+#include "ltr/scorers/scorer.h"
+
+using std::string;
+using std::vector;
+
+using ltr::utility::ApplyFeatureConverter;
 
 namespace ltr {
 /**
- * BaseLearner, implements a learning (on data) strategy of a specific algorithm
- * (e. g. desicion tree). Has a descendent Learner which also can produce specific result
- * scorers. Is used everywhere where a Ptr on Learner is needed - having Ptr on
- * Learner is inconvenient cause Learner is also parametrised be TScorer
- * and inheritance tree is a forest
+ * \brief Learns input dataset and produces a Scorer.
+ *
+ * If you want to make your own Learner it's more convinient
+ * to inherit from BaseLearner.
+ *
+ * \see Learner, BaseLearner, Scorer
  */
 template<class TElement>
-class BaseLearner : public Reporter, public Aliaser, public Parameterized {
-  public:
-  typedef boost::shared_ptr<BaseLearner> Ptr;
-  typedef boost::shared_ptr<BaseLearner> BasePtr;
+class Learner : public Reporter,
+                public Aliaser,
+                public Parameterized {
+ public:
+  typedef boost::shared_ptr<Learner> Ptr;
+  typedef boost::shared_ptr<Learner> BasePtr;
 
-  explicit BaseLearner(const string& alias) : Aliaser(alias) {}
-
-  void learn(const DataSet<TElement>& data);
-
-  virtual void reset() = 0;
-  virtual Scorer::Ptr makeScorerPtr() const = 0;
-
-  void addFeatureConverter(
-      typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
-        feature_converter_learner);
-
-  const FeatureConverterArray& getFeatureConverters() const {
-    return feature_converters_;
-  }
-  void setFeatureConverters(const FeatureConverterArray& featureConverters) {
-    this->feature_converters_ = featureConverters;
-  }
-
-  void addDataPreprocessor(
-      typename DataPreprocessor<TElement>::Ptr data_preprocessor) {
-    data_preprocessors_.push_back(data_preprocessor);
-  }
-
-  const std::vector<typename DataPreprocessor<TElement>::Ptr>&
-      getDataPreprocessors() const {
-    return data_preprocessors_;
-  }
-  void setDataPreprocessors(
-      const std::vector<typename DataPreprocessor<TElement>::Ptr>&
-      data_preprocessors) {
-    this->data_preprocessors_ = data_preprocessors;
-  }
-
-  virtual ~BaseLearner() {}
-  void setMeasure(typename Measure<TElement>::Ptr measure) {
-    p_measure_ = measure;
-  }
-  // atavism
-  void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner) {
-    p_weak_learner_ = weak_learner;
-  }
-
-  protected:
-  typename Measure<TElement>::Ptr p_measure_;
-  typename BaseLearner<TElement>::Ptr p_weak_learner_;
-
-  std::vector<typename DataPreprocessor<TElement>::Ptr> data_preprocessors_;
-
-  FeatureConverterArray feature_converters_;
-  std::vector<typename BaseFeatureConverterLearner<TElement>::Ptr>
-    feature_converter_learners_;
-
-  private:
-  virtual void learnImpl(const DataSet<TElement>& data) = 0;
-};
-
-/**
- * Learner, implements a learning (on data) strategy of a specific algorithm
- * (e. g. desicion tree) and can produce specific result scorers. Everywhere where
- * a Ptr on Learner is needed - use Ptr on BaseLearner. Having Ptr on
- * Learner is inconvenient cause Learner is also parametrised by TScorer
- * and inheritance tree is a forest
- */
-template<class TElement, class TScorer>
-class Learner : public BaseLearner<TElement> {
-  public:
-  explicit Learner(const string& alias) : BaseLearner<TElement>(alias) {}
+  typedef vector<typename FeatureConverterLearner<TElement>::Ptr>
+        FeatureConverterLearnerArray;
+  typedef vector<typename DataPreprocessor<TElement>::Ptr>
+        DataPreprocessorArray;
 
   /**
-   * Is for being sure Scorer::Ptrs outputted by makeScorerPtr() are Ptrs on
-   * different (physically) scorers
-   * @returns a concrete scorer
-   */
-  virtual TScorer makeImpl() const = 0;
-  TScorer make() const {
-    TScorer scorer = makeImpl();
-    scorer.setFeatureConverters(this->feature_converters_);
-    return scorer;
+  * \brief Learns input dataset
+  * \param data_set dataset to study
+  * \param check_parameters whether perform Parameterized::checkParameters() before launch
+  */
+  virtual void learn(const DataSet<TElement>& data_set,
+                     bool check_parameters = true) = 0;
+  /**
+  * \note Don't forget to learn() before make().
+  * \return pointer to <em>new instance</em> of scorer.
+  */
+  virtual Scorer::Ptr make() const = 0;
+
+  /**
+  * \brief Reset internal state of Learner
+  */
+  virtual void reset() = 0;
+  // \TODO Meaning is not clear
+
+  void addFeatureConverterLearner(
+      typename FeatureConverterLearner<TElement>::Ptr
+        feature_converter_learner);
+
+  void addDataPreprocessor(
+      typename DataPreprocessor<TElement>::Ptr data_preprocessor);
+
+  GET(const FeatureConverterLearnerArray&, feature_converter_learners);
+  SET(FeatureConverterLearnerArray, feature_converter_learners);
+
+  GET(const DataPreprocessorArray&, data_preprocessors);
+  SET(DataPreprocessorArray, data_preprocessors);
+
+  /*
+  * \depricated
+  */
+  void set_measure(typename Measure<TElement>::Ptr measure) {
+    measure_ = measure;
   }
-  virtual Scorer::Ptr makeScorerPtr() const;
-  virtual void setInitialScorer(const TScorer& in_scorer) = 0;
+  /*
+  * \depricated
+  */
+  void set_weak_learner(typename Learner<TElement>::Ptr weak_learner) {
+    weak_learner_ = weak_learner;
+  }
+
+ protected:
+  typename Measure<TElement>::Ptr measure_;
+  typename Learner<TElement>::Ptr weak_learner_;
+
+  DataPreprocessorArray data_preprocessors_;
+
+  FeatureConverterArray feature_converters_;
+  FeatureConverterLearnerArray feature_converter_learners_;
 };
 
-template< class TElement, class TScorer >
-Scorer::Ptr Learner< TElement, TScorer >::makeScorerPtr() const {
-  Scorer *scr = new TScorer(make());
-  return Scorer::Ptr(scr);
+template<class TElement, class TScorer>
+class BaseLearner : public Learner<TElement> {
+ public:
+  /**
+  * \note Don't forget to learn() before makeSpecific().
+  * \return pointer to <em>new instance</em> of scorer
+  */
+  typename TScorer::Ptr makeSpecific() const;
+  virtual Scorer::Ptr make() const;
+  virtual void learn(const DataSet<TElement>& data_set,
+                     bool check_parameters = true);
+  // \TODO ? We don't need it in base class as not all Learners support it
+  void setInitialScorer(const TScorer& scorer);
+  virtual void reset();
+ private:
+  /**
+  * \brief Learn input dataset and train scorer.
+  * \param[in] data_set dataset to study
+  * \param[out] scorer scorer to train
+  */
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         TScorer* scorer) = 0;
+
+  using Learner<TElement>::data_preprocessors_;
+
+  using Learner<TElement>::feature_converters_;
+  using Learner<TElement>::feature_converter_learners_;
+
+  TScorer scorer_;
+};
+
+
+// template realization
+
+// _________________Learner________________________
+
+template<class TElement>
+void Learner<TElement>::addDataPreprocessor(
+    typename DataPreprocessor<TElement>::Ptr data_preprocessor) {
+  data_preprocessors_.push_back(data_preprocessor);
 }
 
-template< class TElement >
-void BaseLearner< TElement >::addFeatureConverter(
-    typename ltr::BaseFeatureConverterLearner<TElement>::Ptr
+template<class TElement>
+void Learner<TElement>::addFeatureConverterLearner(
+    typename ltr::FeatureConverterLearner<TElement>::Ptr
       feature_converter_learner) {
   feature_converter_learners_.push_back(feature_converter_learner);
 }
 
-template< class TElement >
-void BaseLearner< TElement >::learn(const DataSet<TElement>& data) {
-  DataSet<TElement> sourceData = data.deepCopy();
-  DataSet<TElement> convertedData;
+
+// _________________BaseLearner_______________________
+
+template<class TElement, class TScorer>
+typename TScorer::Ptr BaseLearner<TElement, TScorer>::makeSpecific() const {
+  return typename TScorer::Ptr(
+      new TScorer(scorer_));
+}
+
+template<class TElement, class TScorer>
+Scorer::Ptr BaseLearner<TElement, TScorer>::make() const {
+  return Scorer::Ptr(makeSpecific());
+}
+
+template<class TElement, class TScorer>
+void BaseLearner<TElement, TScorer>::reset() {
+  TScorer scorer;
+  scorer_ = scorer;
+}
+
+template<class TElement, class TScorer>
+void BaseLearner<TElement, TScorer>::setInitialScorer(const TScorer& scorer) {
+  reset();
+  scorer_ = scorer;
+}
+
+template<class TElement, class TScorer>
+void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
+                                           bool check_parameters) {
+  if (check_parameters) {
+    this->checkParameters();
+  }
+
+  DataSet<TElement> source_data = data_set.deepCopy();
+  DataSet<TElement> converted_data;
 
   for (int i = 0; i < data_preprocessors_.size(); ++i) {
-    data_preprocessors_[i]->apply(sourceData, &convertedData);
-    sourceData = convertedData;
+    data_preprocessors_[i]->apply(source_data, &converted_data);
+    source_data = converted_data;
   }
 
   feature_converters_.clear();
   for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
-    feature_converter_learners_[i]->learn(sourceData);
+    feature_converter_learners_[i]->learn(source_data);
     feature_converters_.push_back(feature_converter_learners_[i]->make());
-        ltr::utility::ApplyFeatureConverter(
-          feature_converters_[i],
-          sourceData,
-          &convertedData);
-    sourceData = convertedData;
+    // \TODO Move ApplyFeatureConverter into FeatureConverter
+    ApplyFeatureConverter(feature_converters_[i],
+                          source_data,
+                          &converted_data);
+    source_data = converted_data;
   }
-  learnImpl(sourceData);
+
+  learnImpl(source_data, &scorer_);
+  scorer_.set_feature_converters(feature_converters_);
 }
 };
 #endif  // LTR_LEARNERS_LEARNER_H_

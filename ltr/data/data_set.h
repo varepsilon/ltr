@@ -34,7 +34,7 @@ class DataSet : public Printable {
   /** The constructor creates a data set to store objects with the given
    * FeatureInfo.
    */
-  DataSet(const FeatureInfo& featureInfo = FeatureInfo());
+  DataSet(const FeatureInfo& feature_info = FeatureInfo());
   /** Destructor
    */
   virtual ~DataSet();
@@ -44,7 +44,7 @@ class DataSet : public Printable {
   const FeatureInfo& feature_info() const;
   /** Returns the number of features in objects of the DataSet.
    */
-  size_t featureCount() const;
+  size_t feature_count() const;
   /** Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
    */
   DataSet& operator<<(const TElement& element);
@@ -125,8 +125,8 @@ typedef DataSet<ObjectPair> PairwiseDataSet;
 typedef DataSet<ObjectList> ListwiseDataSet;
 
 template <typename TElement>
-DataSet<TElement>::DataSet(const FeatureInfo& featureInfo)
-                   : feature_info_(new FeatureInfo(featureInfo)),
+DataSet<TElement>::DataSet(const FeatureInfo& feature_info)
+                   : feature_info_(new FeatureInfo(feature_info)),
                      elements_(new vector<TElement>()),
                      weights_(new vector<double>()) {}
 
@@ -139,8 +139,8 @@ const FeatureInfo& DataSet<TElement>::feature_info() const {
 }
 
 template <typename TElement>
-size_t DataSet<TElement>::featureCount() const {
-  return this->feature_info().get_feature_count();
+size_t DataSet<TElement>::feature_count() const {
+  return this->feature_info().feature_count();
 }
 
 template <typename TElement>
@@ -157,7 +157,7 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   TElement element_to_add = element.deepCopy();
-  if (feature_info_ == NULL || feature_info_->get_feature_count() == 0) {
+  if (feature_info_ == NULL || feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
       new FeatureInfo(element[0].feature_info()));
   }

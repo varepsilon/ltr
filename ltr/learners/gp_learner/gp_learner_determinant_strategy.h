@@ -6,23 +6,26 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 
 #include <algorithm>
+#include <string>
 #include <functional>
+
+using std::string;
 
 namespace ltr {
 namespace gp {
 
 template <typename TElement>
 class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
-  public:
+ public:
   /** Constructor creates a GPLearnerWithDeterminantStrategy.
-   * \param p_Measure shared pointer to the measure that would be maximized on
+   * \param measure shared pointer to the measure that would be maximized on
    * a dataset within learning.
    * \param parameters the ParametersContainer parameters from which would
    * overwrite the default parameters.
    */
-  GPLearnerWithDeterminantStrategy(typename Measure<TElement>::Ptr p_Measure,
+  GPLearnerWithDeterminantStrategy(typename Measure<TElement>::Ptr measure,
       const ParametersContainer& parameters = ParametersContainer())
-  : GPLearner<TElement>(p_Measure, parameters) {
+  : GPLearner<TElement>(measure, parameters) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
@@ -94,7 +97,7 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
                                           G0L1);
   }
 
-  private:
+ private:
     template <class T>
     struct Belongs: public std::unary_function<T, bool> {
       Belongs(const T &min, const T &max): min_(min), max_(max) { }
@@ -106,17 +109,21 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
       const T &max_;
     };
 
+  virtual string getDefaultAlias() const {
+    return "GPLearnerWithDeterminantStrategy";
+  }
 
   /** \brief This function implements the changes made in the population at each
    *  algorithm's iteration.
    */
-  virtual void evaluationStrategyStepImpl() {
+  virtual void evaluationStepImpl() {
     assert(this->population_.size() > 0);
 
     std::cout << "Population looks like:\n";
-    for (size_t treeIdx = 0; treeIdx < this->population_.size(); ++treeIdx) {
-      std::cout << this->population_.at(treeIdx).mFitness
-          << "(" << this->population_.at(treeIdx).mValid <<") ";
+    for (size_t tree_index = 0;
+        tree_index < this->population_.size(); ++tree_index) {
+      std::cout << this->population_.at(tree_index).mFitness
+          << "(" << this->population_.at(tree_index).mValid <<") ";
     }
     std::cout << std::endl;
 
@@ -124,46 +131,50 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     std::sort(this->population_.begin(), this->population_.end());
 
     const ParametersContainer &params = this->parameters();
-    size_t topBoundIdx =
+    size_t top_bound_index =
         (1 - params.template Get<double>("TOP_FOR_NEXT_GENERATION_PART")) *
         this->population_.size();
-    if (topBoundIdx == this->population_.size()) {
-      topBoundIdx -= 1;
+    if (top_bound_index == this->population_.size()) {
+      top_bound_index -= 1;
     }
 
-    size_t curTreeFromTopIdx = topBoundIdx;
-    for (size_t treeIdx = 0; treeIdx < topBoundIdx; ++treeIdx) {
-      this->population_.at(treeIdx) = this->population_.at(curTreeFromTopIdx);
-      ++curTreeFromTopIdx;
-      if (curTreeFromTopIdx >= this->population_.size()) {
-        curTreeFromTopIdx = topBoundIdx;
+    size_t currrent_top_tree_index = top_bound_index;
+    for (size_t tree_index = 0; tree_index < top_bound_index; ++tree_index) {
+      this->population_.at(tree_index)
+        = this->population_.at(currrent_top_tree_index);
+      ++currrent_top_tree_index;
+      if (currrent_top_tree_index >= this->population_.size()) {
+        currrent_top_tree_index = top_bound_index;
       }
     }
 
-    size_t crossoverBoundIdx =
-        params.template Get<double>("CROSSOVER_VS_MUTATION_PART") * topBoundIdx;
-    if (crossoverBoundIdx % 2 != 1) {
-      crossoverBoundIdx -= 1;
+    size_t crossover_bound_index =
+        params.template Get<double>("CROSSOVER_VS_MUTATION_PART")
+        * top_bound_index;
+    if (crossover_bound_index % 2 != 1) {
+      crossover_bound_index -= 1;
     }
 
-    for (size_t treeIdx = 0; treeIdx < crossoverBoundIdx; treeIdx += 2) {
-      Puppy::mateTrees(this->population_[treeIdx],
-                       this->population_[treeIdx + 1],
+    for (size_t tree_index = 0;
+        tree_index < crossover_bound_index; tree_index += 2) {
+      Puppy::mateTrees(this->population_[tree_index],
+                       this->population_[tree_index + 1],
                        this->context_,
                        params.template Get<double>("CROSSOVER_DISTRIB_PROBA"),
                        params.template Get<int>("MAX_DEPTH"));
     }
 
-    for (size_t treeIdx = crossoverBoundIdx; treeIdx < topBoundIdx; ++treeIdx) {
+    for (size_t tree_index = crossover_bound_index;
+        tree_index < top_bound_index; ++tree_index) {
       if (this->context_.mRandom.rollUniform() <=
           params.template Get<double>(
               "STANDART_MUTATION_VS_SWAP_MUTATION_PROBA")) {
-        Puppy::mutateStandard(this->population_[treeIdx],
+        Puppy::mutateStandard(this->population_[tree_index],
             this->context_,
             params.template Get<int>("MUT_MAX_REGEN_DEPTH"),
             params.template Get<int>("MAX_DEPTH"));
       } else {
-        Puppy::mutateSwap(this->population_[treeIdx],
+        Puppy::mutateSwap(this->population_[tree_index],
             this->context_,
             params.template Get<double>("MUT_SWAP_DISTRIB_PROBA"));
       }

@@ -9,6 +9,7 @@
 #include "ltr/utility/numerical.h"
 
 using ltr::utility::equalWithNaN;
+using ltr::utility::NaN;
 
 namespace ltr {
 
@@ -30,7 +31,7 @@ Object::Object(const FeatureInfo& feature_info)
                 actual_label_(1.0),
                 predicted_label_(utility::NaN),
                 feature_info_(new FeatureInfo(feature_info)),
-                features_(new Features(feature_info.get_feature_count(),
+                features_(new Features(feature_info.feature_count(),
                                        utility::NaN)) {}
 
 const Features& Object::features() const {
@@ -87,6 +88,26 @@ Object& Object::operator=(const Object& other)  {
   predicted_label_ = other.predicted_label_;
   feature_info_ = other.feature_info_;
   return *this;
+}
+
+void Object::clear() {
+  features_->clear();
+  feature_info_->clear();
+}
+
+void Object::resize(size_t feature_count) {
+  features_ = FeaturesPtr(new Features(feature_count, NaN));
+  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_count));
+}
+
+void Object::resize(const FeatureInfo::Ptr &feature_info) {
+  features_ = FeaturesPtr(new Features(feature_info->feature_count(), NaN));
+  feature_info_ = feature_info;
+}
+
+void Object::resize(const FeatureInfo &feature_info) {
+  features_ = FeaturesPtr(new Features(feature_info.feature_count(), NaN));
+  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_info));
 }
 
 size_t Object::feature_count() const {

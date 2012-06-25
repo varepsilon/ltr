@@ -15,7 +15,7 @@ namespace utility {
  * given dataset. Used in normalizing converter and decision trees.
  */
 template <typename TElement>
-void getFeaturesValuesRanges(const DataSet<TElement>& dataset,
+void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
                              vector<double>* min_features_values,
                              vector<double>* max_features_values);
 }

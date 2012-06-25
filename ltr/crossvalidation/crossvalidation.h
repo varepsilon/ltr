@@ -31,7 +31,7 @@ namespace ltr {
     ValidationResult Validate(
       const DataSet<TElement>& data_set,
       const vector< typename Measure<TElement>::Ptr >& measures,
-      typename BaseLearner<TElement>::Ptr learner,
+      typename Learner<TElement>::Ptr learner,
       typename Splitter<TElement>::Ptr splitter);
 
     // template realizations
@@ -39,7 +39,7 @@ namespace ltr {
     ValidationResult Validate(
         const DataSet<TElement>& data_set,
         const vector< typename Measure<TElement>::Ptr >& measures,
-        typename BaseLearner<TElement>::Ptr learner,
+        typename Learner<TElement>::Ptr learner,
         typename Splitter<TElement>::Ptr splitter) {
       vector<string> measure_names;
       for (int i = 0; i < measures.size(); ++i) {
@@ -57,7 +57,7 @@ namespace ltr {
         learner->learn(current_splitted.train_set);
 
         string current_report = learner->report();
-        typename Scorer::Ptr current_scorer = learner->makeScorerPtr();
+        typename Scorer::Ptr current_scorer = learner->make();
 
         MarkDataSet(current_splitted.test_set, *current_scorer);
 

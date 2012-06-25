@@ -19,64 +19,64 @@ using ltr::LinearCompositionScorer;
 
 namespace ltr {
 namespace lc {
-  /**
-   * Is a parameter for linear composition learner. Implements a strategy of
-   * updating linear composition's weights while adding a new scorer to it.
-   * E. g. simple boosting always updates only the weight of the last scorer,
-   * whereas gradient boosting updates all weights in composition
-   */
-  template <class TElement>
-  class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
-  public:
-    typedef boost::shared_ptr<LCScorerWeightsUpdater> Ptr;
-
-    explicit LCScorerWeightsUpdater(const string& alias) : Aliaser(alias) {}
-    /**
-     * Updates linear composition's weights
-     * @param data - dataset, not upadated by DataSetWeightsUpdater on
-     * current iteration
-     * @param lin_scorer - linear composition scorer to update it's weights.
-     * Has last scorer (just added) with weight 1.0
-     */
-    virtual void updateWeights(const DataSet<TElement>& data,
-        LinearCompositionScorer* lin_scorer) const =0;
-    /**
-     * Sets measure, used in LCScorerWeightsUpdater. Note that some
-     * LCScorerWeightsUpdaters don't use measures, so they ignore 
-     * the mesure setted
-     */
-    void setMeasure(typename Measure<TElement>::Ptr in_measure) {
-      measure_ = in_measure;
-    }
-  protected:
-    typename Measure<TElement>::Ptr measure_;
-  };
-
+/**
+ * Is a parameter for linear composition learner. Implements a strategy of
+ * updating linear composition's weights while adding a new scorer to it.
+ * E. g. simple boosting always updates only the weight of the last scorer,
+ * whereas gradient boosting updates all weights in composition
+ */
+template <class TElement>
+class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
+ public:
+  typedef boost::shared_ptr<LCScorerWeightsUpdater> Ptr;
 
   /**
-   * Fake LCScorerWeightsUpdater, does nothing (all weights in composition
-   * scorer will be 1.0)
+   * Updates linear composition's weights
+   * @param data - dataset, not upadated by DataSetWeightsUpdater on
+   * current iteration
+   * @param lin_scorer - linear composition scorer to update it's weights.
+   * Has last scorer (just added) with weight 1.0
    */
-  template <class TElement>
-  class FakeLCScorerWeightsUpdater : public LCScorerWeightsUpdater<TElement> {
-  public:
-    typedef boost::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
+  virtual void updateWeights(const DataSet<TElement>& data,
+      LinearCompositionScorer* lin_scorer) const =0;
+  /**
+   * Sets measure, used in LCScorerWeightsUpdater. Note that some
+   * LCScorerWeightsUpdaters don't use measures, so they ignore 
+   * the mesure setted
+   */
+  void set_measure(typename Measure<TElement>::Ptr in_measure) {
+    measure_ = in_measure;
+  }
+ protected:
+  typename Measure<TElement>::Ptr measure_;
+};
 
-    /**
-     * @param parameters Standart LTR parameter container with no parameters
-     */
-    explicit FakeLCScorerWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : LCScorerWeightsUpdater<TElement>("FakeLCScorerWeightsUpdater") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
 
-    void updateWeights(const DataSet<TElement>& data,
-        LinearCompositionScorer* lin_scorer) const {
-      // doing nothing
-    }
-  };
+/**
+ * Fake LCScorerWeightsUpdater, does nothing (all weights in composition
+ * scorer will be 1.0)
+ */
+template <class TElement>
+class FakeLCScorerWeightsUpdater : public LCScorerWeightsUpdater<TElement> {
+ public:
+  typedef boost::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
+
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
+  explicit FakeLCScorerWeightsUpdater(
+      const ParametersContainer& parameters = ParametersContainer()) {
+    this->setDefaultParameters();
+    this->copyParameters(parameters);
+  }
+
+  void updateWeights(const DataSet<TElement>& data,
+      LinearCompositionScorer* lin_scorer) const {
+    // doing nothing
+  }
+ private:
+  virtual string getDefaultAlias() const {return "FakeLCScorerWeightsUpdater";}
+};
 };
 };
 

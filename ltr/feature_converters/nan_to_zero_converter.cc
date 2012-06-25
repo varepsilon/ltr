@@ -10,21 +10,23 @@ void NanToZeroConverter::fillOutputFeatureInfo()  {
   output_feature_info_ = input_feature_info_;
 }
 
-void NanToZeroConverter::applyImpl(const Object& argument,
-                                   Object* value) const {
-  *value = Object(output_feature_info());
-  for (size_t i = 0; i < argument.features().size(); i++) {
-    if (isNaN(argument.features()[i]))
-      value->features()[i] = 0;
-    else
-      value->features()[i] = argument.features()[i];
+void NanToZeroConverter::applyImpl(const Object& input,
+                                         Object* output) const {
+  output->resize(output_feature_info());
+  for (size_t feature_index = 0;
+      feature_index < input.features().size(); ++feature_index) {
+    if (isNaN(input.features()[feature_index])) {
+      output->features()[feature_index] = 0;
+    } else {
+      output->features()[feature_index] = input.features()[feature_index];
+    }
   }
 }
 
 string NanToZeroConverter::generateCppCode(
     const std::string &function_name) const {
-  string hpp_string;
-  hpp_string.
+  string code;
+  code.
       append("#include <vector>\n\nvoid ").
       append(function_name).
       append("(const std::vector<double>& features, ").
@@ -35,6 +37,6 @@ string NanToZeroConverter::generateCppCode(
       append("    else result->push_back(features[i]);\n").
       append("  }\n").
       append("}\n");
-  return hpp_string;
+  return code;
 }
 }

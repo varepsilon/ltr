@@ -77,7 +77,7 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   ltr::utility::MarkDataSet(test_data, fakeScorer);
   double measureBefore = pMeasure->average(test_data);
 
-  ltr::utility::MarkDataSet(test_data, learner.make());
+  ltr::utility::MarkDataSet(test_data, *learner.make());
   double measureAfter = pMeasure->average(test_data);
 
   EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
@@ -89,9 +89,9 @@ TEST_F(LearnersTest, TestingGPLearner) {
 
   learner.learn(learn_data_listwise);
 
-  ltr::gp::GPScorer scorer = learner.make();
+  ltr::gp::GPScorer::Ptr scorer = learner.makeSpecific();
 
-  std::cout << scorer.generateCppCode();
+  std::cout << scorer->generateCppCode();
 };
 
 TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
@@ -100,7 +100,7 @@ TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
 
   learner.learn(learn_data_listwise);
 
-  ltr::gp::GPScorer scorer = learner.make();
+  ltr::gp::GPScorer::Ptr scorer = learner.makeSpecific();
 
-  std::cout << scorer.generateCppCode();
+  std::cout << scorer->generateCppCode();
 };

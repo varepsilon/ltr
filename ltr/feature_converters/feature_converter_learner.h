@@ -5,63 +5,92 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <vector>
+
 #include "ltr/data/data_set.h"
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/printable.h"
 #include "ltr/parameters_container/parameters_container.h"
 
+using std::vector;
+
 namespace ltr {
 /**
- * A class which learns on input dataset and produces a FeatureConverter.
+ * \brief Learns input dataset and produces a FeatureConverter.
  *
- * May produce different converters (using random) for one inputted dataset
- * as in RSM (random subset method). Has a descendent FeatureConverterLearner
- * which also can produce specific FeatureConverters. Is used everywhere where
- * a Ptr on FeatureConverterLearner is needed - having Ptr on FeatureConverterLearner
- * is inconvenient cause FeatureConverterLearner is also parameterised by
- * TFeatureConverter.
+ * Sometimes before training a Scorer it's usefull to make some preprocessing
+ * of object features, e.g. normalize, filter out non significant features, etc. \n
+ * In order to do this one need to add FeatureConverterLearner into the BaseLearner
+ * (see Learner<TElement>::addFeatureConverterLearner).
+ *
+ * If you want to make your own FeatureConverterLearner it's more convinient
+ * to inherit from BaseFeatureConverterLearner.
+ *
+ * \see Learner, FeatureConverterLearner, BaseFeatureConverterLearner
  */
 template <class TElement>
-class BaseFeatureConverterLearner : public Parameterized,
-                                    public Printable {
+class FeatureConverterLearner : public Parameterized,
+                                public Printable,
+                                public Aliaser {
  public:
-  typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
+  typedef boost::shared_ptr<FeatureConverterLearner> Ptr;
   /**
-   * Learns from inputted dataset. E. g. remembers number of features
-   * in dataset and e.t.c.
-   */
-  virtual void learn(const DataSet<TElement>& data_set) = 0;
+  * \brief Learns input dataset.
+  * \param data_set dataset to study
+  * \param check_parameters whether perform Parameterized::checkParameters() before launch
+  */
+  virtual void learn(const DataSet<TElement>& data_set,
+                     bool check_parameters = true) = 0;
   /**
-   * Produces a FeatureConverter. Must have been learned before calling make()
-   */
+  * \note Don't forget to learn() before make().
+  * \return pointer to <em>new instance</em> of feature converter.
+  */
   virtual FeatureConverter::Ptr make() const = 0;
 };
 
 /**
- * \brief A class which learns on inputted dataset and produces 
- * a specific FeatureConverter. 
- *
- * May produce different converters (using random)
- * for one inputted dataset as in RSM (random subset method). Everywhere
- * where a Ptr on FeatureConverterLearner is needed - use Ptr on
- * BaseFeatureConverterLearner. Having Ptr on FeatureConverterLearner is
- * inconvenient cause FeatureConverterLearner is also parameterised by
- * TFeatureConverter and inheritance tree is a forest
- */
+* \brief A base class for FeatureConverter learners.
+*
+* If you want to make your own FeatureConverterLearner you should
+* inherit from BaseFeatureConverterLearner and implement learnImpl().
+*
+* \sa FeatureConverterLearner, BaseLearner
+*/
+// \TODO(sameg) BaseLearner -> Trainer ?
 template <class TElement, class TFeatureConverter>
-class FeatureConverterLearner : public BaseFeatureConverterLearner<TElement> {
+class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
  public:
-  typedef boost::shared_ptr<FeatureConverterLearner> Ptr;
+  typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
   /**
-   * Is for being sure FeatureConverter::Ptrs outputted by makePtr()
-   * are Ptrs on different (physically) FeatureConverters.
-   * \returns a concrete FeatureConverter
-   */
-  virtual typename TFeatureConverter::Ptr makeSpecific() const = 0;
+  * \note Don't forget to learn() before makeSpecific().
+  * \return pointer to <em>new instance</em> of feature converter
+  */
+  typename TFeatureConverter::Ptr makeSpecific() const {
+    return typename TFeatureConverter::Ptr(
+        new TFeatureConverter(feature_converter_));
+  }
   virtual FeatureConverter::Ptr make() const {
     return FeatureConverter::Ptr(makeSpecific());
   }
+  virtual void learn(const DataSet<TElement>& data_set,
+                     bool check_parameters = true) {
+    if (check_parameters) {
+      this->checkParameters();
+    }
+    feature_converter_.set_input_feature_info(data_set.feature_info());
+    learnImpl(data_set, &feature_converter_);
+    feature_converter_.fillOutputFeatureInfo();
+  }
+ private:
+  /**
+  * \brief Learn input dataset and train feature converter.
+  * \param[in] data_set dataset to study
+  * \param[out] feature_converter feature converter to train
+  */
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         TFeatureConverter* feature_converter) = 0;
+  TFeatureConverter feature_converter_;
 };
 };
 

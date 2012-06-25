@@ -21,23 +21,25 @@ namespace ltr {
 
 /**
 * \brief A base class for feature converters.
+*
 * Preprocesses Object, e.g. sample or linear transform features.
 *
-* Can be applied to each Object in DataSet but before doing this
-* FeatureConverter should be trained by FeatureConverterLearner.
+* Can be applied to each Object in DataSet (see ltr::utility::ApplyFeatureConverter).
+* But before doing this FeatureConverter should be trained by some FeatureConverterLearner.
 * This can be usefull for better training of Scorer
-* (see BaseLearner<TElement>::addFeatureConverterLearner).
+* (Learner<TElement>::addFeatureConverterLearner).
 *
 * Feature converters wich were used during training of Scorer 
 * will be added in the result Scorer (see Scorer::addFeatureConverter) 
 * and consequently must be Serializable.
 * 
 * \note In most cases you don't need to create FeatureConverter directly,
-* normally it is the result of FeatureConverterLearner work.
+* normally it is the result of some FeatureConverterLearner work.
 * 
-* \sa FeatureConverterLearner, Learner, Scorer
+* \see FeatureConverterLearner, BaseFeatureConverterLearner, BaseLearner, Scorer
 */
-class FeatureConverter : public Serializable {
+class FeatureConverter : public Serializable,
+                         public Aliaser {
  public:
   typedef boost::shared_ptr<FeatureConverter> Ptr;
   typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
@@ -53,6 +55,11 @@ class FeatureConverter : public Serializable {
     fillOutputFeatureInfo();
   }
   GET(FeatureInfo, output_feature_info);
+  /**
+  * Fills output_feature_info_ (Object may have another FeatureInfo
+  * after convertion, e.g. FeatureConverter may change the number of Object features)
+  */
+  virtual void fillOutputFeatureInfo() = 0;
 
   /**
    * Converts object features
@@ -64,24 +71,18 @@ class FeatureConverter : public Serializable {
     applyImpl(input, output);
   }
  private:
-  /**
-  * Fills output_feature_info_ (Object may have another FeatureInfo
-  * after convertion, e.g. FeatureConverter may change the number of Object features)
-  */
-  virtual void fillOutputFeatureInfo() = 0;
   virtual void applyImpl(const Object& input, Object* output) const = 0;
  protected:
   /**
-  * A FeatureInfo that an input Object is supposed to have
+  * \brief A FeatureInfo that an input Object is supposed to have
   */
   FeatureInfo input_feature_info_;
   /**
-  * A FeatureInfo that an output Object will have
+  * \brief A FeatureInfo that an output Object will have
   */
   FeatureInfo output_feature_info_;
 };
 
 typedef std::vector<FeatureConverter::Ptr> FeatureConverterArray;
 };
-
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

@@ -15,31 +15,32 @@ using ltr::Object;
 using ltr::utility::Inf;
 
 namespace ltr {
-  /**
-   * Squared error pointwise measure
-   */
-  class SquaredError : public PointwiseMeasure {
-    public:
-    SquaredError(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("Squared error") {
-      setDefaultParameters();
-      copyParameters(parameters);
-    }
+/**
+ * Squared error pointwise measure
+ */
+class SquaredError : public PointwiseMeasure {
+ public:
+  SquaredError(const ParametersContainer&
+                  parameters = ParametersContainer()) {
+    setDefaultParameters();
+    copyParameters(parameters);
+  }
 
-    double best() const {
-      return 0.0;
-    }
-    double worst() const {
-      return Inf;
-    }
-    string toString() const {
-      return "Squared error measure";
-    }
-    private:
-    double get_measure(const Object& object) const {
-      return std::pow(object.actual_label() - object.predicted_label(), 2);
-    }
-  };
+  double best() const {
+    return 0.0;
+  }
+  double worst() const {
+    return Inf;
+  }
+  string toString() const {
+    return "Squared error measure";
+  }
+ private:
+  double get_measure(const Object& object) const {
+    return std::pow(object.actual_label() - object.predicted_label(), 2);
+  }
+  virtual string getDefaultAlias() const {return "SquaredError";}
+};
 };
 
 #endif  // LTR_MEASURES_SQUARED_ERROR_H_

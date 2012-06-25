@@ -13,110 +13,103 @@
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"
+#include "ltr/utility/indices.h"
 
 using std::string;
 using std::set;
 using std::logic_error;
 using std::vector;
 
+using ltr::utility::Indices;
+using ltr::utility::IndicesPtr;
+using ltr::utility::getIdPermutation;
+
 namespace ltr {
 /**
- * Produces FeatureSampler with specific indices. Duplication of indices
- * is denied (throws while checking parameters)
- */
+* \brief Produces FeatureSampler with specified indices.
+* \param indices indices of features to sample
+*/
 template <typename TElement>
 class FeatureSamplerLearner
-    : public FeatureConverterLearner<TElement, FeatureSampler> {
-  friend class FeatureSampler;
+    : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
  public:
   typedef boost::shared_ptr<FeatureSamplerLearner> Ptr;
 
   /**
-   * @param parameters Standart LTR parameter container with list parameter
-   * INDICES. INDICES is a list of indices of features to be used in produced
-   * FeatureConverter. If INDICES is empty an equivalent to FakeFeatureConverter
-   * for train dataset is produced.
-   * By default INDICES is empty
-   */
-  explicit FeatureSamplerLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
-    this->checkParameters();
-  }
+  * \param indices indices of features to sample
+  */
+  explicit FeatureSamplerLearner(IndicesPtr indices = IndicesPtr(new Indices));
+  explicit FeatureSamplerLearner(const ParametersContainer& parameters);
 
-  void learn(const DataSet<TElement>& data_set);
-  virtual FeatureSampler::Ptr makeSpecific() const;
+  virtual void setDefaultParameters();
+  virtual void checkParameters() const;
 
-  void setDefaultParameters();
-  void checkParameters() const;
+  virtual string toString() const;
 
-  string toString() const;
-  private:
-  FeatureSampler::Ptr converter_;
+  GET_SET(IndicesPtr, indices);
+ private:
+  virtual void learnImpl(const DataSet<TElement>& data_set,
+                         FeatureSampler *feature_sampler);
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual string getDefaultAlias() const {return "FeatureSamplerLearner";}
+  IndicesPtr indices_;
 };
 
 // template realizations
+
+template <typename TElement>
+FeatureSamplerLearner<TElement>::FeatureSamplerLearner(IndicesPtr indices) {
+  set_indices(indices);
+}
+
+template <typename TElement>
+FeatureSamplerLearner<TElement>::FeatureSamplerLearner(
+    const ParametersContainer& parameters) {
+  this->setParameters(parameters);
+}
+
 template <typename TElement>
 void FeatureSamplerLearner<TElement>::setDefaultParameters() {
-  this->clearParameters();
-  vector<int> empty;
-  this->addNewParam("INDICES", empty);
+  indices_ = IndicesPtr(new Indices);
 }
 
 template <typename TElement>
 void FeatureSamplerLearner<TElement>::checkParameters() const {
-  vector<int> indices = this->parameters().
-                        template Get<std::vector<int> >("INDICES");
-  set<int> used_features;
-  for (int index = 0; index < indices.size(); ++index) {
-    int current_object = indices[index];
-    if (used_features.find(current_object) == used_features.end()) {
-      used_features.insert(current_object);
-    } else {
-      throw logic_error("Indicies array contains equal elements");
-    }
+  // DON'T NEED
+}
+
+template <typename TElement>
+void FeatureSamplerLearner<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  // \TODO(sameg) Create indices from string representation like [1:3], 5, 6
+  indices_ = parameters.Get<IndicesPtr>("INDICES");
+}
+
+template <typename TElement>
+void FeatureSamplerLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data_set, FeatureSampler *feature_sampler) {
+  // \TODO(sameg) Is it logic?
+  if (indices_->size() != 0) {
+    feature_sampler->set_indices(*indices_);
+  } else {
+    Indices indices;
+    getIdPermutation(&indices, data_set.feature_count());
+    feature_sampler->set_indices(indices);
   }
 }
 
 template <typename TElement>
 string FeatureSamplerLearner<TElement>::toString() const {
   std::stringstream str;
-    str << "Feature subset chooser feature converter learner"
-      << "with parameter INDICES = {";
-    vector<int> indices = this->parameters().template GetRef<std::vector<int> >(
-                "INDICES");
-    for (int i = 0; i < indices.size(); ++i) {
+    str << "FeatureSamplerLearner: indices = [";
+    for (int i = 0; i < indices_->size(); ++i) {
       if (i != 0) {
         str << ", ";
       }
-      str << indices[i];
+      str << indices_->at(i);
     }
-    str << "}";
+    str << "]";
     return str.str();
-}
-
-template <typename TElement>
-void FeatureSamplerLearner<TElement>
-    ::learn(const DataSet<TElement>& data_set) {
-  converter_ = FeatureSampler::Ptr(new FeatureSampler);
-  converter_->set_input_feature_info(data_set.feature_info());
-  const ParametersContainer &params = this->parameters();
-  if (params.GetRef<std::vector<int> >("INDICES").size() == 0) {
-    vector<int> all_used(data_set.feature_info().get_feature_count());
-    for (int index = 0; index < all_used.size(); ++index) {
-      all_used[index] = index;
-    }
-    converter_->setChoosedFeaturesIndices(all_used);
-  } else {
-    converter_->setChoosedFeaturesIndices(
-      params.GetRef<std::vector<int> >("INDICES"));
-  }
-}
-
-template <typename TElement>
-FeatureSampler::Ptr FeatureSamplerLearner<TElement>::makeSpecific() const {
-  return converter_;
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_

@@ -4,6 +4,7 @@
 #define LTR_DATA_PREPROCESSORS_DATA_PREPROCESSOR_H_
 
 #include <string>
+#include <vector>
 
 #include <boost/shared_ptr.hpp>  //NOLINT
 
@@ -14,21 +15,23 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::string;
+using std::vector;
 
 namespace ltr {
 /**
 * \brief A base class for data preprocessors.
 *
 * Preprocesses DataSet, e.g. delete or replicate elements in DataSet.
-* This can be usefull for better learning (see BaseLearner<TElement>::addDataPreprocessor ).
+* This can be usefull for better learning (see Learner<TElement>::addDataPreprocessor ).
 * Should not change Object features and FeatureInfo as it won't be saved in Scorer. 
 * Use FeatureConverter for feature convertions.
 * 
-* \sa FeatureConverter, Learner
+* \sa FeatureConverter, BaseLearner
 */
 template <class TElement>
 class DataPreprocessor : public Parameterized,
-                         public Printable {
+                         public Printable,
+                         public Aliaser {
  public:
   typedef boost::shared_ptr<DataPreprocessor> BasePtr;
   typedef boost::shared_ptr<DataPreprocessor> Ptr;
@@ -37,7 +40,7 @@ class DataPreprocessor : public Parameterized,
    * Preprocesses DataSet.
    * \param input DataSet to be preprocessed
    * \param output preprocessed DataSet
-   * \param check_parameters whether perform Parameterized::CheckParameters() before launch
+   * \param check_parameters whether perform Parameterized::checkParameters() before launch
   */
   void apply(const DataSet<TElement>& input,
                    DataSet<TElement>* output,

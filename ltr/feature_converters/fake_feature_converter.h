@@ -26,25 +26,12 @@ class FakeFeatureConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
-
-  void applyImpl(const Object& source_object,
-    Object* preprocessed_object) const;
-
-  string generateCppCode(
-      const string& function_name) const {
-    string hpp_string;
-
-    hpp_string.
-      append("#include <vector>\n\nvoid ").
-      append(function_name).
-      append("(const std::vector<double>& features, ").
-      append("std::vector<double>* result) {").
-      append("*result = features;}\n");
-
-    return hpp_string;
-  }
- private:
   virtual void fillOutputFeatureInfo();
+  virtual string generateCppCode(const string& function_name) const;
+ private:
+  virtual void applyImpl(const Object& input,
+                               Object* output) const;
+  virtual string getDefaultAlias() const {return "FakeFeatureConverter";}
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

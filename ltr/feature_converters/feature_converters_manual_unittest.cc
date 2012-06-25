@@ -8,6 +8,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/data/feature_info.h"
+#include "ltr/utility/indices.h"
 #include "ltr/utility/numerical.h"
 
 #include "ltr/feature_converters/feature_converter.h"
@@ -34,6 +35,9 @@ using ltr::FeatureSamplerLearner;
 using ltr::FeatureRandomSamplerLearner;
 using ltr::PerFeatureLinearConverter;
 using ltr::FeatureNormalizerLearner;
+
+using ltr::utility::IndicesPtr;
+using ltr::utility::Indices;
 
 const int feature_size = 11;
 
@@ -93,35 +97,35 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterLearnerTest) {
 }
 
 TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
-  vector<int> indices;
+  Indices indices;
   indices.push_back(3);
   indices.push_back(7);
   indices.push_back(4);
   FeatureSampler::Ptr conv(new FeatureSampler(indices));
   conv->set_input_feature_info(data.feature_info());
 
-  EXPECT_EQ(3, conv->getChoosedFeaturesCount());
-  EXPECT_EQ(indices, conv->getChoosedFeaturesIndices());
+  EXPECT_EQ(3, conv->indices().size());
+  EXPECT_EQ(indices, conv->indices());
 
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(3, conv_data.feature_info().get_feature_count());
+  EXPECT_EQ(3, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
     EXPECT_EQ(indices[i], conv_data[0].features()[i]);
   }
 
   indices.push_back(1);
-  conv->setChoosedFeaturesIndices(indices);
+  conv->set_indices(indices);
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(4, conv_data.feature_info().get_feature_count());
+  EXPECT_EQ(4, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
     EXPECT_EQ(indices[i], conv_data[0].features()[i]);
   }
 
   indices.push_back(103);
-  EXPECT_ANY_THROW(conv->setChoosedFeaturesIndices(indices));
+  EXPECT_ANY_THROW(conv->set_indices(indices));
 }
 
 TEST_F(FeatureConvertersManualTest, FeatureSamplerLearnerTest) {
@@ -134,24 +138,18 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerLearnerTest) {
 
   EXPECT_TRUE(AreEqual(data, conv_data));
 
-  vector<int> unequal;
-  unequal.push_back(3);
-  unequal.push_back(5);
-  unequal.push_back(3);
-  EXPECT_ANY_THROW(conv_learner.setExistingParameter("INDICES", unequal));
+  IndicesPtr indices(new Indices);
+  indices->push_back(3);
+  indices->push_back(5);
 
-  vector<int> indices;
-  indices.push_back(3);
-  indices.push_back(5);
-
-  conv_learner.setExistingParameter("INDICES", indices);
+  conv_learner.set_indices(indices);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
 
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
-  EXPECT_EQ(indices.size(), conv_data.feature_info().get_feature_count());
-  for (int i = 0; i < indices.size(); ++i) {
-    EXPECT_EQ(indices[i], conv_data[0].features()[i]);
+  EXPECT_EQ(indices->size(), conv_data.feature_count());
+  for (int i = 0; i < indices->size(); ++i) {
+    EXPECT_EQ((*indices)[i], conv_data[0].features()[i]);
   }
 }
 
@@ -163,9 +161,9 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   DataSet<Object> conv_data;
   ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
 
-  EXPECT_EQ(4, conv_data.feature_info().get_feature_count());
+  EXPECT_EQ(4, conv_data.feature_count());
   set<int> used_features;
-  for (int i = 0; i < conv_data.feature_info().get_feature_count(); ++i) {
+  for (int i = 0; i < conv_data.feature_count(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
     EXPECT_LE(0, conv_data[0].features()[i]);
 
@@ -177,14 +175,14 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
     }
   }
 
-  conv_learner.setExistingParameter("SELECTED_PART", 0.8);
+  conv_learner.set_sampling_fraction(0.8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
   ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
 
-  EXPECT_EQ(9, conv_data.feature_info().get_feature_count());
+  EXPECT_EQ(9, conv_data.feature_count());
   used_features.clear();
-  for (int i = 0; i < conv_data.feature_info().get_feature_count(); ++i) {
+  for (int i = 0; i < conv_data.feature_count(); ++i) {
     EXPECT_GT(feature_size, conv_data[0].features()[i]);
     EXPECT_LE(0, conv_data[0].features()[i]);
 
@@ -196,28 +194,30 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
     }
   }
 
-  EXPECT_ANY_THROW(conv_learner.setExistingParameter("SELECTED_PART", 0.0));
-  conv_learner.setExistingParameter("SELECTED_PART", 1e-8);
+  conv_learner.set_sampling_fraction(0.0);
+  EXPECT_ANY_THROW(conv_learner.learn(data));
+  conv_learner.set_sampling_fraction(1e-8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv3 = conv_learner.make();
   ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
-  EXPECT_EQ(1, conv_data.feature_info().get_feature_count());
+  EXPECT_EQ(1, conv_data.feature_count());
 }
 
 TEST_F(FeatureConvertersManualTest, PerFeatureLinearConverterTest) {
   PerFeatureLinearConverter::Ptr pf_converter
-    (new PerFeatureLinearConverter(data.feature_info().get_feature_count()));
+    (new PerFeatureLinearConverter(data.feature_count()));
+
   pf_converter->set_input_feature_info(data.feature_info());
 
-  pf_converter->setShift(0, 1.0);
-  pf_converter->setShift(1, 0.0);
-  pf_converter->setShift(2, -1.0);
-  pf_converter->setShift(3, 0.0);
+  pf_converter->set_shift(0, 1.0);
+  pf_converter->set_shift(1, 0.0);
+  pf_converter->set_shift(2, -1.0);
+  pf_converter->set_shift(3, 0.0);
 
-  pf_converter->setCoefficient(0, 1.0);
-  pf_converter->setCoefficient(1, -0.5);
-  pf_converter->setCoefficient(2, 2.0);
-  pf_converter->setCoefficient(3, 0.0);
+  pf_converter->set_factor(0, 1.0);
+  pf_converter->set_factor(1, -0.5);
+  pf_converter->set_factor(2, 2.0);
+  pf_converter->set_factor(3, 0.0);
 
   DataSet<Object> conv_data;
 
@@ -267,8 +267,8 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerDefaultTest) {
 
 TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerTest) {
   FeatureNormalizerLearner<Object> conv_learner;
-  conv_learner.setExistingParameter("NormalizationIntervalBegin", -2.0);
-  conv_learner.setExistingParameter("NormalizationIntervalEnd", 2.0);
+  conv_learner.set_min(-2.0);
+  conv_learner.set_max(2.0);
 
   DataSet<Object> l_data(FeatureInfo(3));
   Object o1, o2, o3, o4;
