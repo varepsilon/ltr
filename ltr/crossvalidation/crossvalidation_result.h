@@ -1,5 +1,6 @@
-#ifndef CROSSVALIDATION_RESULT_H
-#define CROSSVALIDATION_RESULT_H
+// Copyright 2012 Yandex
+#ifndef LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
+#define LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
 #include <vector>
 #include "ltr/measures/measure.h"
 #include "ltr/learners/learner.h"
@@ -10,14 +11,11 @@
 using std::vector;
 using ltr::utility::MarkDataSet;
 using std::cout;
-//using ltr::cv::Splitter;
 
-namespace ltr{
+namespace ltr {
 namespace cv {
 template <typename ObjectType, typename ScorerType>
 class CrossValidator {
-//  ltr::DataSet<T>::Ptr pointer;
-//  Table field needed!!
   vector<vector<vector<vector<vector<double> > > > > crossValidationResults_;
   vector<typename ltr::DataSet<ObjectType>::Ptr > dataSets_;
   vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
@@ -81,8 +79,7 @@ public:
                          );
               SplittedDataSet<ObjectType> splittedData(
                     splitters_[splitterIndex]->split(
-                      splitIndex, *dataSets_[datasetIndex])
-                    );
+                      splitIndex, *dataSets_[datasetIndex]));
               learners_[learnerIndex]->reset();
               learners_[learnerIndex]->learn(splittedData.train_set);
 
@@ -148,4 +145,4 @@ public:
 }
 }
 
-#endif // CROSSVALIDATION_RESULT_H
+#endif // LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
