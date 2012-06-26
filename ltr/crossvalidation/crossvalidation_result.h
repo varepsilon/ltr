@@ -236,36 +236,12 @@ class CrossValidator {
     vector<SizeOverIndex> multiSize;
     getMultiSize(crossValidationResults_, &multiSize);
     sort(multiSize.begin(), multiSize.end());
-//    for (int i = 0; i < multiSize.size(); ++i) {
-//      cout << multiSize[i].sizeVal;
-//    }
     vector<string> dimNames;
     dimNames.push_back("dataSet");
     dimNames.push_back("learner");
     dimNames.push_back("splitter");
     dimNames.push_back("measure");
     printMultiArray(crossValidationResults_, dimNames);
-//    for (size_t dataSetIndex = 0;
-//         dataSetIndex < crossValidationResults_.size();
-//         ++dataSetIndex) {
-//      for (size_t measureIndex = 0;
-//           measureIndex < crossValidationResults_[dataSetIndex].size();
-//           ++measureIndex) {
-//        for (size_t learnerIndex = 0;
-//             learnerIndex < crossValidationResults_[dataSetIndex]
-//             [measureIndex].size();
-//             ++learnerIndex) {
-//          for (size_t splitterIndex = 0;
-//               splitterIndex < crossValidationResults_
-//               [dataSetIndex][measureIndex][learnerIndex].size();
-//               ++splitterIndex) {
-//            cout << crossValidationResults_
-//                    [dataSetIndex][measureIndex][learnerIndex]
-//                    [splitterIndex] << "\n";
-//          }
-//        }
-//      }
-//    }
   }
 };
 }
