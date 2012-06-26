@@ -55,7 +55,8 @@ bool operator < (const SizeOverIndex& left, const SizeOverIndex& right) {
 }
 
 template <typename T>
-void printMultiArray(const vector<T>& multiArray, const vector<string>& dimNames) {
+void printMultiArray(const vector<T>& multiArray,
+                     const vector<string>& dimNames) {
   vector<SizeOverIndex> multiSize;
   getMultiSize(multiArray, &multiSize);
   vector<int> multiIndex(multiSize.size(), 0);
@@ -75,8 +76,9 @@ struct MultiArrayTraits<vector<T> > {
 };
 
 template <typename T>
-typename MultiArrayTraits<T>::Type getValueByMultiIndex (vector<int>* const multiIndex,
-                                                const vector<T>& multiArray) {
+typename MultiArrayTraits<T>::Type getValueByMultiIndex (
+    vector<int>* const multiIndex,
+    const vector<T>& multiArray) {
   if (multiIndex->size() != 1) {
     throw std::logic_error("Bad multiindex!");
   }
