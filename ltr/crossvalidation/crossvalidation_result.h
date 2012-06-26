@@ -3,6 +3,7 @@
 #define LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
 #include <vector>
 #include <algorithm>
+#include <string>
 #include "ltr/measures/measure.h"
 #include "ltr/learners/learner.h"
 #include "ltr/crossvalidation/splitter.h"
@@ -76,7 +77,7 @@ struct MultiArrayTraits<vector<T> > {
 };
 
 template <typename T>
-typename MultiArrayTraits<T>::Type getValueByMultiIndex (
+typename MultiArrayTraits<T>::Type getValueByMultiIndex(
     vector<int>* const multiIndex,
     const vector<T>& multiArray) {
   if (multiIndex->size() != 1) {
@@ -87,14 +88,13 @@ typename MultiArrayTraits<T>::Type getValueByMultiIndex (
 
 template <typename T>
 typename MultiArrayTraits<vector<T> >::Type
-  getValueByMultiIndex (vector<int>* const multiIndex,
+  getValueByMultiIndex(vector<int>* const multiIndex,
                         const vector<vector<T> >& multiArray) {
   int currentIndex = multiIndex->back();
   multiIndex->pop_back();
   typename MultiArrayTraits<vector<T> >::Type result =
       getValueByMultiIndex(multiIndex, multiArray[currentIndex]);
   multiIndex->push_back(currentIndex);
-  //int x = 0;
   return result;
 }
 
@@ -109,7 +109,7 @@ void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
     multiSize->pop_back();
     for (int i = 0; i < sizeToPrint; ++i) {
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
-      cout << getValueByMultiIndex (multiIndex, multiArray) << "\t";
+      cout << getValueByMultiIndex(multiIndex, multiArray) << "\t";
     }
     SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
     multiSize->push_back(backToPush);
@@ -127,7 +127,6 @@ void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
   } else {
     int indexNoToIncrease = multiSize->back().indexVal;
     int sizeToPrint = multiSize->back().sizeVal;
-    //cout << "\n" << indexNoToIncrease << " " << sizeToPrint << "\n";
     multiSize->pop_back();
     for (int i = 0; i < sizeToPrint; ++i) {
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
@@ -212,7 +211,8 @@ class CrossValidator {
                   [datasetIndex][measureIndex][learnerIndex]
                   [splitterIndex] +=
                   measures_[measureIndex]->average(splittedData.test_set) /
-                  (*splitters_[splitterIndex]).splitCount(*dataSets_[datasetIndex]);
+                  (*splitters_[splitterIndex]).splitCount(
+                    *dataSets_[datasetIndex]);
             }
           }
         }
