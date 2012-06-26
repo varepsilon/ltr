@@ -29,13 +29,13 @@ namespace ltr {
 * This can be usefull for better training of Scorer
 * (Learner<TElement>::addFeatureConverterLearner).
 *
-* Feature converters wich were used during training of Scorer 
-* will be added in the result Scorer (see Scorer::addFeatureConverter) 
+* Feature converters wich were used during training of Scorer
+* will be added in the result Scorer (see Scorer::addFeatureConverter)
 * and consequently must be Serializable.
-* 
+*
 * \note In most cases you don't need to create FeatureConverter directly,
 * normally it is the result of some FeatureConverterLearner work.
-* 
+*
 * \see FeatureConverterLearner, BaseFeatureConverterLearner, BaseLearner, Scorer
 */
 class FeatureConverter : public Serializable,
@@ -64,7 +64,7 @@ class FeatureConverter : public Serializable,
   /**
    * Converts object features
    * \param input object to be converted
-   * \param output coverted object
+   * \param output converted object
    */
   void apply(const Object& input, Object* output) const {
     CHECK(input.feature_info() == input_feature_info_);

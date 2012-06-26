@@ -2,6 +2,7 @@
 #ifndef LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
 #define LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
 #include <vector>
+#include <algorithm>
 #include "ltr/measures/measure.h"
 #include "ltr/learners/learner.h"
 #include "ltr/crossvalidation/splitter.h"
@@ -9,18 +10,160 @@
 #include "ltr/scorers/utility/scorer_utility.h"
 
 using std::vector;
+using std::sort;
+using std::reverse;
 using ltr::utility::MarkDataSet;
 using std::cout;
+using std::string;
 
 namespace ltr {
 namespace cv {
+
+struct SizeOverIndex {
+  int indexVal;
+  size_t sizeVal;
+};
+
+//template<typename T>
+//void printMultiArray(vector<sizeOverIndex> sizeArray,
+//                     vector<string> nameArray,
+//                     vector<T> multiArray) {
+//  if (sizeArray.size() == 1) {
+//    cout << "Array over " << nameArray.back() << ":\n";
+//    for (size_t i = 0; i < multiArray.size(); ++i) {
+//      cout << multiArray[i] << "\t";
+//    }
+//    cout << "\n";
+//  } else if (sizeArray.size() == 2) {
+//    cout << "Array over " << nameArray.back() << " over ";
+//    nameArray.pop_back();
+//    cout << nameArray.back() << ":\n";
+//  } else {
+//    for ()
+//  }
+//}
+
+template <typename T>
+int getSize(const T& value) {
+  return 0;
+}
+
+template <typename T>
+int getSize(const vector<T>& array) {
+  return array.size();
+}
+
+template <typename T>
+void getMultiSize(const T& value, vector<SizeOverIndex>* const result) {}
+
+template <typename T>
+void getMultiSize(const vector<T>& array, vector<SizeOverIndex>* const result) {
+  SizeOverIndex newItem = {result->size(), array.size()};
+  result->push_back(newItem);
+  for (size_t i = 0; i < array.size(); ++i) {
+    if (getSize(array[i]) != getSize(array[0])) {
+      throw std::logic_error(
+            "In getMultiSize the array is not a table!");
+    }
+  }
+  getMultiSize(array[0], result);
+}
+
+bool operator < (const SizeOverIndex& left, const SizeOverIndex& right) {
+  return left.sizeVal < right.sizeVal;
+}
+
+template <typename T>
+void printMultiArray(const vector<T>& multiArray, const vector<string>& dimNames) {
+  vector<SizeOverIndex> multiSize;
+  getMultiSize(multiArray, &multiSize);
+  vector<int> multiIndex(multiSize.size(), 0);
+  sort(multiSize.begin(), multiSize.end());
+  reverse(multiSize.begin(), multiSize.end());
+  printMultiArrayInner(&multiSize, dimNames, multiArray, &multiIndex);
+}
+
+template <typename T >
+struct MultiArrayTraits {
+  typedef T Type;
+};
+
+template <typename T>
+struct MultiArrayTraits<vector<T> > {
+  typedef typename MultiArrayTraits<T>::Type Type;
+};
+
+template <typename T>
+typename MultiArrayTraits<T>::Type getValueByMultiIndex (vector<int>* const multiIndex,
+                                                const vector<T>& multiArray) {
+  if (multiIndex->size() != 1) {
+    throw std::logic_error("Bad multiindex!");
+  }
+  return multiArray[multiIndex->back()];
+}
+
+template <typename T>
+typename MultiArrayTraits<vector<T> >::Type
+  getValueByMultiIndex (vector<int>* const multiIndex,
+                        const vector<vector<T> >& multiArray) {
+  int currentIndex = multiIndex->back();
+  multiIndex->pop_back();
+  typename MultiArrayTraits<vector<T> >::Type result =
+      getValueByMultiIndex(multiIndex, multiArray[currentIndex]);
+  multiIndex->push_back(currentIndex);
+  //int x = 0;
+  return result;
+}
+
+template <typename T>
+void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
+                          const vector<string>& dimNames,
+                          const vector<T>& multiArray,
+                          vector<int>* multiIndex) {
+  if (multiSize->size() == 1) {
+    int indexNoToIncrease = multiSize->back().indexVal;
+    int sizeToPrint = multiSize->back().sizeVal;
+    multiSize->pop_back();
+    for (int i = 0; i < sizeToPrint; ++i) {
+      (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
+      cout << getValueByMultiIndex (multiIndex, multiArray) << "\t";
+    }
+    SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
+    multiSize->push_back(backToPush);
+  } else if (multiSize->size() == 2) {
+    int indexNoToIncrease = multiSize->back().indexVal;
+    int sizeToPrint = multiSize->back().sizeVal;
+    multiSize->pop_back();
+    for (int i = 0; i < sizeToPrint; ++i) {
+      (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
+      printMultiArrayInner(multiSize, dimNames, multiArray, multiIndex);
+      cout << "\n";
+    }
+    SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
+    multiSize->push_back(backToPush);
+  } else {
+    int indexNoToIncrease = multiSize->back().indexVal;
+    int sizeToPrint = multiSize->back().sizeVal;
+    //cout << "\n" << indexNoToIncrease << " " << sizeToPrint << "\n";
+    multiSize->pop_back();
+    for (int i = 0; i < sizeToPrint; ++i) {
+      (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
+      printMultiArrayInner(multiSize, dimNames, multiArray, multiIndex);
+      cout << "======================\n";
+    }
+    SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
+    multiSize->push_back(backToPush);
+  }
+}
+
 template <typename ObjectType, typename ScorerType>
 class CrossValidator {
-  vector<vector<vector<vector<vector<double> > > > > crossValidationResults_;
+  vector<vector<vector<vector<double> > > > crossValidationResults_;
   vector<typename ltr::DataSet<ObjectType>::Ptr > dataSets_;
   vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
   vector<typename ltr::Learner<ObjectType>::Ptr> learners_;
   vector<typename ltr::cv::Splitter<ObjectType>::Ptr > splitters_;
+
  public:
   CrossValidator()
     : crossValidationResults_()
@@ -72,10 +215,6 @@ class CrossValidator {
                  splitIndex < (*splitters_[splitterIndex]).
                  splitCount(*dataSets_[datasetIndex]);
                  ++splitIndex) {
-              crossValidationResults_
-                  [datasetIndex][measureIndex][learnerIndex][splitterIndex].
-                  resize((*splitters_[splitterIndex]).splitCount(
-                           *dataSets_[datasetIndex]));
               SplittedDataSet<ObjectType> splittedData(
                     splitters_[splitterIndex]->split(
                       splitIndex, *dataSets_[datasetIndex]));
@@ -88,9 +227,9 @@ class CrossValidator {
 
               crossValidationResults_
                   [datasetIndex][measureIndex][learnerIndex]
-                  [splitterIndex][splitIndex] =
-                  measures_[measureIndex]->average(splittedData.test_set);
-              cout << measures_[measureIndex]->average(splittedData.test_set);
+                  [splitterIndex] +=
+                  measures_[measureIndex]->average(splittedData.test_set) /
+                  (*splitters_[splitterIndex]).splitCount(*dataSets_[datasetIndex]);
             }
           }
         }
@@ -111,33 +250,39 @@ class CrossValidator {
   }
 
   void printResults() {
-    for (size_t dataSetIndex = 0;
-         dataSetIndex < crossValidationResults_.size();
-         ++dataSetIndex) {
-      for (size_t measureIndex = 0;
-           measureIndex < crossValidationResults_[dataSetIndex].size();
-           ++measureIndex) {
-        for (size_t learnerIndex = 0;
-             learnerIndex < crossValidationResults_[dataSetIndex]
-             [measureIndex].size();
-             ++learnerIndex) {
-          for (size_t splitterIndex = 0;
-               splitterIndex < crossValidationResults_
-               [dataSetIndex][measureIndex][learnerIndex].size();
-               ++splitterIndex) {
-            for (size_t splitIndex = 0;
-                 splitIndex < crossValidationResults_
-                 [dataSetIndex][measureIndex][learnerIndex]
-                 [splitterIndex].size();
-                 ++splitIndex) {
-              cout << crossValidationResults_
-                      [dataSetIndex][measureIndex][learnerIndex]
-                      [splitterIndex][splitIndex] << "\n";
-            }
-          }
-        }
-      }
-    }
+    vector<SizeOverIndex> multiSize;
+    getMultiSize(crossValidationResults_, &multiSize);
+    sort(multiSize.begin(), multiSize.end());
+//    for (int i = 0; i < multiSize.size(); ++i) {
+//      cout << multiSize[i].sizeVal;
+//    }
+    vector<string> dimNames;
+    dimNames.push_back("dataSet");
+    dimNames.push_back("learner");
+    dimNames.push_back("splitter");
+    dimNames.push_back("measure");
+    printMultiArray(crossValidationResults_, dimNames);
+//    for (size_t dataSetIndex = 0;
+//         dataSetIndex < crossValidationResults_.size();
+//         ++dataSetIndex) {
+//      for (size_t measureIndex = 0;
+//           measureIndex < crossValidationResults_[dataSetIndex].size();
+//           ++measureIndex) {
+//        for (size_t learnerIndex = 0;
+//             learnerIndex < crossValidationResults_[dataSetIndex]
+//             [measureIndex].size();
+//             ++learnerIndex) {
+//          for (size_t splitterIndex = 0;
+//               splitterIndex < crossValidationResults_
+//               [dataSetIndex][measureIndex][learnerIndex].size();
+//               ++splitterIndex) {
+//            cout << crossValidationResults_
+//                    [dataSetIndex][measureIndex][learnerIndex]
+//                    [splitterIndex] << "\n";
+//          }
+//        }
+//      }
+//    }
   }
 };
 }
