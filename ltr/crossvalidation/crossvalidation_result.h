@@ -57,7 +57,7 @@ bool operator < (const SizeOverIndex& left, const SizeOverIndex& right) {
 
 template <typename T>
 void printMultiArray(const vector<T>& multiArray,
-                     const vector<string>& dimNames) {
+                     vector<string>* dimNames) {
   vector<SizeOverIndex> multiSize;
   getMultiSize(multiArray, &multiSize);
   vector<int> multiIndex(multiSize.size(), 0);
@@ -100,23 +100,29 @@ typename MultiArrayTraits<vector<T> >::Type
 
 template <typename T>
 void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
-                          const vector<string>& dimNames,
+                          vector<string>* dimNames,
                           const vector<T>& multiArray,
                           vector<int>* multiIndex) {
   if (multiSize->size() == 1) {
     int indexNoToIncrease = multiSize->back().indexVal;
     int sizeToPrint = multiSize->back().sizeVal;
     multiSize->pop_back();
+    string currentName = dimNames->back();
+    dimNames->pop_back();
     for (int i = 0; i < sizeToPrint; ++i) {
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
       cout << getValueByMultiIndex(multiIndex, multiArray) << "\t";
     }
     SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
     multiSize->push_back(backToPush);
+    dimNames->push_back(currentName);
   } else if (multiSize->size() == 2) {
     int indexNoToIncrease = multiSize->back().indexVal;
     int sizeToPrint = multiSize->back().sizeVal;
     multiSize->pop_back();
+    string currentName = dimNames->back();
+    dimNames->pop_back();
+    cout << "Table VERT: " << currentName << " HORIZ: " << dimNames->back() << "\n";
     for (int i = 0; i < sizeToPrint; ++i) {
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
       printMultiArrayInner(multiSize, dimNames, multiArray, multiIndex);
@@ -124,17 +130,22 @@ void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
     }
     SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
     multiSize->push_back(backToPush);
+    dimNames->push_back(currentName);
   } else {
     int indexNoToIncrease = multiSize->back().indexVal;
     int sizeToPrint = multiSize->back().sizeVal;
     multiSize->pop_back();
+    string currentName = dimNames->back();
+    dimNames->pop_back();
     for (int i = 0; i < sizeToPrint; ++i) {
+      cout << currentName << " " << i + 1 << " of " << sizeToPrint << "\n";
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
       printMultiArrayInner(multiSize, dimNames, multiArray, multiIndex);
-      cout << "======================\n";
+      cout << currentName << " end\n";
     }
     SizeOverIndex backToPush = {indexNoToIncrease, sizeToPrint};
     multiSize->push_back(backToPush);
+    dimNames->push_back(currentName);
   }
 }
 
@@ -237,11 +248,11 @@ class CrossValidator {
     getMultiSize(crossValidationResults_, &multiSize);
     sort(multiSize.begin(), multiSize.end());
     vector<string> dimNames;
-    dimNames.push_back("dataSet");
+    dimNames.push_back("dataset");
     dimNames.push_back("learner");
     dimNames.push_back("splitter");
     dimNames.push_back("measure");
-    printMultiArray(crossValidationResults_, dimNames);
+    printMultiArray(crossValidationResults_, &dimNames);
   }
 };
 }
