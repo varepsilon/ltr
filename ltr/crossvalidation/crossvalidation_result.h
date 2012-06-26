@@ -24,25 +24,6 @@ struct SizeOverIndex {
   size_t sizeVal;
 };
 
-//template<typename T>
-//void printMultiArray(vector<sizeOverIndex> sizeArray,
-//                     vector<string> nameArray,
-//                     vector<T> multiArray) {
-//  if (sizeArray.size() == 1) {
-//    cout << "Array over " << nameArray.back() << ":\n";
-//    for (size_t i = 0; i < multiArray.size(); ++i) {
-//      cout << multiArray[i] << "\t";
-//    }
-//    cout << "\n";
-//  } else if (sizeArray.size() == 2) {
-//    cout << "Array over " << nameArray.back() << " over ";
-//    nameArray.pop_back();
-//    cout << nameArray.back() << ":\n";
-//  } else {
-//    for ()
-//  }
-//}
-
 template <typename T>
 int getSize(const T& value) {
   return 0;
