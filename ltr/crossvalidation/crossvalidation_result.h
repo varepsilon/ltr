@@ -122,7 +122,8 @@ void printMultiArrayInner(vector<SizeOverIndex>* multiSize,
     multiSize->pop_back();
     string currentName = dimNames->back();
     dimNames->pop_back();
-    cout << "Table VERT: " << currentName << " HORIZ: " << dimNames->back() << "\n";
+    cout << "Table VERT: " << currentName << " HORIZ: "
+         << dimNames->back() << "\n";
     for (int i = 0; i < sizeToPrint; ++i) {
       (*multiIndex)[multiIndex->size() - 1 - indexNoToIncrease] = i;
       printMultiArrayInner(multiSize, dimNames, multiArray, multiIndex);
