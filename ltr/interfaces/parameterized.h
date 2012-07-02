@@ -76,7 +76,7 @@ class Parameterized {
   }
   // \deprecated
   template<class T>
-  void setExistingParameter(const std::string &name, T value) {
+  void setExistingParameter(const std::string& name, T value) {
     parameters_.SetExisting(name, value);
     checkParameters();
     parametersUpdateCallback();

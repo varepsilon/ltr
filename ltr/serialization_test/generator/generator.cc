@@ -29,10 +29,10 @@ using serialization_test::Generator;
 
 int main(int argc, char* argv[]) {
   Generator generator;
-  /*LOGOG_INITIALIZE();
 
+  LOGOG_INITIALIZE();
   {
-    logog::Cout out;*/
+  logog::Cout out;
 
   Measure<Object>::Ptr abs_error(new AbsError());
   BestFeatureLearner<Object>::Ptr bf_learner(
@@ -44,12 +44,9 @@ int main(int argc, char* argv[]) {
   gp_learner->learn(generator.train_data);
   generator.setScorerTest(gp_learner, "GPLearner");
 
-  //// TODO(Misha): Fix this
-  ///*
-  //ID3_Learner::Ptr id3_learner(new ID3_Learner);
-  //id3_learner->learn(generator.train_data);
-  //generator.setScorerTest(id3_learner, "ID3Learner");
-  //*/
+  ID3_Learner::Ptr id3_learner(new ID3_Learner);
+  id3_learner->learn(generator.train_data);
+  generator.setScorerTest(id3_learner, "ID3Learner");
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
   linear_learner->learn(generator.train_data);
@@ -72,9 +69,9 @@ int main(int argc, char* argv[]) {
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 
-  /*}
+  }
+  LOGOG_SHUTDOWN();
 
-  LOGOG_SHUTDOWN();*/
   generator.write(argv[1]);
   return 0;
 }

@@ -19,20 +19,29 @@ class ID3_Learner : public DecisionTreeLearner {
   public:
     explicit ID3_Learner(
       const ParametersContainer& parameters = ParametersContainer())
-    : DecisionTreeLearner(parameters.Contains("") &&
-                          parameters.TypeCoincides<ParametersContainer>("") ?
+    : DecisionTreeLearner((parameters.Contains("") &&
+                          parameters.TypeCoincides<ParametersContainer>("")) ?
                           parameters.Get<ParametersContainer>("") :
                           ParametersContainer()) {
       // : DecisionTreeLearner(parameters.getGroup(""))
       // {  //variant->any_TODO it is very ugly! fix it!
-      this->setConditionsLearner(
-        ConditionsLearner::Ptr(
-          new ID3_Splitter(
-            parameters.Get<ParametersContainer>("conditions learner"))));
-      this->setSplittingQuality(
-        SplittingQuality::Ptr(
-          new SqrErrorQuality(
-            parameters.Get<ParametersContainer>("splitting quality"))));
+      if (parameters.Contains("") &&
+          parameters.TypeCoincides<ParametersContainer>(""))
+      {
+        this->setConditionsLearner(
+          ConditionsLearner::Ptr(
+            new ID3_Splitter(
+              parameters.Get<ParametersContainer>("conditions learner"))));
+        this->setSplittingQuality(
+          SplittingQuality::Ptr(
+            new SqrErrorQuality(
+              parameters.Get<ParametersContainer>("splitting quality"))));
+      } else {
+        this->setConditionsLearner(
+          ConditionsLearner::Ptr(new ID3_Splitter));
+        this->setSplittingQuality(
+          SplittingQuality::Ptr(new SqrErrorQuality));
+      }
       copyParameters(parameters);
     }
 };

@@ -71,6 +71,8 @@ class DecisionTreeLearner
     void setDefaultParameters() {
       this->addNewParam("MIN_VERTEX_SIZE", 3);
       this->addNewParam("LABEL_EPS", 0.001);
+      this->addNewParam("conditions learner", ParametersContainer());
+      this->addNewParam("splitting quality", ParametersContainer());
     }
     void checkParameters() const {
       this->checkParameter<int>("MIN_VERTEX_SIZE",
