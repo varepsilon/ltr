@@ -6,6 +6,7 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 
 #include <algorithm>
+#include <functional>
 
 namespace ltr {
 namespace gp {
@@ -42,56 +43,70 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
    */
   virtual void setDefaultParameters() {
     this->clearParameters();
-    this->addIntParameter("POP_SIZE", 10);
-    this->addIntParameter("NBR_GEN", 3);
-    this->addIntParameter("MAX_DEPTH", 35);
-    this->addIntParameter("MIN_INIT_DEPTH", 2);
-    this->addIntParameter("MAX_INIT_DEPTH", 5);
-    this->addDoubleParameter("INIT_GROW_PROBA", 0.5);
-    this->addDoubleParameter("TOP_FOR_NEXT_GENERATION_PART", 0.3);
-    this->addDoubleParameter("CROSSOVER_VS_MUTATION_PART", 0.7);
-    this->addDoubleParameter("CROSSOVER_DISTRIB_PROBA", 0.3);
-    this->addDoubleParameter("STANDART_MUTATION_VS_SWAP_MUTATION_PROBA",
-        0.5);
-    this->addIntParameter("MUT_MAX_REGEN_DEPTH", 5);
-    this->addDoubleParameter("MUT_SWAP_DISTRIB_PROBA", 0.5);
-    this->addIntParameter("SEED", 1);
-    this->addBoolParameter("USE_ADD", true);
-    this->addBoolParameter("USE_SUB", true);
-    this->addBoolParameter("USE_MUL", true);
-    this->addBoolParameter("USE_DIV", true);
-    this->addBoolParameter("USE_IF", true);
-    this->addBoolParameter("USE_EFEM", true);
+    this->addNewParam("POP_SIZE", 10);
+    this->addNewParam("NBR_GEN", 3);
+    this->addNewParam("MAX_DEPTH", 35);
+    this->addNewParam("MIN_INIT_DEPTH", 2);
+    this->addNewParam("MAX_INIT_DEPTH", 5);
+    this->addNewParam("INIT_GROW_PROBA", 0.5);
+    this->addNewParam("TOP_FOR_NEXT_GENERATION_PART", 0.3);
+    this->addNewParam("CROSSOVER_VS_MUTATION_PART", 0.7);
+    this->addNewParam("CROSSOVER_DISTRIB_PROBA", 0.3);
+    this->addNewParam("STANDART_MUTATION_VS_SWAP_MUTATION_PROBA", 0.5);
+    this->addNewParam("MUT_MAX_REGEN_DEPTH", 5);
+    this->addNewParam("MUT_SWAP_DISTRIB_PROBA", 0.5);
+    this->addNewParam("SEED", 1);
+    this->addNewParam("USE_ADD", true);
+    this->addNewParam("USE_SUB", true);
+    this->addNewParam("USE_MUL", true);
+    this->addNewParam("USE_DIV", true);
+    this->addNewParam("USE_IF", true);
+    this->addNewParam("USE_EFEM", true);
   }
   /** The method checks the correctness of the parameters in the parameters
    * container. If one of them is not correct it throws
    * std::logical_error(PARAMETER_NAME).
    */
   virtual void checkParameters() const {
-    CHECK_INT_PARAMETER("POP_SIZE", X > 0);
-    CHECK_INT_PARAMETER("NBR_GEN", X > 0);
-    CHECK_INT_PARAMETER("MAX_DEPTH", X > 0);
-    CHECK_INT_PARAMETER("MUT_MAX_REGEN_DEPTH", X > 0);
-    CHECK_INT_PARAMETER("MIN_INIT_DEPTH", X > 0);
+    std::binder2nd<std::greater<int> > GreaterThen0 =
+        std::bind2nd(std::greater<int>(), 0);
 
-    CHECK_INT_PARAMETER("MAX_INIT_DEPTH", \
-      X > this->getIntParameter("MIN_INIT_DEPTH") - 1);
+    Parameterized::checkParameter<int>("POP_SIZE",            GreaterThen0);
+    Parameterized::checkParameter<int>("NBR_GEN",             GreaterThen0);
+    Parameterized::checkParameter<int>("MAX_DEPTH",           GreaterThen0);
+    Parameterized::checkParameter<int>("MUT_MAX_REGEN_DEPTH", GreaterThen0);
+    Parameterized::checkParameter<int>("MIN_INIT_DEPTH",      GreaterThen0);
 
-    CHECK_DOUBLE_PARAMETER("INIT_GROW_PROBA", \
-      X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("TOP_FOR_NEXT_GENERATION_PART", \
-      X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("CROSSOVER_VS_MUTATION_PART", \
-      X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("CROSSOVER_DISTRIB_PROBA", \
-      X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("STANDART_MUTATION_VS_SWAP_MUTATION_PROBA", \
-      X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("MUT_SWAP_DISTRIB_PROBA", \
-      X >= 0 && X <= 1);
+    Parameterized::checkParameter<int>("MAX_INIT_DEPTH",
+      std::bind2nd(std::greater<int>(), this->parameters().
+                          template Get<int>("MIN_INIT_DEPTH") - 1));
+
+    const Belongs<double> G0L1(0, 1);
+    Parameterized::checkParameter<double>("INIT_GROW_PROBA",         G0L1);
+    Parameterized::checkParameter<double>("CROSSOVER_DISTRIB_PROBA", G0L1);
+    Parameterized::checkParameter<double>("MUT_SWAP_DISTRIB_PROBA",  G0L1);
+    Parameterized::checkParameter<double>("TOP_FOR_NEXT_GENERATION_PART",
+                                         G0L1);
+    Parameterized::checkParameter<double>("CROSSOVER_VS_MUTATION_PART",
+                                         G0L1);
+    Parameterized::checkParameter<double>(
+       "STANDART_MUTATION_VS_SWAP_MUTATION_PROBA",
+                                          G0L1);
   }
 
   private:
+    template <class T>
+    struct Belongs: public std::unary_function<T, bool> {
+      Belongs(const T &min, const T &max): min_(min), max_(max) { }
+      bool operator()(const T& x) const {
+        return x >= min_ && x <= max_;
+      }
+    private:
+      T min_;
+      T max_;
+    };
+
+
   /** \brief This function implements the changes made in the population at each
    *  algorithm's iteration.
    */
@@ -108,8 +123,9 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     std::cout << "Sorting population.\n";
     std::sort(this->population_.begin(), this->population_.end());
 
+    ParametersContainer params = this->parameters();
     size_t topBoundIdx =
-        (1 - this->getDoubleParameter("TOP_FOR_NEXT_GENERATION_PART")) *
+        (1 - params.template Get<double>("TOP_FOR_NEXT_GENERATION_PART")) *
         this->population_.size();
     if (topBoundIdx == this->population_.size()) {
       topBoundIdx -= 1;
@@ -125,39 +141,35 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     }
 
     size_t crossoverBoundIdx =
-        this->getDoubleParameter("CROSSOVER_VS_MUTATION_PART") *
-        topBoundIdx;
+        params.template Get<double>("CROSSOVER_VS_MUTATION_PART") * topBoundIdx;
     if (crossoverBoundIdx % 2 != 1) {
       crossoverBoundIdx -= 1;
     }
 
     for (size_t treeIdx = 0; treeIdx < crossoverBoundIdx; treeIdx += 2) {
       Puppy::mateTrees(this->population_[treeIdx],
-          this->population_[treeIdx + 1],
-          this->context_,
-          this->getDoubleParameter("CROSSOVER_DISTRIB_PROBA"),
-          this->getIntParameter("MAX_DEPTH"));
+                       this->population_[treeIdx + 1],
+                       this->context_,
+                       params.template Get<double>("CROSSOVER_DISTRIB_PROBA"),
+                       params.template Get<int>("MAX_DEPTH"));
     }
 
     for (size_t treeIdx = crossoverBoundIdx; treeIdx < topBoundIdx; ++treeIdx) {
       if (this->context_.mRandom.rollUniform() <=
-          this->getDoubleParameter(
+          params.template Get<double>(
               "STANDART_MUTATION_VS_SWAP_MUTATION_PROBA")) {
         Puppy::mutateStandard(this->population_[treeIdx],
             this->context_,
-            this->getIntParameter("MUT_MAX_REGEN_DEPTH"),
-            this->getIntParameter("MAX_DEPTH"));
+            params.template Get<int>("MUT_MAX_REGEN_DEPTH"),
+            params.template Get<int>("MAX_DEPTH"));
       } else {
         Puppy::mutateSwap(this->population_[treeIdx],
             this->context_,
-            this->getDoubleParameter("MUT_SWAP_DISTRIB_PROBA"));
+            params.template Get<double>("MUT_SWAP_DISTRIB_PROBA"));
       }
     }
   }
 };
-template class GPLearnerWithDeterminantStrategy<Object>;
-template class GPLearnerWithDeterminantStrategy<ObjectPair>;
-template class GPLearnerWithDeterminantStrategy<ObjectList>;
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_DETERMINANT_STRATEGY_H_

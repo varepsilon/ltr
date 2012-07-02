@@ -25,7 +25,7 @@ template void MarkDataSet< ObjectList >(const DataSet<ObjectList>& elements,
 template <class TElement>
 void MarkElement(const TElement& element, const Scorer& scorer) {
   for (int i = 0; i < element.size(); ++i) {
-    element[i].setPredictedLabel(scorer(element[i]));
+    element[i].set_predicted_label(scorer(element[i]));
   }
 }
 

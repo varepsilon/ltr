@@ -22,8 +22,8 @@ namespace ltr {
     public:
     SquaredError(const ParametersContainer& parameters = ParametersContainer())
         : PointwiseMeasure("Squared error") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
+      setDefaultParameters();
+      copyParameters(parameters);
     }
 
     double best() const {
@@ -37,7 +37,7 @@ namespace ltr {
     }
     private:
     double get_measure(const Object& object) const {
-      return std::pow(object.actualLabel() - object.predictedLabel(), 2);
+      return std::pow(object.actual_label() - object.predicted_label(), 2);
     }
   };
 };

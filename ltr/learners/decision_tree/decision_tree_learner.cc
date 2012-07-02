@@ -1,8 +1,12 @@
 // Copyright 2012 Yandex
 
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 #include "ltr/learners/decision_tree/decision_tree_learner.h"
+
+using std::stringstream;
 
 namespace ltr {
 namespace decision_tree {
@@ -12,14 +16,13 @@ string DecisionTreeLearner::toString() const {
   std::fixed(str);
   str.precision(2);
   str << "Decision tree learner with parameters: MIN_VERTEX_SIZE = ";
-  str << this->getIntParameter("MIN_VERTEX_SIZE") << ", LABEL_EPS = ";
-  str << this->getDoubleParameter("LABEL_EPS");
+  str << this->parameters().Get<int>("MIN_VERTEX_SIZE") << ", LABEL_EPS = ";
+  str << this->parameters().Get<double>("LABEL_EPS");
   return str.str();
 }
 
 DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
-    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner"),
-      log(logger::Logger::LL_INFO, "DT_Learner ") {
+    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner") {
   this->setDefaultParameters();
   this->copyParameters(parameters);
 
@@ -31,7 +34,7 @@ DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
 
 Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     const DataSet<Object>& data) {
-  log << "Creating vertex for " << data.size() << " objects." << std::endl;
+  INFO("Creating vertex for %d objects.", data.size());
   if (data.size() == 0) {
     throw std::logic_error("no objects given to decision tree learner");
   }
@@ -45,20 +48,19 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   bool generate_leaf = 0;
 
   for (int i = 1; i < data.size(); i++) {
-    min_label = std::min(min_label, data[i].actualLabel());
-    max_label = std::max(max_label, data[i].actualLabel());
+    min_label = std::min(min_label, data[i].actual_label());
+    max_label = std::max(max_label, data[i].actual_label());
   }
 
-  if (max_label - min_label <= this->getDoubleParameter("LABEL_EPS")) {
-    log << "All objects has the same label. Leaf vertex created."
-        << std::endl;
+  ParametersContainer params = this->parameters();
+  if (max_label - min_label <= params.Get<double>("LABEL_EPS")) {
+    INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;
   }
   if (!generate_leaf &&
-       data.size() <= this->getIntParameter("MIN_VERTEX_SIZE")) {
-    log << "Objects count is less than "
-        << this->getIntParameter("MIN_VERTEX_SIZE")
-        << ". Leaf vertex created." << std::endl;
+       data.size() <= params.Get<int>("MIN_VERTEX_SIZE")) {
+    INFO("Objects count is less than %d. Leaf vertex created.",
+         params.Get<int>("MIN_VERTEX_SIZE"));
     generate_leaf = 1;
   }
   if (!generate_leaf &&
@@ -66,7 +68,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     split(data, best_conditions, &datas);
     best_quality = splitting_quality_->value(data, datas);
   } else {
-    log << "Can't generate any splits for data set. Leaf vertex created.";
+    INFO("Can't generate any splits for data set. Leaf vertex created.");
     generate_leaf = 1;
   }
 
@@ -75,7 +77,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     double average = 0;
     double sum = 0;
     for (int i = 0; i < data.size(); i++) {
-      average += data[i].actualLabel() * data.getWeight(i);
+      average += data[i].actual_label() * data.getWeight(i);
       sum += data.getWeight(i);
     }
     if (sum != 0)
@@ -93,12 +95,12 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     }
   }
   split(data, best_conditions, &datas);
-  log << "Data set splitted into " << datas.size()
-      << " sets. Sizes: ";
+  INFO("Data set splitted into %d sets.", datas.size());
+  stringstream sizes;
   for (size_t i = 0; i < datas.size(); i++)
     if (datas[i].size() != 0)
-      log << datas[i].size() << " ";
-  log << std::endl;
+      sizes << datas[i].size() << " ";
+  INFO("Sizes: %s", sizes.str().c_str());
   for (size_t i = 0; i < datas.size(); i++) {
     if (datas[i].size() != 0) {
       Vertex<double>::Ptr tmp = createOneVertex(datas[i]);

@@ -20,14 +20,17 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    ParametersContainer params = this->parameters();
+
+    size_t n = params.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
-    double p_break = this->getDoubleParameter("P_BREAK");
-    double max_label = this->getDoubleParameter("MAX_LABEL");
+
+    double p_break = params.Get<double>("P_BREAK");
+    double max_label = params.Get<double>("MAX_LABEL");
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       if (labels[labels_index].actual < 0) {
@@ -53,11 +56,11 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "PFound measure with parameters: P_BREAK = ";
-    str << this->getDoubleParameter("P_BREAK");
+    str << this->getParameter<double>("P_BREAK");
     str << ", MAX_LABEL = ";
-    str << this->getDoubleParameter("MAX_LABEL");
+    str << this->getParameter<double>("MAX_LABEL");
     str << ", NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->getParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 };

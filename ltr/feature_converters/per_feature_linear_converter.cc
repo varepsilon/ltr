@@ -8,54 +8,63 @@ using std::logic_error;
 
 namespace ltr {
 
-FeatureInfo PerFeatureLinearConverter::getNewFeatureInfo() const {
-  this->checkFeatureCount(feature_info_.getFeatureCount());
-  return feature_info_;
+void PerFeatureLinearConverter::fillOutputFeatureInfo()  {
+  output_feature_info_ = input_feature_info_;
 }
 
-void PerFeatureLinearConverter::setFeatureCount(size_t feature_count) {
-  coefficient_.resize(feature_count);
-  shift_.resize(feature_count);
+void PerFeatureLinearConverter::resize(const FeatureInfo& input_feature_info) {
+  factors_.resize(input_feature_info.feature_count(), 1.);
+  shifts_.resize(input_feature_info.feature_count(), 0.);
+  fillOutputFeatureInfo();
 }
 
-double PerFeatureLinearConverter::getCoefficient(size_t feature_idx) const {
-  return coefficient_[feature_idx];
+double PerFeatureLinearConverter::factor(size_t feature_index) const {
+  return factors_[feature_index];
 }
 
-void PerFeatureLinearConverter::setCoefficient(size_t feature_idx,
-    double coefficient) {
-  coefficient_[feature_idx] = coefficient;
+void PerFeatureLinearConverter::set_factor(size_t feature_index,
+                                                double coefficient) {
+  factors_[feature_index] = coefficient;
 }
 
-double PerFeatureLinearConverter::getShift(size_t feature_idx) const {
-  return shift_[feature_idx];
+double PerFeatureLinearConverter::shift(size_t feature_index) const {
+  return shifts_[feature_index];
 }
 
-void PerFeatureLinearConverter::setShift(size_t feature_idx, double shift) {
-  shift_[feature_idx] = shift;
+void PerFeatureLinearConverter::set_shift(size_t feature_index, double shift) {
+  shifts_[feature_index] = shift;
 }
 
-void PerFeatureLinearConverter::applyImpl(const Object& argument,
-    Object* value) const {
-  this->checkFeatureCount(argument.featureCount());
-  *value = argument.deepCopy();
-  for (size_t feature_idx = 0;
-      feature_idx < value->features().size();
-      ++feature_idx) {
-    value->features()[feature_idx] *= coefficient_[feature_idx];
-    value->features()[feature_idx] += shift_[feature_idx];
+void PerFeatureLinearConverter::applyImpl(const Object& input,
+                                                Object* output) const {
+  *output = input.deepCopy();
+  for (size_t feature_index = 0;
+      feature_index < output->features().size(); ++feature_index) {
+    output->features()[feature_index] *= factors_[feature_index];
+    output->features()[feature_index] += shifts_[feature_index];
   }
 }
 
-size_t PerFeatureLinearConverter::featureCount() const {
-  return coefficient_.size();
-}
-
-void PerFeatureLinearConverter::checkFeatureCount(
-    size_t checked_feature_count) const {
-  if (checked_feature_count != this->featureCount()) {
-    throw logic_error(
-    "PerFeatureLinearConverter: wrong number of features in converted Object.");
-  }
-}
+string PerFeatureLinearConverter::generateCppCode(
+    const string& function_name) const {
+  string code;
+  code.
+    append("#include <vector>\n\nvoid ").
+    append(function_name).
+    append("(const std::vector<double>& features, ").
+    append("std::vector<double>* result) {\n").
+    append("  result->clear();\n");
+    for (size_t i = 0; i < factors_.size(); i++) {
+      code.
+        append("  result->push_back(features[").
+        append(boost::lexical_cast<string>(i)).
+        append("] * ").
+        append(boost::lexical_cast<string>(factors_[i])).
+        append(" + ").
+        append(boost::lexical_cast<string>(shifts_[i])).
+        append(");\n");
+    }
+  code.append("}\n");
+  return code;
+};
 }

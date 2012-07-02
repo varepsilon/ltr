@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <functional>
 
 #include "ltr/data/object_list.h"
 #include "ltr/measures/measure.h"
@@ -70,7 +71,7 @@ namespace ltr {
       this->copyParameters(parameters);
     }
 
-    /** 
+    /**
      * Clears parameters container and sets default values:
      * NUMBER_OF_OBJECTS_TOCONSIDER = 0
      */
@@ -108,7 +109,8 @@ namespace ltr {
     std::stringstream str;
     str << this->alias();
     str << " measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->parameters().template Get<int>(
+               "NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 
@@ -117,7 +119,8 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->parameters().
+               template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -133,11 +136,12 @@ namespace ltr {
   template<class TDCGFormula>
   void BaseDCG<TDCGFormula>::setDefaultParameters() {
     this->clearParameters();
-    this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+    this->addNewParam("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
   }
   template<class TDCGFormula>
   void BaseDCG<TDCGFormula>::checkParameters() const {
-    CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
+    this->checkParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER",
+                               std::bind2nd(std::greater_equal<int>(), 0) );
   }
 };
 #endif  // LTR_MEASURES_DCG_H_

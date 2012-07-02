@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "ltr/utility/numerical.h"
 #include "ltr/data/object.h"
 #include "ltr/parameters_container/parameters_container.h"
@@ -22,24 +24,24 @@ class PointwiseMeasuresTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
     o1 << 1;
-    o1.setActualLabel(1.0);
-    o1.setPredictedLabel(1.0);
+    o1.set_actual_label(1.0);
+    o1.set_predicted_label(1.0);
 
     o2 << 2;
-    o2.setActualLabel(1.5);
-    o2.setPredictedLabel(2.3);
+    o2.set_actual_label(1.5);
+    o2.set_predicted_label(2.3);
 
     o3 << 3;
-    o3.setActualLabel(0.5);
-    o3.setPredictedLabel(-0.5);
+    o3.set_actual_label(0.5);
+    o3.set_predicted_label(-0.5);
 
     o4 << 4;
-    o4.setActualLabel(3.1);
-    o4.setPredictedLabel(3.1);
+    o4.set_actual_label(3.1);
+    o4.set_predicted_label(3.1);
 
     o5 << 5;
-    o5.setActualLabel(0.76);
-    o5.setPredictedLabel(2.13);
+    o5.set_actual_label(0.76);
+    o5.set_predicted_label(2.13);
   }
 
   virtual void TearDown() {

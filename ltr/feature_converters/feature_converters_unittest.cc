@@ -7,10 +7,11 @@
 #include <vector>
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_subset_chooser.h"
-#include "ltr/feature_converters/feature_subset_chooser_learner.h"
+#include "ltr/feature_converters/feature_sampler.h"
+#include "ltr/feature_converters/feature_sampler_learner.h"
+#include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/feature_converters/feature_normalizer_learner.h"
-#include "ltr/feature_converters/remove_nan_converter.h"
+#include "ltr/feature_converters/nan_to_zero_converter.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
@@ -18,17 +19,21 @@
 #include "ltr/measures/dcg.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/feature_converters/utility/utility.h"
+#include "ltr/utility/indices.h"
 
 using ltr::utility::ApplyFeatureConverter;
+using ltr::utility::IndicesPtr;
+using ltr::utility::Indices;
+
 using ltr::FeatureConverter;
-using ltr::RemoveNaNConverterLearner;
+using ltr::NanToZeroConverterLearner;
 
 // The fixture for testing (contains data for tests).
 class FeatureConvertersTest : public ::testing::Test {
   public:
   FeatureConvertersTest()
-    :path_to_learndata("data/imat2009/imat2009_learning.txt"),
-     path_to_testdata("data/imat2009/imat2009_test.txt") {}
+    :path_to_learndata("data/imat2009/imat2009_learning_small.txt"),
+     path_to_testdata("data/imat2009/imat2009_test_small.txt") {}
 
   protected:
   virtual void SetUp() {
@@ -44,22 +49,22 @@ class FeatureConvertersTest : public ::testing::Test {
     test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
         path_to_testdata.string(), "YANDEX");
 
-    RemoveNaNConverterLearner<ltr::Object>::Ptr remove_NaN_learner
-      (new RemoveNaNConverterLearner<ltr::Object>);
-    remove_NaN_learner->learn(learn_data_pointwise);
-    FeatureConverter::Ptr remove_NaN = remove_NaN_learner->makePtr();
-    ApplyFeatureConverter(remove_NaN,
+    NanToZeroConverterLearner<ltr::Object>::Ptr nan_to_zero_converter
+      (new NanToZeroConverterLearner<ltr::Object>);
+    nan_to_zero_converter->learn(learn_data_pointwise);
+    FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
+    ltr::utility::ApplyFeatureConverter(remove_NaN,
       learn_data_pointwise, &learn_data_pointwise);
-    ApplyFeatureConverter(remove_NaN,
+    ltr::utility::ApplyFeatureConverter(remove_NaN,
       test_data_pointwise, &test_data_pointwise);
 
-    RemoveNaNConverterLearner<ltr::ObjectList>::Ptr remove_NaN_learner2
-      (new RemoveNaNConverterLearner<ltr::ObjectList>);
-    remove_NaN_learner2->learn(learn_data_listwise);
-    FeatureConverter::Ptr remove_NaN2 = remove_NaN_learner2->makePtr();
-    ApplyFeatureConverter(remove_NaN2,
+    NanToZeroConverterLearner<ltr::ObjectList>::Ptr nan_to_zero_converter2
+      (new NanToZeroConverterLearner<ltr::ObjectList>);
+    nan_to_zero_converter2->learn(learn_data_listwise);
+    FeatureConverter::Ptr remove_NaN2 = nan_to_zero_converter2->make();
+    ltr::utility::ApplyFeatureConverter(remove_NaN2,
       learn_data_listwise, &learn_data_listwise);
-    ApplyFeatureConverter(remove_NaN2,
+    ltr::utility::ApplyFeatureConverter(remove_NaN2,
       test_data_listwise, &test_data_listwise);
   }
 
@@ -82,32 +87,32 @@ class FeatureConvertersTest : public ::testing::Test {
 // tests.
 
 TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
-  std::vector<int> indexes;
+  IndicesPtr indexes(new Indices);
 
   for (int featureIdx = 0;
-      featureIdx < learn_data_pointwise.featureCount();
+      featureIdx < learn_data_pointwise.feature_count();
       ++featureIdx) {
     if (featureIdx == bestFeatureIndex) {
       continue;
     }
-    indexes.push_back(featureIdx);
+    indexes->push_back(featureIdx);
   }
 
-  ltr::FeatureSubsetChooserLearner<ltr::Object>::Ptr pSubsetChooserL(
-    new ltr::FeatureSubsetChooserLearner<ltr::Object>);
-  pSubsetChooserL->setListParameter("INDICES", indexes);
+  ltr::FeatureSamplerLearner<ltr::Object>::Ptr pSubsetChooserL(
+    new ltr::FeatureSamplerLearner<ltr::Object>);
+  pSubsetChooserL->set_indices(indexes);
 
   // remove NaN here is a code-dublicate from gtest fixture SetUp function
-  RemoveNaNConverterLearner<ltr::Object>::Ptr remove_NaN_learner
-    (new RemoveNaNConverterLearner<ltr::Object>);
-  remove_NaN_learner->learn(learn_data_pointwise);
-  FeatureConverter::Ptr remove_NaN = remove_NaN_learner->makePtr();
+  NanToZeroConverterLearner<ltr::Object>::Ptr nan_to_zero_converter
+    (new NanToZeroConverterLearner<ltr::Object>);
+  nan_to_zero_converter->learn(learn_data_pointwise);
+  FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
-  learner.addFeatureConverter(remove_NaN_learner);
-  learner.addFeatureConverter(pSubsetChooserL);
+  learner.addFeatureConverterLearner(nan_to_zero_converter);
+  learner.addFeatureConverterLearner(pSubsetChooserL);
 
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
 
@@ -115,7 +120,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
   double withoutBestFeatureMeasure = pMeasure->average(learn_data_pointwise);
 
   ltr::OneFeatureScorer scorerByBestFeature(bestFeatureIndex);
-  scorerByBestFeature.addFeatureConverter(remove_NaN);
+  scorerByBestFeature.addFeatureConverterLearner(remove_NaN);
   ltr::utility::MarkDataSet(learn_data_pointwise, scorerByBestFeature);
 
   double bestFeatureMeasure = pMeasure->average(learn_data_pointwise);
@@ -131,7 +136,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
 
-  learner.addFeatureConverter(normalizerLearner);
+  learner.addFeatureConverterLearner(normalizerLearner);
   EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_pointwise, learner.make()));
@@ -146,7 +151,7 @@ TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
   ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
   ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
 
-  learner.addFeatureConverter(normalizerLearner);
+  learner.addFeatureConverterLearner(normalizerLearner);
   EXPECT_NO_THROW(learner.learn(learn_data_listwise));
   EXPECT_NO_THROW(
       ltr::utility::MarkDataSet(learn_data_listwise, learner.make()));

@@ -16,33 +16,21 @@ using std::string;
 
 namespace ltr {
 /**
- * Fake feature converter. Does nothing with inputted object
+ * Fake feature converter. Does nothing with input object
  */
 class FakeFeatureConverter : public FeatureConverter {
-  public:
+ public:
   typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter("FakeFeatureConverter", feature_info) {}
-
-  FeatureInfo getNewFeatureInfo() const;
-
-  void applyImpl(const Object& source_object,
-    Object* preprocessed_object) const;
-
-  string generateCppCode(
-      const string& function_name) const {
-    string hpp_string;
-
-    hpp_string.
-      append("#include <vector>\n\nvoid ").
-      append(function_name).
-      append("(const std::vector<double>& features, ").
-      append("std::vector<double>* result) {").
-      append("*result = features;}\n");
-
-    return hpp_string;
+      : FeatureConverter(feature_info) {
+    fillOutputFeatureInfo();
   }
+  virtual void fillOutputFeatureInfo();
+  virtual string generateCppCode(const string& function_name) const;
+ private:
+  virtual void applyImpl(const Object& input,
+                               Object* output) const;
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_

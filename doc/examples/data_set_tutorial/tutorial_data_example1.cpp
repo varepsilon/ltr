@@ -10,10 +10,10 @@ int main() {
   Object obj;
   obj << 1.1 << 45.3 << 23 << 1e8;        // Object contains now 4 features
 
-  cout << obj.featureCount() << endl;     // Method featureCount returns count of features in object
+  cout << obj.feature_count() << endl;     // Method featureCount returns count of features in object
 
   obj << 2.4;                             // You can add new features at any time.
-  cout << obj.featureCount()              // Returns 5
+  cout << obj.feature_count()              // Returns 5
        << endl << endl;
 
   cout << obj.features()[0] << " "        // Two ways to get the feature value.

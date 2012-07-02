@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <algorithm>
+#include <limits>
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
@@ -17,13 +18,14 @@
 
 using std::exp;
 using std::log;
+using std::numeric_limits;
 using std::swap;
 
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
-using ltr::utility::MarkDataSet;
 using ltr::utility::DoubleEps;
+using ltr::utility::MarkDataSet;
 using ltr::Scorer;
 
 namespace ltr {
@@ -84,7 +86,7 @@ namespace lc {
       Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
       lin_scorer->clear();
       lin_scorer->add(best_scorer, 1.0);
-      // report_ = "AdaRank on mertic " +
+      // report_ = "AdaRank on metric " +
       //  measure_.Alias() + ". Best ranker found!";
       return;
     }

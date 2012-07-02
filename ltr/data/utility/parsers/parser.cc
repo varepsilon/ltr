@@ -29,7 +29,7 @@ namespace ltr {
       file_ = in;
       init(in);
 
-      last_feature_idx_ = -1;
+      last_feature_index_ = -1;
       NominalFeatureValues values;
       for (RawFeatureInfo::iterator it = raw_feature_info_.begin();
            it != raw_feature_info_.end(); it++) {
@@ -37,7 +37,7 @@ namespace ltr {
         values.clear();
         switch (raw_feature_info_[raw_idx].feature_type) {
           case NOMINAL: {
-              feature_id_[raw_idx] = ++last_feature_idx_;
+              feature_id_[raw_idx] = ++last_feature_index_;
               vector<string>& vals = raw_feature_info_[raw_idx].feature_values;
               for (size_t i = 0; i < vals.size(); i++)
                 values[hash(vals[i])] = vals[i];
@@ -45,13 +45,13 @@ namespace ltr {
             }
             break;
           case BOOLEAN:
-            feature_id_[raw_idx] = ++last_feature_idx_;
+            feature_id_[raw_idx] = ++last_feature_index_;
             values[0] = "false";
             values[1] = "true";
             feature_info_.addFeature(ltr::BOOLEAN, values);
             break;
           case NUMERIC:
-            feature_id_[raw_idx] = ++last_feature_idx_;
+            feature_id_[raw_idx] = ++last_feature_index_;
             feature_info_.addFeature(ltr::NUMERIC);
             break;
           case META:
@@ -81,10 +81,10 @@ namespace ltr {
       if (raw_feature_info_.rbegin()->first < raw_object.rbegin()->first) {
         for (int i = raw_feature_info_.rbegin()->first + 1;
              i <= raw_object.rbegin()->first; i++) {
-          feature_id_[i] = ++last_feature_idx_;
+          feature_id_[i] = ++last_feature_index_;
           raw_feature_info_[i].feature_type = NUMERIC;
         }
-        feature_info_.setFeatureCount(raw_object.rbegin()->first,
+        feature_info_.resize(raw_object.rbegin()->first,
                                       ltr::NUMERIC);
       }
 
@@ -93,23 +93,23 @@ namespace ltr {
       for (RawObject::const_iterator it = raw_object.begin();
            it != raw_object.end(); it++) {
         RawFeatureIndex raw_idx = it->first;
-        int feature_idx = feature_id_[raw_idx];
+        int feature_index = feature_id_[raw_idx];
         try {
           switch (raw_feature_info_[raw_idx].feature_type) {
             case NOMINAL:
-              result.features()[feature_idx] = hash(it->second);
+              result.features()[feature_index] = hash(it->second);
               break;
             case BOOLEAN:
             case NUMERIC:
-              result.features()[feature_idx] =
+              result.features()[feature_index] =
                 boost::lexical_cast<double>(it->second);
               break;
             case META:
-              result.metaInfo()[raw_feature_info_[raw_idx].feature_name] =
-                it->second;
+              result.setMetaInfo(raw_feature_info_[raw_idx].feature_name,
+                                 it->second);
               break;
             case CLASS:
-              result.setActualLabel(boost::lexical_cast<double>(it->second));
+              result.set_actual_label(boost::lexical_cast<double>(it->second));
               break;
             default: throw std::logic_error("Unknown raw feature type");
           }

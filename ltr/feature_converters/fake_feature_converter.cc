@@ -9,12 +9,24 @@
 using std::string;
 
 namespace ltr {
-void FakeFeatureConverter::applyImpl(const Object& argument,
-    Object* value) const {
-  *value = argument.deepCopy();
+void FakeFeatureConverter::applyImpl(const Object& input,
+                                           Object* output) const {
+  *output = input.deepCopy();
 }
 
-FeatureInfo FakeFeatureConverter::getNewFeatureInfo() const {
-  return feature_info_;
+void FakeFeatureConverter::fillOutputFeatureInfo() {
+  output_feature_info_ = input_feature_info_;
+}
+
+string FakeFeatureConverter::generateCppCode(
+    const string& function_name) const {
+  string code;
+  code.
+    append("#include <vector>\n\nvoid ").
+    append(function_name).
+    append("(const std::vector<double>& features, ").
+    append("std::vector<double>* result) {").
+    append("*result = features;}\n");
+  return code;
 }
 }

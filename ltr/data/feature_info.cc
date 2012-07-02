@@ -4,15 +4,15 @@
 
 namespace ltr {
 
-bool operator==(const OneFeatureInfo& left, const OneFeatureInfo& right) {
-  return left.type_ == right.type_ && left.values_ == right.values_;
+bool operator==(const OneFeatureInfo& lhs, const OneFeatureInfo& rhs) {
+  return lhs.type_ == rhs.type_ && lhs.values_ == rhs.values_;
 }
 
-bool operator==(const FeatureInfo& left, const FeatureInfo& right) {
-    return left.features_info_ == right.features_info_;
+bool operator==(const FeatureInfo& lhs, const FeatureInfo& rhs) {
+    return lhs.feature_info_ == rhs.feature_info_;
 }
 
-bool operator!=(const FeatureInfo& left, const FeatureInfo& right) {
-    return !(left == right);
+bool operator!=(const FeatureInfo& lhs, const FeatureInfo& rhs) {
+    return !(lhs == rhs);
 }
 }

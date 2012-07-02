@@ -6,6 +6,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include <string>
+#include <functional>
 
 #include "contrib/puppy/Puppy.hpp"
 
@@ -14,6 +15,11 @@
 #include "ltr/learners/gp_learner/gp_functions.h"
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/measures/measure.h"
+
+
+
+#include "ltr/parameters_container/parameters_container.h"
+
 
 namespace ltr {
 namespace gp {
@@ -57,48 +63,57 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   virtual void setDefaultParameters() {
     this->clearParameters();
-    this->addIntParameter("POP_SIZE", 10);
-    this->addIntParameter("NBR_GEN", 3);
-    this->addIntParameter("NBR_PART", 2);
-    this->addIntParameter("MAX_DEPTH", 35);
-    this->addIntParameter("MIN_INIT_DEPTH", 2);
-    this->addIntParameter("MAX_INIT_DEPTH", 5);
-    this->addDoubleParameter("INIT_GROW_PROBA", 0.5);
-    this->addDoubleParameter("CROSSOVER_PROBA", 0.9);
-    this->addDoubleParameter("CROSSOVER_DISTRIB_PROBA", 0.5);
-    this->addDoubleParameter("MUT_STD_PROBA", 0.05);
-    this->addIntParameter("MUT_MAX_REGEN_DEPTH", 5);
-    this->addDoubleParameter("MUT_SWAP_PROBA", 0.05);
-    this->addDoubleParameter("MUT_SWAP_DISTRIB_PROBA", 0.5);
-    this->addIntParameter("SEED", 1);
-    this->addBoolParameter("USE_ADD", true);
-    this->addBoolParameter("USE_SUB", true);
-    this->addBoolParameter("USE_MUL", true);
-    this->addBoolParameter("USE_DIV", true);
-    this->addBoolParameter("USE_IF", true);
-    this->addBoolParameter("USE_EFEM", true);
+    this->addNewParam("POP_SIZE", 10);
+    this->addNewParam("NBR_GEN", 3);
+    this->addNewParam("NBR_PART", 2);
+    this->addNewParam("MAX_DEPTH", 35);
+    this->addNewParam("MIN_INIT_DEPTH", 2);
+    this->addNewParam("MAX_INIT_DEPTH", 5);
+    this->addNewParam("INIT_GROW_PROBA", 0.5);
+    this->addNewParam("CROSSOVER_PROBA", 0.9);
+    this->addNewParam("CROSSOVER_DISTRIB_PROBA", 0.5);
+    this->addNewParam("MUT_STD_PROBA", 0.05);
+    this->addNewParam("MUT_MAX_REGEN_DEPTH", 5);
+    this->addNewParam("MUT_SWAP_PROBA", 0.05);
+    this->addNewParam("MUT_SWAP_DISTRIB_PROBA", 0.5);
+    this->addNewParam("SEED", 1);
+    this->addNewParam("USE_ADD", true);
+    this->addNewParam("USE_SUB", true);
+    this->addNewParam("USE_MUL", true);
+    this->addNewParam("USE_DIV", true);
+    this->addNewParam("USE_IF", true);
+    this->addNewParam("USE_EFEM", true);
   }
   /** The method checks the correctness of the parameters in the parameters
    * container. If one of them is not correct it throws
    * std::logical_error(PARAMETER_NAME).
    */
+
   virtual void checkParameters() const {
-    CHECK_INT_PARAMETER("POP_SIZE", X > 0);
-    CHECK_INT_PARAMETER("NBR_GEN", X > 0);
-    CHECK_INT_PARAMETER("NBR_PART", X > 1);
-    CHECK_INT_PARAMETER("MAX_DEPTH", X > 0);
-    CHECK_INT_PARAMETER("MIN_INIT_DEPTH", X > 0);
-    CHECK_INT_PARAMETER("MUT_MAX_REGEN_DEPTH", X > 0);
+    std::binder2nd<std::greater<int> > GreaterThen0 =
+        std::bind2nd(std::greater<int>(), 0);
+    std::binder2nd<std::greater<int> > GreaterThen1 =
+        std::bind2nd(std::greater<int>(), 1);
+    Parameterized::checkParameter<int>("POP_SIZE",            GreaterThen0);
+    Parameterized::checkParameter<int>("NBR_GEN",             GreaterThen0);
+    Parameterized::checkParameter<int>("NBR_PART",            GreaterThen1);
+    Parameterized::checkParameter<int>("MAX_DEPTH",           GreaterThen0);
+    Parameterized::checkParameter<int>("MIN_INIT_DEPTH",      GreaterThen0);
+    Parameterized::checkParameter<int>("MUT_MAX_REGEN_DEPTH", GreaterThen0);
 
-    CHECK_INT_PARAMETER("MAX_INIT_DEPTH", \
-      X > this->getIntParameter("MIN_INIT_DEPTH") - 1);
+    Parameterized::checkParameter<int>("MAX_INIT_DEPTH",
+       std::bind2nd(std::greater<int>(), this->parameters().
+                    template Get<int>("MIN_INIT_DEPTH") - 1));
 
-    CHECK_DOUBLE_PARAMETER("INIT_GROW_PROBA", X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("CROSSOVER_PROBA", X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("CROSSOVER_DISTRIB_PROBA", X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("MUT_STD_PROBA", X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("MUT_SWAP_PROBA", X >= 0 && X <= 1);
-    CHECK_DOUBLE_PARAMETER("MUT_SWAP_DISTRIB_PROBA", X >= 0 && X <= 1);
+
+    const Belongs<double> belongs(0, 1);
+
+    Parameterized::checkParameter<double>("INIT_GROW_PROBA",         belongs);
+    Parameterized::checkParameter<double>("CROSSOVER_PROBA",         belongs);
+    Parameterized::checkParameter<double>("CROSSOVER_DISTRIB_PROBA", belongs);
+    Parameterized::checkParameter<double>("MUT_STD_PROBA",           belongs);
+    Parameterized::checkParameter<double>("MUT_SWAP_PROBA",          belongs);
+    Parameterized::checkParameter<double>("MUT_SWAP_DISTRIB_PROBA",  belongs);
   }
   /** The function recreates the context and reinitializes the population.
    */
@@ -112,32 +127,32 @@ class GPLearner : public Learner<TElement, GPScorer> {
     std::fixed(str);
     str.precision(2);
     str << "Genetic programming learner with parameters: POP_SIZE = ";
-    str << this->getIntParameter("POP_SIZE") << ", NBR_GEN = ";
-    str << this->getIntParameter("NBR_GEN") << ", NBR_PART = ";
-    str << this->getIntParameter("NBR_PART") << ", MAX_DEPTH = ";
-    str << this->getIntParameter("MAX_DEPTH") << ", MIN_INIT_DEPTH = ";
-    str << this->getIntParameter("MIN_INIT_DEPTH") << ", MAX_INIT_DEPTH = ";
-    str << this->getIntParameter("MAX_INIT_DEPTH") << ", INIT_GROW_PROBA = ";
-    str << this->getDoubleParameter("INIT_GROW_PROBA")
+    str << this->parameters().Get<int>("POP_SIZE") << ", NBR_GEN = ";
+    str << this->parameters().Get<int>("NBR_GEN") << ", NBR_PART = ";
+    str << this->parameters().Get<int>("NBR_PART") << ", MAX_DEPTH = ";
+    str << this->parameters().Get<int>("MAX_DEPTH") << ", MIN_INIT_DEPTH = ";
+    str << this->parameters().Get<int>("MIN_INIT_DEPTH") << ", MAX_INIT_DEPTH = ";
+    str << this->parameters().Get<int>("MAX_INIT_DEPTH") << ", INIT_GROW_PROBA = ";
+    str << this->parameters().Get<double>("INIT_GROW_PROBA")
       << ", CROSSOVER_PROBA = ";
-    str << this->getDoubleParameter("CROSSOVER_PROBA")
+    str << this->parameters().Get<double>("CROSSOVER_PROBA")
       << ", CROSSOVER_DISTRIB_PROBA = ";
-    str << this->getDoubleParameter("CROSSOVER_DISTRIB_PROBA")
+    str << this->parameters().Get<double>("CROSSOVER_DISTRIB_PROBA")
       << ", MUT_STD_PROBA = ";
-    str << this->getDoubleParameter("MUT_STD_PROBA")
+    str << this->parameters().Get<double>("MUT_STD_PROBA")
       << ", MUT_MAX_REGEN_DEPTH = ";
-    str << this->getIntParameter("MUT_MAX_REGEN_DEPTH")
+    str << this->parameters().Get<int>("MUT_MAX_REGEN_DEPTH")
       << ", MUT_SWAP_PROBA = ";
-    str << this->getDoubleParameter("MUT_SWAP_PROBA")
+    str << this->parameters().Get<double>("MUT_SWAP_PROBA")
       << ", MUT_SWAP_DISTRIB_PROBA = ";
-    str << this->getDoubleParameter("MUT_SWAP_DISTRIB_PROBA") << ", SEED = ";
-    str << this->getIntParameter("SEED") << ", USE_ADD = ";
-    str << this->getBoolParameter("USE_ADD") << ", USE_SUB = ";
-    str << this->getBoolParameter("USE_SUB") << ", USE_MUL = ";
-    str << this->getBoolParameter("USE_MUL") << ", USE_DIV = ";
-    str << this->getBoolParameter("USE_DIV") << ", USE_IF = ";
-    str << this->getBoolParameter("USE_IF") << ", USE_EFEM = ";
-    str << this->getBoolParameter("USE_EFEM");
+    str << this->parameters().Get<double>("MUT_SWAP_DISTRIB_PROBA") << ", SEED = ";
+    str << this->parameters().Get<int>("SEED") << ", USE_ADD = ";
+    str << this->parameters().Get<bool>("USE_ADD") << ", USE_SUB = ";
+    str << this->parameters().Get<bool>("USE_SUB") << ", USE_MUL = ";
+    str << this->parameters().Get<bool>("USE_MUL") << ", USE_DIV = ";
+    str << this->parameters().Get<bool>("USE_DIV") << ", USE_IF = ";
+    str << this->parameters().Get<bool>("USE_IF") << ", USE_EFEM = ";
+    str << this->parameters().Get<bool>("USE_EFEM");
     return str.str();
   }
 
@@ -158,31 +173,34 @@ class GPLearner : public Learner<TElement, GPScorer> {
   }
 
   private:
+    template <class T>
+    struct Belongs: public std::unary_function<T, bool> {
+      Belongs(const T& min, const T& max): min_(min), max_(max) { }
+      bool operator()(const T& x) const {
+        return x >= min_ && x <= max_;
+      }
+
+    private:
+      T min_;
+      T max_;
+    };
+
   /** Method clears and adds primitives to the context.
    */
   void initContext() {
     Puppy::Context newContext;
     context_= newContext;
 
-    context_.mRandom.seed(this->getIntParameter("SEED"));
-    if (this->getBoolParameter("USE_ADD")) {
-      context_.insert(new Add);
-    }
-    if (this->getBoolParameter("USE_SUB")) {
-      context_.insert(new Subtract);
-    }
-    if (this->getBoolParameter("USE_MUL")) {
-      context_.insert(new Multiply);
-    }
-    if (this->getBoolParameter("USE_DIV")) {
-      context_.insert(new Divide);
-    }
-    if (this->getBoolParameter("USE_IF")) {
-      context_.insert(new IfThenFunc);
-    }
-    if (this->getBoolParameter("USE_EFEM")) {
-      context_.insert(new Ephemeral);
-    }
+    const ParametersContainer &params = this->parameters();
+
+    context_.mRandom.seed(params.template Get<int>("SEED"));
+    if (params.template Get<bool>("USE_ADD")) context_.insert(new Add);
+    if (params.template Get<bool>("USE_SUB")) context_.insert(new Subtract);
+    if (params.template Get<bool>("USE_MUL")) context_.insert(new Multiply);
+    if (params.template Get<bool>("USE_DIV")) context_.insert(new Divide);
+    if (params.template Get<bool>("USE_IF"))  context_.insert(new IfThenFunc);
+    if (params.template Get<bool>("USE_EFEM")) context_.insert(new Ephemeral);
+
     for (int featureIdx = 0;
         featureIdx < featureCountInContext_;
         ++featureIdx) {
@@ -197,11 +215,13 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   void initPopulation() {
     population_.clear();
-    population_.resize(this->getIntParameter("POP_SIZE"));
+    ParametersContainer params = this->parameters();
+
+    population_.resize(params.template Get<int>("POP_SIZE"));
     Puppy::initializePopulation(population_, context_,
-        this->getDoubleParameter("INIT_GROW_PROBA"),
-        this->getIntParameter("MIN_INIT_DEPTH"),
-        this->getIntParameter("MAX_INIT_DEPTH"));
+                                params.template Get<double>("INIT_GROW_PROBA"),
+                                params.template Get<int>("MIN_INIT_DEPTH"),
+                                params.template Get<int>("MAX_INIT_DEPTH"));
   }
 
   /** \brief This function implements the changes made in the population at each
@@ -209,25 +229,27 @@ class GPLearner : public Learner<TElement, GPScorer> {
    */
   virtual void evaluationStrategyStepImpl() {
     std::cout << "Tournament.\n";
+    ParametersContainer params = this->parameters();
+
     Puppy::applySelectionTournament(population_, context_,
-        this->getIntParameter("NBR_PART"));
+        params.template Get<int>("NBR_PART"));
 
     std::cout << "Crossover.\n";
     Puppy::applyCrossover(population_, context_,
-        this->getDoubleParameter("CROSSOVER_PROBA"),
-        this->getDoubleParameter("CROSSOVER_DISTRIB_PROBA"),
-        this->getIntParameter("MAX_DEPTH"));
+                         params.template Get<double>("CROSSOVER_PROBA"),
+                         params.template Get<double>("CROSSOVER_DISTRIB_PROBA"),
+                         params.template Get<int>("MAX_DEPTH"));
 
     std::cout << "Mutation standart.\n";
     Puppy::applyMutationStandard(population_, context_,
-        this->getDoubleParameter("MUT_STD_PROBA"),
-        this->getIntParameter("MUT_MAX_REGEN_DEPTH"),
-        this->getIntParameter("MAX_DEPTH"));
+                                params.template Get<double>("MUT_STD_PROBA"),
+                                params.template Get<int>("MUT_MAX_REGEN_DEPTH"),
+                                params.template Get<int>("MAX_DEPTH"));
 
     std::cout << "Mutation swap.\n";
     Puppy::applyMutationSwap(population_, context_,
-        this->getDoubleParameter("MUT_SWAP_PROBA"),
-        this->getDoubleParameter("MUT_SWAP_DISTRIB_PROBA"));
+                         params.template Get<double>("MUT_SWAP_PROBA"),
+                         params.template Get<double>("MUT_SWAP_DISTRIB_PROBA"));
   }
 
   /** The implementation of genetic programming optimization approach.
@@ -235,8 +257,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * learning procedure.
    */
   void learnImpl(const DataSet<TElement>& data) {
-    if (data.featureCount() != featureCountInContext_) {
-      featureCountInContext_ = data.featureCount();
+    if (data.feature_count() != featureCountInContext_) {
+      featureCountInContext_ = data.feature_count();
       reset();
     }
 
@@ -251,8 +273,8 @@ class GPLearner : public Learner<TElement, GPScorer> {
 
     std::cout << "Evolution begins.\n";
     for (int generationIdx = 0;
-        generationIdx < this->getIntParameter("NBR_GEN");
-        ++generationIdx) {
+       generationIdx < this->parameters().template Get<int>("NBR_GEN");
+       ++generationIdx) {
       std::cout << "Generation "<< generationIdx << ".\n";
 
       std::cout << "Calling strategy\n";
@@ -321,10 +343,6 @@ class GPLearner : public Learner<TElement, GPScorer> {
    * the context_ is constructed for.
    */
 };
-
-template class GPLearner<Object>;
-template class GPLearner<ObjectPair>;
-template class GPLearner<ObjectList>;
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_

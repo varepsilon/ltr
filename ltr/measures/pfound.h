@@ -4,6 +4,7 @@
 #define LTR_MEASURES_PFOUND_H_
 
 #include <stdexcept>
+#include <functional>
 #include <string>
 
 #include "ltr/measures/measure.h"
@@ -34,18 +35,22 @@ namespace ltr {
      */
     void setDefaultParameters() {
       this->clearParameters();
-      this->addDoubleParameter("P_BREAK", 0.15);
-      this->addDoubleParameter("MAX_LABEL", 5.0);
-      this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+      this->addNewParam("P_BREAK", 0.15);
+      this->addNewParam("MAX_LABEL", 5.0);
+      this->addNewParam("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
     }
     /**
      * Checks if 0 <= P_BREAK <= 1, NUMBER_OF_OBJECTS_TO_CONSIDER >=0,
      * MAX_LABEL >= 0 (all should be true)
      */
     void checkParameters() const {
-      CHECK_DOUBLE_PARAMETER("P_BREAK", X >= 0 && X <= 1);
-      CHECK_INT_PARAMETER("NUMBER_OF_OBJECTS_TO_CONSIDER", X >= 0);
-      CHECK_DOUBLE_PARAMETER("MAX_LABEL", X >= 0);
+      const Belongs<double> G0L1(0, 1);
+
+      this->checkParameter<double>("P_BREAK", G0L1);
+      this->checkParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER",
+                              std::bind2nd(std::greater_equal<int>(), 0) );
+      this->checkParameter<double>("MAX_LABEL",
+                               std::bind2nd(std::greater_equal<double>(), 0) );
     }
 
     double best() const {
@@ -55,7 +60,20 @@ namespace ltr {
       return 0.0;
     }
     string toString() const;
+
   private:
+    template <class T>
+    struct Belongs: public std::unary_function<T, bool> {
+      Belongs(const T &min, const T &max): min_(min), max_(max) { }
+      bool operator()(const T& x) const {
+        return x >= min_ && x <= max_;
+      }
+
+    private:
+      T min_;
+      T max_;
+    };
+
     double get_measure(const ObjectList& objects) const;
   };
 };

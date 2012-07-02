@@ -10,7 +10,7 @@
 #include <sstream>
 
 #include "ltr/data/utility/parsers/parse_svm.h"
-#include "ltr/data/utility/data_set_utility.h"
+#include "ltr/data/utility/io_utility.h"
 #include "ltr/utility/numerical.h"
 
 using boost::algorithm::trim_copy;
@@ -69,11 +69,11 @@ namespace ltr {
   void SVMParser::makeString(const Object& obj, string*result) {
     stringstream str;
     str.precision(utility::DOUBLE_PRECISION);
-    str << obj.actualLabel() << " ";
+    str << obj.actual_label() << " ";
     try {
       str << "qid:" << obj.getMetaInfo("queryId") << " ";
     } catch(std::logic_error err) { }
-    for (size_t k = 0; k < obj.featureCount(); k++) {
+    for (size_t k = 0; k < obj.feature_count(); k++) {
       str << k+1 << ":" << obj.features()[k] << " ";
     }
     *result = str.str();
@@ -85,7 +85,7 @@ namespace ltr {
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
-    utility::groupByIntMeta(objects, "queryId", &objects_);
+    groupByIntMeta(objects, "queryId", &objects_);
 
     for (object_iterator i = objects_.begin(); i != objects_.end(); i++) {
       ObjectList list;
@@ -102,7 +102,7 @@ namespace ltr {
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
-    utility::groupByIntMeta(objects, "queryId", &objects_);
+    groupByIntMeta(objects, "queryId", &objects_);
 
     for (object_iterator i = objects_.begin(); i != objects_.end(); i++)
       for (int j = 0; j < i->second.size(); j++)

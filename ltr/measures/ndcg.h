@@ -44,7 +44,7 @@ namespace ltr {
       this->copyParameters(parameters);
     }
 
-    /** 
+    /**
      * Clears parameters container and sets default values:
      * NUMBER_OF_OBJECTS_TOCONSIDER = 0
      */
@@ -82,7 +82,8 @@ namespace ltr {
     std::stringstream str;
     str << this->alias();
     str << " measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << this->parameters().template Get<int>(
+               "NUMBER_OF_OBJECTS_TO_CONSIDER");
     return str.str();
   }
 
@@ -91,7 +92,8 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), ActualDecreasing);
 
-    size_t n = this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = this->parameters().
+               template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
@@ -120,11 +122,12 @@ namespace ltr {
   template<class TDCGFormula>
   void BaseNDCG<TDCGFormula>::setDefaultParameters() {
     this->clearParameters();
-    this->addIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+    this->addNewParam("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
   }
   template<class TDCGFormula>
   void BaseNDCG<TDCGFormula>::checkParameters() const {
-    if (this->getIntParameter("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
+    if (this->parameters().
+        template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER") < 0) {
       throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
     }
   }

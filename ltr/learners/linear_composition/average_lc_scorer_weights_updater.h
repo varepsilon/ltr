@@ -20,7 +20,6 @@ using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
 using ltr::utility::MarkDataSet;
-using ltr::utility::DoubleEps;
 using ltr::Scorer;
 
 namespace ltr {

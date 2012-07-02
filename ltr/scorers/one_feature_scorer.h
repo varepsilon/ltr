@@ -35,7 +35,7 @@ namespace ltr {
 
   private:
     double scoreImpl(const Object& obj) const {
-      return obj[1].features().at(index_);
+      return obj.features().at(index_);
     }
 
     string generateCppCodeImpl(const string& function_name) const;

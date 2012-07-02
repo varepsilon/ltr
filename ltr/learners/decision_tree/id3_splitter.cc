@@ -4,32 +4,32 @@
 
 #include "ltr/learners/decision_tree/id3_splitter.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/data/utility/data_set_utility.h"
+#include "ltr/data/utility/io_utility.h"
 
 #include "ltr/learners/decision_tree/compare_condition.h"
 
 using ltr::utility::DoubleEqual;
 using ltr::utility::DoubleLessOrEqual;
-using ltr::utility::lightSubset;
 
 namespace ltr {
 namespace decision_tree {
 
 void ID3_Splitter::init() {
   current_feature = 0;
+  ParametersContainer params = this->parameters();
   split_idx = 0;
-  log << "Inited. ";
-  if (this->getBoolParameter("SPLIT_FEATURE_N_TIMES"))
-    log << "Splitting every feature "
-        << this->getIntParameter("FEATURE_SPLIT_COUNT") << " times"
-        << std::endl;
-  else
-    log << "Using half summs splitting. Step = "
-        << this->getIntParameter("HALF_SUMMS_STEP");
+  INFO("Inited. ");
+  if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
+    INFO("Splitting every feature %d times",
+         params.Get<int>("FEATURE_SPLIT_COUNT"));
+  } else {
+    INFO("Using half summs splitting. Step = %d",
+         params.Get<int>("HALF_SUMMS_STEP"));
+  }
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
-  if (current_feature >= data_.featureInfo().getFeatureCount())
+  if (current_feature >= data_.feature_count())
     return 0;
   result->clear();
 
@@ -55,8 +55,10 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       return getNextConditions(result);
     }
 
-    if (this->getBoolParameter("SPLIT_FEATURE_N_TIMES")) {
-      int split_cnt = this->getIntParameter("FEATURE_SPLIT_COUNT");
+    ParametersContainer params = this->parameters();
+
+    if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
+      int split_cnt = params.Get<int>("FEATURE_SPLIT_COUNT");
       if (split_cnt <= feature_values.size() - 1) {
         for (int i = 0; i < split_cnt; i++)
           numeric_split_values.
@@ -68,13 +70,13 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       }
     } else {
       for (int i = 0; i < feature_values.size() - 1;
-          i+= this->getIntParameter("HALF_SUMMS_STEP"))
+          i+= params.Get<int>("HALF_SUMMS_STEP"))
         numeric_split_values.
           push_back((feature_values[i] + feature_values[i+1]) / 2);
     }
   }
-  if (data_.featureInfo().getFeatureType(current_feature) == BOOLEAN ||
-      data_.featureInfo().getFeatureType(current_feature) == NOMINAL) {
+  if (data_.feature_info().getFeatureType(current_feature) == BOOLEAN ||
+      data_.feature_info().getFeatureType(current_feature) == NOMINAL) {
     for (int j = 0; j < feature_values.size(); j++)
       result->push_back(
         CompareConditionPtr(OneFeatureConditionPtr(current_feature),

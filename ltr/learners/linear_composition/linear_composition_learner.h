@@ -5,6 +5,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <functional>
+
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/linear_composition_scorer.h"
@@ -40,7 +42,7 @@ namespace lc {
    * elements before each weak learner's learn() call. Provides the variability
    * of weak scorers. By default is fake, so dataset weights remain const
 
-   * FeatureConverterLearner - let weak learner call learn() on dataset with
+   * BaseFeatureConverterLearner - let weak learner call learn() on dataset with
    * converted features (e. g. RSM - random subspace method). Provides the
    * variability of weak scorers. By default is fake, so dataset is not pre-
    * feature converted before weak learning
@@ -87,13 +89,14 @@ namespace lc {
      */
     void setDefaultParameters() {
       this->clearParameters();
-      this->addIntParameter("NUMBER_OF_ITERATIONS", 10);
+      this->addNewParam("NUMBER_OF_ITERATIONS", 10);
     }
     /**
      * Checks if NUMBER_OF_ITERATIONS > 0 (should be true)
      */
     void checkParameters() const {
-      CHECK_INT_PARAMETER("NUMBER_OF_ITERATIONS", X > 0);
+      Parameterized::checkParameter<int>("NUMBER_OF_ITERATIONS",
+                                         std::bind2nd(std::greater<int>(), 0));
     }
     // void setMeasure(typename Measure<TElement>::Ptr measure);
     // void setWeakLearner(typename BaseLearner<TElement>::Ptr weak_learner);
@@ -113,7 +116,7 @@ namespace lc {
     string toString() const {
       std::stringstream str;
       str << "Linear composition learner with parameter NUMBER_OF_ITERATIONS = "
-        << this->getIntParameter("NUMBER_OF_ITERATIONS");
+        << this->parameters().Get<int>("NUMBER_OF_ITERATIONS");
       str << ", [" << p_weak_learner_->toString() << "] as weak learner, ["
         << data_set_weights_updater->toString()
         << "] as dataset weights updeter and ["
@@ -136,14 +139,15 @@ namespace lc {
   template <class TElement>
   void LinearCompositionLearner<TElement>::
       learnImpl(const DataSet<TElement>& data) {
-    if (!this->p_measure_) {
+    if (this->p_measure_) {
       linear_composition_scorer_weights_updater->setMeasure(this->p_measure_);
       data_set_weights_updater->setMeasure(this->p_measure_);
       this->p_weak_learner_->setMeasure(this->p_measure_);
     }
 
     for (int iteration = 0;
-        iteration < this->getIntParameter("NUMBER_OF_ITERATIONS");
+        iteration < this->parameters().
+         template Get<int>("NUMBER_OF_ITERATIONS");
         ++iteration) {
       this->p_weak_learner_->reset();
 

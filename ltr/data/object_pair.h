@@ -3,10 +3,11 @@
 #ifndef LTR_DATA_OBJECT_PAIR_H_
 #define LTR_DATA_OBJECT_PAIR_H_
 
-#include <boost/shared_ptr.hpp>
-
-#include <vector>
+#include <stdexcept>
 #include <string>
+#include <vector>
+
+#include <boost/shared_ptr.hpp> //NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/interfaces/printable.h"
@@ -20,7 +21,7 @@ namespace ltr {
   public:
   /** \typedef Shared pointer to an object pair.
    */
-  typedef boost::shared_ptr< ObjectPair > Ptr;
+  typedef boost::shared_ptr<ObjectPair> Ptr;
 
   /** Default constructor creates a pair of two objects with no features.
    *
@@ -28,11 +29,7 @@ namespace ltr {
   ObjectPair();
   /** Constructor creates a new pair of two copies of the two given objects.
    */
-  ObjectPair(const Object& o1, const Object& o2);
-  /** Creates a ObjectPair from copies of objects[0] and objects[1] from the
-   * given vector.
-   */
-  explicit ObjectPair(const std::vector<Object>& objects);
+  ObjectPair(const Object& first, const Object& second);
   /** Returns a constant link to the first object in the pair.
    */
   const Object& first() const;
@@ -59,12 +56,12 @@ namespace ltr {
    * is returned otherwise the constant link to the second. This method is
    * needed to follow object container interface.
    */
-  const Object& at(const size_t j) const;
+  const Object& at(size_t i) const;
   /** If i is less than 1 then the link to the first object in the pair
    * is returned otherwise the link to the second. This method is
    * needed to follow object container interface.
    */
-  Object& at(const size_t j);
+  Object& at(size_t i);
   /*
    * Returns always 2. This method is needed to follow object container
    * interface.
@@ -84,16 +81,16 @@ namespace ltr {
   private:
   /** The first object in the pair.
    */
-  Object o1_;
+  Object first_;
   /** The second object in the pair.
    */
-  Object o2_;
+  Object second_;
 };
 /** Operator, checks whether two objects are equal.
  */
-bool operator==(const ObjectPair& o1, const ObjectPair& o2);
+bool operator==(const ObjectPair& lhs, const ObjectPair& rhs);
 /** Operator, checks whether two objects are not equal.
  */
-bool operator!=(const ObjectPair& o1, const ObjectPair& o2);
+bool operator!=(const ObjectPair& lhs, const ObjectPair& rhs);
 }
 #endif  // LTR_DATA_OBJECT_PAIR_H_

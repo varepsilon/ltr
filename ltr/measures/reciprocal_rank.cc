@@ -31,7 +31,8 @@ namespace ltr {
     for (vector<PredictedAndActualLabels>::const_iterator labels_it
         = labels.begin(); labels_it != labels.end();
         ++labels_it, pos += 1) {
-      if (labels_it->actual >= getDoubleParameter("SCORE_FOR_RELEVANT")) {
+      if (labels_it->actual >=
+          this->getParameter<double>("SCORE_FOR_RELEVANT")) {
         result = RRFormula(pos);
         relevant_found = true;
         break;
@@ -49,7 +50,7 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "Reciprocal Rank measure with parameter SCORE_FOR_RELEVANT = ";
-    str << this->getDoubleParameter("SCORE_FOR_RELEVANT");
+    str << this->getParameter<double>("SCORE_FOR_RELEVANT");
     return str.str();
   }
 };

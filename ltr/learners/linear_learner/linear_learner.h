@@ -59,14 +59,14 @@ template<class TElement>
 void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
   VectorXd Y(data.size());
   for (int i = 0; i < Y.size(); ++i) {
-    Y(i) = data[i].actualLabel();
+    Y(i) = data[i].actual_label();
   }
 
-  MatrixXd X(data.size(), data.featureCount() + 1);
+  MatrixXd X(data.size(), data.feature_count() + 1);
   for (int object_index = 0; object_index < data.size(); ++object_index) {
     X(object_index, 0) = 1.0;
     for (int feature_index = 0;
-        feature_index < data.featureCount(); ++feature_index) {
+        feature_index < data.feature_count(); ++feature_index) {
       X(object_index, feature_index + 1) =
         data[object_index].features()[feature_index];
     }

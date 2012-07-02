@@ -20,8 +20,8 @@ namespace utility {
     vector<PredictedAndActualLabels> output(object_list.size());
 
     for (size_t index = 0; index < object_list.size(); ++index) {
-      output[index].predicted = object_list[index].predictedLabel();
-      output[index].actual = object_list[index].actualLabel();
+      output[index].predicted = object_list[index].predicted_label();
+      output[index].actual = object_list[index].actual_label();
     }
     return output;
   }

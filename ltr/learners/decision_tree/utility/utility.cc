@@ -6,11 +6,11 @@ namespace ltr {
 namespace decision_tree {
 
 void split(DataSet<Object> data,
-           vector<Condition::Ptr> conditions,
-           vector<DataSet<Object> >* datas) {
+           std::vector<Condition::Ptr> conditions,
+           std::vector<DataSet<Object> >* datas) {
   datas->clear();
   for (size_t j = 0; j < conditions.size(); j++)
-    datas->push_back(DataSet<Object>((data.featureInfo())));
+    datas->push_back(DataSet<Object>((data.feature_info())));
   for (size_t i = 0; i < data.size(); i++) {
     int best_idx = -1;
     double best_value = 0;

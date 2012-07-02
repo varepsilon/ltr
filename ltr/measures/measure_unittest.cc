@@ -27,23 +27,23 @@ using ltr::NormalizedMeasure;
 TEST(MeasureTest, MeasureTest) {
   Object o1;
   o1 << 1;
-  o1.setActualLabel(0);
-  o1.setPredictedLabel(2);
+  o1.set_actual_label(0);
+  o1.set_predicted_label(2);
 
   Object o2;
   o2 << 2;
-  o2.setActualLabel(1.4);
-  o2.setPredictedLabel(1.4);
+  o2.set_actual_label(1.4);
+  o2.set_predicted_label(1.4);
 
   Object o3;
   o3 << 3;
-  o3.setActualLabel(3.5);
-  o3.setPredictedLabel(-3.5);
+  o3.set_actual_label(3.5);
+  o3.set_predicted_label(-3.5);
 
   Object o4;
   o4 << 4;
-  o4.setActualLabel(0.5);
-  o4.setPredictedLabel(4.0);
+  o4.set_actual_label(0.5);
+  o4.set_predicted_label(4.0);
 
   DataSet<Object> data_set(FeatureInfo(1));
   DataSet<Object> empty_data_set(FeatureInfo(1));
@@ -78,8 +78,8 @@ TEST(MeasureTest, NormalizedMeasureTest) {
   NormalizedMeasure<Object> norm;
   NormalizedMeasure<Object> norm2(1, -1);
   Object obj;
-  obj.setActualLabel(1);
-  obj.setPredictedLabel(0);
+  obj.set_actual_label(1);
+  obj.set_predicted_label(0);
 
   norm.setWeakMeasure(AbsError());
 
@@ -94,7 +94,7 @@ TEST(MeasureTest, NormalizedMeasureTest) {
   EXPECT_EQ(norm.value(obj), -1);
   EXPECT_EQ(norm2.value(obj), 1);
 
-  obj.setPredictedLabel(1);
+  obj.set_predicted_label(1);
   EXPECT_EQ(norm.value(obj), 1);
   EXPECT_EQ(norm2.value(obj), -1);
 }

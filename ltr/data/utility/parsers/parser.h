@@ -122,7 +122,7 @@ namespace ltr {
       protected:
         map<RawFeatureIndex, FeatureIndex> feature_id_;
         RawFeatureInfo raw_feature_info_;
-        int last_feature_idx_;
+        int last_feature_index_;
         FeatureInfo feature_info_;
 
         /**
@@ -140,7 +140,7 @@ namespace ltr {
         virtual void init(std::istream* in) {}
 
         double hash(const string str) {
-          return utility::murmurHash2(str.c_str(), str.size(), 19837);
+          return utility::murmurHash(str.c_str(), str.size(), 19837);
         }
     };
 

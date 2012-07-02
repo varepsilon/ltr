@@ -22,11 +22,5 @@ int main() {
 
   obj.setMetaInfo("info2", "value2");
   cout << obj.getMetaInfo("info2") << endl;
-
-  map<string, string> new_meta_info;
-  new_meta_info["test1"] = "new_value1";
-  new_meta_info["test2"] = "new_value2";
-
-  obj.metaInfo() = new_meta_info;       // You can also set all meta info at once.
   return 0;
 }

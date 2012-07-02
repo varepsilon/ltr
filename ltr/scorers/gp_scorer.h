@@ -64,7 +64,7 @@ class GPScorer : public Scorer {
    *  Puppy::tree in the population.
    */
   double scoreImpl(const Object& obj) const {
-    assert(featureCountInContext_ == obj.featureCount());
+    assert(featureCountInContext_ == obj.feature_count());
     setContextToObject(&context_, obj);
     double resultScore;
     population_[inPopulationBestTreeIdx_].interpret(&resultScore, context_);

@@ -3,211 +3,140 @@
 #ifndef LTR_INTERFACES_PARAMETERIZED_H_
 #define LTR_INTERFACES_PARAMETERIZED_H_
 
+#include <stdexcept>
 #include <string>
-#include <set>
-#include <vector>
 
 #include "ltr/parameters_container/parameters_container.h"
 
-using std::string;
-using std::set;
-using std::vector;
-
-#define CHECK_PARAMETER(type, name, condition) \
-  { \
-    type X = (static_cast<const Parameterized* const>(this))\
-    ->getParameter<type>(name); \
-    if (!(condition)) \
-      throw std::logic_error("Error in parameter '" \
-        name "' check: " #condition); \
-  }
-
-#define CHECK_INT_PARAMETER(name, condition) \
-  CHECK_PARAMETER(int, name, condition)
-#define CHECK_DOUBLE_PARAMETER(name, condition) \
-  CHECK_PARAMETER(double, name, condition)
-#define CHECK_BOOL_PARAMETER(name, condition) \
-  CHECK_PARAMETER(bool, name, condition)
-#define CHECK_LIST_PARAMETER(name, condition) \
-  CHECK_PARAMETER(vector<int>, name, condition)
-
-#define CHECK_HAS_GROUP(group) \
-  if (!parameters_.hasGroup(group)) \
-    throw std::logic_error("Class must has '" #group "' parameter group");
-
-#define CHECK_HAS_NO_GROUP(group) \
-  if (parameters_.hasGroup(group)) \
-    throw std::logic_error("Class must has no '" #group "' parameter group");
-
-#define CHECK_HAS_PARAMETER(type, name, group) \
-  if (!parameters_.has<type>(name, group)) \
-    throw std::logic_error("Class must has " #type " parameter " #name);
-
-#define CHECK_HAS_NO_PARAMETER(type, name, group) \
-  if (parameters_.has<type>(name, group)) \
-    throw std::logic_error("Class mustn't has " #type " parameter " #name);
+using std::logic_error;
 
 namespace ltr {
+
+/**
+* Simple getter and setter
+*/
+#define GET_SET(type, name) \
+  void set_##name(const type& name) { \
+    name##_ = name; \
+  }; \
+  type name() const { \
+    return name##_; \
+  };
+
+/**
+* Simple setter
+*/
+#define SET(type, name) \
+  void set_##name(const type& name) { \
+    name##_ = name; \
+  };
+
+/**
+* Simple getter
+*/
+#define GET(type, name) \
+  type name() const { \
+    return name##_; \
+  };
+
+/**
+* Throw an exception if expression is false
+*/
+#define CHECK(expression) \
+  if (!(expression)) { \
+    throw logic_error("Expected: " #expression); \
+  }
+
 /**
  * Parameterized is a class that provides derived subclasses hold their
- * different-type parameters (int, double and bool) in convenient
+ * different-type parameters (int, double, bool, etc.) in convenient
  * way. E.g. a derived subclass knows it's default parameters
  */
 class Parameterized {
-  protected:
-  /** Container, which contain all the parameters of this object.
-   */
-  ParametersContainer parameters_;
-  Parameterized() {}
-
-  public:
+ public:
+  virtual ~Parameterized();
   /**
-   * By default simply clears all parameters
+   * Set default values of parameters
    */
   virtual void setDefaultParameters();
   /**
-   * checks, if current parameters are valid.
-   * If invalid parameters found - logic_error is thrown.
+   * Perform checks of parameters. In case of wrong parameters
+   * std::logic_error will be thrown.
    */
   virtual void checkParameters() const;
-  /**
-   * This function is called after updation of any parameter.
-   * By default does nothing.
-   */
-  virtual void updateParameters() {}
-
-  /**
-   * Returns parametersContainer of this parametrized object. 
-   */
-  const ParametersContainer& parameters() {
-    return parameters_;
+  void setParameters(const ParametersContainer &parameters);
+  // \deprecated
+  template <class T, class TPred>
+  void checkParameter(const std::string &name, TPred pred) const
+      throw(std::logic_error, std::bad_cast) {
+    const T &value = parameters_.Get<T>(name);
+    if (!pred(value)) {
+      throw std::logic_error("Error in parameter " + name + " check");
+    }
   }
-  /**
-   * Adds new parameter. Checks, that there were no such parameter yet.
-   */
+  // \deprecated
   template<class T>
-  void addParameter(const string& name, T value, string group="") {
-    CHECK_HAS_NO_PARAMETER(T, name, group);
-    parameters_.set<T>(name, value, group);
-  }
-  /**
-   * Sets value of the parameter.
-   * Checks, that there was such a parameter.
-   */
-  template<class T>
-  void setParameter(const string& name, T value, string group="") {
-    CHECK_HAS_PARAMETER(T, name, group);
-    parameters_.set<T>(name, value, group);
+  void setExistingParameter(const std::string &name, T value) {
+    parameters_.SetExisting(name, value);
     checkParameters();
-    updateParameters();
+    parametersUpdateCallback();
   }
-  /** Sets integer parameter and calls checkParameters() and updateParameters()
-   */
-  void setIntParameter(const string& name, int value, string group="") {
-    setParameter<int>(name, value, group);
-  }
-  /** Sets double parameter and calls checkParameters() and updateParameters()
-   */
-  void setDoubleParameter(const string& name, double value, string group="") {
-    setParameter<double>(name, value, group);
-  }
-  /** Sets bool parameter and calls checkParameters() and updateParameters()
-   */
-  void setBoolParameter(const string& name, bool value, string group="") {
-    setParameter<bool>(name, value, group);
-  }
-  /** Sets list(array of integers) parameter and calls checkParameters()
-   * and updateParameters()
-   */
-  void setListParameter(const string& name,
-                        vector<int> value,
-                        string group="") {
-    setParameter<vector<int> >(name, value, group);
-  }
-
-  /** Adds new integer parameter.
-   */
-  void addIntParameter(const string& name, int value, string group="") {
-    addParameter<int>(name, value, group);
-  }
-  /** Adds new double parameter.
-   */
-  void addDoubleParameter(const string& name, double value, string group="") {
-    addParameter<double>(name, value, group);
-  }
-  /** Adds new bool parameter.
-   */
-  void addBoolParameter(const string& name, bool value, string group="") {
-    addParameter<bool>(name, value, group);
-  }
-  /** Adds new list(array of integers) parameter.
-   */
-  void addListParameter(const string& name,
-                        vector<int> value,
-                        string group="") {
-    addParameter<vector<int> >(name, value, group);
-  }
-
-  /** Copies parameters from another parameter container
-   * @param params - container to copy parameters from.
-   */
-  void copyParameters(const ParametersContainer& params) {
-    parameters_.copy(params);
-    checkParameters();
-    updateParameters();
-  }
-  /**
-   * Removes all the parameters.
-   */
+  // \deprecated
   void clearParameters() {
-    parameters_.clear();
+    parameters_.Clear();
   }
-
-  /** Returns the value of parameter with name 'name'
-   */
+  // \deprecated
   template<class T>
-  T getParameter(const string& name, string group="") const {
-    return parameters_.get<T>(name, group);
+  void addNewParam(const std::string &name, const T &value) {
+    parameters_.AddNew(name, value);
   }
-  /** Returns the value of integer parameter with name 'name'
-   */
-  int getIntParameter(const string& name, string group="") const {
-    return parameters_.getInt(name, group);
-  }
-  /** Returns the value of double parameter with name 'name'
-   */
-  double getDoubleParameter(const string& name, string group="") const {
-    return parameters_.getDouble(name, group);
-  }
-  /** Returns the value of bool parameter with name 'name'
-   */
-  bool getBoolParameter(const string& name, string group="") const {
-    return parameters_.getBool(name, group);
-  }
-  /** Returns the value of list parameter with name 'name'
-   */
-  vector<int> getListParameter(const string& name, string group="") const {
-    return parameters_.getList(name, group);
-  }
-
-  /**
-   * Removes group of parameters.
-   */
-  void removeParametersGroup(const string& group) {
-    parameters_.removeGroup(group);
-  }
-  /**
-   * Adds all the parameters from the given parametersContainer
-   * into the given group.
-   * @param container - container to copy from.
-   * @param group - group to copy parameters in.
-   */
-  void addParametersGroup(const ParametersContainer& container,
-                          const string& group) {
-    parameters_.setGroup(container, group);
-  }
-  virtual ~Parameterized() {}
-};
+  // \deprecated
+  const ParametersContainer& parameters() const;
+  template <typename DesiredType>
+  DesiredType getParameter(const string& name) const;
+  // \deprecated
+  void copyParameters(const ParametersContainer& parameters);
+ protected:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual void parametersUpdateCallback();
+ private:
+  // \deprecated
+  ParametersContainer parameters_;
 };
 
+// template realization
+
+template <class DesiredType>
+DesiredType Parameterized::getParameter(const string& name) const {
+  try {
+    return parameters_.Get<DesiredType>(name);
+  } catch(std::logic_error error) {
+    try {
+      return parameters_.Get<Parameterized*, DesiredType>(name);
+    } catch(std::logic_error error) {
+      throw;
+    }
+  }
+}
+
+template<>
+inline double Parameterized::getParameter<double>(const string& name) const {
+  return parameters_.Get<double>(name);
+}
+
+template<>
+inline int Parameterized::getParameter<int>(const string& name) const {
+  return parameters_.Get<int>(name);
+}
+
+template<>
+inline bool Parameterized::getParameter<bool>(const string& name) const {
+  return parameters_.Get<bool>(name);
+}
+
+template<>
+inline float Parameterized::getParameter<float>(const string& name) const {
+  return parameters_.Get<float>(name);
+}
+};
 #endif  // LTR_INTERFACES_PARAMETERIZED_H_

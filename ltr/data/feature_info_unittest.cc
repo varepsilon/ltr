@@ -45,5 +45,5 @@ TEST_F(FeaturesInfoTest, TestingBasicOperations) {
   EXPECT_FALSE(info2 == info1);
   info2.addFeature(ltr::NOMINAL, values);
 
-  EXPECT_EQ(info1, info2);  
+  EXPECT_EQ(info1, info2);
 }

@@ -9,7 +9,6 @@
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
-#include "ltr/data/utility/data_set_utility.h"
 #include "ltr/data/utility/io_utility.h"
 
 #include "ltr/data/utility/data_set_converters.h"
@@ -45,8 +44,8 @@ TEST_F(DataSetTest, DataSetLightSubsetTest) {
   data_set.add(o2);
   data_set.add(o3);
 
-  ltr::DataSet<ltr::Object> light_subset = ltr::utility::lightSubset(data_set,
-      std::vector<int>(1, 1));
+  ltr::DataSet<ltr::Object> light_subset =
+              data_set.lightSubset(std::vector<int>(1, 1));
 
   EXPECT_EQ(light_subset.at(0), o2);
 }
@@ -80,14 +79,14 @@ TEST_F(DataSetTest, DataSetConvertersTest) {
 TEST_F(DataSetTest, DataSetAlignTest) {
   ltr::DataSet<ltr::Object> test_data; 
 
-  std::string test_data_file_name = //"data/imat2009/imat2009_test.txt";
-      boost::filesystem::path("data/imat2009/imat2009_test.txt")
+  std::string test_data_file_name = //"data/imat2009/imat2009_test_small.txt";
+      boost::filesystem::path("data/imat2009/imat2009_test_small.txt")
       .string();
 
   test_data = ltr::io_utility::loadDataSet<ltr::Object>(test_data_file_name,
       "YANDEX");
 
   for (size_t objIdx = 0; objIdx < test_data.size(); ++objIdx) {
-    EXPECT_EQ(test_data.featureCount(), test_data.at(objIdx).featureCount());
+    EXPECT_EQ(test_data.feature_count(), test_data.at(objIdx).feature_count());
   }
 }*/

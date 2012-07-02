@@ -21,7 +21,7 @@ const int k = 3;
 
 KFoldSimpleSplitter<Object> Use_k(int in_k) {
   ParametersContainer param;
-  param.setInt("K", in_k);
+  param.Set("K", in_k);
   return KFoldSimpleSplitter<Object>(param);
 }
 

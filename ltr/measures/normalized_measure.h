@@ -32,8 +32,8 @@ class NormalizedMeasure : public Measure<TElement> {
           weak_measure_->worst() == -utility::Inf) {
         throw std::logic_error("can't normalize infinity measure");
       }
-      double best = this->getDoubleParameter("BEST");
-      double worst = this->getDoubleParameter("WORST");
+      double best = this->parameters().template Get<double>("BEST");
+      double worst = this->parameters().template Get<double>("WORST");
       return (weak_measure_->value(element) - weak_measure_->worst()) *
                 (best - worst) /
                   (weak_measure_->best() - weak_measure_->worst())
@@ -53,8 +53,8 @@ class NormalizedMeasure : public Measure<TElement> {
     NormalizedMeasure(double worst, double best)
         : Measure<TElement>("Normalized measure") {
       this->setDefaultParameters();
-      this->setDoubleParameter("WORST", worst);
-      this->setDoubleParameter("BEST", best);
+      this->setExistingParameter("WORST", worst);
+      this->setExistingParameter("BEST", best);
       this->checkParameters();
     }
 
@@ -87,21 +87,21 @@ class NormalizedMeasure : public Measure<TElement> {
     }
 
     virtual void checkParameters() {
-      if (this->getDoubleParameter("BEST") ==
-          this->getDoubleParameter("WORST"))
+      if (this->parameters().template Get<double>("BEST") ==
+          this->parameters().template Get<double>("WORST"))
         throw std::logic_error("Best and worst values must be different");
     }
 
     virtual void setDefaultParameters() {
-      this->addDoubleParameter("BEST", 1);
-      this->addDoubleParameter("WORST", -1);
+      this->addNewParam("BEST", 1.);
+      this->addNewParam("WORST", -1.);
     }
 
     virtual double worst() const {
-      return this->getDoubleParameter("WORST");
+      return this->parameters().template Get<double>("WORST");
     }
     virtual double best() const {
-      return this->getDoubleParameter("BEST");
+      return this->parameters().template Get<double>("BEST");
     }
 
     string toString() const {
@@ -116,9 +116,9 @@ class NormalizedMeasure : public Measure<TElement> {
         str << " }";
       }
       str << " with parameters: BEST = ";
-      str << this->getDoubleParameter("BEST");
+      str << this->parameters().template Get<double>("BEST");
       str << ", WORST = ";
-      str << this->getDoubleParameter("WORST");
+      str << this->parameters().template Get<double>("WORST");
       return str.str();
     }
 };

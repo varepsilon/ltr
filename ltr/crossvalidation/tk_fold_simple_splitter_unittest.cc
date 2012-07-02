@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <map>
+#include <utility>
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/splitter_unittest.h"
@@ -25,8 +26,8 @@ const int t = 4;
 
 TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {
   ParametersContainer param;
-  param.setInt("K", in_k);
-  param.setInt("T", in_t);
+  param.Set("K", in_k);
+  param.Set("T", in_t);
   return TKFoldSimpleSplitter<Object>(param);
 }
 

@@ -4,50 +4,56 @@
 #include "ltr/utility/numerical.h"
 
 using ltr::utility::isNaN;
-namespace ltr {
 
-FeatureInfo RemoveNominalConverter::getNewFeatureInfo() const {
-  FeatureInfo result;
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
-      result.addFeature(feature_info_.getFeatureType(i));
-  return result;
+namespace ltr {
+void RemoveNominalConverter::fillOutputFeatureInfo()  {
+  output_feature_info_.clear();
+  for (size_t i = 0; i < input_feature_info_.feature_count(); i++) {
+    if (input_feature_info_.getFeatureType(i) != NOMINAL) {
+      output_feature_info_.addFeature(input_feature_info_.getFeatureType(i));
+    }
+  }
 }
 
-void RemoveNominalConverter::applyImpl(
-    const Object& argument, Object* value) const {
-  *value = Object(getNewFeatureInfo());
-  size_t result_idx = 0;
-  for (size_t i = 0; i < argument.features().size(); i++)
-    if (feature_info_.getFeatureType(i) != NOMINAL)
-      value->features()[result_idx++] = argument.features()[i];
+void RemoveNominalConverter::applyImpl(const Object& input,
+                                             Object* output) const {
+  output->resize(output_feature_info_);
+  // \FIXME(sameg): Extra copy of output_feature_info.
+  size_t output_feature_index = 0;
+  for (size_t input_feature_index = 0;
+      input_feature_index < input.features().size(); ++input_feature_index) {
+    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
+      output->features()[output_feature_index++]
+          = input.features()[input_feature_index];
+    }
+  }
 }
 
 string RemoveNominalConverter::generateCppCode(
-    const std::string &function_name) const {
-  string hpp_string;
-  hpp_string.
+    const string &function_name) const {
+  string code;
+  code.
     append("#include <vector>\n\nvoid ").
     append(function_name).
     append("(const std::vector<double>& features, ").
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
   append("  bool nominal[] = {");
-  for (size_t i = 0; i < feature_info_.getFeatureCount(); i++) {
+  for (size_t i = 0; i < input_feature_info_.feature_count(); ++i) {
     if (i != 0)
-      hpp_string.append(",");
-    if (feature_info_.getFeatureType(i) == NOMINAL)
-      hpp_string.append("1");
+      code.append(",");
+    if (input_feature_info_.getFeatureType(i) == NOMINAL)
+      code.append("1");
     else
-      hpp_string.append("0");
+      code.append("0");
   }
-  hpp_string.
+  code.
     append("};\n").
-    append("  for (size_t i = 0; i < features.size(); i++) {\n").
+    append("  for (size_t i = 0; i < features.size(); ++i) {\n").
     append("    if (!nominal[i])\n").
     append("      result->push_back(features[i]);\n").
     append("  }\n").
     append("}\n");
-  return hpp_string;
+  return code;
 }
 }

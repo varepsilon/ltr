@@ -19,11 +19,11 @@
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
-#include "ltr/feature_converters/remove_nan_converter.h"
+#include "ltr/feature_converters/nan_to_zero_converter.h"
 #include "ltr/feature_converters/utility/utility.h"
 
 using ltr::FeatureConverter;
-using ltr::RemoveNaNConverterLearner;
+using ltr::NanToZeroConverterLearner;
 using ltr::utility::ApplyFeatureConverter;
 
 // The fixture for testing (contains data for tests).
@@ -33,7 +33,7 @@ class LearnersTest : public ::testing::Test {
     // Code here will be called immediately after the constructor (right
     // before each test).
     std::string learn_data_file_name =
-        boost::filesystem::path("data/imat2009/imat2009_learning.txt")
+        boost::filesystem::path("data/imat2009/imat2009_learning_small.txt")
     .string();
     learn_data = ltr::io_utility::loadDataSet<ltr::Object>(
         learn_data_file_name, "YANDEX");
@@ -43,7 +43,7 @@ class LearnersTest : public ::testing::Test {
 
 
     std::string test_data_file_name =
-        boost::filesystem::path("data/imat2009/imat2009_test.txt")
+        boost::filesystem::path("data/imat2009/imat2009_test_small.txt")
     .string();
     test_data = ltr::io_utility::loadDataSet<ltr::Object>(
         test_data_file_name, "YANDEX");
@@ -63,9 +63,9 @@ class LearnersTest : public ::testing::Test {
 
 
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-  RemoveNaNConverterLearner<ltr::Object> remove_NaN_learner;
-  remove_NaN_learner.learn(learn_data);
-  FeatureConverter::Ptr remove_NaN = remove_NaN_learner.makePtr();
+  NanToZeroConverterLearner<ltr::Object> nan_to_zero_converter;
+  nan_to_zero_converter.learn(learn_data);
+  FeatureConverter::Ptr remove_NaN = nan_to_zero_converter.make();
   ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
   ApplyFeatureConverter(remove_NaN, test_data, &test_data);
 

@@ -6,11 +6,11 @@
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
+#include <functional>
 
 #include "ltr/learners/decision_tree/conditions_learner.h"
 
-#include "utility/logger.h"
-using logger::LogStream;
+#include "logog/logog.h"
 
 using std::vector;
 
@@ -30,14 +30,12 @@ For nominal features splits by value of the feature.
     int split_idx;
     vector<double> feature_values;
     vector<double> numeric_split_values;
-    LogStream log;
 
   public:
     typedef boost::shared_ptr<ID3_Splitter> Ptr;
 
     explicit ID3_Splitter(
-        const ParametersContainer& parameters = ParametersContainer())
-        : log(logger::Logger::LL_INFO, "ID3_splitter ") {
+        const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
       this->copyParameters(parameters);
     }
@@ -45,15 +43,18 @@ For nominal features splits by value of the feature.
     int getNextConditions(vector<Condition::Ptr>* result);
 
     void setDefaultParameters() {
-      this->addBoolParameter("SPLIT_FEATURE_N_TIMES", false);
-      this->addIntParameter("FEATURE_SPLIT_COUNT", 100);
-      this->addIntParameter("HALF_SUMMS_STEP", 5);
+      this->addNewParam("SPLIT_FEATURE_N_TIMES", false);
+      this->addNewParam("FEATURE_SPLIT_COUNT", 100);
+      this->addNewParam("HALF_SUMMS_STEP", 5);
     }
     void checkParameters() {
-      CHECK_INT_PARAMETER("FEATURE_SPLIT_COUNT", X >= 1);
-      CHECK_INT_PARAMETER("HALF_SUMMS_STEP", X >= 1);
-      int n = this->getBoolParameter("SPLIT_FEATURE_N_TIMES");
-      n += this->getBoolParameter("USE_HALF_SUMMS_SPLIT");
+      this->checkParameter<int>("FEATURE_SPLIT_COUNT",
+                                std::bind2nd(std::greater_equal<int>(), 1));
+      this->checkParameter<int>("HALF_SUMMS_STEP",
+                                std::bind2nd(std::greater_equal<int>(), 1));
+
+      int n = getParameter<bool>("SPLIT_FEATURE_N_TIMES");
+      n += getParameter<bool>("USE_HALF_SUMMS_SPLIT");
       if (n > 1)
         throw std::logic_error("you can use only one splitting type");
     }

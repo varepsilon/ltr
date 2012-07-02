@@ -13,7 +13,7 @@ namespace gp {
 
 void setContextToObject(Puppy::Context* context, const Object& obj) {
   for (size_t featureIdx = 0;
-      featureIdx < obj.featureCount();
+      featureIdx < obj.feature_count();
       ++featureIdx) {
     double featureVal = obj.features().at(featureIdx);
     string featureName = "feature[" + boost::lexical_cast<string>(featureIdx);
@@ -31,7 +31,7 @@ void markDataSetWithTree(const DataSet<TElement>& data,
       setContextToObject(context, data[elementIdx][objectIdx]);
       double resultFromTree;
       tree->interpret(&resultFromTree, *context);
-      data[elementIdx][objectIdx].setPredictedLabel(resultFromTree);
+      data[elementIdx][objectIdx].set_predicted_label(resultFromTree);
     }
   }
 }

@@ -3,37 +3,21 @@
 #ifndef LTR_DATA_DATA_SET_H_
 #define LTR_DATA_DATA_SET_H_
 
-#include <vector>
-#include <string>
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 #include "ltr/data/object.h"
-#include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
+#include "ltr/data/object_pair.h"
+
+using std::vector;
 
 namespace ltr {
 /** The default weight for an element in data set.
  */
 const double DEFAULT_ELEMENT_WEIGHT = 1.0;
-
-template <typename TElement> class DataSet;
-
-namespace utility {
-template <typename TElement>
-DataSet<TElement> lightSubset(const DataSet<TElement>& data,
-    const std::vector<int>& indexes);
-}
-
-/** \typedef Type for a data set that implements pointwise approach.
- */
-typedef DataSet<Object> PointwiseDataSet;
-/** \typedef Type for a data set that implements pairwise approach.
- */
-typedef DataSet<ObjectPair> PairwiseDataSet;
-/** \typedef Type for a data set that implements listwise approach.
- */
-typedef DataSet<ObjectList> ListwiseDataSet;
 
 /** \class \brief Template class that implements DataSet.
  *  \tparam type of elements, which would be stored in the DataSet. The
@@ -45,21 +29,22 @@ class DataSet : public Printable {
   public:
   /** Shared pointer type to the DataSet.
    */
-  typedef boost::shared_ptr< DataSet > Ptr;
+  typedef boost::shared_ptr<DataSet> Ptr;
 
-  /** The constructor creates a data set to store objects with given
+  /** The constructor creates a data set to store objects with the given
    * FeatureInfo.
    */
-  DataSet(const FeatureInfo& featureInfo = FeatureInfo());
+  DataSet(const FeatureInfo& feature_info = FeatureInfo());
+  /** Destructor
+   */
   virtual ~DataSet();
-  /** Returns FeatureInfo, objects with same FeatureInfo are allowed to be
+  /** Returns FeatureInfo, objects with the same FeatureInfo are allowed to be
    * stored in the DataSet.
    */
-  const FeatureInfo& featureInfo() const;
-  FeatureInfo::Ptr featureInfoPtr() const;
+  const FeatureInfo& feature_info() const;
   /** Returns the number of features in objects of the DataSet.
    */
-  size_t featureCount() const;
+  size_t feature_count() const;
   /** Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
    */
   DataSet& operator<<(const TElement& element);
@@ -79,81 +64,83 @@ class DataSet : public Printable {
   void clear();
   /** Deletes the element with given index from the DataSet.
    */
-  void erase(size_t i);
+  void erase(size_t element_index);
   /** Returns a constant link to the ith element of the DataSet.
    */
-  const TElement& operator[](size_t i) const;
+  const TElement& operator[](size_t element_index) const;
   /** Returns a link to the ith element of the DataSet.
    */
-  TElement& operator[](size_t i);
+  TElement& operator[](size_t element_index);
   /** Returns a constant link to the ith element of the DataSet.
    */
-  const TElement& at(size_t i) const;
+  const TElement& at(size_t element_index) const;
   /** Returns a link to the ith element of the DataSet.
    */
-  TElement& at(size_t i);
+  TElement& at(size_t element_index);
   /** Returns the weight of ith element.
    */
-  double getWeight(size_t element_idx) const;
+  double getWeight(size_t element_index) const;
   /** Sets the weight of ith element.
    * \param element_idx index of the element to set up weight.
    * \param new weight value.
    */
-  void setWeight(size_t element_idx, double weight) const;
-  /** Creates a new DataSet cantaining the copies of the elements in the
+  void setWeight(size_t element_index, double weight) const;
+  /** Creates a new DataSet containing the copies of the elements in the
    * DataSet.
    */
   DataSet<TElement> deepCopy() const;
-  /** The function creates new DataSet, which contains easy copies of elements
+  /** Creates new DataSet, which contains easy copies of elements
    * with given indexes (easy means that they share objects' resources: feature
    * vectors, objects' meat information).
-   * \param data the DataSet from which the subset is build.
-   * \param indexes the indexes of elements from data based on those the subset
+   * \param indices the indices of elements from data based on those the subset
    * is build.
    */
-  friend DataSet<TElement> utility::lightSubset< >(
-      const DataSet<TElement>& data,
-      const std::vector<int>& indexes);
+  DataSet<TElement> lightSubset(const vector<int>& indices) const;
 
   /** 
-   * Function for serialization data set into string.
+   * Function for serialization dataset into string.
    */
-  string toString() const;
+  virtual string toString() const;
 
   private:
   /** Shared pointer to the actual vector, in which the elements are stored.
    */
-  boost::shared_ptr< std::vector<TElement> > p_Elements_;
+  boost::shared_ptr<vector<TElement> > elements_;
   /** The information about objects that are stored in the DataSet.
    */
-  FeatureInfo::Ptr featureInfo_;
+  FeatureInfo::Ptr feature_info_;
   /** Shared pointer to the vector of elements' weights.
      */
-  boost::shared_ptr< std::vector<double> > p_Weights_;
+  boost::shared_ptr<vector<double> > weights_;
 };
 
-template <typename TElement>
-DataSet<TElement>::DataSet(const FeatureInfo& featureInfo)
-  :featureInfo_(new FeatureInfo(featureInfo)),
-  p_Elements_(new std::vector<TElement>()),
-  p_Weights_(new std::vector<double>()) {}
-
-template< typename TElement >
-DataSet< TElement >::~DataSet() {}
-
-template< typename TElement >
-const FeatureInfo& DataSet< TElement >::featureInfo() const {
-  return *featureInfo_;
-}
-
-template< typename TElement >
-FeatureInfo::Ptr DataSet<TElement>::featureInfoPtr() const {
-  return featureInfo_;
-}
+/** \typedef Type for a data set that implements pointwise approach.
+ */
+typedef DataSet<Object> PointwiseDataSet;
+/** \typedef Type for a data set that implements pairwise approach.
+ */
+typedef DataSet<ObjectPair> PairwiseDataSet;
+/** \typedef Type for a data set that implements listwise approach.
+ */
+typedef DataSet<ObjectList> ListwiseDataSet;
 
 template <typename TElement>
-size_t DataSet< TElement >::featureCount() const {
-  return this->featureInfo().getFeatureCount();
+DataSet<TElement>::DataSet(const FeatureInfo& feature_info)
+                   : feature_info_(new FeatureInfo(feature_info)),
+                     elements_(new vector<TElement>()),
+                     weights_(new vector<double>()) {}
+
+template<typename TElement>
+DataSet<TElement>::~DataSet() {}
+
+template<typename TElement>
+const FeatureInfo& DataSet<TElement>::feature_info() const {
+  return *feature_info_;
+}
+
+template <typename TElement>
+size_t DataSet<TElement>::feature_count() const {
+  return this->feature_info().feature_count();
 }
 
 template <typename TElement>
@@ -170,101 +157,129 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   TElement element_to_add = element.deepCopy();
-  if (featureInfo_ == NULL || featureInfo_->getFeatureCount() == 0) {
-    featureInfo_ = FeatureInfo::Ptr(
+  if (feature_info_ == NULL || feature_info_->feature_count() == 0) {
+    feature_info_ = FeatureInfo::Ptr(
       new FeatureInfo(element[0].feature_info()));
   }
-  for (size_t i = 0; i < element_to_add.size(); i++) {
-    if (element[i].feature_info() != featureInfo())
+  for (int object_index = 0;
+       object_index < (int)element_to_add.size();
+       ++object_index) {
+    if (element[object_index].feature_info() != feature_info()) {
       throw std::logic_error("can't add objects with another FeatureInfo.");
-    element_to_add[i].feature_info_ = featureInfo_;
+    }
+    element_to_add[object_index].feature_info_ = feature_info_;
   }
-  (*p_Elements_).push_back(element_to_add);
-  (*p_Weights_).push_back(weight);
+  (*elements_).push_back(element_to_add);
+  (*weights_).push_back(weight);
 }
 
 template <typename TElement>
 size_t DataSet<TElement>::size() const {
-  return (*p_Elements_).size();
+  return elements_->size();
 }
 
 template <typename TElement>
 void DataSet<TElement>::clear() {
-  (*p_Elements_).clear();
-  (*p_Weights_).clear();
+  elements_->clear();
+  weights_->clear();
 }
 
 template <typename TElement>
-void DataSet<TElement>::erase(size_t i) {
-  (*p_Elements_).erase((*p_Elements_).begin() + i);
-  (*p_Weights_).erase((*p_Weights_).begin() + i);
+void DataSet<TElement>::erase(size_t element_index) {
+  elements_->erase(elements_->begin() + element_index);
+  weights_->erase(weights_->begin() + element_index);
 }
 
 template <typename TElement>
-const TElement& DataSet< TElement >::at(size_t i) const {
-  return (*p_Elements_)[i];
+const TElement& DataSet<TElement>::at(size_t element_index) const {
+  return (*elements_)[element_index];
 }
 
 template <typename TElement>
-TElement& DataSet< TElement >::at(size_t i) {
-  return (*p_Elements_)[i];
+TElement& DataSet<TElement>::at(size_t element_index) {
+  return (*elements_)[element_index];
 }
 
 template <typename TElement>
-const TElement& DataSet< TElement >::operator[](size_t i) const {
-  return at(i);
+const TElement& DataSet<TElement>::operator[](size_t element_index) const {
+  return at(element_index);
 }
 
 template <typename TElement>
-TElement& DataSet< TElement >::operator[](size_t i) {
-  return at(i);
+TElement& DataSet<TElement>::operator[](size_t element_index) {
+  return at(element_index);
 }
 
 template <typename TElement>
-double DataSet< TElement >::getWeight(size_t element_idx) const {
-  return (*p_Weights_)[element_idx];
+double DataSet<TElement>::getWeight(size_t element_index) const {
+  return (*weights_)[element_index];
 }
 
 template <typename TElement>
-void DataSet< TElement >::setWeight(size_t element_idx, double weight) const {
-  (*p_Weights_)[element_idx] = weight;
+void DataSet<TElement>::setWeight(size_t element_index, double weight) const {
+  (*weights_)[element_index] = weight;
 }
 
-template< typename TElement >
+template<typename TElement>
 DataSet<TElement> DataSet<TElement>::deepCopy() const {
-  DataSet<TElement> result(this->featureInfo());
-  for (size_t idx = 0; idx < this->size(); ++idx) {
-    result << this->at(idx);
+  DataSet<TElement> result(this->feature_info());
+  for (int element_index = 0;
+       element_index < (int)this->size();
+       ++element_index) {
+    result << this->at(element_index);
   }
   return result;
 }
 
-template< typename TElement >
+template<typename TElement>
 string DataSet<TElement>::toString() const {
   std::stringstream str;
-  for (size_t i = 0; i < size(); i++)
-    str << (*this)[i].toString() << std::endl;
+  for (int element_index = 0; element_index < (int)size(); ++element_index) {
+    str << (*this)[element_index].toString() << std::endl;
+  }
   return str.str();
 }
 
-template< typename TElement >
-bool operator==(const DataSet<TElement>& left,
-                const DataSet<TElement>& right) {
-  if (left.featureInfo() != right.featureInfo())
+template<typename TElement>
+bool operator==(const DataSet<TElement>& lhs,
+                const DataSet<TElement>& rhs) {
+  if (lhs.feature_info() != rhs.feature_info()) {
     return false;
-  if (left.size() != right.size())
+  }
+  if (lhs.size() != rhs.size()) {
     return false;
-  for (int i = 0; i < left.size(); ++i) {
-    if (left[i].size() != right[i].size()) {
+  }
+  for (int element_index = 0;
+       element_index < (int)lhs.size();
+       ++element_index) {
+    if (lhs[element_index].size() != rhs[element_index].size()) {
       return false;
     }
-    for (int j = 0; j < left[i].size(); ++j) {
-      if (left[i][j] != right[i][j]) {
+    for (int object_index = 0;
+         object_index < lhs[element_index].size();
+         ++object_index) {
+      if (lhs[element_index][object_index] !=
+          rhs[element_index][object_index]) {
         return false;
       }
     }
   }
   return true;
+}
+
+template <typename TElement>
+DataSet<TElement>
+DataSet<TElement>::lightSubset(const vector<int>& indices) const {
+  DataSet<TElement> resultDataSet(feature_info());
+
+  for (size_t index_index = 0; index_index < indices.size(); ++index_index) {
+    if (indices[index_index] > size()) {
+      throw std::logic_error("Index is too large");
+    }
+    resultDataSet.elements_->push_back(elements_->at(indices[index_index]));
+    resultDataSet.weights_->push_back(getWeight(indices[index_index]));
+  }
+  return resultDataSet;
 }
 }
 #endif  // LTR_DATA_DATA_SET_H_
