@@ -149,23 +149,19 @@ TEST_F(ListwiseMeasuresTest, TestingYandexNDCG) {
 };
 
 TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
-  ParametersContainer param;
-  param.Set("SCORE_FOR_RELEVANT", 2.0);
-  AveragePrecision ap(param);
+  AveragePrecision ap(2.0);
   EXPECT_TRUE(DoubleEqual(ap(olist), 0.833333333333333333)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  param.Set("SCORE_FOR_RELEVANT", 1.0);
-  AveragePrecision ap1(param);
+  AveragePrecision ap1(1.0);
   EXPECT_TRUE(DoubleEqual(ap1(olist), 1.0)) << ap1(olist);
   EXPECT_TRUE(DoubleEqual(ap1(olist2), 1.0)) << ap1(olist2);
 
-  ap.setExistingParameter("SCORE_FOR_RELEVANT", 4.0);
+  ap.set_score_for_relevant(4.0);
   EXPECT_TRUE(DoubleEqual(ap(olist), 1.0)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  param.Set("SCORE_FOR_RELEVANT", 5.0);
-  AveragePrecision ap2(param);
+  AveragePrecision ap2(5.0);
   EXPECT_TRUE(DoubleEqual(ap2(olist), 0.0));
 }
 

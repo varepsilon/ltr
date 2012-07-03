@@ -16,19 +16,24 @@ namespace ltr {
  */
 class AveragePrecision: public ListwiseMeasure {
  public:
-  AveragePrecision(const ParametersContainer&
-      parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit AveragePrecision(const ParametersContainer&
+      parameters) {
+    this->setParameters(parameters);
+  }
+
+  explicit AveragePrecision(double score_for_relevant = 3.0) {
+    score_for_relevant_ = score_for_relevant;
   }
   /**
    * Clears parameters container and sets default values:
    * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
    * the object is considered to be relevant
    */
-  void setDefaultParameters() {
-    this->clearParameters();
-    this->addNewParam("SCORE_FOR_RELEVANT", 3.0);
+
+  GET_SET(double, score_for_relevant);
+
+  virtual void setDefaultParameters() {
+    score_for_relevant_ = 3.0;
   }
   double best() const {
     return 1.0;
@@ -38,6 +43,10 @@ class AveragePrecision: public ListwiseMeasure {
   }
   string toString() const;
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    score_for_relevant_ = parameters.Get<double>("SCORE_FOR_RELEVANT");
+  }
+  double score_for_relevant_;
   double get_measure(const ObjectList& objects) const;
   virtual string getDefaultAlias() const {return "AveragePrecision";}
 };
