@@ -67,10 +67,15 @@ class BaseDCG : public ListwiseMeasure {
    * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
    * by default NUMBER_OF_OBJECTS_TO_CONSIDER = 0
    */
-  BaseDCG(const ParametersContainer& parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit BaseDCG(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
   }
+
+  explicit BaseDCG(int number_of_objects_to_consider = 0) {
+    number_of_objects_to_consider_ = number_of_objects_to_consider;
+  }
+
+  GET_SET(int, number_of_objects_to_consider);
 
   /**
    * Clears parameters container and sets default values:
@@ -88,6 +93,8 @@ class BaseDCG : public ListwiseMeasure {
   string toString() const;
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+  int number_of_objects_to_consider_;
   double get_measure(const ObjectList& objects) const;
   virtual string getDefaultAlias() const {return TDCGFormula::alias();}
 };
@@ -111,9 +118,14 @@ string BaseDCG<TDCGFormula>::toString() const {
   std::stringstream str;
   str << this->alias();
   str << " measure with parameter NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-  str << this->parameters().template Get<int>(
-             "NUMBER_OF_OBJECTS_TO_CONSIDER");
+  str << this->number_of_objects_to_consider_;
   return str.str();
+}
+
+template<class TDCGFormula>
+void BaseDCG<TDCGFormula>::setParametersImpl(const ParametersContainer& parameters) {
+  this->number_of_objects_to_consider_ = 
+    parameters.template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
 }
 
 template<class TDCGFormula>
@@ -121,8 +133,7 @@ double BaseDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
   vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
   sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-  size_t n = this->parameters().
-             template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+  size_t n = this->number_of_objects_to_consider_;
   if ((n == 0) || (n > labels.size())) {
     n = labels.size();
   }
@@ -137,13 +148,11 @@ double BaseDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
 
 template<class TDCGFormula>
 void BaseDCG<TDCGFormula>::setDefaultParameters() {
-  this->clearParameters();
-  this->addNewParam("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
+  this->number_of_objects_to_consider_ = 0;
 }
 template<class TDCGFormula>
 void BaseDCG<TDCGFormula>::checkParameters() const {
-  this->checkParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER",
-                             std::bind2nd(std::greater_equal<int>(), 0) );
+  CHECK(this->number_of_objects_to_consider_ >= 0);
 }
 };
 #endif  // LTR_MEASURES_DCG_H_

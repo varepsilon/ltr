@@ -91,11 +91,11 @@ TEST_F(ListwiseMeasuresTest, TestingGMRR) {
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg0;
   DCG dcg1;
-  dcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.set_number_of_objects_to_consider(1);
   DCG dcg2;
-  dcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.set_number_of_objects_to_consider(2);
   DCG dcg3;
-  dcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 15.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 15.6309297535714));
@@ -106,11 +106,11 @@ TEST_F(ListwiseMeasuresTest, TestingDCG) {
 TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
   YandexDCG dcg0;
   YandexDCG dcg1;
-  dcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.set_number_of_objects_to_consider(1);
   YandexDCG dcg2;
-  dcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.set_number_of_objects_to_consider(2);
   YandexDCG dcg3;
-  dcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 4.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 4.5));
