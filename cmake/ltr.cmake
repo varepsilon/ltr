@@ -5,7 +5,8 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc
              ${Source_Path}/ltr/data/object_list.h ${Source_Path}/ltr/data/object_list.cc
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
-             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc)
+             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
+             ${Source_Path}/ltr/data/per_object_accessor.h)
 
 SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
@@ -128,9 +129,6 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc)
-
-SET(LTR_FEATURE_CONVERTERS_UTILITY ${Source_Path}/ltr/feature_converters/utility/utility.h
-                                   ${Source_Path}/ltr/feature_converters/utility/utility.cc)
                            
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/data_sampler.h

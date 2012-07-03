@@ -22,8 +22,6 @@
 using std::string;
 using std::vector;
 
-using ltr::utility::ApplyFeatureConverter;
-
 namespace ltr {
 /**
  * \brief Learns input dataset and produces a Scorer.
@@ -195,10 +193,7 @@ void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
   for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
     feature_converter_learners_[i]->learn(source_data);
     feature_converters_.push_back(feature_converter_learners_[i]->make());
-    // \TODO Move ApplyFeatureConverter into FeatureConverter
-    ApplyFeatureConverter(feature_converters_[i],
-                          source_data,
-                          &converted_data);
+    feature_converters_[i]->apply(source_data, &converted_data);
     source_data = converted_data;
   }
 

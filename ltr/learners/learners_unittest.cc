@@ -24,7 +24,6 @@
 
 using ltr::FeatureConverter;
 using ltr::NanToZeroConverterLearner;
-using ltr::utility::ApplyFeatureConverter;
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -66,8 +65,8 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   NanToZeroConverterLearner<ltr::Object> nan_to_zero_converter;
   nan_to_zero_converter.learn(learn_data);
   FeatureConverter::Ptr remove_NaN = nan_to_zero_converter.make();
-  ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
-  ApplyFeatureConverter(remove_NaN, test_data, &test_data);
+  remove_NaN->apply(learn_data, &learn_data);
+  remove_NaN->apply(test_data, &test_data);
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);

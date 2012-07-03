@@ -21,7 +21,6 @@
 #include "ltr/feature_converters/utility/utility.h"
 #include "ltr/utility/indices.h"
 
-using ltr::utility::ApplyFeatureConverter;
 using ltr::utility::IndicesPtr;
 using ltr::utility::Indices;
 
@@ -53,19 +52,15 @@ class FeatureConvertersTest : public ::testing::Test {
       (new NanToZeroConverterLearner<ltr::Object>);
     nan_to_zero_converter->learn(learn_data_pointwise);
     FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
-    ltr::utility::ApplyFeatureConverter(remove_NaN,
-      learn_data_pointwise, &learn_data_pointwise);
-    ltr::utility::ApplyFeatureConverter(remove_NaN,
-      test_data_pointwise, &test_data_pointwise);
+    remove_NaN->apply(learn_data_pointwise, &learn_data_pointwise);
+    remove_NaN->apply(test_data_pointwise, &test_data_pointwise);
 
     NanToZeroConverterLearner<ltr::ObjectList>::Ptr nan_to_zero_converter2
       (new NanToZeroConverterLearner<ltr::ObjectList>);
     nan_to_zero_converter2->learn(learn_data_listwise);
     FeatureConverter::Ptr remove_NaN2 = nan_to_zero_converter2->make();
-    ltr::utility::ApplyFeatureConverter(remove_NaN2,
-      learn_data_listwise, &learn_data_listwise);
-    ltr::utility::ApplyFeatureConverter(remove_NaN2,
-      test_data_listwise, &test_data_listwise);
+    remove_NaN2->apply(learn_data_listwise, &learn_data_listwise);
+    remove_NaN2->apply(test_data_listwise, &test_data_listwise);
   }
 
   virtual void TearDown() {
