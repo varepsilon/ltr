@@ -187,23 +187,22 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.88024)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.7985632)) << pf(olist2);
 
-  ParametersContainer param;
-  param.Set("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
-  PFound pf2(param);
+  PFound pf2;
+  pf2.set_number_of_objects_to_consider(2);
   EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
   EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  pf.set_number_of_objects_to_consider(2);
   EXPECT_TRUE(DoubleEqual(pf(olist), pf2(olist)));
   EXPECT_TRUE(DoubleEqual(pf(olist2), pf2(olist2)));
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
-  pf.setExistingParameter("MAX_LABEL", 6.0);
+  pf.set_number_of_objects_to_consider(5);
+  pf.set_max_label(6.0);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.78078703703703)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.71972415123456)) << pf(olist2);
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  pf.setExistingParameter("P_BREAK", 0.23);
+  pf.set_number_of_objects_to_consider(0);
+  pf.set_p_break(0.23);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.76434259259259)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.65711983024691)) << pf(olist2);
 }
