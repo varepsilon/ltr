@@ -29,8 +29,13 @@ class LeaveOneOutSplitter : public Splitter<TElement> {
    * @param parameters Standart LTR parameter container with no parameters
    * (LeaveOneOutSplitter has no parameters at all)
    */
+
+  explicit LeaveOneOutSplitter() {
+    this->setDefaultParameters();
+  }
+
   explicit LeaveOneOutSplitter
-      (const ParametersContainer& parameters = ParametersContainer()) {
+      (const ParametersContainer& parameters) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }

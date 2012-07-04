@@ -24,11 +24,8 @@ using std::pair;
 const int k = 3;
 const int t = 4;
 
-TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {
-  ParametersContainer param;
-  param.Set("K", in_k);
-  param.Set("T", in_t);
-  return TKFoldSimpleSplitter<Object>(param);
+TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {  
+  return TKFoldSimpleSplitter<Object>(in_k, in_t);
 }
 
 
@@ -71,8 +68,10 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
     EXPECT_LE(diff, 1);
   }
 
-  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl1 = Use_k_t(1, t));
-  EXPECT_ANY_THROW(TKFoldSimpleSplitter<Object> spl2 = Use_k_t(k, 0));
+  TKFoldSimpleSplitter<Object> spl1 = Use_k_t(1, t);
+  EXPECT_ANY_THROW(spl1.split(0, data));
+  TKFoldSimpleSplitter<Object> spl2 = Use_k_t(k, 0);
+  EXPECT_ANY_THROW(spl2.split(0, data));
 };
 
 // partition is a mapping from element to part's number

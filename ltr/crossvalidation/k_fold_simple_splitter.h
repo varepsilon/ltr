@@ -32,10 +32,15 @@ class KFoldSimpleSplitter : public Splitter<TElement> {
    * K, by default K = 10
    */
   explicit KFoldSimpleSplitter
-      (const ParametersContainer& parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+      (const ParametersContainer& parameters) {
+    this->setParameters(parameters);
   }
+
+  explicit KFoldSimpleSplitter
+      (const int K = 10) {
+    K_ = K;
+  }
+
   /**
    * Clears parameters container and sets int K = 10
    */
@@ -48,13 +53,16 @@ class KFoldSimpleSplitter : public Splitter<TElement> {
   int splitCount(const DataSet<TElement>& base_set) const;
 
   string toString() const;
+  GET_SET(int, K);
  protected:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void splitImpl(
     int split_index,
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const;
   virtual string getDefaultAlias() const {return "KFoldSimpleSplitter";}
+  int K_;
 };
 
 // template realizations
@@ -68,20 +76,24 @@ string KFoldSimpleSplitter<TElement>::toString() const {
 
 template<class TElement>
 void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
-  this->clearParameters();
-  this->addNewParam("K", 10);
+  this->K_ = 10;
 }
 
 template<class TElement>
-void KFoldSimpleSplitter<TElement>::checkParameters() const {
-  Parameterized::checkParameter<int>("K",
-                               std::bind2nd(std::greater_equal<int>(), 2));
+void KFoldSimpleSplitter<TElement>::checkParameters() const {  
+  CHECK(this->K_ >= 2);
+}
+
+template <class TElement>
+void KFoldSimpleSplitter<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  K_ = parameters.Get<int>("K");
 }
 
 template<class TElement>
 int KFoldSimpleSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
-  return this->parameters().template Get<int>("K");
+  return K_;
 }
 
 template<class TElement>
@@ -100,8 +112,8 @@ void KFoldSimpleSplitter<TElement>::splitImpl(
 
   const ParametersContainer &params = this->parameters();
 
-  int block_size = base_set.size() / params.Get<int>("K");
-  int extra_length = base_set.size() % params.Get<int>("K");
+  int block_size = base_set.size() / K_;
+  int extra_length = base_set.size() % K_;
 
   int test_begin = block_size * split_index +
     std::min(split_index, extra_length);
