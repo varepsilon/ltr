@@ -11,7 +11,6 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/feature_converters/feature_converter_learner.h"
-#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/interfaces/reporter.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"

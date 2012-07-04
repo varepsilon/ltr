@@ -12,7 +12,6 @@
 #include "ltr/utility/numerical.h"
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"

@@ -20,7 +20,6 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
 #include "ltr/feature_converters/nan_to_zero_converter.h"
-#include "ltr/feature_converters/utility/utility.h"
 
 using ltr::FeatureConverter;
 using ltr::NanToZeroConverterLearner;

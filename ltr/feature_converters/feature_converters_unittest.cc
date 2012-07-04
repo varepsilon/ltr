@@ -18,7 +18,6 @@
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/dcg.h"
 #include "ltr/parameters_container/parameters_container.h"
-#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/utility/indices.h"
 
 using ltr::utility::IndicesPtr;
