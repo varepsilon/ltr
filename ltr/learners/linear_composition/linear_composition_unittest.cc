@@ -67,7 +67,8 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
   AbsError::Ptr abs_error(new AbsError);
   lc_learner.set_measure(abs_error);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   lc_learner.set_weak_learner(bf_learner);
 
   lc_learner.learn(data);
@@ -99,7 +100,8 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   AbsError::Ptr abs_error(new AbsError);
   lc_learner.set_measure(abs_error);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
   bf_learner->addDataPreprocessor(begging);
   lc_learner.set_weak_learner(bf_learner);
@@ -115,7 +117,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   }
 
   begging->set_sampling_fraction(2.);
-  lc_learner.setExistingParameter("NUMBER_OF_ITERATIONS", 15);
+  lc_learner.set_number_of_iterations(15);
   lc_learner.learn(data);
   lin_scorer = lc_learner.makeSpecific();
 
@@ -136,7 +138,8 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   bf_learner->addFeatureConverterLearner(rsm);
   lc_learner.set_weak_learner(bf_learner);
 
@@ -156,7 +159,8 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
   AbsError::Ptr abs_error(new AbsError);
   adads_lc_learner.set_measure(abs_error);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   adads_lc_learner.set_weak_learner(bf_learner);
 
   adads_lc_learner.learn(data);
@@ -173,9 +177,11 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
   adalcs_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
 
   TruePoint::Ptr true_point(new TruePoint);
+  AbsError::Ptr abs_error(new AbsError);
   adalcs_lc_learner.set_measure(true_point);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   adalcs_lc_learner.set_weak_learner(bf_learner);
 
   adalcs_lc_learner.learn(data);
@@ -196,9 +202,11 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   ada_lc_learner.setDataSetWeightsUpdater(ada_dswu);
 
   TruePoint::Ptr true_point(new TruePoint);
+  AbsError::Ptr abs_error(new AbsError);
   ada_lc_learner.set_measure(true_point);
 
-  BestFeatureLearner<Object>::Ptr bf_learner(new BestFeatureLearner<Object>);
+  BestFeatureLearner<Object>::Ptr 
+    bf_learner(new BestFeatureLearner<Object>(abs_error));
   ada_lc_learner.set_weak_learner(bf_learner);
 
   FeatureRandomSamplerLearner<Object>::Ptr

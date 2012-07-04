@@ -24,9 +24,12 @@ class LinearLearner : public BaseLearner<TElement, LinearScorer> {
  public:
   typedef boost::shared_ptr<LinearLearner> Ptr;
 
-  LinearLearner(const ParametersContainer& parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit LinearLearner(const ParametersContainer& parameters) {
+    // DO NOTHING
+  }
+
+  LinearLearner() {
+    // DO NOTHING
   }
 
   // \TODO ? Implement

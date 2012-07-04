@@ -28,10 +28,8 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
   typedef boost::shared_ptr<BestFeatureLearner> Ptr;
 
-  BestFeatureLearner
-      (const ParametersContainer& parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit BestFeatureLearner(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
   }
 
   explicit BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure) {
@@ -39,23 +37,28 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
   }
 
   void setDefaultParameters() {
-    Parameterized::addNewParam<Measure<TElement>*>("measure", NULL);
-  }
-  virtual void parametersUpdateCallback() {
-    Measure<TElement> *msr =
-        Parameterized::getParameter<Measure<TElement>*>("measure");
-    this->measure_ = typename Measure<TElement>::Ptr(msr);
+    measure_ = typename Measure<TElement>::Ptr();
   }
 
+  GET_SET(typename Measure<TElement>::Ptr, measure);
+
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
+  }
   virtual void learnImpl(const DataSet<TElement>& data,
                          OneFeatureScorer* scorer);
   virtual string getDefaultAlias() const {return "BestFeatureLeaner";}
+
+  typename Measure<TElement>::Ptr measure_;
 };
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
+  if(measure_.get() == 0) {
+    throw std::logic_error("Set measure first.");
+  }
   if (data.feature_count() == 0) {
     throw std::logic_error("There are no features for BF learner.");
   }
