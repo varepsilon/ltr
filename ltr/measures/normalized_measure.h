@@ -82,7 +82,8 @@ class NormalizedMeasure : public Measure<TElement> {
   double worst_, best_;
 
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    weak_measure_ = parameters.Get<Measure<TElement>::Ptr>("WEAK_MEASURE");
+    weak_measure_
+      = parameters.Get<typename Measure<TElement>::Ptr>("WEAK_MEASURE");
     worst_ = parameters.Get<double>("WORST");
     best_ = parameters.Get<double>("BEST");
   }
