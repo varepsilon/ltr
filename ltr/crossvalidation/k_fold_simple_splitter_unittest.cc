@@ -20,9 +20,7 @@ using std::vector;
 const int k = 3;
 
 KFoldSimpleSplitter<Object> Use_k(int in_k) {
-  ParametersContainer param;
-  param.Set("K", in_k);
-  return KFoldSimpleSplitter<Object>(param);
+  return KFoldSimpleSplitter<Object>(in_k);
 }
 
 TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
@@ -61,5 +59,6 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
     *std::min_element(test_sizes.begin(), test_sizes.end());
   EXPECT_LE(diff, 1);
 
-  EXPECT_ANY_THROW(KFoldSimpleSplitter<Object> spl1 = Use_k(1));
+  KFoldSimpleSplitter<Object> spl1 = Use_k(1);
+  EXPECT_ANY_THROW(spl1.split(0, data));
 };

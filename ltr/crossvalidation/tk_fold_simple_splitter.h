@@ -35,10 +35,18 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
    * K and T, by default K = T = 10
    */
   explicit TKFoldSimpleSplitter
-      (const ParametersContainer& parameters = ParametersContainer()) {
+      (const ParametersContainer& parameters) {
     this->setDefaultParameters();
     this->copyParameters(parameters);
   }
+
+  explicit TKFoldSimpleSplitter
+      (const int K = 10,
+       const int T = 10) {
+    K_ = K;
+    T_ = T;
+  }
+
   /**
    * Clears parameters container and sets ints K = 10 and T = 10
    */
@@ -52,12 +60,15 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
 
   string toString() const;
  protected:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void splitImpl(
     int split_index,
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const;
 
+  GET_SET(int, K);
+  GET_SET(int, T);
  private:
   typedef vector<int> Permutation;
   /**
@@ -67,6 +78,8 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
    */
   Permutation getRandomPermutation(int index, int dataset_size) const;
   virtual string getDefaultAlias() const {return "TKFoldSimpleSplitter";}
+  int K_;
+  int T_;
 };
 
 // template realizations
@@ -74,32 +87,35 @@ template<class TElement>
 string TKFoldSimpleSplitter<TElement>::toString() const {
   std::stringstream str;
   str << "TK-fold splitter with parameters: T = ";
-  str << this->parameters().template Get<int>("T");
+  str << T_;
   str << ", K = ";
-  str << this->parameters().template Get<int>("K");
+  str << K_;
   return str.str();
 }
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
-  this->clearParameters();
-  this->addNewParam("K", 10);
-  this->addNewParam("T", 10);
+  K_ = 10;
+  T_ = 10;
 }
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-  Parameterized::checkParameter<int>("K",
-                                     std::bind2nd(std::greater<int>(), 1));
-  Parameterized::checkParameter<int>("T",
-                                     std::bind2nd(std::greater<int>(), 0));
+  CHECK(K_ > 1);
+  CHECK(T_ > 0);                  
+}
+
+template <class TElement>
+void TKFoldSimpleSplitter<TElement>::setParametersImpl(
+    const ParametersContainer& parameters) {
+  K_ = parameters.Get<int>("K");
+  T_ = parameters.Get<int>("T");
 }
 
 template<class TElement>
 int TKFoldSimpleSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
-  return this->parameters().template Get<int>("K") *
-         this->parameters().template Get<int>("T");
+  return K_ * T_;
 }
 
 template<class TElement>
@@ -118,14 +134,14 @@ void TKFoldSimpleSplitter<TElement>::splitImpl(
 
   const ParametersContainer &params = this->parameters();
 
-  int blocksplit_index = split_index / params.Get<int>("K");
-  int block_index = split_index % params.Get<int>("K");
+  int blocksplit_index = split_index / K_;
+  int block_index = split_index % K_;
 
   Permutation current_perm =
     getRandomPermutation(blocksplit_index, base_set.size());
 
-  int block_size = base_set.size() / params.Get<int>("K");
-  int extra_length = base_set.size() % params.Get<int>("K");
+  int block_size = base_set.size() / K_;
+  int extra_length = base_set.size() % K_;
 
   int test_begin = block_size * block_index +
     std::min(block_index, extra_length);
