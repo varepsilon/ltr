@@ -19,9 +19,10 @@ namespace ltr {
 template <class TElement>
 class Accuracy : public Measure<TElement> {
  public:
-  Accuracy(const ParametersContainer& parameters = ParametersContainer()) {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
+  explicit Accuracy() {}
+
+  explicit Accuracy(const ParametersContainer& parameters) {
+    // DO NOTHING
   }
   double best() const {
     return 1.0;

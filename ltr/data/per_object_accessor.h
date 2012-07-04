@@ -17,7 +17,7 @@ using ltr::ObjectList;
 template<class TElement>
 class PerObjectAccessor {
  public:
-  PerObjectAccessor(TElement* element) : element_(element) {}
+  explicit PerObjectAccessor(TElement* element) : element_(element) {}
 
   size_t object_count() const;
   Object& object(size_t object_index);
@@ -30,7 +30,7 @@ class PerObjectAccessor {
 template<>
 class PerObjectAccessor<Object> {
  public:
-  PerObjectAccessor(Object* element) : element_(element) {}
+  explicit PerObjectAccessor(Object* element) : element_(element) {}
 
   size_t object_count() const {
     return 1;
@@ -46,7 +46,7 @@ class PerObjectAccessor<Object> {
 template<>
 class PerObjectAccessor<const Object> {
  public:
-  PerObjectAccessor(const Object* element) : element_(element) {}
+  explicit PerObjectAccessor(const Object* element) : element_(element) {}
 
   size_t object_count() const {
     return 1;
@@ -63,7 +63,7 @@ class PerObjectAccessor<const Object> {
 template<>
 class PerObjectAccessor<ObjectPair> {
  public:
-  PerObjectAccessor(ObjectPair* element) : element_(element) {}
+  explicit PerObjectAccessor(ObjectPair* element) : element_(element) {}
 
   size_t object_count() const {
     return 2;
@@ -83,7 +83,7 @@ class PerObjectAccessor<ObjectPair> {
 template<>
 class PerObjectAccessor<const ObjectPair> {
  public:
-  PerObjectAccessor(const ObjectPair* element) : element_(element) {}
+  explicit PerObjectAccessor(const ObjectPair* element) : element_(element) {}
 
   size_t object_count() const {
     return 2;
@@ -103,7 +103,7 @@ class PerObjectAccessor<const ObjectPair> {
 template<>
 class PerObjectAccessor<ObjectList> {
  public:
-  PerObjectAccessor(ObjectList* element) : element_(element) {}
+  explicit PerObjectAccessor(ObjectList* element) : element_(element) {}
 
   size_t object_count() const {
     return element_->size();
@@ -119,7 +119,7 @@ class PerObjectAccessor<ObjectList> {
 template<>
 class PerObjectAccessor<const ObjectList> {
  public:
-  PerObjectAccessor(const ObjectList* element) : element_(element) {}
+  explicit PerObjectAccessor(const ObjectList* element) : element_(element) {}
 
   size_t object_count() const {
     return element_->size();

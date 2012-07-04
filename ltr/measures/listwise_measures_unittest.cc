@@ -71,18 +71,18 @@ class ListwiseMeasuresTest : public ::testing::Test {
 TEST_F(ListwiseMeasuresTest, TestingGMRR) {
   GMRR gmrr0;
   GMRR gmrr1;
-  gmrr1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  gmrr1.set_number_of_objects_to_consider(1);
   GMRR gmrr2;
-  gmrr2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  gmrr2.set_number_of_objects_to_consider(2);
 
   EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.49313354492187));
   EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.46875));
   EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.47705078125));
 
-  gmrr0.setExistingParameter("MAX_LABEL", 4.0);
-  gmrr1.setExistingParameter("MAX_LABEL", 4.0);
-  gmrr2.setExistingParameter("MAX_LABEL", 4.0);
-
+  gmrr0.set_max_label(4.0);
+  gmrr1.set_max_label(4.0);
+  gmrr2.set_max_label(4.0);
+ 
   EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.943115234375));
   EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.9375));
   EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.939453125));
@@ -91,11 +91,11 @@ TEST_F(ListwiseMeasuresTest, TestingGMRR) {
 TEST_F(ListwiseMeasuresTest, TestingDCG) {
   DCG dcg0;
   DCG dcg1;
-  dcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.set_number_of_objects_to_consider(1);
   DCG dcg2;
-  dcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.set_number_of_objects_to_consider(2);
   DCG dcg3;
-  dcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 15.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 15.6309297535714));
@@ -106,11 +106,11 @@ TEST_F(ListwiseMeasuresTest, TestingDCG) {
 TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
   YandexDCG dcg0;
   YandexDCG dcg1;
-  dcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  dcg1.set_number_of_objects_to_consider(1);
   YandexDCG dcg2;
-  dcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  dcg2.set_number_of_objects_to_consider(2);
   YandexDCG dcg3;
-  dcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  dcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(dcg1(olist), 4.0));
   EXPECT_TRUE(DoubleEqual(dcg2(olist), 4.5));
@@ -121,11 +121,11 @@ TEST_F(ListwiseMeasuresTest, TestingYandexDCG) {
 TEST_F(ListwiseMeasuresTest, TestingNDCG) {
   NDCG ndcg0;
   NDCG ndcg1;
-  ndcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  ndcg1.set_number_of_objects_to_consider(1);
   NDCG ndcg2;
-  ndcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  ndcg2.set_number_of_objects_to_consider(2);
   NDCG ndcg3;
-  ndcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  ndcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.92530188545727754));
@@ -136,11 +136,11 @@ TEST_F(ListwiseMeasuresTest, TestingNDCG) {
 TEST_F(ListwiseMeasuresTest, TestingYandexNDCG) {
   YandexNDCG ndcg0;
   YandexNDCG ndcg1;
-  ndcg1.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 1);
+  ndcg1.set_number_of_objects_to_consider(1);
   YandexNDCG ndcg2;
-  ndcg2.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  ndcg2.set_number_of_objects_to_consider(2);
   YandexNDCG ndcg3;
-  ndcg3.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 3);
+  ndcg3.set_number_of_objects_to_consider(3);
 
   EXPECT_TRUE(DoubleEqual(ndcg1(olist), 1.0));
   EXPECT_TRUE(DoubleEqual(ndcg2(olist), 0.9));
@@ -149,23 +149,19 @@ TEST_F(ListwiseMeasuresTest, TestingYandexNDCG) {
 };
 
 TEST_F(ListwiseMeasuresTest, TestingAveragePrecision) {
-  ParametersContainer param;
-  param.Set("SCORE_FOR_RELEVANT", 2.0);
-  AveragePrecision ap(param);
+  AveragePrecision ap(2.0);
   EXPECT_TRUE(DoubleEqual(ap(olist), 0.833333333333333333)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  param.Set("SCORE_FOR_RELEVANT", 1.0);
-  AveragePrecision ap1(param);
+  AveragePrecision ap1(1.0);
   EXPECT_TRUE(DoubleEqual(ap1(olist), 1.0)) << ap1(olist);
   EXPECT_TRUE(DoubleEqual(ap1(olist2), 1.0)) << ap1(olist2);
 
-  ap.setExistingParameter("SCORE_FOR_RELEVANT", 4.0);
+  ap.set_score_for_relevant(4.0);
   EXPECT_TRUE(DoubleEqual(ap(olist), 1.0)) << ap(olist);
   EXPECT_TRUE(DoubleEqual(ap(olist2), 0.5)) << ap(olist2);
 
-  param.Set("SCORE_FOR_RELEVANT", 5.0);
-  AveragePrecision ap2(param);
+  AveragePrecision ap2(5.0);
   EXPECT_TRUE(DoubleEqual(ap2(olist), 0.0));
 }
 
@@ -191,23 +187,22 @@ TEST_F(ListwiseMeasuresTest, TestingPFoundRank) {
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.88024)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.7985632)) << pf(olist2);
 
-  ParametersContainer param;
-  param.Set("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
-  PFound pf2(param);
+  PFound pf2;
+  pf2.set_number_of_objects_to_consider(2);
   EXPECT_TRUE(DoubleEqual(pf2(olist), 0.834)) << pf2(olist);
   EXPECT_TRUE(DoubleEqual(pf2(olist2), 0.744)) << pf2(olist2);
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 2);
+  pf.set_number_of_objects_to_consider(2);
   EXPECT_TRUE(DoubleEqual(pf(olist), pf2(olist)));
   EXPECT_TRUE(DoubleEqual(pf(olist2), pf2(olist2)));
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 5);
-  pf.setExistingParameter("MAX_LABEL", 6.0);
+  pf.set_number_of_objects_to_consider(5);
+  pf.set_max_label(6.0);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.78078703703703)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.71972415123456)) << pf(olist2);
 
-  pf.setExistingParameter("NUMBER_OF_OBJECTS_TO_CONSIDER", 0);
-  pf.setExistingParameter("P_BREAK", 0.23);
+  pf.set_number_of_objects_to_consider(0);
+  pf.set_p_break(0.23);
   EXPECT_TRUE(DoubleEqual(pf(olist), 0.76434259259259)) << pf(olist);
   EXPECT_TRUE(DoubleEqual(pf(olist2), 0.65711983024691)) << pf(olist2);
 }

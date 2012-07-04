@@ -23,19 +23,23 @@ class ReciprocalRank : public ListwiseMeasure {
    * @param parameters Standart LTR parameter container with int parameter
    * SCORE_FOR_RELEVANT, by default SCORE_FOR_RELEVANT = 3.0
    */
-  ReciprocalRank(const ParametersContainer&
-      parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit ReciprocalRank(const ParametersContainer&
+      parameters) {
+    this->setParameters(parameters);
   }
+
+  explicit ReciprocalRank(double score_for_relevant) {
+    score_for_relevant_ = score_for_relevant;
+  }
+
+  GET_SET(double, score_for_relevant);
   /**
    * Clears parameters container and sets default values:
    * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
    * the object is considered to be relevant
    */
   void setDefaultParameters() {
-    this->clearParameters();
-    this->addNewParam("SCORE_FOR_RELEVANT", 3.0);
+    score_for_relevant_ = 3.0;
   }
 
   double best() const {
@@ -47,6 +51,10 @@ class ReciprocalRank : public ListwiseMeasure {
   string toString() const;
 
  private:
+  double score_for_relevant_;
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    score_for_relevant_ = parameters.Get<double>("SCORE_FOR_RELEVANT");
+  }
   double get_measure(const ObjectList& objects) const;
   /**
    * Some decreasing function, usually f(x) = 1/x

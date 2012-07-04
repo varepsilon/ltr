@@ -30,13 +30,13 @@ namespace ltr {
 * This can be usefull for better training of Scorer
 * (Learner<TElement>::addFeatureConverterLearner).
 *
-* Feature converters wich were used during training of Scorer 
-* will be added in the result Scorer (see Scorer::addFeatureConverter) 
+* Feature converters wich were used during training of Scorer
+* will be added in the result Scorer (see Scorer::addFeatureConverter)
 * and consequently must be Serializable.
-* 
+*
 * \note In most cases you don't need to create FeatureConverter directly,
 * normally it is the result of some FeatureConverterLearner work.
-* 
+*
 * \see FeatureConverterLearner, BaseFeatureConverterLearner, BaseLearner, Scorer
 */
 class FeatureConverter : public Serializable,
@@ -97,7 +97,7 @@ typedef std::vector<FeatureConverter::Ptr> FeatureConverterArray;
 // template realization
 
 template<class TElement>
-void FeatureConverter::apply(const DataSet<TElement>& input, 
+void FeatureConverter::apply(const DataSet<TElement>& input,
                              DataSet<TElement>* output) const {
   *output = input.deepCopy();
   for (int element_index = 0; element_index < input.size(); ++element_index) {

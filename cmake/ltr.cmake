@@ -11,23 +11,23 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
 SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
 					  ${Source_Path}/ltr/learners/decision_tree/id3_learner.h
-					  
+
 					  ${Source_Path}/ltr/learners/decision_tree/conditions_learner.h
 					  ${Source_Path}/ltr/learners/decision_tree/splitting_quality.h
-					  
+
 					  ${Source_Path}/ltr/learners/decision_tree/id3_splitter.h
 					  ${Source_Path}/ltr/learners/decision_tree/id3_splitter.cc
 					  ${Source_Path}/ltr/learners/decision_tree/sqr_error_quality.h
-				 
+
 				      ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc
                       ${Source_Path}/ltr/learners/decision_tree/classification_result.h
                       ${Source_Path}/ltr/learners/decision_tree/classification_result.cc
-                      
+
                       ${Source_Path}/ltr/learners/decision_tree/leaf_vertex.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_vertex.h
                       ${Source_Path}/ltr/learners/decision_tree/regression_vertex.h
-                      
+
                       ${Source_Path}/ltr/learners/decision_tree/condition.h
                       ${Source_Path}/ltr/learners/decision_tree/condition.cc
                       ${Source_Path}/ltr/learners/decision_tree/compare_condition.h
@@ -42,7 +42,7 @@ SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
 
-SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h                
+SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/io_utility.cc
                  ${Source_Path}/ltr/data/utility/parsers/parser.h
                  ${Source_Path}/ltr/data/utility/parsers/parser.cc
@@ -75,13 +75,13 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/s
                 ${Source_Path}/ltr/scorers/gp_scorer.h
                 ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
 				${Source_Path}/ltr/scorers/linear_scorer.h ${Source_Path}/ltr/scorers/linear_scorer.cc)
-            
+
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
                       ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
 
 SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                              ${Source_Path}/ltr/parameters_container/parameters_container.cc)
-                            
+
 SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/abs_error.h
                  ${Source_Path}/ltr/measures/squared_error.h
@@ -105,7 +105,7 @@ SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner_determinant_strategy.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner_determinant_strategy.cc
-				 
+
 				   ${Source_Path}/ltr/learners/gp_learner/gp_primitives.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_functions.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_functions.cc)
@@ -129,27 +129,29 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.cc)
-                           
+
 SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocessor.h
                            ${Source_Path}/ltr/data_preprocessors/data_sampler.h
 						   ${Source_Path}/ltr/data_preprocessors/data_random_sampler.h
                            ${Source_Path}/ltr/data_preprocessors/fake_data_preprocessor.h)
-                           
+
 SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
                         ${Source_Path}/ltr/crossvalidation/validation_result.h
                         ${Source_Path}/ltr/crossvalidation/validation_result.cc
                         ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
-                        ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h)
-                        
+                        ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h
+                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.h
+                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.cc)
+
 SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear_composition_learner.h
                            ${Source_Path}/ltr/learners/linear_composition/data_set_weights_updater.h
                            ${Source_Path}/ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h
                            ${Source_Path}/ltr/learners/linear_composition/ada_rank_data_set_weights_updater.h
                            ${Source_Path}/ltr/learners/linear_composition/ada_rank_lc_scorer_weights_updater.h
                            ${Source_Path}/ltr/learners/linear_composition/average_lc_scorer_weights_updater.h)
-                            
+
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(data FILES ${LTR_DATA})

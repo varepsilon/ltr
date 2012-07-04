@@ -147,8 +147,7 @@ double Measure<TElement>::average(const DataSet<TElement>& set) const {
     val = this->operator()(set[i]);
     sum += val;
   }
-
-  sum /= query_proceed;
+  sum /= static_cast<double>(query_proceed);
   return sum;
 }
 

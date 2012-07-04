@@ -17,7 +17,7 @@ void RemoveNominalConverter::fillOutputFeatureInfo()  {
 
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
-  output->resize(output_feature_info_);
+  *output = input;
   // \FIXME(sameg): Extra copy of output_feature_info.
   size_t output_feature_index = 0;
   for (size_t input_feature_index = 0;

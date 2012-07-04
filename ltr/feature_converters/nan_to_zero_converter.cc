@@ -12,7 +12,7 @@ void NanToZeroConverter::fillOutputFeatureInfo()  {
 
 void NanToZeroConverter::applyImpl(const Object& input,
                                          Object* output) const {
-  output->resize(output_feature_info());
+  *output = input;
   for (size_t feature_index = 0;
       feature_index < input.features().size(); ++feature_index) {
     if (isNaN(input.features()[feature_index])) {
