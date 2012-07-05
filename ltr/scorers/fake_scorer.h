@@ -19,9 +19,8 @@ class FakeScorer : public Scorer {
   typedef boost::shared_ptr< FakeScorer > Ptr;
 
   FakeScorer(double scoreValue = 0.0,
-      const FeatureConverterArray& featureConverters = FeatureConverterArray())
-  :Scorer("FakeScorer", featureConverters),
-  score_value_(scoreValue) {}
+      const FeatureConverterArray& feature_converters = FeatureConverterArray())
+  : Scorer(feature_converters), score_value_(scoreValue) {}
 
   string toString() const {
     return "All scores are constant (" +
@@ -36,6 +35,7 @@ class FakeScorer : public Scorer {
   string generateCppCodeImpl(const string& function_name) const {
     return "Not implemented.";
   }
+  virtual string getDefaultAlias() const {return "FakeScorer";}
 
   double score_value_;
 };

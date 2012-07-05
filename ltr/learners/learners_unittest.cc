@@ -20,11 +20,9 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
 #include "ltr/feature_converters/nan_to_zero_converter.h"
-#include "ltr/feature_converters/utility/utility.h"
 
 using ltr::FeatureConverter;
 using ltr::NanToZeroConverterLearner;
-using ltr::utility::ApplyFeatureConverter;
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -66,8 +64,8 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   NanToZeroConverterLearner<ltr::Object> nan_to_zero_converter;
   nan_to_zero_converter.learn(learn_data);
   FeatureConverter::Ptr remove_NaN = nan_to_zero_converter.make();
-  ApplyFeatureConverter(remove_NaN, learn_data, &learn_data);
-  ApplyFeatureConverter(remove_NaN, test_data, &test_data);
+  remove_NaN->apply(learn_data, &learn_data);
+  remove_NaN->apply(test_data, &test_data);
 
   ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
   ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
@@ -77,7 +75,7 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   ltr::utility::MarkDataSet(test_data, fakeScorer);
   double measureBefore = pMeasure->average(test_data);
 
-  ltr::utility::MarkDataSet(test_data, learner.make());
+  ltr::utility::MarkDataSet(test_data, *learner.make());
   double measureAfter = pMeasure->average(test_data);
 
   EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
@@ -89,9 +87,9 @@ TEST_F(LearnersTest, TestingGPLearner) {
 
   learner.learn(learn_data_listwise);
 
-  ltr::gp::GPScorer scorer = learner.make();
+  ltr::gp::GPScorer::Ptr scorer = learner.makeSpecific();
 
-  std::cout << scorer.generateCppCode();
+  std::cout << scorer->generateCppCode();
 };
 
 TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
@@ -100,7 +98,7 @@ TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
 
   learner.learn(learn_data_listwise);
 
-  ltr::gp::GPScorer scorer = learner.make();
+  ltr::gp::GPScorer::Ptr scorer = learner.makeSpecific();
 
-  std::cout << scorer.generateCppCode();
+  std::cout << scorer->generateCppCode();
 };

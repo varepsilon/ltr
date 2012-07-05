@@ -13,33 +13,34 @@ namespace ltr {
 namespace decision_tree {
 
 class DecisionTreeScorer : public Scorer {
-  private:
-    DecisionTree<double> tree_;
+ private:
+  DecisionTree<double> tree_;
 
-    double scoreImpl(const Object& obj) const {
-      return tree_.value(obj);
-    }
+  double scoreImpl(const Object& obj) const {
+    return tree_.value(obj);
+  }
 
-    string generateCppCodeImpl(const string& function_name) const {
-      return tree_.generateCppCode(function_name);
-    }
+  string generateCppCodeImpl(const string& function_name) const {
+    return tree_.generateCppCode(function_name);
+  }
 
-  public:
-    typedef boost::shared_ptr< DecisionTreeScorer > Ptr;
+  virtual string getDefaultAlias() const {return "DecisionTreeScorer";}
+ public:
+  typedef boost::shared_ptr< DecisionTreeScorer > Ptr;
 
-    DecisionTreeScorer() : Scorer("Decision tree scorer") {}
+  DecisionTreeScorer() {}
 
-    void setTree(const DecisionTree<double>& tree) {
-      tree_ = tree;
-    }
+  void setTree(const DecisionTree<double>& tree) {
+    tree_ = tree;
+  }
 
-    void setTreeRoot(Vertex<double>::Ptr root) {
-      tree_.setRoot(root);
-    }
+  void setTreeRoot(Vertex<double>::Ptr root) {
+    tree_.setRoot(root);
+  }
 
-    string toString() const {
-      return "Decision of the tree";
-    }
+  string toString() const {
+    return "Decision of the tree";
+  }
 };
 }
 }

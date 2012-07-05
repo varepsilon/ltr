@@ -24,6 +24,7 @@ class NanToZeroConverter : public FeatureConverter {
   virtual string generateCppCode(const string& function_name) const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "NanToZeroConverter";}
 };
 
 template <typename TElement>
@@ -34,9 +35,11 @@ class NanToZeroConverterLearner
                          NanToZeroConverter* feature_converter) {
     // DO NOTHING
   }
-  string toString() const {
+  virtual string toString() const {
     return "NanToZeroConverterLearner";
   }
+ private:
+  virtual string getDefaultAlias() const {return "NanToZeroConverterLearner";}
 };
 }
 

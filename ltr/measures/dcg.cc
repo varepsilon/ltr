@@ -17,9 +17,6 @@ namespace ltr {
   double DCGFormula::count(double relevance, size_t position) {
     return (pow(2, relevance) - 1) / (log(position + 2.0) / log(2.0));
   }
-  string DCGFormula::alias() {
-    return "DCGFormula";
-  }
   double DCGFormula::best() {
     return Inf;
   }
@@ -29,9 +26,6 @@ namespace ltr {
 
   double YandexDCGFormula::count(double relevance, size_t position) {
     return relevance / ((log(position + 1.0) / log(2.0)) + 1.0);
-  }
-  string YandexDCGFormula::alias() {
-    return "YandexDCGFormula";
   }
   double YandexDCGFormula::best() {
     return Inf;

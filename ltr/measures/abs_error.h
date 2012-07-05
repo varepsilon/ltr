@@ -16,33 +16,34 @@ using ltr::Object;
 using ltr::utility::Inf;
 
 namespace ltr {
-  /**
-   * Absolute error pointwise measure
-   */
-  class AbsError : public PointwiseMeasure {
-    public:
-    AbsError(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("Absolute error") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
+/**
+ * Absolute error pointwise measure
+ */
+class AbsError : public PointwiseMeasure {
+ public:
+  explicit AbsError() {}
 
-    double worst() const {
-      return Inf;
-    }
-    double best() const {
-      return 0.0;
-    }
+  explicit AbsError(const ParametersContainer& parameters) {
+    // DO NOTHING
+  }
 
-    string toString() const {
-      return "Absolute error measure";
-    }
+  double worst() const {
+    return Inf;
+  }
+  double best() const {
+    return 0.0;
+  }
 
-    private:
-    double get_measure(const Object& element) const {
-      return fabs(element.actual_label() -
-                  element.predicted_label());
-    }
-  };
+  string toString() const {
+    return "Absolute error measure";
+  }
+
+ private:
+  double get_measure(const Object& element) const {
+    return fabs(element.actual_label() -
+                element.predicted_label());
+  }
+  virtual string getDefaultAlias() const {return "AbsError";}
+};
 };
 #endif  // LTR_MEASURES_ABS_ERROR_H_

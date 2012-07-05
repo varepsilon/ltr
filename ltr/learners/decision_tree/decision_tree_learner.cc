@@ -11,24 +11,24 @@ using std::stringstream;
 namespace ltr {
 namespace decision_tree {
 
-string DecisionTreeLearner::toString() const {
-  std::stringstream str;
-  std::fixed(str);
-  str.precision(2);
-  str << "Decision tree learner with parameters: MIN_VERTEX_SIZE = ";
-  str << this->parameters().Get<int>("MIN_VERTEX_SIZE") << ", LABEL_EPS = ";
-  str << this->parameters().Get<double>("LABEL_EPS");
-  return str.str();
+DecisionTreeLearner::DecisionTreeLearner(
+    const ParametersContainer& parameters) {
+  this->setParameters(parameters);
+
+  set_conditions_learner(
+      ConditionsLearner::Ptr(new FakeConditionsLearner()));
+  set_splitting_quality(
+      SplittingQuality::Ptr(new FakeSplittingQuality()));
 }
 
-DecisionTreeLearner::DecisionTreeLearner(const ParametersContainer& parameters)
-    : Learner<Object, DecisionTreeScorer>("DecisionTreeLearner") {
-  this->setDefaultParameters();
-  this->copyParameters(parameters);
+DecisionTreeLearner::DecisionTreeLearner(
+    int min_vertex_size, double label_eps) {
+  min_vertex_size_ = min_vertex_size;
+  label_eps_ = label_eps;
 
-  setConditionsLearner(
+  set_conditions_learner(
       ConditionsLearner::Ptr(new FakeConditionsLearner()));
-  setSplittingQuality(
+  set_splitting_quality(
       SplittingQuality::Ptr(new FakeSplittingQuality()));
 }
 
@@ -53,14 +53,13 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   }
 
   ParametersContainer params = this->parameters();
-  if (max_label - min_label <= params.Get<double>("LABEL_EPS")) {
+  if (max_label - min_label <= label_eps_) {
     INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;
   }
-  if (!generate_leaf &&
-       data.size() <= params.Get<int>("MIN_VERTEX_SIZE")) {
+  if (!generate_leaf && data.size() <= min_vertex_size_) {
     INFO("Objects count is less than %d. Leaf vertex created.",
-         params.Get<int>("MIN_VERTEX_SIZE"));
+         min_vertex_size_);
     generate_leaf = 1;
   }
   if (!generate_leaf &&

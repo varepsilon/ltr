@@ -41,10 +41,6 @@ namespace ltr {
       typedef boost::shared_ptr<Splitter> Ptr;
       typedef boost::shared_ptr<Splitter> BasePtr;
       /**
-       * Sets splitter's alias
-       */
-      explicit Splitter(const string& alias) : Aliaser(alias) {}
-      /**
        * Total number of possible splits for an input dataset.
        */
       virtual int splitCount(const DataSet<TElement>& base_set) const = 0;
@@ -79,6 +75,7 @@ namespace ltr {
     template <class TElement>
     SplittedDataSet<TElement> Splitter<TElement>::split(int split_index,
         const DataSet<TElement>& base_set) const {
+      this->checkParameters();
       vector<int> train_set_indexes;
       vector<int> test_set_indexes;
       splitImpl(split_index, base_set, &train_set_indexes, &test_set_indexes);

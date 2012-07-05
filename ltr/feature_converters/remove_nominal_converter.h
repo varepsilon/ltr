@@ -26,6 +26,7 @@ class RemoveNominalConverter : public FeatureConverter {
   virtual void fillOutputFeatureInfo();
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
+  virtual string getDefaultAlias() const {return "RemoveNominalConverter";}
 };
 
 template <typename TElement>

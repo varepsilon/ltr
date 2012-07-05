@@ -12,7 +12,6 @@
 #include "ltr/utility/numerical.h"
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/utility/utility.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"
@@ -81,7 +80,7 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterTest) {
     (new FakeFeatureConverter(data.feature_info()));
   DataSet<Object> conv_data;
 
-  ltr::utility::ApplyFeatureConverter(ffc, data, &conv_data);
+  ffc->apply(data, &conv_data);
   EXPECT_TRUE(AreEqual(data, conv_data));
 }
 
@@ -92,7 +91,7 @@ TEST_F(FeatureConvertersManualTest, FakeFeatureConverterLearnerTest) {
 
   DataSet<Object> conv_data;
 
-  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
+  conv->apply(data, &conv_data);
   EXPECT_TRUE(AreEqual(data, conv_data));
 }
 
@@ -108,7 +107,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
   EXPECT_EQ(indices, conv->indices());
 
   DataSet<Object> conv_data;
-  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
+  conv->apply(data, &conv_data);
 
   EXPECT_EQ(3, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
@@ -117,7 +116,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerTest) {
 
   indices.push_back(1);
   conv->set_indices(indices);
-  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
+  conv->apply(data, &conv_data);
 
   EXPECT_EQ(4, conv_data.feature_count());
   for (int i = 0; i < indices.size(); ++i) {
@@ -134,7 +133,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerLearnerTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
+  conv->apply(data, &conv_data);
 
   EXPECT_TRUE(AreEqual(data, conv_data));
 
@@ -146,7 +145,7 @@ TEST_F(FeatureConvertersManualTest, FeatureSamplerLearnerTest) {
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
 
-  ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
+  conv2->apply(data, &conv_data);
   EXPECT_EQ(indices->size(), conv_data.feature_count());
   for (int i = 0; i < indices->size(); ++i) {
     EXPECT_EQ((*indices)[i], conv_data[0].features()[i]);
@@ -159,7 +158,7 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  ltr::utility::ApplyFeatureConverter(conv, data, &conv_data);
+  conv->apply(data, &conv_data);
 
   EXPECT_EQ(4, conv_data.feature_count());
   set<int> used_features;
@@ -178,7 +177,7 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   conv_learner.set_sampling_fraction(0.8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv2 = conv_learner.make();
-  ltr::utility::ApplyFeatureConverter(conv2, data, &conv_data);
+  conv2->apply(data, &conv_data);
 
   EXPECT_EQ(9, conv_data.feature_count());
   used_features.clear();
@@ -199,7 +198,7 @@ TEST_F(FeatureConvertersManualTest, FeatureRandomSamplerLearnerTest) {
   conv_learner.set_sampling_fraction(1e-8);
   conv_learner.learn(data);
   FeatureConverter::Ptr conv3 = conv_learner.make();
-  ltr::utility::ApplyFeatureConverter(conv3, data, &conv_data);
+  conv3->apply(data, &conv_data);
   EXPECT_EQ(1, conv_data.feature_count());
 }
 
@@ -221,7 +220,7 @@ TEST_F(FeatureConvertersManualTest, PerFeatureLinearConverterTest) {
 
   DataSet<Object> conv_data;
 
-  ltr::utility::ApplyFeatureConverter(pf_converter, data, &conv_data);
+  pf_converter->apply(data, &conv_data);
 
   EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 1.0));
   EXPECT_TRUE(DoubleEqual(conv_data[0].features()[1], -0.5));
@@ -247,7 +246,7 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerDefaultTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
+  conv->apply(l_data, &conv_data);
 
   EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 1.0));
   EXPECT_TRUE(DoubleEqual(conv_data[1].features()[0], 0.0));
@@ -285,7 +284,7 @@ TEST_F(FeatureConvertersManualTest, FeatureNormalizerLearnerTest) {
   FeatureConverter::Ptr conv = conv_learner.make();
 
   DataSet<Object> conv_data;
-  ltr::utility::ApplyFeatureConverter(conv, l_data, &conv_data);
+  conv->apply(l_data, &conv_data);
 
   EXPECT_TRUE(DoubleEqual(conv_data[0].features()[0], 2.0));
   EXPECT_TRUE(DoubleEqual(conv_data[1].features()[0], -2.0));

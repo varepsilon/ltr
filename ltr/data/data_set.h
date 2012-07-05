@@ -26,7 +26,7 @@ const double DEFAULT_ELEMENT_WEIGHT = 1.0;
  */
 template <typename TElement>
 class DataSet : public Printable {
-  public:
+ public:
   /** Shared pointer type to the DataSet.
    */
   typedef boost::shared_ptr<DataSet> Ptr;
@@ -42,6 +42,9 @@ class DataSet : public Printable {
    * stored in the DataSet.
    */
   const FeatureInfo& feature_info() const;
+  /** Simple feature info setter
+   */
+  void set_feature_info(const FeatureInfo &feature_info);
   /** Returns the number of features in objects of the DataSet.
    */
   size_t feature_count() const;
@@ -102,7 +105,7 @@ class DataSet : public Printable {
    */
   virtual string toString() const;
 
-  private:
+ private:
   /** Shared pointer to the actual vector, in which the elements are stored.
    */
   boost::shared_ptr<vector<TElement> > elements_;
@@ -136,6 +139,11 @@ DataSet<TElement>::~DataSet() {}
 template<typename TElement>
 const FeatureInfo& DataSet<TElement>::feature_info() const {
   return *feature_info_;
+}
+
+template<typename TElement>
+void DataSet<TElement>::set_feature_info(const FeatureInfo &feature_info) {
+  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_info));
 }
 
 template <typename TElement>

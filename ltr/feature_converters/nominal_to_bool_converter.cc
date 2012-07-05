@@ -21,7 +21,7 @@ void NominalToBoolConverter::fillOutputFeatureInfo()  {
 
 void NominalToBoolConverter::applyImpl(
     const Object& input, Object* output) const {
-  *output = Object(output_feature_info());
+  *output = input;
   size_t result_idx = 0;
   for (size_t i = 0; i < input.features().size(); ++i)
     if (input_feature_info_.getFeatureType(i) != NOMINAL)

@@ -1,6 +1,12 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
+SET(LTR_OBJECT_TEST ${Source_Path}/ltr/data/object_unittest.cc)
+
+SET(LTR_FEATURE_INFO_TEST ${Source_Path}/ltr/data/feature_info_unittest.cc)
+
+SET(LTR_OBJECT_LIST_TEST ${Source_Path}/ltr/data/object_list_unittest.cc)
+
 SET(LTR_DATA_TEST ${Source_Path}/ltr/data/data_set_unittest.cc
 				  ${Source_Path}/ltr/data/serialization_unittest.cc)
 
@@ -21,7 +27,9 @@ SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
                       ${Source_Path}/ltr/measures/pairwise_measures_unittest.cc)
 
 SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
-                     ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc)
+                     ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc
+					 ${Source_Path}/ltr/scorers/linear_scorer_unittest.cc
+					 ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc)
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
                         ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
@@ -50,7 +58,8 @@ SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS_TEST})
 
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST}
+SET(LTR_TEST ${LTR_OBJECT_TEST} ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} 
+			 ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST}
              ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
              ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_LINEAR_COMPOSITION})
 SET(LTR_TEST_H)

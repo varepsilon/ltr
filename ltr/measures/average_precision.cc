@@ -28,7 +28,7 @@ namespace ltr {
         = labels.begin(); labels_it != labels.end();
         ++labels_it, total_amount += 1) {
       if (labels_it->actual >=
-          getParameter<double>("SCORE_FOR_RELEVANT")) {
+          score_for_relevant_) {
         relevant_amount += 1;
         ans += static_cast<double>(relevant_amount)/total_amount;
       }
@@ -48,7 +48,7 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "Average precision measure with parameter SCORE_FOR_RELEVANT = ";
-    str << getParameter<double>("SCORE_FOR_RELEVANT");
+    str << score_for_relevant_;
     return str.str();
   }
 };

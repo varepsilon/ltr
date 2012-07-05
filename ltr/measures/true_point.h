@@ -20,10 +20,10 @@ namespace ltr {
    */
   class TruePoint : public PointwiseMeasure {
   public:
-    TruePoint(const ParametersContainer& parameters = ParametersContainer())
-        : PointwiseMeasure("TruePoint") {
-      setDefaultParameters();
-      copyParameters(parameters);
+    explicit TruePoint() {}
+
+    explicit TruePoint(const ParametersContainer& parameters) {
+      // DO NOTHING
     }
 
     double best() const {
@@ -39,6 +39,7 @@ namespace ltr {
     double get_measure(const Object& object) const {
       return 1.0/(fabs(object.actual_label() - object.predicted_label()) + 1.0);
     }
+    virtual string getDefaultAlias() const {return "TruePoint";}
   };
 };
 

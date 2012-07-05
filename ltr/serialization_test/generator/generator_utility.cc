@@ -130,9 +130,9 @@ namespace serialization_test {
     return "//" + slashes + "\n\n";
   }
 
-  void Generator::setScorerTest(BaseLearner<Object>::Ptr learner,
+  void Generator::setScorerTest(Learner<Object>::Ptr learner,
       string test_name) {
-    Scorer::Ptr tested_scorer = learner->makeScorerPtr();
+    Scorer::Ptr tested_scorer = learner->make();
     MarkDataSet(test_data, *tested_scorer);
 
     string function_number = boost::lexical_cast<string>(scorers_to_test);

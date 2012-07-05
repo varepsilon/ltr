@@ -22,15 +22,15 @@ namespace ltr {
 
     ParametersContainer params = this->parameters();
 
-    size_t n = params.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    size_t n = number_of_objects_to_consider_;
     if ((n == 0) || (n > labels.size())) {
       n = labels.size();
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
-
-    double p_break = params.Get<double>("P_BREAK");
-    double max_label = params.Get<double>("MAX_LABEL");
+// why not using p_break_ directly?
+    double p_break = p_break_;
+    double max_label = max_label_;
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       if (labels[labels_index].actual < 0) {
@@ -56,11 +56,11 @@ namespace ltr {
     std::fixed(str);
     str.precision(2);
     str << "PFound measure with parameters: P_BREAK = ";
-    str << this->getParameter<double>("P_BREAK");
+    str << p_break_;
     str << ", MAX_LABEL = ";
-    str << this->getParameter<double>("MAX_LABEL");
+    str << max_label_;
     str << ", NUMBER_OF_OBJECTS_TO_CONSIDER = ";
-    str << this->getParameter<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    str << number_of_objects_to_consider_;
     return str.str();
   }
 };

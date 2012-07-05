@@ -15,78 +15,71 @@
 #include "ltr/interfaces/printable.h"
 
 using std::string;
+
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
 
 namespace ltr {
 namespace lc {
-  /**
-   * Is a parameter for linear composition learner. Implements a strategy of
-   * updating dataset's element's weights while adding a new scorer to
-   * linear composition scorer. The idea is to increase weights of "hard" elements
-   * with bad measure values and decrease weights of "easy" elements with good
-   * measure values. Thus next scorer in linear composition could be learned
-   * primary on bad elements and level the limitations of previous scorers
-   */
-  template <class TElement>
-  class DataSetWeightsUpdater :
-    public Aliaser,
-    public Parameterized,
-    public Printable {
-  public:
-    typedef boost::shared_ptr<DataSetWeightsUpdater> Ptr;
-
-    explicit DataSetWeightsUpdater(const string& alias) : Aliaser(alias) {}
-
-    /**
-     * Updates dataset's weights
-     * @param data - dataset to update it's weights
-     * @param lin_scorer - linear composition scorer with already updated 
-     * by ltr::lc::LCScorerWeightsUpdater composition weight's
-     */
-    virtual void updateWeights(const DataSet<TElement>* data,
-        const LinearCompositionScorer& lin_scorer) const = 0;
-    /**
-     * Sets measure, used in DataSetWeightsUpdater. Note that some
-     * DataSetWeightsUpdaters don't use measures, so they ignore 
-     * the mesure setted
-     */
-    void setMeasure(typename Measure<TElement>::Ptr in_measure) {
-      measure_ = in_measure;
-    }
-  protected:
-    typename Measure<TElement>::Ptr measure_;
-  };
-
+/**
+ * Is a parameter for linear composition learner. Implements a strategy of
+ * updating dataset's element's weights while adding a new scorer to
+ * linear composition scorer. The idea is to increase weights of "hard" elements
+ * with bad measure values and decrease weights of "easy" elements with good
+ * measure values. Thus next scorer in linear composition could be learned
+ * primary on bad elements and level the limitations of previous scorers
+ */
+template <class TElement>
+class DataSetWeightsUpdater : public Aliaser, public Parameterized {
+ public:
+  typedef boost::shared_ptr<DataSetWeightsUpdater> Ptr;
 
   /**
-   * Fake DataSetWeightsUpdater, does nothing
+   * Updates dataset's weights
+   * @param data - dataset to update it's weights
+   * @param lin_scorer - linear composition scorer with already updated 
+   * by ltr::lc::LCScorerWeightsUpdater composition weight's
    */
-  template <class TElement>
-  class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
-  public:
-    typedef boost::shared_ptr<FakeDataSetWeightsUpdater> Ptr;
+  virtual void updateWeights(const DataSet<TElement>* data,
+      const LinearCompositionScorer& lin_scorer) const = 0;
+  /**
+   * Sets measure, used in DataSetWeightsUpdater. Note that some
+   * DataSetWeightsUpdaters don't use measures, so they ignore 
+   * the mesure setted
+   */
+  void set_measure(typename Measure<TElement>::Ptr measure) {
+    measure_ = measure;
+  }
+ protected:
+  typename Measure<TElement>::Ptr measure_;
+};
 
-    /**
-     * @param parameters Standart LTR parameter container with no parameters
-     */
-    explicit FakeDataSetWeightsUpdater(
-        const ParametersContainer& parameters = ParametersContainer())
-        : DataSetWeightsUpdater<TElement>("FakeDataSetWeightsUpdater") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
 
-    string toString() const {
-      return "Fake dataset weights updater";
-    }
+/**
+ * Fake DataSetWeightsUpdater, does nothing
+ */
+template <class TElement>
+class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
+ public:
+  typedef boost::shared_ptr<FakeDataSetWeightsUpdater> Ptr;
 
-    void updateWeights(const DataSet<TElement>* data,
-        const LinearCompositionScorer& lin_scorer) const {
-      // doing nothing
-    }
-  };
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
+  explicit FakeDataSetWeightsUpdater(
+      const ParametersContainer& parameters = ParametersContainer()) {
+    this->setDefaultParameters();
+    this->copyParameters(parameters);
+  }
+
+  void updateWeights(const DataSet<TElement>* data,
+      const LinearCompositionScorer& lin_scorer) const {
+    // doing nothing
+  }
+ private:
+  virtual string getDefaultAlias() const {return "FakeDataSetWieghtsUpdater";}
+};
 };
 };
 

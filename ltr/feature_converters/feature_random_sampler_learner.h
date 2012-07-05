@@ -56,6 +56,9 @@ class FeatureRandomSamplerLearner
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FeatureSampler* feature_sampler);
   virtual void setParametersImpl(const ParametersContainer& parameters);
+  virtual string getDefaultAlias() const {
+    return "FeatureRandomSamplerLearner";
+  }
   double sampling_fraction_;
   int seed_;
 };

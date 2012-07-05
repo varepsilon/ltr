@@ -18,11 +18,11 @@ namespace ltr {
  */
 template <class TElement>
 class Accuracy : public Measure<TElement> {
-  public:
-  Accuracy(const ParametersContainer& parameters = ParametersContainer())
-    : Measure<TElement>("Accuracy") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
+ public:
+  explicit Accuracy() {}
+
+  explicit Accuracy(const ParametersContainer& parameters) {
+    // DO NOTHING
   }
   double best() const {
     return 1.0;
@@ -31,8 +31,9 @@ class Accuracy : public Measure<TElement> {
     return 0.0;
   }
   string toString() const;
-  private:
+ private:
   double get_measure(const TElement& object) const;
+  virtual string getDefaultAlias() const {return "Accuracy";}
 };
 }
 

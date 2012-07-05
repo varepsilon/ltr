@@ -6,57 +6,45 @@
 #include <boost/shared_ptr.hpp>
 #include <Eigen/Dense>
 
+#include <string>
 #include <vector>
 
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/linear_scorer.h"
 
+using std::string;
 using std::vector;
+
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 
 namespace ltr {
 template<class TElement>
-class LinearLearner : public Learner<TElement, LinearScorer> {
+class LinearLearner : public BaseLearner<TElement, LinearScorer> {
  public:
   typedef boost::shared_ptr<LinearLearner> Ptr;
 
-  LinearLearner(const ParametersContainer& parameters = ParametersContainer())
-      : Learner<TElement, LinearScorer>("LinearScorer") {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit LinearLearner(const ParametersContainer& parameters) {
+    // DO NOTHING
   }
 
+  LinearLearner() {
+    // DO NOTHING
+  }
+
+  // \TODO ? Implement
   void reset() {}
-  void setInitialScorer(const LinearScorer& in_scorer) {}
-
-  string toString() const;
-
-  LinearScorer makeImpl() const;
+  // \TODO ? Implement
+  void setInitialScorer(const LinearScorer& scorer) {}
  private:
-  void learnImpl(const DataSet<TElement>& data);
-  // min (Y - Xb)^T W (Y - Xb)
-  // b = (X^T W X)^-1 X^T W Y
-  VectorXd b;
+  void learnImpl(const DataSet<TElement>& data, LinearScorer* scorer);
+  virtual string getDefaultAlias() const {return "LinearLearner";}
 };
 
 
 template<class TElement>
-string LinearLearner<TElement>::toString() const {
-  return "Linear learner";
-}
-
-template<class TElement>
-LinearScorer LinearLearner<TElement>::makeImpl() const {
-  vector<double> weights(b.size());
-  for (int i = 0; i < b.size(); ++i) {
-    weights[i] = b[i];
-  }
-  return LinearScorer(weights);
-}
-
-template<class TElement>
-void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
+void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
+                                        LinearScorer* scorer) {
   VectorXd Y(data.size());
   for (int i = 0; i < Y.size(); ++i) {
     Y(i) = data[i].actual_label();
@@ -77,8 +65,16 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data) {
   for (int i = 0; i < data.size(); ++i) {
     XTW.col(i) *= data.getWeight(i);
   }
-
+  VectorXd b;
   b = (XTW * X).ldlt().solve(XTW * Y);
+
+  // \TODO rewrite when LinearScorer
+  // will have set_weights or set_weight(i, weight)
+  vector<double> weights(b.size());
+  for (int i = 0; i < b.size(); ++i) {
+    weights[i] = b[i];
+  }
+  *scorer = LinearScorer(weights);
 }
 }
 #endif  // LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_

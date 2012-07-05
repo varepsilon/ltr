@@ -20,20 +20,14 @@ class FakeFeatureConverterLearner
 : public BaseFeatureConverterLearner<TElement, FakeFeatureConverter> {
  public:
   typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
-  /**
-   * @param parameters Standart LTR parameter container with no parameters
-   */
-  explicit FakeFeatureConverterLearner(const ParametersContainer& parameters =
-      ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
-    this->checkParameters();
-  }
 
   virtual string toString() const;
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FakeFeatureConverter *feature_converter);
+  virtual string getDefaultAlias() const {
+    return "FakeFeatureConverterLearner";
+  }
 };
 
 // template realizations

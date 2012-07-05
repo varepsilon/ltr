@@ -8,22 +8,34 @@
 using std::string;
 
 namespace ltr {
+/**
+* \brief Inherit from this class in order to use alias.
+*
+* Alias for example can be used for logging.
+*/
+class Aliaser {
+ public:
+  virtual ~Aliaser() {}
   /**
-   * Aliaser holds alias of derived subclass
-   * \deprecated
-   */
-  class Aliaser {
-  public:
-    explicit Aliaser(const string& input = "Alias")
-      : alias_(input) {}
-
-    string alias() const {
+  * \return alias if it's was set or default alias otherwise
+  */
+  virtual string alias() const {
+    if (!alias_.empty()) {
       return alias_;
-    };
-
-  private:
-    string alias_;
-  };
+    } else {
+      return getDefaultAlias();
+    }
+  }
+  /**
+  * sets alias
+  */
+  void set_alias(const string& alias) {
+    alias_ = alias;
+  }
+ private:
+  virtual string getDefaultAlias() const = 0;
+  string alias_;
+};
 };
 
 #endif  // LTR_INTERFACES_ALIASER_H_

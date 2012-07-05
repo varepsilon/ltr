@@ -63,4 +63,20 @@ string ObjectList::toString() const {
   str << '}';
   return str.str();
 }
+
+bool operator==(const ObjectList& lhs, const ObjectList& rhs) {
+  if (lhs.size() != rhs.size()) {
+    return false;
+  }
+	for (int object_index = 0; object_index < (int)lhs.size(); ++object_index) {
+	  if (lhs[object_index] != rhs[object_index]) {
+      return false;
+  	}
+  }
+	return true;
+}
+
+bool operator!=(const ObjectList& lhs, const ObjectList& rhs) {
+  return !(lhs == rhs);
+}
 }

@@ -12,49 +12,57 @@ using std::string;
 using ltr::ObjectList;
 
 namespace ltr {
+/**
+ * Reciprocal rank listwise measure.
+ * Returns f(x), where x is position of first relevant object.
+ * Usually f(x) = 1.0 / x
+ */
+class ReciprocalRank : public ListwiseMeasure {
+ public:
   /**
-   * Reciprocal rank listwise measure.
-   * Returns f(x), where x is position of first relevant object.
-   * Usually f(x) = 1.0 / x
+   * @param parameters Standart LTR parameter container with int parameter
+   * SCORE_FOR_RELEVANT, by default SCORE_FOR_RELEVANT = 3.0
    */
-  class ReciprocalRank : public ListwiseMeasure {
-  public:
-    /**
-     * @param parameters Standart LTR parameter container with int parameter
-     * SCORE_FOR_RELEVANT, by default SCORE_FOR_RELEVANT = 3.0
-     */
-    ReciprocalRank(const ParametersContainer&
-        parameters = ParametersContainer())
-        : ListwiseMeasure("Reciprocal Rank") {
-      this->setDefaultParameters();
-      this->copyParameters(parameters);
-    }
-    /**
-     * Clears parameters container and sets default values:
-     * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
-     * the object is considered to be relevant
-     */
-    void setDefaultParameters() {
-      this->clearParameters();
-      this->addNewParam("SCORE_FOR_RELEVANT", 3.0);
-    }
+  explicit ReciprocalRank(const ParametersContainer&
+      parameters) {
+    this->setParameters(parameters);
+  }
 
-    double best() const {
-      return 1.0;
-    }
-    double worst() const {
-      return 0.0;
-    }
-    string toString() const;
+  explicit ReciprocalRank(double score_for_relevant) {
+    score_for_relevant_ = score_for_relevant;
+  }
 
-  private:
-    double get_measure(const ObjectList& objects) const;
-    /**
-     * Some decreasing function, usually f(x) = 1/x
-     * @param pos - position of the first relevant object
-     */
-    static double RRFormula(int pos);
-  };
+  GET_SET(double, score_for_relevant);
+  /**
+   * Clears parameters container and sets default values:
+   * SCORE_FOR_RELEVANT = 3.0 - if object's score is more or equal to SCORE_FOR_RELEVANT,
+   * the object is considered to be relevant
+   */
+  void setDefaultParameters() {
+    score_for_relevant_ = 3.0;
+  }
+
+  double best() const {
+    return 1.0;
+  }
+  double worst() const {
+    return 0.0;
+  }
+  string toString() const;
+
+ private:
+  double score_for_relevant_;
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    score_for_relevant_ = parameters.Get<double>("SCORE_FOR_RELEVANT");
+  }
+  double get_measure(const ObjectList& objects) const;
+  /**
+   * Some decreasing function, usually f(x) = 1/x
+   * @param pos - position of the first relevant object
+   */
+  static double RRFormula(int pos);
+  virtual string getDefaultAlias() const {return "ReciprocalRank";}
+};
 };
 
 #endif  // LTR_MEASURES_RECIPROCAL_RANK_H_

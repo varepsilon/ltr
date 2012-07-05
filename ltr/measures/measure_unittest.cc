@@ -75,8 +75,9 @@ TEST(MeasureTest, MeasureTest) {
 }
 
 TEST(MeasureTest, NormalizedMeasureTest) {
-  NormalizedMeasure<Object> norm;
-  NormalizedMeasure<Object> norm2(1, -1);
+  AbsError::Ptr abs_error(new AbsError());
+  NormalizedMeasure<Object> norm(abs_error);
+  NormalizedMeasure<Object> norm2(abs_error, 1, -1);
   Object obj;
   obj.set_actual_label(1);
   obj.set_predicted_label(0);
