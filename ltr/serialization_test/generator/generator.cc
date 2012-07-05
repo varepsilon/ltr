@@ -28,11 +28,8 @@ using serialization_test::Generator;
 // Otherwise name conflicts while feature converter's serialization may occur
 
 int main(int argc, char* argv[]) {
+  ltr::Log LOG("generator.log");
   Generator generator;
-
-  LOGOG_INITIALIZE();
-  {
-  logog::Cout out;
 
   Measure<Object>::Ptr abs_error(new AbsError());
   BestFeatureLearner<Object>::Ptr bf_learner(
@@ -68,9 +65,6 @@ int main(int argc, char* argv[]) {
   rsm_lc_learner->setWeakLearner(bf_learner);
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
-
-  }
-  LOGOG_SHUTDOWN();
 
   generator.write(argv[1]);
   return 0;

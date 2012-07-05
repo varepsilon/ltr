@@ -4,7 +4,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "contrib/logog/include/logog.hpp"
-/*
+
 namespace ltr {
   class Log {
   public:
@@ -12,16 +12,25 @@ namespace ltr {
 
     Log() {
       LOGOG_INITIALIZE();
-      target = TargetPtr(new logog::Cout);
+      target_ = TargetPtr(new logog::Cout);
+    }
+    Log(const char* filename) {
+      LOGOG_INITIALIZE();
+      target_ = TargetPtr(new logog::LogFile(filename));
+    }
+    void setTargetAsFile(const char* filename) {
+      target_ = TargetPtr(new logog::LogFile(filename));
+    }
+    void setTargetAsCout() {
+      target_ = TargetPtr(new logog::Cout);
     }
     ~Log() {
+      target_.reset();
       LOGOG_SHUTDOWN();
     }
   private:
-    TargetPtr target;
+    TargetPtr target_;
   };
-}
+};
 
-const ltr::Log LOG;
-*/
 #endif  // CONTRIB_LOGOG_LOGOG_H_

@@ -14,6 +14,8 @@ SET(LOGOG_SOURCES
 	${Source_Path}/contrib/logog/src/timer.cpp
 	${Source_Path}/contrib/logog/src/topic.cpp
 	${Source_Path}/contrib/logog/src/unittest.cpp
+	
+	${Source_Path}/contrib/logog/logog.h
 )
 
 SET(LOGOG_INCLUDE_DIR ${Source_Path}/contrib)

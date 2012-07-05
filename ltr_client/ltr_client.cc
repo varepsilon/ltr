@@ -246,9 +246,7 @@ void LtrClient::launch() {
 // ===========================================================================
 
 int main(int argc, char* argv[]) {
-//  logog::Cout out;
-//  logog::LogFile outFile("ltr_client.log");
-//  logog::GetDefaultFormatter().SetShowTimeOfDay(true);
+  ltr::Log LOG;
 
   if (argc < 2) {
       ERR("config file  missing");
