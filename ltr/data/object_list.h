@@ -72,5 +72,13 @@ namespace ltr {
    */
   boost::shared_ptr<vector<Object> > objects_;
 };
+
+/** Operator, checks whether two object_lists are equal.
+ */
+bool operator==(const Object& lhs, const Object& rhs);
+
+/** Operator, checks whether two object_lists are not equal.
+ */
+bool operator!=(const Object& lhs, const Object& rhs);
 }
 #endif  // LTR_DATA_OBJECT_LIST_H_
