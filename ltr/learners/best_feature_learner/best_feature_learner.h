@@ -64,7 +64,7 @@ string BestFeatureLearner<TElement>::toString() const {
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
-  if(measure_.get() == 0) {
+  if (measure_.get() == 0) {
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {

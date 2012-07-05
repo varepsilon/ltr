@@ -102,7 +102,7 @@ void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::checkParameters() const {
   CHECK(K_ > 1);
-  CHECK(T_ > 0);                  
+  CHECK(T_ > 0);
 }
 
 template <class TElement>

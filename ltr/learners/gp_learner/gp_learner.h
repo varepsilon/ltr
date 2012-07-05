@@ -75,7 +75,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     double mut_swap_proba = 0.05)
   : feature_count_(0),
   best_tree_index_(0) {
-
     measure_ = measure;
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
@@ -120,9 +119,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     double crossover_proba = 0.9,
     double mut_std_proba = 0.05,
     double mut_swap_proba = 0.05)
-  : feature_count_(0),
-    best_tree_index_(0) {
-
+    : feature_count_(0),
+      best_tree_index_(0) {
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
     nbr_part_ = nbr_part;
@@ -205,8 +203,10 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     str << this->parameters().Get<int>("NBR_GEN") << ", NBR_PART = ";
     str << this->parameters().Get<int>("NBR_PART") << ", MAX_DEPTH = ";
     str << this->parameters().Get<int>("MAX_DEPTH") << ", MIN_INIT_DEPTH = ";
-    str << this->parameters().Get<int>("MIN_INIT_DEPTH") << ", MAX_INIT_DEPTH = ";
-    str << this->parameters().Get<int>("MAX_INIT_DEPTH") << ", INIT_GROW_PROBA = ";
+    str << this->parameters().Get<int>("MIN_INIT_DEPTH")
+      << ", MAX_INIT_DEPTH = ";
+    str << this->parameters().Get<int>("MAX_INIT_DEPTH")
+      << ", INIT_GROW_PROBA = ";
     str << this->parameters().Get<double>("INIT_GROW_PROBA")
       << ", CROSSOVER_PROBA = ";
     str << this->parameters().Get<double>("CROSSOVER_PROBA")
@@ -219,7 +219,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
       << ", MUT_SWAP_PROBA = ";
     str << this->parameters().Get<double>("MUT_SWAP_PROBA")
       << ", MUT_SWAP_DISTRIB_PROBA = ";
-    str << this->parameters().Get<double>("MUT_SWAP_DISTRIB_PROBA") << ", SEED = ";
+    str << this->parameters().Get<double>("MUT_SWAP_DISTRIB_PROBA")
+      << ", SEED = ";
     str << this->parameters().Get<int>("SEED") << ", USE_ADD = ";
     str << this->parameters().Get<bool>("USE_ADD") << ", USE_SUB = ";
     str << this->parameters().Get<bool>("USE_SUB") << ", USE_MUL = ";

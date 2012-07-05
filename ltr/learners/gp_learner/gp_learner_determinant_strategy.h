@@ -28,7 +28,8 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     this->setParameters(parameters);
   }
 
-  explicit GPLearnerWithDeterminantStrategy(typename Measure<TElement>::Ptr measure,
+  explicit GPLearnerWithDeterminantStrategy(
+    typename Measure<TElement>::Ptr measure,
     int pop_size = 10,
     int nbr_gen = 3,
     int max_depth = 35,
@@ -65,7 +66,6 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
   use_div,
   use_if,
   use_efem) {
-
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
     max_depth_ = max_depth;
@@ -125,7 +125,6 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
   use_div,
   use_if,
   use_efem) {
-
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
     max_depth_ = max_depth;

@@ -25,8 +25,8 @@ class PFound: public ListwiseMeasure {
     this->setParameters(parameters);
   }
 
-  explicit PFound(double p_break = 0.15, 
-                  double max_label = 5.0, 
+  explicit PFound(double p_break = 0.15,
+                  double max_label = 5.0,
                   int number_of_objects_to_consider = 0) {
     p_break_ = p_break;
     max_label_ = max_label;
@@ -76,10 +76,10 @@ class PFound: public ListwiseMeasure {
   virtual void setParametersImpl(const ParametersContainer& parameters) {
     p_break_ = parameters.Get<double>("P_BREAK");
     max_label_ = parameters.Get<double>("MAX_LABEL");
-    number_of_objects_to_consider_ = 
+    number_of_objects_to_consider_ =
       parameters.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
   }
-  
+
   double get_measure(const ObjectList& objects) const;
   virtual string getDefaultAlias() const {return "PFound";}
 };
