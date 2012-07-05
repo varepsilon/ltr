@@ -15,9 +15,9 @@ DecisionTreeLearner::DecisionTreeLearner(
     const ParametersContainer& parameters) {
   this->setParameters(parameters);
 
-  setConditionsLearner(
+  set_conditions_learner(
       ConditionsLearner::Ptr(new FakeConditionsLearner()));
-  setSplittingQuality(
+  set_splitting_quality(
       SplittingQuality::Ptr(new FakeSplittingQuality()));
 }
 
@@ -26,9 +26,9 @@ DecisionTreeLearner::DecisionTreeLearner(
   min_vertex_size_ = min_vertex_size;
   label_eps_ = label_eps;
 
-  setConditionsLearner(
+  set_conditions_learner(
       ConditionsLearner::Ptr(new FakeConditionsLearner()));
-  setSplittingQuality(
+  set_splitting_quality(
       SplittingQuality::Ptr(new FakeSplittingQuality()));
 }
 

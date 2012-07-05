@@ -23,11 +23,11 @@ class ID3_Learner : public DecisionTreeLearner {
  public:
   explicit ID3_Learner(const ParametersContainer& parameters)
   : DecisionTreeLearner(parameters) {
-    this->setConditionsLearner(
+    this->set_conditions_learner(
       ConditionsLearner::Ptr(
         new ID3_Splitter(
           parameters.Get<ParametersContainer>("ID3SplitterParams"))));
-    this->setSplittingQuality(
+    this->set_splitting_quality(
       SplittingQuality::Ptr(new SqrErrorQuality(
           parameters.Get<ParametersContainer>("SqrErrorQualityParams"))));
   }
@@ -38,13 +38,13 @@ class ID3_Learner : public DecisionTreeLearner {
     int min_vertex_size = 3,
     double label_eps = 0.001)
   : DecisionTreeLearner(min_vertex_size, label_eps) {
-    this->setConditionsLearner(
+    this->set_conditions_learner(
       ConditionsLearner::Ptr(
         new ID3_Splitter(split_feature_n_times,
         feature_split_count,
         half_summs_step)));
-    this->setSplittingQuality(
-      SplittingQuality::Ptr());
+    this->set_splitting_quality(
+      SplittingQuality::Ptr(new SqrErrorQuality()));
   }
  private:
   virtual string getDefaultAlias() const {return "ID3_Learner";}
