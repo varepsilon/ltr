@@ -19,12 +19,12 @@ void ID3_Splitter::init() {
   const ParametersContainer &params = this->parameters();
   split_idx = 0;
   INFO("Inited. ");
-  if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
+  if (split_feature_n_times_) {
     INFO("Splitting every feature %d times",
-         params.Get<int>("FEATURE_SPLIT_COUNT"));
+         feature_split_count_);
   } else {
     INFO("Using half summs splitting. Step = %d",
-         params.Get<int>("HALF_SUMMS_STEP"));
+         half_summs_step_);
   }
 }
 
@@ -57,8 +57,8 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
 
     const ParametersContainer &params = this->parameters();
 
-    if (params.Get<bool>("SPLIT_FEATURE_N_TIMES")) {
-      int split_cnt = params.Get<int>("FEATURE_SPLIT_COUNT");
+    if (split_feature_n_times_) {
+      int split_cnt = feature_split_count_;
       if (split_cnt <= feature_values.size() - 1) {
         for (int i = 0; i < split_cnt; i++)
           numeric_split_values.
@@ -70,7 +70,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       }
     } else {
       for (int i = 0; i < feature_values.size() - 1;
-          i+= params.Get<int>("HALF_SUMMS_STEP"))
+          i+= half_summs_step_)
         numeric_split_values.
           push_back((feature_values[i] + feature_values[i+1]) / 2);
     }

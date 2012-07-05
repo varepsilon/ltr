@@ -21,23 +21,30 @@ using std::string;
 namespace ltr {
 class ID3_Learner : public DecisionTreeLearner {
  public:
-  explicit ID3_Learner(
-    const ParametersContainer& parameters = ParametersContainer())
-  : DecisionTreeLearner(parameters.Contains("") &&
-                        parameters.TypeCoincides<ParametersContainer>("") ?
-                        parameters.Get<ParametersContainer>("") :
-                        ParametersContainer()) {
-    // : DecisionTreeLearner(parameters.getGroup(""))
-    // {  //variant->any_TODO it is very ugly! fix it!
+  explicit ID3_Learner(const ParametersContainer& parameters)
+  : DecisionTreeLearner(parameters) {
     this->setConditionsLearner(
       ConditionsLearner::Ptr(
         new ID3_Splitter(
-          parameters.Get<ParametersContainer>("conditions learner"))));
+          parameters.Get<ParametersContainer>("ID3SplitterParams"))));
     this->setSplittingQuality(
-      SplittingQuality::Ptr(
-        new SqrErrorQuality(
-          parameters.Get<ParametersContainer>("splitting quality"))));
-    copyParameters(parameters);
+      SplittingQuality::Ptr(new SqrErrorQuality(
+          parameters.Get<ParametersContainer>("SqrErrorQualityParams"))));
+  }
+
+  explicit ID3_Learner(bool split_feature_n_times = false,
+    int feature_split_count = 100,
+    int half_summs_step = 5,
+    int min_vertex_size = 3,
+    double label_eps = 0.001)
+  : DecisionTreeLearner(min_vertex_size, label_eps) {
+    this->setConditionsLearner(
+      ConditionsLearner::Ptr(
+        new ID3_Splitter(split_feature_n_times,
+        feature_split_count,
+        half_summs_step)));
+    this->setSplittingQuality(
+      SplittingQuality::Ptr());
   }
  private:
   virtual string getDefaultAlias() const {return "ID3_Learner";}

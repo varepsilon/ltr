@@ -13,8 +13,18 @@ namespace decision_tree {
 
 DecisionTreeLearner::DecisionTreeLearner(
     const ParametersContainer& parameters) {
-  this->setDefaultParameters();
-  this->copyParameters(parameters);
+  this->setParameters(parameters);
+
+  setConditionsLearner(
+      ConditionsLearner::Ptr(new FakeConditionsLearner()));
+  setSplittingQuality(
+      SplittingQuality::Ptr(new FakeSplittingQuality()));
+}
+
+DecisionTreeLearner::DecisionTreeLearner(
+    int min_vertex_size, double label_eps) {
+  min_vertex_size_ = min_vertex_size;
+  label_eps_ = label_eps;
 
   setConditionsLearner(
       ConditionsLearner::Ptr(new FakeConditionsLearner()));
@@ -43,14 +53,13 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   }
 
   const ParametersContainer &params = this->parameters();
-  if (max_label - min_label <= params.Get<double>("LABEL_EPS")) {
+  if (max_label - min_label <= label_eps_) {
     INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;
   }
-  if (!generate_leaf &&
-       data.size() <= params.Get<int>("MIN_VERTEX_SIZE")) {
+  if (!generate_leaf && data.size() <= min_vertex_size_) {
     INFO("Objects count is less than %d. Leaf vertex created.",
-         params.Get<int>("MIN_VERTEX_SIZE"));
+         min_vertex_size_);
     generate_leaf = 1;
   }
   if (!generate_leaf &&
