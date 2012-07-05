@@ -58,9 +58,9 @@ class DecisionTreeLearner
     min_vertex_size_ = parameters.Get<int>("MIN_VERTEX_SIZE");
     label_eps_ = parameters.Get<double>("LABEL_EPS");
     conditions_learner_
-      = parameters.Get<typename ConditionsLearner::Ptr>("CONDITIONS_LEARNER");
+      = parameters.Get<ConditionsLearner::Ptr>("CONDITIONS_LEARNER");
     splitting_quality_
-      = parameters.Get<typename SplittingQuality::Ptr>("SPLITTING_QUALITY");
+      = parameters.Get<SplittingQuality::Ptr>("SPLITTING_QUALITY");
   }
   /** Object, used to generate different conditions for splitting data set
    */
