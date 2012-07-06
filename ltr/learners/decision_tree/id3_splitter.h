@@ -23,41 +23,55 @@ half-summs of nearest values splits.
 For nominal features splits by value of the feature.
 */
 class ID3_Splitter : public ConditionsLearner {
- private:
-  void init();
-
-  int current_feature;
-  int split_idx;
-  vector<double> feature_values;
-  vector<double> numeric_split_values;
-
  public:
   typedef boost::shared_ptr<ID3_Splitter> Ptr;
 
-  explicit ID3_Splitter(
-      const ParametersContainer& parameters = ParametersContainer()) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+  explicit ID3_Splitter(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
+
+  explicit ID3_Splitter(bool split_feature_n_times = false,
+    int feature_split_count = 100,
+    int half_summs_step = 5) {
+
+    split_feature_n_times_ = split_feature_n_times;
+    feature_split_count_ = feature_split_count;
+    half_summs_step_ = half_summs_step;
   }
 
   int getNextConditions(vector<Condition::Ptr>* result);
 
   void setDefaultParameters() {
-    this->addNewParam("SPLIT_FEATURE_N_TIMES", false);
-    this->addNewParam("FEATURE_SPLIT_COUNT", 100);
-    this->addNewParam("HALF_SUMMS_STEP", 5);
+    split_feature_n_times_ = false;
+    feature_split_count_ = 100;
+    half_summs_step_ = 5;
   }
-  void checkParameters() {
-    this->checkParameter<int>("FEATURE_SPLIT_COUNT",
-                              std::bind2nd(std::greater_equal<int>(), 1));
-    this->checkParameter<int>("HALF_SUMMS_STEP",
-                              std::bind2nd(std::greater_equal<int>(), 1));
 
-    int n = getParameter<bool>("SPLIT_FEATURE_N_TIMES");
-    n += getParameter<bool>("USE_HALF_SUMMS_SPLIT");
-    if (n > 1)
-      throw std::logic_error("you can use only one splitting type");
+  void checkParameters() {
+    CHECK(feature_split_count_ >= 1);
+    CHECK(half_summs_step_ >= 1);
   }
+
+  GET_SET(bool, split_feature_n_times);
+  GET_SET(int, feature_split_count);
+  GET_SET(int, half_summs_step);
+
+ private:
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    split_feature_n_times_ = parameters.Get<bool>("SPLIT_FEATURE_N_TIMES");
+    feature_split_count_ = parameters.Get<int>("FEATURE_SPLIT_COUNT");
+    half_summs_step_ = parameters.Get<int>("HALF_SUMMS_STEP");
+  }
+
+  void init();
+
+  int current_feature;
+  int split_idx;
+  bool split_feature_n_times_;
+  int feature_split_count_;
+  int half_summs_step_;
+  vector<double> feature_values;
+  vector<double> numeric_split_values;
 };
 }
 }

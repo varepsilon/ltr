@@ -10,23 +10,7 @@
 using ltr::FeatureInfo;
 using ltr::NominalFeatureValues;
 
-// The fixture for testing (contains data for tests).
-class FeaturesInfoTest : public ::testing::Test {
-    protected:
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
-
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
-};
-
-// tests.
-
-TEST_F(FeaturesInfoTest, TestingBasicOperations) {
+TEST(FeaturesInfoTest, TestingBasicOperations) {
   FeatureInfo info1(5, ltr::NUMERIC);
   for (size_t i = 0; i < 5; i++)
     EXPECT_EQ(info1.getFeatureType(i), ltr::NUMERIC);
@@ -40,7 +24,7 @@ TEST_F(FeaturesInfoTest, TestingBasicOperations) {
   EXPECT_EQ(info1.getFeatureValues(5), values);
 
   FeatureInfo info2;
-  info2.setFeatureCount(5, ltr::NUMERIC);
+  info2.resize(5, ltr::NUMERIC);
 
   EXPECT_FALSE(info2 == info1);
   info2.addFeature(ltr::NOMINAL, values);

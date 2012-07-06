@@ -32,7 +32,36 @@ namespace decision_tree {
 
 class DecisionTreeLearner
   : public BaseLearner<Object, DecisionTreeScorer> {
+ public:
+  void setDefaultParameters() {
+    min_vertex_size_ = 3;
+    label_eps_ = 0.001;
+  }
+
+  void checkParameters() const {
+    CHECK(min_vertex_size_ > 0); // NOLINT
+    CHECK(label_eps_ >= 0); // NOLINT
+  }
+
+  GET_SET(ConditionsLearner::Ptr, conditions_learner);
+  GET_SET(SplittingQuality::Ptr, splitting_quality);
+  GET_SET(int, min_vertex_size);
+  GET_SET(double, label_eps);
+
+  explicit DecisionTreeLearner(const ParametersContainer& parameters);
+
+  explicit DecisionTreeLearner(
+    int min_vertex_size = 3, double label_eps = 0.001);
+
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters) {
+    min_vertex_size_ = parameters.Get<int>("MIN_VERTEX_SIZE");
+    label_eps_ = parameters.Get<double>("LABEL_EPS");
+    conditions_learner_
+      = parameters.Get<ConditionsLearner::Ptr>("CONDITIONS_LEARNER");
+    splitting_quality_
+      = parameters.Get<SplittingQuality::Ptr>("SPLITTING_QUALITY");
+  }
   /** Object, used to generate different conditions for splitting data set
    */
   ConditionsLearner::Ptr conditions_learner_;
@@ -53,35 +82,8 @@ class DecisionTreeLearner
   }
   virtual string getDefaultAlias() const {return "DecisionTreeLearner";}
 
- public:
-  /** Sets conditiona learner object.
-   */
-  void setConditionsLearner(ConditionsLearner::Ptr conditions_learner) {
-    conditions_learner_ = conditions_learner;
-    this->setExistingParameter("conditions learner",
-                        conditions_learner_->parameters());
-  }
-  /** Sets splitting quality object.
-   */
-  void setSplittingQuality(SplittingQuality::Ptr splitting_quality) {
-    splitting_quality_ = splitting_quality;
-    this->setExistingParameter("splitting quality",
-                        splitting_quality_->parameters());
-  }
-
-  void setDefaultParameters() {
-    this->addNewParam("MIN_VERTEX_SIZE", 3);
-    this->addNewParam("LABEL_EPS", 0.001);
-  }
-  void checkParameters() const {
-    this->checkParameter<int>("MIN_VERTEX_SIZE",
-                                       std::bind2nd(std::greater<int>(), 0) );
-    this->checkParameter<double>("LABEL_EPS",
-                            std::bind2nd(std::greater_equal<double>(), 0) );
-  }
-
-  explicit DecisionTreeLearner(
-    const ParametersContainer& parameters = ParametersContainer());
+  int min_vertex_size_;
+  double label_eps_;
 };
 }
 }
