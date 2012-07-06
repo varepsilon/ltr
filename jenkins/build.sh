@@ -2,9 +2,10 @@
 ! [ -d build ] && mkdir build
 rm -rf build/*
 cd build
-cmake ../
-if [ "$os_type" == "windows" ]; then
-  cmd.exe /E:ON /V:ON /C 'jenkins\build.cmd'
+if [ "$OS" = "Windows_NT" ]; then
+  $COMSPEC /c '..\jenkins\build.cmd'
 else
+  cmake ../
   make -j$JOBS
 fi
+./ltr_test

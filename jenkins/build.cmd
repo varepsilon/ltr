@@ -8,4 +8,5 @@ call "%PROGRAMFILES%\Microsoft Visual Studio 9.0\vcvarsall.bat"
 @set LIB=%PROGRAMFILES%\Microsoft SDKs\Windows\v6.1\Lib;%LIB%
 @set LIB=%PROGRAMFILES%\Microsoft Visual Studio 9.0\VC\lib;%LIB%
 
+cmake ../
 nmake
