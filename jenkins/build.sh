@@ -3,7 +3,7 @@
 rm -rf build/*
 cd build
 cmake ../
-if [ "$os_type" == "windows" ]
+if [ "$os_type" == "windows" ]; then
   cmd.exe /E:ON /V:ON /C 'jenkins\build.cmd'
 else
   make -j$JOBS
