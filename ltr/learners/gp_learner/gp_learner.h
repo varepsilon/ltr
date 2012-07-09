@@ -173,12 +173,12 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
 
   virtual void checkParameters() const {
-    CHECK(pop_size_ > 0);
-    CHECK(nbr_gen_ > 0);
-    CHECK(nbr_part_ > 1);
-    CHECK(max_depth_ > 0);
-    CHECK(min_init_depth_ > 0);
-    CHECK(mut_max_regen_depth_ > 0);
+    CHECK(pop_size_ > 0); // NOLINT
+    CHECK(nbr_gen_ > 0); // NOLINT
+    CHECK(nbr_part_ > 1); // NOLINT
+    CHECK(max_depth_ > 0); // NOLINT
+    CHECK(min_init_depth_ > 0); // NOLINT
+    CHECK(mut_max_regen_depth_ > 0); // NOLINT
     CHECK(max_init_depth_ > min_init_depth_ - 1);
     CHECK(0.0 <= init_grow_proba_ && init_grow_proba_ <= 1.0);
     CHECK(0.0 <= crossover_proba_ && crossover_proba_ <= 1.0);

@@ -81,7 +81,7 @@ void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
 
 template<class TElement>
 void KFoldSimpleSplitter<TElement>::checkParameters() const {
-  CHECK(this->K_ >= 2);
+  CHECK(this->K_ >= 2); // NOLINT
 }
 
 template <class TElement>

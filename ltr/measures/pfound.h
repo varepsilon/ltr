@@ -54,10 +54,10 @@ class PFound: public ListwiseMeasure {
    * MAX_LABEL >= 0 (all should be true)
    */
   void checkParameters() const {
-    CHECK(p_break_ >= 0);
-    CHECK(p_break_ <= 1);
-    CHECK(number_of_objects_to_consider_ >= 0);
-    CHECK(max_label_ >= 0);
+    CHECK(p_break_ >= 0); // NOLINT
+    CHECK(p_break_ <= 1); // NOLINT
+    CHECK(number_of_objects_to_consider_ >= 0); // NOLINT
+    CHECK(max_label_ >= 0); // NOLINT
   }
 
   double best() const {

@@ -48,8 +48,8 @@ class ID3_Splitter : public ConditionsLearner {
   }
 
   void checkParameters() {
-    CHECK(feature_split_count_ >= 1);
-    CHECK(half_summs_step_ >= 1);
+    CHECK(feature_split_count_ >= 1); // NOLINT
+    CHECK(half_summs_step_ >= 1); // NOLINT
   }
 
   GET_SET(bool, split_feature_n_times);
