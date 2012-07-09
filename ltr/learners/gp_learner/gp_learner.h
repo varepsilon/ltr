@@ -199,35 +199,36 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     std::fixed(str);
     str.precision(2);
     str << "Genetic programming learner with parameters: POP_SIZE = ";
-    str << this->parameters().Get<int>("POP_SIZE") << ", NBR_GEN = ";
-    str << this->parameters().Get<int>("NBR_GEN") << ", NBR_PART = ";
-    str << this->parameters().Get<int>("NBR_PART") << ", MAX_DEPTH = ";
-    str << this->parameters().Get<int>("MAX_DEPTH") << ", MIN_INIT_DEPTH = ";
-    str << this->parameters().Get<int>("MIN_INIT_DEPTH")
+    str << this->parameters().template Get<int>("POP_SIZE") << ", NBR_GEN = ";
+    str << this->parameters().template Get<int>("NBR_GEN") << ", NBR_PART = ";
+    str << this->parameters().template Get<int>("NBR_PART") << ", MAX_DEPTH = ";
+    str << this->parameters().template Get<int>("MAX_DEPTH")
+      << ", MIN_INIT_DEPTH = ";
+    str << this->parameters().template Get<int>("MIN_INIT_DEPTH")
       << ", MAX_INIT_DEPTH = ";
-    str << this->parameters().Get<int>("MAX_INIT_DEPTH")
+    str << this->parameters().template Get<int>("MAX_INIT_DEPTH")
       << ", INIT_GROW_PROBA = ";
-    str << this->parameters().Get<double>("INIT_GROW_PROBA")
+    str << this->parameters().template Get<double>("INIT_GROW_PROBA")
       << ", CROSSOVER_PROBA = ";
-    str << this->parameters().Get<double>("CROSSOVER_PROBA")
+    str << this->parameters().template Get<double>("CROSSOVER_PROBA")
       << ", CROSSOVER_DISTRIB_PROBA = ";
-    str << this->parameters().Get<double>("CROSSOVER_DISTRIB_PROBA")
+    str << this->parameters().template Get<double>("CROSSOVER_DISTRIB_PROBA")
       << ", MUT_STD_PROBA = ";
-    str << this->parameters().Get<double>("MUT_STD_PROBA")
+    str << this->parameters().template Get<double>("MUT_STD_PROBA")
       << ", MUT_MAX_REGEN_DEPTH = ";
-    str << this->parameters().Get<int>("MUT_MAX_REGEN_DEPTH")
+    str << this->parameters().template Get<int>("MUT_MAX_REGEN_DEPTH")
       << ", MUT_SWAP_PROBA = ";
-    str << this->parameters().Get<double>("MUT_SWAP_PROBA")
+    str << this->parameters().template Get<double>("MUT_SWAP_PROBA")
       << ", MUT_SWAP_DISTRIB_PROBA = ";
-    str << this->parameters().Get<double>("MUT_SWAP_DISTRIB_PROBA")
+    str << this->parameters().template Get<double>("MUT_SWAP_DISTRIB_PROBA")
       << ", SEED = ";
-    str << this->parameters().Get<int>("SEED") << ", USE_ADD = ";
-    str << this->parameters().Get<bool>("USE_ADD") << ", USE_SUB = ";
-    str << this->parameters().Get<bool>("USE_SUB") << ", USE_MUL = ";
-    str << this->parameters().Get<bool>("USE_MUL") << ", USE_DIV = ";
-    str << this->parameters().Get<bool>("USE_DIV") << ", USE_IF = ";
-    str << this->parameters().Get<bool>("USE_IF") << ", USE_EFEM = ";
-    str << this->parameters().Get<bool>("USE_EFEM");
+    str << this->parameters().template Get<int>("SEED") << ", USE_ADD = ";
+    str << this->parameters().template Get<bool>("USE_ADD") << ", USE_SUB = ";
+    str << this->parameters().template Get<bool>("USE_SUB") << ", USE_MUL = ";
+    str << this->parameters().template Get<bool>("USE_MUL") << ", USE_DIV = ";
+    str << this->parameters().template Get<bool>("USE_DIV") << ", USE_IF = ";
+    str << this->parameters().template Get<bool>("USE_IF") << ", USE_EFEM = ";
+    str << this->parameters().template Get<bool>("USE_EFEM");
     return str.str();
   }
 
