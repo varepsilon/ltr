@@ -3,7 +3,11 @@
 #ifndef LTR_SCORERS_COMPOSITION_SCORERS_MAX_WEIGHT_COMPOSITION_SCORER_H_
 #define LTR_SCORERS_COMPOSITION_SCORERS_MAX_WEIGHT_COMPOSITION_SCORER_H_
 
+#include <string>
+
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
+
+using std::string;
 
 namespace ltr {
 class MaxWeightCompositionScorer : public CompositionScorer {

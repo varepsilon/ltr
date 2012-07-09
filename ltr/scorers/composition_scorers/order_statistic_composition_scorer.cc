@@ -18,17 +18,20 @@ double NonNegative(double value) {
 }
 
 namespace ltr {
-  double OrderStaticticCompositionScorer::scoreImpl(const Object& object) const {
+  double OrderStaticticCompositionScorer::scoreImpl
+      (const Object& object) const {
     // if weight[i] < 0 then take it 0
     double sum_weight = 0.0;
-    vector<pair<double,double> > weighted_scores(size());
+    vector<pair<double, double> > weighted_scores(size());
     for (size_t i = 0; i < size(); ++i) {
       sum_weight += NonNegative(at(i).weight);
-      weighted_scores[i] = make_pair(((*at(i).scorer)(object)), NonNegative(at(i).weight));
+      weighted_scores[i] = make_pair(((*at(i).scorer)(object)),
+        NonNegative(at(i).weight));
     }
 
     if (DoubleEqual(sum_weight, 0.0)) {
-      throw std::logic_error("No positive weights in OrderStaticticCompositionScorer");
+      throw std::logic_error
+        ("No positive weights in OrderStaticticCompositionScorer");
     }
 
     // it might be a faster realization without sort

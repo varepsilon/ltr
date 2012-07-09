@@ -39,7 +39,7 @@ class CompositionScorer : public Scorer {
   void add(const ScorerAndWeight& weighted_scorer);
   void add(Scorer::Ptr scorer, double weight);
 
-  virtual ~CompositionScorer() {};
+  virtual ~CompositionScorer() {}
 
  private:
   virtual string getDefaultAlias() const {return "CompositionScorer";}

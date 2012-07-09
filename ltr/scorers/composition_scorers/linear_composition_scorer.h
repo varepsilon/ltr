@@ -4,10 +4,12 @@
 #define LTR_SCORERS_COMPOSITION_SCORERS_LINEAR_COMPOSITION_SCORER_H_
 
 #include <string>
+#include <vector>
 
 #include "ltr/scorers/composition_scorers/soft_composition_scorer.h"
 
 using std::string;
+using std::vector;
 
 namespace ltr {
 class LinearCompositionScorer : public SoftCompositionScorer {

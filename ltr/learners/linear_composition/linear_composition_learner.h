@@ -85,7 +85,7 @@ class LinearCompositionLearner
    * Checks if NUMBER_OF_ITERATIONS > 0 (should be true)
    */
   void checkParameters() const {
-    CHECK(number_of_iterations_ > 0);
+    CHECK(number_of_iterations_ > 0); // NOLINT
   }
   // void set_measure(typename Measure<TElement>::Ptr measure);
   // void set_weak_learner(typename Learner<TElement>::Ptr weak_learner);

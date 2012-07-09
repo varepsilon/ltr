@@ -14,7 +14,7 @@ class OrderStaticticCompositionScorer : public CompositionScorer {
  public:
   typedef boost::shared_ptr<OrderStaticticCompositionScorer> Ptr;
 
-  OrderStaticticCompositionScorer(double ratio)
+  explicit OrderStaticticCompositionScorer(double ratio)
     : ratio_(ratio) {}
 
   virtual string toString() const;

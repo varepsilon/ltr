@@ -19,7 +19,7 @@ class MedianCompositionScorer : public OrderStaticticCompositionScorer {
 
   virtual string toString() const;
 
- private:  
+ private:
   virtual string getDefaultAlias() const {
     return "MedianCompositionScorer";
   }
