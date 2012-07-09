@@ -5,7 +5,7 @@
 
 #include "ltr/utility/numerical.h"
 #include "ltr/data/object.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/scorers/linear_scorer.h"
 #include "ltr/scorers/one_feature_scorer.h"
 

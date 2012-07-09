@@ -8,7 +8,7 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/printable.h"

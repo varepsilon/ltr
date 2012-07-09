@@ -10,7 +10,7 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/learners/learner.h"
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
