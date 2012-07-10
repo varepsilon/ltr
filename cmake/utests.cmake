@@ -19,7 +19,8 @@ SET(LTR_FEATURE_CONVERTERS_TEST ${Source_Path}/ltr/feature_converters/feature_co
 
 SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_preprocessors_unittest.cc)
 
-SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc)
+SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc
+					  ${Source_Path}/ltr/learners/linear_learner/linear_learner_unittest.cc)
 
 SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
                       ${Source_Path}/ltr/measures/listwise_measures_unittest.cc
@@ -56,6 +57,7 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(data_preprocessors FILES ${LTR_DATA_PREPROCESSORS_TEST})
 SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS_TEST})
+SOURCE_GROUP(learners FILES ${LTR_LEARNERS_TEST})
 
 # lets list all LTR_TEST's source binaries
 SET(LTR_TEST ${LTR_OBJECT_TEST} ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} 
