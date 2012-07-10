@@ -20,9 +20,13 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
 #include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/scorers/linear_scorer.h"
 
 using ltr::FeatureConverter;
 using ltr::NanToZeroConverterLearner;
+using ltr::Object;
+using ltr::DataSet;
 
 // The fixture for testing (contains data for tests).
 class LearnersTest : public ::testing::Test {
@@ -99,6 +103,26 @@ TEST_F(LearnersTest, TestingGPLearnerDeterminantStrategy) {
   learner.learn(learn_data_listwise);
 
   ltr::gp::GPScorer::Ptr scorer = learner.makeSpecific();
+
+  std::cout << scorer->generateCppCode();
+};
+
+TEST_F(LearnersTest, TestingLinearLearner) {
+  DataSet<Object> data;
+  Object object1, object2, object3;
+  object1 << 1.2 << 1.9;
+  object2 << 1.7 << 512.1;
+  object3 << 5.9 << 0.2;
+
+  data.add(object1, 1.2);
+  data.add(object2, 0.5);
+  data.add(object3, 7.2);
+
+  ltr::LinearLearner<Object> learner;
+
+  learner.learn(data);
+
+  ltr::LinearScorer::Ptr scorer = learner.makeSpecific();
 
   std::cout << scorer->generateCppCode();
 };
