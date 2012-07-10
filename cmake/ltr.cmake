@@ -71,10 +71,22 @@ SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
 SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
                 ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
                 ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
-                ${Source_Path}/ltr/scorers/linear_composition_scorer.h ${Source_Path}/ltr/scorers/linear_composition_scorer.cc
                 ${Source_Path}/ltr/scorers/gp_scorer.h
                 ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
 				${Source_Path}/ltr/scorers/linear_scorer.h ${Source_Path}/ltr/scorers/linear_scorer.cc)
+
+SET(LTR_COMPOSITION_SCORERS		
+				${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.cc
+				${Source_Path}/ltr/scorers/composition_scorers/soft_composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.cc
+				${Source_Path}/ltr/scorers/composition_scorers/order_statistic_composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/order_statistic_composition_scorer.cc
+				${Source_Path}/ltr/scorers/composition_scorers/median_composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/median_composition_scorer.cc
+				${Source_Path}/ltr/scorers/composition_scorers/max_weight_composition_scorer.h
+				${Source_Path}/ltr/scorers/composition_scorers/max_weight_composition_scorer.cc)
 
 SET(LTR_SCORERS_UTILS ${Source_Path}/ltr/scorers/utility/scorer_utility.h
                       ${Source_Path}/ltr/scorers/utility/scorer_utility.cc)
@@ -168,6 +180,7 @@ SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS})
 SOURCE_GROUP(feature_converters\\utils FILES ${LTR_FEATURE_CONVERTERS_UTILITY})
 SOURCE_GROUP(data_preprocessor FILES ${LTR_DATA_PREPROCESSORS})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS})
+SOURCE_GROUP(scorers\\composition_scorers FILES ${LTR_COMPOSITION_SCORERS})
 SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
@@ -178,7 +191,7 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
-			${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE}
+			${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS}
             ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY})
 
 INCLUDE_DIRECTORIES(${Source_Path})

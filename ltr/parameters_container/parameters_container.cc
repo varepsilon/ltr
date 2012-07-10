@@ -33,7 +33,7 @@ void ParametersContainer::Copy(const ParametersContainer& parameters) {
        it != parameters.name_value_hash_.end();
        ++it) {
     const string& name = it->first;
-    const boost::any &value = it->second;
+    const boost::any& value = it->second;
 
     if (!Contains(name))  {
       string error_string = "Wrong parameter name " + name + "\n";

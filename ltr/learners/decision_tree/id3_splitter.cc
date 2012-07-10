@@ -16,7 +16,7 @@ namespace decision_tree {
 
 void ID3_Splitter::init() {
   current_feature = 0;
-  const ParametersContainer &params = this->parameters();
+  ParametersContainer params = this->parameters();
   split_idx = 0;
   INFO("Inited. ");
   if (split_feature_n_times_) {
@@ -55,7 +55,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       return getNextConditions(result);
     }
 
-    const ParametersContainer &params = this->parameters();
+    ParametersContainer params = this->parameters();
 
     if (split_feature_n_times_) {
       int split_cnt = feature_split_count_;

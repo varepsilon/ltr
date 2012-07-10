@@ -5,7 +5,7 @@
 
 #include "ltr/utility/numerical.h"
 #include "ltr/data/object.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/scorers/linear_scorer.h"
 #include "ltr/scorers/one_feature_scorer.h"
 
@@ -20,10 +20,10 @@ TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   vector<double> weights1(2);
   weights1[0] = 0.5;
   weights1[1] = 1.7;
-  
+
   LinearScorer::Ptr ls1(new LinearScorer(weights1));
   OneFeatureScorer::Ptr ofs1(new OneFeatureScorer());
-  
+
   Object obj1;
   obj1 << 1.2;
 

@@ -17,6 +17,7 @@
 #include "ltr/measures/measure.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/scorers/scorer.h"
+#include "ltr/interfaces/printable.h"
 
 using std::string;
 using std::vector;

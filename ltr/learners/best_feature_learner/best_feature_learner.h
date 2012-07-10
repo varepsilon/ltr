@@ -36,6 +36,8 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
     this->set_measure(pMeasure);
   }
 
+  string toString() const;
+
   void setDefaultParameters() {
     measure_ = typename Measure<TElement>::Ptr();
   }
@@ -53,10 +55,16 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
   typename Measure<TElement>::Ptr measure_;
 };
 
+
+template<class TElement>
+string BestFeatureLearner<TElement>::toString() const {
+  return "Best feature learner with " + this->p_measure_->toString();
+}
+
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
-  if(measure_.get() == 0) {
+  if (measure_.get() == 0) {
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {

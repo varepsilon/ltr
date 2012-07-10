@@ -10,7 +10,7 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/learners/learner.h"
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
@@ -85,7 +85,7 @@ class LinearCompositionLearner
    * Checks if NUMBER_OF_ITERATIONS > 0 (should be true)
    */
   void checkParameters() const {
-    CHECK(number_of_iterations_ > 0);
+    CHECK(number_of_iterations_ > 0); // NOLINT
   }
   // void set_measure(typename Measure<TElement>::Ptr measure);
   // void set_weak_learner(typename Learner<TElement>::Ptr weak_learner);

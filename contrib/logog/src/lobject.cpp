@@ -2,7 +2,8 @@
  * \file object.cpp
  */
 
-#include "logog.hpp"
+// "logog/include/" prefix is added by ltr developers for convenience
+#include "logog/include/logog.hpp"
 #ifdef LOGOG_LEAK_DETECTION
 #include <iostream>
 #endif // LOGOG_LEAK_DETECTION

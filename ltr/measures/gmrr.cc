@@ -28,7 +28,7 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    const ParametersContainer &params = this->parameters();
+    ParametersContainer params = this->parameters();
 
     size_t n = number_of_objects_to_consider_;
     if ((n == 0) || (n > labels.size())) {

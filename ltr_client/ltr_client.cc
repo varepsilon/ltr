@@ -17,7 +17,7 @@ using std::cout;
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/ndcg.h"
 
-#include "contrib/logog/include/logog.hpp"
+#include "logog/logog.h"
 
 class LtrClientPrivate {
  public:
@@ -246,10 +246,7 @@ void LtrClient::launch() {
 // ===========================================================================
 
 int main(int argc, char* argv[]) {
-  LOGOG_INITIALIZE();
-//  logog::Cout out;
-//  logog::LogFile outFile("ltr_client.log");
-//  logog::GetDefaultFormatter().SetShowTimeOfDay(true);
+  ltr::Log LOG;
 
   if (argc < 2) {
       ERR("config file  missing");
@@ -271,6 +268,5 @@ int main(int argc, char* argv[]) {
       ERR("Caught exception");
   }
 
-  LOGOG_SHUTDOWN();
   return 0;
 }

@@ -83,8 +83,9 @@ class ParametersContainer: public Printable {
   template <class T>
   bool TypeCoincides(const string& name) const {
     const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end())
+    if (it == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
+    }
     return it->second.type() == typeid(T);
   }
   /**
@@ -138,11 +139,12 @@ class ParametersContainer: public Printable {
    * Returns const reference to value of parameter with given name
    */
   template<class T>
-  const T &GetRef(const string& name) const
+  const T& GetRef(const string& name) const
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end())
+    if (it == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
+    }
 
     try {
       return *boost::any_cast<T>(&it->second);
@@ -157,11 +159,12 @@ class ParametersContainer: public Printable {
    * Returns reference to value of parameter with given name
    */
   template<class T>
-  T &GetRef(const string &name)
+  T& GetRef(const string &name)
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end())
+    if (it == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
+    }
 
     try {
       return *boost::any_cast<T>(&it->second);
@@ -192,7 +195,7 @@ class ParametersContainer: public Printable {
    * @param value - value to set
    */
   template<class T>
-  void SetExisting(const string &name, const T &value) {
+  void SetExisting(const string& name, const T& value) {
     const StringAnyHash::iterator it = name_value_hash_.find(name);
     if (it == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
@@ -207,7 +210,7 @@ class ParametersContainer: public Printable {
    * @param value - value to add
    */
   template<class T>
-  void AddNew(const string &name, const T &value) {
+  void AddNew(const string& name, const T& value) {
     const StringAnyHash::const_iterator it = name_value_hash_.find(name);
     if (it != name_value_hash_.end()) {
       throw std::logic_error("There is already exist such parameter: " + name);
@@ -219,7 +222,7 @@ class ParametersContainer: public Printable {
    * Throws if other container contains new parameters
    * or there is conflict of types.
    */
-  void Copy(const ParametersContainer &parameters);
+  void Copy(const ParametersContainer& parameters);
   /**
    * Print names and values of all parameters
    */

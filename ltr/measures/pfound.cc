@@ -20,7 +20,7 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    const ParametersContainer &params = this->parameters();
+    ParametersContainer params = this->parameters();
 
     size_t n = number_of_objects_to_consider_;
     if ((n == 0) || (n > labels.size())) {
@@ -28,9 +28,9 @@ namespace ltr {
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
+// why not using p_break_ directly?
     double p_break = p_break_;
     double max_label = max_label_;
-    size_t cur = 1;
 
     for (int labels_index = 0; labels_index < n; ++labels_index) {
       if (labels[labels_index].actual < 0) {

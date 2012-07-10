@@ -18,7 +18,7 @@
 #include "ltr/learners/decision_tree/splitting_quality.h"
 #include "ltr/learners/decision_tree/conditions_learner.h"
 
-#include "contrib/logog/include/logog.hpp"
+#include "logog/logog.h"
 
 using std::string;
 
@@ -49,6 +49,8 @@ class DecisionTreeLearner
   GET_SET(double, label_eps);
 
   explicit DecisionTreeLearner(const ParametersContainer& parameters);
+  public:
+    string toString() const;
 
   explicit DecisionTreeLearner(
     int min_vertex_size = 3, double label_eps = 0.001);

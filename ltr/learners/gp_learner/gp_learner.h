@@ -75,7 +75,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     double mut_swap_proba = 0.05)
   : feature_count_(0),
   best_tree_index_(0) {
-
     measure_ = measure;
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
@@ -120,9 +119,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     double crossover_proba = 0.9,
     double mut_std_proba = 0.05,
     double mut_swap_proba = 0.05)
-  : feature_count_(0),
-    best_tree_index_(0) {
-
+    : feature_count_(0),
+      best_tree_index_(0) {
     pop_size_ = pop_size;
     nbr_gen_ = nbr_gen;
     nbr_part_ = nbr_part;
@@ -175,12 +173,12 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
 
   virtual void checkParameters() const {
-    CHECK(pop_size_ > 0);
-    CHECK(nbr_gen_ > 0);
-    CHECK(nbr_part_ > 1);
-    CHECK(max_depth_ > 0);
-    CHECK(min_init_depth_ > 0);
-    CHECK(mut_max_regen_depth_ > 0);
+    CHECK(pop_size_ > 0); // NOLINT
+    CHECK(nbr_gen_ > 0); // NOLINT
+    CHECK(nbr_part_ > 1); // NOLINT
+    CHECK(max_depth_ > 0); // NOLINT
+    CHECK(min_init_depth_ > 0); // NOLINT
+    CHECK(mut_max_regen_depth_ > 0); // NOLINT
     CHECK(max_init_depth_ > min_init_depth_ - 1);
     CHECK(0.0 <= init_grow_proba_ && init_grow_proba_ <= 1.0);
     CHECK(0.0 <= crossover_proba_ && crossover_proba_ <= 1.0);
@@ -194,6 +192,44 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   void reset() {
     this->initContext();
     this->initPopulation();
+  }
+
+  string toString() const {
+    std::stringstream str;
+    std::fixed(str);
+    str.precision(2);
+    str << "Genetic programming learner with parameters: POP_SIZE = ";
+    str << this->parameters().template Get<int>("POP_SIZE") << ", NBR_GEN = ";
+    str << this->parameters().template Get<int>("NBR_GEN") << ", NBR_PART = ";
+    str << this->parameters().template Get<int>("NBR_PART") << ", MAX_DEPTH = ";
+    str << this->parameters().template Get<int>("MAX_DEPTH")
+      << ", MIN_INIT_DEPTH = ";
+    str << this->parameters().template Get<int>("MIN_INIT_DEPTH")
+      << ", MAX_INIT_DEPTH = ";
+    str << this->parameters().template Get<int>("MAX_INIT_DEPTH")
+      << ", INIT_GROW_PROBA = ";
+    str << this->parameters().template Get<double>("INIT_GROW_PROBA")
+      << ", CROSSOVER_PROBA = ";
+    str << this->parameters().template Get<double>("CROSSOVER_PROBA")
+      << ", CROSSOVER_DISTRIB_PROBA = ";
+    str << this->parameters().template Get<double>("CROSSOVER_DISTRIB_PROBA")
+      << ", MUT_STD_PROBA = ";
+    str << this->parameters().template Get<double>("MUT_STD_PROBA")
+      << ", MUT_MAX_REGEN_DEPTH = ";
+    str << this->parameters().template Get<int>("MUT_MAX_REGEN_DEPTH")
+      << ", MUT_SWAP_PROBA = ";
+    str << this->parameters().template Get<double>("MUT_SWAP_PROBA")
+      << ", MUT_SWAP_DISTRIB_PROBA = ";
+    str << this->parameters().template Get<double>("MUT_SWAP_DISTRIB_PROBA")
+      << ", SEED = ";
+    str << this->parameters().template Get<int>("SEED") << ", USE_ADD = ";
+    str << this->parameters().template Get<bool>("USE_ADD") << ", USE_SUB = ";
+    str << this->parameters().template Get<bool>("USE_SUB") << ", USE_MUL = ";
+    str << this->parameters().template Get<bool>("USE_MUL") << ", USE_DIV = ";
+    str << this->parameters().template Get<bool>("USE_DIV") << ", USE_IF = ";
+    str << this->parameters().template Get<bool>("USE_IF") << ", USE_EFEM = ";
+    str << this->parameters().template Get<bool>("USE_EFEM");
+    return str.str();
   }
 
   /** The function sets up context and population from the given GPScorer.
@@ -283,7 +319,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   void initPopulation() {
     population_.clear();
-    const ParametersContainer &params = this->parameters();
+    ParametersContainer params = this->parameters();
 
     population_.resize(pop_size_);
     Puppy::initializePopulation(population_, context_, init_grow_proba_,
@@ -295,7 +331,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   virtual void evaluationStepImpl() {
     std::cout << "Tournament.\n";
-    const ParametersContainer &params = this->parameters();
+    ParametersContainer params = this->parameters();
 
     Puppy::applySelectionTournament(population_, context_, nbr_part_);
 

@@ -9,7 +9,7 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/scorers/scorer.h"

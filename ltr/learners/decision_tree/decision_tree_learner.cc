@@ -52,7 +52,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     max_label = std::max(max_label, data[i].actual_label());
   }
 
-  const ParametersContainer &params = this->parameters();
+  ParametersContainer params = this->parameters();
   if (max_label - min_label <= label_eps_) {
     INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;

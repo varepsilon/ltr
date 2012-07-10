@@ -2,7 +2,8 @@
  * \file lstring.cpp
  */
 
-#include "logog.hpp"
+// "logog/include/" prefix is added by ltr developers for convenience
+#include "logog/include/logog.hpp"
 
 namespace logog {
 

@@ -30,13 +30,13 @@ const ParametersContainer& Parameterized::parameters() const {
   return parameters_;
 }
 
-void Parameterized::copyParameters(const ParametersContainer &parameters) {
+void Parameterized::copyParameters(const ParametersContainer& parameters) {
   parameters_.Copy(parameters);
   checkParameters();
   parametersUpdateCallback();
 }
 
-void Parameterized::setParameters(const ParametersContainer &parameters) {
+void Parameterized::setParameters(const ParametersContainer& parameters) {
   setParametersImpl(parameters);
   checkParameters();
   parametersUpdateCallback();

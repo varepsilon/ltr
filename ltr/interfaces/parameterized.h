@@ -16,7 +16,7 @@ namespace ltr {
 * Simple getter and setter
 */
 #define GET_SET(type, name) \
-  void set_##name(const type &name) { \
+  void set_##name(const type& name) { \
     name##_ = name; \
   }; \
   type name() const { \
@@ -27,7 +27,7 @@ namespace ltr {
 * Simple setter
 */
 #define SET(type, name) \
-  void set_##name(const type &name) { \
+  void set_##name(const type& name) { \
     name##_ = name; \
   };
 
@@ -49,7 +49,7 @@ namespace ltr {
 
 /**
  * Parameterized is a class that provides derived subclasses hold their
- * different-type parameters (int, double and bool) in convenient
+ * different-type parameters (int, double, bool, etc.) in convenient
  * way. E.g. a derived subclass knows it's default parameters
  */
 class Parameterized {
@@ -76,7 +76,7 @@ class Parameterized {
   }
   // \deprecated
   template<class T>
-  void setExistingParameter(const std::string &name, T value) {
+  void setExistingParameter(const std::string& name, T value) {
     parameters_.SetExisting(name, value);
     checkParameters();
     parametersUpdateCallback();
@@ -95,9 +95,9 @@ class Parameterized {
   template <typename DesiredType>
   DesiredType getParameter(const string& name) const;
   // \deprecated
-  void copyParameters(const ParametersContainer &parameters);
+  void copyParameters(const ParametersContainer& parameters);
  protected:
-  virtual void setParametersImpl(const ParametersContainer &parameters);
+  virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual void parametersUpdateCallback();
  private:
   // \deprecated

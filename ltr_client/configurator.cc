@@ -9,7 +9,7 @@
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string/predicate.hpp"
 
-#include "contrib/logog/include/logog.hpp"
+#include "logog/logog.h"
 
 #include "tinyxml/tinyxml.h"
 

@@ -28,6 +28,7 @@ using serialization_test::Generator;
 // Otherwise name conflicts while feature converter's serialization may occur
 
 int main(int argc, char* argv[]) {
+  ltr::Log LOG("generator.log");
   Generator generator;
 
   Measure<Object>::Ptr abs_error(new AbsError());
@@ -40,12 +41,9 @@ int main(int argc, char* argv[]) {
   gp_learner->learn(generator.train_data);
   generator.setScorerTest(gp_learner, "GPLearner");
 
-  // TODO(Misha): Fix this
-  /*
   ID3_Learner::Ptr id3_learner(new ID3_Learner);
   id3_learner->learn(generator.train_data);
   generator.setScorerTest(id3_learner, "ID3Learner");
-  */
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
   linear_learner->learn(generator.train_data);

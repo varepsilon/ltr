@@ -97,6 +97,7 @@ class NormalizedMeasure : public Measure<TElement> {
         weak_measure_->worst() == -utility::Inf) {
       throw std::logic_error("can't normalize infinity measure");
     }
+// using best_ directly?
     double best = best_;
     double worst = worst_;
     return (weak_measure_->value(element) - weak_measure_->worst()) *

@@ -11,26 +11,27 @@
  **/
 // #define LOGOG_UNICODE 1
 
-#include "const.hpp"
-#include "platform.hpp"
-#include "statics.hpp"
-#include "object.hpp"
-#include "timer.hpp"
-#include "mutex.hpp"
-#include "string.hpp"
-#include "node.hpp"
-#include "topic.hpp"
-#include "formatter.hpp"
-#include "target.hpp"
+// "logog/include/" prefix is added by ltr developers for convenience
+#include "logog/include/const.hpp"
+#include "logog/include/platform.hpp"
+#include "logog/include/statics.hpp"
+#include "logog/include/object.hpp"
+#include "logog/include/timer.hpp"
+#include "logog/include/mutex.hpp"
+#include "logog/include/string.hpp"
+#include "logog/include/node.hpp"
+#include "logog/include/topic.hpp"
+#include "logog/include/formatter.hpp"
+#include "logog/include/target.hpp"
 // #include "socket.hpp"
-#include "checkpoint.hpp"
-#include "api.hpp"
-#include "message.hpp"
-#include "macro.hpp"
+#include "logog/include/checkpoint.hpp"
+#include "logog/include/api.hpp"
+#include "logog/include/message.hpp"
+#include "logog/include/macro.hpp"
 
 #ifdef LOGOG_UNIT_TESTING
-#include "thread.hpp"
-#include "unittest.hpp"
+#include "logog/include/thread.hpp"
+#include "logog/include/unittest.hpp"
 #endif
 
 //LTR HACK: in order to resolve conflicts with std::min, std::max
