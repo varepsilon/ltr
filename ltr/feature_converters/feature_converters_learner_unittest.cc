@@ -2,12 +2,15 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/data/feature_info.h"
 #include "ltr/utility/indices.h"
 
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
@@ -15,6 +18,8 @@
 #include "ltr/feature_converters/nan_to_zero_converter.h"
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
 #include "ltr/feature_converters/remove_nominal_converter.h"
+
+using std::vector;
 
 using ltr::Object;
 using ltr::DataSet;
@@ -24,6 +29,8 @@ using ltr::utility::IndicesPtr;
 using ltr::utility::Indices;
 
 using ltr::FeatureConverter;
+using ltr::FeatureConverterLearner;
+using ltr::BaseFeatureConverterLearner;
 using ltr::FakeFeatureConverterLearner;
 using ltr::FeatureSamplerLearner;
 using ltr::FeatureRandomSamplerLearner;
@@ -53,47 +60,45 @@ class FeatureConvertersLearnerTest : public ::testing::Test {
 };
 
 TEST_F(FeatureConvertersLearnerTest, CommonTest) {
-  FakeFeatureConverterLearner<Object> fake_feature_learner;
-  FeatureNormalizerLearner<Object> feature_normalizer_learner;
-  FeatureRandomSamplerLearner<Object> feature_random_sampler_learner;
-  FeatureSamplerLearner<Object> feature_sampler_learner;
-  NanToZeroConverterLearner<Object> nan_to_zero_learner;
-  NominalToBoolConverterLearner<Object> nominal_to_bool_learner;
-  RemoveNominalConverterLearner<Object> remove_nominal_learner;
+  vector<FeatureConverterLearner<Object>::Ptr> feature_converters;
 
-  ASSERT_NO_THROW(fake_feature_learner.learn(data));
-  ASSERT_NO_THROW(feature_normalizer_learner.learn(data));
-  ASSERT_NO_THROW(feature_random_sampler_learner.learn(data));
-  ASSERT_NO_THROW(feature_sampler_learner.learn(data));
-  ASSERT_NO_THROW(nan_to_zero_learner.learn(data));
-  ASSERT_NO_THROW(nominal_to_bool_learner.learn(data));
-  ASSERT_NO_THROW(remove_nominal_learner.learn(data));
+  feature_converters.push_back(
+    static_cast<FakeFeatureConverterLearner<Object>::Ptr>(
+      new FakeFeatureConverterLearner<Object>));
+  feature_converters.push_back(
+    static_cast<FeatureNormalizerLearner<Object>::Ptr>(
+      new FeatureNormalizerLearner<Object>));
+  feature_converters.push_back(
+    static_cast<FeatureRandomSamplerLearner<Object>::Ptr>(
+      new FeatureRandomSamplerLearner<Object>));
+  feature_converters.push_back(
+    static_cast<FeatureSamplerLearner<Object>::Ptr>(
+      new FeatureSamplerLearner<Object>));
+  feature_converters.push_back(
+    static_cast<NanToZeroConverterLearner<Object>::Ptr>(
+      new NanToZeroConverterLearner<Object>));
+  feature_converters.push_back(
+    static_cast<NominalToBoolConverterLearner<Object>::Ptr>(
+      new NominalToBoolConverterLearner<Object>));
+  feature_converters.push_back(
+    static_cast<RemoveNominalConverterLearner<Object>::Ptr>(
+      new RemoveNominalConverterLearner<Object>));
 
-  FeatureConverter::Ptr fake_feature_converter =
-    fake_feature_learner.make();
-  FeatureConverter::Ptr feature_normalizer_converter =
-    feature_normalizer_learner.make();
-  FeatureConverter::Ptr feature_random_sampler_converter =
-    feature_random_sampler_learner.make();
-  FeatureConverter::Ptr feature_sampler_converter =
-    feature_sampler_learner.make();
-  FeatureConverter::Ptr nan_to_zero_converter =
-    nan_to_zero_learner.make();
-  FeatureConverter::Ptr nominal_to_bool_converter =
-    nominal_to_bool_learner.make();
-  FeatureConverter::Ptr remove_nominal_converter =
-    remove_nominal_learner.make();
+  for (int feature_converters_index = 0;
+       feature_converters_index < feature_converters.size();
+       ++feature_converters_index) {
+    ASSERT_NO_THROW(feature_converters[feature_converters_index]->learn(data));
+  }
 
   DataSet<Object> converted_data;
 
-  ASSERT_NO_THROW(fake_feature_converter->apply(data, &converted_data));
-  ASSERT_NO_THROW(feature_normalizer_converter->apply(data, &converted_data));
-  ASSERT_NO_THROW(feature_random_sampler_converter->apply(data,
-                                                          &converted_data));
-  ASSERT_NO_THROW(feature_sampler_converter->apply(data, &converted_data));
-  ASSERT_NO_THROW(nan_to_zero_converter->apply(data, &converted_data));
-  ASSERT_NO_THROW(nominal_to_bool_converter->apply(data, &converted_data));
-  ASSERT_NO_THROW(remove_nominal_converter->apply(data, &converted_data));
+  for (int feature_converters_index = 0;
+       feature_converters_index < feature_converters.size();
+       ++feature_converters_index) {
+    FeatureConverter::Ptr feature_converter =
+      feature_converters[feature_converters_index]->make();
+    ASSERT_NO_THROW(feature_converter->apply(data, &converted_data));
+  }
 }
 
 TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
@@ -175,43 +180,12 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
   EXPECT_EQ(1, converted_data.feature_count());
 }
 
-TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerDefaultTest) {
-  FeatureNormalizerLearner<Object> feature_normalizer_learner;
-
-  DataSet<Object> train_data(FeatureInfo(3));
-  Object object1, object2, object3, object4;
-  object1 << 1.0 << 2.0 << 3.0;
-  object2 << -2.0 << 1.0 << 1.0;
-  object3 << 0.0 << 5.0 << 2.0;
-  object4 << 1.0 << 3.0 << -1.0;
-  train_data.add(object1);
-  train_data.add(object2);
-  train_data.add(object3);
-  train_data.add(object4);
-
-  feature_normalizer_learner.learn(train_data);
-  FeatureConverter::Ptr converter = feature_normalizer_learner.make();
-
-  DataSet<Object> converted_data;
-  converter->apply(train_data, &converted_data);
-
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[0], 1.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[0], 0.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[0], 0.66666666666666));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[0], 1.0));
-
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[1], 0.25));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[1], 0.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[1], 1.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[1], 0.5));
-
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[2], 1.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[2], 0.5));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[2], 0.75));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[2], 0.0));
-}
-
 TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
+  FeatureNormalizerLearner<Object> bad_feature_normalizer_learner;
+  bad_feature_normalizer_learner.set_min(2.0);
+  bad_feature_normalizer_learner.set_max(-2.0);
+  ASSERT_ANY_THROW(bad_feature_normalizer_learner.checkParameters());
+
   FeatureNormalizerLearner<Object> feature_normalizer_learner;
   feature_normalizer_learner.set_min(-2.0);
   feature_normalizer_learner.set_max(2.0);
@@ -229,6 +203,7 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
 
   feature_normalizer_learner.learn(train_data);
   FeatureConverter::Ptr converter = feature_normalizer_learner.make();
+  ASSERT_NO_THROW(feature_normalizer_learner.checkParameters());
 
   DataSet<Object> converted_data;
   converter->apply(train_data, &converted_data);

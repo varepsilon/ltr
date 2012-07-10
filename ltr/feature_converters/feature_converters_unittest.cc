@@ -34,18 +34,9 @@ using ltr::NanToZeroConverter;
 using ltr::NominalToBoolConverter;
 using ltr::RemoveNominalConverter;
 
-const int features_count = 11;
-
-class FeatureConvertersTest : public ::testing::Test {
- public:
-   FeatureConvertersTest() {}
-};
-
-TEST_F(FeatureConvertersTest, FakeFeatureConverterTest) {
+TEST(FeatureConvertersTest, FakeFeatureConverterTest) {
   Object object, converted_object;
-  for (int feature_index = 0; feature_index < features_count; ++feature_index) {
-    object << feature_index;
-  }
+  object << 0.43532 << -1.435 << 2.435435 << 0.546;
 
   FakeFeatureConverter::Ptr fake_feature_converter
     (new FakeFeatureConverter(object.feature_info()));
@@ -55,16 +46,14 @@ TEST_F(FeatureConvertersTest, FakeFeatureConverterTest) {
   EXPECT_EQ(object.features(), converted_object.features());
 }
 
-TEST_F(FeatureConvertersTest, FeatureSamplerTest) {
+TEST(FeatureConvertersTest, FeatureSamplerTest) {
   Object object, converted_object;
-  for (int feature_index = 0; feature_index < features_count; ++feature_index) {
-    object << feature_index;
-  }
+  object << 0.43532 << -1.435 << 2.435435 << 0.546 << 12.23143;
 
   Indices indices;
-  indices.push_back(3);
-  indices.push_back(7);
+  indices.push_back(2);
   indices.push_back(4);
+  indices.push_back(3);
 
   FeatureSampler::Ptr converter(new FeatureSampler(indices));
   converter->set_input_feature_info(object.feature_info());
@@ -74,28 +63,27 @@ TEST_F(FeatureConvertersTest, FeatureSamplerTest) {
   converter->apply(object, &converted_object);
 
   EXPECT_EQ(indices.size(), converted_object.feature_count());
-  for (int index = 0; index < indices.size(); ++index) {
-    EXPECT_EQ(indices[index], converted_object.features()[index]);
-  }
+  EXPECT_EQ(object.features()[2], converted_object.features()[0]);
+  EXPECT_EQ(object.features()[4], converted_object.features()[1]);
+  EXPECT_EQ(object.features()[3], converted_object.features()[2]);
 
   indices.push_back(1);
   converter->set_indices(indices);
   converter->apply(object, &converted_object);
 
   EXPECT_EQ(indices.size(), converted_object.feature_count());
-  for (int index = 0; index < indices.size(); ++index) {
-    EXPECT_EQ(indices[index], converted_object.features()[index]);
-  }
+  EXPECT_EQ(object.features()[2], converted_object.features()[0]);
+  EXPECT_EQ(object.features()[4], converted_object.features()[1]);
+  EXPECT_EQ(object.features()[3], converted_object.features()[2]);
+  EXPECT_EQ(object.features()[1], converted_object.features()[3]);
 
   indices.push_back(103);
   EXPECT_ANY_THROW(converter->set_indices(indices));
 }
 
-TEST_F(FeatureConvertersTest, PerFeatureLinearConverterTest) {
+TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   Object object, converted_object;
-  for (int feature_index = 0; feature_index < features_count; ++feature_index) {
-    object << feature_index;
-  }
+  object << 0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
 
   PerFeatureLinearConverter::Ptr per_feature_converter
     (new PerFeatureLinearConverter(object.feature_count()));
@@ -120,12 +108,12 @@ TEST_F(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   EXPECT_TRUE(DoubleEqual(converted_object.features()[3], 0.0));
 }
 
-TEST_F(FeatureConvertersTest, NanToZeroConverterTest) {
+TEST(FeatureConvertersTest, NanToZeroConverterTest) {
   Object nan_features_object, zero_features_object, converted_object;
-  for (int feature_index = 0; feature_index < features_count; ++feature_index) {
-    nan_features_object << numeric_limits<double>::quiet_NaN();
-    zero_features_object << 0;
-  }
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  zero_features_object << 0 << 0 << 0;
 
   NanToZeroConverter::Ptr nan_to_zero_converter
     (new NanToZeroConverter(nan_features_object.feature_info()));
@@ -135,7 +123,7 @@ TEST_F(FeatureConvertersTest, NanToZeroConverterTest) {
   EXPECT_EQ(converted_object.features(), zero_features_object.features());
 }
 
-TEST_F(FeatureConvertersTest, NominalToBoolConverterTest) {
+TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
   FeatureInfo feature_info;
   map <size_t, std::string> nominal_feature_values1, nominal_feature_values2;
   nominal_feature_values1[1] = "red";
@@ -182,7 +170,7 @@ TEST_F(FeatureConvertersTest, NominalToBoolConverterTest) {
   EXPECT_EQ(converted_object.feature_info().getFeatureType(3), BOOLEAN);
 }
 
-TEST_F(FeatureConvertersTest, RemoveNominalConverterTest) {
+TEST(FeatureConvertersTest, RemoveNominalConverterTest) {
   FeatureInfo feature_info;
   feature_info.addFeature(NOMINAL);
   
