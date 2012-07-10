@@ -14,6 +14,7 @@
 #include "ltr/learners/gp_learner/gp_functions.h"
 #include "ltr/learners/gp_learner/gp_primitives.h"
 #include "ltr/interfaces/serializable.h"
+#include "ltr/scorers/scorer.h"
 
 using std::vector;
 using std::string;

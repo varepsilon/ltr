@@ -30,7 +30,8 @@ SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
 SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc
 					 ${Source_Path}/ltr/scorers/linear_scorer_unittest.cc
-					 ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc)
+					 ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc
+                     ${Source_Path}/ltr/scorers/gp_scorer_unittest.cc)
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
                         ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
