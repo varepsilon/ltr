@@ -15,7 +15,7 @@ SET(LTR_IO_UILITY_TEST ${Source_Path}/ltr/data/utility/io_utility_unittest.cc)
 SET(LTR_DECISION_TREE_TEST ${Source_Path}/ltr/learners/decision_tree/decision_tree_unittest.cc)
 
 SET(LTR_FEATURE_CONVERTERS_TEST ${Source_Path}/ltr/feature_converters/feature_converters_unittest.cc
-                                ${Source_Path}/ltr/feature_converters/feature_converters_manual_unittest.cc)
+                                ${Source_Path}/ltr/feature_converters/feature_converters_learner_unittest.cc)
 
 SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_preprocessors_unittest.cc)
 

@@ -41,6 +41,8 @@ class NominalToBoolConverterLearner
   virtual string toString() const {
     return "NominalToBoolConverterLearner";
   }
+ private:
+  virtual string getDefaultAlias() const {return "NominalToBoolConverterLearner";}
 };
 }
 

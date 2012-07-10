@@ -5,15 +5,18 @@
 namespace ltr {
 void NominalToBoolConverter::fillOutputFeatureInfo()  {
   output_feature_info_.clear();
-  for (size_t i = 0; i < input_feature_info_.feature_count(); i++) {
-    if (input_feature_info_.getFeatureType(i) != NOMINAL) {
-      output_feature_info_.addFeature(input_feature_info_.getFeatureType(i));
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count();
+       input_feature_index++) {
+    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
+      output_feature_info_.addFeature(
+        input_feature_info_.getFeatureType(input_feature_index));
     }
   }
-  for (size_t i = 0; i < input_feature_info_.feature_count(); i++) {
-    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
-      // \FIXME(sameg) Seems like bug!
-      int outputs_cnt = input_feature_info_.getFeatureValues(i).size();
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count();
+       input_feature_index++) {
+    if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
       output_feature_info_.addFeature(BOOLEAN);
     }
   }
@@ -21,23 +24,34 @@ void NominalToBoolConverter::fillOutputFeatureInfo()  {
 
 void NominalToBoolConverter::applyImpl(
     const Object& input, Object* output) const {
-  *output = input;
-  size_t result_idx = 0;
-  for (size_t i = 0; i < input.features().size(); ++i)
-    if (input_feature_info_.getFeatureType(i) != NOMINAL)
-      output->features()[result_idx++] = input.features()[i];
-
-  for (size_t i = 0; i < input.features().size(); ++i)
-    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
-      map<size_t, string> vals = input_feature_info_.getFeatureValues(i);
-      for (map<size_t, string>::iterator it = vals.begin();
-           it != vals.end(); ++it)
-        if (input.features()[i] == it->first) {
-          output->features()[result_idx++] = 1.0;
-        } else {
-          output->features()[result_idx++] = 0.0;
-        }
+  *output = Object(output_feature_info_);
+  output->features().resize(output_feature_info_.feature_count());
+  size_t output_feature_index = 0;
+  for (size_t input_feature_index = 0;
+       input_feature_index < input.features().size();
+       ++input_feature_index) {
+    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
+      output->features()[output_feature_index++] =
+        input.features()[input_feature_index];
     }
+  }
+
+  for (size_t input_feature_index = 0;
+       input_feature_index < input.features().size();
+       ++input_feature_index) {
+    if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
+      map<size_t, string> vals =
+        input_feature_info_.getFeatureValues(input_feature_index);
+      for (map<size_t, string>::iterator it = vals.begin();
+           it != vals.end(); ++it) {
+        if (input.features()[input_feature_index] == it->first) {
+          output->features()[output_feature_index++] = 1.0;
+        } else {
+          output->features()[output_feature_index++] = 0.0;
+        }
+      }
+    }
+  }
 }
 
 string NominalToBoolConverter::generateCppCode(
@@ -50,13 +64,17 @@ string NominalToBoolConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
     append("  bool nominal[] = {");
-  for (size_t i = 0; i < input_feature_info_.feature_count(); i++) {
-    if (i != 0)
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count(); 
+       input_feature_index++) {
+    if (input_feature_index != 0) {
       code.append(",");
-    if (input_feature_info_.getFeatureType(i) == NOMINAL)
+    }
+    if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
       code.append("1");
-    else
+    } else {
       code.append("0");
+    }
   }
   code.
     append("};\n").
@@ -65,19 +83,23 @@ string NominalToBoolConverter::generateCppCode(
       boost::lexical_cast<string>(input_feature_info_.feature_count())).
     append("];\n");
 
-  for (size_t i = 0; i < input_feature_info_.feature_count(); i++)
-    if (input_feature_info_.getFeatureType(i) == NOMINAL) {
-      map<size_t, string> vals = input_feature_info_.getFeatureValues(i);
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count();
+       input_feature_index++) {
+    if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
+      map<size_t, string> vals =
+        input_feature_info_.getFeatureValues(input_feature_index);
       for (map<size_t, string>::iterator it = vals.begin();
            it != vals.end(); it++) {
         code.
           append("  feature_outputs[").
-          append(boost::lexical_cast<string>(i)).
+          append(boost::lexical_cast<string>(input_feature_index)).
           append("].push_back(").
           append(boost::lexical_cast<string>(it->first)).
           append(");\n");
       }
     }
+  }
   code.
     append("  for (size_t i = 0; i < features.size(); i++) {\n").
     append("    if (!nominal[i])\n").
