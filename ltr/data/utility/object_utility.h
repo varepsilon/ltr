@@ -9,14 +9,14 @@ namespace ltr {
   /**
    * Function checks the sameness of two vectors of features
    */
-bool equalWithNaN(const Features& lhs, const Features& rhs) {
+bool DoubleEqualWithNaN(const Features& lhs, const Features& rhs) {
   if (lhs.size() != rhs.size()) {
       return false;
   }
   for (int feature_index = 0;
        feature_index < (int)lhs.size();
        ++feature_index) {
-    if (!utility::equalWithNaN(lhs[feature_index],
+    if (!utility::DoubleEqualWithNaN(lhs[feature_index],
                                rhs[feature_index])) {
       return false;
     }

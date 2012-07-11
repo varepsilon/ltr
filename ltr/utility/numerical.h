@@ -20,7 +20,9 @@ const double ln_2 = std::log(2.0);
 /**
  * Very small double positive value.
  */
-const double DoubleEps = 1e-14;
+const double DOUBLE_EPS = 1e-14;
+
+const double DOUBLE_TOLERANCE = 1e-14;
 
 /**
  * Very big double positive value.
@@ -40,7 +42,7 @@ bool isNaN(double x);
 /**
  * Checks for a and b are equal or both a and b are NaNs.
  */
-bool equalWithNaN(double a, double b);
+bool DoubleEqualWithNaN(double a, double b);
 
 /**
  * Functions for comparison of two doubles (proper processing with small diferences)

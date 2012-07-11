@@ -20,6 +20,8 @@ using std::ofstream;
 using std::string;
 using std::vector;
 
+using ltr::utility::DOUBLE_PRECISION;
+
 namespace ltr {
 namespace io_utility {
 /**
@@ -185,7 +187,7 @@ void savePredictions(const DataSet<TElement>& data,
     throw std::logic_error("can't open " + filename + " for writing");
   }
 
-  file.precision(utility::DOUBLE_PRECISION);
+  file.precision(DOUBLE_PRECISION);
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
@@ -215,8 +217,7 @@ void savePredictions(const DataSet<TElement>& data,
          object_index < data[element_index].size();
          ++object_index) {
       double label = data[element_index][object_index].predicted_label();
-      file << boost::lexical_cast<string>(label)
-           << std::endl;
+      file << label << std::endl;
     }
   }
   file.close();

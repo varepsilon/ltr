@@ -1,6 +1,16 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
+SET(TOSTRING_TEST ${Source_Path}/ltr/data/tostring_unittest.cc)
+
+SET(INDICES_TEST ${Source_Path}/ltr/data/indices_unittest.cc)
+
+SET(NUMERICAL_TEST ${Source_Path}/ltr/data/numerical_unittest.cc)
+
+SET(SAVE_PREDICTION_TEST ${Source_Path}/ltr/data/save_predictions_unittest.cc)
+
+SET(LIST_TO_ALL_PAIRS_CONVERTER_TEST ${Source_Path}/ltr/data/list_to_all_pairs_converter_unittest.cc)
+
 SET(LTR_OBJECT_TEST ${Source_Path}/ltr/data/object_unittest.cc)
 
 SET(LTR_FEATURE_INFO_TEST ${Source_Path}/ltr/data/feature_info_unittest.cc)
@@ -61,9 +71,9 @@ SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS_TEST})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS_TEST})
 
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${LTR_OBJECT_TEST} ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} 
-			 ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} ${LTR_IO_UILITY_TEST}
-             ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
+SET(LTR_TEST ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST} ${LTR_OBJECT_LIST_TEST} 
+			 ${LTR_FEATURE_INFO_TEST} ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST} 
+			 ${LTR_IO_UILITY_TEST} ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
              ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_LINEAR_COMPOSITION})
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)

@@ -1,33 +1,33 @@
 // Copyright 2012 Yandex School Practice
 
-#include <stdlib.h>
-#include <string>
-
 #include "gtest/gtest.h"
 
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 
+using ltr::Object;
+using ltr::ObjectList;
+
 TEST(ObjectListTest, TestObjectListOperations) {
-  ltr::Object obj1;
-  obj1 << 1 << 2 << 2.57;
+  Object object1;
+  object1 << 1 << 2 << 2.57;
 
-  ltr::ObjectList objList1;
-  objList1.add(obj1);
-  EXPECT_TRUE(objList1[0] == obj1);
+  ObjectList object_list;
+  object_list.add(object1);
+  EXPECT_TRUE(object_list[0] == object1);
 
-  ltr::ObjectList objList2 = objList1.deepCopy();
-  EXPECT_EQ(objList1, objList2);
+  ObjectList object_list2 = object_list.deepCopy();
+  EXPECT_EQ(object_list, object_list2);
 
-  ltr::Object obj2;
-  obj2 << 0 << -3.1;
-  objList2.add(obj2);
-  EXPECT_EQ(objList1.size(), 1);
-  EXPECT_EQ(objList2.size(), 2);
-  EXPECT_FALSE(objList1 == objList2);
+  Object object2;
+  object2 << 0 << -3.1;
+  object_list2.add(object2);
+  EXPECT_EQ(object_list.size(), 1);
+  EXPECT_EQ(object_list2.size(), 2);
+  EXPECT_FALSE(object_list == object_list2);
 
-  objList2 = objList1;
-  EXPECT_EQ(objList1, objList2);
-  objList2.add(obj2);
-  EXPECT_EQ(objList1, objList2);
+  object_list2 = object_list;
+  EXPECT_EQ(object_list, object_list2);
+  object_list2.add(object2);
+  EXPECT_EQ(object_list, object_list2);
 }

@@ -27,7 +27,7 @@ using std::string;
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
-using ltr::utility::DoubleEps;
+using ltr::utility::DOUBLE_EPS;
 using ltr::utility::MarkDataSet;
 using ltr::Scorer;
 
@@ -82,7 +82,7 @@ void AdaRankLCScorerWeightsUpdater<TElement>::updateWeights(
     denominator += data.getWeight(i) * (1 - normalized_measure_value);
   }
 
-  if (denominator < DoubleEps) {
+  if (denominator < DOUBLE_EPS) {
     Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
     lin_scorer->clear();
     lin_scorer->add(best_scorer, 1.0);

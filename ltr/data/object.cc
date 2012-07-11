@@ -8,7 +8,7 @@
 #include "ltr/data/utility/object_utility.h"
 #include "ltr/utility/numerical.h"
 
-using ltr::utility::equalWithNaN;
+using ltr::utility::DoubleEqualWithNaN;
 using ltr::utility::NaN;
 
 namespace ltr {
@@ -159,11 +159,11 @@ string Object::toString() const {
 }
 
 bool operator==(const Object& lhs, const Object& rhs) {
-  return equalWithNaN(*lhs.features_, *rhs.features_) &&
+  return DoubleEqualWithNaN(*lhs.features_, *rhs.features_) &&
          *lhs.meta_info_ == *rhs.meta_info_ &&
          *lhs.feature_info_ == *rhs.feature_info_ &&
-         utility::equalWithNaN(lhs.actual_label(), rhs.actual_label()) &&
-         utility::equalWithNaN(lhs.predicted_label(), rhs.predicted_label());
+         utility::DoubleEqualWithNaN(lhs.actual_label(), rhs.actual_label()) &&
+         utility::DoubleEqualWithNaN(lhs.predicted_label(), rhs.predicted_label());
 }
 
 bool operator!=(const Object& lhs, const Object& rhs) {
