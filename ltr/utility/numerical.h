@@ -49,6 +49,11 @@ bool DoubleEqualWithNaN(double a, double b);
  */
 bool DoubleMore(double lhs, double rhs);
 bool DoubleLess(double lhs, double rhs);
+
+/**
+ * Function for checking whether two doubles equal or not
+ * see motivation here: http://www.boost.org/doc/libs/1_34_1/libs/test/doc/components/test_tools/floating_point_comparison.html
+ */
 bool DoubleEqual(double lhs, double rhs);
 bool DoubleMoreOrEqual(double lhs, double rhs);
 bool DoubleLessOrEqual(double lhs, double rhs);
