@@ -50,7 +50,6 @@ class AdaRankLCScorerWeightsUpdater
   explicit AdaRankLCScorerWeightsUpdater(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->copyParameters(parameters);
   }
 
   void updateWeights(const DataSet<TElement>& data,

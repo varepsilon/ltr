@@ -295,8 +295,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     Puppy::Context newContext;
     context_= newContext;
 
-    const ParametersContainer &params = this->parameters();
-
     context_.mRandom.seed(seed_);
     if (use_add_) context_.insert(new Add);
     if (use_sub_) context_.insert(new Subtract);
@@ -319,7 +317,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   void initPopulation() {
     population_.clear();
-    ParametersContainer params = this->parameters();
 
     population_.resize(pop_size_);
     Puppy::initializePopulation(population_, context_, init_grow_proba_,
@@ -331,7 +328,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   virtual void evaluationStepImpl() {
     std::cout << "Tournament.\n";
-    ParametersContainer params = this->parameters();
 
     Puppy::applySelectionTournament(population_, context_, nbr_part_);
 

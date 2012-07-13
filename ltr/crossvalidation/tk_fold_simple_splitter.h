@@ -132,8 +132,6 @@ void TKFoldSimpleSplitter<TElement>::splitImpl(
   train_set_indexes->clear();
   test_set_indexes->clear();
 
-  const ParametersContainer &params = this->parameters();
-
   int blocksplit_index = split_index / K_;
   int block_index = split_index % K_;
 

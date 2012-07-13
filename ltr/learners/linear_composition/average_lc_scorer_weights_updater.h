@@ -43,7 +43,6 @@ class AverageLCScorerWeightsUpdater
   explicit AverageLCScorerWeightsUpdater(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->copyParameters(parameters);
   }
 
   void updateWeights(const DataSet<TElement>& data,

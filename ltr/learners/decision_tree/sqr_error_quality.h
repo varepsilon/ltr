@@ -34,17 +34,18 @@ class SqrErrorQuality : public SplittingQuality {
     explicit SqrErrorQuality(
         const ParametersContainer& parameters = ParametersContainer()) {
       this->setDefaultParameters();
-      this->copyParameters(parameters);
     }
 
     virtual double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const {
-      if (split.size() <= 1)
+      if (split.size() <= 1) {
         return -1e9;
-      double res = 0;
-      for (int i = 0; i < split.size(); i++)
-        res += split[i].size() * 1.0 / data.size() * sqrError(split[i]);
-      return res;
+      }
+      double result = 0;
+      for (int i = 0; i < split.size(); i++) {
+        result += split[i].size() * 1.0 / data.size() * sqrError(split[i]);
+      }
+      return result;
     }
 };
 }

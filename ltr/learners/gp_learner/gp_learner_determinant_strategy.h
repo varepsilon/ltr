@@ -256,7 +256,6 @@ class GPLearnerWithDeterminantStrategy : public GPLearner<TElement> {
     std::cout << "Sorting population.\n";
     std::sort(this->population_.begin(), this->population_.end());
 
-    ParametersContainer params = this->parameters();
     size_t top_bound_index = (1 - top_for_next_generation_part_) *
         this->population_.size();
     if (top_bound_index == this->population_.size()) {

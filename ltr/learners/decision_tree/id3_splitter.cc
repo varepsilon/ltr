@@ -16,8 +16,7 @@ namespace decision_tree {
 
 void ID3_Splitter::init() {
   current_feature = 0;
-  ParametersContainer params = this->parameters();
-  split_idx = 0;
+  split_index = 0;
   INFO("Inited. ");
   if (split_feature_n_times_) {
     INFO("Splitting every feature %d times",
@@ -33,7 +32,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
     return 0;
   result->clear();
 
-  if (split_idx == 0) {
+  if (split_index == 0) {
 //    log << "Splitting feature " << current_feature << std::endl;
     feature_values.clear();
     numeric_split_values.clear();
@@ -51,11 +50,11 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
                    feature_values.end(), DoubleEqual) - feature_values.begin());
     if (feature_values.size() <= 1) {
       current_feature++;
-      split_idx = 0;
+      split_index = 0;
       return getNextConditions(result);
     }
 
-    ParametersContainer params = this->parameters();
+
 
     if (split_feature_n_times_) {
       int split_cnt = feature_split_count_;
@@ -82,18 +81,18 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
         CompareConditionPtr(OneFeatureConditionPtr(current_feature),
                             EQUAL, feature_values[j]));
     current_feature++;
-    split_idx = 0;
+    split_index = 0;
   } else {
-    double split_val = numeric_split_values[split_idx];
+    double split_val = numeric_split_values[split_index];
     result->push_back(
       CompareConditionPtr(
         OneFeatureConditionPtr(current_feature), LESS_OR_EQUAL, split_val));
     result->push_back(
       CompareConditionPtr(
         OneFeatureConditionPtr(current_feature), GREATER, split_val));
-    split_idx++;
-    if (split_idx >= numeric_split_values.size()) {
-      split_idx = 0;
+    split_index++;
+    if (split_index >= numeric_split_values.size()) {
+      split_index = 0;
       current_feature++;
     }
   }

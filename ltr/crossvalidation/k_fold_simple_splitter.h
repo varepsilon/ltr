@@ -69,7 +69,7 @@ class KFoldSimpleSplitter : public Splitter<TElement> {
 template<class TElement>
 string KFoldSimpleSplitter<TElement>::toString() const {
   std::stringstream str;
-  str << this->parameters().template Get<int>("K");
+  str << this->K_;
   str << "-fold sequent splitter";
   return str.str();
 }
@@ -109,8 +109,6 @@ void KFoldSimpleSplitter<TElement>::splitImpl(
 
   train_set_indexes->clear();
   test_set_indexes->clear();
-
-  const ParametersContainer &params = this->parameters();
 
   int block_size = base_set.size() / K_;
   int extra_length = base_set.size() % K_;

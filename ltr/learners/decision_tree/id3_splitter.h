@@ -66,7 +66,7 @@ class ID3_Splitter : public ConditionsLearner {
   void init();
 
   int current_feature;
-  int split_idx;
+  int split_index;
   bool split_feature_n_times_;
   int feature_split_count_;
   int half_summs_step_;
