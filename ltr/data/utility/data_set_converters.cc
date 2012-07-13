@@ -48,10 +48,11 @@ DataSet<Object> convertDataSet(const DataSet<ObjectPair>& data,
                                ListToPairConvertionStrategy::Ptr strategy) {
   DataSet<Object> result;
   for (int pair_index = 0; pair_index < (int)data.size(); ++pair_index) {
+    PerObjectAccessor<const ObjectPair> poa(&data[pair_index]);
     for (int object_index = 0;
-         object_index < data[pair_index].size();
+         object_index < poa.object_count();
          ++object_index) {
-      result << data[pair_index][object_index];
+      result << poa.object(object_index);
     }
   }
   return result;
