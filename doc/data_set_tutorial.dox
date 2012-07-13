@@ -4,7 +4,7 @@ namespace ltr {
 
 \tableofcontents
 
-\section TutorialDataObject Object.
+\section TutorialDataObject Object
 
 Object is main class to operate with data.
 Any object can contain several features and some meta information.
@@ -12,7 +12,7 @@ Every feature has index and double value.
 Every Meta data has name (string) and value(string).
 Also any object has an actual and a predicted label.
 
-\subsection TutorialDataObjectFeatures Features.
+\subsection TutorialDataObjectFeatures Features
 Every Object has several features with indexes 0, 1, 2... Every feature is a double value.
 
 
@@ -32,7 +32,7 @@ You can operate with features using this functions:
 </td></tr>
 </table>
 
-\subsection TutorialDataObjectLabels Actual and predicted labels.
+\subsection TutorialDataObjectLabels Actual and predicted labels
 
 Every object has an actual label and a predicted label. This labels are double values.
 
@@ -55,7 +55,7 @@ You can manage them, using this functions:
 </td></tr>
 </table>
 
-\subsection TutorialDataObjectMetaInfo Meta info.
+\subsection TutorialDataObjectMetaInfo Meta info
 
 Every Object can have some meta information. 
 You can manage it, using this functions:
@@ -74,7 +74,7 @@ You can manage it, using this functions:
 </td></tr>
 </table>
 
-\subsection TutorialDataObjectCopying Copying objects.
+\subsection TutorialDataObjectCopying Copying objects
 
 There are two ways to copy objects.
 \li Simple copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo.
@@ -95,7 +95,7 @@ There are two ways to copy objects.
 </td></tr>
 </table>
 
-\section TutorialDataObjectPair ObjectPair.
+\section TutorialDataObjectPair ObjectPair
 
 Class to operate pairs of object. Every pair contains two objects.
 
@@ -114,7 +114,7 @@ There are two ways of operating objects:
 </td></tr>
 </table>
 
-\section TutorialDataObjectList ObjectList.
+\section TutorialDataObjectList ObjectList
 
 Class to operate pairs of object. Every list contains several objects.
 
@@ -137,7 +137,7 @@ To find out, how many elements are there in the list, call the \link ObjectList:
 </td></tr>
 </table>
 
-\section TutorialDataDataSet DataSet.
+\section TutorialDataDataSet DataSet
 
 DataSet is a class to operate with sets of data.
 It can contain Object, ObjectPair or ObjectList as elements.<br>Every elment can also has a double weight, default weight is 1.
@@ -154,7 +154,7 @@ typedef DataSet<ObjectPair> PairwiseDataSet;
 typedef DataSet<ObjectList> ListwiseDataSet;
 \endcode
 
-\subsection TutorialDataDataSetBasicOperations Basic operations.
+\subsection TutorialDataDataSetBasicOperations Basic operations
 
 Function for basic operations:
 \li DataSet::size() - returns number of elements in DataSet
@@ -183,7 +183,7 @@ Function for basic operations:
 </td></tr>
 </table>
 
-\subsection TutorialDataDataSetFeatureInfo Feature info.
+\subsection TutorialDataDataSetFeatureInfo Feature info
 
 There is one more important thing in DataSet: every data set has a FeatureInfo,
  which containes information about types and possible values of objects features in DataSet.
@@ -191,7 +191,7 @@ There is one more important thing in DataSet: every data set has a FeatureInfo,
 It is important to set right feature info, or many things wont work right.<br>
 There is only one function in DataSet for working with FeatureInfo: DataSet::featureInfo() const. It returns a constant reference to the FeatureInfo.
 
-\subsection TutorialDataDataSetSavingAndLoading Loading and saving into files.
+\subsection TutorialDataDataSetSavingAndLoading Loading and saving into files
 
 Main think, you can do with DataSet is to load it from file or save it into file.
 
