@@ -11,7 +11,6 @@
 #include "ltr/measures/measure.h"
 #include "ltr/crossvalidation/leave_one_out_splitter.h"
 #include "ltr/crossvalidation/validation_result.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/scorers/fake_scorer.h"
 
 using std::vector;
@@ -24,37 +23,39 @@ using ltr::cv::LeaveOneOutSplitter;
 using ltr::cv::Validate;
 using ltr::cv::ValidationResult;
 using ltr::FakeScorer;
-using ltr::utility::MarkDataSet;
 using ltr::PointwiseMeasure;
 
-const int data_lenght = 11;
-const FeatureInfo fi(1);
+const int data_length = 11;
+const FeatureInfo feature_info(1);
 
 TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
-  DataSet<Object> data(fi);
-  for (int i = 0; i < data_lenght; ++i) {
-    Object obj;
-    obj << 1;
-    data.add(obj);
+  DataSet<Object> data(feature_info);
+  for (int object_index = 0; object_index < data_length; ++object_index) {
+    Object object;
+    object << 1;
+    data.add(object);
   }
-  FakeScorer::Ptr fscorer(new FakeScorer());
-  MarkDataSet(data, *fscorer);
+  FakeScorer::Ptr fake_scorer(new FakeScorer());
+  fake_scorer->markDataSet(data);
 
-  AbsError::Ptr ab_measure(new AbsError);
-  BestFeatureLearner<Object>::Ptr bfl(
-    new BestFeatureLearner<Object>(ab_measure));
+  AbsError::Ptr abs_measure_error(new AbsError);
+  BestFeatureLearner<Object>::Ptr best_feature_learner(
+    new BestFeatureLearner<Object>(abs_measure_error));
 
-  vector<PointwiseMeasure::Ptr> abm_vector;
-  abm_vector.push_back(ab_measure);
+  vector<PointwiseMeasure::Ptr> abs_measure_vector;
+  abs_measure_vector.push_back(abs_measure_error);
 
-  LeaveOneOutSplitter<Object>::Ptr spl(new LeaveOneOutSplitter<Object>);
+  LeaveOneOutSplitter<Object>::Ptr loo_splitter(new LeaveOneOutSplitter<Object>);
 
-  ValidationResult vr = Validate(data, abm_vector, bfl, spl);
+  ValidationResult vr = Validate(data,
+                                 abs_measure_vector, 
+                                 best_feature_learner, 
+                                 loo_splitter);
 
-  EXPECT_EQ(data_lenght, vr.getSplitCount());
+  EXPECT_EQ(data_length, vr.getSplitCount());
   EXPECT_EQ(1, vr.getMeasureValues(0).size());
   EXPECT_EQ(1, vr.getMeasureNames().size());
-  EXPECT_EQ(ab_measure->alias(), vr.getMeasureNames().at(0));
+  EXPECT_EQ(abs_measure_error->alias(), vr.getMeasureNames().at(0));
 
   for (int split = 0; split < vr.getSplitCount(); ++split) {
     Object test_obj;

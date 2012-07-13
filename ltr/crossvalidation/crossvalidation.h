@@ -10,11 +10,9 @@
 #include "ltr/measures/measure.h"
 #include "ltr/crossvalidation/validation_result.h"
 #include "ltr/crossvalidation/splitter.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 
 using std::string;
 using std::vector;
-using ltr::utility::MarkDataSet;
 
 namespace ltr {
   namespace cv {
@@ -59,7 +57,7 @@ namespace ltr {
         string current_report = learner->report();
         typename Scorer::Ptr current_scorer = learner->make();
 
-        MarkDataSet(current_splitted.test_set, *current_scorer);
+        current_scorer->markDataSet(current_splitted.test_set);
 
         vector<double> current_measure_values;
         for (int measure_index = 0;

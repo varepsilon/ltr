@@ -30,12 +30,13 @@ void markDataSetWithTree(const DataSet<TElement>& data,
                          Puppy::Tree* tree) {
   for (size_t element_index = 0;
       element_index < data.size(); ++element_index) {
+    PerObjectAccessor<const TElement> poa(&data[element_index]);
     for (size_t object_index = 0;
-        object_index < data[element_index].size(); ++object_index) {
-      setContextToObject(context, data[element_index][object_index]);
+        object_index < poa.object_count(); ++object_index) {
+        setContextToObject(context, poa.object(object_index));
       double predicted_label;
       tree->interpret(&predicted_label, *context);
-      data[element_index][object_index].set_predicted_label(predicted_label);
+      poa.object(object_index).set_predicted_label(predicted_label);
     }
   }
 }

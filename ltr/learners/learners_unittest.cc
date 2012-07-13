@@ -15,7 +15,6 @@
 #include "ltr/measures/dcg.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/scorers/gp_scorer.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_learner_determinant_strategy.h"
@@ -67,22 +66,22 @@ class LearnersTest : public ::testing::Test {
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
   NanToZeroConverterLearner<ltr::Object> nan_to_zero_converter;
   nan_to_zero_converter.learn(learn_data);
-  FeatureConverter::Ptr remove_NaN = nan_to_zero_converter.make();
-  remove_NaN->apply(learn_data, &learn_data);
-  remove_NaN->apply(test_data, &test_data);
+  FeatureConverter::Ptr remove_nan = nan_to_zero_converter.make();
+  remove_nan->apply(learn_data, &learn_data);
+  remove_nan->apply(test_data, &test_data);
 
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
-  ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
+  ltr::Measure<ltr::Object>::Ptr abs_error_measure(new ltr::AbsError());
+  ltr::BestFeatureLearner<ltr::Object> learner(abs_error_measure);
   learner.learn(learn_data);
 
-  ltr::FakeScorer fakeScorer(std::numeric_limits<double>::max());
-  ltr::utility::MarkDataSet(test_data, fakeScorer);
-  double measureBefore = pMeasure->average(test_data);
+  ltr::FakeScorer fake_scorer(std::numeric_limits<double>::max());
+  fake_scorer.markDataSet(test_data);
+  double measure_before = abs_error_measure->average(test_data);
 
-  ltr::utility::MarkDataSet(test_data, *learner.make());
-  double measureAfter = pMeasure->average(test_data);
+  learner.make()->markDataSet(test_data);
+  double measure_after = abs_error_measure->average(test_data);
 
-  EXPECT_LE(measureAfter, measureBefore) << "It can't be worth.\n";
+  EXPECT_LE(measure_after, measure_before) << "It can't be worth.\n";
 };
 
 TEST_F(LearnersTest, TestingGPLearner) {

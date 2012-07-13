@@ -13,7 +13,6 @@
 #include "ltr/scorers/scorer.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 
 using std::string;
 using std::vector;
@@ -24,7 +23,6 @@ using std::copy;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::io_utility::loadDataSet;
-using ltr::utility::MarkDataSet;
 using ltr::Scorer;
 
 namespace serialization_test {
@@ -80,7 +78,7 @@ namespace serialization_test {
   }
 
   string Generator::setTestCode(int index,
-      string test_name) const {
+                                const string& test_name) const {
     string output;
     output.append("TEST_F(SerializationTest, " + test_name +
       ") {\n");
@@ -133,7 +131,7 @@ namespace serialization_test {
   void Generator::setScorerTest(Learner<Object>::Ptr learner,
       string test_name) {
     Scorer::Ptr tested_scorer = learner->make();
-    MarkDataSet(test_data, *tested_scorer);
+    tested_scorer->markDataSet(test_data);
 
     string function_number = boost::lexical_cast<string>(scorers_to_test);
 

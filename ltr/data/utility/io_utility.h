@@ -166,11 +166,12 @@ void saveDataSet(const DataSet<TElement>& data,
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> poa(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < poa.object_count();
          ++object_index) {
       string str;
-      parser->makeString(data[element_index][object_index], &str);
+      parser->makeString(poa.object(object_index), &str);
       file << str << std::endl;
     }
   }
@@ -191,10 +192,11 @@ void savePredictions(const DataSet<TElement>& data,
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> poa(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < poa.object_count();
          ++object_index) {
-      file << (*scorer)(data[element_index][object_index]) << std::endl;
+      file << (*scorer)(poa.object(object_index)) << std::endl;
     }
   }
   file.close();
@@ -213,14 +215,16 @@ void savePredictions(const DataSet<TElement>& data,
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> poa(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < poa.object_count();
          ++object_index) {
-      double label = data[element_index][object_index].predicted_label();
+      double label = poa.object(object_index).predicted_label();
       file << label << std::endl;
     }
   }
   file.close();
+
 }
 };
 };

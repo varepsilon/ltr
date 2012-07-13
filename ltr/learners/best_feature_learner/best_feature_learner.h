@@ -12,14 +12,13 @@
 
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/one_feature_scorer.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/measures/measure.h"
+
+using std::string;
 
 using ltr::DataSet;
 using ltr::OneFeatureScorer;
 using ltr::Measure;
-
-using std::string;
 
 namespace ltr {
 
@@ -72,21 +71,23 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   }
 
   // \TODO Rewrite using setter and getters
-  size_t bestFeatureIdx = 0;
-  OneFeatureScorer current_scorer(bestFeatureIdx);
-  utility::MarkDataSet(data, current_scorer);
-  double bestMeasureValue = this->measure_->average(data);
+  size_t best_feature_index = 0;
+  OneFeatureScorer current_scorer(best_feature_index);
+  current_scorer.markDataSet(data);
+  double best_measure_value = this->measure_->average(data);
 
-  for (size_t featureIdx = 1; featureIdx < data.feature_count(); ++featureIdx) {
-    OneFeatureScorer current_scorer(featureIdx);
-    utility::MarkDataSet(data, current_scorer);
-    double measureValue = this->measure_->average(data);
-    if (this->measure_->better(measureValue, bestMeasureValue)) {
-      bestMeasureValue = measureValue;
-      bestFeatureIdx = featureIdx;
+  for (size_t feature_index = 1;
+       feature_index < data.feature_count();
+       ++feature_index) {
+    OneFeatureScorer current_scorer(feature_index);
+    current_scorer.markDataSet(data);
+    double measure_value = this->measure_->average(data);
+    if (this->measure_->better(measure_value, best_measure_value)) {
+      best_measure_value = measure_value;
+      best_feature_index = feature_index;
     }
   }
-  *scorer = OneFeatureScorer(bestFeatureIdx);
+  *scorer = OneFeatureScorer(best_feature_index);
 }
 }
 #endif  // LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_

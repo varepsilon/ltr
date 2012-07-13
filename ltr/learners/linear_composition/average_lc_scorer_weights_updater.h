@@ -10,7 +10,6 @@
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
@@ -22,7 +21,6 @@ using std::string;
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
-using ltr::utility::MarkDataSet;
 using ltr::Scorer;
 
 namespace ltr {

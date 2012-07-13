@@ -32,11 +32,11 @@ class Scorer : public Aliaser,
             feature_converters = FeatureConverterArray()):
         feature_converters_(feature_converters) {}
 
-  double value(const Object& obj) const {
-    return score(obj);
+  double value(const Object& object) const {
+    return score(object);
   }
 
-  double score(const Object& obj) const;
+  double score(const Object& object) const;
 
   const FeatureConverterArray& feature_converters() const {
     return feature_converters_;
@@ -99,6 +99,14 @@ class Scorer : public Aliaser,
     code.append("}\n");
     return code;
   }
+
+  template <class TElement>
+  void markDataSet(const DataSet<TElement>& elements);
+
+  template <class TElement>
+  void markElement(const TElement& element);
+
+  string generateLocalClassName(size_t index);
 
   virtual ~Scorer() {}
 

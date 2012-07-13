@@ -16,13 +16,15 @@ class SqrErrorQuality : public SplittingQuality {
       double weight_sum = 0;
       double sum_label = 0;
       for (int i = 0; i < data.size(); i++) {
-        sum_label += data[i][0].actual_label() * data.getWeight(i);
+        PerObjectAccessor<ltr::Object> poa(&data[i]);
+        sum_label += poa.object(0).actual_label() * data.getWeight(i);
         weight_sum += data.getWeight(i);
       }
       double average = sum_label / weight_sum;
       double err = 0;
       for (int i = 0; i < data.size(); i++) {
-        double label = data[i][0].actual_label();
+        PerObjectAccessor<ltr::Object> poa(&data[i]);
+        double label = poa.object(0).actual_label();
         err += (label - average) * (label - average) * data.getWeight(i);
       }
       return -err / weight_sum;

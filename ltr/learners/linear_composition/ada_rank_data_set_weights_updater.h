@@ -12,7 +12,6 @@
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
 
 using std::string;
@@ -22,7 +21,6 @@ using std::exp;
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
-using ltr::utility::MarkDataSet;
 
 namespace ltr {
 namespace lc {
@@ -58,7 +56,7 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>* data,
     const LinearCompositionScorer& lin_scorer) const {
   int last_scorer_number = static_cast<int>(lin_scorer.size()) - 1;
-  MarkDataSet(*data, *lin_scorer[last_scorer_number].scorer);
+  lin_scorer[last_scorer_number].scorer->markDataSet(*data);
 
   vector<double> measure_exps(data->size());
   double sum_exps = 0.0;
