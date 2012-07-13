@@ -73,14 +73,14 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   // \TODO Rewrite using setter and getters
   size_t best_feature_index = 0;
   OneFeatureScorer current_scorer(best_feature_index);
-  current_scorer.markDataSet(data);
+  current_scorer.predict(data);
   double best_measure_value = this->measure_->average(data);
 
   for (size_t feature_index = 1;
        feature_index < data.feature_count();
        ++feature_index) {
     OneFeatureScorer current_scorer(feature_index);
-    current_scorer.markDataSet(data);
+    current_scorer.predict(data);
     double measure_value = this->measure_->average(data);
     if (this->measure_->better(measure_value, best_measure_value)) {
       best_measure_value = measure_value;

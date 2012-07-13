@@ -36,7 +36,7 @@ TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
     data.add(object);
   }
   FakeScorer::Ptr fake_scorer(new FakeScorer());
-  fake_scorer->markDataSet(data);
+  fake_scorer->predict(data);
 
   AbsError::Ptr abs_measure_error(new AbsError);
   BestFeatureLearner<Object>::Ptr best_feature_learner(

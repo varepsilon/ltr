@@ -59,10 +59,10 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
   learner.learn(learn_data);
 
   ltr::FakeScorer fake_scorer(std::numeric_limits<double>::max());
-  fake_scorer.markDataSet(test_data);
+  fake_scorer.predict(test_data);
   double measure_before = abs_error_measure->average(test_data);
 
-  learner.make()->markDataSet(test_data);
+  learner.make()->predict(test_data);
   double measure_after = abs_error_measure->average(test_data);
 
   EXPECT_LE(measure_after, measure_before) << "It can't be worth.\n";

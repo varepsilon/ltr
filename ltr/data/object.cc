@@ -133,10 +133,6 @@ Object Object::deepCopy() const {
   return result;
 }
 
-size_t Object::size() const {
-  return 1;
-};
-
 string Object::toString() const {
   std::stringstream str;
   std::fixed(str);

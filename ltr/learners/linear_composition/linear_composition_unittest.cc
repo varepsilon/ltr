@@ -73,7 +73,7 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
 
   EXPECT_EQ(10, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    lin_scorer->at(i).scorer->markDataSet(data);
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
@@ -89,7 +89,7 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
   average_lin_composition_learner.learn(data);
   LinearCompositionScorer::Ptr average_lin_scorer =
     average_lin_composition_learner.makeSpecific();
-  average_lin_scorer->markDataSet(data);
+  average_lin_scorer->predict(data);
   EXPECT_NEAR(0.0, abs_error->average(data), 1e-8);
 }
 
@@ -110,7 +110,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
 
   EXPECT_EQ(10, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    lin_scorer->at(i).scorer->markDataSet(data);
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
@@ -122,7 +122,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
 
   EXPECT_EQ(25, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    lin_scorer->at(i).scorer->markDataSet(data);
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
@@ -145,7 +145,7 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   LinearCompositionScorer::Ptr lin_scorer =
     lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(lin_scorer->markDataSet(data));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
@@ -165,7 +165,7 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
   LinearCompositionScorer::Ptr lin_scorer =
     ada_lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(lin_scorer->markDataSet(data));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
@@ -185,7 +185,7 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
   LinearCompositionScorer::Ptr lin_scorer =
     ada_lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(lin_scorer->markDataSet(data));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
@@ -216,5 +216,5 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   ada_learner.learn(data);
   LinearCompositionScorer::Ptr lin_scorer = ada_learner.makeSpecific();
 
-  EXPECT_NO_THROW(lin_scorer->markDataSet(data));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }

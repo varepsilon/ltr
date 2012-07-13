@@ -165,20 +165,20 @@ void DataSet<TElement>::add(const TElement& element) {
 
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
-  PerObjectAccessor<const TElement> poa1(&element);
+  PerObjectAccessor<const TElement> per_object_accessor1(&element);
   TElement element_to_add = element.deepCopy();
-  PerObjectAccessor<TElement> poa2(&element_to_add);
+  PerObjectAccessor<TElement> per_object_accessor2(&element_to_add);
   if (feature_info_ == NULL || feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
-      new FeatureInfo(poa1.object(0).feature_info()));
+      new FeatureInfo(per_object_accessor1.object(0).feature_info()));
   }
   for (int object_index = 0;
-       object_index < (int)poa2.object_count();
+       object_index < (int)per_object_accessor2.object_count();
        ++object_index) {
-    if (poa1.object(object_index).feature_info() != feature_info()) {
+    if (per_object_accessor1.object(object_index).feature_info() != feature_info()) {
       throw std::logic_error("can't add objects with another FeatureInfo.");
     }
-    poa2.object(object_index).feature_info_ = feature_info_;
+    per_object_accessor2.object(object_index).feature_info_ = feature_info_;
   }
   (*elements_).push_back(element_to_add);
   (*weights_).push_back(weight);
@@ -263,16 +263,17 @@ bool operator==(const DataSet<TElement>& lhs,
   for (int element_index = 0;
        element_index < (int)lhs.size();
        ++element_index) {
-    if (lhs[element_index].size() != rhs[element_index].size()) {
+    PerObjectAccessor<const TElement> per_object_accessor1(&lhs[element_index]);
+    PerObjectAccessor<const TElement> per_object_accessor2(&rhs[element_index]);
+    if (per_object_accessor1.object_count() !=
+        per_object_accessor2.object_count()) {
       return false;
     }
     for (int object_index = 0;
-         object_index < lhs[element_index].size();
+         object_index < per_object_accessor1.object_count();
          ++object_index) {
-      PerObjectAccessor<const TElement> poa1(&lhs[element_index]);
-      PerObjectAccessor<const TElement> poa2(&rhs[element_index]);
-      if (poa1.object(object_index) !=
-          poa2.object(object_index)) {
+      if (per_object_accessor1.object(object_index) !=
+          per_object_accessor2.object(object_index)) {
         return false;
       }
     }

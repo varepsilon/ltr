@@ -31,19 +31,19 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
   for (int element_index = 0;
        element_index < (int)dataset.size();
        ++element_index) {
-    PerObjectAccessor<const TElement> poa(&dataset[element_index]);
+    PerObjectAccessor<const TElement> per_object_accessor(&dataset[element_index]);
     for (int object_index = 0;
-         object_index < (int)poa.object_count();
+         object_index < (int)per_object_accessor.object_count();
          ++object_index) {
       for (int feature_index = 0;
            feature_index < (int)dataset.feature_count();
            ++feature_index) {
         min_features_values->at(feature_index) = min(
             min_features_values->at(feature_index),
-            poa.object(object_index).features()[feature_index]);
+            per_object_accessor.object(object_index).features()[feature_index]);
         max_features_values->at(feature_index) = max(
             max_features_values->at(feature_index),
-            poa.object(object_index).features()[feature_index]);
+            per_object_accessor.object(object_index).features()[feature_index]);
       }
     }
   }

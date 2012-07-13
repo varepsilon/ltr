@@ -30,11 +30,6 @@ namespace ltr {
   /** Constructor creates a new pair of two copies of the two given objects.
    */
   ObjectPair(const Object& first, const Object& second);
-  /*
-   * Returns always 2. This method is needed to follow object container
-   * interface.
-   */
-  size_t size() const;
   /**
    * Makes a deep copy of the pair, the new created copy consists of two copies
    * of the objects in the pair.

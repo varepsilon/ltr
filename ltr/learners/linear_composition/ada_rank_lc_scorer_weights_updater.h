@@ -64,7 +64,7 @@ void AdaRankLCScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
     LinearCompositionScorer* lin_scorer) const {
   int last_scorer_number = static_cast<int>(lin_scorer->size()) - 1;
-  lin_scorer->at(last_scorer_number).scorer->markDataSet(data);
+  lin_scorer->at(last_scorer_number).scorer->predict(data);
 
   double numerator = 0.0;
   double denominator = 0.0;

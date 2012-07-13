@@ -125,10 +125,6 @@ class Object : public Printable {
    * returned.
    */
   Object deepCopy() const;
-  /** Always returns 1. This method is
-   * needed to follow object container interface.
-   */
-  size_t size() const;
   /** Friend operator, checks whether two objects are equal.
    */
   friend bool operator==(const Object& lhs, const Object& rhs);

@@ -14,10 +14,6 @@ ObjectPair::ObjectPair(const Object& first, const Object& second)
                       : first(first),
                         second(second) {}
 
-size_t ObjectPair::size() const {
-  return 2;
-};
-
 ObjectPair ObjectPair::deepCopy() const {
   ObjectPair result = *this;
   result.first = this->first.deepCopy();

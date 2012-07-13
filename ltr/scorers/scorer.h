@@ -101,10 +101,10 @@ class Scorer : public Aliaser,
   }
 
   template <class TElement>
-  void markDataSet(const DataSet<TElement>& elements);
+  void predict(const DataSet<TElement>& elements);
 
   template <class TElement>
-  void markElement(const TElement& element);
+  void predict(const TElement& element);
 
   string generateLocalClassName(size_t index);
 

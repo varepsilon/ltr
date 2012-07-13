@@ -57,7 +57,7 @@ namespace ltr {
         string current_report = learner->report();
         typename Scorer::Ptr current_scorer = learner->make();
 
-        current_scorer->markDataSet(current_splitted.test_set);
+        current_scorer->predict(current_splitted.test_set);
 
         vector<double> current_measure_values;
         for (int measure_index = 0;

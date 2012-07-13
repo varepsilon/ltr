@@ -8,12 +8,10 @@
 #include "ltr/learners/learner.h"
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 
 using std::vector;
 using std::sort;
 using std::reverse;
-using ltr::utility::MarkDataSet;
 using std::cout;
 using std::string;
 
@@ -217,7 +215,7 @@ class CrossValidator {
 
               Scorer::Ptr currentScorer = (
                     learners_[learnerIndex])->make();
-              MarkDataSet(splittedData.test_set, *currentScorer);
+              currentScorer->predict(splittedData.test_set);
 
               crossValidationResults_
                   [datasetIndex][measureIndex][learnerIndex]
