@@ -63,7 +63,6 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
   LinearCompositionLearner<Object> lin_composition_learner;
 
   AbsError::Ptr abs_error(new AbsError);
-  lin_composition_learner.set_measure(abs_error);
 
   BestFeatureLearner<Object>::Ptr 
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
@@ -85,8 +84,7 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
 
   LinearCompositionLearner<Object> average_lin_composition_learner;
   average_lin_composition_learner.setLCScorerWeightsUpdater(
-    average_lin_composition_scorer_weights_updater);
-  average_lin_composition_learner.set_measure(abs_error);
+    average_lin_composition_scorer_weights_updater);  
   average_lin_composition_learner.set_weak_learner(best_feature_learner);
   average_lin_composition_learner.learn(data);
   LinearCompositionScorer::Ptr average_lin_scorer =
@@ -98,8 +96,7 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
 TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object> lin_composition_learner;
 
-  AbsError::Ptr abs_error(new AbsError);
-  lin_composition_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
@@ -134,8 +131,7 @@ TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
 TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object> lin_composition_learner;
 
-  AbsError::Ptr abs_error(new AbsError);
-  lin_composition_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
@@ -157,12 +153,9 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_rank_data_set_weight_updater(
-      new AdaRankDataSetWeightsUpdater<Object>);
-  ada_lin_composition_learner.setDataSetWeightsUpdater(
-    ada_rank_data_set_weight_updater);
+      new AdaRankDataSetWeightsUpdater<Object>);  
 
-  AbsError::Ptr abs_error(new AbsError);
-  ada_lin_composition_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
@@ -179,13 +172,10 @@ TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object> ada_lin_composition_learner;
 
   AdaRankLCScorerWeightsUpdater<Object>::Ptr
-    ada_rank_weight_updater(new AdaRankLCScorerWeightsUpdater<Object>);
-  ada_lin_composition_learner.setLCScorerWeightsUpdater(
-    ada_rank_weight_updater);
+    ada_rank_weight_updater(new AdaRankLCScorerWeightsUpdater<Object>);  
 
   TruePoint::Ptr true_point(new TruePoint);
-  AbsError::Ptr abs_error(new AbsError);
-  ada_lin_composition_learner.set_measure(true_point);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
@@ -202,18 +192,14 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   LinearCompositionLearner<Object> ada_learner;
 
   AdaRankLCScorerWeightsUpdater<Object>::Ptr
-    ada_rank_weights_updater(new AdaRankLCScorerWeightsUpdater<Object>);
-  ada_learner.setLCScorerWeightsUpdater(ada_rank_weights_updater);
+    ada_rank_weights_updater(new AdaRankLCScorerWeightsUpdater<Object>);  
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_rank_data_set_weights_updater(
-      new AdaRankDataSetWeightsUpdater<Object>);
-  ada_learner.setDataSetWeightsUpdater(
-    ada_rank_data_set_weights_updater);
+      new AdaRankDataSetWeightsUpdater<Object>);  
 
   TruePoint::Ptr true_point(new TruePoint);
-  AbsError::Ptr abs_error(new AbsError);
-  ada_learner.set_measure(true_point);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
