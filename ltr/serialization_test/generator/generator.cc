@@ -36,7 +36,6 @@ int main(int argc, char* argv[]) {
       new BestFeatureLearner<Object>(abs_error));
   bf_learner->learn(generator.train_data);
   generator.setScorerTest(bf_learner, "BFLearner");
-
   GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
   gp_learner->learn(generator.train_data);
   generator.setScorerTest(gp_learner, "GPLearner");
@@ -51,14 +50,13 @@ int main(int argc, char* argv[]) {
 
   LinearCompositionLearner<Object>::Ptr simple_lc_learner(
     new LinearCompositionLearner<Object>);
-  simple_lc_learner->set_measure(abs_error);
   simple_lc_learner->set_weak_learner(bf_learner);
   simple_lc_learner->learn(generator.train_data);
   generator.setScorerTest(simple_lc_learner, "SimpleLCLearner");
 
   LinearCompositionLearner<Object>::Ptr rsm_lc_learner(
     new LinearCompositionLearner<Object>);
-  rsm_lc_learner->set_measure(abs_error);
+
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverterLearner(rsm);
@@ -69,3 +67,4 @@ int main(int argc, char* argv[]) {
   generator.write(argv[1]);
   return 0;
 }
+

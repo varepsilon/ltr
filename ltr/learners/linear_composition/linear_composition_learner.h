@@ -26,7 +26,6 @@ using ltr::lc::FakeLCScorerWeightsUpdater;
 using ltr::lc::LCScorerWeightsUpdater;
 using ltr::lc::DataSetWeightsUpdater;
 
-
 namespace ltr {
 namespace lc {
 /**
@@ -62,15 +61,15 @@ class LinearCompositionLearner
    */
   explicit LinearCompositionLearner(
       const ParametersContainer& parameters)
-      : data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
-      linear_composition_scorer_weights_updater
+      : data_set_weights_updater_(new FakeDataSetWeightsUpdater<TElement>),
+        linear_composition_scorer_weights_updater_
         (new FakeLCScorerWeightsUpdater<TElement>) {
     this->setParameters(parameters);
   }
 
   explicit LinearCompositionLearner(int number_of_iterations = 10)
-      : data_set_weights_updater(new FakeDataSetWeightsUpdater<TElement>),
-      linear_composition_scorer_weights_updater
+      : data_set_weights_updater_(new FakeDataSetWeightsUpdater<TElement>),
+        linear_composition_scorer_weights_updater_
         (new FakeLCScorerWeightsUpdater<TElement>) {
     number_of_iterations_ = number_of_iterations;
   }
@@ -87,22 +86,24 @@ class LinearCompositionLearner
   void checkParameters() const {
     CHECK(number_of_iterations_ > 0); // NOLINT
   }
-  // void set_measure(typename Measure<TElement>::Ptr measure);
-  // void set_weak_learner(typename Learner<TElement>::Ptr weak_learner);
 
   void setDataSetWeightsUpdater(
     typename DataSetWeightsUpdater<TElement>::Ptr
       in_data_set_weights_updater) {
-    data_set_weights_updater = in_data_set_weights_updater;
+    data_set_weights_updater_ = in_data_set_weights_updater;
   }
   void setLCScorerWeightsUpdater(
     typename LCScorerWeightsUpdater<TElement>::Ptr
-      in_linear_composition_scorer_weights_updater) {
-    linear_composition_scorer_weights_updater
-      = in_linear_composition_scorer_weights_updater;
+      in_linear_composition_scorer_weights_updater_) {
+    linear_composition_scorer_weights_updater_
+      = in_linear_composition_scorer_weights_updater_;
   }
 
   GET_SET(int, number_of_iterations);
+  GET_SET(typename Learner<TElement>::Ptr, weak_learner);
+
+ protected:
+  typename Learner<TElement>::Ptr weak_learner_;
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
@@ -110,8 +111,8 @@ class LinearCompositionLearner
   }
 
   typename LCScorerWeightsUpdater<TElement>::Ptr
-    linear_composition_scorer_weights_updater;
-  typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater;
+    linear_composition_scorer_weights_updater_;
+  typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater_;
 
   void learnImpl(const DataSet<TElement>& data,
                  LinearCompositionScorer* scorer);
@@ -120,14 +121,10 @@ class LinearCompositionLearner
   int number_of_iterations_;
 };
 
-
 // template realizations
 template <class TElement>
 void LinearCompositionLearner<TElement>::learnImpl(
     const DataSet<TElement>& data, LinearCompositionScorer* scorer) {
-  linear_composition_scorer_weights_updater->set_measure(this->measure_);
-  data_set_weights_updater->set_measure(this->measure_);
-  this->weak_learner_->set_measure(this->measure_);
 
   for (int iteration = 0;
       iteration < number_of_iterations_;
@@ -137,8 +134,8 @@ void LinearCompositionLearner<TElement>::learnImpl(
     this->weak_learner_->learn(data);
     Scorer::Ptr current_scorer = this->weak_learner_->make();
     scorer->add(current_scorer, 1.0);
-    linear_composition_scorer_weights_updater->updateWeights(data, scorer);
-    data_set_weights_updater->updateWeights(&data, *scorer);
+    linear_composition_scorer_weights_updater_->updateWeights(data, scorer);
+    data_set_weights_updater_->updateWeights(&data, *scorer);
   }
 }
 };

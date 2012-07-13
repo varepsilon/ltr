@@ -76,23 +76,7 @@ class Learner : public Reporter,
   GET(const DataPreprocessorArray&, data_preprocessors);
   SET(DataPreprocessorArray, data_preprocessors);
 
-  /*
-  * \depricated
-  */
-  void set_measure(typename Measure<TElement>::Ptr measure) {
-    measure_ = measure;
-  }
-  /*
-  * \depricated
-  */
-  void set_weak_learner(typename Learner<TElement>::Ptr weak_learner) {
-    weak_learner_ = weak_learner;
-  }
-
  protected:
-  typename Measure<TElement>::Ptr measure_;
-  typename Learner<TElement>::Ptr weak_learner_;
-
   DataPreprocessorArray data_preprocessors_;
 
   FeatureConverterArray feature_converters_;
@@ -130,7 +114,6 @@ class BaseLearner : public Learner<TElement> {
   TScorer scorer_;
 };
 
-
 // template realization
 
 // _________________Learner________________________
@@ -147,7 +130,6 @@ void Learner<TElement>::addFeatureConverterLearner(
       feature_converter_learner) {
   feature_converter_learners_.push_back(feature_converter_learner);
 }
-
 
 // _________________BaseLearner_______________________
 
