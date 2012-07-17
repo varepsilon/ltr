@@ -16,9 +16,9 @@ void NanToZeroConverter::applyImpl(const Object& input,
   for (size_t feature_index = 0;
       feature_index < input.features().size(); ++feature_index) {
     if (isNaN(input[feature_index])) {
-      output->features()[feature_index] = 0;
+      output->at(feature_index) = 0;
     } else {
-      output->features()[feature_index] = input[feature_index];
+      output->at(feature_index) = input[feature_index];
     }
   }
 }
