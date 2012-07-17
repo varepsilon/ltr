@@ -124,13 +124,11 @@ SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_functions.cc)
 
 SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.h
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/multiply_top_trees_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/select_top_trees_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_crossover_strategy.h
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/all_pairs_crossover_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/all_trees_mutation_standart_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/all_trees_mutation_swap_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/population_handler.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h

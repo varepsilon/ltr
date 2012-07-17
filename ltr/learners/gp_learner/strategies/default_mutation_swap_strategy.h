@@ -8,28 +8,36 @@
 #include "contrib/puppy/Puppy.hpp"
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
+using std::vector;
+
+using Puppy::Tree;
+using Puppy::Context;
+
 namespace ltr {
 namespace gp {
+/**
+* Mutate all trees in population with
+* Puppy applyMutationSwap function.
+*/
 class DefaultMutationSwapStrategy : public BasePopulationHandler {
  public:
   explicit DefaultMutationSwapStrategy(double mutation_probability = 0.05,
-                                       int max_regeneration_depth = 5,
-                                       int max_depth = 35)
+                                       double distribution_probability = 0.5)
   : mutation_probability_(mutation_probability),
-    max_regeneration_depth_(max_regeneration_depth),
-    max_depth_(max_depth) {}
+    distribution_probability_(distribution_probability) {}
 
-  virtual void HandlePopulation(std::vector<Puppy::Tree>& population,
-                                 Puppy::Context& context) {
-    Puppy::applyMutationStandard(population, context, mutation_probability_,
-                                 max_regeneration_depth_, max_depth_);
-  }
+  virtual void HandlePopulation(vector<Tree>& population, Context& context);
 
  private:
   double mutation_probability_;
-  int max_regeneration_depth_;
-  int max_depth_;
+  double distribution_probability_;
 };
+
+void DefaultMutationSwapStrategy::
+  HandlePopulation(vector<Tree>& population, Context& context) {
+    Puppy::applyMutationSwap(population, context, mutation_probability_,
+                             distribution_probability_);
+}
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_SWAP_STRATEGY_H_

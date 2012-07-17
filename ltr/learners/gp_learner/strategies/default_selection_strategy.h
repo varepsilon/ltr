@@ -8,22 +8,33 @@
 #include "contrib/puppy/Puppy.hpp"
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
+using std::vector;
+
+using Puppy::Tree;
+using Puppy::Context;
+
 namespace ltr {
 namespace gp {
+/**
+* Select trees for the next generation with
+* Puppy applySelectionTournament function.
+*/
 class DefaultSelectionStrategy : public BasePopulationHandler {
  public:
   explicit DefaultSelectionStrategy(int number_of_participants = 2)
   : number_of_participants_(number_of_participants) {}
 
-  virtual void HandlePopulation(std::vector<Puppy::Tree>& population,
-                                 Puppy::Context& context) {
-    Puppy::applySelectionTournament(population, context,
-                                    number_of_participants_);
-  }
+  virtual void HandlePopulation(vector<Tree>& population, Context& context);
 
  private:
   int number_of_participants_;
 };
+
+void DefaultSelectionStrategy::
+  HandlePopulation(vector<Tree>& population, Context& context) {
+    Puppy::applySelectionTournament(population, context,
+                                    number_of_participants_);
+}
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_SELECTION_STRATEGY_H_

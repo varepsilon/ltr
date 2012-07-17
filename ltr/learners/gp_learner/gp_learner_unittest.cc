@@ -23,10 +23,8 @@
 #include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
 
-#include "ltr/learners/gp_learner/strategies/multiply_top_trees_strategy.h"
-#include "ltr/learners/gp_learner/strategies/all_pairs_crossover_strategy.h"
-#include "ltr/learners/gp_learner/strategies/all_trees_mutation_standart_strategy.h"
-#include "ltr/learners/gp_learner/strategies/all_trees_mutation_swap_strategy.h"
+#include "ltr/learners/gp_learner/strategies/select_top_trees_strategy.h"
+#include "ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h"
 
 using boost::filesystem::path;
 
@@ -49,10 +47,8 @@ using ltr::gp::DefaultSelectionStrategy;
 using ltr::gp::DefaultCrossoverStrategy;
 using ltr::gp::DefaultMutationStandartStrategy;
 using ltr::gp::DefaultMutationSwapStrategy;
-using ltr::gp::MultiplyTopTreesStrategy;
-using ltr::gp::AllPairsCrossoverStrategy;
-using ltr::gp::AllTreesMutationStandartStrategy;
-using ltr::gp::AllTreesMutationSwapStrategy;
+using ltr::gp::SelectTopTreesStrategy;
+using ltr::gp::CrossoverAdjacentTreesStrategy;
 
 class GPLearnerTest : public ::testing::Test {
  protected:
@@ -130,9 +126,9 @@ TEST_F(GPLearnerTest, DefaultMutationSwapStrategyTest) {
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
-TEST_F(GPLearnerTest, MultiplyTopTreesStrategyTest) {
-  MultiplyTopTreesStrategy::Ptr multiply_top_trees_strategy
-    (new MultiplyTopTreesStrategy());
+TEST_F(GPLearnerTest, SelectTopTreesStrategyTest) {
+  SelectTopTreesStrategy::Ptr multiply_top_trees_strategy
+    (new SelectTopTreesStrategy());
 
   GPLearner<Object> gp_learner(
     static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
@@ -142,38 +138,14 @@ TEST_F(GPLearnerTest, MultiplyTopTreesStrategyTest) {
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
-TEST_F(GPLearnerTest, AllPairsCrossoverStrategyTest) {
-  AllPairsCrossoverStrategy::Ptr all_pairs_crossover_strategy
-    (new AllPairsCrossoverStrategy());
+TEST_F(GPLearnerTest, CrossoverAdjacentTreesStrategyTest) {
+  CrossoverAdjacentTreesStrategy::Ptr crossover_adjacent_trees_strategy
+    (new CrossoverAdjacentTreesStrategy());
 
   GPLearner<Object> gp_learner(
     static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
   ASSERT_NO_THROW(gp_learner.addPopulationHandler(
-    all_pairs_crossover_strategy));
-
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
-}
-
-TEST_F(GPLearnerTest, AllTreesMutationStandartStrategyTest) {
-  AllTreesMutationStandartStrategy::Ptr all_trees_mutation_standart_strategy
-    (new AllTreesMutationStandartStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(
-    all_trees_mutation_standart_strategy));
-
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
-}
-
-TEST_F(GPLearnerTest, AllTreesMutationSwapStrategyTest) {
-  AllTreesMutationSwapStrategy::Ptr all_trees_mutation_swap_strategy
-    (new AllTreesMutationSwapStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(
-    all_trees_mutation_swap_strategy));
+    crossover_adjacent_trees_strategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
