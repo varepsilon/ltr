@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include <boost/shared_ptr.hpp> // NOLINT
+#include "ltr/utility/shared_ptr.h" // NOLINT
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
@@ -33,7 +33,7 @@ template <class TElement>
 class AverageLCScorerWeightsUpdater
   : public LCScorerWeightsUpdater<TElement> {
  public:
-  typedef boost::shared_ptr<AverageLCScorerWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<AverageLCScorerWeightsUpdater> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with no parameters

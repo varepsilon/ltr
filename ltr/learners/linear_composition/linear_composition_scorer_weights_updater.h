@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_LINEAR_COMPOSITION_LINEAR_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_LINEAR_COMPOSITION_LINEAR_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <string>
 
 #include "ltr/measures/measure.h"
@@ -29,7 +29,7 @@ namespace lc {
 template <class TElement>
 class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
  public:
-  typedef boost::shared_ptr<LCScorerWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<LCScorerWeightsUpdater> Ptr;
 
   /**
    * Updates linear composition's weights
@@ -60,7 +60,7 @@ class LCScorerWeightsUpdater : public Aliaser, public Parameterized {
 template <class TElement>
 class FakeLCScorerWeightsUpdater : public LCScorerWeightsUpdater<TElement> {
  public:
-  typedef boost::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<FakeLCScorerWeightsUpdater> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with no parameters

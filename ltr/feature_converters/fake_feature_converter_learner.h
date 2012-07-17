@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <string>
 
 #include "ltr/feature_converters/feature_converter_learner.h"
@@ -19,7 +19,7 @@ template <class TElement>
 class FakeFeatureConverterLearner
 : public BaseFeatureConverterLearner<TElement, FakeFeatureConverter> {
  public:
-  typedef boost::shared_ptr<FakeFeatureConverterLearner> Ptr;
+  typedef ltr::utility::shared_ptr<FakeFeatureConverterLearner> Ptr;
 
   virtual string toString() const;
  private:

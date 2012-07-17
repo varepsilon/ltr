@@ -12,7 +12,7 @@ using std::string;
 namespace ltr {
 class MedianCompositionScorer : public OrderStaticticCompositionScorer {
  public:
-  typedef boost::shared_ptr<MedianCompositionScorer> Ptr;
+  typedef ltr::utility::shared_ptr<MedianCompositionScorer> Ptr;
 
   MedianCompositionScorer()
     : OrderStaticticCompositionScorer(0.5) {}

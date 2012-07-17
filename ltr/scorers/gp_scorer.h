@@ -3,7 +3,7 @@
 #ifndef LTR_SCORERS_GP_SCORER_H_
 #define LTR_SCORERS_GP_SCORER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <string>
@@ -33,7 +33,7 @@ class GPScorer : public Scorer {
 
   /** \typedef boost shared pointer to GPScorer;
    */
-  typedef boost::shared_ptr< GPScorer > Ptr;
+  typedef ltr::utility::shared_ptr< GPScorer > Ptr;
   /** Constructor.
    * \param population the current population of  genetic programming's
    * evolution process, vector of Puppy::tree.

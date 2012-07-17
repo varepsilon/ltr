@@ -14,7 +14,7 @@ using std::vector;
 namespace ltr {
 class CompositionScorer : public Scorer {
  public:
-  typedef boost::shared_ptr<CompositionScorer> Ptr;
+  typedef ltr::utility::shared_ptr<CompositionScorer> Ptr;
 
   struct ScorerAndWeight {
     Scorer::Ptr scorer;

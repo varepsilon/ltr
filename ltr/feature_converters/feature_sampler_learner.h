@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <set>
 #include <vector>
@@ -33,7 +33,7 @@ template <typename TElement>
 class FeatureSamplerLearner
     : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
  public:
-  typedef boost::shared_ptr<FeatureSamplerLearner> Ptr;
+  typedef ltr::utility::shared_ptr<FeatureSamplerLearner> Ptr;
 
   /**
   * \param indices indices of features to sample

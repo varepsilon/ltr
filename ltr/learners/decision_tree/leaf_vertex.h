@@ -17,7 +17,7 @@ Leaf Vertex is a node, which returns constant value for any object.
 template <class TValue>
 class LeafVertex : public Vertex<TValue> {
   public:
-    typedef typename boost::shared_ptr<LeafVertex<TValue> > Ptr;
+    typedef typename ltr::utility::shared_ptr<LeafVertex<TValue> > Ptr;
     TValue value(const Object& obj) const {
       return value_;
     }

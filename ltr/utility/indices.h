@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include <boost/shared_ptr.hpp>  //NOLINT
+#include "ltr/utility/shared_ptr.h"  //NOLINT
 
 using std::vector;
 
@@ -13,7 +13,7 @@ namespace ltr {
 namespace utility {
 
 typedef vector<int> Indices;
-typedef boost::shared_ptr<Indices> IndicesPtr;
+typedef ltr::utility::shared_ptr<Indices> IndicesPtr;
 
 typedef vector<int> Permutation;
 

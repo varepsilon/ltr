@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
 #define LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <functional>
@@ -24,7 +24,7 @@ For nominal features splits by value of the feature.
 */
 class ID3_Splitter : public ConditionsLearner {
  public:
-  typedef boost::shared_ptr<ID3_Splitter> Ptr;
+  typedef ltr::utility::shared_ptr<ID3_Splitter> Ptr;
 
   explicit ID3_Splitter(const ParametersContainer& parameters) {
     this->setParameters(parameters);

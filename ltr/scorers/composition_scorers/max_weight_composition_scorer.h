@@ -12,7 +12,7 @@ using std::string;
 namespace ltr {
 class MaxWeightCompositionScorer : public CompositionScorer {
  public:
-  typedef boost::shared_ptr<MaxWeightCompositionScorer> Ptr;
+  typedef ltr::utility::shared_ptr<MaxWeightCompositionScorer> Ptr;
 
   virtual string toString() const;
   virtual double scoreImpl(const Object& object) const;

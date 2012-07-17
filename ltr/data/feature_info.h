@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "ltr/interfaces/parameterized.h"
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 using std::map;
 using std::string;
@@ -55,7 +55,8 @@ class FeatureInfo {
  public:
   /** \typedef Shared pointer to feature info.
    */
-  typedef boost::shared_ptr<FeatureInfo> Ptr;
+  
+  typedef ltr::utility::shared_ptr<FeatureInfo> Ptr;
   /** Constructor, creates info about given count of features
    *  with given type
    */

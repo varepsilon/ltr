@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_LEARNER_H_
 #define LTR_LEARNERS_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <string>
@@ -36,8 +36,8 @@ class Learner : public Reporter,
                 public Aliaser,
                 public Parameterized {
  public:
-  typedef boost::shared_ptr<Learner> Ptr;
-  typedef boost::shared_ptr<Learner> BasePtr;
+  typedef ltr::utility::shared_ptr<Learner> Ptr;
+  typedef ltr::utility::shared_ptr<Learner> BasePtr;
 
   typedef vector<typename FeatureConverterLearner<TElement>::Ptr>
         FeatureConverterLearnerArray;

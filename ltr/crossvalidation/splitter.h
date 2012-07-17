@@ -3,7 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_SPLITTER_H_
 #define LTR_CROSSVALIDATION_SPLITTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <string>
@@ -38,8 +38,8 @@ namespace ltr {
     template<class TElement>
     class Splitter : public Parameterized, public Aliaser, public Printable {
     public:
-      typedef boost::shared_ptr<Splitter> Ptr;
-      typedef boost::shared_ptr<Splitter> BasePtr;
+      typedef ltr::utility::shared_ptr<Splitter> Ptr;
+      typedef ltr::utility::shared_ptr<Splitter> BasePtr;
       /**
        * Total number of possible splits for an input dataset.
        */

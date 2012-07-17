@@ -11,7 +11,7 @@
 #include <string>
 
 #include <boost/lexical_cast.hpp>  //NOLINT
-#include <boost/shared_ptr.hpp>  //NOLINT
+#include "ltr/utility/shared_ptr.h"  //NOLINT
 
 #include "ltr/data/data_set.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"
@@ -34,7 +34,7 @@ namespace ltr {
 template <class TElement>
 class DataSampler : public DataPreprocessor<TElement> {
  public:
-  typedef boost::shared_ptr<DataSampler> Ptr;
+  typedef ltr::utility::shared_ptr<DataSampler> Ptr;
 
   /**
   * \param indices indices of elements to sample,

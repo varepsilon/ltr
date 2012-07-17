@@ -53,7 +53,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc)
 
-SET(LTR_UTILS ${Source_Path}/ltr/utility/random_number_generator.h
+SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
+              ${Source_Path}/ltr/utility/shared_ptr.cc
+              ${Source_Path}/ltr/utility/random_number_generator.h
               ${Source_Path}/ltr/utility/random_number_generator.cc
               ${Source_Path}/ltr/utility/numerical.h
               ${Source_Path}/ltr/utility/numerical.cc

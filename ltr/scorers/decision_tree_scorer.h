@@ -26,7 +26,7 @@ class DecisionTreeScorer : public Scorer {
 
   virtual string getDefaultAlias() const {return "DecisionTreeScorer";}
  public:
-  typedef boost::shared_ptr< DecisionTreeScorer > Ptr;
+  typedef ltr::utility::shared_ptr< DecisionTreeScorer > Ptr;
 
   DecisionTreeScorer() {}
 

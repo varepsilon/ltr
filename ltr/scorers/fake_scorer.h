@@ -16,7 +16,7 @@ namespace ltr {
  */
 class FakeScorer : public Scorer {
   public:
-  typedef boost::shared_ptr< FakeScorer > Ptr;
+  typedef ltr::utility::shared_ptr< FakeScorer > Ptr;
 
   FakeScorer(double scoreValue = 0.0,
       const FeatureConverterArray& feature_converters = FeatureConverterArray())

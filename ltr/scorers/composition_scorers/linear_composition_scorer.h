@@ -14,7 +14,7 @@ using std::vector;
 namespace ltr {
 class LinearCompositionScorer : public SoftCompositionScorer {
  public:
-  typedef boost::shared_ptr<LinearCompositionScorer> Ptr;
+  typedef ltr::utility::shared_ptr<LinearCompositionScorer> Ptr;
 
   virtual const vector<double>& gradient
     (const vector<double>& weak_scores) const;

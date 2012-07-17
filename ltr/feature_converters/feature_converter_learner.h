@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 
@@ -34,7 +34,7 @@ class FeatureConverterLearner : public Parameterized,
                                 public Printable,
                                 public Aliaser {
  public:
-  typedef boost::shared_ptr<FeatureConverterLearner> Ptr;
+  typedef ltr::utility::shared_ptr<FeatureConverterLearner> Ptr;
   /**
   * \brief Learns input dataset.
   * \param data_set dataset to study
@@ -61,7 +61,7 @@ class FeatureConverterLearner : public Parameterized,
 template <class TElement, class TFeatureConverter>
 class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
  public:
-  typedef boost::shared_ptr<BaseFeatureConverterLearner> Ptr;
+  typedef ltr::utility::shared_ptr<BaseFeatureConverterLearner> Ptr;
   /**
   * \note Don't forget to learn() before makeSpecific().
   * \return pointer to <em>new instance</em> of feature converter

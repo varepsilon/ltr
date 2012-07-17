@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <boost/shared_ptr.hpp>  //NOLINT
+#include "ltr/utility/shared_ptr.h"  //NOLINT
 
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/aliaser.h"
@@ -33,8 +33,8 @@ class DataPreprocessor : public Parameterized,
                          public Printable,
                          public Aliaser {
  public:
-  typedef boost::shared_ptr<DataPreprocessor> BasePtr;
-  typedef boost::shared_ptr<DataPreprocessor> Ptr;
+  typedef ltr::utility::shared_ptr<DataPreprocessor> BasePtr;
+  typedef ltr::utility::shared_ptr<DataPreprocessor> Ptr;
   virtual ~DataPreprocessor() {}
   /**
    * Preprocesses DataSet.
