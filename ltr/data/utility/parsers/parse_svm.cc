@@ -66,15 +66,18 @@ namespace ltr {
       features[raw_query_id_idx_] = lexical_cast<string>(qid);
   }
 
-  void SVMParser::makeString(const Object& obj, string*result) {
+  void SVMParser::makeString(const Object& object, string* result) {
     stringstream str;
     str.precision(utility::DOUBLE_PRECISION);
-    str << obj.actual_label() << " ";
+    str << object.actual_label() << " ";
     try {
-      str << "qid:" << obj.getMetaInfo("queryId") << " ";
+      str << "qid:" << object.getMetaInfo("queryId") << " ";
     } catch(std::logic_error err) { }
-    for (size_t k = 0; k < obj.feature_count(); k++) {
-      str << k+1 << ":" << obj.features()[k] << " ";
+    for (size_t feature_index = 0;
+         feature_index < object.feature_count();
+         ++feature_index) {
+      str << feature_index+1 << ":" 
+          << object[feature_index] << " ";
     }
     *result = str.str();
   }

@@ -10,7 +10,7 @@ using std::vector;
 
 using ltr::utility::DoubleLess;
 using ltr::utility::DoubleMore;
-using ltr::utility::equalWithNaN;
+using ltr::utility::DoubleEqualWithNaN;
 
 namespace ltr {
 namespace utility {
@@ -32,7 +32,7 @@ namespace utility {
     if (DoubleMore(left.predicted, right.predicted)) {
       return true;
     }
-    if (equalWithNaN(left.predicted, right.predicted)) {
+    if (DoubleEqualWithNaN(left.predicted, right.predicted)) {
       return DoubleLess(left.actual, right.actual);
     }
     return false;

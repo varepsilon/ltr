@@ -20,6 +20,8 @@ using std::ofstream;
 using std::string;
 using std::vector;
 
+using ltr::utility::DOUBLE_PRECISION;
+
 namespace ltr {
 namespace io_utility {
 /**
@@ -164,11 +166,12 @@ void saveDataSet(const DataSet<TElement>& data,
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < per_object_accessor.object_count();
          ++object_index) {
       string str;
-      parser->makeString(data[element_index][object_index], &str);
+      parser->makeString(per_object_accessor.object(object_index), &str);
       file << str << std::endl;
     }
   }
@@ -185,14 +188,15 @@ void savePredictions(const DataSet<TElement>& data,
     throw std::logic_error("can't open " + filename + " for writing");
   }
 
-  file.precision(utility::DOUBLE_PRECISION);
+  file.precision(DOUBLE_PRECISION);
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < per_object_accessor.object_count();
          ++object_index) {
-      file << (*scorer)(data[element_index][object_index]) << std::endl;
+      file << (*scorer)(per_object_accessor.object(object_index)) << std::endl;
     }
   }
   file.close();
@@ -211,15 +215,16 @@ void savePredictions(const DataSet<TElement>& data,
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
     for (int object_index = 0;
-         object_index < data[element_index].size();
+         object_index < per_object_accessor.object_count();
          ++object_index) {
-      double label = data[element_index][object_index].predicted_label();
-      file << boost::lexical_cast<string>(label)
-           << std::endl;
+      double label = per_object_accessor.object(object_index).predicted_label();
+      file << label << std::endl;
     }
   }
   file.close();
+
 }
 };
 };

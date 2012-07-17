@@ -70,7 +70,6 @@ class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   explicit FakeDataSetWeightsUpdater(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->copyParameters(parameters);
   }
 
   void updateWeights(const DataSet<TElement>* data,

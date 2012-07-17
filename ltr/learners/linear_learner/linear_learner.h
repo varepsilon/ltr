@@ -56,7 +56,7 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
     for (int feature_index = 0;
         feature_index < data.feature_count(); ++feature_index) {
       X(object_index, feature_index + 1) =
-        data[object_index].features()[feature_index];
+        data[object_index][feature_index];
     }
   }
 

@@ -65,78 +65,9 @@ class Parameterized {
    */
   virtual void checkParameters() const;
   void setParameters(const ParametersContainer &parameters);
-  // \deprecated
-  template <class T, class TPred>
-  void checkParameter(const std::string &name, TPred pred) const
-      throw(std::logic_error, std::bad_cast) {
-    const T &value = parameters_.Get<T>(name);
-    if (!pred(value)) {
-      throw std::logic_error("Error in parameter " + name + " check");
-    }
-  }
-  // \deprecated
-  template<class T>
-  void setExistingParameter(const std::string& name, T value) {
-    parameters_.SetExisting(name, value);
-    checkParameters();
-    parametersUpdateCallback();
-  }
-  // \deprecated
-  void clearParameters() {
-    parameters_.Clear();
-  }
-  // \deprecated
-  template<class T>
-  void addNewParam(const std::string &name, const T &value) {
-    parameters_.AddNew(name, value);
-  }
-  // \deprecated
-  const ParametersContainer& parameters() const;
-  template <typename DesiredType>
-  DesiredType getParameter(const string& name) const;
-  // \deprecated
-  void copyParameters(const ParametersContainer& parameters);
+
  protected:
   virtual void setParametersImpl(const ParametersContainer& parameters);
-  virtual void parametersUpdateCallback();
- private:
-  // \deprecated
-  ParametersContainer parameters_;
 };
-
-// template realization
-
-template <class DesiredType>
-DesiredType Parameterized::getParameter(const string& name) const {
-  try {
-    return parameters_.Get<DesiredType>(name);
-  } catch(std::logic_error error) {
-    try {
-      return parameters_.Get<Parameterized*, DesiredType>(name);
-    } catch(std::logic_error error) {
-      throw;
-    }
-  }
-}
-
-template<>
-inline double Parameterized::getParameter<double>(const string& name) const {
-  return parameters_.Get<double>(name);
-}
-
-template<>
-inline int Parameterized::getParameter<int>(const string& name) const {
-  return parameters_.Get<int>(name);
-}
-
-template<>
-inline bool Parameterized::getParameter<bool>(const string& name) const {
-  return parameters_.Get<bool>(name);
-}
-
-template<>
-inline float Parameterized::getParameter<float>(const string& name) const {
-  return parameters_.Get<float>(name);
-}
 };
 #endif  // LTR_INTERFACES_PARAMETERIZED_H_

@@ -30,43 +30,6 @@ namespace ltr {
   /** Constructor creates a new pair of two copies of the two given objects.
    */
   ObjectPair(const Object& first, const Object& second);
-  /** Returns a constant link to the first object in the pair.
-   */
-  const Object& first() const;
-  /** Returns a link to the first object in the pair.
-   */
-  Object& first();
-  /** Returns a constant link to the second object in the pair.
-   */
-  const Object& second() const;
-  /** Returns a link to the second object in the pair.
-   */
-  Object& second();
-  /** If i is less than 1 then the constant link to the first object in the pair
-   * is returned otherwise the constant link to the second. This method is
-   * needed to follow object container interface.
-   */
-  const Object& operator[](size_t i) const;
-  /** If i is less than 1 then the link to the first object in the pair
-   * is returned otherwise the link to the second. This method is
-   * needed to follow object container interface.
-   */
-  Object& operator[](size_t i);
-  /** If i is less than 1 then the constant link to the first object in the pair
-   * is returned otherwise the constant link to the second. This method is
-   * needed to follow object container interface.
-   */
-  const Object& at(size_t i) const;
-  /** If i is less than 1 then the link to the first object in the pair
-   * is returned otherwise the link to the second. This method is
-   * needed to follow object container interface.
-   */
-  Object& at(size_t i);
-  /*
-   * Returns always 2. This method is needed to follow object container
-   * interface.
-   */
-  size_t size() const;
   /**
    * Makes a deep copy of the pair, the new created copy consists of two copies
    * of the objects in the pair.
@@ -78,13 +41,12 @@ namespace ltr {
    */
   string toString() const;
 
-  private:
   /** The first object in the pair.
    */
-  Object first_;
+  Object first;
   /** The second object in the pair.
    */
-  Object second_;
+  Object second;
 };
 /** Operator, checks whether two objects are equal.
  */

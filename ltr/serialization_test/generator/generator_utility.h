@@ -30,7 +30,7 @@ namespace serialization_test {
     string setFixture() const;
     string setTestLabelsFunction(string function_name) const;
     string setTestCode(int index,
-      string test_name) const;
+                       const string& test_name) const;
     string setBeginBlockComment(string message) const;
     string setEndBlockComment(string message) const;
 

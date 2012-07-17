@@ -20,18 +20,18 @@ namespace ltr {
   double Accuracy<ObjectPair>::get_measure(
       const ObjectPair& object_pair) const {
     bool predicted_is_less = utility::DoubleLess(
-      object_pair.first().predicted_label(),
-      object_pair.second().predicted_label());
+      object_pair.first.predicted_label(),
+      object_pair.second.predicted_label());
     bool actual_is_less = utility::DoubleLess(
-      object_pair.first().actual_label(),
-      object_pair.second().actual_label());
+      object_pair.first.actual_label(),
+      object_pair.second.actual_label());
 
     bool predicted_is_more = utility::DoubleMore(
-      object_pair.first().predicted_label(),
-      object_pair.second().predicted_label());
+      object_pair.first.predicted_label(),
+      object_pair.second.predicted_label());
     bool actual_is_more = utility::DoubleMore(
-      object_pair.first().actual_label(),
-      object_pair.second().actual_label());
+      object_pair.first.actual_label(),
+      object_pair.second.actual_label());
 
     if ((predicted_is_less == actual_is_less)
         && (predicted_is_more == actual_is_more)) {

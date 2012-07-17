@@ -34,10 +34,11 @@ DataSet<Object> convertDataSet(const DataSet<ObjectList>& data,
                                ListToPairConvertionStrategy::Ptr strategy) {
   DataSet<Object> result;
   for (int list_index = 0; list_index < (int)data.size(); ++list_index) {
+    PerObjectAccessor<const ObjectList> per_object_accessor(&data[list_index]);
     for (int object_index = 0;
-         object_index < data[list_index].size();
+         object_index < per_object_accessor.object_count();
          ++object_index) {
-      result << data[list_index][object_index];
+      result << per_object_accessor.object(object_index);
     }
   }
   return result;
@@ -48,10 +49,11 @@ DataSet<Object> convertDataSet(const DataSet<ObjectPair>& data,
                                ListToPairConvertionStrategy::Ptr strategy) {
   DataSet<Object> result;
   for (int pair_index = 0; pair_index < (int)data.size(); ++pair_index) {
+    PerObjectAccessor<const ObjectPair> per_object_accessor(&data[pair_index]);
     for (int object_index = 0;
-         object_index < data[pair_index].size();
+         object_index < per_object_accessor.object_count();
          ++object_index) {
-      result << data[pair_index][object_index];
+      result << per_object_accessor.object(object_index);
     }
   }
   return result;

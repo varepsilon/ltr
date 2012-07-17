@@ -5,7 +5,6 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/data/feature_info.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/utility/numerical.h"
 
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
@@ -26,7 +25,6 @@ using ltr::Object;
 using ltr::DataSet;
 using ltr::FeatureInfo;
 using ltr::LinearCompositionScorer;
-using ltr::utility::MarkDataSet;
 using ltr::utility::DoubleEqual;
 
 using ltr::lc::FakeDataSetWeightsUpdater;
@@ -62,162 +60,161 @@ class LinearCompositionTest : public ::testing::Test {
 };
 
 TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> lc_learner;
+  LinearCompositionLearner<Object> lin_composition_learner;
 
   AbsError::Ptr abs_error(new AbsError);
-  lc_learner.set_measure(abs_error);
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  lin_composition_learner.set_weak_learner(best_feature_learner);
 
-  lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = lc_learner.makeSpecific();
+  lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer = lin_composition_learner.makeSpecific();
 
   EXPECT_EQ(10, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    MarkDataSet(data, *(lin_scorer->at(i).scorer));
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
 
   AverageLCScorerWeightsUpdater<Object>::Ptr
-    av_lcswu(new AverageLCScorerWeightsUpdater<Object>);
+    average_lin_composition_scorer_weights_updater(
+      new AverageLCScorerWeightsUpdater<Object>);
 
-  LinearCompositionLearner<Object> av_lc_learner;
-  av_lc_learner.setLCScorerWeightsUpdater(av_lcswu);
-  av_lc_learner.set_measure(abs_error);
-  av_lc_learner.set_weak_learner(bf_learner);
-  av_lc_learner.learn(data);
-  LinearCompositionScorer::Ptr av_lin_scorer = av_lc_learner.makeSpecific();
-  MarkDataSet(data, *av_lin_scorer);
+  LinearCompositionLearner<Object> average_lin_composition_learner;
+  average_lin_composition_learner.setLCScorerWeightsUpdater(
+    average_lin_composition_scorer_weights_updater);  
+  average_lin_composition_learner.set_weak_learner(best_feature_learner);
+  average_lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr average_lin_scorer =
+    average_lin_composition_learner.makeSpecific();
+  average_lin_scorer->predict(data);
   EXPECT_NEAR(0.0, abs_error->average(data), 1e-8);
 }
 
 TEST_F(LinearCompositionTest, BeggingSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> lc_learner;
+  LinearCompositionLearner<Object> lin_composition_learner;
 
-  AbsError::Ptr abs_error(new AbsError);
-  lc_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
-  bf_learner->addDataPreprocessor(begging);
-  lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
+  best_feature_learner->addDataPreprocessor(bagging);
+  lin_composition_learner.set_weak_learner(best_feature_learner);
 
-  lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = lc_learner.makeSpecific();
+  lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer =
+    lin_composition_learner.makeSpecific();
 
   EXPECT_EQ(10, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    MarkDataSet(data, *(lin_scorer->at(i).scorer));
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
 
-  begging->set_sampling_fraction(2.);
-  lc_learner.set_number_of_iterations(15);
-  lc_learner.learn(data);
-  lin_scorer = lc_learner.makeSpecific();
+  bagging->set_sampling_fraction(2.);
+  lin_composition_learner.set_number_of_iterations(15);
+  lin_composition_learner.learn(data);
+  lin_scorer = lin_composition_learner.makeSpecific();
 
   EXPECT_EQ(25, lin_scorer->size());
   for (int i = 0; i < lin_scorer->size(); ++i) {
-    MarkDataSet(data, *(lin_scorer->at(i).scorer));
+    lin_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))
       << abs_error->average(data);
   }
 }
 
 TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> lc_learner;
+  LinearCompositionLearner<Object> lin_composition_learner;
 
-  AbsError::Ptr abs_error(new AbsError);
-  lc_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  bf_learner->addFeatureConverterLearner(rsm);
-  lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  best_feature_learner->addFeatureConverterLearner(rsm);
+  lin_composition_learner.set_weak_learner(best_feature_learner);
 
-  lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = lc_learner.makeSpecific();
+  lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer =
+    lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(MarkDataSet(data, *lin_scorer));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> adads_lc_learner;
+  LinearCompositionLearner<Object> ada_lin_composition_learner;
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
-    ada_dswu(new AdaRankDataSetWeightsUpdater<Object>);
-  adads_lc_learner.setDataSetWeightsUpdater(ada_dswu);
+    ada_rank_data_set_weight_updater(
+      new AdaRankDataSetWeightsUpdater<Object>);  
 
-  AbsError::Ptr abs_error(new AbsError);
-  adads_lc_learner.set_measure(abs_error);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  adads_lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  ada_lin_composition_learner.set_weak_learner(best_feature_learner);
 
-  adads_lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = adads_lc_learner.makeSpecific();
+  ada_lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer =
+    ada_lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(MarkDataSet(data, *lin_scorer));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankLCSWUSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> adalcs_lc_learner;
+  LinearCompositionLearner<Object> ada_lin_composition_learner;
 
   AdaRankLCScorerWeightsUpdater<Object>::Ptr
-    ada_lcswu(new AdaRankLCScorerWeightsUpdater<Object>);
-  adalcs_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
+    ada_rank_weight_updater(new AdaRankLCScorerWeightsUpdater<Object>);  
 
   TruePoint::Ptr true_point(new TruePoint);
-  AbsError::Ptr abs_error(new AbsError);
-  adalcs_lc_learner.set_measure(true_point);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  adalcs_lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  ada_lin_composition_learner.set_weak_learner(best_feature_learner);
 
-  adalcs_lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = adalcs_lc_learner.makeSpecific();
+  ada_lin_composition_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer =
+    ada_lin_composition_learner.makeSpecific();
 
-  EXPECT_NO_THROW(MarkDataSet(data, *lin_scorer));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
-  LinearCompositionLearner<Object> ada_lc_learner;
+  LinearCompositionLearner<Object> ada_learner;
 
   AdaRankLCScorerWeightsUpdater<Object>::Ptr
-    ada_lcswu(new AdaRankLCScorerWeightsUpdater<Object>);
-  ada_lc_learner.setLCScorerWeightsUpdater(ada_lcswu);
+    ada_rank_weights_updater(new AdaRankLCScorerWeightsUpdater<Object>);  
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
-    ada_dswu(new AdaRankDataSetWeightsUpdater<Object>);
-  ada_lc_learner.setDataSetWeightsUpdater(ada_dswu);
+    ada_rank_data_set_weights_updater(
+      new AdaRankDataSetWeightsUpdater<Object>);  
 
   TruePoint::Ptr true_point(new TruePoint);
-  AbsError::Ptr abs_error(new AbsError);
-  ada_lc_learner.set_measure(true_point);
+  AbsError::Ptr abs_error(new AbsError);  
 
   BestFeatureLearner<Object>::Ptr 
-    bf_learner(new BestFeatureLearner<Object>(abs_error));
-  ada_lc_learner.set_weak_learner(bf_learner);
+    best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  ada_learner.set_weak_learner(best_feature_learner);
 
   FeatureRandomSamplerLearner<Object>::Ptr
-    rsm(new FeatureRandomSamplerLearner<Object>);
-  bf_learner->addFeatureConverterLearner(rsm);
+    random_sampler_learner(new FeatureRandomSamplerLearner<Object>);
+  best_feature_learner->addFeatureConverterLearner(
+    random_sampler_learner);
 
-  DataRandomSampler<Object>::Ptr begging(new DataRandomSampler<Object>);
-  bf_learner->addDataPreprocessor(begging);
+  DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
+  best_feature_learner->addDataPreprocessor(bagging);
 
-  ada_lc_learner.learn(data);
-  LinearCompositionScorer::Ptr lin_scorer = ada_lc_learner.makeSpecific();
+  ada_learner.learn(data);
+  LinearCompositionScorer::Ptr lin_scorer = ada_learner.makeSpecific();
 
-  EXPECT_NO_THROW(MarkDataSet(data, *lin_scorer));
+  EXPECT_NO_THROW(lin_scorer->predict(data));
 }

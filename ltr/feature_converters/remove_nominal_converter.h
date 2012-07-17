@@ -40,6 +40,8 @@ class RemoveNominalConverterLearner
   virtual string toString() const {
     return "RemoveNominalConverterLearner";
   }
+ private:
+  virtual string getDefaultAlias() const {return "RemoveNominalConverterLearner";}
 };
 }
 

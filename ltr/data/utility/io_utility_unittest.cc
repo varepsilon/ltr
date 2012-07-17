@@ -54,7 +54,8 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   }
 
   saveDataSet(data, tmp_file_name, "svmlite");
-  EXPECT_EQ(loadDataSet<ltr::Object>(tmp_file_name, "svmlite"), data);
+  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "svmlite");
+  EXPECT_EQ(data2, data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;

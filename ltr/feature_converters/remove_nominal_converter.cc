@@ -8,23 +8,27 @@ using ltr::utility::isNaN;
 namespace ltr {
 void RemoveNominalConverter::fillOutputFeatureInfo()  {
   output_feature_info_.clear();
-  for (size_t i = 0; i < input_feature_info_.feature_count(); i++) {
-    if (input_feature_info_.getFeatureType(i) != NOMINAL) {
-      output_feature_info_.addFeature(input_feature_info_.getFeatureType(i));
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count();
+       input_feature_index++) {
+    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
+      output_feature_info_.addFeature(
+        input_feature_info_.getFeatureType(input_feature_index));
     }
   }
 }
 
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
-  *output = input;
-  // \FIXME(sameg): Extra copy of output_feature_info.
+  *output = Object(output_feature_info_);
+  output->features().resize(output_feature_info_.feature_count());
   size_t output_feature_index = 0;
   for (size_t input_feature_index = 0;
-      input_feature_index < input.features().size(); ++input_feature_index) {
+       input_feature_index < input.features().size();
+       ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
-      output->features()[output_feature_index++]
-          = input.features()[input_feature_index];
+      output->at(output_feature_index++)
+          = input[input_feature_index];
     }
   }
 }
@@ -39,13 +43,17 @@ string RemoveNominalConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
   append("  bool nominal[] = {");
-  for (size_t i = 0; i < input_feature_info_.feature_count(); ++i) {
-    if (i != 0)
+  for (size_t input_feature_index = 0;
+       input_feature_index < input_feature_info_.feature_count();
+       ++input_feature_index) {
+    if (input_feature_index != 0) {
       code.append(",");
-    if (input_feature_info_.getFeatureType(i) == NOMINAL)
+    }
+    if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
       code.append("1");
-    else
+    } else {
       code.append("0");
+    }
   }
   code.
     append("};\n").

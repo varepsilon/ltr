@@ -97,11 +97,11 @@ namespace ltr {
         try {
           switch (raw_feature_info_[raw_idx].feature_type) {
             case NOMINAL:
-              result.features()[feature_index] = hash(it->second);
+              result[feature_index] = hash(it->second);
               break;
             case BOOLEAN:
             case NUMERIC:
-              result.features()[feature_index] =
+              result[feature_index] =
                 boost::lexical_cast<double>(it->second);
               break;
             case META:

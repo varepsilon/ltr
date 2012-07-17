@@ -1,17 +1,17 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include <gtest/gtest.h>
 
 #include <vector>
 #include <set>
 
+#include "ltr/data/data_set.h"
+#include "ltr/data/object.h"
+
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/data_preprocessors/data_sampler.h"
 #include "ltr/data_preprocessors/data_random_sampler.h"
 #include "ltr/data_preprocessors/fake_data_preprocessor.h"
-
-#include "ltr/data/data_set.h"
-#include "ltr/data/object.h"
 
 #include "ltr/utility/indices.h"
 
@@ -20,6 +20,7 @@ using std::set;
 
 using ltr::Object;
 using ltr::DataSet;
+
 using ltr::DataPreprocessor;
 using ltr::DataSampler;
 using ltr::DataRandomSampler;
@@ -33,10 +34,10 @@ const int data_size = 11;
 class DataPreprocessorsTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
-    for (int i = 0; i < data_size; ++i) {
-      Object obj;
-      obj << i;
-      data.add(obj);
+    for (int index = 0; index < data_size; ++index) {
+      Object object;
+      object << index;
+      data.add(object);
     }
     // note that this dataset has invalid feature info
     // but it's not significant for non-feature data preprocessors
@@ -45,27 +46,25 @@ class DataPreprocessorsTest : public ::testing::Test {
   DataSet<Object> data;
 };
 
-template<class TElement>
-bool AreEqual(const DataSet<TElement>& first,
-              const DataSet<TElement>& second) {
-  if (first.size() != second.size()) {
-    return false;
-  }
-  for (int i = 0; i < first.size(); ++i) {
-    if (first[i].features() != second[i].features()) {
-      return false;
-    }
-  }
-  return true;
+TEST_F(DataPreprocessorsTest, CommonTest) {
+  FakePreprocessor<Object> fake_preprocessor;
+  DataSampler<Object> data_sampler;
+  DataRandomSampler<Object> data_random_sampler;
+
+  DataSet<Object> preprocessed_data;
+
+  ASSERT_NO_THROW(fake_preprocessor.apply(data, &preprocessed_data));
+  ASSERT_NO_THROW(data_sampler.apply(data, &preprocessed_data));
+  ASSERT_NO_THROW(data_random_sampler.apply(data, &preprocessed_data));
 }
 
 TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
-  FakePreprocessor<Object> prep;
+  FakePreprocessor<Object> fake_preprocessor;
 
-  DataSet<Object> prep_data;
-  prep.apply(data, &prep_data);
+  DataSet<Object> preprocessed_data;
+  fake_preprocessor.apply(data, &preprocessed_data);
 
-  EXPECT_TRUE(AreEqual(data, prep_data));
+  EXPECT_EQ(data, preprocessed_data);
 }
 
 TEST_F(DataPreprocessorsTest, DataSamplerTest) {
@@ -73,58 +72,60 @@ TEST_F(DataPreprocessorsTest, DataSamplerTest) {
   indices->push_back(3);
   indices->push_back(7);
   indices->push_back(4);
-  DataSampler<Object> prep;
-  prep.set_indices(indices);
 
-  DataSet<Object> prep_data;
-  prep.apply(data, &prep_data);
+  DataSampler<Object> data_sampler;
+  data_sampler.set_indices(indices);
 
-  EXPECT_EQ(3, prep_data.size());
-  for (int i = 0; i < indices->size(); ++i) {
-    EXPECT_EQ(indices->at(i), prep_data[i].features()[0]);
-  }
+  DataSet<Object> preprocessed_data;
+  data_sampler.apply(data, &preprocessed_data);
+
+  EXPECT_EQ(3, preprocessed_data.size());
+  EXPECT_EQ(data[3], preprocessed_data[0]);
+  EXPECT_EQ(data[7], preprocessed_data[1]);
+  EXPECT_EQ(data[4], preprocessed_data[2]);
 
   indices->push_back(1);
-  prep.set_indices(indices);
-  prep.apply(data, &prep_data);
+  data_sampler.set_indices(indices);
+  data_sampler.apply(data, &preprocessed_data);
 
-  EXPECT_EQ(4, prep_data.size());
-  for (int i = 0; i < indices->size(); ++i) {
-    EXPECT_EQ(indices->at(i), prep_data[i].features()[0]);
-  }
+  EXPECT_EQ(4, preprocessed_data.size());
+  EXPECT_EQ(data[3], preprocessed_data[0]);
+  EXPECT_EQ(data[7], preprocessed_data[1]);
+  EXPECT_EQ(data[4], preprocessed_data[2]);
+  EXPECT_EQ(data[1], preprocessed_data[3]);
 
   indices->push_back(103);
-  prep.set_indices(indices);
-  EXPECT_ANY_THROW(prep.apply(data, &prep_data));
+  data_sampler.set_indices(indices);
+  EXPECT_ANY_THROW(data_sampler.apply(data, &preprocessed_data));
 
-  prep.setDefaultParameters();
-  prep.apply(data, &prep_data);
-  EXPECT_TRUE(AreEqual(data, prep_data));
+  data_sampler.setDefaultParameters();
+  data_sampler.apply(data, &preprocessed_data);
+  EXPECT_EQ(data, preprocessed_data);
 }
 
 TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
-  DataRandomSampler<Object> prep;
+  DataRandomSampler<Object> data_random_sampler;
 
-  DataSet<Object> prep_data;
-  prep.apply(data, &prep_data);
+  DataSet<Object> preprocessed_data;
+  data_random_sampler.apply(data, &preprocessed_data);
 
-  EXPECT_EQ(4, prep_data.size());
-  for (int i = 0; i < prep_data.size(); ++i) {
-    EXPECT_GT(data_size, prep_data[i].features()[0]);
-    EXPECT_LE(0, prep_data[i].features()[0]);
+  EXPECT_EQ(4, preprocessed_data.size());
+  for (int index = 0; index < preprocessed_data.size(); ++index) {
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
   }
 
-  prep.set_with_replacement(false);
-  prep.set_sampling_fraction(0.8);
-  prep.apply(data, &prep_data);
+  data_random_sampler.set_with_replacement(false);
+  data_random_sampler.set_sampling_fraction(0.8);
+  data_random_sampler.apply(data, &preprocessed_data);
 
-  EXPECT_EQ(9, prep_data.size());
+  EXPECT_EQ(9, preprocessed_data.size());
   set<int> used_elements;
-  for (int i = 0; i < prep_data.size(); ++i) {
-    EXPECT_GT(data_size, prep_data[i].features()[0]);
-    EXPECT_LE(0, prep_data[i].features()[0]);
+  for (int index = 0; index < preprocessed_data.size(); ++index) {
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
 
-    int current_object = prep_data[i].features()[0];
+    int current_object = preprocessed_data[index][0];
     if (used_elements.find(current_object) == used_elements.end()) {
       used_elements.insert(current_object);
     } else {
@@ -132,24 +133,24 @@ TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
     }
   }
 
-  prep.set_with_replacement(true);
-  prep.set_sampling_fraction(1.5);
-  prep.apply(data, &prep_data);
+  data_random_sampler.set_with_replacement(true);
+  data_random_sampler.set_sampling_fraction(1.5);
+  data_random_sampler.apply(data, &preprocessed_data);
 
-  EXPECT_EQ(17, prep_data.size());
-  for (int i = 0; i < prep_data.size(); ++i) {
-    EXPECT_GT(data_size, prep_data[i].features()[0]);
-    EXPECT_LE(0, prep_data[i].features()[0]);
+  EXPECT_EQ(17, preprocessed_data.size());
+  for (int index = 0; index < preprocessed_data.size(); ++index) {
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
   }
 
-  prep.set_sampling_fraction(0.);
-  EXPECT_ANY_THROW(prep.checkParameters());
-  prep.set_sampling_fraction(0.5);
-  prep.set_with_replacement(false);
-  prep.set_sampling_fraction(0.);
-  EXPECT_ANY_THROW(prep.checkParameters());
+  data_random_sampler.set_sampling_fraction(0.);
+  EXPECT_ANY_THROW(data_random_sampler.checkParameters());
+  data_random_sampler.set_sampling_fraction(0.5);
+  data_random_sampler.set_with_replacement(false);
+  data_random_sampler.set_sampling_fraction(0.);
+  EXPECT_ANY_THROW(data_random_sampler.checkParameters());
 
-  prep.set_sampling_fraction(1e-8);
-  prep.apply(data, &prep_data);
-  EXPECT_EQ(1, prep_data.size());
+  data_random_sampler.set_sampling_fraction(1e-8);
+  data_random_sampler.apply(data, &preprocessed_data);
+  EXPECT_EQ(1, preprocessed_data.size());
 }

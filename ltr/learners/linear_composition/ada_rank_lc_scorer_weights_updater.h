@@ -13,7 +13,6 @@
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
-#include "ltr/scorers/utility/scorer_utility.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h"
@@ -27,8 +26,7 @@ using std::string;
 using ltr::Measure;
 using ltr::DataSet;
 using ltr::LinearCompositionScorer;
-using ltr::utility::DoubleEps;
-using ltr::utility::MarkDataSet;
+using ltr::utility::DOUBLE_EPS;
 using ltr::Scorer;
 
 namespace ltr {
@@ -50,7 +48,6 @@ class AdaRankLCScorerWeightsUpdater
   explicit AdaRankLCScorerWeightsUpdater(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
-    this->copyParameters(parameters);
   }
 
   void updateWeights(const DataSet<TElement>& data,
@@ -67,7 +64,7 @@ void AdaRankLCScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
     LinearCompositionScorer* lin_scorer) const {
   int last_scorer_number = static_cast<int>(lin_scorer->size()) - 1;
-  MarkDataSet(data, *lin_scorer->at(last_scorer_number).scorer);
+  lin_scorer->at(last_scorer_number).scorer->predict(data);
 
   double numerator = 0.0;
   double denominator = 0.0;
@@ -82,7 +79,7 @@ void AdaRankLCScorerWeightsUpdater<TElement>::updateWeights(
     denominator += data.getWeight(i) * (1 - normalized_measure_value);
   }
 
-  if (denominator < DoubleEps) {
+  if (denominator < DOUBLE_EPS) {
     Scorer::Ptr best_scorer = (*lin_scorer)[last_scorer_number].scorer;
     lin_scorer->clear();
     lin_scorer->add(best_scorer, 1.0);

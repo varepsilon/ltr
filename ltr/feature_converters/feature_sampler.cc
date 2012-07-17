@@ -31,9 +31,9 @@ void FeatureSampler::fillOutputFeatureInfo() {
 }
 
 void FeatureSampler::applyImpl(const Object& input, Object* output) const {
-  output->resize(output_feature_info_);
+  output->setFeatureInfo(output_feature_info_);
   for (int i = 0; i < indices_.size(); ++i) {
-    output->features()[i] = input.features()[indices_[i]];
+    output->at(i) = input[indices_[i]];
   }
   // \FIXME(sameg): Extra copy of output_feature_info.
   // Do we really need to have feature_info in object??

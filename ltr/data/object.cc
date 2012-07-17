@@ -8,7 +8,7 @@
 #include "ltr/data/utility/object_utility.h"
 #include "ltr/utility/numerical.h"
 
-using ltr::utility::equalWithNaN;
+using ltr::utility::DoubleEqualWithNaN;
 using ltr::utility::NaN;
 
 namespace ltr {
@@ -62,23 +62,23 @@ Object& Object::operator<<(double feature) {
   return *this;
 }
 
-const Object& Object::operator[](size_t i) const {
-  return at(i);
+const double& Object::operator[](size_t feature_index) const {
+  return at(feature_index);
 }
-Object& Object::operator[](size_t i) {
-  return at(i);
+double& Object::operator[](size_t feature_index) {
+  return at(feature_index);
 }
-const Object& Object::at(size_t i) const {
-  if (i != 0) {
-    throw std::logic_error("Error: object indexation with non-zero index");
+const double& Object::at(size_t feature_index) const {
+  if (feature_index < 0 || feature_index >= features_->size()) {
+    throw std::logic_error("Error: feature index out of bounds");
   }
-  return *this;
+  return features_->at(feature_index);
 }
-Object& Object::at(size_t i) {
-  if (i != 0) {
-    throw std::logic_error("Error: object indexation with non-zero index");
+double& Object::at(size_t feature_index) {
+  if (feature_index < 0 || feature_index >= features_->size()) {
+    throw std::logic_error("Error: feature index out of bounds");
   }
-  return *this;
+  return features_->at(feature_index);
 }
 
 Object& Object::operator=(const Object& other)  {
@@ -95,17 +95,12 @@ void Object::clear() {
   feature_info_->clear();
 }
 
-void Object::resize(size_t feature_count) {
-  features_ = FeaturesPtr(new Features(feature_count, NaN));
-  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_count));
-}
-
-void Object::resize(const FeatureInfo::Ptr &feature_info) {
+void Object::setFeatureInfo(const FeatureInfo::Ptr feature_info) {
   features_ = FeaturesPtr(new Features(feature_info->feature_count(), NaN));
   feature_info_ = feature_info;
 }
 
-void Object::resize(const FeatureInfo &feature_info) {
+void Object::setFeatureInfo(const FeatureInfo& feature_info) {
   features_ = FeaturesPtr(new Features(feature_info.feature_count(), NaN));
   feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_info));
 }
@@ -138,10 +133,6 @@ Object Object::deepCopy() const {
   return result;
 }
 
-size_t Object::size() const {
-  return 1;
-};
-
 string Object::toString() const {
   std::stringstream str;
   std::fixed(str);
@@ -159,11 +150,11 @@ string Object::toString() const {
 }
 
 bool operator==(const Object& lhs, const Object& rhs) {
-  return equalWithNaN(*lhs.features_, *rhs.features_) &&
+  return DoubleEqualWithNaN(*lhs.features_, *rhs.features_) &&
          *lhs.meta_info_ == *rhs.meta_info_ &&
          *lhs.feature_info_ == *rhs.feature_info_ &&
-         utility::equalWithNaN(lhs.actual_label(), rhs.actual_label()) &&
-         utility::equalWithNaN(lhs.predicted_label(), rhs.predicted_label());
+         utility::DoubleEqualWithNaN(lhs.actual_label(), rhs.actual_label()) &&
+         utility::DoubleEqualWithNaN(lhs.predicted_label(), rhs.predicted_label());
 }
 
 bool operator!=(const Object& lhs, const Object& rhs) {

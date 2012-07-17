@@ -71,22 +71,18 @@ class Object : public Printable {
 
   // \TODO(sameg) Don't like the next 3 operators
 
-  /** Always returns constant link to an object itself. This method is
-   *  needed to follow object container interface.
+  /** Returns constant link to feature at index i.
    */
-  const Object& operator[](size_t i) const;
-  /** Always returns a link to an object itself. This method is
-   *  needed to follow object container interface.
+  const double& operator[](size_t feature_index) const;
+  /** Returns link to feature at index i.
    */
-  Object& operator[](size_t i);
-  /** Always returns constant link to an object itself. This method is
-   *  needed to follow object container interface.
+  double& operator[](size_t feature_index);
+  /** Returns constant link to feature at index i.
    */
-  const Object& at(size_t i) const;
-  /** Always returns a link to an object itself. This method is
-   *  needed to follow object container interface.
+  const double& at(size_t feature_index) const;
+  /** Returns link to feature at index i.
    */
-  Object& at(size_t i);
+  double& at(size_t feature_index);
   /** Easy weighted operator=. Makes the object to use the feature vector and
    * meta information of the other object. If it is needed, the resources of
    * the object (feature vector and meta information) are destroyed.
@@ -97,17 +93,13 @@ class Object : public Printable {
   */
   void clear();
 
-  /** Resize object features and FeatureInfo (feature type will be numerical).
+  /** Set FeatureInfo and resize object features.
   */
-  void resize(size_t feature_count);
+  void setFeatureInfo(const FeatureInfo& feature_info);
 
   /** Set FeatureInfo and resize object features.
   */
-  void resize(const FeatureInfo &feature_info);
-
-  /** Set FeatureInfo and resize object features.
-  */
-  void resize(const FeatureInfo::Ptr &feature_info);
+  void setFeatureInfo(const FeatureInfo::Ptr feature_info);
 
   /** Returns the number of features in the object.
    */
@@ -133,10 +125,6 @@ class Object : public Printable {
    * returned.
    */
   Object deepCopy() const;
-  /** Always returns 1. This method is
-   * needed to follow object container interface.
-   */
-  size_t size() const;
   /** Friend operator, checks whether two objects are equal.
    */
   friend bool operator==(const Object& lhs, const Object& rhs);

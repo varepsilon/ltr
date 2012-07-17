@@ -124,7 +124,8 @@ void Measure<TElement>::checkResult(double result) const {
 
 template<class TElement>
 double Measure<TElement>::operator()(const TElement& element) const {
-  if (element.size() == 0) {
+  PerObjectAccessor<const TElement> per_object_accessor(&element);
+  if (per_object_accessor.object_count() == 0) {
     throw logic_error(alias() + " gained empty list");
   }
   double measure = get_measure(element);

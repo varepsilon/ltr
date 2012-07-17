@@ -1,0 +1,47 @@
+namespace ltr {
+/** \page TutorialDataPreprocessors Tutorial page 3 - Data preprocessors
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section TutorialDataPreprocessor DataPreprocessor
+
+A base class for data preprocessors.
+
+Preprocesses DataSet, e.g. delete or replicate elements in DataSet.
+This can be usefull for better learning.
+Should not change Object features and FeatureInfo as it won't be saved in Scorer.
+Use FeatureConverter for feature convertions.
+
+You can preprocess your data in this way:
+
+\li DataPreprocessor::apply(const DataSet<TElement>& input, DataSet<TElement>* output, bool check_parameters = true)
+\param input DataSet to be preprocessed
+\param output preprocessed DataSet
+\param check_parameters whether perform Parameterized::checkParameters() before launch
+
+\subsection TutorialFakeDataPreprocessor FakeDataPreprocessor
+
+Does nothing with input DataSet.
+
+\subsection TutorialDataSampler DataSampler
+
+Samples elements with specififed indices from input DataSet.
+Duplication of indices leads to duplication of elements in the result sample.
+
+<table class="example">
+<tr><td>Example: preprocessing data.</td></tr>
+<tr><td>
+\include tutorial_data_preprocessor_example1.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_data_preprocessor_example1.out
+</td></tr>
+</table>
+
+\subsection TutorialDataRandomSampler DataRandomSampler
+
+Acts as DataSampler with random indices each new applying (duplication may be allowed).
+**/
+}

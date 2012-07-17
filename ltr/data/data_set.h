@@ -11,6 +11,7 @@
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 #include "ltr/data/object_pair.h"
+#include "ltr/data/per_object_accessor.h"
 
 using std::vector;
 
@@ -166,18 +167,20 @@ void DataSet<TElement>::add(const TElement& element) {
 
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
+  PerObjectAccessor<const TElement> per_object_accessor1(&element);
   TElement element_to_add = element.deepCopy();
+  PerObjectAccessor<TElement> per_object_accessor2(&element_to_add);
   if (feature_info_ == NULL || feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
-      new FeatureInfo(element[0].feature_info()));
+      new FeatureInfo(per_object_accessor1.object(0).feature_info()));
   }
   for (int object_index = 0;
-       object_index < (int)element_to_add.size();
+       object_index < (int)per_object_accessor2.object_count();
        ++object_index) {
-    if (element[object_index].feature_info() != feature_info()) {
+    if (per_object_accessor1.object(object_index).feature_info() != feature_info()) {
       throw std::logic_error("can't add objects with another FeatureInfo.");
     }
-    element_to_add[object_index].feature_info_ = feature_info_;
+    per_object_accessor2.object(object_index).feature_info_ = feature_info_;
   }
   (*elements_).push_back(element_to_add);
   (*weights_).push_back(weight);
@@ -262,14 +265,17 @@ bool operator==(const DataSet<TElement>& lhs,
   for (int element_index = 0;
        element_index < (int)lhs.size();
        ++element_index) {
-    if (lhs[element_index].size() != rhs[element_index].size()) {
+    PerObjectAccessor<const TElement> per_object_accessor1(&lhs[element_index]);
+    PerObjectAccessor<const TElement> per_object_accessor2(&rhs[element_index]);
+    if (per_object_accessor1.object_count() !=
+        per_object_accessor2.object_count()) {
       return false;
     }
     for (int object_index = 0;
-         object_index < lhs[element_index].size();
+         object_index < per_object_accessor1.object_count();
          ++object_index) {
-      if (lhs[element_index][object_index] !=
-          rhs[element_index][object_index]) {
+      if (per_object_accessor1.object(object_index) !=
+          per_object_accessor2.object(object_index)) {
         return false;
       }
     }

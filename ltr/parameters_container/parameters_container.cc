@@ -4,6 +4,8 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 
+using std::stringstream;
+
 namespace ltr {
 
 ParametersContainer::ParametersContainer() {
@@ -59,12 +61,12 @@ void ParametersContainer::Copy(const ParametersContainer& parameters) {
 }
 
 string ParametersContainer::toString() const {
-  std::stringstream out;
+  stringstream out;
   if (name_value_hash_.size() == 0) {
     out << "ParametersContainer(empty)";
     return out.str();
   }
-  out << "ParametersContainer(number of parameters=" << name_value_hash_.size();
+  out << "ParametersContainer (number of parameters=" << name_value_hash_.size();
   StringAnyHash::size_type parameter_index = 1;
   for (StringAnyHash::const_iterator it = name_value_hash_.begin();
        it != name_value_hash_.end();

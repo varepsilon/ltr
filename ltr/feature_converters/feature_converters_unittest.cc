@@ -1,152 +1,199 @@
-// Copyright 2011 Yandex School Practice
+// Copyright 2012 Yandex
 
 #include <gtest/gtest.h>
 
-#include <boost/filesystem/path.hpp>
+#include <map>
+#include <string>
 
-#include <vector>
+#include "ltr/data/object.h"
+#include "ltr/data/feature_info.h"
+#include "ltr/utility/indices.h"
+#include "ltr/utility/numerical.h"
 
 #include "ltr/feature_converters/feature_converter.h"
+#include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/feature_sampler.h"
-#include "ltr/feature_converters/feature_sampler_learner.h"
-#include "ltr/feature_converters/feature_random_sampler_learner.h"
-#include "ltr/feature_converters/feature_normalizer_learner.h"
+#include "ltr/feature_converters/per_feature_linear_converter.h"
 #include "ltr/feature_converters/nan_to_zero_converter.h"
-#include "ltr/data/utility/io_utility.h"
-#include "ltr/learners/best_feature_learner/best_feature_learner.h"
-#include "ltr/measures/abs_error.h"
-#include "ltr/measures/average_precision.h"
-#include "ltr/measures/dcg.h"
-#include "ltr/parameters_container/parameters_container.h"
-#include "ltr/utility/indices.h"
+#include "ltr/feature_converters/nominal_to_bool_converter.h"
+#include "ltr/feature_converters/remove_nominal_converter.h"
 
-using ltr::utility::IndicesPtr;
+using ltr::Object;
+using ltr::FeatureInfo;
+using ltr::NOMINAL;
+using ltr::NUMERIC;
+using ltr::BOOLEAN;
+using ltr::utility::DoubleEqual;
 using ltr::utility::Indices;
 
 using ltr::FeatureConverter;
-using ltr::NanToZeroConverterLearner;
+using ltr::FakeFeatureConverter;
+using ltr::FeatureSampler;
+using ltr::PerFeatureLinearConverter;
+using ltr::NanToZeroConverter;
+using ltr::NominalToBoolConverter;
+using ltr::RemoveNominalConverter;
 
-// The fixture for testing (contains data for tests).
-class FeatureConvertersTest : public ::testing::Test {
-  public:
-  FeatureConvertersTest()
-    :path_to_learndata("data/imat2009/imat2009_learning_small.txt"),
-     path_to_testdata("data/imat2009/imat2009_test_small.txt") {}
+TEST(FeatureConvertersTest, FakeFeatureConverterTest) {
+  Object object, converted_object;
+  object << 0.43532 << -1.435 << 2.435435 << 0.546;
 
-  protected:
-  virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-    learn_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-        path_to_learndata.string(), "YANDEX");
-    test_data_pointwise = ltr::io_utility::loadDataSet<ltr::Object>(
-        path_to_testdata.string(), "YANDEX");
+  FakeFeatureConverter::Ptr fake_feature_converter
+    (new FakeFeatureConverter(object.feature_info()));
 
-    learn_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-        path_to_learndata.string(), "YANDEX");
-    test_data_listwise = ltr::io_utility::loadDataSet<ltr::ObjectList>(
-        path_to_testdata.string(), "YANDEX");
+  fake_feature_converter->apply(object, &converted_object);
 
-    NanToZeroConverterLearner<ltr::Object>::Ptr nan_to_zero_converter
-      (new NanToZeroConverterLearner<ltr::Object>);
-    nan_to_zero_converter->learn(learn_data_pointwise);
-    FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
-    remove_NaN->apply(learn_data_pointwise, &learn_data_pointwise);
-    remove_NaN->apply(test_data_pointwise, &test_data_pointwise);
+  EXPECT_EQ(object.features(), converted_object.features());
+}
 
-    NanToZeroConverterLearner<ltr::ObjectList>::Ptr nan_to_zero_converter2
-      (new NanToZeroConverterLearner<ltr::ObjectList>);
-    nan_to_zero_converter2->learn(learn_data_listwise);
-    FeatureConverter::Ptr remove_NaN2 = nan_to_zero_converter2->make();
-    remove_NaN2->apply(learn_data_listwise, &learn_data_listwise);
-    remove_NaN2->apply(test_data_listwise, &test_data_listwise);
-  }
+TEST(FeatureConvertersTest, FeatureSamplerTest) {
+  Object object, converted_object;
+  object << 0.43532 << -1.435 << 2.435435 << 0.546 << 12.23143;
 
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-  // objects, used in tests
-  protected:
-  ltr::DataSet<ltr::Object> learn_data_pointwise;
-  ltr::DataSet<ltr::Object> test_data_pointwise;
-  ltr::DataSet<ltr::ObjectList> learn_data_listwise;
-  ltr::DataSet<ltr::ObjectList> test_data_listwise;
-  static const int bestFeatureIndex = 16;
+  Indices indices;
+  indices.push_back(2);
+  indices.push_back(4);
+  indices.push_back(3);
 
-  boost::filesystem::path path_to_learndata;
-  boost::filesystem::path path_to_testdata;
-};
+  FeatureSampler::Ptr converter(new FeatureSampler(indices));
+  converter->set_input_feature_info(object.feature_info());
 
-// tests.
+  EXPECT_EQ(indices, converter->indices());
 
-TEST_F(FeatureConvertersTest, TestingFeatureSubsetChooser) {
-  IndicesPtr indexes(new Indices);
+  converter->apply(object, &converted_object);
 
-  for (int featureIdx = 0;
-      featureIdx < learn_data_pointwise.feature_count();
-      ++featureIdx) {
-    if (featureIdx == bestFeatureIndex) {
-      continue;
-    }
-    indexes->push_back(featureIdx);
-  }
+  EXPECT_EQ(indices.size(), converted_object.feature_count());
+  EXPECT_EQ(object[2], converted_object[0]);
+  EXPECT_EQ(object[4], converted_object[1]);
+  EXPECT_EQ(object[3], converted_object[2]);
 
-  ltr::FeatureSamplerLearner<ltr::Object>::Ptr pSubsetChooserL(
-    new ltr::FeatureSamplerLearner<ltr::Object>);
-  pSubsetChooserL->set_indices(indexes);
+  indices.push_back(1);
+  converter->set_indices(indices);
+  converter->apply(object, &converted_object);
 
-  // remove NaN here is a code-dublicate from gtest fixture SetUp function
-  NanToZeroConverterLearner<ltr::Object>::Ptr nan_to_zero_converter
-    (new NanToZeroConverterLearner<ltr::Object>);
-  nan_to_zero_converter->learn(learn_data_pointwise);
-  FeatureConverter::Ptr remove_NaN = nan_to_zero_converter->make();
+  EXPECT_EQ(indices.size(), converted_object.feature_count());
+  EXPECT_EQ(object[2], converted_object[0]);
+  EXPECT_EQ(object[4], converted_object[1]);
+  EXPECT_EQ(object[3], converted_object[2]);
+  EXPECT_EQ(object[1], converted_object[3]);
 
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
-  ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
+  indices.push_back(103);
+  EXPECT_ANY_THROW(converter->set_indices(indices));
+}
 
-  learner.addFeatureConverterLearner(nan_to_zero_converter);
-  learner.addFeatureConverterLearner(pSubsetChooserL);
+TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
+  Object object, converted_object;
+  object << 0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
 
-  EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
+  PerFeatureLinearConverter::Ptr per_feature_converter
+    (new PerFeatureLinearConverter(object.feature_count()));
 
-  ltr::utility::MarkDataSet(learn_data_pointwise, *learner.make());
-  double withoutBestFeatureMeasure = pMeasure->average(learn_data_pointwise);
+  per_feature_converter->set_input_feature_info(object.feature_info());
 
-  ltr::OneFeatureScorer scorerByBestFeature(bestFeatureIndex);
-  scorerByBestFeature.addFeatureConverter(remove_NaN);
-  ltr::utility::MarkDataSet(learn_data_pointwise, scorerByBestFeature);
+  per_feature_converter->set_shift(0, 1.0);
+  per_feature_converter->set_shift(1, 0.0);
+  per_feature_converter->set_shift(2, -1.0);
+  per_feature_converter->set_shift(3, 0.0);
 
-  double bestFeatureMeasure = pMeasure->average(learn_data_pointwise);
+  per_feature_converter->set_factor(0, 1.0);
+  per_feature_converter->set_factor(1, -0.5);
+  per_feature_converter->set_factor(2, 2.0);
+  per_feature_converter->set_factor(3, 0.0);
+  
+  per_feature_converter->apply(object, &converted_object);
 
-  EXPECT_LE(withoutBestFeatureMeasure, bestFeatureMeasure);
-};
+  EXPECT_TRUE(DoubleEqual(converted_object[0], 1.0));
+  EXPECT_TRUE(DoubleEqual(converted_object[1], -0.5));
+  EXPECT_TRUE(DoubleEqual(converted_object[2], 3.0));
+  EXPECT_TRUE(DoubleEqual(converted_object[3], 0.0));
+}
 
-TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObject) {
-  ltr::FeatureNormalizerLearner<ltr::Object>::Ptr normalizerLearner
-    (new ltr::FeatureNormalizerLearner<ltr::Object>);
-  EXPECT_NO_THROW(normalizerLearner->learn(learn_data_pointwise));
+TEST(FeatureConvertersTest, NanToZeroConverterTest) {
+  Object nan_features_object, zero_features_object, converted_object;
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  nan_features_object << numeric_limits<double>::quiet_NaN();
+  zero_features_object << 0 << 0 << 0;
 
-  ltr::Measure<ltr::Object>::Ptr pMeasure(new ltr::AbsError());
-  ltr::BestFeatureLearner<ltr::Object> learner(pMeasure);
+  NanToZeroConverter::Ptr nan_to_zero_converter
+    (new NanToZeroConverter(nan_features_object.feature_info()));
 
-  learner.addFeatureConverterLearner(normalizerLearner);
-  EXPECT_NO_THROW(learner.learn(learn_data_pointwise));
-  EXPECT_NO_THROW(
-      ltr::utility::MarkDataSet(learn_data_pointwise, *learner.make()));
-};
+  nan_to_zero_converter->apply(nan_features_object, &converted_object);
 
+  EXPECT_EQ(converted_object.features(), zero_features_object.features());
+}
 
-TEST_F(FeatureConvertersTest, TestingFeatureNormalisationNoFailureObjectList) {
-  ltr::FeatureNormalizerLearner<ltr::ObjectList>::Ptr normalizerLearner
-    (new ltr::FeatureNormalizerLearner<ltr::ObjectList>);
-  EXPECT_NO_THROW(normalizerLearner->learn(learn_data_listwise));
+TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
+  FeatureInfo feature_info;
+  map <size_t, std::string> nominal_feature_values1, nominal_feature_values2;
+  nominal_feature_values1[1] = "red";
+  nominal_feature_values2[2] = "green";
+  feature_info.addFeature(NOMINAL,
+                          ltr::NominalFeatureValues(nominal_feature_values1));
+  feature_info.addFeature(NOMINAL,
+                          ltr::NominalFeatureValues(nominal_feature_values2));
 
-  ltr::Measure<ltr::ObjectList>::Ptr pMeasure(new ltr::DCG());
-  ltr::BestFeatureLearner<ltr::ObjectList> learner(pMeasure);
+  NominalToBoolConverter::Ptr nominal_to_bool_converter
+    (new NominalToBoolConverter(feature_info));
 
-  learner.addFeatureConverterLearner(normalizerLearner);
-  EXPECT_NO_THROW(learner.learn(learn_data_listwise));
-  EXPECT_NO_THROW(
-      ltr::utility::MarkDataSet(learn_data_listwise, *learner.make()));
-};
+  Object object(feature_info), converted_object;
+  object[0] = 1;
+  object[1] = 1;
+
+  nominal_to_bool_converter->apply(object, &converted_object);
+  EXPECT_EQ(converted_object.features().size(), 2);
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(0), BOOLEAN);
+  EXPECT_TRUE(converted_object[0]);
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(1), BOOLEAN);
+  EXPECT_FALSE(converted_object[1]);
+
+  feature_info.addFeature(NUMERIC);
+  feature_info.addFeature(NOMINAL);
+  object = Object(feature_info);
+  object[0] = 1;
+  object[1] = 1;
+  object[2] = 10;
+  object[3] = 1;
+
+  NominalToBoolConverter::Ptr nominal_to_bool_converter2
+    (new NominalToBoolConverter(feature_info));
+
+  nominal_to_bool_converter2->apply(object, &converted_object);
+
+  EXPECT_EQ(converted_object.features().size(), 4);
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(0), NUMERIC);
+  EXPECT_EQ(converted_object[0], 10);
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(1), BOOLEAN);
+  EXPECT_TRUE(converted_object[1]);
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(2), BOOLEAN);
+  EXPECT_FALSE(converted_object[2]);  
+  EXPECT_EQ(converted_object.feature_info().getFeatureType(3), BOOLEAN);
+}
+
+TEST(FeatureConvertersTest, RemoveNominalConverterTest) {
+  FeatureInfo feature_info;
+  feature_info.addFeature(NOMINAL);
+  
+  RemoveNominalConverter::Ptr remove_nominal_converter
+    (new RemoveNominalConverter(feature_info));
+
+  Object converted_object;
+  remove_nominal_converter->apply(Object(feature_info), &converted_object);
+
+  EXPECT_TRUE(converted_object.features().empty());
+
+  feature_info.addFeature(NUMERIC);
+  feature_info.addFeature(NOMINAL);
+  Object object(feature_info);
+  object[0] = 1;
+  object[1] = 2;
+  object[2] = 3;
+
+  RemoveNominalConverter::Ptr remove_nominal_converter2
+    (new RemoveNominalConverter(feature_info));
+
+  remove_nominal_converter2->apply(object, &converted_object);
+
+  EXPECT_EQ(converted_object.features().size(), 1);
+  EXPECT_EQ(converted_object[0], 2);
+}

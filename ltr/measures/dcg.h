@@ -62,6 +62,7 @@ class YandexDCGFormula {
 template<class TDCGFormula>
 class BaseDCG : public ListwiseMeasure {
  public:
+   typedef boost::shared_ptr<BaseDCG> Ptr;
   /**
    * @param parameters Standart LTR parameter container with int parameter
    * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),

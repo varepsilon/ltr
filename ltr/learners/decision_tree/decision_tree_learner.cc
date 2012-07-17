@@ -44,15 +44,14 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   vector<Condition::Ptr> best_conditions;
   vector<DataSet<Object> > datas;
   vector<Condition::Ptr> conditions;
-  double min_label = 1e9, max_label = -1e9;
+  double min_label = -1e9, max_label = 1e9;
   bool generate_leaf = 0;
 
-  for (int i = 1; i < data.size(); i++) {
-    min_label = std::min(min_label, data[i].actual_label());
-    max_label = std::max(max_label, data[i].actual_label());
+  for (int object_index = 1; object_index < data.size(); object_index++) {
+    min_label = std::min(min_label, data[object_index].actual_label());
+    max_label = std::max(max_label, data[object_index].actual_label());
   }
 
-  ParametersContainer params = this->parameters();
   if (max_label - min_label <= label_eps_) {
     INFO("All objects has the same label. Leaf vertex created.");
     generate_leaf = 1;

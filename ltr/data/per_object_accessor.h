@@ -71,9 +71,9 @@ class PerObjectAccessor<ObjectPair> {
   Object& object(size_t object_index) {
     CHECK(object_index < object_count());
     if (object_index == 0) {
-      return element_->first();
+      return element_->first;
     } else if (object_index == 1) {
-      return element_->second();
+      return element_->second;
     }
   }
  private:
@@ -91,9 +91,9 @@ class PerObjectAccessor<const ObjectPair> {
   const Object& object(size_t object_index) {
     CHECK(object_index < object_count());
     if (object_index == 0) {
-      return element_->first();
+      return element_->first;
     } else if (object_index == 1) {
-      return element_->second();
+      return element_->second;
     }
   }
  private:
