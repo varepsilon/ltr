@@ -28,7 +28,7 @@ void RemoveNominalConverter::applyImpl(const Object& input,
        ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
       output->features()[output_feature_index++]
-          = input.features()[input_feature_index];
+          = input[input_feature_index];
     }
   }
 }

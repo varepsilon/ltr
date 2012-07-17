@@ -63,19 +63,19 @@ TEST(FeatureConvertersTest, FeatureSamplerTest) {
   converter->apply(object, &converted_object);
 
   EXPECT_EQ(indices.size(), converted_object.feature_count());
-  EXPECT_EQ(object.features()[2], converted_object.features()[0]);
-  EXPECT_EQ(object.features()[4], converted_object.features()[1]);
-  EXPECT_EQ(object.features()[3], converted_object.features()[2]);
+  EXPECT_EQ(object[2], converted_object[0]);
+  EXPECT_EQ(object[4], converted_object[1]);
+  EXPECT_EQ(object[3], converted_object[2]);
 
   indices.push_back(1);
   converter->set_indices(indices);
   converter->apply(object, &converted_object);
 
   EXPECT_EQ(indices.size(), converted_object.feature_count());
-  EXPECT_EQ(object.features()[2], converted_object.features()[0]);
-  EXPECT_EQ(object.features()[4], converted_object.features()[1]);
-  EXPECT_EQ(object.features()[3], converted_object.features()[2]);
-  EXPECT_EQ(object.features()[1], converted_object.features()[3]);
+  EXPECT_EQ(object[2], converted_object[0]);
+  EXPECT_EQ(object[4], converted_object[1]);
+  EXPECT_EQ(object[3], converted_object[2]);
+  EXPECT_EQ(object[1], converted_object[3]);
 
   indices.push_back(103);
   EXPECT_ANY_THROW(converter->set_indices(indices));
@@ -102,10 +102,10 @@ TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   
   per_feature_converter->apply(object, &converted_object);
 
-  EXPECT_TRUE(DoubleEqual(converted_object.features()[0], 1.0));
-  EXPECT_TRUE(DoubleEqual(converted_object.features()[1], -0.5));
-  EXPECT_TRUE(DoubleEqual(converted_object.features()[2], 3.0));
-  EXPECT_TRUE(DoubleEqual(converted_object.features()[3], 0.0));
+  EXPECT_TRUE(DoubleEqual(converted_object[0], 1.0));
+  EXPECT_TRUE(DoubleEqual(converted_object[1], -0.5));
+  EXPECT_TRUE(DoubleEqual(converted_object[2], 3.0));
+  EXPECT_TRUE(DoubleEqual(converted_object[3], 0.0));
 }
 
 TEST(FeatureConvertersTest, NanToZeroConverterTest) {
@@ -137,23 +137,23 @@ TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
     (new NominalToBoolConverter(feature_info));
 
   Object object(feature_info), converted_object;
-  object.features()[0] = 1;
-  object.features()[1] = 1;
+  object[0] = 1;
+  object[1] = 1;
 
   nominal_to_bool_converter->apply(object, &converted_object);
   EXPECT_EQ(converted_object.features().size(), 2);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(0), BOOLEAN);
-  EXPECT_TRUE(converted_object.features()[0]);
+  EXPECT_TRUE(converted_object[0]);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(1), BOOLEAN);
-  EXPECT_FALSE(converted_object.features()[1]);
+  EXPECT_FALSE(converted_object[1]);
 
   feature_info.addFeature(NUMERIC);
   feature_info.addFeature(NOMINAL);
   object = Object(feature_info);
-  object.features()[0] = 1;
-  object.features()[1] = 1;
-  object.features()[2] = 10;
-  object.features()[3] = 1;
+  object[0] = 1;
+  object[1] = 1;
+  object[2] = 10;
+  object[3] = 1;
 
   NominalToBoolConverter::Ptr nominal_to_bool_converter2
     (new NominalToBoolConverter(feature_info));
@@ -162,11 +162,11 @@ TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
 
   EXPECT_EQ(converted_object.features().size(), 4);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(0), NUMERIC);
-  EXPECT_EQ(converted_object.features()[0], 10);
+  EXPECT_EQ(converted_object[0], 10);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(1), BOOLEAN);
-  EXPECT_TRUE(converted_object.features()[1]);
+  EXPECT_TRUE(converted_object[1]);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(2), BOOLEAN);
-  EXPECT_FALSE(converted_object.features()[2]);  
+  EXPECT_FALSE(converted_object[2]);  
   EXPECT_EQ(converted_object.feature_info().getFeatureType(3), BOOLEAN);
 }
 
@@ -185,9 +185,9 @@ TEST(FeatureConvertersTest, RemoveNominalConverterTest) {
   feature_info.addFeature(NUMERIC);
   feature_info.addFeature(NOMINAL);
   Object object(feature_info);
-  object.features()[0] = 1;
-  object.features()[1] = 2;
-  object.features()[2] = 3;
+  object[0] = 1;
+  object[1] = 2;
+  object[2] = 3;
 
   RemoveNominalConverter::Ptr remove_nominal_converter2
     (new RemoveNominalConverter(feature_info));
@@ -195,5 +195,5 @@ TEST(FeatureConvertersTest, RemoveNominalConverterTest) {
   remove_nominal_converter2->apply(object, &converted_object);
 
   EXPECT_EQ(converted_object.features().size(), 1);
-  EXPECT_EQ(converted_object.features()[0], 2);
+  EXPECT_EQ(converted_object[0], 2);
 }

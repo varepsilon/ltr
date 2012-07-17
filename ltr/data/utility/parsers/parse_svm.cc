@@ -77,7 +77,7 @@ namespace ltr {
          feature_index < object.feature_count();
          ++feature_index) {
       str << feature_index+1 << ":" 
-          << object.features()[feature_index] << " ";
+          << object[feature_index] << " ";
     }
     *result = str.str();
   }

@@ -28,7 +28,7 @@ string LinearScorer::toString() const {
 double LinearScorer::scoreImpl(const Object& obj) const {
   double output = weights[0];
   for (int i = 0; i < obj.features().size(); ++i) {
-    output += obj.features()[i] * weights[i + 1];
+    output += obj[i] * weights[i + 1];
   }
   return output;
 }

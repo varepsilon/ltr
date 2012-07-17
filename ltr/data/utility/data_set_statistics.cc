@@ -40,10 +40,10 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
            ++feature_index) {
         min_features_values->at(feature_index) = min(
             min_features_values->at(feature_index),
-            per_object_accessor.object(object_index).features()[feature_index]);
+            per_object_accessor.object(object_index)[feature_index]);
         max_features_values->at(feature_index) = max(
             max_features_values->at(feature_index),
-            per_object_accessor.object(object_index).features()[feature_index]);
+            per_object_accessor.object(object_index)[feature_index]);
       }
     }
   }

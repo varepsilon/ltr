@@ -111,8 +111,8 @@ TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
 
   EXPECT_EQ(4, preprocessed_data.size());
   for (int index = 0; index < preprocessed_data.size(); ++index) {
-    EXPECT_GT(data_size, preprocessed_data[index].features()[0]);
-    EXPECT_LE(0, preprocessed_data[index].features()[0]);
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
   }
 
   data_random_sampler.set_with_replacement(false);
@@ -122,10 +122,10 @@ TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
   EXPECT_EQ(9, preprocessed_data.size());
   set<int> used_elements;
   for (int index = 0; index < preprocessed_data.size(); ++index) {
-    EXPECT_GT(data_size, preprocessed_data[index].features()[0]);
-    EXPECT_LE(0, preprocessed_data[index].features()[0]);
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
 
-    int current_object = preprocessed_data[index].features()[0];
+    int current_object = preprocessed_data[index][0];
     if (used_elements.find(current_object) == used_elements.end()) {
       used_elements.insert(current_object);
     } else {
@@ -139,8 +139,8 @@ TEST_F(DataPreprocessorsTest, DataRandomSamplerTest) {
 
   EXPECT_EQ(17, preprocessed_data.size());
   for (int index = 0; index < preprocessed_data.size(); ++index) {
-    EXPECT_GT(data_size, preprocessed_data[index].features()[0]);
-    EXPECT_LE(0, preprocessed_data[index].features()[0]);
+    EXPECT_GT(data_size, preprocessed_data[index][0]);
+    EXPECT_LE(0, preprocessed_data[index][0]);
   }
 
   data_random_sampler.set_sampling_fraction(0.);

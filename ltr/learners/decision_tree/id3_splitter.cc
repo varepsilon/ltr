@@ -41,7 +41,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
     double min_val = 1e9, max_val = -1e9;
     for (int j = 0; j < data_.size(); j++) {
       double feature =
-        feature_values[j] = data_[j].features()[current_feature];
+        feature_values[j] = data_[j][current_feature];
       min_val = std::min(min_val, feature);
       max_val = std::max(max_val, feature);
     }

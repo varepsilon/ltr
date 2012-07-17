@@ -32,7 +32,7 @@ void NominalToBoolConverter::applyImpl(
        ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
       output->features()[output_feature_index++] =
-        input.features()[input_feature_index];
+        input[input_feature_index];
     }
   }
 
@@ -44,7 +44,7 @@ void NominalToBoolConverter::applyImpl(
         input_feature_info_.getFeatureValues(input_feature_index);
       for (map<size_t, string>::iterator it = vals.begin();
            it != vals.end(); ++it) {
-        if (input.features()[input_feature_index] == it->first) {
+        if (input[input_feature_index] == it->first) {
           output->features()[output_feature_index++] = 1.0;
         } else {
           output->features()[output_feature_index++] = 0.0;

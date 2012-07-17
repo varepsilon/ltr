@@ -122,7 +122,7 @@ TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
   converter2->apply(data, &converted_data);
   EXPECT_EQ(indices->size(), converted_data.feature_count());
   for (int index = 0; index < indices->size(); ++index) {
-    EXPECT_EQ((*indices)[index], converted_data[0].features()[index]);
+    EXPECT_EQ((*indices)[index], converted_data[0][index]);
   }
 }
 
@@ -139,10 +139,10 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
   for (int feature_index = 0;
        feature_index < converted_data.feature_count();
        ++feature_index) {
-    EXPECT_GT(features_count, converted_data[0].features()[feature_index]);
-    EXPECT_LE(0, converted_data[0].features()[feature_index]);
+    EXPECT_GT(features_count, converted_data[0][feature_index]);
+    EXPECT_LE(0, converted_data[0][feature_index]);
 
-    int current_feature = converted_data[0].features()[feature_index];
+    int current_feature = converted_data[0][feature_index];
     if (used_features.find(current_feature) == used_features.end()) {
       used_features.insert(current_feature);
     } else {
@@ -160,10 +160,10 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
   for (int feature_index = 0;
        feature_index < converted_data.feature_count();
        ++feature_index) {
-    EXPECT_GT(features_count, converted_data[0].features()[feature_index]);
-    EXPECT_LE(0, converted_data[0].features()[feature_index]);
+    EXPECT_GT(features_count, converted_data[0][feature_index]);
+    EXPECT_LE(0, converted_data[0][feature_index]);
 
-    int current_feature = converted_data[0].features()[feature_index];
+    int current_feature = converted_data[0][feature_index];
     if (used_features.find(current_feature) == used_features.end()) {
       used_features.insert(current_feature);
     } else {
@@ -208,18 +208,18 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
   DataSet<Object> converted_data;
   converter->apply(train_data, &converted_data);
 
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[0], 2.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[0], -2.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[0], 0.66666666666666));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[0], 2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[0][0], 2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][0], -2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[2][0], 0.66666666666666));
+  EXPECT_TRUE(DoubleEqual(converted_data[3][0], 2.0));
 
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[1], -1.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[1], -2.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[1], 2.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[1], 0.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[0][1], -1.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][1], -2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[2][1], 2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[3][1], 0.0));
 
-  EXPECT_TRUE(DoubleEqual(converted_data[0].features()[2], 2.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[1].features()[2], 0.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[2].features()[2], 1.0));
-  EXPECT_TRUE(DoubleEqual(converted_data[3].features()[2], -2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[0][2], 2.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][2], 0.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[2][2], 1.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[3][2], -2.0));
 }
