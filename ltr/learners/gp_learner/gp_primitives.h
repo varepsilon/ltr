@@ -6,6 +6,8 @@
 #include <cmath>
 #include <string>
 
+#include <boost/shared_ptr.hpp>
+
 #include "contrib/puppy/Puppy.hpp"
 #include "ltr/interfaces/serializable.h"
 
@@ -14,12 +16,19 @@ using boost::lexical_cast;
 
 namespace ltr {
 namespace gp {
+class BaseGPOperation : public Puppy::Primitive {
+ public:
+  typedef boost::shared_ptr<BaseGPOperation> Ptr;
+
+  BaseGPOperation(int number_of_arguments, string name)
+  : Primitive(number_of_arguments, name) {}
+};
 /** \brief The Puppy::Primitive implements addition functor, it is used to
  * build Puppy::trees from.
  */
-class Add : public Puppy::Primitive, public Serializable {
+class Add : public BaseGPOperation, public Serializable {
  public:
-  Add() : Primitive(2, "ADD") {}
+  Add() : BaseGPOperation(2, "ADD") {}
   virtual ~Add() {}
   /** The implementation of addition functor.
    */
@@ -42,9 +51,9 @@ class Add : public Puppy::Primitive, public Serializable {
 /** \brief The Puppy::Primitive implements subtraction functor, it is used to
  * build Puppy::trees from.
  */
-class Subtract : public Puppy::Primitive, public Serializable {
+class Subtract : public BaseGPOperation, public Serializable {
  public:
-  Subtract() : Primitive(2, "SUB") {}
+  Subtract() : BaseGPOperation(2, "SUB") {}
   virtual ~Subtract() {}
   /** The implementation of subtraction functor.
    */
@@ -67,9 +76,9 @@ class Subtract : public Puppy::Primitive, public Serializable {
 /** \brief The Puppy::Primitive implements multiplication functor, it is used to
  * build Puppy::trees from.
  */
-class Multiply : public Puppy::Primitive, public Serializable {
+class Multiply : public BaseGPOperation, public Serializable {
  public:
-  Multiply() : Primitive(2, "MUL") {}
+  Multiply() : BaseGPOperation(2, "MUL") {}
   virtual ~Multiply() {}
   /** The implementation of multiplication functor.
    */
@@ -92,10 +101,10 @@ class Multiply : public Puppy::Primitive, public Serializable {
 /** \brief The Puppy::Primitive implements division functor, it is used to
  * build Puppy::trees from.
  */
-class Divide : public Puppy::Primitive, public Serializable {
+class Divide : public BaseGPOperation, public Serializable {
   static const double SAFE_DIVISION_EPS;
  public:
-  Divide() : Primitive(2, "DIV") {}
+  Divide() : BaseGPOperation(2, "DIV") {}
   virtual ~Divide() {}
   /** The implementation of division functor.
    */
@@ -134,9 +143,9 @@ class Divide : public Puppy::Primitive, public Serializable {
 /** \brief The Puppy::Primitive implements if-then-else functor, it is used to
  * build Puppy::trees from.
  */
-class IfThenFunc : public Puppy::Primitive, public Serializable {
+class IfThenFunc : public BaseGPOperation, public Serializable {
   public:
-  IfThenFunc() : Primitive(3, "IF") {}
+  IfThenFunc() : BaseGPOperation(3, "IF") {}
   virtual ~IfThenFunc() {}
   /** The implementation of if-then-else functor functor.
    */
@@ -164,10 +173,10 @@ class IfThenFunc : public Puppy::Primitive, public Serializable {
 /** \brief The Puppy::Primitive implements the functor, that gives random
  * constants to build Puppy::Tree.
  */
-class Ephemeral : public Puppy::Primitive {
+class Ephemeral : public BaseGPOperation {
   static const size_t precision = 20;
   public:
-  Ephemeral() : Primitive(0, "E") {}
+  Ephemeral() : BaseGPOperation(0, "E") {}
   virtual ~Ephemeral() {}
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {}

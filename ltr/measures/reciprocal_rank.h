@@ -28,7 +28,7 @@ class ReciprocalRank : public ListwiseMeasure {
     this->setParameters(parameters);
   }
 
-  explicit ReciprocalRank(double score_for_relevant) {
+  explicit ReciprocalRank(double score_for_relevant = 3.0) {
     score_for_relevant_ = score_for_relevant;
   }
 
