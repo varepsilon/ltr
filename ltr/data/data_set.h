@@ -177,7 +177,8 @@ void DataSet<TElement>::add(const TElement& element, double weight) {
   for (int object_index = 0;
        object_index < (int)per_object_accessor2.object_count();
        ++object_index) {
-    if (per_object_accessor1.object(object_index).feature_info() != feature_info()) {
+    if (per_object_accessor1.object(object_index).feature_info() !=
+        feature_info()) {
       throw std::logic_error("can't add objects with another FeatureInfo.");
     }
     per_object_accessor2.object(object_index).feature_info_ = feature_info_;
