@@ -26,7 +26,7 @@ for file in diff_files:
         continue
     if file.split('/')[-1] == "train_visitor.h":
         continue
-    filters = "--filter=-readability/streams,-runtime/threadsafe_fn,-runtime/rtti"
+    filters = "--filter=-readability/streams,-runtime/threadsafe_fn,-runtime/rtti,-readability/check"
     if file.split('/')[-1] == "factory.h":
         filters = filters + ",-build/header_guard"
     r, w, e = popen2.popen3('python cpplint.py ' + filters + ' ' + file)
