@@ -16,12 +16,14 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"
 #include "ltr/utility/indices.h"
+#include "ltr/utility/random_number_generator.h"
 
 using std::string;
 using std::vector;
 
 using ltr::utility::Indices;
 using ltr::utility::getRandomIndices;
+using ltr::utility::randomizer;
 
 namespace ltr {
 /**
@@ -69,7 +71,7 @@ template <typename TElement>
 void FeatureRandomSamplerLearner<TElement>::set_seed(int seed) {
   CHECK(seed >= 0);  //NOLINT
   seed_ = seed;
-  srand(seed_);
+  randomizer.setSeed(seed);
 }
 
 template <class TElement>

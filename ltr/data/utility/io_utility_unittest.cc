@@ -6,16 +6,18 @@
 
 #include "gtest/gtest.h"
 
+#include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/scorers/fake_scorer.h"
-#include "ltr/data/data_set.h"
+#include "ltr/utility/random_number_generator.h"
 
+using ltr::DataSet;
 using ltr::io_utility::loadDataSet;
 using ltr::io_utility::saveDataSet;
-using ltr::DataSet;
 using ltr::Object;
 using ltr::ObjectList;
 using ltr::ObjectPair;
+using ltr::utility::randomizer;
 
 int last_random = 2981984;
 
@@ -49,7 +51,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand()) / 15332;
+      obj << static_cast<double>(randomizer.rand()) / 15332;
     data << obj;
   }
 
@@ -61,13 +63,13 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
   for (int i = 0; i < N; i++) {
-    int cn = rand() % (1 + max_list_size - min_list_size) + min_list_size;
+    int cn = randomizer.rand() % (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
       obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
-        obj << static_cast<double>(rand()) / 15332;
+        obj << static_cast<double>(randomizer.rand()) / 15332;
       lst << obj;
     }
     list_data << lst;
@@ -84,7 +86,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand()) / 15332;
+      obj << static_cast<double>(randomizer.rand()) / 15332;
     data << obj;
   }
   saveDataSet(data, tmp_file_name, "yandex");
@@ -94,13 +96,13 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
   for (int i = 0; i < N; i++) {
-    int cn = rand() % (1 + max_list_size - min_list_size) + min_list_size;
+    int cn = randomizer.rand() % (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
       obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
-        obj << static_cast<double>(rand()) / 15332;
+        obj << static_cast<double>(randomizer.rand()) / 15332;
       lst << obj;
     }
     list_data << lst;
@@ -128,7 +130,7 @@ TEST_F(IOUtilityTest, TestingSavePredictions) {
   for (int i = 0; i < N; i++) {
     Object obj;
     for (int j = 0; j < featureN; j++)
-      obj << static_cast<double>(rand()) / 15332;
+      obj << static_cast<double>(randomizer.rand()) / 15332;
     data << obj;
   }
   EXPECT_NO_THROW(ltr::io_utility::savePredictions(data,
