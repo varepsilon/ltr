@@ -1,0 +1,95 @@
+namespace ltr {
+/** \page CrossvalidationData Tutorial page 2 - Testing of algorithms
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section CrossvalidationDataTest Testing
+
+There are two approaches in the testing of algorithms.
+First approach needs two datasets.
+The first dataset is training and the second is testing.
+Algorithm is learnt with the first dataset.
+And after the learning the algorithm is ought to be tested with the second dataset.
+But this approach needs a lot of data and usually there is a small amount of available data.
+So in machine learning more often used second approach that called cross-validation.
+Cross-validation is a technique for assessing how the results of a statistical analysis will generalize to an independent data set.
+One round of cross-validation involves partitioning a sample of data into complementary subsets,
+performing the analysis on one subset (called the training set), and validating the analysis on the other subset (called the validation set or testing set).
+To reduce variability, multiple rounds of cross-validation are performed using different partitions, and the validation results are averaged over the rounds.
+
+\section CrossvalidationDataTestCrossvalidation Cross-validation
+LTR library supports cross-validaion technique that was described in the beginning of this page.
+
+Validate is the main function that performs crossvalidation. It recieves four parameters:
+\li data_set - data set to run crossvalidation on
+\li measures - measures, wich values will be calculated for every split
+\li learner - learner used to produce scorers on train data
+\li splitter - splitter used to split dataset into train + test sets
+
+Function Validate returns ValidationResult with information about all splits performed.
+ValidationResult is the class that holds scorer with it's learner's report and array of measure values on some test data.
+\n You can operate with ValidationResult using next functions:
+\li  addSplitInfo(Scorer::Ptr, const string&, const vector<double>&) - Adds information about one split - resulted scorer, learner's report and values of measures
+\li  getSplitCount() - Returns number of splits, about which holds information ValidationResult
+\li  getScorer(int) - Gets scorer by split index
+\li  getReport(int) - Gets report by split index
+\li  getMeasureValues(int) - Gets measure values by split index
+\li  getMeasureNames() - Gets names (aliases) of measures, which values are held in ValidationResult
+
+Now let's take a closer look at parameters that function Validate recieves:
+
+data_set is DataSet class variable. DataSet is class that contains list of all members.
+
+Measuers is a vector of Measure<TElement>::Ptr elements. (Measure<TElement>::Ptr is a shared pointer).
+
+learner is a shared pointer to some learner implemented in LTR.
+
+More information about DataSet, Measure and Learner classes you can find in another chapters of LTR tutorial. [insert link to this chapter]
+
+splitter is shared pointer to splitter implemented in LTR.
+
+Every particular splitter corresponds to a particular kind of cross-validation.
+\n There are 3 different splitters implemented in LTR:
+
+
+
+\subsection CrossvalidationDataTestCrossvalidationKFold K-fold cross-validation
+
+In k-fold cross-validation, the original sample is randomly partitioned into k subsamples.
+Of the k subsamples, a single subsample is retained as the validation data for testing the model, and the remaining k - 1 subsamples are used as training data.
+The cross-validation process is then repeated k times (the folds), with each of the k subsamples used exactly once as the validation data.
+The k results from the folds then can be averaged (or otherwise combined) to produce a single estimation.
+The advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once.
+
+
+\subsection CrossvalidationDataTestCrossvalidationTKFold TK-fold cross-validation
+
+TK-fold cross-validation is an approach similar to K-fold cross-validation. The only difference between K-fold and TK-fold that TK-fold repeats K-fold cross-validation procedure T times
+with the random subsets.
+
+\subsection CrossvalidationDataTestCrossvalidationLeaveOneOut Leave One Out cross-validation
+
+As the name suggests, leave-one-out cross-validation involves using a single observation from the original sample as the validation data,
+and the remaining observations as the training data.
+This is repeated such that each observation in the sample is used once as the validation data.
+This is the same as a K-fold cross-validation with K being equal to the number of observations in the original sample.
+Leave-one-out cross-validation is computationally expensive because it requires many repetitions of training.
+
+Here is an example how to use Validate function with the Leave One Out cross-validation:
+<table class="example">
+<tr><td>Here is an example how to use Validate function with the Leave One Out cross-validation: </td></tr>
+<tr><td>
+\include tutorial_crossvalidation_example1.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_crossvalidation_example1.out
+</td></tr>
+</table>
+
+*/
+
+
+
+}
