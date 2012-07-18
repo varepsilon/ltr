@@ -12,10 +12,19 @@
 #include "contrib/puppy/Puppy.hpp"
 
 #include "ltr/learners/learner.h"
+
 #include "ltr/learners/gp_learner/gp_primitives.h"
 #include "ltr/learners/gp_learner/gp_functions.h"
+
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
+#include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
+
+
 #include "ltr/scorers/gp_scorer.h"
+
 #include "ltr/measures/measure.h"
 #include "ltr/measures/reciprocal_rank.h"
 
@@ -210,6 +219,13 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    *  algorithm's iteration.
    */
   virtual void evaluationStepImpl() {
+    if (population_handlers_.empty()) {
+      population_handlers_.push_back(new DefaultSelectionStrategy);
+      population_handlers_.push_back(new DefaultCrossoverStrategy);
+      population_handlers_.push_back(new DefaultMutationStandartStrategy);
+      population_handlers_.push_back(new DefaultMutationSwapStrategy);
+    }
+
     for (int population_handler_index = 0;
          population_handler_index < (int) population_handlers_.size();
          ++population_handler_index) {
@@ -231,7 +247,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     this->evaluatePopulation(data);
 
     std::cout << "The population looks like: \n";
-    for (int tree_index = 0; tree_index < (int)population_.size(); ++tree_index) {
+    for (int tree_index = 0;
+         tree_index < (int)population_.size(); ++tree_index) {
       using ::operator <<;
       std::cout << population_[tree_index] << std::endl;
     }
@@ -273,7 +290,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    *  @param data data set for calculation of the average metric value
    */
   void evaluatePopulation(const DataSet<TElement>& data) {
-    for (int tree_index = 0; tree_index < (int)population_.size(); ++tree_index) {
+    for (int tree_index = 0;
+         tree_index < (int)population_.size(); ++tree_index) {
       if (population_[tree_index].mValid) {
         continue;
       }

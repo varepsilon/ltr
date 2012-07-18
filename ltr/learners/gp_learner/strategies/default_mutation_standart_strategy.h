@@ -1,11 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_STANDART_STRATEGY_H_
-#define LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_STANDART_STRATEGY_H_
+#ifndef LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_STANDART_STRATEGY_H_
+#define LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_STANDART_STRATEGY_H_
 
 #include <vector>
 
 #include "contrib/puppy/Puppy.hpp"
+
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
 using std::vector;
@@ -28,19 +29,13 @@ class DefaultMutationStandartStrategy : public BasePopulationHandler {
     max_regeneration_depth_(max_regeneration_depth),
     max_depth_(max_depth) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context);
+  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
 
  private:
   double mutation_probability_;
   int max_regeneration_depth_;
   int max_depth_;
 };
-
-void DefaultMutationStandartStrategy::
-  HandlePopulation(vector<Tree>& population, Context& context) {
-    Puppy::applyMutationStandard(population, context, mutation_probability_,
-                                 max_regeneration_depth_, max_depth_);
 }
 }
-}
-#endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_STANDART_STRATEGY_H_
+#endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_STANDART_STRATEGY_H_

@@ -1,11 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_LEARNERS_GP_LEARNER_DEFAULT_CROSSOVER_STRATEGY_H_
-#define LTR_LEARNERS_GP_LEARNER_DEFAULT_CROSSOVER_STRATEGY_H_
+#ifndef LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_CROSSOVER_STRATEGY_H_
+#define LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_CROSSOVER_STRATEGY_H_
 
 #include <vector>
 
 #include "contrib/puppy/Puppy.hpp"
+
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
 using std::vector;
@@ -28,19 +29,13 @@ class DefaultCrossoverStrategy : public BasePopulationHandler {
     distribution_probability_(distribution_probability),
     max_depth_(max_depth) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context);
+  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
 
  private:
   double mating_probability_;
   double distribution_probability_;
   int max_depth_;
 };
-
-void DefaultCrossoverStrategy::
-  HandlePopulation(vector<Tree>& population, Context& context) {
-    Puppy::applyCrossover(population, context, mating_probability_,
-                          distribution_probability_, max_depth_);
 }
 }
-}
-#endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_CROSSOVER_STRATEGY_H_
+#endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_CROSSOVER_STRATEGY_H_
