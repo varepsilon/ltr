@@ -1,10 +1,13 @@
 // Copyright 2011 Yandex
 
-#include "ltr/utility/indices.h"
-
 #include <algorithm>
 
+#include "ltr/utility/indices.h"
+#include "ltr/utility/random_number_generator.h"
+
 using std::random_shuffle;
+
+using ltr::utility::randomizer;
 
 namespace ltr {
 namespace utility {
@@ -18,7 +21,7 @@ void getIdPermutation(Permutation *permution, int size) {
 
 void getRandomPermutation(Permutation *permution, int size) {
   getIdPermutation(permution, size);
-  random_shuffle(permution->begin(), permution->end());
+  random_shuffle(permution->begin(), permution->end(), randomizer);
 }
 
 void getRandomIndices(Indices *indices, int max_index, int count) {

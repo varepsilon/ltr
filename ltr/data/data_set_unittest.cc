@@ -10,10 +10,11 @@
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
-
 #include "ltr/data/utility/data_set_converters.h"
+#include "ltr/utility/random_number_generator.h";
 
 using ltr::utility::convertDataSet;
+using ltr::utility::randomizer;
 
 // The fixture for testing (contains data for tests).
 class DataSetTest : public ::testing::Test {
@@ -57,13 +58,13 @@ TEST_F(DataSetTest, DataSetConvertersTest) {
   const int min_list_size = 4;
   ltr::DataSet<ltr::ObjectList> list_data;
   for (int i = 0; i < N; i++) {
-    int cn = rand() % (1 + max_list_size - min_list_size) + min_list_size;
+    int cn = randomizer.rand() % (1 + max_list_size - min_list_size) + min_list_size;
     ltr::ObjectList lst;
     for (int j = 0; j < cn; j++) {
       ltr::Object obj;
       obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
-        obj << static_cast<double>(rand()) / 15332;
+        obj << static_cast<double>(randomizer.rand()) / 15332;
       lst << obj;
     }
     list_data << lst;
