@@ -25,7 +25,7 @@ Class for condition, which compares value of a weak functor with a constant.
 */
 class CompareCondition : public Condition {
   public:
-    typedef boost::shared_ptr<CompareCondition> Ptr;
+    typedef ltr::utility::shared_ptr<CompareCondition> Ptr;
 
     /** Sets a compare type.
     */

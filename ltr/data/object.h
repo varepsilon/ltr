@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 #include "ltr/data/feature_info.h"
 #include "ltr/interfaces/printable.h"
@@ -28,7 +28,7 @@ typedef vector<double> Features;
 /** \typedef
  * Type for pointer to feature vector.
  */
-typedef boost::shared_ptr<Features> FeaturesPtr;
+typedef ltr::utility::shared_ptr<Features> FeaturesPtr;
 
 /** \typedef
  * Type for meta information.
@@ -43,7 +43,7 @@ class Object : public Printable {
  public:
   /** \typedef Shared pointer to an object.
    */
-  typedef boost::shared_ptr<Object> Ptr;
+  typedef shared_ptr<Object> Ptr;
   /** Default constructor, creates an object with empty feature vector.
    */
   Object();
@@ -145,7 +145,7 @@ class Object : public Printable {
   FeaturesPtr features_;
   /** Shared pointer to meta information container.
    */
-  boost::shared_ptr<MetaInfo> meta_info_;
+  ltr::utility::shared_ptr<MetaInfo> meta_info_;
   /** Actual label.
    */
   double actual_label_;

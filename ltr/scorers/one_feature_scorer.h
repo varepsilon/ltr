@@ -16,7 +16,7 @@ namespace ltr {
  */
 class OneFeatureScorer : public Scorer {
  public:
-  typedef boost::shared_ptr<OneFeatureScorer> Ptr;
+  typedef ltr::utility::shared_ptr<OneFeatureScorer> Ptr;
 
   explicit OneFeatureScorer(size_t feature_index = 0,
     FeatureConverterArray featureConverterArray = FeatureConverterArray()) :

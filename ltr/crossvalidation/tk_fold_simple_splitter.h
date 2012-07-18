@@ -3,7 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <algorithm>
 #include <vector>
 #include <functional>
@@ -29,7 +29,7 @@ namespace cv {
 template<class TElement>
 class TKFoldSimpleSplitter : public Splitter<TElement> {
  public:
-  typedef boost::shared_ptr<TKFoldSimpleSplitter> Ptr;
+  typedef ltr::utility::shared_ptr<TKFoldSimpleSplitter> Ptr;
   /**
    * @param parameters Standart LTR parameter container with int parameters
    * K and T, by default K = T = 10

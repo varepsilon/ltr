@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <vector>
 #include <string>
 #include <stdexcept>
@@ -42,8 +42,8 @@ namespace ltr {
 class FeatureConverter : public Serializable,
                          public Aliaser {
  public:
-  typedef boost::shared_ptr<FeatureConverter> Ptr;
-  typedef boost::shared_ptr<const FeatureConverter> ConstPtr;
+  typedef ltr::utility::shared_ptr<FeatureConverter> Ptr;
+  typedef ltr::utility::shared_ptr<const FeatureConverter> ConstPtr;
 
   FeatureConverter(const FeatureInfo& input_feature_info = FeatureInfo()) {
     input_feature_info_ =  input_feature_info;

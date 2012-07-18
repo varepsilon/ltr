@@ -3,7 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 #define LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <vector>
 #include <stdexcept>
 #include <string>
@@ -22,7 +22,7 @@ namespace cv {
 template<class TElement>
 class LeaveOneOutSplitter : public Splitter<TElement> {
  public:
-  typedef boost::shared_ptr<LeaveOneOutSplitter> Ptr;
+  typedef ltr::utility::shared_ptr<LeaveOneOutSplitter> Ptr;
 
   virtual int splitCount(const DataSet<TElement>& base_set) const;
   /**

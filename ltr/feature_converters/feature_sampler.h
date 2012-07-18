@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <algorithm>
 #include <string>
@@ -28,7 +28,7 @@ namespace ltr {
 */
 class FeatureSampler : public FeatureConverter {
   public:
-  typedef boost::shared_ptr<FeatureSampler> Ptr;
+  typedef ltr::utility::shared_ptr<FeatureSampler> Ptr;
 
   /**
   * \param indices indices of features to sample

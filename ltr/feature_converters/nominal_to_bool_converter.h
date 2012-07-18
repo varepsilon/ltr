@@ -17,7 +17,7 @@ namespace ltr {
 */
 class NominalToBoolConverter : public FeatureConverter {
  public:
-  typedef boost::shared_ptr<NominalToBoolConverter> Ptr;
+  typedef ltr::utility::shared_ptr<NominalToBoolConverter> Ptr;
 
   NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
       : FeatureConverter(feature_info) {

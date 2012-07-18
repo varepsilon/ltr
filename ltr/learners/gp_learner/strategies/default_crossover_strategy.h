@@ -8,8 +8,17 @@
 #include "contrib/puppy/Puppy.hpp"
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
+using std::vector;
+
+using Puppy::Tree;
+using Puppy::Context;
+
 namespace ltr {
 namespace gp {
+/**
+* Crossover random tree pairs with
+* Puppy applyCrossover function.
+*/
 class DefaultCrossoverStrategy : public BasePopulationHandler {
  public:
   explicit DefaultCrossoverStrategy(double mating_probability = 0.9,
@@ -19,17 +28,19 @@ class DefaultCrossoverStrategy : public BasePopulationHandler {
     distribution_probability_(distribution_probability),
     max_depth_(max_depth) {}
 
-  virtual void HandlePopulation(std::vector<Puppy::Tree>& population,
-                                 Puppy::Context& context) {
-    Puppy::applyCrossover(population, context, mating_probability_,
-                          distribution_probability_, max_depth_);
-  }
+  virtual void HandlePopulation(vector<Tree>& population, Context& context);
 
  private:
   double mating_probability_;
   double distribution_probability_;
   int max_depth_;
 };
+
+void DefaultCrossoverStrategy::
+  HandlePopulation(vector<Tree>& population, Context& context) {
+    Puppy::applyCrossover(population, context, mating_probability_,
+                          distribution_probability_, max_depth_);
+}
 }
 }
 #endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_CROSSOVER_STRATEGY_H_

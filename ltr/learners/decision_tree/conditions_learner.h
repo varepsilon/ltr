@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_CONDITIONS_LEARNER_H_
 #define LTR_LEARNERS_DECISION_TREE_CONDITIONS_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 
@@ -24,8 +24,8 @@ class ConditionsLearner : public Parameterized {
     virtual void init() = 0;
 
   public:
-    typedef boost::shared_ptr<ConditionsLearner> Ptr;
-    typedef boost::shared_ptr<ConditionsLearner> BasePtr;
+    typedef ltr::utility::shared_ptr<ConditionsLearner> Ptr;
+    typedef ltr::utility::shared_ptr<ConditionsLearner> BasePtr;
 
     /**
      Function used to gen the next conditions set.

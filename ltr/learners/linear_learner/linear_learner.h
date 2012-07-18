@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 #define LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <Eigen/Dense>
 
 #include <string>
@@ -22,7 +22,7 @@ namespace ltr {
 template<class TElement>
 class LinearLearner : public BaseLearner<TElement, LinearScorer> {
  public:
-  typedef boost::shared_ptr<LinearLearner> Ptr;
+  typedef ltr::utility::shared_ptr<LinearLearner> Ptr;
 
   explicit LinearLearner(const ParametersContainer& parameters) {
     // DO NOTHING

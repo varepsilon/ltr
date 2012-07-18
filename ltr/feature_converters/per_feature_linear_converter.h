@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_
 #define LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <string>
 #include <vector>
@@ -24,7 +24,7 @@ namespace ltr {
 */
 class PerFeatureLinearConverter : public FeatureConverter {
  public:
-  typedef boost::shared_ptr<PerFeatureLinearConverter> Ptr;
+  typedef ltr::utility::shared_ptr<PerFeatureLinearConverter> Ptr;
 
   explicit PerFeatureLinearConverter(
     const FeatureInfo& input_feature_info = FeatureInfo()) {

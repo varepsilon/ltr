@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <boost/weak_ptr.hpp>
 
 #include <map>
@@ -30,7 +30,7 @@ It can have children.
 */
 class Vertex : public SerializableFunctor<TValue> {
   public:
-    typedef boost::shared_ptr<Vertex> Ptr;
+    typedef ltr::utility::shared_ptr<Vertex> Ptr;
     typedef boost::weak_ptr<Vertex> WeakPtr;
 
     Vertex() : parent_(0) {}

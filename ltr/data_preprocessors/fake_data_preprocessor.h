@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include <boost/shared_ptr.hpp>  //NOLINT
+#include "ltr/utility/shared_ptr.h"  //NOLINT
 
 #include "ltr/data/data_set.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"
@@ -19,7 +19,7 @@ namespace ltr {
 template <class TElement>
 class FakePreprocessor : public DataPreprocessor<TElement> {
  public:
-  typedef boost::shared_ptr<FakePreprocessor> Ptr;
+  typedef ltr::utility::shared_ptr<FakePreprocessor> Ptr;
 
   virtual string toString() const {
     return this->alias();

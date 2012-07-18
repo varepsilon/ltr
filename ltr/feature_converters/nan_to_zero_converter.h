@@ -14,7 +14,7 @@ namespace ltr {
 */
 class NanToZeroConverter : public FeatureConverter {
  public:
-  typedef boost::shared_ptr<NanToZeroConverter> Ptr;
+  typedef ltr::utility::shared_ptr<NanToZeroConverter> Ptr;
 
   NanToZeroConverter(const FeatureInfo& feature_info = FeatureInfo())
       : FeatureConverter(feature_info) {

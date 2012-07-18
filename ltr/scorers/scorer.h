@@ -3,7 +3,7 @@
 #ifndef LTR_SCORERS_SCORER_H_
 #define LTR_SCORERS_SCORER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <string>
@@ -25,8 +25,8 @@ class Scorer : public Aliaser,
     public SerializableFunctor<double>,
     public Printable {
   public:
-  typedef boost::shared_ptr<Scorer> Ptr;
-  typedef boost::shared_ptr<Scorer> BasePtr;
+  typedef ltr::utility::shared_ptr<Scorer> Ptr;
+  typedef ltr::utility::shared_ptr<Scorer> BasePtr;
 
   Scorer(const FeatureConverterArray&
             feature_converters = FeatureConverterArray()):

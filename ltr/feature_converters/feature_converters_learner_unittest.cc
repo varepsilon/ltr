@@ -62,27 +62,13 @@ class FeatureConvertersLearnerTest : public ::testing::Test {
 TEST_F(FeatureConvertersLearnerTest, CommonTest) {
   vector<FeatureConverterLearner<Object>::Ptr> feature_converters;
 
-  feature_converters.push_back(
-    static_cast<FakeFeatureConverterLearner<Object>::Ptr>(
-      new FakeFeatureConverterLearner<Object>));
-  feature_converters.push_back(
-    static_cast<FeatureNormalizerLearner<Object>::Ptr>(
-      new FeatureNormalizerLearner<Object>));
-  feature_converters.push_back(
-    static_cast<FeatureRandomSamplerLearner<Object>::Ptr>(
-      new FeatureRandomSamplerLearner<Object>));
-  feature_converters.push_back(
-    static_cast<FeatureSamplerLearner<Object>::Ptr>(
-      new FeatureSamplerLearner<Object>));
-  feature_converters.push_back(
-    static_cast<NanToZeroConverterLearner<Object>::Ptr>(
-      new NanToZeroConverterLearner<Object>));
-  feature_converters.push_back(
-    static_cast<NominalToBoolConverterLearner<Object>::Ptr>(
-      new NominalToBoolConverterLearner<Object>));
-  feature_converters.push_back(
-    static_cast<RemoveNominalConverterLearner<Object>::Ptr>(
-      new RemoveNominalConverterLearner<Object>));
+  feature_converters.push_back(new FakeFeatureConverterLearner<Object>);
+  feature_converters.push_back(new FeatureNormalizerLearner<Object>);
+  feature_converters.push_back(new FeatureRandomSamplerLearner<Object>);
+  feature_converters.push_back(new FeatureSamplerLearner<Object>);
+  feature_converters.push_back(new NanToZeroConverterLearner<Object>);
+  feature_converters.push_back(new NominalToBoolConverterLearner<Object>);
+  feature_converters.push_back(new RemoveNominalConverterLearner<Object>);
 
   for (int feature_converters_index = 0;
        feature_converters_index < feature_converters.size();

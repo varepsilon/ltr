@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/interfaces/printable.h"
@@ -22,7 +22,7 @@ namespace ltr {
   public:
   /** \typedef Shared pointer to an object list.
    */
-  typedef boost::shared_ptr< ObjectList > Ptr;
+  typedef ltr::utility::shared_ptr< ObjectList > Ptr;
   /** Default constructor creates an empty list of objects.
    */
   ObjectList();
@@ -70,7 +70,7 @@ namespace ltr {
   private:
   /** Shared pointer to the vector of Object s.
    */
-  boost::shared_ptr<vector<Object> > objects_;
+  ltr::utility::shared_ptr<vector<Object> > objects_;
 };
 
 /** Operator, checks whether two object_lists are equal.

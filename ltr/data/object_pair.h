@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/interfaces/printable.h"
@@ -21,7 +21,7 @@ namespace ltr {
   public:
   /** \typedef Shared pointer to an object pair.
    */
-  typedef boost::shared_ptr<ObjectPair> Ptr;
+  typedef ltr::utility::shared_ptr<ObjectPair> Ptr;
 
   /** Default constructor creates a pair of two objects with no features.
    *

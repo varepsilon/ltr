@@ -3,7 +3,7 @@
 #ifndef LTR_MEASURES_MEASURE_H_
 #define LTR_MEASURES_MEASURE_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <stdexcept>
@@ -39,8 +39,8 @@ namespace ltr {
 template <class TElement>
 class Measure : public Aliaser, public Parameterized, public Printable {
   public:
-  typedef boost::shared_ptr<Measure> Ptr;
-  typedef boost::shared_ptr<Measure> BasePtr;
+  typedef ltr::utility::shared_ptr<Measure> Ptr;
+  typedef ltr::utility::shared_ptr<Measure> BasePtr;
 
   /**
    * Value of measure(quality of algorithm)

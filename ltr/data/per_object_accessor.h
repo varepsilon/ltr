@@ -8,7 +8,7 @@
 #include "ltr/data/object_list.h"
 #include "ltr/interfaces/parameterized.h"
 
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 using ltr::Object;
 using ltr::ObjectPair;

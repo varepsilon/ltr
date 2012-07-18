@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_SPLITTING_QUALITY_H_
 #define LTR_LEARNERS_DECISION_TREE_SPLITTING_QUALITY_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 
@@ -17,8 +17,8 @@ namespace decision_tree {
 
 class SplittingQuality : public Parameterized {
   public:
-    typedef boost::shared_ptr<SplittingQuality> Ptr;
-    typedef boost::shared_ptr<SplittingQuality> BasePtr;
+    typedef ltr::utility::shared_ptr<SplittingQuality> Ptr;
+    typedef ltr::utility::shared_ptr<SplittingQuality> BasePtr;
 
     virtual double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const = 0;
@@ -29,7 +29,7 @@ class SplittingQuality : public Parameterized {
 
 class FakeSplittingQuality : public SplittingQuality {
   public:
-    typedef boost::shared_ptr<FakeSplittingQuality> Ptr;
+    typedef ltr::utility::shared_ptr<FakeSplittingQuality> Ptr;
 
     double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const {

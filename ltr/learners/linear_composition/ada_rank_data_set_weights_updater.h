@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_LINEAR_COMPOSITION_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_LINEAR_COMPOSITION_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <cmath>
 #include <string>
@@ -32,7 +32,7 @@ namespace lc {
 template <class TElement>
 class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
  public:
-  typedef boost::shared_ptr<AdaRankDataSetWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<AdaRankDataSetWeightsUpdater> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with no parameters

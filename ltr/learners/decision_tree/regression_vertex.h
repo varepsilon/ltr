@@ -17,7 +17,7 @@ in its children
 template <class TValue>
 class RegressionVertex : public Vertex<TValue> {
   public:
-    typedef boost::shared_ptr<RegressionVertex<TValue> > Ptr;
+    typedef ltr::utility::shared_ptr<RegressionVertex<TValue> > Ptr;
 
     RegressionVertex() : Vertex<TValue>() {}
     explicit RegressionVertex(Condition::Ptr condition) :

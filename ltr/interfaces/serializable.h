@@ -3,7 +3,7 @@
 #ifndef LTR_INTERFACES_SERIALIZABLE_H_
 #define LTR_INTERFACES_SERIALIZABLE_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
 
 #include <string>
@@ -23,7 +23,7 @@ class Serializable {
   public:
   /** \typedef boost shared pointer to the Functor
    */
-  typedef boost::shared_ptr<Serializable> Ptr;
+  typedef ltr::utility::shared_ptr<Serializable> Ptr;
   /** Default constructor. Counts all serializable objects and assigns them
    * unique id.
    */

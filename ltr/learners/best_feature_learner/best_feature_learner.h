@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 #define LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <stdexcept>
 #include <string>
@@ -25,7 +25,7 @@ namespace ltr {
 template< class TElement >
 class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
-  typedef boost::shared_ptr<BestFeatureLearner> Ptr;
+  typedef ltr::utility::shared_ptr<BestFeatureLearner> Ptr;
 
   explicit BestFeatureLearner(const ParametersContainer& parameters) {
     this->setParameters(parameters);

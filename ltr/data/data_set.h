@@ -32,7 +32,7 @@ class DataSet : public Printable {
  public:
   /** Shared pointer type to the DataSet.
    */
-  typedef boost::shared_ptr<DataSet> Ptr;
+  typedef ltr::utility::shared_ptr<DataSet> Ptr;
 
   /** The constructor creates a data set to store objects with the given
    * FeatureInfo.
@@ -111,13 +111,13 @@ class DataSet : public Printable {
  private:
   /** Shared pointer to the actual vector, in which the elements are stored.
    */
-  boost::shared_ptr<vector<TElement> > elements_;
+  ltr::utility::shared_ptr<vector<TElement> > elements_;
   /** The information about objects that are stored in the DataSet.
    */
   FeatureInfo::Ptr feature_info_;
   /** Shared pointer to the vector of elements' weights.
      */
-  boost::shared_ptr<vector<double> > weights_;
+  ltr::utility::shared_ptr<vector<double> > weights_;
 };
 
 /** \typedef Type for a data set that implements pointwise approach.

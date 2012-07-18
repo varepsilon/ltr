@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_LINEAR_COMPOSITION_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_LINEAR_COMPOSITION_DATA_SET_WEIGHTS_UPDATER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <string>
 
@@ -33,7 +33,7 @@ namespace lc {
 template <class TElement>
 class DataSetWeightsUpdater : public Aliaser, public Parameterized {
  public:
-  typedef boost::shared_ptr<DataSetWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<DataSetWeightsUpdater> Ptr;
 
   /**
    * Updates dataset's weights
@@ -62,7 +62,7 @@ class DataSetWeightsUpdater : public Aliaser, public Parameterized {
 template <class TElement>
 class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
  public:
-  typedef boost::shared_ptr<FakeDataSetWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<FakeDataSetWeightsUpdater> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with no parameters

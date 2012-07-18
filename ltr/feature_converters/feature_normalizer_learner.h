@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <algorithm>
@@ -33,7 +33,7 @@ template <class TElement>
 class FeatureNormalizerLearner
     : public BaseFeatureConverterLearner<TElement, PerFeatureLinearConverter> {
  public:
-  typedef boost::shared_ptr<FeatureNormalizerLearner> Ptr;
+  typedef ltr::utility::shared_ptr<FeatureNormalizerLearner> Ptr;
 
   /**
   * \param min desired minimum values

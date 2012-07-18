@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_RANDOM_SAMPLER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_RANDOM_SAMPLER_LEARNER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <ctime>
 #include <cmath>
@@ -34,7 +34,7 @@ class FeatureRandomSamplerLearner
     : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
   friend class FeatureSampler;
  public:
-  typedef boost::shared_ptr<FeatureRandomSamplerLearner> Ptr;
+  typedef ltr::utility::shared_ptr<FeatureRandomSamplerLearner> Ptr;
 
   /**
   * \param sampling_fraction portion of features to sample, must be in (0,1]

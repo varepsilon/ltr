@@ -21,7 +21,7 @@ namespace ltr {
 template<class TElement>
 class NormalizedMeasure : public Measure<TElement> {
  public:
-  typedef boost::shared_ptr<NormalizedMeasure> Ptr;
+  typedef ltr::utility::shared_ptr<NormalizedMeasure> Ptr;
 
   explicit NormalizedMeasure(const ParametersContainer& parameters) {
     this->setParameters(parameters);

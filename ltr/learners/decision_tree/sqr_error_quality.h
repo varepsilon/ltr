@@ -31,7 +31,7 @@ class SqrErrorQuality : public SplittingQuality {
     }
 
   public:
-    typedef boost::shared_ptr<SqrErrorQuality> Ptr;
+    typedef ltr::utility::shared_ptr<SqrErrorQuality> Ptr;
 
     explicit SqrErrorQuality(
         const ParametersContainer& parameters = ParametersContainer()) {

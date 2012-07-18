@@ -18,7 +18,7 @@ with the greatest condition
 template <class TValue>
 class DecisionVertex : public Vertex<TValue> {
   public:
-    typedef boost::shared_ptr<DecisionVertex<TValue> > Ptr;
+    typedef ltr::utility::shared_ptr<DecisionVertex<TValue> > Ptr;
 
     DecisionVertex() : Vertex<TValue>() {}
     explicit DecisionVertex(Condition::Ptr condition) :

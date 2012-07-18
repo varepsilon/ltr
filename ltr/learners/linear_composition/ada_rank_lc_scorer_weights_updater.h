@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include <boost/shared_ptr.hpp>  // NOLINT
+#include "ltr/utility/shared_ptr.h"  // NOLINT
 
 #include <algorithm>
 #include <limits>
@@ -40,7 +40,7 @@ template <class TElement>
 class AdaRankLCScorerWeightsUpdater
   : public LCScorerWeightsUpdater<TElement> {
  public:
-  typedef boost::shared_ptr<AdaRankLCScorerWeightsUpdater> Ptr;
+  typedef ltr::utility::shared_ptr<AdaRankLCScorerWeightsUpdater> Ptr;
 
   /**
    * @param parameters Standart LTR parameter container with no parameters

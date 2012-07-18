@@ -3,7 +3,7 @@
 #ifndef LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_
 #define LTR_FEATURE_CONVERTERS_FAKE_FEATURE_CONVERTER_H_
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
 
 #include <string>
 
@@ -20,7 +20,7 @@ namespace ltr {
  */
 class FakeFeatureConverter : public FeatureConverter {
  public:
-  typedef boost::shared_ptr<FakeFeatureConverter> Ptr;
+  typedef ltr::utility::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
       : FeatureConverter(feature_info) {

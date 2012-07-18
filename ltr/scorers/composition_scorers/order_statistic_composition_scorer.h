@@ -12,7 +12,7 @@ using std::string;
 namespace ltr {
 class OrderStaticticCompositionScorer : public CompositionScorer {
  public:
-  typedef boost::shared_ptr<OrderStaticticCompositionScorer> Ptr;
+  typedef ltr::utility::shared_ptr<OrderStaticticCompositionScorer> Ptr;
 
   explicit OrderStaticticCompositionScorer(double ratio)
     : ratio_(ratio) {}

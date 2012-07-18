@@ -14,7 +14,7 @@ using std::vector;
 namespace ltr {
 class LinearScorer : public Scorer {
  public:
-  typedef boost::shared_ptr<LinearScorer> Ptr;
+  typedef ltr::utility::shared_ptr<LinearScorer> Ptr;
 
   LinearScorer() {}
 

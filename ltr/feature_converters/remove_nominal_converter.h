@@ -16,7 +16,7 @@ namespace ltr {
 */
 class RemoveNominalConverter : public FeatureConverter {
  public:
-  typedef boost::shared_ptr<RemoveNominalConverter> Ptr;
+  typedef ltr::utility::shared_ptr<RemoveNominalConverter> Ptr;
 
   RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())
       : FeatureConverter(feature_info) {

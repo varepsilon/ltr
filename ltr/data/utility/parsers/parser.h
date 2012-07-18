@@ -56,7 +56,7 @@ namespace ltr {
           public:
             bad_line() : std::logic_error("") {}
         };
-        typedef boost::shared_ptr<Parser> Ptr;
+        typedef ltr::utility::shared_ptr<Parser> Ptr;
 
         /**
          * Function sets stream to parse objects from and initialize parser. 

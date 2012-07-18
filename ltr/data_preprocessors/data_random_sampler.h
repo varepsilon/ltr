@@ -33,7 +33,7 @@ namespace ltr {
 template <class TElement>
 class DataRandomSampler : public DataPreprocessor<TElement> {
  public:
-  typedef boost::shared_ptr<DataRandomSampler> Ptr;
+  typedef ltr::utility::shared_ptr<DataRandomSampler> Ptr;
 
   /**
   * \param sampling_fraction ratio of chosen objects count to dataset size,

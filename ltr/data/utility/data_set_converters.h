@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <vector>
 
-#include <boost/shared_ptr.hpp> //NOLINT
+#include "ltr/utility/shared_ptr.h" //NOLINT
 
 #include "ltr/data/data_set.h"
 
@@ -19,7 +19,7 @@ namespace utility {
  */
 class ListToPairConvertionStrategy {
  public:
-  typedef boost::shared_ptr<ListToPairConvertionStrategy> Ptr;
+  typedef ltr::utility::shared_ptr<ListToPairConvertionStrategy> Ptr;
   /**
    * Function converts data from ObjectList to the list of ObjectPair.
    * @param list - list to convert
