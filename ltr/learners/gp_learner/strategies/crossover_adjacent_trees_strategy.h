@@ -26,9 +26,23 @@ class CrossoverAdjacentTreesStrategy : public BasePopulationHandler {
   : distribution_probability_(distribution_probability),
     max_depth_(max_depth) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
+  explicit CrossoverAdjacentTreesStrategy(
+    const ParametersContainer& parameters) {
+      this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(double, distribution_probability);
+  GET_SET(int, max_depth);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   double distribution_probability_;
   int max_depth_;
 };

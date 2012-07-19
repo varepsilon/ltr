@@ -29,9 +29,24 @@ class DefaultMutationStandartStrategy : public BasePopulationHandler {
     max_regeneration_depth_(max_regeneration_depth),
     max_depth_(max_depth) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
+  explicit DefaultMutationStandartStrategy(
+    const ParametersContainer& parameters) {
+      this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(double, mutation_probability);
+  GET_SET(int, max_regeneration_depth);
+  GET_SET(int, max_depth);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   double mutation_probability_;
   int max_regeneration_depth_;
   int max_depth_;

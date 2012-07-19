@@ -7,6 +7,10 @@
 
 #include "ltr/utility/shared_ptr.h"
 
+#include "ltr/interfaces/parameterized.h"
+
+#include "ltr/parameters_container/parameters_container.h"
+
 using std::vector;
 
 using Puppy::Tree;
@@ -19,11 +23,11 @@ namespace gp {
 *
 * Handle population of trees for GPLearner.
 */
-class BasePopulationHandler {
+class BasePopulationHandler : public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<BasePopulationHandler> Ptr;
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context) = 0; // NOLINT
+  virtual void handlePopulation(vector<Tree>& population, Context& context) = 0; // NOLINT
 };
 }
 }

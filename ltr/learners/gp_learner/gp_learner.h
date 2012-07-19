@@ -22,7 +22,6 @@
 #include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
 
-
 #include "ltr/scorers/gp_scorer.h"
 
 #include "ltr/measures/measure.h"
@@ -50,8 +49,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   explicit GPLearner(typename Measure<TElement>::Ptr measure,
       const ParametersContainer& parameters)
   : feature_count_(0),
-    best_tree_index_(0) {
-    measure_ = measure;
+    best_tree_index_(0),
+    measure_(measure) {
     this->setParameters(parameters);
   }
   /** Constructor creates a GPLearner. But leaves p_measure uninitialized.
@@ -110,9 +109,9 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * std::logical_error(PARAMETER_NAME).
    */
   virtual void checkParameters() const {
-    CHECK(population_size_ > 0); // NOLINT
-    CHECK(number_of_generations_ > 0); // NOLINT
-    CHECK(min_init_depth_ > 0); // NOLINT
+    CHECK(population_size_ > 0);
+    CHECK(number_of_generations_ > 0);
+    CHECK(min_init_depth_ > 0);
     CHECK(max_init_depth_ > min_init_depth_ - 1);
     CHECK(0.0 <= init_grow_probability_ && init_grow_probability_ <= 1.0);
   }
@@ -167,11 +166,11 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    population_size_ = parameters.Get<int>("POP_SIZE");
-    number_of_generations_ = parameters.Get<int>("NBR_GEN");
+    population_size_ = parameters.Get<int>("POPULATION_SIZE");
+    number_of_generations_ = parameters.Get<int>("NUMBER_OF_GENERATIONS");
     min_init_depth_ = parameters.Get<int>("MIN_INIT_DEPTH");
     max_init_depth_ = parameters.Get<int>("MAX_INIT_DEPTH");
-    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBA");
+    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY");
     seed_ = parameters.Get<int>("SEED");
   }
 
@@ -230,7 +229,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
          population_handler_index < (int) population_handlers_.size();
          ++population_handler_index) {
       population_handlers_[population_handler_index]->
-        HandlePopulation(population_, context_);
+        handlePopulation(population_, context_);
     }
   }
   /** The implementation of genetic programming optimization approach.

@@ -25,9 +25,21 @@ class DefaultSelectionStrategy : public BasePopulationHandler {
   explicit DefaultSelectionStrategy(int number_of_participants = 2)
   : number_of_participants_(number_of_participants) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
+  explicit DefaultSelectionStrategy(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(int, number_of_participants);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   int number_of_participants_;
 };
 }

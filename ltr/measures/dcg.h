@@ -153,7 +153,7 @@ void BaseDCG<TDCGFormula>::setDefaultParameters() {
 }
 template<class TDCGFormula>
 void BaseDCG<TDCGFormula>::checkParameters() const {
-  CHECK(this->number_of_objects_to_consider_ >= 0); // NOLINT
+  CHECK(this->number_of_objects_to_consider_ >= 0);
 }
 };
 #endif  // LTR_MEASURES_DCG_H_
