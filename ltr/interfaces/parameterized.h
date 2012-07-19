@@ -64,6 +64,7 @@ class Parameterized {
    * std::logic_error will be thrown.
    */
   virtual void checkParameters() const;
+
   void setParameters(const ParametersContainer &parameters);
 
  protected:

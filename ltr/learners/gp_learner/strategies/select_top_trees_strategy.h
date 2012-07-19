@@ -26,9 +26,21 @@ class SelectTopTreesStrategy : public BasePopulationHandler {
   explicit SelectTopTreesStrategy(double top_fraction = 0.3)
   : top_fraction_(top_fraction) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
+  explicit SelectTopTreesStrategy(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(double, top_fraction);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   double top_fraction_;
 };
 }

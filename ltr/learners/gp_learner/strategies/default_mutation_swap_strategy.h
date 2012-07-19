@@ -27,9 +27,22 @@ class DefaultMutationSwapStrategy : public BasePopulationHandler {
   : mutation_probability_(mutation_probability),
     distribution_probability_(distribution_probability) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context); // NOLINT
+  explicit DefaultMutationSwapStrategy(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(double, mutation_probability);
+  GET_SET(double, distribution_probability);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   double mutation_probability_;
   double distribution_probability_;
 };
