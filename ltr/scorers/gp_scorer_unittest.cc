@@ -47,7 +47,8 @@ TEST(GPScorer, GPScorerTest) {
 
   int best_tree_index = 0;
 
-  GPScorer gp_scorer = GPScorer(population, context, features_count, best_tree_index);
+  GPScorer gp_scorer =
+    GPScorer(population[best_tree_index], context, features_count);
 
   Object object1;
   object1 << 1.3 << 1.7 << 9.2;

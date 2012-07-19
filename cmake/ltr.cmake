@@ -66,18 +66,27 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
-                   ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
+                   ${Source_Path}/ltr/interfaces/parameterized.h
+                   ${Source_Path}/ltr/interfaces/parameterized.cc
                    ${Source_Path}/ltr/interfaces/functor.h
-                   ${Source_Path}/ltr/interfaces/serializable.h ${Source_Path}/ltr/interfaces/serializable.cc
+                   ${Source_Path}/ltr/interfaces/serializable.h
+                   ${Source_Path}/ltr/interfaces/serializable.cc
                    ${Source_Path}/ltr/interfaces/serializable_functor.h
-                   ${Source_Path}/ltr/interfaces/printable.h ${Source_Path}/ltr/interfaces/printable.cc)
+                   ${Source_Path}/ltr/interfaces/printable.h
+                   ${Source_Path}/ltr/interfaces/printable.cc)
 
-SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
-                ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
-                ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
+SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
+                ${Source_Path}/ltr/scorers/scorer.cc
+                ${Source_Path}/ltr/scorers/fake_scorer.h
+                ${Source_Path}/ltr/scorers/fake_scorer.cc
+                ${Source_Path}/ltr/scorers/one_feature_scorer.h
+                ${Source_Path}/ltr/scorers/one_feature_scorer.cc
                 ${Source_Path}/ltr/scorers/gp_scorer.h
-                ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
-                ${Source_Path}/ltr/scorers/linear_scorer.h ${Source_Path}/ltr/scorers/linear_scorer.cc)
+                ${Source_Path}/ltr/scorers/gp_scorer.cc
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.h
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
+                ${Source_Path}/ltr/scorers/linear_scorer.h
+                ${Source_Path}/ltr/scorers/linear_scorer.cc)
 
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
