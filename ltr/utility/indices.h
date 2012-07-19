@@ -3,11 +3,13 @@
 #ifndef LTR_UTILITY_INDICES_H_
 #define LTR_UTILITY_INDICES_H_
 
+#include <string>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h"  //NOLINT
+#include "ltr/utility/shared_ptr.h"
 
 using std::vector;
+using std::string;
 
 namespace ltr {
 namespace utility {
@@ -17,10 +19,11 @@ typedef ltr::utility::shared_ptr<Indices> IndicesPtr;
 
 typedef vector<int> Permutation;
 
-void getIdPermutation(Permutation *permution, int size);
-void getRandomPermutation(Permutation *permution, int size);
-
+void getIdPermutation(Permutation *permutation, int size);
+void getRandomPermutation(Permutation *permutation, int size);
 void getRandomIndices(Indices *indices, int max_index, int count);
+
+Indices getIndicesFromString(const string& string_to_parse);
 };
 };
 
