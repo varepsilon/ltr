@@ -177,8 +177,7 @@ SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.h
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.cc)
+                        ${Source_Path}/ltr/crossvalidation/crossvalidator.h)
 
 SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear_composition_learner.h
                            ${Source_Path}/ltr/learners/linear_composition/data_set_weights_updater.h
