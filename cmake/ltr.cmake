@@ -120,6 +120,12 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
                        ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
+SET(LTR_METRICS ${Source_Path}/ltr/metrics/metric.h
+                ${Source_Path}/ltr/metrics/euclidean_metric.h
+                ${Source_Path}/ltr/metrics/euclidean_metric.cc
+                ${Source_Path}/ltr/metrics/manhattan_metric.h
+                ${Source_Path}/ltr/metrics/manhattan_metric.cc)
+
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.h
@@ -211,10 +217,11 @@ SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
+SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_METRICS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
             ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS}
