@@ -160,6 +160,9 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.h
                            ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_converter.h
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_learner.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h

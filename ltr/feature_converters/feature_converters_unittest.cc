@@ -6,6 +6,7 @@
 #include <string>
 
 #include "ltr/data/object.h"
+#include "ltr/data/data_set.h"
 #include "ltr/data/feature_info.h"
 #include "ltr/utility/indices.h"
 #include "ltr/utility/numerical.h"
@@ -19,6 +20,7 @@
 #include "ltr/feature_converters/remove_nominal_converter.h"
 
 using ltr::Object;
+using ltr::DataSet;
 using ltr::FeatureInfo;
 using ltr::NOMINAL;
 using ltr::NUMERIC;
@@ -99,7 +101,7 @@ TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   per_feature_converter->set_factor(1, -0.5);
   per_feature_converter->set_factor(2, 2.0);
   per_feature_converter->set_factor(3, 0.0);
-  
+
   per_feature_converter->apply(object, &converted_object);
 
   EXPECT_TRUE(DoubleEqual(converted_object[0], 1.0));
@@ -166,14 +168,14 @@ TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
   EXPECT_EQ(converted_object.feature_info().getFeatureType(1), BOOLEAN);
   EXPECT_TRUE(converted_object[1]);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(2), BOOLEAN);
-  EXPECT_FALSE(converted_object[2]);  
+  EXPECT_FALSE(converted_object[2]);
   EXPECT_EQ(converted_object.feature_info().getFeatureType(3), BOOLEAN);
 }
 
 TEST(FeatureConvertersTest, RemoveNominalConverterTest) {
   FeatureInfo feature_info;
   feature_info.addFeature(NOMINAL);
-  
+
   RemoveNominalConverter::Ptr remove_nominal_converter
     (new RemoveNominalConverter(feature_info));
 

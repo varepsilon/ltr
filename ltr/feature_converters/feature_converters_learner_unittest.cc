@@ -16,6 +16,7 @@
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/feature_converters/feature_normalizer_learner.h"
 #include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/feature_converters/nan_to_average_learner.h"
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
 #include "ltr/feature_converters/remove_nominal_converter.h"
 
@@ -36,6 +37,7 @@ using ltr::FeatureSamplerLearner;
 using ltr::FeatureRandomSamplerLearner;
 using ltr::FeatureNormalizerLearner;
 using ltr::NanToZeroConverterLearner;
+using ltr::NanToAverageConverterLearner;
 using ltr::NominalToBoolConverterLearner;
 using ltr::RemoveNominalConverterLearner;
 
@@ -67,6 +69,7 @@ TEST_F(FeatureConvertersLearnerTest, CommonTest) {
   feature_converters.push_back(new FeatureRandomSamplerLearner<Object>);
   feature_converters.push_back(new FeatureSamplerLearner<Object>);
   feature_converters.push_back(new NanToZeroConverterLearner<Object>);
+  feature_converters.push_back(new NanToAverageConverterLearner<Object>);
   feature_converters.push_back(new NominalToBoolConverterLearner<Object>);
   feature_converters.push_back(new RemoveNominalConverterLearner<Object>);
 
@@ -79,7 +82,7 @@ TEST_F(FeatureConvertersLearnerTest, CommonTest) {
   DataSet<Object> converted_data;
 
   for (int feature_converters_index = 0;
-       feature_converters_index < feature_converters.size();
+       feature_converters_index < (int)feature_converters.size();
        ++feature_converters_index) {
     FeatureConverter::Ptr feature_converter =
       feature_converters[feature_converters_index]->make();
@@ -208,4 +211,56 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
   EXPECT_TRUE(DoubleEqual(converted_data[1][2], 0.0));
   EXPECT_TRUE(DoubleEqual(converted_data[2][2], 1.0));
   EXPECT_TRUE(DoubleEqual(converted_data[3][2], -2.0));
+}
+
+TEST_F(FeatureConvertersLearnerTest, NanToAverageConverterLearnerTest) {
+  Object object0, object1, object2;
+  object0 << 1.234;
+  object1 << 1.234;
+  object2 << numeric_limits<double>::quiet_NaN();
+
+  object0 << numeric_limits<double>::quiet_NaN();
+  object1 << numeric_limits<double>::quiet_NaN();
+  object2 << numeric_limits<double>::quiet_NaN();
+
+  object0 << 1.234;
+  object1 << numeric_limits<double>::quiet_NaN();
+  object2 << -1.234;
+
+  object0 << numeric_limits<double>::quiet_NaN();
+  object1 << 5.0;
+  object2 << 2.0;
+
+  object0 << 2.345;
+  object1 << 3.456;
+  object2 << 4.567;
+
+  DataSet<Object> data, converted_data;
+  data.add(object0);
+  data.add(object1);
+  data.add(object2);
+
+  NanToAverageConverterLearner<Object> nan_to_average_converter_learner;
+  nan_to_average_converter_learner.learn(data);
+
+  FeatureConverter::Ptr nan_to_average_converter =
+    nan_to_average_converter_learner.make();
+
+  nan_to_average_converter->apply(data, &converted_data);
+
+  ASSERT_EQ(4, converted_data.feature_count());
+  EXPECT_EQ(1.234, converted_data[0][0]);
+  EXPECT_EQ(1.234, converted_data[0][1]);
+  EXPECT_EQ(3.5, converted_data[0][2]);
+  EXPECT_EQ(2.345, converted_data[0][3]);
+
+  EXPECT_EQ(1.234, converted_data[1][0]);
+  EXPECT_EQ(0.0, converted_data[1][1]);
+  EXPECT_EQ(5.0, converted_data[1][2]);
+  EXPECT_EQ(3.456, converted_data[1][3]);
+
+  EXPECT_EQ(1.234, converted_data[2][0]);
+  EXPECT_EQ(-1.234, converted_data[2][1]);
+  EXPECT_EQ(2.0, converted_data[2][2]);
+  EXPECT_EQ(4.567, converted_data[2][3]);
 }

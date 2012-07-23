@@ -1,16 +1,16 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include <boost/lexical_cast.hpp>
 
 #include <string>
 #include <stdexcept>
+
 #include "ltr/feature_converters/feature_sampler.h"
 
 using std::logic_error;
 using std::string;
 
 namespace ltr {
-
 void FeatureSampler::set_indices(const Indices& indices) {
   indices_ = indices;
   fillOutputFeatureInfo();
@@ -28,17 +28,6 @@ void FeatureSampler::fillOutputFeatureInfo() {
         input_feature_info_.getFeatureType(indices_[i]);
     output_feature_info_.setFeatureType(i, feature_type);
   }
-}
-
-void FeatureSampler::applyImpl(const Object& input, Object* output) const {
-  output->setFeatureInfo(output_feature_info_);
-  for (int i = 0; i < indices_.size(); ++i) {
-    output->at(i) = input[indices_[i]];
-  }
-  // \FIXME(sameg): Extra copy of output_feature_info.
-  // Do we really need to have feature_info in object??
-  // In this case output_feature_info_ must became a FeatureInfo::Ptr
-  // output->set_feature_info(output_feature_info_);
 }
 
 string FeatureSampler::generateCppCode(const string& function_name) const {
@@ -65,4 +54,19 @@ string FeatureSampler::generateCppCode(const string& function_name) const {
       append("}\n");
     return code;
 }
+
+void FeatureSampler::applyImpl(const Object& input, Object* output) const {
+  output->setFeatureInfo(output_feature_info_);
+  for (int i = 0; i < indices_.size(); ++i) {
+    output->at(i) = input[indices_[i]];
+  }
+  // \FIXME(sameg): Extra copy of output_feature_info.
+  // Do we really need to have feature_info in object??
+  // In this case output_feature_info_ must became a FeatureInfo::Ptr
+  // output->set_feature_info(output_feature_info_);
 }
+
+string FeatureSampler::getDefaultAlias() const {
+  return "FeatureSampler";
+}
+};

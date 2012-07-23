@@ -9,25 +9,28 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
-
 /**
-* \brief Converts nominal features to boolean.
-*
-* Nominal feature with k values will be converted to k boolean features.
-*/
+ * \brief Converts nominal features to boolean.
+ *
+ * Nominal feature with k values will be converted to k boolean features.
+ */
 class NominalToBoolConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<NominalToBoolConverter> Ptr;
 
   NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
-      : FeatureConverter(feature_info) {
+    : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
+
   virtual void fillOutputFeatureInfo();
+
   string generateCppCode(const std::string &function_name) const;
+
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
-  virtual string getDefaultAlias() const {return "NominalToBoolConverter";}
+
+  virtual string getDefaultAlias() const;
 };
 
 template <typename TElement>
@@ -38,13 +41,17 @@ class NominalToBoolConverterLearner
                          NominalToBoolConverter* feature_converter) {
     // DO NOTHING
   }
+
   virtual string toString() const {
     return "NominalToBoolConverterLearner";
   }
+
  private:
-  virtual string getDefaultAlias() const {return "NominalToBoolConverterLearner";}
+  virtual string getDefaultAlias() const {
+    return "NominalToBoolConverterLearner";
+  }
 };
-}
+};
 
 #endif  // LTR_FEATURE_CONVERTERS_NOMINAL_TO_BOOL_CONVERTER_H_
 
