@@ -105,6 +105,7 @@ template<class TElement>
 void FeatureConverter::apply(const DataSet<TElement>& input,
                              DataSet<TElement>* output) const {
   *output = input.deepCopy();
+#pragma omp parallel for
   for (int element_index = 0; element_index < input.size(); ++element_index) {
     PerObjectAccessor<const TElement> input_element(&input.at(element_index));
     PerObjectAccessor<TElement> output_element(&output->at(element_index));
