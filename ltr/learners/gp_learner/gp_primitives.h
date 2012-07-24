@@ -191,6 +191,6 @@ class Ephemeral : public BaseGPOperation {
     return new Puppy::TokenT<double>(name.str(), value);
   }
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_

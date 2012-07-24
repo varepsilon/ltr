@@ -29,6 +29,6 @@ class BasePopulationHandler : public Parameterized {
 
   virtual void handlePopulation(vector<Tree>& population, Context& context) = 0; // NOLINT
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_POPULATION_HANDLER_H_

@@ -31,4 +31,4 @@ void DefaultMutationStandartStrategy::
     max_depth_ = parameters.Get<int>("MAX_DEPTH");
 }
 };
-}
+};

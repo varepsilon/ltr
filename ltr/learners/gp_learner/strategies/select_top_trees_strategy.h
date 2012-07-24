@@ -43,6 +43,6 @@ class SelectTopTreesStrategy : public BasePopulationHandler {
 
   double top_fraction_;
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_SELECT_TOP_TREES_STRATEGY_H_

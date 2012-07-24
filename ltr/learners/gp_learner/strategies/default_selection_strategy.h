@@ -42,6 +42,6 @@ class DefaultSelectionStrategy : public BasePopulationHandler {
 
   int number_of_participants_;
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_SELECTION_STRATEGY_H_

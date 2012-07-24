@@ -28,5 +28,5 @@ void DefaultMutationSwapStrategy::
     distribution_probability_ =
       parameters.Get<double>("DISTRIBUTION_PROBABILITY");
 }
-}
-}
+};
+};

@@ -46,6 +46,6 @@ class DefaultMutationSwapStrategy : public BasePopulationHandler {
   double mutation_probability_;
   double distribution_probability_;
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_SWAP_STRATEGY_H_

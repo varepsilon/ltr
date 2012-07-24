@@ -50,6 +50,6 @@ class DefaultCrossoverStrategy : public BasePopulationHandler {
   double distribution_probability_;
   int max_depth_;
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_CROSSOVER_STRATEGY_H_

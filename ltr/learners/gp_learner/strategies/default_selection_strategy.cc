@@ -24,5 +24,5 @@ void DefaultSelectionStrategy::
   setParametersImpl(const ParametersContainer& parameters) {
     number_of_participants_ = parameters.Get<int>("NUMBER_OF_PARTICIPANTS");
 }
-}
-}
+};
+};

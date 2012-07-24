@@ -31,5 +31,5 @@ void DefaultCrossoverStrategy::
       parameters.Get<double>("DISTRIBUTION_PROBABILITY");
     max_depth_ = parameters.Get<int>("MAX_DEPTH");
 }
-}
-}
+};
+};

@@ -29,5 +29,5 @@ void SelectTopTreesStrategy::
   setParametersImpl(const ParametersContainer& parameters) {
     top_fraction_ = parameters.Get<double>("TOP_FRACTION");
 }
-}
-}
+};
+};

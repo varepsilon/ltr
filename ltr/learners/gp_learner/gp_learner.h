@@ -329,6 +329,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   std::vector<BasePopulationHandler::Ptr> population_handlers_;
   std::vector<BaseGPOperation::Ptr> gp_operations_;
   };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_

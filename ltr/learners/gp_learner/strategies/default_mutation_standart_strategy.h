@@ -51,6 +51,6 @@ class DefaultMutationStandartStrategy : public BasePopulationHandler {
   int max_regeneration_depth_;
   int max_depth_;
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_STANDART_STRATEGY_H_
