@@ -57,6 +57,7 @@ string FeatureSampler::generateCppCode(const string& function_name) const {
 
 void FeatureSampler::applyImpl(const Object& input, Object* output) const {
   output->setFeatureInfo(output_feature_info_);
+#pragma omp parallel for
   for (int i = 0; i < indices_.size(); ++i) {
     output->at(i) = input[indices_[i]];
   }

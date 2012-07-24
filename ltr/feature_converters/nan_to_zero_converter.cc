@@ -29,7 +29,8 @@ string NanToZeroConverter::generateCppCode(
 void NanToZeroConverter::applyImpl(const Object& input,
                                          Object* output) const {
   *output = input;
-  for (size_t feature_index = 0;
+#pragma omp parallel for
+  for (int feature_index = 0;
       feature_index < input.features().size(); ++feature_index) {
     if (isNaN(input[feature_index])) {
       output->at(feature_index) = 0;
