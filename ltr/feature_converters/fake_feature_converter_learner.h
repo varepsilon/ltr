@@ -42,7 +42,7 @@ template <class TElement>
 void FakeFeatureConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set,
   FakeFeatureConverter* feature_converter) {
-  // DO NOTHING
+    // DO NOTHING
 }
 
 template <class TElement>

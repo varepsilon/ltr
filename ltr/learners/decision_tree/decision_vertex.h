@@ -86,7 +86,7 @@ class DecisionVertex : public Vertex<TValue> {
         append("  double best_condition = 0;\n").
         append("  for (int i = 0; i < ").
         append(boost::lexical_cast<string>(n_children)).
-        append("; i++) {\n").
+        append("; ++i) {\n").
         append("    double val = conditions[i](features);\n").
         append("    if (best_id == -1 || val > best_condition) {\n").
           append("      best_id = i;\n").

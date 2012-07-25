@@ -19,13 +19,11 @@ class NominalToBoolConverter : public FeatureConverter {
   typedef ltr::utility::shared_ptr<NominalToBoolConverter> Ptr;
 
   NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
-    : FeatureConverter(feature_info) {
-    fillOutputFeatureInfo();
-  }
+    : FeatureConverter(feature_info) {}
 
-  virtual void fillOutputFeatureInfo();
+  virtual FeatureInfo convertFeatureInfo() const;
 
-  string generateCppCode(const std::string &function_name) const;
+  string generateCppCode(const std::string& function_name) const;
 
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
@@ -35,7 +33,7 @@ class NominalToBoolConverter : public FeatureConverter {
 
 template <typename TElement>
 class NominalToBoolConverterLearner
-    : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
+  : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NominalToBoolConverter* feature_converter) {

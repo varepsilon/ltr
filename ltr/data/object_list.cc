@@ -1,27 +1,28 @@
-// Copyright 2011 Yandex
-
+// Copyright 2012 Yandex
 
 #include <sstream>
 #include <vector>
 
 #include "ltr/data/object_list.h"
+
 #include "ltr/utility/numerical.h"
 
 namespace ltr {
-
 ObjectList::ObjectList() : objects_(new vector<Object>()) {}
 
+const Object& ObjectList::operator[](int i) const {
+  return at(i);
+}
 
-const Object& ObjectList::operator[](size_t i) const {
+Object& ObjectList::operator[](int i) {
   return at(i);
 }
-Object& ObjectList::operator[](size_t i) {
-  return at(i);
-}
-const Object& ObjectList::at(size_t i) const {
+
+const Object& ObjectList::at(int i) const {
   return (*objects_)[i];
 }
-Object& ObjectList::at(size_t i) {
+
+Object& ObjectList::at(int i) {
     return (*objects_)[i];
 }
 
@@ -29,11 +30,12 @@ ObjectList& ObjectList::operator<<(const Object& obj) {
   (*objects_).push_back(obj.deepCopy());
   return *this;
 }
+
 void ObjectList::add(const Object& obj) {
   (*this) << obj;
 }
 
-size_t ObjectList::size() const {
+int ObjectList::size() const {
   return (*objects_).size();
 }
 
@@ -68,15 +70,15 @@ bool operator==(const ObjectList& lhs, const ObjectList& rhs) {
   if (lhs.size() != rhs.size()) {
     return false;
   }
-	for (int object_index = 0; object_index < (int)lhs.size(); ++object_index) {
-	  if (lhs[object_index] != rhs[object_index]) {
+  for (int object_index = 0; object_index < (int)lhs.size(); ++object_index) {
+    if (lhs[object_index] != rhs[object_index]) {
       return false;
-  	}
+    }
   }
-	return true;
+  return true;
 }
 
 bool operator!=(const ObjectList& lhs, const ObjectList& rhs) {
   return !(lhs == rhs);
 }
-}
+};

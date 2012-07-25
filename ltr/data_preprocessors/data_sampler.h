@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_DATA_PREPROCESSORS_DATA_SAMPLER_H_
 #define LTR_DATA_PREPROCESSORS_DATA_SAMPLER_H_
@@ -100,11 +100,11 @@ template <typename TElement>
 string DataSampler<TElement>::toString() const {
   std::stringstream str;
   str << "DataSampler: indices = [";
-  for (int i = 0; i < indices_->size(); ++i) {
-    if (i != 0) {
+  for (int index = 0; index < (int)indices_->size(); ++index) {
+    if (index != 0) {
       str << ", ";
     }
-    str << indices_->at(i);
+    str << indices_->at(index);
   }
   str << "]";
   return str.str();

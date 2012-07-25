@@ -16,7 +16,7 @@ namespace ltr {
  */
 template <typename TElement>
 class NanToAverageConverterLearner
-    : public BaseFeatureConverterLearner<TElement, NanToAverageConverter> {
+  : public BaseFeatureConverterLearner<TElement, NanToAverageConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NanToAverageConverter* feature_converter);

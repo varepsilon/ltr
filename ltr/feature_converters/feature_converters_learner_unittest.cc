@@ -74,7 +74,7 @@ TEST_F(FeatureConvertersLearnerTest, CommonTest) {
   feature_converters.push_back(new RemoveNominalConverterLearner<Object>);
 
   for (int feature_converters_index = 0;
-       feature_converters_index < feature_converters.size();
+       feature_converters_index < (int)feature_converters.size();
        ++feature_converters_index) {
     ASSERT_NO_THROW(feature_converters[feature_converters_index]->learn(data));
   }
@@ -110,7 +110,7 @@ TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
 
   converter2->apply(data, &converted_data);
   EXPECT_EQ(indices->size(), converted_data.feature_count());
-  for (int index = 0; index < indices->size(); ++index) {
+  for (int index = 0; index < (int)indices->size(); ++index) {
     EXPECT_EQ((*indices)[index], converted_data[0][index]);
   }
 }
@@ -124,14 +124,14 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
   converter->apply(data, &converted_data);
 
   EXPECT_EQ(4, converted_data.feature_count());
-  set<int> used_features;
+  set<double> used_features;
   for (int feature_index = 0;
        feature_index < converted_data.feature_count();
        ++feature_index) {
     EXPECT_GT(features_count, converted_data[0][feature_index]);
     EXPECT_LE(0, converted_data[0][feature_index]);
 
-    int current_feature = converted_data[0][feature_index];
+    double current_feature = converted_data[0][feature_index];
     if (used_features.find(current_feature) == used_features.end()) {
       used_features.insert(current_feature);
     } else {
@@ -152,7 +152,7 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
     EXPECT_GT(features_count, converted_data[0][feature_index]);
     EXPECT_LE(0, converted_data[0][feature_index]);
 
-    int current_feature = converted_data[0][feature_index];
+    double current_feature = converted_data[0][feature_index];
     if (used_features.find(current_feature) == used_features.end()) {
       used_features.insert(current_feature);
     } else {

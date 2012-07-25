@@ -5,8 +5,8 @@
 
 using ltr::utility::isNaN;
 namespace ltr {
-void NanToZeroConverter::fillOutputFeatureInfo()  {
-  output_feature_info_ = input_feature_info_;
+FeatureInfo NanToZeroConverter::convertFeatureInfo() const  {
+  return input_feature_info_;
 }
 
 string NanToZeroConverter::generateCppCode(
@@ -18,7 +18,7 @@ string NanToZeroConverter::generateCppCode(
       append("(const std::vector<double>& features, ").
       append("std::vector<double>* result) {\n").
       append("  result->clear();\n").
-      append("  for (int i = 0; i < features.size(); i++) {\n").
+      append("  for (int i = 0; i < features.size(); ++i) {\n").
       append("    if (features[i] != features[i]) result->push_back(0);\n").
       append("    else result->push_back(features[i]);\n").
       append("  }\n").
@@ -26,16 +26,14 @@ string NanToZeroConverter::generateCppCode(
   return code;
 }
 
-void NanToZeroConverter::applyImpl(const Object& input,
-                                         Object* output) const {
-  *output = input;
+void NanToZeroConverter::applyImpl(
+  const Object& input, Object* output) const {
+  *output = input.deepCopy();
 #pragma omp parallel for
   for (int feature_index = 0;
-      feature_index < input.features().size(); ++feature_index) {
+       feature_index < (int)input.features().size(); ++feature_index) {
     if (isNaN(input[feature_index])) {
       output->at(feature_index) = 0;
-    } else {
-      output->at(feature_index) = input[feature_index];
     }
   }
 }

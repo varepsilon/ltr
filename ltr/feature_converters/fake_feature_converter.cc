@@ -9,8 +9,8 @@
 using std::string;
 
 namespace ltr {
-void FakeFeatureConverter::fillOutputFeatureInfo() {
-  output_feature_info_ = input_feature_info_;
+FeatureInfo FakeFeatureConverter::convertFeatureInfo() const {
+  return input_feature_info_;
 }
 
 string FakeFeatureConverter::generateCppCode(
@@ -25,9 +25,9 @@ string FakeFeatureConverter::generateCppCode(
   return code;
 }
 
-void FakeFeatureConverter::applyImpl(const Object& input,
-                                           Object* output) const {
-  *output = input.deepCopy();
+void FakeFeatureConverter::applyImpl(
+  const Object& input, Object* output) const {
+    *output = input.deepCopy();
 }
 
 string FakeFeatureConverter::getDefaultAlias() const {

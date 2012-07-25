@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_DATA_PREPROCESSORS_DATA_RANDOM_SAMPLER_H_
 #define LTR_DATA_PREPROCESSORS_DATA_RANDOM_SAMPLER_H_
@@ -120,10 +120,10 @@ template <class TElement>
 void DataRandomSampler<TElement>::applyImpl(
     const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
-  int sample_size = ceilf(input.size() * sampling_fraction_);
+  int sample_size = (int)ceil(input.size() * sampling_fraction_);
   Indices indices(sample_size);
-  if (with_replacement_) {    
-    for (int i = 0; i < indices.size(); ++i) {
+  if (with_replacement_) {
+    for (int i = 0; i < (int)indices.size(); ++i) {
       indices[i] = randomizer.rand(input.size());
     }
   } else {

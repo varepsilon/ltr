@@ -59,11 +59,11 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
     if (split_feature_n_times_) {
       int split_cnt = feature_split_count_;
       if (split_cnt <= feature_values.size() - 1) {
-        for (int i = 0; i < split_cnt; i++)
+        for (int i = 0; i < split_cnt; ++i)
           numeric_split_values.
             push_back(min_val + (max_val - min_val) / split_cnt * i);
       } else {
-        for (int i = 0; i < feature_values.size() - 1; i++)
+        for (int i = 0; i < feature_values.size() - 1; ++i)
           numeric_split_values.
             push_back((feature_values[i] + feature_values[i+1]) / 2);
       }

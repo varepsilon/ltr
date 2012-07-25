@@ -19,13 +19,11 @@ class RemoveNominalConverter : public FeatureConverter {
   typedef ltr::utility::shared_ptr<RemoveNominalConverter> Ptr;
 
   RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())
-      : FeatureConverter(feature_info) {
-    fillOutputFeatureInfo();
-  }
+    : FeatureConverter(feature_info) {}
 
   string generateCppCode(const std::string &function_name) const;
 
-  virtual void fillOutputFeatureInfo();
+  virtual FeatureInfo convertFeatureInfo() const;
 
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
@@ -35,7 +33,7 @@ class RemoveNominalConverter : public FeatureConverter {
 
 template <typename TElement>
 class RemoveNominalConverterLearner
-    : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
+  : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          RemoveNominalConverter* feature_converter) {

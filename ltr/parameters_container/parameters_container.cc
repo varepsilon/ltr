@@ -30,20 +30,20 @@ bool ParametersContainer::Contains(const string& name) const {
 }
 
 void ParametersContainer::Copy(const ParametersContainer& parameters) {
-  for (StringAnyHash::const_iterator it =
+  for (StringAnyHash::const_iterator iterator =
        parameters.name_value_hash_.begin();
-       it != parameters.name_value_hash_.end();
-       ++it) {
-    const string& name = it->first;
-    const boost::any& value = it->second;
+       iterator != parameters.name_value_hash_.end();
+       ++iterator) {
+    const string& name = iterator->first;
+    const boost::any& value = iterator->second;
 
     if (!Contains(name))  {
       string error_string = "Wrong parameter name " + name + "\n";
       error_string += "Did you mean one of these:";
-      for (StringAnyHash::const_iterator it = name_value_hash_.begin();
-           it != name_value_hash_.end();
-           ++it) {
-        error_string += " " + it->first;
+      for (StringAnyHash::const_iterator iterator = name_value_hash_.begin();
+           iterator != name_value_hash_.end();
+           ++iterator) {
+        error_string += " " + iterator->first;
     }
       error_string += "?";
       throw std::logic_error(error_string);
@@ -66,13 +66,14 @@ string ParametersContainer::toString() const {
     out << "ParametersContainer(empty)";
     return out.str();
   }
-  out << "ParametersContainer (number of parameters=" << name_value_hash_.size();
+  out <<
+    "ParametersContainer (number of parameters=" << name_value_hash_.size();
   StringAnyHash::size_type parameter_index = 1;
-  for (StringAnyHash::const_iterator it = name_value_hash_.begin();
-       it != name_value_hash_.end();
-       ++it) {
-    const string& name = it->first;
-    const boost::any& value = it->second;
+  for (StringAnyHash::const_iterator iterator = name_value_hash_.begin();
+       iterator != name_value_hash_.end();
+       ++iterator) {
+    const string& name = iterator->first;
+    const boost::any& value = iterator->second;
     out << '\n';
     out << parameter_index++ << ") name=" << name
         << ", type=" << value.type().name();

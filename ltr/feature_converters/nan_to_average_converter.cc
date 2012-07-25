@@ -5,21 +5,17 @@
 #include "ltr/feature_converters/nan_to_average_converter.h"
 
 namespace ltr {
-void NanToAverageConverter::fillOutputFeatureInfo()  {
-  // TO DO (not very good)
-  if (average_features_values_.empty()) {
-    return;
-  }
-
-  output_feature_info_.clear();
+FeatureInfo NanToAverageConverter::convertFeatureInfo() const  {
+  FeatureInfo output_feature_info;
   for (int input_feature_index = 0;
        input_feature_index < (int)input_feature_info_.feature_count();
        input_feature_index++) {
     if (!isNaN(average_features_values_[input_feature_index])) {
-      output_feature_info_.addFeature(
+      output_feature_info.addFeature(
         input_feature_info_.getFeatureType(input_feature_index));
     }
   }
+  return output_feature_info;
 }
 
 string NanToAverageConverter::generateCppCode(
@@ -59,20 +55,16 @@ string NanToAverageConverter::generateCppCode(
 
 void NanToAverageConverter::applyImpl(const Object& input,
                                       Object* output) const {
-  *output = Object(output_feature_info_);
-  output->features().resize(output_feature_info_.feature_count());
-
-  int input_feature_index = 0, output_feature_index = 0;
-  for (; input_feature_index < (int)input.features().size();
+  *output = Object();
+  for (int input_feature_index = 0;
+       input_feature_index < (int)input.features().size();
        ++input_feature_index) {
     if (!isNaN(average_features_values_[input_feature_index])) {
       if (isNaN(input[input_feature_index])) {
-        output->at(output_feature_index) =
-          average_features_values_[input_feature_index];
+        output->operator<<(average_features_values_[input_feature_index]);
       } else {
-        output->at(output_feature_index) = input[input_feature_index];
+        output->operator<<(input[input_feature_index]);
       }
-      ++output_feature_index;
     }
   }
 }

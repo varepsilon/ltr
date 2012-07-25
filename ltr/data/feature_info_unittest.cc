@@ -12,7 +12,7 @@ using ltr::NominalFeatureValues;
 
 TEST(FeaturesInfoTest, TestingBasicOperations) {
   FeatureInfo info1(5, ltr::NUMERIC);
-  for (size_t i = 0; i < 5; i++)
+  for (size_t i = 0; i < 5; ++i)
     EXPECT_EQ(info1.getFeatureType(i), ltr::NUMERIC);
 
   NominalFeatureValues values;

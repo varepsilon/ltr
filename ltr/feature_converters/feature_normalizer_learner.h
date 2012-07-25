@@ -81,7 +81,7 @@ void FeatureNormalizerLearner<TElement>::learnImpl(
   Features input_min, input_max;
   getFeaturesMinMaxValues(data_set, &input_min, &input_max);
 
-  for (size_t feature_index = 0;
+  for (int feature_index = 0;
        feature_index < data_set.feature_count(); ++feature_index) {
     double delta = input_max[feature_index] - input_min[feature_index];
     double coefficient, shift;

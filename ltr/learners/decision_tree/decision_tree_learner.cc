@@ -74,7 +74,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     LeafVertex<double>::Ptr vertex = LeafVertexPtr<double>();
     double average = 0;
     double sum = 0;
-    for (int i = 0; i < data.size(); i++) {
+    for (int i = 0; i < data.size(); ++i) {
       average += data[i].actual_label() * data.getWeight(i);
       sum += data.getWeight(i);
     }
@@ -95,11 +95,11 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   split(data, best_conditions, &datas);
   INFO("Data set splitted into %d sets.", datas.size());
   stringstream sizes;
-  for (size_t i = 0; i < datas.size(); i++)
+  for (size_t i = 0; i < datas.size(); ++i)
     if (datas[i].size() != 0)
       sizes << datas[i].size() << " ";
   INFO("Sizes: %s", sizes.str().c_str());
-  for (size_t i = 0; i < datas.size(); i++) {
+  for (size_t i = 0; i < datas.size(); ++i) {
     if (datas[i].size() != 0) {
       Vertex<double>::Ptr tmp = createOneVertex(datas[i]);
       tmp->setCondition(best_conditions[i]);

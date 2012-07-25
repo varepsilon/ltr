@@ -10,9 +10,9 @@ void SelectTopTreesStrategy::
 
     std::sort(population.rbegin(), population.rend());
 
-    int top_bound_index = ceil(top_fraction_ * population.size());
+    int top_bound_index = (int)ceil(top_fraction_ * population.size());
     for (int tree_index = top_bound_index;
-         tree_index < population.size(); ++tree_index) {
+         tree_index < (int)population.size(); ++tree_index) {
       population[tree_index] = population[tree_index % top_bound_index];
     }
 }

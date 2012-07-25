@@ -17,11 +17,9 @@ class NanToZeroConverter : public FeatureConverter {
   typedef ltr::utility::shared_ptr<NanToZeroConverter> Ptr;
 
   NanToZeroConverter(const FeatureInfo& feature_info = FeatureInfo())
-      : FeatureConverter(feature_info) {
-    fillOutputFeatureInfo();
-  }
+    : FeatureConverter(feature_info) {}
 
-  virtual void fillOutputFeatureInfo();
+  virtual FeatureInfo convertFeatureInfo() const;
 
   virtual string generateCppCode(const string& function_name) const;
 
@@ -33,7 +31,7 @@ class NanToZeroConverter : public FeatureConverter {
 
 template <typename TElement>
 class NanToZeroConverterLearner
-    : public BaseFeatureConverterLearner<TElement, NanToZeroConverter> {
+  : public BaseFeatureConverterLearner<TElement, NanToZeroConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NanToZeroConverter* feature_converter) {

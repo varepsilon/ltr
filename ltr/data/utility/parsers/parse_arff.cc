@@ -133,7 +133,7 @@ namespace io_utility {
       raw_feature_info_[feature_id].feature_name = attr_name;
       if (attr_name == "class") {
         raw_feature_info_[feature_id].feature_type = CLASS;
-        for (int i = 0; i < values.size(); i++)
+        for (int i = 0; i < (int)values.size(); ++i)
           classes_[values[i]] = i+1;
         class_feature_id_ = feature_id;
       } else if (attr_type == "NUMERIC" || attr_type == "REAL") {

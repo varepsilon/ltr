@@ -73,10 +73,10 @@ namespace ltr {
     try {
       str << "qid:" << object.getMetaInfo("queryId") << " ";
     } catch(std::logic_error err) { }
-    for (size_t feature_index = 0;
+    for (int feature_index = 0;
          feature_index < object.feature_count();
          ++feature_index) {
-      str << feature_index+1 << ":" 
+      str << feature_index+1 << ":"
           << object[feature_index] << " ";
     }
     *result = str.str();
@@ -90,9 +90,9 @@ namespace ltr {
 
     groupByIntMeta(objects, "queryId", &objects_);
 
-    for (object_iterator i = objects_.begin(); i != objects_.end(); i++) {
+    for (object_iterator i = objects_.begin(); i != objects_.end(); ++i) {
       ObjectList list;
-      for (int j = 0; j < i->second.size(); j++)
+      for (int j = 0; j < (int)i->second.size(); j++)
         list << i->second[j];
       data << list;
     }
@@ -107,8 +107,8 @@ namespace ltr {
 
     groupByIntMeta(objects, "queryId", &objects_);
 
-    for (object_iterator i = objects_.begin(); i != objects_.end(); i++)
-      for (int j = 0; j < i->second.size(); j++)
+    for (object_iterator i = objects_.begin(); i != objects_.end(); ++i)
+      for (int j = 0; j < (int)i->second.size(); j++)
         for (int k = 0; k < j; k++)
           data << ObjectPair(i->second[j], i->second[k]);
     return data;

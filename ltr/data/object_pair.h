@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_DATA_OBJECT_PAIR_H_
 #define LTR_DATA_OBJECT_PAIR_H_
@@ -7,13 +7,13 @@
 #include <string>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h" //NOLINT
-
 #include "ltr/data/object.h"
+
 #include "ltr/interfaces/printable.h"
 
-namespace ltr {
+#include "ltr/utility/shared_ptr.h"
 
+namespace ltr {
 /** \class The class stores a pair of two objects. The container for two
  *  objects, can be stored in DataSet. That would represent a pairwise data set.
  */
@@ -22,7 +22,6 @@ namespace ltr {
   /** \typedef Shared pointer to an object pair.
    */
   typedef ltr::utility::shared_ptr<ObjectPair> Ptr;
-
   /** Default constructor creates a pair of two objects with no features.
    *
    */
@@ -35,12 +34,10 @@ namespace ltr {
    * of the objects in the pair.
    */
   ObjectPair deepCopy() const;
-
   /** 
    * Function for serialization pair into string.
    */
   string toString() const;
-
   /** The first object in the pair.
    */
   Object first;
@@ -54,5 +51,5 @@ bool operator==(const ObjectPair& lhs, const ObjectPair& rhs);
 /** Operator, checks whether two objects are not equal.
  */
 bool operator!=(const ObjectPair& lhs, const ObjectPair& rhs);
-}
+};
 #endif  // LTR_DATA_OBJECT_PAIR_H_

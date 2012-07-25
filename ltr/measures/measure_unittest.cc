@@ -25,32 +25,32 @@ using ltr::Accuracy;
 using ltr::NormalizedMeasure;
 
 TEST(MeasureTest, MeasureTest) {
-  Object o1;
-  o1 << 1;
-  o1.set_actual_label(0);
-  o1.set_predicted_label(2);
+  Object object1;
+  object1 << 1;
+  object1.set_actual_label(0);
+  object1.set_predicted_label(2);
 
-  Object o2;
-  o2 << 2;
-  o2.set_actual_label(1.4);
-  o2.set_predicted_label(1.4);
+  Object object2;
+  object2 << 2;
+  object2.set_actual_label(1.4);
+  object2.set_predicted_label(1.4);
 
-  Object o3;
-  o3 << 3;
-  o3.set_actual_label(3.5);
-  o3.set_predicted_label(-3.5);
+  Object object3;
+  object3 << 3;
+  object3.set_actual_label(3.5);
+  object3.set_predicted_label(-3.5);
 
-  Object o4;
-  o4 << 4;
-  o4.set_actual_label(0.5);
-  o4.set_predicted_label(4.0);
+  Object object4;
+  object4 << 4;
+  object4.set_actual_label(0.5);
+  object4.set_predicted_label(4.0);
 
   DataSet<Object> data_set(FeatureInfo(1));
   DataSet<Object> empty_data_set(FeatureInfo(1));
-  data_set.add(o1, 1.0);
-  data_set.add(o2, 2.0);
-  data_set.add(o3, 0.5);
-  data_set.add(o4, 1.2);
+  data_set.add(object1, 1.0);
+  data_set.add(object2, 2.0);
+  data_set.add(object3, 0.5);
+  data_set.add(object4, 1.2);
 
   AbsError ae;
   EXPECT_TRUE(DoubleEqual(ae.average(data_set), 3.125));

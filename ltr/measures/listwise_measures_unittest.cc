@@ -30,34 +30,34 @@ using ltr::GMRR;
 class ListwiseMeasuresTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
-    Object o1;
-    o1 << 1;
-    o1.set_actual_label(1);
-    o1.set_predicted_label(2);
+    Object object1;
+    object1 << 1;
+    object1.set_actual_label(1);
+    object1.set_predicted_label(2);
 
-    Object o2;
-    o2 << 2;
-    o2.set_actual_label(2);
-    o2.set_predicted_label(2);
+    Object object2;
+    object2 << 2;
+    object2.set_actual_label(2);
+    object2.set_predicted_label(2);
 
-    Object o3;
-    o3 << 3;
-    o3.set_actual_label(4);
-    o3.set_predicted_label(3);
+    Object object3;
+    object3 << 3;
+    object3.set_actual_label(4);
+    object3.set_predicted_label(3);
 
-    olist << o1;
-    olist << o2;
-    olist << o3;
+    olist << object1;
+    olist << object2;
+    olist << object3;
 
-    Object o4;
-    o4 << 4;
-    o4.set_actual_label(1);
-    o4.set_predicted_label(3);
+    Object object4;
+    object4 << 4;
+    object4.set_actual_label(1);
+    object4.set_predicted_label(3);
 
-    olist2 << o1;
-    olist2 << o2;
-    olist2 << o3;
-    olist2 << o4;
+    olist2 << object1;
+    olist2 << object2;
+    olist2 << object3;
+    olist2 << object4;
   }
 
   virtual void TearDown() {
@@ -82,7 +82,7 @@ TEST_F(ListwiseMeasuresTest, TestingGMRR) {
   gmrr0.set_max_label(4.0);
   gmrr1.set_max_label(4.0);
   gmrr2.set_max_label(4.0);
- 
+
   EXPECT_TRUE(DoubleEqual(gmrr0(olist), 0.943115234375));
   EXPECT_TRUE(DoubleEqual(gmrr1(olist), 0.9375));
   EXPECT_TRUE(DoubleEqual(gmrr2(olist), 0.939453125));

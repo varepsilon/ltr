@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_DATA_PER_OBJECT_ACCESSOR_H_
 #define LTR_DATA_PER_OBJECT_ACCESSOR_H_
@@ -6,9 +6,10 @@
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
+
 #include "ltr/interfaces/parameterized.h"
 
-#include "ltr/utility/shared_ptr.h" //NOLINT
+#include "ltr/utility/shared_ptr.h"
 
 using ltr::Object;
 using ltr::ObjectPair;
@@ -19,8 +20,10 @@ class PerObjectAccessor {
  public:
   explicit PerObjectAccessor(TElement* element) : element_(element) {}
 
-  size_t object_count() const;
-  Object& object(size_t object_index);
+  int object_count() const;
+
+  Object& object(int object_index);
+
  private:
   TElement* element_;
 };
@@ -32,13 +35,15 @@ class PerObjectAccessor<Object> {
  public:
   explicit PerObjectAccessor(Object* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return 1;
   }
-  Object& object(size_t object_index) {
+
+  Object& object(int object_index) {
     CHECK(object_index < object_count());
     return *element_;
   }
+
  private:
   Object* element_;
 };
@@ -48,13 +53,15 @@ class PerObjectAccessor<const Object> {
  public:
   explicit PerObjectAccessor(const Object* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return 1;
   }
-  const Object& object(size_t object_index) {
+
+  const Object& object(int object_index) {
     CHECK(object_index < object_count());
     return *element_;
   }
+
  private:
   const Object* element_;
 };
@@ -65,10 +72,11 @@ class PerObjectAccessor<ObjectPair> {
  public:
   explicit PerObjectAccessor(ObjectPair* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return 2;
   }
-  Object& object(size_t object_index) {
+
+  Object& object(int object_index) {
     CHECK(object_index < object_count());
     if (object_index == 0) {
       return element_->first;
@@ -76,6 +84,7 @@ class PerObjectAccessor<ObjectPair> {
       return element_->second;
     }
   }
+
  private:
   ObjectPair* element_;
 };
@@ -85,10 +94,11 @@ class PerObjectAccessor<const ObjectPair> {
  public:
   explicit PerObjectAccessor(const ObjectPair* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return 2;
   }
-  const Object& object(size_t object_index) {
+
+  const Object& object(int object_index) {
     CHECK(object_index < object_count());
     if (object_index == 0) {
       return element_->first;
@@ -96,6 +106,7 @@ class PerObjectAccessor<const ObjectPair> {
       return element_->second;
     }
   }
+
  private:
   const ObjectPair* element_;
 };
@@ -105,13 +116,15 @@ class PerObjectAccessor<ObjectList> {
  public:
   explicit PerObjectAccessor(ObjectList* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return element_->size();
   }
-  Object& object(size_t object_index) {
+
+  Object& object(int object_index) {
     CHECK(object_index < object_count());
     return element_->at(object_index);
   }
+
  private:
   ObjectList* element_;
 };
@@ -121,13 +134,15 @@ class PerObjectAccessor<const ObjectList> {
  public:
   explicit PerObjectAccessor(const ObjectList* element) : element_(element) {}
 
-  size_t object_count() const {
+  int object_count() const {
     return element_->size();
   }
-  const Object& object(size_t object_index) {
+
+  const Object& object(int object_index) {
     CHECK(object_index < object_count());
     return element_->at(object_index);
   }
+
  private:
   const ObjectList* element_;
 };

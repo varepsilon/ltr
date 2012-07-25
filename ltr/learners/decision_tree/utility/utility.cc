@@ -11,7 +11,7 @@ void split(DataSet<Object> data,
   datas->clear();
   for (size_t j = 0; j < conditions.size(); j++)
     datas->push_back(DataSet<Object>((data.feature_info())));
-  for (size_t i = 0; i < data.size(); i++) {
+  for (size_t i = 0; i < data.size(); ++i) {
     int best_idx = -1;
     double best_value = 0;
     for (int j = 0; j < conditions.size(); j++) {

@@ -15,14 +15,15 @@ class SqrErrorQuality : public SplittingQuality {
     double sqrError(DataSet<ltr::Object> data) const {
       double weight_sum = 0;
       double sum_label = 0;
-      for (int i = 0; i < data.size(); i++) {
+      for (int i = 0; i < data.size(); ++i) {
         PerObjectAccessor<ltr::Object> per_object_accessor(&data[i]);
-        sum_label += per_object_accessor.object(0).actual_label() * data.getWeight(i);
+        sum_label +=
+          per_object_accessor.object(0).actual_label() * data.getWeight(i);
         weight_sum += data.getWeight(i);
       }
       double average = sum_label / weight_sum;
       double err = 0;
-      for (int i = 0; i < data.size(); i++) {
+      for (int i = 0; i < data.size(); ++i) {
         PerObjectAccessor<ltr::Object> per_object_accessor(&data[i]);
         double label = per_object_accessor.object(0).actual_label();
         err += (label - average) * (label - average) * data.getWeight(i);
@@ -44,7 +45,7 @@ class SqrErrorQuality : public SplittingQuality {
         return -1e9;
       }
       double result = 0;
-      for (int i = 0; i < split.size(); i++) {
+      for (int i = 0; i < split.size(); ++i) {
         result += split[i].size() * 1.0 / data.size() * sqrError(split[i]);
       }
       return result;

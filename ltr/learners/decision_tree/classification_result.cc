@@ -29,16 +29,16 @@ int ClassificationResult::size() const {
 
 void ClassificationResult::normalize() {
   double sum = 0;
-  for (int i = 0; i < size(); i++) {
+  for (int i = 0; i < size(); ++i) {
     sum += std::fabs(probability_[i]);
   }
   if (sum == 0) {
-    for (int i = 0; i < size(); i++) {
+    for (int i = 0; i < size(); ++i) {
       probability_[i] = 1.0 / size();
     }
     return;
   }
-  for (int i = 0; i < size(); i++) {
+  for (int i = 0; i < size(); ++i) {
     probability_[i] = std::fabs(probability_[i]) / sum;
   }
 }
@@ -48,7 +48,7 @@ ClassificationResult operator+(const ClassificationResult& left,
   if (left.size() != right.size())
     throw std::logic_error("can't add: different number of classes");
   ClassificationResult result(left.size());
-  for (int i = 0; i < result.size(); i++) {
+  for (int i = 0; i < result.size(); ++i) {
     result[i] = left[i] + right[i];
   }
   return result;
@@ -57,7 +57,7 @@ ClassificationResult operator+(const ClassificationResult& left,
 ClassificationResult operator*(const ClassificationResult& left,
                                double right) {
   ClassificationResult result(left.size());
-  for (int i = 0; i < result.size(); i++) {
+  for (int i = 0; i < result.size(); ++i) {
     result[i] = right * left[i];
   }
   return result;
