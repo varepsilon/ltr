@@ -6,19 +6,21 @@
 #include <cmath>
 #include <string>
 
-#include <boost/shared_ptr.hpp>
-
 #include "contrib/puppy/Puppy.hpp"
+
 #include "ltr/interfaces/serializable.h"
 
+#include "ltr/utility/shared_ptr.h"
+
 using std::string;
+
 using boost::lexical_cast;
 
 namespace ltr {
 namespace gp {
 class BaseGPOperation : public Puppy::Primitive {
  public:
-  typedef boost::shared_ptr<BaseGPOperation> Ptr;
+  typedef ltr::utility::shared_ptr<BaseGPOperation> Ptr;
 
   BaseGPOperation(int number_of_arguments, string name)
   : Primitive(number_of_arguments, name) {}
@@ -189,6 +191,6 @@ class Ephemeral : public BaseGPOperation {
     return new Puppy::TokenT<double>(name.str(), value);
   }
 };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_

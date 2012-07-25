@@ -1,9 +1,7 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_
-
-#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <algorithm>
@@ -11,10 +9,13 @@
 #include <string>
 #include <sstream>
 
+#include "ltr/data/utility/data_set_statistics.h"
+
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/per_feature_linear_converter.h"
+
 #include "ltr/utility/numerical.h"
-#include "ltr/data/utility/data_set_statistics.h"
+#include "ltr/utility/shared_ptr.h"
 
 using std::vector;
 using std::string;
@@ -23,48 +24,48 @@ using std::logic_error;
 using ltr::utility::getFeaturesMinMaxValues;
 
 namespace ltr {
-
 /**
-* \brief Independently normalize each feature component to the specified range.
-* \param min desired minimum values
-* \param max desired maximum values
-*/
+ * \brief Independently normalize each feature component to the specified range.
+ * \param min desired minimum values
+ * \param max desired maximum values
+ */
 template <class TElement>
 class FeatureNormalizerLearner
-    : public BaseFeatureConverterLearner<TElement, PerFeatureLinearConverter> {
+  : public BaseFeatureConverterLearner<TElement, PerFeatureLinearConverter> {
  public:
   typedef ltr::utility::shared_ptr<FeatureNormalizerLearner> Ptr;
-
   /**
-  * \param min desired minimum values
-  * \param max desired maximum values
-  */
-  explicit FeatureNormalizerLearner(double min = 0.0, double max = 1.0);
+   * \param min desired minimum values
+   * \param max desired maximum values
+   */
+  explicit FeatureNormalizerLearner(double min = 0.0, double max = 1.0)
+    : min_(min),
+      max_(max) {}
+
   explicit FeatureNormalizerLearner(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
+
   virtual void checkParameters() const;
 
   virtual string toString() const;
 
   GET_SET(double, min);
   GET_SET(double, max);
+
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
       PerFeatureLinearConverter* per_feature_linear_converter);
+
   virtual void setParametersImpl(const ParametersContainer& parameters);
-  virtual string getDefaultAlias() const {return "FeatureNormalizerLearner";}
+
+  virtual string getDefaultAlias() const;
 
   double min_;
   double max_;
 };
 
-template <typename TElement>
-FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(double min,
-                                                             double max) {
-  min_ = min;
-  max_ = max;
-}
+// template realizations
 
 template <typename TElement>
 FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
@@ -81,7 +82,7 @@ void FeatureNormalizerLearner<TElement>::learnImpl(
   getFeaturesMinMaxValues(data_set, &input_min, &input_max);
 
   for (size_t feature_index = 0;
-      feature_index < data_set.feature_count(); ++feature_index) {
+       feature_index < data_set.feature_count(); ++feature_index) {
     double delta = input_max[feature_index] - input_min[feature_index];
     double coefficient, shift;
     if (utility::DoubleEqual(delta, 0)) {
@@ -114,7 +115,6 @@ void FeatureNormalizerLearner<TElement>::setParametersImpl(
   max_ = parameters.Get<double>("MAX");
 }
 
-
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::setDefaultParameters() {
   min_ = 0.0;
@@ -125,5 +125,10 @@ template <typename TElement>
 void FeatureNormalizerLearner<TElement>::checkParameters() const {
   CHECK(min_ < max_);
 }
+
+template <typename TElement>
+string FeatureNormalizerLearner<TElement>::getDefaultAlias() const {
+  return "FeatureNormalizerLearner";
 }
+};
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_NORMALIZER_LEARNER_H_

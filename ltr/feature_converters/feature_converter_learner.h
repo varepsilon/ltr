@@ -1,17 +1,20 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_
 
-#include "ltr/utility/shared_ptr.h"
-
 #include <vector>
 
 #include "ltr/data/data_set.h"
+
 #include "ltr/feature_converters/feature_converter.h"
+
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/printable.h"
+
 #include "ltr/parameters_container/parameters_container.h"
+
+#include "ltr/utility/shared_ptr.h"
 
 using std::vector;
 
@@ -36,60 +39,64 @@ class FeatureConverterLearner : public Parameterized,
  public:
   typedef ltr::utility::shared_ptr<FeatureConverterLearner> Ptr;
   /**
-  * \brief Learns input dataset.
-  * \param data_set dataset to study
-  * \param check_parameters whether perform Parameterized::checkParameters() before launch
-  */
+   * \brief Learns input dataset.
+   * \param data_set dataset to study
+   * \param check_parameters whether perform Parameterized::checkParameters() before launch
+   */
   virtual void learn(const DataSet<TElement>& data_set,
                      bool check_parameters = true) = 0;
   /**
-  * \note Don't forget to learn() before make().
-  * \return pointer to <em>new instance</em> of feature converter.
-  */
+   * \note Don't forget to learn() before make().
+   * \return pointer to <em>new instance</em> of feature converter.
+   */
   virtual FeatureConverter::Ptr make() const = 0;
 };
-
 /**
-* \brief A base class for FeatureConverter learners.
-*
-* If you want to make your own FeatureConverterLearner you should
-* inherit from BaseFeatureConverterLearner and implement learnImpl().
-*
-* \sa FeatureConverterLearner, BaseLearner
-*/
+ * \brief A base class for FeatureConverter learners.
+ *
+ * If you want to make your own FeatureConverterLearner you should
+ * inherit from BaseFeatureConverterLearner and implement learnImpl().
+ *
+ * \sa FeatureConverterLearner, BaseLearner
+ */
 // \TODO(sameg) BaseLearner -> Trainer ?
 template <class TElement, class TFeatureConverter>
 class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
  public:
   typedef ltr::utility::shared_ptr<BaseFeatureConverterLearner> Ptr;
   /**
-  * \note Don't forget to learn() before makeSpecific().
-  * \return pointer to <em>new instance</em> of feature converter
-  */
+   * \note Don't forget to learn() before makeSpecific().
+   * \return pointer to <em>new instance</em> of feature converter
+   */
   typename TFeatureConverter::Ptr makeSpecific() const {
     return typename TFeatureConverter::Ptr(
-        new TFeatureConverter(feature_converter_));
+      new TFeatureConverter(feature_converter_));
   }
+
   virtual FeatureConverter::Ptr make() const {
     return FeatureConverter::Ptr(makeSpecific());
   }
+
   virtual void learn(const DataSet<TElement>& data_set,
                      bool check_parameters = true) {
     if (check_parameters) {
       this->checkParameters();
     }
+
     feature_converter_.set_input_feature_info(data_set.feature_info());
     learnImpl(data_set, &feature_converter_);
     feature_converter_.fillOutputFeatureInfo();
   }
+
  private:
   /**
-  * \brief Learn input dataset and train feature converter.
-  * \param[in] data_set dataset to study
-  * \param[out] feature_converter feature converter to train
-  */
+   * \brief Learn input dataset and train feature converter.
+   * \param[in] data_set dataset to study
+   * \param[out] feature_converter feature converter to train
+   */
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          TFeatureConverter* feature_converter) = 0;
+
   TFeatureConverter feature_converter_;
 };
 };

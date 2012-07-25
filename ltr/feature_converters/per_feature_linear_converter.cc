@@ -7,7 +7,6 @@
 using std::logic_error;
 
 namespace ltr {
-
 void PerFeatureLinearConverter::fillOutputFeatureInfo()  {
   output_feature_info_ = input_feature_info_;
 }
@@ -35,16 +34,6 @@ void PerFeatureLinearConverter::set_shift(size_t feature_index, double shift) {
   shifts_[feature_index] = shift;
 }
 
-void PerFeatureLinearConverter::applyImpl(const Object& input,
-                                                Object* output) const {
-  *output = input.deepCopy();
-  for (size_t feature_index = 0;
-      feature_index < output->features().size(); ++feature_index) {
-    output->at(feature_index) *= factors_[feature_index];
-    output->at(feature_index) += shifts_[feature_index];
-  }
-}
-
 string PerFeatureLinearConverter::generateCppCode(
     const string& function_name) const {
   string code;
@@ -66,5 +55,20 @@ string PerFeatureLinearConverter::generateCppCode(
     }
   code.append("}\n");
   return code;
-};
 }
+
+void PerFeatureLinearConverter::applyImpl(const Object& input,
+                                                Object* output) const {
+  *output = input.deepCopy();
+#pragma omp parallel for
+  for (int feature_index = 0;
+      feature_index < output->features().size(); ++feature_index) {
+    output->at(feature_index) *= factors_[feature_index];
+    output->at(feature_index) += shifts_[feature_index];
+  }
+}
+
+string PerFeatureLinearConverter::getDefaultAlias() const {
+  return "PerFeatureLinearConverter";
+}
+};

@@ -7,6 +7,7 @@ namespace ltr {
   - \b Tutorial
     - \ref HowToInstall
     - \ref TutorialData
+    - \ref CrossvalidationData 
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
   - \b Advanced \b topics

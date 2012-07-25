@@ -12,8 +12,8 @@ using std::string;
 
 namespace ltr {
 /**
-* \brief Remove all nominal features.
-*/
+ * \brief Remove all nominal features.
+ */
 class RemoveNominalConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<RemoveNominalConverter> Ptr;
@@ -22,11 +22,15 @@ class RemoveNominalConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
+
   string generateCppCode(const std::string &function_name) const;
+
   virtual void fillOutputFeatureInfo();
+
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
-  virtual string getDefaultAlias() const {return "RemoveNominalConverter";}
+
+  virtual string getDefaultAlias() const;
 };
 
 template <typename TElement>
@@ -37,13 +41,15 @@ class RemoveNominalConverterLearner
                          RemoveNominalConverter* feature_converter) {
     // DO NOTHING
   }
+
   virtual string toString() const {
     return "RemoveNominalConverterLearner";
   }
+
  private:
-  virtual string getDefaultAlias() const {return "RemoveNominalConverterLearner";}
+  virtual string getDefaultAlias() const {
+    return "RemoveNominalConverterLearner";
+  }
 };
-}
-
+};
 #endif  // LTR_FEATURE_CONVERTERS_REMOVE_NOMINAL_CONVERTER_H_
-

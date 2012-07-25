@@ -1,9 +1,7 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_SCORERS_GP_SCORER_H_
 #define LTR_SCORERS_GP_SCORER_H_
-
-#include "ltr/utility/shared_ptr.h"
 
 #include <vector>
 #include <string>
@@ -13,7 +11,11 @@
 
 #include "ltr/learners/gp_learner/gp_functions.h"
 #include "ltr/learners/gp_learner/gp_primitives.h"
+
 #include "ltr/interfaces/serializable.h"
+
+#include "ltr/utility/shared_ptr.h"
+
 #include "ltr/scorers/scorer.h"
 
 using std::vector;
@@ -22,7 +24,6 @@ using std::stringstream;
 
 namespace ltr {
 namespace gp {
-
 typedef vector<Puppy::Tree> Population;
 /** \class The class prepresent Scorer for GPLearner. It contains the last
  * population of genetic programming's evolution process.
@@ -30,87 +31,45 @@ typedef vector<Puppy::Tree> Population;
 class GPScorer : public Scorer {
  public:
   GPScorer() {}
-
   /** \typedef boost shared pointer to GPScorer;
    */
   typedef ltr::utility::shared_ptr< GPScorer > Ptr;
   /** Constructor.
-   * \param population the current population of  genetic programming's
-   * evolution process, vector of Puppy::tree.
+   * \param best_tree the best Puppy::tree(formula, individ) in the population.
    * \param context the context upon which the Puppy::trees in the population
    * are constructed.
    * \param feature_count the number of features for those the context
    * was created.
-   * \param best_tree_index the index of best Puppy::tree(formula,
-   * individ) in the population.
    * \param feature_converters the vector of feature_converters to be applied
    * to the dataset before scoring.
    */
-  GPScorer(const Population& population,
-      const Puppy::Context& context,
-      size_t feature_count,
-      size_t best_tree_index,
-      const FeatureConverterArray& feature_converters =
-          FeatureConverterArray())
+  GPScorer(const Puppy::Tree& best_tree,
+           const Puppy::Context& context,
+           int feature_count,
+           const FeatureConverterArray& feature_converters =
+           FeatureConverterArray())
   : Scorer(feature_converters),
-  population_(population),
+  best_tree_(best_tree),
   context_(context),
-  feature_count_(feature_count),
-  best_tree_index_(best_tree_index) {}
+  feature_count_(feature_count) {}
 
-  string toString() const {
-    return "Genetic programming scorer";
-  }
+  string toString() const {return "Genetic programming scorer";}
 
  private:
   /** The implementation of scoring function. It scores using the best
    *  Puppy::tree in the population.
    */
-  double scoreImpl(const Object& object) const {
-    assert(feature_count_ == object.feature_count());
-    setContextToObject(&context_, object);
-    double score;
-    population_[best_tree_index_].interpret(&score, context_);
-    return score;
-  }
+  double scoreImpl(const Object& object) const;
   /** the function generates code for the scorer as cpp code function
    * \param class_name the name for the class that would be created.
    */
-  string generateCppCodeImpl(const string& function_name) const {
-    string code;
-    code.append("#include <vector>\n");
-    // generate primitive-functions code.
-    vector<Puppy::PrimitiveHandle>::const_iterator functionItr =
-        context_.mFunctionSet.begin();
-    for (; functionItr != context_.mFunctionSet.end(); ++functionItr) {
-      const Serializable* serializable = puppyPrimitiveHandleToPSerializable(
-          *functionItr);
-      string primiriveFunctionName =
-          serializable->getDefaultSerializableObjectName();
-      primiriveFunctionName += (*functionItr)->getName();
-      code.append(serializable->generateCppCode(primiriveFunctionName));
-    }
-    // generate the function from tree.
-    stringstream sstreamForCalls;
-    writeTreeAsStringOfCppCalls(population_[best_tree_index_],
-        sstreamForCalls, 0);
-    // generate scoring function
-    code.append("double ");
-    code.append(function_name);
-    code.append("(const std::vector< double >& feature) {\n");
-    code.append("  return ");
-    code.append(sstreamForCalls.str());
-    code.append(";\n");
-    code.append("}\n");
+  string generateCppCodeImpl(const string& function_name) const;
 
-    return code;
-  }
   virtual string getDefaultAlias() const {return "GPScorer";}
-
-  /** the current population of  genetic programming's
-   * evolution process, vector of Puppy::tree.
+  /** the best Puppy::tree(formula,
+   * individ) in the population.
    */
-  mutable Population population_;
+  mutable Puppy::Tree best_tree_;
   /** the context upon which the Puppy::trees in the population
    * are constructed.
    */
@@ -118,11 +77,7 @@ class GPScorer : public Scorer {
   /** the number of features for those the context
     * was created.
     */
-  size_t best_tree_index_;
-  /** the index of best Puppy::tree(formula,
-   * individ) in the population.
-   */
-  size_t feature_count_;
+  int feature_count_;
   /** GPlearner can access the class private data to set up the scorer as the
    * starting point of GP evolution process.
    */

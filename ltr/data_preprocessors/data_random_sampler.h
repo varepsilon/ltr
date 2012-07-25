@@ -17,6 +17,7 @@
 
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/utility/indices.h"
+#include "ltr/utility/random_number_generator.h"
 
 using std::vector;
 using std::string;
@@ -24,6 +25,7 @@ using std::vector;
 
 using ltr::utility::Indices;
 using ltr::utility::getRandomIndices;
+using ltr::utility::randomizer;
 
 namespace ltr {
 /**
@@ -63,8 +65,6 @@ class DataRandomSampler : public DataPreprocessor<TElement> {
   double sampling_fraction_;
   bool with_replacement_;
   int seed_;
-  // \TODO(sameg) May be make global random generator object?
-  mutable boost::mt19937 generator_;
 };
 
 // template realizations
@@ -73,8 +73,7 @@ template <class TElement>
 void DataRandomSampler<TElement>::set_seed(int seed) {
   CHECK(seed >= 0);  //NOLINT
   seed_ = seed;
-  srand(seed_);
-  generator_.seed(seed_);
+  randomizer.setSeed(seed_);
 }
 
 template <class TElement>
@@ -123,10 +122,9 @@ void DataRandomSampler<TElement>::applyImpl(
     DataSet<TElement>* output) const {
   int sample_size = ceilf(input.size() * sampling_fraction_);
   Indices indices(sample_size);
-  if (with_replacement_) {
-    boost::random_number_generator<boost::mt19937> random(generator_);
+  if (with_replacement_) {    
     for (int i = 0; i < indices.size(); ++i) {
-      indices[i] = random(input.size());
+      indices[i] = randomizer.rand(input.size());
     }
   } else {
     // \TODO(sameg) Not thread safe.

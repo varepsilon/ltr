@@ -1,11 +1,15 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_LEARNERS_GP_LEARNER_POPULATION_HANDLER_H_
-#define LTR_LEARNERS_GP_LEARNER_POPULATION_HANDLER_H_
+#ifndef LTR_LEARNERS_GP_LEARNER_STRATEGIES_POPULATION_HANDLER_H_
+#define LTR_LEARNERS_GP_LEARNER_STRATEGIES_POPULATION_HANDLER_H_
 
 #include <vector>
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/shared_ptr.h"
+
+#include "ltr/interfaces/parameterized.h"
+
+#include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
 
@@ -19,12 +23,12 @@ namespace gp {
 *
 * Handle population of trees for GPLearner.
 */
-class BasePopulationHandler {
+class BasePopulationHandler : public Parameterized {
  public:
-  typedef boost::shared_ptr<BasePopulationHandler> Ptr;
+  typedef ltr::utility::shared_ptr<BasePopulationHandler> Ptr;
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context) = 0;
+  virtual void handlePopulation(vector<Tree>& population, Context& context) = 0; // NOLINT
 };
-}
-}
-#endif  // LTR_LEARNERS_GP_LEARNER_POPULATION_HANDLER_H_
+};
+};
+#endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_POPULATION_HANDLER_H_

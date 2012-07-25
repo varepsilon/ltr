@@ -62,7 +62,6 @@ class YandexDCGFormula {
 template<class TDCGFormula>
 class BaseDCG : public ListwiseMeasure {
  public:
-   typedef boost::shared_ptr<BaseDCG> Ptr;
   /**
    * @param parameters Standart LTR parameter container with int parameter
    * NUMBER_OF_OBJECTS_TO_CONSIDER (where 0 means consider all docs),
@@ -124,8 +123,9 @@ string BaseDCG<TDCGFormula>::toString() const {
 }
 
 template<class TDCGFormula>
-void BaseDCG<TDCGFormula>::setParametersImpl(const ParametersContainer& parameters) {
-  this->number_of_objects_to_consider_ = 
+void BaseDCG<TDCGFormula>::
+  setParametersImpl(const ParametersContainer& parameters) {
+  this->number_of_objects_to_consider_ =
     parameters.template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
 }
 

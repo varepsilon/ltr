@@ -10,8 +10,8 @@
 
 namespace ltr {
 /**
-* Converts NaN features to zero values.
-*/
+ * Converts NaN features to zero values.
+ */
 class NanToZeroConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<NanToZeroConverter> Ptr;
@@ -20,11 +20,15 @@ class NanToZeroConverter : public FeatureConverter {
       : FeatureConverter(feature_info) {
     fillOutputFeatureInfo();
   }
+
   virtual void fillOutputFeatureInfo();
+
   virtual string generateCppCode(const string& function_name) const;
+
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
-  virtual string getDefaultAlias() const {return "NanToZeroConverter";}
+
+  virtual string getDefaultAlias() const;
 };
 
 template <typename TElement>
@@ -35,12 +39,16 @@ class NanToZeroConverterLearner
                          NanToZeroConverter* feature_converter) {
     // DO NOTHING
   }
+
   virtual string toString() const {
     return "NanToZeroConverterLearner";
   }
+
  private:
-  virtual string getDefaultAlias() const {return "NanToZeroConverterLearner";}
+  virtual string getDefaultAlias() const {
+    return "NanToZeroConverterLearner";
+  }
 };
-}
+};
 
 #endif  // LTR_FEATURE_CONVERTERS_NAN_TO_ZERO_CONVERTER_H_

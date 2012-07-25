@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include <boost/lexical_cast.hpp>
 
@@ -9,11 +9,6 @@
 using std::string;
 
 namespace ltr {
-void FakeFeatureConverter::applyImpl(const Object& input,
-                                           Object* output) const {
-  *output = input.deepCopy();
-}
-
 void FakeFeatureConverter::fillOutputFeatureInfo() {
   output_feature_info_ = input_feature_info_;
 }
@@ -29,4 +24,13 @@ string FakeFeatureConverter::generateCppCode(
     append("*result = features;}\n");
   return code;
 }
+
+void FakeFeatureConverter::applyImpl(const Object& input,
+                                           Object* output) const {
+  *output = input.deepCopy();
 }
+
+string FakeFeatureConverter::getDefaultAlias() const {
+  return "FakeFeatureConverter";
+}
+};

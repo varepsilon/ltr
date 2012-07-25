@@ -47,6 +47,6 @@ void writeTreeAsStringOfCppCalls(
     const Puppy::Tree& tree,
     std::ostream& output,
     size_t node_index);
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_FUNCTIONS_H_

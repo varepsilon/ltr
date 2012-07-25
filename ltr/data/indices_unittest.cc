@@ -11,6 +11,7 @@ using std::sort;
 
 using ltr::utility::Indices;
 using ltr::utility::getIdPermutation;
+using ltr::utility::getIndicesFromString;
 using ltr::utility::getRandomPermutation;
 using ltr::utility::getRandomIndices;
 using ltr::utility::Permutation;
@@ -25,8 +26,8 @@ TEST(IndicesTest, GetIdPermutationTest) {
   }
 }
 
-long long Factorial(int number) {
-  long long result = 1;
+int Factorial(int number) {
+  int result = 1;
   for (int index = 1; index <= number; ++index) {
     result *= index;
   }
@@ -61,7 +62,6 @@ TEST(IndicesTest, GetRandomIndicesTest) {
   int max_index = 1000;
   int size = 100;
   getRandomIndices(&indices, max_index, size);
-
   EXPECT_EQ(indices.size(), size);
 
   for (int index = 0; index < size; ++index) {
@@ -71,4 +71,44 @@ TEST(IndicesTest, GetRandomIndicesTest) {
   indices.resize(std::unique(indices.begin(), indices.end()) -
                  indices.begin());
   EXPECT_EQ(size, indices.size());
+}
+
+TEST(IndicesTest, GetIndicesFromStringTest) {
+  string given_string;
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "12-11";
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "11-12-13";
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "-12-11";
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "1-11,";
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "12, 11, , 14";
+  EXPECT_ANY_THROW(getIndicesFromString(given_string));
+
+  given_string = "103";
+  EXPECT_EQ(Indices(1, 103), getIndicesFromString(given_string));
+
+  given_string = "103, 103, 103";
+  EXPECT_EQ(Indices(1, 103), getIndicesFromString(given_string));
+
+  given_string = "103, 103 - 103, 103,103-103";
+  EXPECT_EQ(Indices(1, 103), getIndicesFromString(given_string));
+
+  given_string = "7-9,6-8,4,1624-1630,1631,22,27-27";
+  Indices indices;
+  indices.push_back(4);
+  for (int index = 6; index <= 9; ++index)
+    indices.push_back(index);
+  indices.push_back(22);
+  indices.push_back(27);
+  for (int index = 1624; index <= 1631; ++index)
+    indices.push_back(index);
+  EXPECT_EQ(indices, getIndicesFromString(given_string));
 }

@@ -10,7 +10,6 @@ using std::string;
 
 namespace ltr {
 namespace gp {
-
 void setContextToObject(Puppy::Context* context,
                         const Object& object) {
   for (size_t feature_index = 0;
@@ -36,7 +35,8 @@ void markDataSetWithTree(const DataSet<TElement>& data,
         setContextToObject(context, per_object_accessor.object(object_index));
       double predicted_label;
       tree->interpret(&predicted_label, *context);
-      per_object_accessor.object(object_index).set_predicted_label(predicted_label);
+      per_object_accessor.object(object_index).set_predicted_label(
+        predicted_label);
     }
   }
 }
@@ -88,5 +88,5 @@ void writeTreeAsStringOfCppCalls(const Puppy::Tree& tree,
     output << ")";
   }
 }
-}
-}
+};
+};

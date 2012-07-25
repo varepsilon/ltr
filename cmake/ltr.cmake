@@ -66,18 +66,27 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
-                   ${Source_Path}/ltr/interfaces/parameterized.h ${Source_Path}/ltr/interfaces/parameterized.cc
+                   ${Source_Path}/ltr/interfaces/parameterized.h
+                   ${Source_Path}/ltr/interfaces/parameterized.cc
                    ${Source_Path}/ltr/interfaces/functor.h
-                   ${Source_Path}/ltr/interfaces/serializable.h ${Source_Path}/ltr/interfaces/serializable.cc
+                   ${Source_Path}/ltr/interfaces/serializable.h
+                   ${Source_Path}/ltr/interfaces/serializable.cc
                    ${Source_Path}/ltr/interfaces/serializable_functor.h
-                   ${Source_Path}/ltr/interfaces/printable.h ${Source_Path}/ltr/interfaces/printable.cc)
+                   ${Source_Path}/ltr/interfaces/printable.h
+                   ${Source_Path}/ltr/interfaces/printable.cc)
 
-SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h ${Source_Path}/ltr/scorers/scorer.cc
-                ${Source_Path}/ltr/scorers/fake_scorer.h ${Source_Path}/ltr/scorers/fake_scorer.cc
-                ${Source_Path}/ltr/scorers/one_feature_scorer.h ${Source_Path}/ltr/scorers/one_feature_scorer.cc
+SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
+                ${Source_Path}/ltr/scorers/scorer.cc
+                ${Source_Path}/ltr/scorers/fake_scorer.h
+                ${Source_Path}/ltr/scorers/fake_scorer.cc
+                ${Source_Path}/ltr/scorers/one_feature_scorer.h
+                ${Source_Path}/ltr/scorers/one_feature_scorer.cc
                 ${Source_Path}/ltr/scorers/gp_scorer.h
-                ${Source_Path}/ltr/scorers/decision_tree_scorer.h ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
-                ${Source_Path}/ltr/scorers/linear_scorer.h ${Source_Path}/ltr/scorers/linear_scorer.cc)
+                ${Source_Path}/ltr/scorers/gp_scorer.cc
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.h
+                ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
+                ${Source_Path}/ltr/scorers/linear_scorer.h
+                ${Source_Path}/ltr/scorers/linear_scorer.cc)
 
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
@@ -111,6 +120,12 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
                        ${Source_Path}/ltr/measures/utils/measure_utility.cc)
 
+SET(LTR_METRICS ${Source_Path}/ltr/metrics/metric.h
+                ${Source_Path}/ltr/metrics/euclidean_metric.h
+                ${Source_Path}/ltr/metrics/euclidean_metric.cc
+                ${Source_Path}/ltr/metrics/manhattan_metric.h
+                ${Source_Path}/ltr/metrics/manhattan_metric.cc)
+
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.h
@@ -124,11 +139,17 @@ SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_functions.cc)
 
 SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/select_top_trees_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/select_top_trees_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_crossover_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_crossover_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/population_handler.h)
 
 SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_converter.h
@@ -145,6 +166,9 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.h
                            ${Source_Path}/ltr/feature_converters/nan_to_zero_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_converter.h
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_converter.cc
+                           ${Source_Path}/ltr/feature_converters/nan_to_average_learner.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.h
                            ${Source_Path}/ltr/feature_converters/nominal_to_bool_converter.cc
                            ${Source_Path}/ltr/feature_converters/remove_nominal_converter.h
@@ -162,8 +186,7 @@ SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.h
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_result.cc)
+                        ${Source_Path}/ltr/crossvalidation/crossvalidator.h)
 
 SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear_composition_learner.h
                            ${Source_Path}/ltr/learners/linear_composition/data_set_weights_updater.h
@@ -194,10 +217,11 @@ SOURCE_GROUP(scorers\\utils FILES ${LTR_SCORERS_UTILS})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER})
 SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
+SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 
-SET(LTR_ALL ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_METRICS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
             ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS}

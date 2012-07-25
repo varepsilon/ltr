@@ -1,11 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_SWAP_STRATEGY_H_
-#define LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_SWAP_STRATEGY_H_
+#ifndef LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_SWAP_STRATEGY_H_
+#define LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_SWAP_STRATEGY_H_
 
 #include <vector>
 
 #include "contrib/puppy/Puppy.hpp"
+
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 
 using std::vector;
@@ -26,18 +27,25 @@ class DefaultMutationSwapStrategy : public BasePopulationHandler {
   : mutation_probability_(mutation_probability),
     distribution_probability_(distribution_probability) {}
 
-  virtual void HandlePopulation(vector<Tree>& population, Context& context);
+  explicit DefaultMutationSwapStrategy(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
+
+  virtual void handlePopulation(vector<Tree>& population, Context& context); // NOLINT
+
+  virtual void setDefaultParameters();
+
+  virtual void checkParameters() const;
+
+  GET_SET(double, mutation_probability);
+  GET_SET(double, distribution_probability);
 
  private:
+  virtual void setParametersImpl(const ParametersContainer& parameters);
+
   double mutation_probability_;
   double distribution_probability_;
 };
-
-void DefaultMutationSwapStrategy::
-  HandlePopulation(vector<Tree>& population, Context& context) {
-    Puppy::applyMutationSwap(population, context, mutation_probability_,
-                             distribution_probability_);
-}
-}
-}
-#endif  // LTR_LEARNERS_GP_LEARNER_DEFAULT_MUTATION_SWAP_STRATEGY_H_
+};
+};
+#endif  // LTR_LEARNERS_GP_LEARNER_STRATEGIES_DEFAULT_MUTATION_SWAP_STRATEGY_H_

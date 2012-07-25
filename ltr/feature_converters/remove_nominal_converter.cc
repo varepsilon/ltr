@@ -18,21 +18,6 @@ void RemoveNominalConverter::fillOutputFeatureInfo()  {
   }
 }
 
-void RemoveNominalConverter::applyImpl(const Object& input,
-                                             Object* output) const {
-  *output = Object(output_feature_info_);
-  output->features().resize(output_feature_info_.feature_count());
-  size_t output_feature_index = 0;
-  for (size_t input_feature_index = 0;
-       input_feature_index < input.features().size();
-       ++input_feature_index) {
-    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
-      output->at(output_feature_index++)
-          = input[input_feature_index];
-    }
-  }
-}
-
 string RemoveNominalConverter::generateCppCode(
     const string &function_name) const {
   string code;
@@ -64,4 +49,23 @@ string RemoveNominalConverter::generateCppCode(
     append("}\n");
   return code;
 }
+
+void RemoveNominalConverter::applyImpl(const Object& input,
+                                             Object* output) const {
+  *output = Object(output_feature_info_);
+  output->features().resize(output_feature_info_.feature_count());
+  size_t output_feature_index = 0;
+  for (size_t input_feature_index = 0;
+       input_feature_index < input.features().size();
+       ++input_feature_index) {
+    if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
+      output->at(output_feature_index++)
+          = input[input_feature_index];
+    }
+  }
 }
+
+string RemoveNominalConverter::getDefaultAlias() const {
+  return "RemoveNominalConverter";
+}
+};

@@ -83,69 +83,49 @@ TEST_F(GPLearnerTest, GPLearnerTest) {
 };
 
 TEST_F(GPLearnerTest, DefaultSelectionStrategyTest) {
-  DefaultSelectionStrategy::Ptr selection_strategy
-    (new DefaultSelectionStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(selection_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new DefaultSelectionStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultCrossoverStrategyTest) {
-  DefaultCrossoverStrategy::Ptr crossover_strategy
-    (new DefaultCrossoverStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(crossover_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new DefaultCrossoverStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultMutationStandartStrategyTest) {
-  DefaultMutationStandartStrategy::Ptr mutation_standart_strategy
-    (new DefaultMutationStandartStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(mutation_standart_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new DefaultMutationStandartStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultMutationSwapStrategyTest) {
-  DefaultMutationSwapStrategy::Ptr mutation_swap_strategy
-    (new DefaultMutationSwapStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(mutation_swap_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new DefaultMutationSwapStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, SelectTopTreesStrategyTest) {
-  SelectTopTreesStrategy::Ptr multiply_top_trees_strategy
-    (new SelectTopTreesStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(
-    multiply_top_trees_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new SelectTopTreesStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, CrossoverAdjacentTreesStrategyTest) {
-  CrossoverAdjacentTreesStrategy::Ptr crossover_adjacent_trees_strategy
-    (new CrossoverAdjacentTreesStrategy());
-
-  GPLearner<Object> gp_learner(
-    static_cast<ltr::TruePoint::Ptr>(new ltr::TruePoint));
-  ASSERT_NO_THROW(gp_learner.addPopulationHandler(
-    crossover_adjacent_trees_strategy));
+  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  ASSERT_NO_THROW(
+    gp_learner.addPopulationHandler(new CrossoverAdjacentTreesStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }

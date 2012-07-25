@@ -3,7 +3,6 @@
 #ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <algorithm>
 #include <vector>
 #include <functional>
@@ -13,11 +12,15 @@
 #include <string>
 
 #include "ltr/crossvalidation/splitter.h"
+#include "ltr/utility/random_number_generator.h"
+#include "ltr/utility/shared_ptr.h"
 
+using std::logic_error;
+using std::random_shuffle;
 using std::string;
 using std::vector;
-using std::random_shuffle;
-using std::logic_error;
+
+using ltr::utility::randomizer;
 
 namespace ltr {
 namespace cv {
@@ -162,13 +165,12 @@ typename TKFoldSimpleSplitter<TElement>::Permutation
   TKFoldSimpleSplitter<TElement>::getRandomPermutation(
     int index, int dataset_size) const {
   // one can use any other shift instead 23
-  srand(index + 23);
+  randomizer.setSeed(index + 23);
   Permutation output;
   for (int index = 0; index < dataset_size; ++index) {
     output.push_back(index);
   }
-  random_shuffle(output.begin(), output.end());
-
+  random_shuffle(output.begin(), output.end(), randomizer);
   return output;
 }
 };

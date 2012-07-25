@@ -1,9 +1,7 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
 #define LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_
-
-#include "ltr/utility/shared_ptr.h"
 
 #include <set>
 #include <vector>
@@ -13,7 +11,9 @@
 
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/feature_sampler.h"
+
 #include "ltr/utility/indices.h"
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 using std::set;
@@ -26,32 +26,37 @@ using ltr::utility::getIdPermutation;
 
 namespace ltr {
 /**
-* \brief Produces FeatureSampler with specified indices.
-* \param indices indices of features to sample
-*/
+ * \brief Produces FeatureSampler with specified indices.
+ * \param indices indices of features to sample
+ */
 template <typename TElement>
 class FeatureSamplerLearner
     : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
  public:
   typedef ltr::utility::shared_ptr<FeatureSamplerLearner> Ptr;
-
   /**
-  * \param indices indices of features to sample
-  */
+   * \param indices indices of features to sample
+   */
   explicit FeatureSamplerLearner(IndicesPtr indices = IndicesPtr(new Indices));
+
   explicit FeatureSamplerLearner(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
+
   virtual void checkParameters() const;
 
   virtual string toString() const;
 
   GET_SET(IndicesPtr, indices);
+
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FeatureSampler *feature_sampler);
+
   virtual void setParametersImpl(const ParametersContainer& parameters);
-  virtual string getDefaultAlias() const {return "FeatureSamplerLearner";}
+
+  virtual string getDefaultAlias() const;
+
   IndicesPtr indices_;
 };
 
@@ -110,6 +115,11 @@ string FeatureSamplerLearner<TElement>::toString() const {
     }
     str << "]";
     return str.str();
+}
+
+template <typename TElement>
+string FeatureSamplerLearner<TElement>::getDefaultAlias() const {
+  return "FeatureSamplerLearner";
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_LEARNER_H_

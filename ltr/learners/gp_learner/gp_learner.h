@@ -12,10 +12,18 @@
 #include "contrib/puppy/Puppy.hpp"
 
 #include "ltr/learners/learner.h"
+
 #include "ltr/learners/gp_learner/gp_primitives.h"
 #include "ltr/learners/gp_learner/gp_functions.h"
+
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
+#include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
+
 #include "ltr/scorers/gp_scorer.h"
+
 #include "ltr/measures/measure.h"
 #include "ltr/measures/reciprocal_rank.h"
 
@@ -41,8 +49,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   explicit GPLearner(typename Measure<TElement>::Ptr measure,
       const ParametersContainer& parameters)
   : feature_count_(0),
-    best_tree_index_(0) {
-    measure_ = measure;
+    measure_(measure) {
     this->setParameters(parameters);
   }
   /** Constructor creates a GPLearner. But leaves p_measure uninitialized.
@@ -50,8 +57,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * overwrite the default parameters.
    */
   explicit GPLearner(const ParametersContainer& parameters)
-  : feature_count_(0),
-    best_tree_index_(0) {
+  : feature_count_(0) {
     this->setParameters(parameters);
   }
 
@@ -63,7 +69,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
                      double init_grow_probability = 0.5,
                      int seed = 1)
   : feature_count_(0),
-    best_tree_index_(0),
     measure_(measure),
     population_size_(population_size),
     number_of_generations_(number_of_generations),
@@ -79,7 +84,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
                      double init_grow_probability = 0.5,
                      int seed = 1)
   : feature_count_(0),
-    best_tree_index_(0),
     population_size_(population_size),
     number_of_generations_(number_of_generations),
     min_init_depth_(min_init_depth),
@@ -101,9 +105,9 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * std::logical_error(PARAMETER_NAME).
    */
   virtual void checkParameters() const {
-    CHECK(population_size_ > 0); // NOLINT
-    CHECK(number_of_generations_ > 0); // NOLINT
-    CHECK(min_init_depth_ > 0); // NOLINT
+    CHECK(population_size_ > 0);
+    CHECK(number_of_generations_ > 0);
+    CHECK(min_init_depth_ > 0);
     CHECK(max_init_depth_ > min_init_depth_ - 1);
     CHECK(0.0 <= init_grow_probability_ && init_grow_probability_ <= 1.0);
   }
@@ -131,10 +135,9 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * \param scorer GPScorer whose population and context would be set up.
    */
   void setInitialScorer(const GPScorer& scorer) {
-    population_ = scorer.population_;
+    best_tree_ = scorer.best_tree_;
     context_ = scorer.context_;
     feature_count_ = scorer.feature_count_;
-    best_tree_index_ = scorer.best_tree_index_;
   }
 
   void addPopulationHandler(const BasePopulationHandler::Ptr
@@ -158,11 +161,11 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    population_size_ = parameters.Get<int>("POP_SIZE");
-    number_of_generations_ = parameters.Get<int>("NBR_GEN");
+    population_size_ = parameters.Get<int>("POPULATION_SIZE");
+    number_of_generations_ = parameters.Get<int>("NUMBER_OF_GENERATIONS");
     min_init_depth_ = parameters.Get<int>("MIN_INIT_DEPTH");
     max_init_depth_ = parameters.Get<int>("MAX_INIT_DEPTH");
-    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBA");
+    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY");
     seed_ = parameters.Get<int>("SEED");
   }
 
@@ -210,11 +213,18 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    *  algorithm's iteration.
    */
   virtual void evaluationStepImpl() {
+    if (population_handlers_.empty()) {
+      population_handlers_.push_back(new DefaultSelectionStrategy);
+      population_handlers_.push_back(new DefaultCrossoverStrategy);
+      population_handlers_.push_back(new DefaultMutationStandartStrategy);
+      population_handlers_.push_back(new DefaultMutationSwapStrategy);
+    }
+
     for (int population_handler_index = 0;
          population_handler_index < (int) population_handlers_.size();
          ++population_handler_index) {
       population_handlers_[population_handler_index]->
-        HandlePopulation(population_, context_);
+        handlePopulation(population_, context_);
     }
   }
   /** The implementation of genetic programming optimization approach.
@@ -231,7 +241,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     this->evaluatePopulation(data);
 
     std::cout << "The population looks like: \n";
-    for (int tree_index = 0; tree_index < (int)population_.size(); ++tree_index) {
+    for (int tree_index = 0;
+         tree_index < (int)population_.size(); ++tree_index) {
       using ::operator <<;
       std::cout << population_[tree_index] << std::endl;
     }
@@ -248,32 +259,32 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
       std::cout << "Evaluation.\n";
       this->evaluatePopulation(data);
 
-      best_tree_index_ = 0;
+      int best_tree_index = 0;
       for (int tree_index = 1;
           tree_index < (int)population_.size(); ++tree_index) {
-        if (population_[best_tree_index_].mFitness <
+        if (population_[best_tree_index].mFitness <
             population_[tree_index].mFitness) {
-          best_tree_index_ = tree_index;
+          best_tree_index = tree_index;
         }
       }
 
       std::cout
-      << "The best one is number " << best_tree_index_ << ".\n";
+      << "The best one is number " << best_tree_index << ".\n";
       using ::operator <<;
-      std::cout << population_[best_tree_index_] << std::endl;
-      std::cout << "with fitness " <<
-          population_[best_tree_index_].mFitness << "\n";
+      best_tree_ = population_[best_tree_index];
+      std::cout << best_tree_ << std::endl;
+      std::cout << "with fitness " << best_tree_.mFitness << "\n";
     }
     // \TODO ? rewrite with setters and getters
-    *scorer = GPScorer(population_, context_,
-                       feature_count_, best_tree_index_);
+    *scorer = GPScorer(best_tree_, context_, feature_count_);
   }
   /** Method evaluates the population, it sets individ tree fitness to the
    *  average on the data set metric value.
    *  @param data data set for calculation of the average metric value
    */
   void evaluatePopulation(const DataSet<TElement>& data) {
-    for (int tree_index = 0; tree_index < (int)population_.size(); ++tree_index) {
+    for (int tree_index = 0;
+         tree_index < (int)population_.size(); ++tree_index) {
       if (population_[tree_index].mValid) {
         continue;
       }
@@ -291,10 +302,6 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * the context_ is constructed for.
    */
   int feature_count_;
-  /** The index of the best Puppy::tree (formula, individ) in current
-   * population.
-   */
-  int best_tree_index_;
 
   typename Measure<TElement>::Ptr measure_;
 
@@ -314,10 +321,14 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * the population.
    */
   Puppy::Context context_;
+  /** the best Puppy::tree(formula,
+   * individ) in the population.
+   */
+  Puppy::Tree best_tree_;
 
   std::vector<BasePopulationHandler::Ptr> population_handlers_;
   std::vector<BaseGPOperation::Ptr> gp_operations_;
   };
-}
-}
+};
+};
 #endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
