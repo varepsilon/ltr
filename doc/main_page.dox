@@ -10,6 +10,7 @@ namespace ltr {
     - \ref CrossvalidationData 
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
+    - \ref TutorialMeasureLearnerScorer
   - \b Advanced \b topics
   
    
