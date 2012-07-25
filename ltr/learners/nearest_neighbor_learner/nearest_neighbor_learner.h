@@ -3,6 +3,8 @@
 #ifndef LTR_LEARNERS_NEAREST_NEIGHBOR_LEARNER_NEAREST_NEIGHBOR_LEARNER_H_
 #define LTR_LEARNERS_NEAREST_NEIGHBOR_LEARNER_NEAREST_NEIGHBOR_LEARNER_H_
 
+#include <logog/logog.h>
+
 #include <string>
 #include <vector>
 
@@ -62,9 +64,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 
  private:
   void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
-  virtual string getDefaultAlias() const {
-    return "NearestNeightborScorer";
-  }
+  virtual string getDefaultAlias() const {return "NearestNeightborScorer";}
 
   BaseMetric::Ptr metric_;
   NeighborWeighter::Ptr neighbor_weighter_;
@@ -78,6 +78,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 template<class TElement>
 void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                     NNScorer* scorer) {
+  INFO("Learning started");
   *scorer =  NNScorer(metric_,
                       data,
                       neighbor_weighter_,

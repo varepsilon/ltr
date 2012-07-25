@@ -54,6 +54,7 @@ class DecisionVertex : public Vertex<TValue> {
       // Create array of condition functions
       child = this->firstChild();
       if (child != NULL) {
+        INFO("Child is not NULL.");
         hpp_code.
           append(child->condition()->getDefaultSerializableObjectName());
         child = child->nextSibling();
@@ -71,6 +72,7 @@ class DecisionVertex : public Vertex<TValue> {
       // Create array of children functions
       child = this->firstChild();
       if (child != NULL) {
+        INFO("Child is not NULL.");
         hpp_code.append(child->getDefaultSerializableObjectName());
         child = child->nextSibling();
       }
@@ -98,6 +100,8 @@ class DecisionVertex : public Vertex<TValue> {
 
       return hpp_code;
     }
+  private:
+    virtual string getDefaultAlias() const {return "Decision Vertex";}
 };
 
 template<class TValue>
@@ -116,8 +120,9 @@ template <class TValue>
 TValue DecisionVertex<TValue>::value(const Object& obj) const {
   typename Vertex<TValue>::Ptr best_child;
   double max_value = 0;
-  if (!this->hasChild())
+  if (!this->hasChild()) {
     throw std::logic_error("non list vertex has no children");
+  }
   typename Vertex<TValue>::Ptr child = this->firstChild();
   while (child != NULL) {
     double cond_value = child->condition()->value(obj);

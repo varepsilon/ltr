@@ -55,6 +55,8 @@ class VoteAggregator : public Aggregator {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Vote aggregator";}
 };
 };
 

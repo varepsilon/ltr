@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
 
+#include <logog/logog.h>
+
 #include "ltr/scorers/composition_scorers/max_weight_composition_scorer.h"
 #include "ltr/utility/numerical.h"
 
@@ -7,6 +9,7 @@ using ltr::utility::DoubleLess;
 
 namespace ltr {
   double MaxWeightCompositionScorer::scoreImpl(const Object& object) const {
+    INFO("Starting to score an object.");
     size_t current_best_index = 0;
     double current_biggest_weight = at(current_best_index).weight;
     for (size_t index = 1; index < size(); ++index) {

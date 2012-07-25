@@ -37,6 +37,8 @@ class AverageAggregator : public Aggregator {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Average aggregator";}
 };
 };
 

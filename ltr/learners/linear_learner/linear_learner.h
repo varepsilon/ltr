@@ -3,12 +3,13 @@
 #ifndef LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 #define LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <Eigen/Dense>
+#include <logog/logog.h>
 
 #include <string>
 #include <vector>
 
+#include "ltr/utility/shared_ptr.h"
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/linear_scorer.h"
 
@@ -45,8 +46,10 @@ class LinearLearner : public BaseLearner<TElement, LinearScorer> {
 template<class TElement>
 void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                         LinearScorer* scorer) {
+  INFO("Learning started");
   VectorXd Y(data.size());
   for (int i = 0; i < Y.size(); ++i) {
+    INFO("Getting the label of %d element.", i);
     Y(i) = data[i].actual_label();
   }
 
@@ -61,6 +64,7 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   }
 
   // XTW = X^T W
+  INFO("Calculating XTW matrix");
   MatrixXd XTW = X.transpose();
   for (int i = 0; i < data.size(); ++i) {
     XTW.col(i) *= data.getWeight(i);

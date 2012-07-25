@@ -3,7 +3,6 @@
 #ifndef LTR_SCORERS_SCORER_H_
 #define LTR_SCORERS_SCORER_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <string>
@@ -13,6 +12,7 @@
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/interfaces/serializable_functor.h"
 #include "ltr/interfaces/printable.h"
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 
@@ -21,8 +21,7 @@ namespace ltr {
  * Scorer is a class that can for every object evaluate
  * a value - its rank, or score
  */
-class Scorer : public Aliaser,
-    public SerializableFunctor<double>,
+class Scorer : public SerializableFunctor<double>,
     public Printable {
   public:
   typedef ltr::utility::shared_ptr<Scorer> Ptr;

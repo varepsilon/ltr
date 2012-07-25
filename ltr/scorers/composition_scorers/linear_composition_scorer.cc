@@ -1,9 +1,11 @@
 // Copyright 2011 Yandex
 
 #include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
+#include "logog/logog.h"
 
 namespace ltr {
   double LinearCompositionScorer::scoreImpl(const Object& object) const {
+    INFO("Starting to score object");
     double result = 0.0;
     for (size_t i = 0; i < size(); ++i) {
       result += at(i).weight * ((*at(i).scorer)(object));
@@ -15,8 +17,9 @@ namespace ltr {
       (const string& function_name) const {
     string hpp_code;
 
-    for (size_t i = 0; i < size(); ++i)
+    for (size_t i = 0; i < size(); ++i) {
       hpp_code.append(at(i).scorer->generateCppCode());
+    }
 
     hpp_code.
       append("inline double ").
@@ -55,6 +58,7 @@ namespace ltr {
 
   const vector<double>& LinearCompositionScorer::gradient
       (const vector<double>& weak_scores) const {
+    INFO("Starting to calculate a gradient of LinearCompositionScorer.");
     vector<double> output(size());
     for (size_t i = 0; i < size(); ++i) {
       output[i] = at(i).weight;

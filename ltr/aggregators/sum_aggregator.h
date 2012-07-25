@@ -37,6 +37,8 @@ class SumAggregator : public Aggregator {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Sum aggregator";}
 };
 };
 

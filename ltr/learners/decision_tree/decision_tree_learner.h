@@ -3,22 +3,19 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_DECISION_TREE_LEARNER_H_
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_LEARNER_H_
 
+#include <logog/logog.h>
+
 #include <vector>
 #include <string>
 #include <functional>
 
 #include "ltr/learners/learner.h"
-
 #include "ltr/scorers/decision_tree_scorer.h"
-
 #include "ltr/learners/decision_tree/utility/utility.h"
 #include "ltr/learners/decision_tree/decision_vertex.h"
 #include "ltr/learners/decision_tree/leaf_vertex.h"
-
 #include "ltr/learners/decision_tree/splitting_quality.h"
 #include "ltr/learners/decision_tree/conditions_learner.h"
-
-#include "logog/logog.h"
 
 using std::string;
 
@@ -57,6 +54,7 @@ class DecisionTreeLearner
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
+    INFO("Setting parameters of DecisionTreeLearner.");
     min_vertex_size_ = parameters.Get<int>("MIN_VERTEX_SIZE");
     label_eps_ = parameters.Get<double>("LABEL_EPS");
     conditions_learner_

@@ -1,5 +1,7 @@
 // Copyright 2012 Yandex
 
+#include <logog/logog.h>
+
 #include "ltr/learners/decision_tree/compare_condition.h"
 #include "ltr/utility/numerical.h"
 
@@ -7,18 +9,22 @@ namespace ltr {
 namespace decision_tree {
 
 void CompareCondition::setCompareNumber(double number) {
+  INFO("Setting compare number equal to %d.", number);
   compare_number_ = number;
 }
 
 void CompareCondition::setCompareType(CompareType type) {
+  INFO("Setting compare type.");
   compare_type_ = type;
 }
 
 void CompareCondition::setWeakCondition(Condition::Ptr weak_condition) {
+  INFO("Setting weak condition.");
   weak_condition_ = weak_condition;
 }
 
 double CompareCondition::value(const ltr::Object &obj) const {
+  INFO("Finding value of object.");
   if (weak_condition_ == NULL)
     throw std::logic_error("no weak condition");
   double weak_value = weak_condition_->value(obj);

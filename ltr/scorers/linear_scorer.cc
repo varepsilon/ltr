@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 
+#include "logog/logog.h"
+
 using std::string;
 using boost::lexical_cast;
 

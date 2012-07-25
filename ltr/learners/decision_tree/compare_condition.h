@@ -47,6 +47,8 @@ class CompareCondition : public Condition {
     string generateCppCode(const string& function_name) const;
 
   private:
+    virtual string getDefaultAlias() const {return "Decision Tree";}
+
     double value(const Object& obj) const;
 
     Condition::Ptr weak_condition_;

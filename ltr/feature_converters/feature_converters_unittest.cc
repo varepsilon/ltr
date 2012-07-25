@@ -24,7 +24,6 @@ using ltr::DataSet;
 using ltr::FeatureInfo;
 using ltr::NOMINAL;
 using ltr::NUMERIC;
-using ltr::BOOLEAN;
 using ltr::utility::DoubleEqual;
 using ltr::utility::Indices;
 
@@ -159,9 +158,9 @@ TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
 
   nominal_to_bool_converter->apply(data, &converted_data);
   EXPECT_EQ(2, converted_data[0].features().size());
-  EXPECT_EQ(BOOLEAN, converted_data.feature_info().getFeatureType(0));
+  EXPECT_EQ(ltr::BOOLEAN, converted_data.feature_info().getFeatureType(0));
   EXPECT_EQ(1, converted_data[0][0]);
-  EXPECT_EQ(BOOLEAN, converted_data.feature_info().getFeatureType(1));
+  EXPECT_EQ(ltr::BOOLEAN, converted_data.feature_info().getFeatureType(1));
   EXPECT_EQ(0, converted_data[0][1]);
 
   feature_info.addFeature(NUMERIC);
@@ -176,11 +175,11 @@ TEST(FeatureConvertersTest, NominalToBoolConverterTest) {
   EXPECT_EQ(4, converted_data[0].features().size());
   EXPECT_EQ(NUMERIC, converted_data.feature_info().getFeatureType(0));
   EXPECT_EQ(converted_data[0][0], 10);
-  EXPECT_EQ(BOOLEAN, converted_data.feature_info().getFeatureType(1));
+  EXPECT_EQ(ltr::BOOLEAN, converted_data.feature_info().getFeatureType(1));
   EXPECT_EQ(1, converted_data[0][1]);
-  EXPECT_EQ(BOOLEAN, converted_data.feature_info().getFeatureType(2));
+  EXPECT_EQ(ltr::BOOLEAN, converted_data.feature_info().getFeatureType(2));
   EXPECT_EQ(0, converted_data[0][2]);
-  EXPECT_EQ(BOOLEAN, converted_data.feature_info().getFeatureType(3));
+  EXPECT_EQ(ltr::BOOLEAN, converted_data.feature_info().getFeatureType(3));
 }
 
 TEST(FeatureConvertersTest, RemoveNominalConverterTest) {

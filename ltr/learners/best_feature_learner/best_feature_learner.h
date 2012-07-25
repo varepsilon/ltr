@@ -3,13 +3,13 @@
 #ifndef LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 #define LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include <logog/logog.h>
 
 #include <stdexcept>
 #include <string>
 #include <limits>
 
-
+#include "ltr/utility/shared_ptr.h"
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/one_feature_scorer.h"
 #include "ltr/measures/measure.h"
@@ -63,10 +63,13 @@ string BestFeatureLearner<TElement>::toString() const {
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
+  INFO("Starting learning");
   if (measure_.get() == 0) {
+    INFO("Measure is equal to zero");
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {
+    INFO("Data is empty");
     throw std::logic_error("There are no features for BF learner.");
   }
 

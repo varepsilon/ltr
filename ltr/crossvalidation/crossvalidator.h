@@ -1,11 +1,17 @@
 // Copyright 2012 Yandex
-#ifndef LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
-#define LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
+#ifndef LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
+#define LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
+
+#include <logog/logog.h>
 
 #include <algorithm>
 #include <list>
 #include <string>
 #include <vector>
+
+#include "boost/multi_array.hpp"
+#include "boost/range.hpp"
+#include "boost/tuple/tuple.hpp"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/data/data_set.h"
@@ -13,9 +19,6 @@
 #include "ltr/measures/measure.h"
 #include "ltr/utility/multitable.h"
 
-#include "boost/multi_array.hpp"
-#include "boost/range.hpp"
-#include "boost/tuple/tuple.hpp"
 
 using std::cerr;
 using std::cout;
@@ -59,12 +62,14 @@ CrossValidator<ObjectType, ScorerType>::CrossValidator()
   , splitters_() {}
 
 template <typename ObjectType, typename ScorerType>
-void CrossValidator<ObjectType, ScorerType>::addDataSet(const typename DataSet<ObjectType>::Ptr& data_set) {
+void CrossValidator<ObjectType, ScorerType>::
+  addDataSet(const typename DataSet<ObjectType>::Ptr& data_set) {
   data_sets_.push_back(data_set);
 }
 
 template <typename ObjectType, typename ScorerType>
-void CrossValidator<ObjectType, ScorerType>::addMeasure(const typename Measure<ObjectType>::Ptr& measure) {
+void CrossValidator<ObjectType, ScorerType>::
+  addMeasure(const typename Measure<ObjectType>::Ptr& measure) {
   measures_.push_back(measure);
 }
 
@@ -76,35 +81,53 @@ void CrossValidator<ObjectType, ScorerType>::addLearner(
 }
 
 template <typename ObjectType, typename ScorerType>
-void CrossValidator<ObjectType, ScorerType>::addSplitter(const typename Splitter<ObjectType>::Ptr& splitter) {
+void CrossValidator<ObjectType, ScorerType>::
+  addSplitter(const typename Splitter<ObjectType>::Ptr& splitter) {
   splitters_.push_back(splitter);
 }
 
 template <typename ObjectType, typenmae ScorerType>
-void CrossValidator<objectType, ScorerType>::setCrossValidationResultLabels() {
+void CrossValidator<objectType, ScorerType>::
+  setCrossValidationResultLabels() {
+  INFO("Starting to set crossvalidation results labels.");
+  INFO("Starting to set measures");
   cross_validation_results_.setAxisLabel(0, "Measure");
   for (int measure_index = 0;
        measure_index < measures_.size();
        ++measure_index) {
-    cross_validation_results_.setTickLabel(0, measure_index, measures_[measure_index]->alias());
+    INFO("Setting %d tick label. Current measure is %s",
+         measure_index,
+         measures_[measure_index]->alias());
+    cross_validation_results_.setTickLabel(0,
+                                           measure_index,
+                                           measures_[measure_index]->alias());
   }
+
+  INFO("Starting to set dataset");
   cross_validation_results_.setAxisLabel(1, "DataSet");
   for (int dataset_index = 0;
        dataset_index < data_sets_.size();
        ++dataset_index) {
+    INFO("Setting %d tick label", dataset_index);
     cross_validation_results_.setTickLabel(1, dataset_index, "dataset");
   }
+
+  INFO("Starting to set Learners");
   cross_validation_results_.setAxisLabel(2, "Learner");
   for (int learner_index = 0;
        learner_index < learners_.size();
        ++learner_index) {
+    INFO("Setting %d tick label", learner_index);
     cross_validation_results_.
         setTickLabel(2, learner_index, learners_[learner_index]->alias());
   }
+
+  INFO("Starting to set splitters");
   cross_validation_results_.setAxisLabel(3, "Splitter");
   for (int splitter_index = 0;
        splitter_index < splitters_.size();
        ++splitter_index) {
+    INFO("Setting %d tick label", splitter_index);
     cross_validation_results_.
         setTickLabel(3, splitter_index, splitters_[splitter_index]->alias());
   }
@@ -113,6 +136,7 @@ void CrossValidator<objectType, ScorerType>::setCrossValidationResultLabels() {
 
 template <typename ObjectType, typename ScorerType>
 void CrossValidator<ObjectType, ScorerType>::launch() {
+  INFO("Launching crossvalidator");
   vector<size_t> multi_size;
   multi_size.push_back(measures_.size());
   multi_size.push_back(data_sets_.size());
@@ -163,8 +187,7 @@ template <typename ObjectType, typename ScorerType>
 void CrossValidator<ObjectType, ScorerType>::toString() {
   return cross_validation_results_.toString();
 }
-
 }
 }
 
-#endif  // LTR_CROSSVALIDATION_CROSSVALIDATION_RESULT_H_
+#endif  // LTR_CROSSVALIDATION_CROSSVALIDATOR_H_

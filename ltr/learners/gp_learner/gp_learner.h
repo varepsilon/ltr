@@ -4,6 +4,7 @@
 #define LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
 
 #include <boost/lexical_cast.hpp>
+#include <logog/logog.h>
 
 #include <string>
 #include <vector>
@@ -93,6 +94,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   /** The function sets up default parameters for genetic learning process.
    */
   virtual void setDefaultParameters() {
+    INFO("Starting to set defaul parameters of gp_learner");
     population_size_ = 10;
     number_of_generations_ = 3;
     min_init_depth_ = 2;
@@ -105,6 +107,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * std::logical_error(PARAMETER_NAME).
    */
   virtual void checkParameters() const {
+    INFO("Starting to check parameters of gp_learner");
     CHECK(population_size_ > 0);
     CHECK(number_of_generations_ > 0);
     CHECK(min_init_depth_ > 0);
@@ -135,6 +138,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * \param scorer GPScorer whose population and context would be set up.
    */
   void setInitialScorer(const GPScorer& scorer) {
+    INFO("Starting to set initial scorer.");
     best_tree_ = scorer.best_tree_;
     context_ = scorer.context_;
     feature_count_ = scorer.feature_count_;
@@ -173,6 +177,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   /** Method clears and adds primitives to the context.
    */
   void initContext() {
+    INFO("Starting to init context of gp_learner");
     Puppy::Context newContext;
     context_= newContext;
 
@@ -185,6 +190,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
     }
 
     if (gp_operations_.empty()) {
+      INFO("No gp_operations");
       context_.insert(new Add);
       context_.insert(new Subtract);
       context_.insert(new Multiply);
@@ -203,6 +209,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   /** Method creates initial population.
    */
   void initPopulation() {
+    INFO("Starting to init popultation");
     population_.clear();
 
     population_.resize(population_size_);
@@ -232,31 +239,26 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * learning procedure.
    */
   void learnImpl(const DataSet<TElement>& data, GPScorer* scorer) {
+    INFO("Learning started");
     if (data.feature_count() != feature_count_) {
+      INFO("Missmatch of feature_count");
       feature_count_ = data.feature_count();
       reset();
     }
 
-    std::cout << "Evaluating data for the first time.\n";
+    INFO("Evaluating data for the first time.");
     this->evaluatePopulation(data);
 
-    std::cout << "The population looks like: \n";
-    for (int tree_index = 0;
-         tree_index < (int)population_.size(); ++tree_index) {
-      using ::operator <<;
-      std::cout << population_[tree_index] << std::endl;
-    }
-
-    std::cout << "Evolution begins.\n";
+    INFO("Evolution begins.\n");
     for (int generationIdx = 0;
          generationIdx < number_of_generations_;
          ++generationIdx) {
-      std::cout << "Generation "<< generationIdx << ".\n";
+      INFO("Generation %d \n", generationIdx);
 
-      std::cout << "Calling strategy\n";
+      INFO("Calling strategy\n");
       this->evaluationStepImpl();
 
-      std::cout << "Evaluation.\n";
+      INFO("Evaluation.\n");
       this->evaluatePopulation(data);
 
       int best_tree_index = 0;
@@ -268,12 +270,9 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
         }
       }
 
-      std::cout
-      << "The best one is number " << best_tree_index << ".\n";
+      INFO("The best one is number %d .\n", best_tree_index);
       using ::operator <<;
       best_tree_ = population_[best_tree_index];
-      std::cout << best_tree_ << std::endl;
-      std::cout << "with fitness " << best_tree_.mFitness << "\n";
     }
     // \TODO ? rewrite with setters and getters
     *scorer = GPScorer(best_tree_, context_, feature_count_);

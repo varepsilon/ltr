@@ -16,17 +16,19 @@ in its children
 */
 template <class TValue>
 class RegressionVertex : public Vertex<TValue> {
-  public:
-    typedef ltr::utility::shared_ptr<RegressionVertex<TValue> > Ptr;
+ public:
+  typedef ltr::utility::shared_ptr<RegressionVertex<TValue> > Ptr;
 
-    RegressionVertex() : Vertex<TValue>() {}
-    explicit RegressionVertex(Condition::Ptr condition) :
-        Vertex<TValue>(condition) {}
-    TValue value(const Object& obj) const;
+  RegressionVertex() : Vertex<TValue>() {}
+  explicit RegressionVertex(Condition::Ptr condition) :
+      Vertex<TValue>(condition) {}
+  TValue value(const Object& obj) const;
 
-    string generateCppCode(const string& function_name) const {
-      return "Not implemented yet";
-    }
+  string generateCppCode(const string& function_name) const {
+    return "Not implemented yet";
+  }
+ private:
+  virtual string getDefaultAlias() const {return "Regression vertex";}
 };
 
 template<class TValue>

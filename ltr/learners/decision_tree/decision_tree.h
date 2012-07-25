@@ -3,8 +3,8 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <boost/weak_ptr.hpp>
+#include <logog/logog.h>
 
 #include <map>
 #include <cmath>
@@ -12,6 +12,7 @@
 #include <vector>
 #include <stdexcept>
 
+#include "ltr/utility/shared_ptr.h"
 #include "ltr/learners/decision_tree/condition.h"
 
 using std::map;
@@ -80,7 +81,9 @@ class Vertex : public SerializableFunctor<TValue> {
 
 template<class TValue>
 void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
+  INFO("Removing a child of vertex.");
   if (first_child_ == child) {
+    INFO("first child of vertex is equal to removable child.");
     first_child_ = first_child_->nextSibling();
     if (first_child_ == NULL)
       last_child_ = NULL;
@@ -88,6 +91,7 @@ void Vertex<TValue>::removeChild(typename Vertex<TValue>::Ptr child) {
   }
   typename Vertex<TValue>::Ptr now = first_child_;
   while (now != NULL) {
+    INFO("current child doesn't match with the removable child.")
     if (now->nextSibling() == child) {
       now->sibling_ = now->nextSibling()->nextSibling();
       child->parent_ = NULL;
@@ -124,10 +128,13 @@ void Vertex<TValue>::setCondition(Condition::Ptr condition) {
 
 template<class TValue>
 void Vertex<TValue>::addChild(typename Vertex<TValue>::Ptr child) {
-  if (last_child_ == NULL)
+  if (last_child_ == NULL) {
+    INFO("Last child of vertex is NULL");
     first_child_ = last_child_ = child;
-  else
+  } else {
+    INFO("Last child of vertex is not NULL");
     last_child_ = last_child_->sibling_ = child;
+  }
   child->parent_ = this;
 }
 
@@ -159,7 +166,12 @@ class DecisionTree : public SerializableFunctor<TValue> {
     string generateCppCode(const string& function_name) const {
       return root_->generateCppCode(function_name);
     }
+
   private:
+    virtual string getDefaultAlias() const {
+      return "Decision Tree";
+    }
+
     VertexPtr root_;
 };
 
@@ -171,12 +183,16 @@ void DecisionTree<TValue>::setRoot(typename Vertex<TValue>::Ptr root) {
 template<class TValue>
 void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
   typename Vertex<TValue>::Ptr v = vertex;
-  while (v != NULL)
+  while (v != NULL) {
     v = v->parent_;
-  if (v != this->root)
+  }
+  if (v != this->root) {
+    INFO("Vertex is from another tree.");
     throw std::logic_error("can't remove vertex: vertex from another tree");
+  }
 
   if (vertex == this->root) {
+    INFO("Vertrx is from current tree.");
     this->root = typename Vertex<TValue>::Ptr(NULL);
     return;
   }

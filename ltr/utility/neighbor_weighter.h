@@ -36,6 +36,8 @@ class InverseLinearDistance : public NeighborWeighter {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Inverse linear distance";}
 };
 
 class InverseSquareDistance : public NeighborWeighter {
@@ -51,6 +53,8 @@ class InverseSquareDistance : public NeighborWeighter {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Inverse sqaure distance";}
 };
 
 class InverseOrder : public NeighborWeighter {
@@ -66,6 +70,8 @@ class InverseOrder : public NeighborWeighter {
     result += "}\n";
     return result;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Inverse order";}
 };
 };
 };

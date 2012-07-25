@@ -15,6 +15,7 @@ namespace ltr {
 namespace decision_tree {
 
 void ID3_Splitter::init() {
+  INFO("Starting to init ID3_Splitter.");
   current_feature = 0;
   split_index = 0;
   INFO("Inited. ");
@@ -28,12 +29,14 @@ void ID3_Splitter::init() {
 }
 
 int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
-  if (current_feature >= data_.feature_count())
+  if (current_feature >= data_.feature_count()) {
+    INFO("Current_feature is out of range.");
     return 0;
+  }
   result->clear();
 
   if (split_index == 0) {
-//    log << "Splitting feature " << current_feature << std::endl;
+    INFO("Split_index is equal to zero.");
     feature_values.clear();
     numeric_split_values.clear();
     feature_values.resize(data_.size());
@@ -49,29 +52,31 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
     feature_values.resize(std::unique(feature_values.begin(),
                    feature_values.end(), DoubleEqual) - feature_values.begin());
     if (feature_values.size() <= 1) {
+      INFO("Number of features is less or equal than one.");
       current_feature++;
       split_index = 0;
       return getNextConditions(result);
     }
 
-
-
     if (split_feature_n_times_) {
       int split_cnt = feature_split_count_;
       if (split_cnt <= feature_values.size() - 1) {
-        for (int i = 0; i < split_cnt; ++i)
+        for (int i = 0; i < split_cnt; i++) {
           numeric_split_values.
             push_back(min_val + (max_val - min_val) / split_cnt * i);
+        }
       } else {
-        for (int i = 0; i < feature_values.size() - 1; ++i)
+        for (int i = 0; i < feature_values.size() - 1; i++) {
           numeric_split_values.
             push_back((feature_values[i] + feature_values[i+1]) / 2);
+        }
       }
     } else {
       for (int i = 0; i < feature_values.size() - 1;
-          i+= half_summs_step_)
+          i+= half_summs_step_) {
         numeric_split_values.
           push_back((feature_values[i] + feature_values[i+1]) / 2);
+      }
     }
   }
   if (data_.feature_info().getFeatureType(current_feature) == BOOLEAN ||

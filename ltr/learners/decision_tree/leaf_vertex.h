@@ -44,6 +44,8 @@ class LeafVertex : public Vertex<TValue> {
     }
 
   private:
+    virtual string getDefaultAlias() const {return "Leaf Vertex";}
+
     TValue value_;
 };
 

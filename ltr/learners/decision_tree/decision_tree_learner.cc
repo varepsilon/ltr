@@ -36,6 +36,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
     const DataSet<Object>& data) {
   INFO("Creating vertex for %d objects.", data.size());
   if (data.size() == 0) {
+    INFO("Data is empty.");
     throw std::logic_error("no objects given to decision tree learner");
   }
   Vertex<double>::Ptr vertex = DecisionVertexPtr<double>();
@@ -71,6 +72,7 @@ Vertex<double>::Ptr DecisionTreeLearner::createOneVertex(
   }
 
   if (generate_leaf) {
+    INFO("Leaf was generated.");
     LeafVertex<double>::Ptr vertex = LeafVertexPtr<double>();
     double average = 0;
     double sum = 0;

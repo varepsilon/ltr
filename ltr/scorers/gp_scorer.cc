@@ -1,10 +1,13 @@
 // Copyright 2012 Yandex
 
+#include <logog/logog.h>
+
 #include "ltr/scorers/gp_scorer.h"
 
 namespace ltr {
 namespace gp {
 double GPScorer::scoreImpl(const Object& object) const {
+  INFO("Starting to score an object with the gp_learner");
   assert(feature_count_ == object.feature_count());
   setContextToObject(&context_, object);
   double score;

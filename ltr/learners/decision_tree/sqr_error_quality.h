@@ -13,6 +13,7 @@ namespace decision_tree {
 class SqrErrorQuality : public SplittingQuality {
   private:
     double sqrError(DataSet<ltr::Object> data) const {
+      INFO("Getting sqrError of data");
       double weight_sum = 0;
       double sum_label = 0;
       for (int i = 0; i < data.size(); ++i) {
@@ -41,7 +42,9 @@ class SqrErrorQuality : public SplittingQuality {
 
     virtual double value(DataSet<ltr::Object> data,
                          vector<DataSet<ltr::Object> > split) const {
+      INFO("Getting value of data");
       if (split.size() <= 1) {
+        INFO("Split size is less or equal then one");
         return -1e9;
       }
       double result = 0;

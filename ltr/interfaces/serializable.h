@@ -3,11 +3,16 @@
 #ifndef LTR_INTERFACES_SERIALIZABLE_H_
 #define LTR_INTERFACES_SERIALIZABLE_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
+#include <logog/logog.h>
 
 #include <string>
 #include <iostream>
+
+
+
+#include "ltr/utility/shared_ptr.h"
+#include "ltr/interfaces/aliaser.h"
 
 using std::string;
 
@@ -19,7 +24,7 @@ extern size_t serializable_objects_counter_;
 /** \class The interface class for objects, that can be serialized. That means
  * that a cpp code for those can be created.
  */
-class Serializable {
+class Serializable : public Aliaser {
   public:
   /** \typedef boost shared pointer to the Functor
    */
@@ -45,6 +50,7 @@ class Serializable {
   /** The function creates cpp code for serializable object using default name.
    */
   string generateCppCode() const {
+    INFO("Starting to generate CPP code of %s", this->alias().c_str());
     return this->generateCppCode(this->getDefaultSerializableObjectName());
   }
   /** Returns unique id of the serializable object.

@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
 
+#include <logog/logog.h>
+
 #include <stdexcept>
 #include <utility>
 #include <algorithm>
@@ -20,6 +22,7 @@ double NonNegative(double value) {
 namespace ltr {
   double OrderStaticticCompositionScorer::scoreImpl
       (const Object& object) const {
+    INFO("Starting to score an object");
     // if weight[i] < 0 then take it 0
     double sum_weight = 0.0;
     vector<pair<double, double> > weighted_scores(size());

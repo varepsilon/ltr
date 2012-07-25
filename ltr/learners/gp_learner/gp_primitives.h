@@ -3,13 +3,14 @@
 #ifndef LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_
 #define LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_
 
+#include <logog/logog.h>
+
 #include <cmath>
 #include <string>
 
 #include "contrib/puppy/Puppy.hpp"
 
 #include "ltr/interfaces/serializable.h"
-
 #include "ltr/utility/shared_ptr.h"
 
 using std::string;
@@ -49,6 +50,8 @@ class Add : public BaseGPOperation, public Serializable {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs + rhs;}\n";
   }
+ private:
+  virtual string getDefaultAlias() const {return "Add";}
 };
 /** \brief The Puppy::Primitive implements subtraction functor, it is used to
  * build Puppy::trees from.
@@ -61,6 +64,7 @@ class Subtract : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
+    INFO("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(0, &first_argument, puppy_context);
@@ -74,6 +78,8 @@ class Subtract : public BaseGPOperation, public Serializable {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs - rhs;}\n";
   }
+ private:
+  virtual string getDefaultAlias() const {return "Subtract";}
 };
 /** \brief The Puppy::Primitive implements multiplication functor, it is used to
  * build Puppy::trees from.
@@ -86,6 +92,7 @@ class Multiply : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
+    INFO("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(0, &first_argument, puppy_context);
@@ -99,6 +106,8 @@ class Multiply : public BaseGPOperation, public Serializable {
     return "inline double " + function_name +
       "(double lhs, double rhs) { return lhs * rhs;}\n";
   }
+ private:
+  virtual string getDefaultAlias() const {return "Multiply";}
 };
 /** \brief The Puppy::Primitive implements division functor, it is used to
  * build Puppy::trees from.
@@ -112,6 +121,7 @@ class Divide : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
+    INFO("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(1, &second_argument, puppy_context);
@@ -126,6 +136,7 @@ class Divide : public BaseGPOperation, public Serializable {
    * for serialization GPScorer to cpp code.
    */
   string generateCppCode(const string& function_name) const {
+    INFO("Starting to generate CPP code of Divide class");
     string code;
     code.append("#include <cmath>\n");
     code.append("inline double ");
@@ -141,12 +152,14 @@ class Divide : public BaseGPOperation, public Serializable {
     code.append("}\n");
     return code;
   }
+ private:
+  virtual string getDefaultAlias() const {return "Divide";}
 };
 /** \brief The Puppy::Primitive implements if-then-else functor, it is used to
  * build Puppy::trees from.
  */
 class IfThenFunc : public BaseGPOperation, public Serializable {
-  public:
+ public:
   IfThenFunc() : BaseGPOperation(3, "IF") {}
   virtual ~IfThenFunc() {}
   /** The implementation of if-then-else functor functor.
@@ -161,7 +174,9 @@ class IfThenFunc : public BaseGPOperation, public Serializable {
       getArgument(2, static_cast<double*>(output), puppy_context);
     }
   }
+
   string generateCppCode(const string& function_name) const {
+    INFO("Starting to generate CPP code of IfThenFunc");
     return "inline double " + function_name +
       "(double lhs, double mhs, double rhs) {\n" +
       "  if (lhs > 0.0) {\n" +
@@ -171,6 +186,8 @@ class IfThenFunc : public BaseGPOperation, public Serializable {
       "  }\n" +
       "}\n";
   }
+ private:
+  virtual string getDefaultAlias() const {return "IfThenFunc";}
 };
 /** \brief The Puppy::Primitive implements the functor, that gives random
  * constants to build Puppy::Tree.
@@ -184,6 +201,7 @@ class Ephemeral : public BaseGPOperation {
       Puppy::Context& puppy_context) {}
   virtual Puppy::PrimitiveHandle giveReference(
       Puppy::Context& puppy_context) {
+    INFO("giving reference of puppy_context");
     double value = puppy_context.mRandom.rollUniform(-1.0, 1.0);
     std::ostringstream name;
     name.precision(precision);

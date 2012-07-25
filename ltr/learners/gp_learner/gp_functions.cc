@@ -1,6 +1,7 @@
 // Copyright 2011 Yandex School Practice
 
 #include <boost/lexical_cast.hpp>
+#include <logog/logog.h>
 
 #include <string>
 
@@ -12,6 +13,7 @@ namespace ltr {
 namespace gp {
 void setContextToObject(Puppy::Context* context,
                         const Object& object) {
+  INFO("Starting to set context to object");
   for (size_t feature_index = 0;
       feature_index < object.feature_count();
       ++feature_index) {
@@ -27,6 +29,7 @@ template <typename TElement>
 void markDataSetWithTree(const DataSet<TElement>& data,
                          Puppy::Context* context,
                          Puppy::Tree* tree) {
+  INFO("Starting to mark DataSet with tree");
   for (size_t element_index = 0;
       element_index < data.size(); ++element_index) {
     PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
@@ -66,11 +69,14 @@ const Serializable* puppyPrimitiveHandleToPSerializable(
 void writeTreeAsStringOfCppCalls(const Puppy::Tree& tree,
                                  std::ostream &output,
                                  size_t node_index) {
+  INFO("Starting to wite tree as string of cpp calls");
   assert(node_index < tree.size());
   size_t number_arguments = tree[node_index].mPrimitive->getNumberArguments();
   if (number_arguments == 0) {
+    INFO("Number of arguments is equal to zero");
     output << tree[node_index].mPrimitive->getName();
   } else {
+    INFO("Number of arguments is not equal to zero");
     const Serializable* serializable
         = puppyPrimitiveHandleToPSerializable(tree[node_index].mPrimitive);
     output << serializable->getDefaultSerializableObjectName();
