@@ -18,6 +18,7 @@ TEST(MetricTest, TestEuclideanMetric) {
 
   object1 << 1.0;
   ltr::EuclideanMetric euclidean_metric;
+
   EXPECT_ANY_THROW(euclidean_metric.distance(object1, object2));
 
   object2 << 4.0;
@@ -35,6 +36,7 @@ TEST(MetricTest, TestManhattanMetric) {
 
   object1 << 15.15;
   ltr::ManhattanMetric manhattan_metric;
+
   EXPECT_ANY_THROW(manhattan_metric.distance(object1, object2));
 
   object2 << -3.75;
