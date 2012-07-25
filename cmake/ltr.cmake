@@ -62,8 +62,10 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
               ${Source_Path}/ltr/utility/murmur_hash.h
               ${Source_Path}/ltr/utility/murmur_hash.cc
               ${Source_Path}/ltr/utility/indices.h
-              ${Source_Path}/ltr/utility/indices.cc)
-
+              ${Source_Path}/ltr/utility/indices.cc
+              ${Source_Path}/ltr/utility/neighbor_weighter.h
+              ${Source_Path}/ltr/utility/neighbor_weighter.cc)
+    
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
                    ${Source_Path}/ltr/interfaces/parameterized.h
@@ -86,7 +88,9 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
                 ${Source_Path}/ltr/scorers/decision_tree_scorer.h
                 ${Source_Path}/ltr/scorers/decision_tree_scorer.cc
                 ${Source_Path}/ltr/scorers/linear_scorer.h
-                ${Source_Path}/ltr/scorers/linear_scorer.cc)
+                ${Source_Path}/ltr/scorers/linear_scorer.cc
+                ${Source_Path}/ltr/scorers/nearest_neighbor_scorer.h
+                ${Source_Path}/ltr/scorers/nearest_neighbor_scorer.cc)
 
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
@@ -125,11 +129,13 @@ SET(LTR_METRICS ${Source_Path}/ltr/metrics/metric.h
                 ${Source_Path}/ltr/metrics/euclidean_metric.cc
                 ${Source_Path}/ltr/metrics/manhattan_metric.h
                 ${Source_Path}/ltr/metrics/manhattan_metric.cc)
-
+              
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.h
-                 ${Source_Path}/ltr/learners/linear_learner/linear_learner.cc)
+                 ${Source_Path}/ltr/learners/linear_learner/linear_learner.cc
+                 ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h
+                 ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc)
 
 SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc
@@ -195,8 +201,16 @@ SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear
                            ${Source_Path}/ltr/learners/linear_composition/ada_rank_lc_scorer_weights_updater.h
                            ${Source_Path}/ltr/learners/linear_composition/average_lc_scorer_weights_updater.h)
 
+SET(LTR_AGGREGATORS ${Source_Path}/ltr/aggregators/aggregator.h
+                    ${Source_Path}/ltr/aggregators/average_aggregator.h
+                    ${Source_Path}/ltr/aggregators/average_aggregator.cc
+                    ${Source_Path}/ltr/aggregators/sum_aggregator.h
+                    ${Source_Path}/ltr/aggregators/sum_aggregator.cc
+                    ${Source_Path}/ltr/aggregators/vote_aggregator.h
+                    ${Source_Path}/ltr/aggregators/vote_aggregator.cc)
 
 # lets divide binaries in groups, for comfort navigation
+SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS})
 SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
@@ -221,10 +235,10 @@ SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 
-SET(LTR_ALL ${LTR_METRICS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
-            ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS}
+            ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS}
             ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY})
 
 INCLUDE_DIRECTORIES(${Source_Path})

@@ -20,6 +20,20 @@ double EuclideanMetric::distance(const ltr::Object& lhs,
   return sqrt(distance);
 }
 
+string EuclideanMetric::generateCppCode(const string& function_name) const {
+  string result;
+  result += "double " + function_name +
+    "(const Object& lhs, const Object& rhs) {\n";
+  result += " double result = 0;\n";
+  result += " for (int index = 0; index < lhs.feature_count(); ++index) {\n";
+  result += "   result += (lhs[index] - rhs[index])";
+  result += " * (lhs[index] - rhs[index]);\n";
+  result += " }\n";
+  result += " return sqrt(result);\n";
+  result += "}\n";
+  return result;
+}
+
 string EuclideanMetric::getDefaultAlias() const {
   return "Euclidean metric";
 }
