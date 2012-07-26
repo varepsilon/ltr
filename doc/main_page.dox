@@ -11,6 +11,7 @@ namespace ltr {
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
     - \ref TutorialMeasureLearnerScorer
+    - \ref QualityTable
   - \b Advanced \b topics
     - \ref HowToCreateNewLearnerAndScorer
   
