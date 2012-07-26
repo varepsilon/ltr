@@ -56,11 +56,12 @@ void FeatureSampler::set_indices(const Indices& indices) {
 }
 
 void FeatureSampler::applyImpl(const Object& input, Object* output) const {
-  output->features().resize(indices_.size());
-#pragma omp parallel for
-  for (int i = 0; i < (int)indices_.size(); ++i) {
-    output->at(i) = input[indices_[i]];
+  Object converted_object;
+  converted_object.features().resize(indices_.size());
+  for (int index = 0; index < (int)indices_.size(); ++index) {
+    converted_object[index] = input[indices_[index]];
   }
+  *output = converted_object;
 }
 
 string FeatureSampler::getDefaultAlias() const {

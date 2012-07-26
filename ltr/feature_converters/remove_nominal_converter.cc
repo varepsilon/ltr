@@ -53,14 +53,15 @@ string RemoveNominalConverter::generateCppCode(
 
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
-  *output = Object();
+  Object converted_object;
   for (int input_feature_index = 0;
        input_feature_index < (int)input.features().size();
        ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
-      output->operator<<(input[input_feature_index]);
+      converted_object << input[input_feature_index];
     }
   }
+  *output = converted_object;
 }
 
 string RemoveNominalConverter::getDefaultAlias() const {

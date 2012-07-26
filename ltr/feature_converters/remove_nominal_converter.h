@@ -6,7 +6,6 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_converter_learner.h"
 
 using std::string;
 
@@ -29,25 +28,6 @@ class RemoveNominalConverter : public FeatureConverter {
   virtual void applyImpl(const Object& input, Object* output) const;
 
   virtual string getDefaultAlias() const;
-};
-
-template <typename TElement>
-class RemoveNominalConverterLearner
-  : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
- public:
-  virtual void learnImpl(const DataSet<TElement>& data_set,
-                         RemoveNominalConverter* feature_converter) {
-    // DO NOTHING
-  }
-
-  virtual string toString() const {
-    return "RemoveNominalConverterLearner";
-  }
-
- private:
-  virtual string getDefaultAlias() const {
-    return "RemoveNominalConverterLearner";
-  }
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_REMOVE_NOMINAL_CONVERTER_H_

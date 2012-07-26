@@ -15,7 +15,7 @@
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/feature_sampler.h"
 #include "ltr/feature_converters/per_feature_linear_converter.h"
-#include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/feature_converters/nan_to_neutral_converter.h"
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
 #include "ltr/feature_converters/remove_nominal_converter.h"
 
@@ -32,7 +32,7 @@ using ltr::FeatureConverter;
 using ltr::FakeFeatureConverter;
 using ltr::FeatureSampler;
 using ltr::PerFeatureLinearConverter;
-using ltr::NanToZeroConverter;
+using ltr::NanToNeutralConverter;
 using ltr::NominalToBoolConverter;
 using ltr::RemoveNominalConverter;
 
@@ -119,22 +119,23 @@ TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   EXPECT_TRUE(DoubleEqual(converted_data[0][3], 0.0));
 }
 
-TEST(FeatureConvertersTest, NanToZeroConverterTest) {
-  Object nan_features_object, zero_features_object;
+TEST(FeatureConvertersTest, NanToNeutralConverterTest) {
+  Object nan_features_object, object;
   nan_features_object << numeric_limits<double>::quiet_NaN();
   nan_features_object << numeric_limits<double>::quiet_NaN();
   nan_features_object << numeric_limits<double>::quiet_NaN();
-  zero_features_object << 0 << 0 << 0;
+  object << 1 << 2 << 3;
 
   DataSet<Object> data, converted_data;
   data.add(nan_features_object);
 
-  NanToZeroConverter::Ptr nan_to_zero_converter
-    (new NanToZeroConverter(data.feature_info()));
+  NanToNeutralConverter::Ptr nan_to_neutral_converter
+    (new NanToNeutralConverter(data.feature_info()));
 
-  nan_to_zero_converter->apply(data, &converted_data);
+  nan_to_neutral_converter->set_neutral_object(object);
+  nan_to_neutral_converter->apply(data, &converted_data);
 
-  EXPECT_EQ(zero_features_object.features(), converted_data[0].features());
+  EXPECT_EQ(converted_data[0].features(), object.features());
 }
 
 TEST(FeatureConvertersTest, NominalToBoolConverterTest) {

@@ -6,7 +6,6 @@
 #include <string>
 
 #include "ltr/feature_converters/feature_converter.h"
-#include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
 /**
@@ -30,26 +29,5 @@ class NominalToBoolConverter : public FeatureConverter {
 
   virtual string getDefaultAlias() const;
 };
-
-template <typename TElement>
-class NominalToBoolConverterLearner
-  : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
- public:
-  virtual void learnImpl(const DataSet<TElement>& data_set,
-                         NominalToBoolConverter* feature_converter) {
-    // DO NOTHING
-  }
-
-  virtual string toString() const {
-    return "NominalToBoolConverterLearner";
-  }
-
- private:
-  virtual string getDefaultAlias() const {
-    return "NominalToBoolConverterLearner";
-  }
 };
-};
-
 #endif  // LTR_FEATURE_CONVERTERS_NOMINAL_TO_BOOL_CONVERTER_H_
-

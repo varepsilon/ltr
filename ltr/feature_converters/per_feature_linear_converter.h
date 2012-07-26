@@ -65,5 +65,4 @@ class PerFeatureLinearConverter : public FeatureConverter {
   vector<double> shifts_;
 };
 };
-
 #endif  // LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_

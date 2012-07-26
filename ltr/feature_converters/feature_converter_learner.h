@@ -99,5 +99,4 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   TFeatureConverter feature_converter_;
 };
 };
-
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_

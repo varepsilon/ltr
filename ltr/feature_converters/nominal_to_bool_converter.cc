@@ -88,21 +88,19 @@ string NominalToBoolConverter::generateCppCode(
 
 void NominalToBoolConverter::applyImpl(
   const Object& input, Object* output) const {
-    *output = input.deepCopy();
-    int output_feature_index = 0;
+    Object converted_object;
     for (int input_feature_index = 0;
-      input_feature_index < (int)input.features().size();
-      ++input_feature_index) {
+         input_feature_index < (int)input.features().size();
+         ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) != NOMINAL) {
-          output->at(output_feature_index++) =
-            input[input_feature_index];
+          converted_object << input[input_feature_index];
         }
     }
 
     for (int input_feature_index = 0;
-      input_feature_index < (int)input.features().size();
-      ++input_feature_index) {
+         input_feature_index < (int)input.features().size();
+         ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) == NOMINAL) {
           map<int, string> vals =
@@ -110,13 +108,15 @@ void NominalToBoolConverter::applyImpl(
           for (map<int, string>::iterator iterator = vals.begin();
             iterator != vals.end(); ++iterator) {
               if (input[input_feature_index] == iterator->first) {
-                output->at(output_feature_index++) = 1.0;
+                converted_object << 1.0;
               } else {
-                output->at(output_feature_index++) = 0.0;
+                converted_object << 0.0;
               }
           }
         }
     }
+    converted_object.features().resize(input.feature_count());
+    *output = converted_object;
 }
 
 string NominalToBoolConverter::getDefaultAlias() const {

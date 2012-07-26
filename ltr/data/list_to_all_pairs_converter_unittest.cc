@@ -18,13 +18,13 @@ TEST(ListToAllPairsConverterTest, TestListConvertion) {
   object2 << 4 << 5 << 6;
   object3 << 7 << 5 << 3.13;
 
-  ltr::ObjectList objList;
-  objList << object1 << object2 << object3;
+  ltr::ObjectList object_list;
+  object_list << object1 << object2 << object3;
 
   ltr::utility::ListToAllPairsConverter converter;
   std::vector<ltr::ObjectPair> pairs;
 
-  EXPECT_NO_THROW(converter(objList, &pairs));
+  EXPECT_NO_THROW(converter(object_list, &pairs));
   EXPECT_EQ(pairs.size(), 3);
   EXPECT_EQ(pairs[0], ltr::ObjectPair(object2, object1));
   EXPECT_EQ(pairs[1], ltr::ObjectPair(object3, object1));

@@ -15,10 +15,10 @@
 #include "ltr/feature_converters/feature_sampler_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/feature_converters/feature_normalizer_learner.h"
-#include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/feature_converters/nan_to_zero_learner.h"
 #include "ltr/feature_converters/nan_to_average_learner.h"
-#include "ltr/feature_converters/nominal_to_bool_converter.h"
-#include "ltr/feature_converters/remove_nominal_converter.h"
+#include "ltr/feature_converters/nominal_to_bool_learner.h"
+#include "ltr/feature_converters/remove_nominal_learner.h"
 
 using std::vector;
 
