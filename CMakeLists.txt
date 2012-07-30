@@ -1,4 +1,3 @@
-#FreeBSD Note
 # Use cmake -DCMAKE_CXX_COMPILER=g++46 /mnt/freedata/home/Void/Yandex/ltr1
 # to compile via gcc46
 
@@ -47,7 +46,7 @@ IF(UNIX)
 ENDIF(UNIX)
 
 ########################################################################################
-# lets SETup boost 
+# lets SETup boost
 INCLUDE(${Source_Path}/cmake/boost.cmake)
 
 ########################################################################################

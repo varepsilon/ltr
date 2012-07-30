@@ -43,7 +43,7 @@ class CrossValidator {
   void addSplitter(const typename Splitter<ObjectType>::Ptr& splitter);
   void launch();
   void reset();
-  void toString();
+  string toString();
  private:
   void setCrossValidationResultLabels();
   MultiTable<double, 4> cross_validation_results_;
@@ -86,8 +86,8 @@ void CrossValidator<ObjectType, ScorerType>::
   splitters_.push_back(splitter);
 }
 
-template <typename ObjectType, typenmae ScorerType>
-void CrossValidator<objectType, ScorerType>::
+template <typename ObjectType, typename ScorerType>
+void CrossValidator<ObjectType, ScorerType>::
   setCrossValidationResultLabels() {
   INFO("Starting to set crossvalidation results labels.");
   INFO("Starting to set measures");
@@ -97,7 +97,7 @@ void CrossValidator<objectType, ScorerType>::
        ++measure_index) {
     INFO("Setting %d tick label. Current measure is %s",
          measure_index,
-         measures_[measure_index]->alias());
+         measures_[measure_index]->alias().c_str());
     cross_validation_results_.setTickLabel(0,
                                            measure_index,
                                            measures_[measure_index]->alias());
@@ -127,7 +127,7 @@ void CrossValidator<objectType, ScorerType>::
   for (int splitter_index = 0;
        splitter_index < splitters_.size();
        ++splitter_index) {
-    INFO("Setting %d tick label", splitter_index);
+//    INFO("Setting %d tick label", splitter_index);
     cross_validation_results_.
         setTickLabel(3, splitter_index, splitters_[splitter_index]->alias());
   }
@@ -184,7 +184,7 @@ void CrossValidator<ObjectType, ScorerType>::reset() {
 }
 
 template <typename ObjectType, typename ScorerType>
-void CrossValidator<ObjectType, ScorerType>::toString() {
+string CrossValidator<ObjectType, ScorerType>::toString() {
   return cross_validation_results_.toString();
 }
 }

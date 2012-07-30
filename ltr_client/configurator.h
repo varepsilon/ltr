@@ -15,37 +15,38 @@
 using std::string;
 using std::auto_ptr;
 
-class TExecutor;
+class TagHandler;
 
-typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
+typedef boost::unordered_map<string, TagHandler*> TagHandlers;
 
 struct TDataInfo {
   TDataInfo() { }
   // C++11 -> we have no initializer, so we MUST write
   // stupid conctructor manually
-  TDataInfo(const string& nm, const string& app,
-            const string& fmt, const string& fn):
-    name(nm), approach(app), format(fmt), file_name(fn) { }
+  TDataInfo(const string& name_, const string& approach_,
+            const string& format_, const string& file_name_):
+    name(name_), approach(approach_), format(format_), file(file_name_) { }
   string name;
   string approach;
   string format;
-  string file_name;
+  string file;
 };
 string ToString(const TDataInfo &Info);
 
 struct TXmlTokenDependency {
   // C++11 -> we have no initializer, so we MUST write
   // stupid conctructor manually
-  explicit TXmlTokenDependency(const string& nm): parameter_name(nm) { }
+  explicit TXmlTokenDependency(const string& parameter_name_)
+    : parameter_name(parameter_name_) { }
   string parameter_name;
 };
 
 
-struct TTrainInfo {
-  TTrainInfo() {}
+struct TrainLaunchInfo {
+  TrainLaunchInfo() {}
   // C++11 -> we have no initializer, so we MUST write stupid
   // conctructor manually
-  TTrainInfo(const string& nm,
+  TrainLaunchInfo(const string& nm,
              const string& dt,
              const string& lr):
     name(nm), data(dt), learner(lr) { gen_cpp = false; }
@@ -55,33 +56,37 @@ struct TTrainInfo {
   boost::unordered_set<string> predicts;
   bool gen_cpp;
 };
-string ToString(const TTrainInfo& Info);
+string ToString(const TrainLaunchInfo& Info);
 
 
-struct TCrossvalidationInfo {
-  TCrossvalidationInfo() { }
+struct CrossvalidationLaunchInfo {
+  CrossvalidationLaunchInfo() { }
   // C++11 -> we have no initializer, so we MUST write stupid
   // conctructor manually
-  explicit TCrossvalidationInfo(const string& fd):fold(fd) { }
-  string fold;
+  explicit CrossvalidationLaunchInfo(const string& fold_)
+    : splitter(fold_) { }
+  string splitter;
   boost::unordered_set<string> learners;
   boost::unordered_set<string> measures;
   boost::unordered_set<string> datas;
 };
-string ToString(const TCrossvalidationInfo& Info);
+string ToString(const CrossvalidationLaunchInfo& Info);
 
-class TXmlTokenSpec;
-class Configurator {
+class ParametrizedInfo;
+
+
+
+class ConfigParser {
  public:
   typedef boost::unordered_map<string, TDataInfo> TDataInfos;
-  typedef boost::unordered_map<string, TXmlTokenSpec> TXmlTokenSpecs;
-  typedef boost::unordered_map<string, TTrainInfo> TTrainInfos;
-  typedef boost::unordered_map<string, TCrossvalidationInfo>
+  typedef boost::unordered_map<string, ParametrizedInfo> TXmlTokenSpecs;
+  typedef boost::unordered_map<string, TrainLaunchInfo> TTrainInfos;
+  typedef boost::unordered_map<string, CrossvalidationLaunchInfo>
                                                           TCrossvalidationInfos;
 
-  Configurator();
-  ~Configurator();
-  void loadConfig(const string& file_name);
+  ConfigParser();
+  ~ConfigParser();
+  void parseConfig(const string& file_name);
 
   const TDataInfos& dataInfos() const;
   TDataInfos& dataInfos();
@@ -91,33 +96,37 @@ class Configurator {
   TTrainInfos& trainInfos();
   const TCrossvalidationInfos& crossvalidationInfos() const;
   TCrossvalidationInfos& crossvalidationInfos();
-  const TXmlTokenSpec& findLearner(const string &name) const;
+  const ParametrizedInfo& findLearner(const string &name) const;
   const TDataInfo& findData(const string &name) const;
 
   const string& rootPath() const;
 
  private:
-  TStrExecMap handlers_;
-  TExecutor* general_xml_token;
+  TagHandlers tag_handlers_;
+  TagHandler* general_xml_token_;
 
   auto_ptr<TiXmlDocument> document_;
   TiXmlElement* root_;
   string root_path_;
-  Configurator::TDataInfos data_infos_;
-  Configurator::TXmlTokenSpecs xml_token_specs;
-  Configurator::TTrainInfos train_infos;
-  Configurator::TCrossvalidationInfos crossvalidation_infos;
+  ConfigParser::TDataInfos data_infos_;
+  ConfigParser::TXmlTokenSpecs xml_token_specs;
+  ConfigParser::TTrainInfos train_infos;
+  ConfigParser::TCrossvalidationInfos crossvalidation_infos;
 };
 
-
-class TXmlTokenSpec;
-typedef std::list<const TXmlTokenSpec*> TXmlTokenSpecList;
-class TXmlTokenSpec {
+class ParametrizedInfo;
+typedef std::list<const ParametrizedInfo*> TXmlTokenSpecList;
+class ParametrizedInfo {
  public:
-  TXmlTokenSpec();
-  TXmlTokenSpec(const TXmlTokenSpec& other);
-  TXmlTokenSpec& operator=(const TXmlTokenSpec& other);
-  ~TXmlTokenSpec();
+  ParametrizedInfo();
+  ParametrizedInfo(const string& tag_name,
+                   const string& name,
+                   const string& type,
+                   const string& approach,
+                   ltr::ParametersContainer parameters);
+  ParametrizedInfo(const ParametrizedInfo& other);
+  ParametrizedInfo& operator=(const ParametrizedInfo& other);
+  ~ParametrizedInfo();
 
   const string& getTagName() const;
   const string& getName() const;
@@ -126,20 +135,20 @@ class TXmlTokenSpec {
   const ltr::ParametersContainer& getParameters() const;
 
   const TXmlTokenSpecList& dependencySpecs() const;
-  void checkAvailability(
-      const Configurator::TXmlTokenSpecs& token_specifications);
+  void fillDependencyList(
+      const ConfigParser::TXmlTokenSpecs& token_specifications);
 
  private:
-  string tag_name;
-  string name;
-  string type;
-  string approach;
-  ltr::ParametersContainer parameters;
-  TXmlTokenSpecList dependency_specs;
+  string tag_name_;
+  string name_;
+  string type_;
+  string approach_;
+  ltr::ParametersContainer parameters_;
+  TXmlTokenSpecList dependency_specs_;
 
-  friend class Configurator;
-  friend class TOnGeneralXmlToken;
+  friend class ConfigParser;
+  friend class OnGeneralXmlToken;
 };
-string ToString(const TXmlTokenSpec& Info);
+string ToString(const ParametrizedInfo& Info);
 
 #endif  // LTR_CLIENT_CONFIGURATOR_H_

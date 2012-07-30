@@ -45,7 +45,9 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
+    Measure<TElement> *msr =
+        parameters.Get<Parameterized *, Measure<TElement> *>("measure");
+    measure_ = typename Measure<TElement>::Ptr(msr);
   }
   virtual void learnImpl(const DataSet<TElement>& data,
                          OneFeatureScorer* scorer);

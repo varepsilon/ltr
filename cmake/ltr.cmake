@@ -64,7 +64,8 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
               ${Source_Path}/ltr/utility/indices.h
               ${Source_Path}/ltr/utility/indices.cc
               ${Source_Path}/ltr/utility/neighbor_weighter.h
-              ${Source_Path}/ltr/utility/neighbor_weighter.cc)
+              ${Source_Path}/ltr/utility/neighbor_weighter.cc
+              ${Source_Path}/ltr/utility/container_utility.h)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
@@ -129,7 +130,7 @@ SET(LTR_METRICS ${Source_Path}/ltr/metrics/metric.h
                 ${Source_Path}/ltr/metrics/euclidean_metric.cc
                 ${Source_Path}/ltr/metrics/manhattan_metric.h
                 ${Source_Path}/ltr/metrics/manhattan_metric.cc)
-              
+
 SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/best_feature_learner/best_feature_learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.h

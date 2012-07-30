@@ -11,6 +11,8 @@
 
 #include "logog/logog.h"
 
+#include "ltr/utility/container_utility.h"
+
 #include "tinyxml/tinyxml.h"
 
 using std::string;
@@ -60,21 +62,21 @@ static inline void DeleteAllFromUnorderedMap(
   }
 }
 
-class TExecutor {
+class TagHandler {
  public:
-  explicit TExecutor(Configurator* configuratorInstance)
+  explicit TagHandler(ConfigParser* configuratorInstance)
     : d(configuratorInstance) {}
-  virtual ~TExecutor() {}
+  virtual ~TagHandler() {}
   virtual void operator()(TiXmlElement* xmlElement) = 0;
  protected:
-  Configurator* d;
+  ConfigParser* d;
 };
 
-typedef boost::unordered_map<string, TExecutor*> TStrExecMap;
+typedef boost::unordered_map<string, TagHandler*> TagHandlers;
 
-static inline void GenericParse(const TStrExecMap& executors,
+static inline void GenericParse(const TagHandlers& executors,
                                 TiXmlNode* xmlNode,
-                                TExecutor* on_unknown_token = NULL) {
+                                TagHandler* on_unknown_token = NULL) {
   for (; xmlNode; xmlNode = xmlNode->NextSibling()) {
     if (xmlNode->Type() != TiXmlNode::TINYXML_ELEMENT) {
       continue;
@@ -85,7 +87,7 @@ static inline void GenericParse(const TStrExecMap& executors,
       throw logic_error("Can not convert node to element");
     }
 
-    const TStrExecMap::const_iterator it = executors.find(xmlNode->Value());
+    const TagHandlers::const_iterator it = executors.find(xmlNode->Value());
     if (it == executors.end()) {
       if (on_unknown_token) {
         (*on_unknown_token)(element);
@@ -99,37 +101,6 @@ static inline void GenericParse(const TStrExecMap& executors,
       (*it->second)(element);
     }
   }
-}
-
-template <class TCont>
-static inline bool Contains(const TCont& cont,
-                            const typename TCont::key_type& key) {
-  return cont.find(key) != cont.end();
-}
-
-template <class ValueType>
-static inline ValueType &SafeInsert(
-    boost::unordered_map<string, ValueType> &container,
-    const char* key) {
-  if (!key) {
-    throw logic_error("empty name!!!!");
-  }
-  if (Contains(container, key)) {
-    throw logic_error("Container already contains " + string(key) + "!!!");
-  }
-  return container[key];
-}
-
-static inline void SafeInsert(
-    boost::unordered_set<string>& cont,
-    const char* key) {
-  if (!key) {
-    return;
-  }
-  if (Contains(cont, key)) {
-    throw logic_error("Container already contains " + string(key) + "!!!");
-  }
-  cont.insert(key);
 }
 
 template <class Key, class Value>
@@ -158,12 +129,12 @@ string ToString(const TDataInfo& info) {;
   out << "TDataInfo(name=" << info.name
       << ", approach=" << info.approach
       << ", format=" << info.format
-      << ", file_name=" << info.file_name
+      << ", file_name=" << info.file
       << ")";
   return out.str();
 }
 
-string ToString(const TTrainInfo& info) {
+string ToString(const TrainLaunchInfo& info) {
   stringstream out(stringstream::out);
   out << "TTrainInfo(name=" << info.name
       << ", data=" << info.data
@@ -174,9 +145,9 @@ string ToString(const TTrainInfo& info) {
   return out.str();
 }
 
-string ToString(const TCrossvalidationInfo& info) {
+string ToString(const CrossvalidationLaunchInfo& info) {
   stringstream out(stringstream::out);
-  out << "TCrossvalidationInfo(fold=" << info.fold
+  out << "TCrossvalidationInfo(fold=" << info.splitter
       << ", learners=" << ToString(info.learners)
       << ", measures=" << ToString(info.measures)
       << ", datas=" << ToString(info.datas)
@@ -186,90 +157,94 @@ string ToString(const TCrossvalidationInfo& info) {
 
 // =============================== TXmlTokenSpec ============================
 
-void TXmlTokenSpec::checkAvailability(
-    const Configurator::TXmlTokenSpecs& token_specs) {
-  dependency_specs.clear();
+void ParametrizedInfo::fillDependencyList(
+    const ConfigParser::TXmlTokenSpecs& token_specs) {
+  dependency_specs_.clear();
 
   typedef ltr::ParametersContainer::NameValue<const TXmlTokenDependency>
       TNameValue;
   typedef list<TNameValue> TDependencies;
   const TDependencies& my_dependencies =
-      parameters.getValuesByType<const TXmlTokenDependency>();
+      parameters_.getValuesByType<const TXmlTokenDependency>();
 
   for (TDependencies::const_iterator my_dependency_it = my_dependencies.begin();
       my_dependency_it != my_dependencies.end();
       ++my_dependency_it) {
     const TNameValue& dependency = *my_dependency_it;
-    const TXmlTokenSpec* found = NULL;
+    const ParametrizedInfo* found = NULL;
 
-    for (Configurator::TXmlTokenSpecs::const_iterator it = token_specs.begin();
-        it != token_specs.end();
-        ++it) {
-      const string& name = it->first;
-      const TXmlTokenSpec& spec = it->second;
-      if (dependency.value.parameter_name == name) {
-        found = &spec;
-        break;
-      }
-    }
+    ConfigParser::TXmlTokenSpecs::const_iterator it = token_specs.find(
+          dependency.value.parameter_name);
+    found = &it->second;
 
     if (!found) {
-      throw logic_error("TXmlTokenSpec::checkAvailability: "
+      throw logic_error("TXmlTokenSpec::fillDependency List: "
                         "Could not resolve dependency " +
                         dependency.value.parameter_name);
     }
-    dependency_specs.push_back(found);
+    dependency_specs_.push_back(found);
   }
 }
 
-TXmlTokenSpec::TXmlTokenSpec()
-  : tag_name()
-  , name()
-  , type()
-  , approach()
-  , parameters()
-  , dependency_specs() {}
+ParametrizedInfo::ParametrizedInfo()
+  : tag_name_()
+  , name_()
+  , type_()
+  , approach_()
+  , parameters_()
+  , dependency_specs_() {}
 
-TXmlTokenSpec::TXmlTokenSpec(const TXmlTokenSpec& other) {
+ParametrizedInfo::ParametrizedInfo(const string& tag_name,
+                 const string& name,
+                 const string& type,
+                 const string& approach,
+                 ltr::ParametersContainer parameters)
+  : tag_name_(tag_name)
+  , name_(name)
+  , type_(type)
+  , approach_(approach)
+  , parameters_(parameters) {}
+
+ParametrizedInfo::ParametrizedInfo(const ParametrizedInfo& other) {
   *this = other;
 }
 
-TXmlTokenSpec& TXmlTokenSpec::operator= (const TXmlTokenSpec& other) {
+ParametrizedInfo& ParametrizedInfo::operator= (const ParametrizedInfo& other) {
   if (this == &other) {
     return *this;
   }
-  name = other.getName();
-  type = other.getType();
-  approach = other.getApproach();
-  parameters = other.getParameters();
-  dependency_specs = other.dependencySpecs();
+  name_ = other.getName();
+  type_ = other.getType();
+  approach_ = other.getApproach();
+  parameters_ = other.getParameters();
+  dependency_specs_ = other.dependencySpecs();
   return *this;
 }
 
 
-TXmlTokenSpec::~TXmlTokenSpec() {
+ParametrizedInfo::~ParametrizedInfo() {
 }
 
-const string& TXmlTokenSpec::getTagName() const {
-  return tag_name;
+const string& ParametrizedInfo::getTagName() const {
+  return tag_name_;
 }
-const string& TXmlTokenSpec::getName() const {
-  return name;
+const string& ParametrizedInfo::getName() const {
+  return name_;
 }
-const string& TXmlTokenSpec::getType() const {
-  return type;
+const string& ParametrizedInfo::getType() const {
+  return type_;
 }
-const string& TXmlTokenSpec::getApproach() const {
-  return approach;
+const string& ParametrizedInfo::getApproach() const {
+  return approach_;
 }
-const ltr::ParametersContainer& TXmlTokenSpec::getParameters() const {
-  return parameters;
+const ltr::ParametersContainer& ParametrizedInfo::getParameters() const {
+  return parameters_;
 }
-const TXmlTokenSpecList& TXmlTokenSpec::dependencySpecs() const {
-  return dependency_specs;
+const TXmlTokenSpecList& ParametrizedInfo::dependencySpecs() const {
+  return dependency_specs_;
 }
 
-string ToString(const TXmlTokenSpec& info) {
+string ToString(const ParametrizedInfo& info) {
   stringstream out(stringstream::out);
   out << "TXmlTokenSpec(name=" << info.getName()
       << ", type=" << info.getType()
@@ -287,9 +262,9 @@ string ToString(const TXmlTokenSpec& info) {
 
 // =============================== Config parsing ============================
 
-class TOnConfigExecutor: public TExecutor {
+class OnConfigParser: public TagHandler {
  public:
-  explicit TOnConfigExecutor(Configurator* impl): TExecutor(impl) { }
+  explicit OnConfigParser(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
     cout << "TOnConfigExecutor" << endl;
   }  // We already read it
@@ -297,9 +272,9 @@ class TOnConfigExecutor: public TExecutor {
 
 // =============================== Data parsing ==============================
 
-class TOnDataExecutor: public TExecutor {
+class TOnDataTag: public TagHandler {
  public:
-  explicit TOnDataExecutor(Configurator* impl): TExecutor(impl) { }
+  explicit TOnDataTag(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
     cout << "TOnDataExecutor" << endl;
 
@@ -335,10 +310,10 @@ class TOnDataExecutor: public TExecutor {
 
 // =========================== General XML token parsing ======================
 
-class TOnParameterExecutor: public TExecutor {
+class TOnParameterTag: public TagHandler {
  public:
-  explicit TOnParameterExecutor(Configurator *impl)
-    : TExecutor(impl)
+  explicit TOnParameterTag(ConfigParser *impl)
+    : TagHandler(impl)
     , container(NULL) {}
 
   void setContainer(ltr::ParametersContainer *cont) {
@@ -457,16 +432,16 @@ class TOnParameterExecutor: public TExecutor {
   ltr::ParametersContainer *container;
 };
 
-const char* TOnParameterExecutor::XML_TOKEN_DEPENDENCY_TYPE =
+const char* TOnParameterTag::XML_TOKEN_DEPENDENCY_TYPE =
     "TXmlTokenDependency";
 
 
-class TOnGeneralXmlToken: public TExecutor {
+class OnGeneralXmlToken: public TagHandler {
  public:
-  explicit TOnGeneralXmlToken(Configurator *impl): TExecutor(impl) {
-    parameters_executor = new TOnParameterExecutor(impl);
+  explicit OnGeneralXmlToken(ConfigParser *impl): TagHandler(impl) {
+    parameters_executor = new TOnParameterTag(impl);
   }
-  ~TOnGeneralXmlToken() {
+  ~OnGeneralXmlToken() {
     delete parameters_executor;
   }
 
@@ -474,8 +449,8 @@ class TOnGeneralXmlToken: public TExecutor {
     cout << "TOnGeneralXmlToken" << endl;
 
     const char* name = element->Attribute(NAME_ATTR);
-    TXmlTokenSpec& spec = SafeInsert(d->xmlTokenSpecs(),
-                                     name);
+    ParametrizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
+                                                      name);
     const char* type = element->Attribute(TYPE_ATTR);
     if (!type) {
       throw logic_error("no 'type' attribute");
@@ -491,91 +466,91 @@ class TOnGeneralXmlToken: public TExecutor {
       throw logic_error("no tag name");
     }
 
-    spec.tag_name = tag_name;
-    spec.name = name;
-    spec.type = type;
-    spec.approach = approach;
+    spec.tag_name_ = tag_name;
+    spec.name_ = name;
+    spec.type_ = type;
+    spec.approach_ = approach;
 
-    parameters_executor->setContainer(&spec.parameters);
-    GenericParse(TStrExecMap(),
+    parameters_executor->setContainer(&spec.parameters_);
+    GenericParse(TagHandlers(),
                  element->FirstChildElement(),
                  parameters_executor);
   }
 
  private:
-  TOnParameterExecutor *parameters_executor;
+  TOnParameterTag *parameters_executor;
 };
 
 //============================= Launch parsing =================================
 
-class TOnCVLearnerExecutor: public TExecutor {
+class OnCVLearnerTag: public TagHandler {
   public:
-  explicit TOnCVLearnerExecutor(Configurator* impl): TExecutor(impl) {
+  explicit OnCVLearnerTag(ConfigParser* impl): TagHandler(impl) {
     info = NULL;
   }
-  ~TOnCVLearnerExecutor() { }
-  void setInfo(TCrossvalidationInfo *ti) {
+  ~OnCVLearnerTag() { }
+  void setInfo(CrossvalidationLaunchInfo *ti) {
     info = ti;
   }
   virtual void operator()(TiXmlElement *element) {
     cout << "TOnCVLearnerExecutor" << endl;
     assert(info);
-    SafeInsert(info->learners, element->GetText());
+    ltr::utility::SafeInsert(info->learners, element->GetText());
   }
 
  private:
-  TCrossvalidationInfo *info;
+  CrossvalidationLaunchInfo *info;
 };
 
-class TOnCVMeasureExecutor: public TExecutor {
+class OnCVMeasureTag: public TagHandler {
   public:
-  explicit TOnCVMeasureExecutor(Configurator* impl): TExecutor(impl) {
+  explicit OnCVMeasureTag(ConfigParser* impl): TagHandler(impl) {
     info = NULL;
   }
-  ~TOnCVMeasureExecutor() { }
-  void setInfo(TCrossvalidationInfo *ti) {
+  ~OnCVMeasureTag() { }
+  void setInfo(CrossvalidationLaunchInfo *ti) {
     info = ti;
   }
   virtual void operator()(TiXmlElement *element) {
     cout << "TOnCVMeasureExecutor" << endl;
     assert(info);
-    SafeInsert(info->measures, element->GetText());
+    ltr::utility::SafeInsert(info->measures, element->GetText());
   }
 
  private:
-  TCrossvalidationInfo *info;
+  CrossvalidationLaunchInfo *info;
 };
 
-class TOnCVDataExecutor: public TExecutor {
+class OnCVDataTag: public TagHandler {
   public:
-  explicit TOnCVDataExecutor(Configurator* impl)
-    : TExecutor(impl)
+  explicit OnCVDataTag(ConfigParser* impl)
+    : TagHandler(impl)
     , info(NULL) {}
-  ~TOnCVDataExecutor() {}
-  void setInfo(TCrossvalidationInfo* trainInfo) {
+  ~OnCVDataTag() {}
+  void setInfo(CrossvalidationLaunchInfo* trainInfo) {
     info = trainInfo;
   }
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnCVDataExecutor" << endl;
     assert(info);
-    SafeInsert(info->datas, element->GetText());
+    ltr::utility::SafeInsert(info->datas, element->GetText());
   }
 
  private:
-  TCrossvalidationInfo *info;
+  CrossvalidationLaunchInfo *info;
 };
 
 
 
-class TOnCrossvalidationExecutor: public TExecutor {
+class OnCrossvalidationTag: public TagHandler {
  public:
-  explicit TOnCrossvalidationExecutor(Configurator* impl):
-    TExecutor(impl) {
-    handlers_[LEARNER] = learner_executor = new TOnCVLearnerExecutor(impl);
-    handlers_[MEASURE] = measure_executor = new TOnCVMeasureExecutor(impl);
-    handlers_[DATA] = data_executor = new TOnCVDataExecutor(impl);
+  explicit OnCrossvalidationTag(ConfigParser* impl):
+    TagHandler(impl) {
+    handlers_[LEARNER] = learner_executor = new OnCVLearnerTag(impl);
+    handlers_[MEASURE] = measure_executor = new OnCVMeasureTag(impl);
+    handlers_[DATA] = data_executor = new OnCVDataTag(impl);
   }
-  ~TOnCrossvalidationExecutor() {
+  ~OnCrossvalidationTag() {
     DeleteAllFromUnorderedMap(&handlers_);
   }
   virtual void operator()(TiXmlElement* element) {
@@ -587,7 +562,7 @@ class TOnCrossvalidationExecutor: public TExecutor {
         return;
     }
 
-    TCrossvalidationInfo new_fold_info(fold);
+    CrossvalidationLaunchInfo new_fold_info(fold);
     d->crossvalidationInfos()[fold] = new_fold_info;
     learner_executor->setInfo(&d->crossvalidationInfos()[fold]);
     measure_executor->setInfo(&d->crossvalidationInfos()[fold]);
@@ -596,41 +571,41 @@ class TOnCrossvalidationExecutor: public TExecutor {
   }
 
  private:
-  TOnCVLearnerExecutor* learner_executor;
-  TOnCVMeasureExecutor* measure_executor;
-  TOnCVDataExecutor* data_executor;
-  TStrExecMap handlers_;
+  OnCVLearnerTag* learner_executor;
+  OnCVMeasureTag* measure_executor;
+  OnCVDataTag* data_executor;
+  TagHandlers handlers_;
 };
 
-class TOnPredictExecutor: public TExecutor {
+class OnPredictTag: public TagHandler {
   public:
-  explicit TOnPredictExecutor(Configurator* impl)
-    : TExecutor(impl)
+  explicit OnPredictTag(ConfigParser* impl)
+    : TagHandler(impl)
     , info(NULL) {}
 
-  ~TOnPredictExecutor() {}
-  void setTrainInfo(TTrainInfo* trainInfo) {
+  ~OnPredictTag() {}
+  void setTrainInfo(TrainLaunchInfo* trainInfo) {
     info = trainInfo;
   }
 
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnPredictExecutor" << endl;
     assert(info);
-    SafeInsert(info->predicts, element->GetText());
+    ltr::utility::SafeInsert(info->predicts, element->GetText());
   }
 
  private:
-  TTrainInfo *info;
+  TrainLaunchInfo *info;
 };
 
-class TOnCppGenExecutor: public TExecutor {
+class OnCppGenTag: public TagHandler {
   public:
-  explicit TOnCppGenExecutor(Configurator* impl)
-    : TExecutor(impl)
+  explicit OnCppGenTag(ConfigParser* impl)
+    : TagHandler(impl)
     , info(NULL) {}
 
-  ~TOnCppGenExecutor() {}
-  void setTrainInfo(TTrainInfo* trainInfo) {
+  ~OnCppGenTag() {}
+  void setTrainInfo(TrainLaunchInfo* trainInfo) {
     info = trainInfo;
   }
 
@@ -640,18 +615,18 @@ class TOnCppGenExecutor: public TExecutor {
   }
 
  private:
-  TTrainInfo *info;
+  TrainLaunchInfo *info;
 };
 
-class TOnTrainExecutor: public TExecutor {
+class OnTrainTag: public TagHandler {
  public:
-  explicit TOnTrainExecutor(Configurator* impl): TExecutor(impl) {
-    cpp_gen_executor =  new TOnCppGenExecutor(impl);
-    predict_executor = new TOnPredictExecutor(impl);
+  explicit OnTrainTag(ConfigParser* impl): TagHandler(impl) {
+    cpp_gen_executor =  new OnCppGenTag(impl);
+    predict_executor = new OnPredictTag(impl);
     handlers_[CPP_GEN] = cpp_gen_executor;
     handlers_[PREDICT] = predict_executor;
   }
-  ~TOnTrainExecutor() { DeleteAllFromUnorderedMap(&handlers_); }
+  ~OnTrainTag() { DeleteAllFromUnorderedMap(&handlers_); }
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnTrainExecutor" << endl;
     const char* name = element->Attribute("name");
@@ -674,7 +649,7 @@ class TOnTrainExecutor: public TExecutor {
         return;
     }
 
-    TTrainInfo new_train_info(name, data, learner);
+    TrainLaunchInfo new_train_info(name, data, learner);
     d->trainInfos()[name] = new_train_info;
 
     cpp_gen_executor->setTrainInfo(&d->trainInfos()[name]);
@@ -683,42 +658,43 @@ class TOnTrainExecutor: public TExecutor {
   }
 
  private:
-  TStrExecMap handlers_;
-  TOnCppGenExecutor* cpp_gen_executor;
-  TOnPredictExecutor* predict_executor;
+  TagHandlers handlers_;
+  OnCppGenTag* cpp_gen_executor;
+  OnPredictTag* predict_executor;
 };
 
-class TOnLaunchExecutor: public TExecutor {
+class OnLaunchTag: public TagHandler {
  public:
-  explicit TOnLaunchExecutor(Configurator* impl): TExecutor(impl) {
-    handlers_[TRAIN] = new TOnTrainExecutor(impl);
-    handlers_[CROSSVALIDATION] = new TOnCrossvalidationExecutor(impl);
+  explicit OnLaunchTag(ConfigParser* impl): TagHandler(impl) {
+    handlers_[TRAIN] = new OnTrainTag(impl);
+    handlers_[CROSSVALIDATION] = new OnCrossvalidationTag(impl);
   }
-  ~TOnLaunchExecutor() { DeleteAllFromUnorderedMap(&handlers_); }
+  ~OnLaunchTag() { DeleteAllFromUnorderedMap(&handlers_); }
   virtual void operator() (TiXmlElement* element) {
     cout << "TOnLaunchExecutor" << endl;
     GenericParse(handlers_, element->FirstChildElement());
   }
 
  private:
-  TStrExecMap handlers_;
+  TagHandlers handlers_;
 };
 
 // ====================== ConfiguratorPrivate impl =============================
 
-Configurator::Configurator() {
+ConfigParser::ConfigParser() {
   root_ = NULL;
-  general_xml_token = new TOnGeneralXmlToken(this);
-  handlers_[CONFIG] = new TOnConfigExecutor(this);
-  handlers_[DATA] = new TOnDataExecutor(this);
-  handlers_[LAUNCH] = new TOnLaunchExecutor(this);
+  general_xml_token_ = new OnGeneralXmlToken(this);
+  tag_handlers_[CONFIG] = new OnConfigParser(this);
+  tag_handlers_[DATA] = new TOnDataTag(this);
+  tag_handlers_[LAUNCH] = new OnLaunchTag(this);
 }
-Configurator::~Configurator() {
-  DeleteAllFromUnorderedMap(&handlers_);
-  delete general_xml_token;
+ConfigParser::~ConfigParser() {
+  DeleteAllFromUnorderedMap(&tag_handlers_);
+  delete general_xml_token_;
 }
 
-void Configurator::loadConfig(const string& file_name) {
+void ConfigParser::
+parseConfig(const string& file_name) {
   document_ = auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
   if (!document_->LoadFile()) {
     throw logic_error("not valid config in " + file_name);
@@ -744,9 +720,9 @@ void Configurator::loadConfig(const string& file_name) {
   INFO(" LTR Client. Copyright 2011 Yandex");
   INFO(" Experiment started ");
 
-  GenericParse(handlers_,
+  GenericParse(tag_handlers_,
                root_->FirstChildElement(),
-               general_xml_token);
+               general_xml_token_);
 
   cout << "\n\nEnd of loadConfig. Collected data:\n";
   cout << "data_infos_\n" << ToString(dataInfos()) << endl;
@@ -758,55 +734,55 @@ void Configurator::loadConfig(const string& file_name) {
   for (TXmlTokenSpecs::iterator it = xmlTokenSpecs().begin();
       it != xmlTokenSpecs().end();
       ++it) {
-    TXmlTokenSpec& spec = it->second;
-    spec.checkAvailability(xmlTokenSpecs());
+    ParametrizedInfo& spec = it->second;
+    spec.fillDependencyList(xmlTokenSpecs());
   }
 }
 
-const Configurator::TDataInfos& Configurator::dataInfos() const {
+const ConfigParser::TDataInfos& ConfigParser::dataInfos() const {
   return data_infos_;
 }
-Configurator::TDataInfos& Configurator::dataInfos() {
+ConfigParser::TDataInfos& ConfigParser::dataInfos() {
   return data_infos_;
 }
 
-const Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() const {
+const ConfigParser::TXmlTokenSpecs& ConfigParser::xmlTokenSpecs() const {
   return xml_token_specs;
 }
 
-Configurator::TXmlTokenSpecs& Configurator::xmlTokenSpecs() {
+ConfigParser::TXmlTokenSpecs& ConfigParser::xmlTokenSpecs() {
   return xml_token_specs;
 }
 
-const Configurator::TTrainInfos& Configurator::trainInfos() const {
+const ConfigParser::TTrainInfos& ConfigParser::trainInfos() const {
   return train_infos;
 }
 
-Configurator::TTrainInfos& Configurator::trainInfos() {
+ConfigParser::TTrainInfos& ConfigParser::trainInfos() {
   return train_infos;
 }
 
-const Configurator::TCrossvalidationInfos&
-                                  Configurator::crossvalidationInfos() const {
+const ConfigParser::TCrossvalidationInfos&
+                                  ConfigParser::crossvalidationInfos() const {
   return crossvalidation_infos;
 }
 
-Configurator::TCrossvalidationInfos& Configurator::crossvalidationInfos() {
+ConfigParser::TCrossvalidationInfos& ConfigParser::crossvalidationInfos() {
   return crossvalidation_infos;
 }
 
-const TXmlTokenSpec& Configurator::findLearner(const string& name) const {
+const ParametrizedInfo& ConfigParser::findLearner(const string& name) const {
   for (TXmlTokenSpecs::const_iterator it = xml_token_specs.begin();
        it != xml_token_specs.end();
        ++it) {
-    const TXmlTokenSpec& spec = it->second;
+    const ParametrizedInfo& spec = it->second;
     if (spec.getTagName() == "learner" && spec.getName() == name) {
       return spec;
     }
   }
   throw logic_error("Can not find learner!");
 }
-const TDataInfo& Configurator::findData(const string& name) const {
+const TDataInfo& ConfigParser::findData(const string& name) const {
   for (TDataInfos::const_iterator it = dataInfos().begin();
        it != dataInfos().end();
        ++it) {
@@ -818,7 +794,7 @@ const TDataInfo& Configurator::findData(const string& name) const {
   throw logic_error("Can not find data!");
 }
 
-const string& Configurator::rootPath() const {
+const string& ConfigParser::rootPath() const {
   return root_path_;
 }
 
