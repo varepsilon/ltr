@@ -19,10 +19,10 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* A base class for population handlers.
-*
-* Handle population of trees for GPLearner.
-*/
+ * A base class for population handlers.
+ *
+ * Handle population of trees for GPLearner.
+ */
 class BasePopulationHandler : public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<BasePopulationHandler> Ptr;

@@ -17,9 +17,9 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* Select trees for the next generation with
-* Puppy applySelectionTournament function.
-*/
+ * Select trees for the next generation with
+ * Puppy applySelectionTournament function.
+ */
 class DefaultSelectionStrategy : public BasePopulationHandler {
  public:
   explicit DefaultSelectionStrategy(int number_of_participants = 2)

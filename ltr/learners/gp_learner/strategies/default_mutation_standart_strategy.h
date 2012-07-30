@@ -17,9 +17,9 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* Mutate all trees in population with
-* Puppy applyMutationStandard function.
-*/
+ * Mutate all trees in population with
+ * Puppy applyMutationStandard function.
+ */
 class DefaultMutationStandartStrategy : public BasePopulationHandler {
  public:
   explicit DefaultMutationStandartStrategy(double mutation_probability = 0.05,

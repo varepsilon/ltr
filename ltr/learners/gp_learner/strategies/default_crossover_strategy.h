@@ -17,9 +17,9 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* Crossover random tree pairs with
-* Puppy applyCrossover function.
-*/
+ * Crossover random tree pairs with
+ * Puppy applyCrossover function.
+ */
 class DefaultCrossoverStrategy : public BasePopulationHandler {
  public:
   explicit DefaultCrossoverStrategy(double mating_probability = 0.9,

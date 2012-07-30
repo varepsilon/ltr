@@ -19,8 +19,8 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* Select top fraction of trees for the next generation.
-*/
+ * Select top fraction of trees for the next generation.
+ */
 class SelectTopTreesStrategy : public BasePopulationHandler {
  public:
   explicit SelectTopTreesStrategy(double top_fraction = 0.3)

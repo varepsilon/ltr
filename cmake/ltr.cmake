@@ -65,7 +65,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/shared_ptr.h
               ${Source_Path}/ltr/utility/indices.cc
               ${Source_Path}/ltr/utility/neighbor_weighter.h
               ${Source_Path}/ltr/utility/neighbor_weighter.cc)
-    
+
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
                    ${Source_Path}/ltr/interfaces/parameterized.h
@@ -139,10 +139,7 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
 
 SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc
-
-                   ${Source_Path}/ltr/learners/gp_learner/gp_primitives.h
-                   ${Source_Path}/ltr/learners/gp_learner/gp_functions.h
-                   ${Source_Path}/ltr/learners/gp_learner/gp_functions.cc)
+                   ${Source_Path}/ltr/learners/gp_learner/gp_primitives.h)
 
 SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.cc
