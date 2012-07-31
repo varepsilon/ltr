@@ -74,7 +74,7 @@ string ParametersContainer::toString() const {
        ++iterator) {
     const string& name = iterator->first;
     const boost::any& value = iterator->second;
-    out << '\n';
+    out << "\n ";
     out << parameter_index++ << ") name=" << name
         << ", type=" << value.type().name();
   }

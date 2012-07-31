@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_CLIENT_CONFIGURATOR_H_
 #define LTR_CLIENT_CONFIGURATOR_H_
@@ -31,7 +31,7 @@ struct TDataInfo {
   string format;
   string file;
 };
-string ToString(const TDataInfo &Info);
+string ToString(const TDataInfo& Info);
 
 struct TXmlTokenDependency {
   // C++11 -> we have no initializer, so we MUST write
@@ -96,8 +96,8 @@ class ConfigParser {
   TTrainInfos& trainInfos();
   const TCrossvalidationInfos& crossvalidationInfos() const;
   TCrossvalidationInfos& crossvalidationInfos();
-  const ParametrizedInfo& findLearner(const string &name) const;
-  const TDataInfo& findData(const string &name) const;
+  const ParametrizedInfo& findLearner(const string& name) const;
+  const TDataInfo& findData(const string& name) const;
 
   const string& rootPath() const;
 

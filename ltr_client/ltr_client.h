@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_CLIENT_LTR_CLIENT_H_
 #define LTR_CLIENT_LTR_CLIENT_H_
@@ -6,26 +6,31 @@
 #include <string>
 
 #include "ltr/interfaces/parameterized.h"
+
 #include "ltr_client/configurator.h"
+
+using std::string;
 
 using ltr::Parameterized;
 
-class LtrClientPrivate;
 class LtrClient {
  public:
   LtrClient();
-  ~LtrClient();
-  void initFrom(const std::string &file_name);
-  void launch();
- private:
-//  LtrClientPrivate * const d;
 
+  ~LtrClient();
+
+  void initFrom(const string& file_name);
+
+  void launch();
+
+ private:
   template <class TElement>
   void executeTrain(Parameterized* parameterized,
-                const TrainLaunchInfo &train_info);
+                    const TrainLaunchInfo& train_info);
+
+  TXmlTokenSpecList getLoadQueue() const;
 
   ConfigParser configurator_;
-  TXmlTokenSpecList getLoadQueue() const;
 };
 
 #endif  // LTR_CLIENT_LTR_CLIENT_H_

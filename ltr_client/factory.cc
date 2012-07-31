@@ -2,4 +2,4 @@
 
 #include "ltr_client/factory.h"
 
-Factory *Factory::self_ = NULL;
+Factory* Factory::self_ = NULL;

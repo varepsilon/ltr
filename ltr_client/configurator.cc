@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include "ltr_client/configurator.h"
 
@@ -25,32 +25,32 @@ using std::endl;
 
 // ==========================  XML tokens  =====================================
 namespace {
-static const char * const CONFIG          = "config";
-static const char * const ROOT            = "LTR_experiment";
-static const char * const ROOT_DIR        = "root_directory";
-static const char * const DATA            = "data";
-static const char * const LAUNCH          = "launch";
-static const char * const NAME_ATTR       = "name";
-static const char * const FORMAT_ATTR     = "format";
-static const char * const TYPE_ATTR       = "type";
-static const char * const APPROACH_ATTR   = "approach";
-static const char * const PARAMETERS      = "parameters";
-static const char * const WEAK_LEARNER    = "weak_learner";
-static const char * const TRAIN           = "train";
-static const char * const CROSSVALIDATION = "crossvalidation";
-static const char * const CPP_GEN         = "cpp";
-static const char * const PREDICT         = "predict";
-static const char * const FOLD_ATTR       = "fold";
+static const char* const CONFIG          = "config";
+static const char* const ROOT            = "LTR_experiment";
+static const char* const ROOT_DIR        = "root_directory";
+static const char* const DATA            = "data";
+static const char* const LAUNCH          = "launch";
+static const char* const NAME_ATTR       = "name";
+static const char* const FORMAT_ATTR     = "format";
+static const char* const TYPE_ATTR       = "type";
+static const char* const APPROACH_ATTR   = "approach";
+static const char* const PARAMETERS      = "parameters";
+static const char* const WEAK_LEARNER    = "weak_learner";
+static const char* const TRAIN           = "train";
+static const char* const CROSSVALIDATION = "crossvalidation";
+static const char* const CPP_GEN         = "cpp";
+static const char* const PREDICT         = "predict";
+static const char* const FOLD_ATTR       = "fold";
 
-static const char * const LEARNER         = "learner";
-static const char * const MEASURE         = "measure";
+static const char* const LEARNER         = "learner";
+static const char* const MEASURE         = "measure";
 }
 
 // =========================== various helpers =================================
 
 template <class Key, class Value>
 static inline void DeleteAllFromUnorderedMap(
-    boost::unordered_map<Key, Value> *unorderedMapInstance
+    boost::unordered_map<Key, Value>* unorderedMapInstance
     ) {
   assert(unorderedMapInstance);
   // C++11 We have no unique_ptr so we MUST delete pointers manually
@@ -312,15 +312,15 @@ class TOnDataTag: public TagHandler {
 
 class TOnParameterTag: public TagHandler {
  public:
-  explicit TOnParameterTag(ConfigParser *impl)
+  explicit TOnParameterTag(ConfigParser* impl)
     : TagHandler(impl)
     , container(NULL) {}
 
-  void setContainer(ltr::ParametersContainer *cont) {
+  void setContainer(ltr::ParametersContainer* cont) {
     container = cont;
   }
 
-  virtual void operator()(TiXmlElement *element) {
+  virtual void operator()(TiXmlElement* element) {
     cout << "TOnParametersExecutor" << endl;
 
     assert(container);
@@ -337,14 +337,14 @@ class TOnParameterTag: public TagHandler {
         WARN("parameter %s has no value", name.c_str());
         return;
     }
-    const string *type = element->Attribute(string(TYPE_ATTR));
+    const string* type = element->Attribute(string(TYPE_ATTR));
     cout << "TOnParametersExecutor: name:" << name <<
             " val: " << val << " type: " << type << endl;
     addParameter(name, type ? *type : guessType(val), val);
   }
 
  private:
-  static bool toBool(const string &value) {
+  static bool toBool(const string& value) {
     if (boost::iequals(value, string("true"))) {
       return true;
     } else if (boost::iequals(value, string("false"))) {
@@ -353,25 +353,25 @@ class TOnParameterTag: public TagHandler {
       throw logic_error("Can not convert " + value + " to bool!");
     }
   }
-  static int toInt(const string &value) {
+  static int toInt(const string& value) {
     try {
       return boost::lexical_cast<int>(value);
-    } catch(boost::bad_lexical_cast &) {
+    } catch(boost::bad_lexical_cast&) {
       throw logic_error("Can not convert " + value + " to int!");
     }
   }
-  static double toDouble(const string &value) {
+  static double toDouble(const string& value) {
     try {
       return boost::lexical_cast<double>(value);
-    } catch(boost::bad_lexical_cast &) {
+    } catch(boost::bad_lexical_cast&) {
       throw logic_error("Can not convert " + value + " to double!");
     }
   }
   static const char* XML_TOKEN_DEPENDENCY_TYPE;
 
-  void addParameter(const string &name,
-                    const string &type,
-                    const string &value) {
+  void addParameter(const string& name,
+                    const string& type,
+                    const string& value) {
     if (type == "bool") {
       container->AddNew(name, toBool(value));
       cout << "TOnParametersExecutor: Added bool " <<
@@ -393,7 +393,7 @@ class TOnParameterTag: public TagHandler {
                           " is not implemented yet...").c_str());
     }
   }
-  static string guessType(const string &value) {
+  static string guessType(const string& value) {
     const string::size_type pos_of_space = value.find(' ');
     cout << "TOnParametersExecutor: guessing type of " <<
                  value << " " << pos_of_space << " " << endl;
@@ -405,7 +405,7 @@ class TOnParameterTag: public TagHandler {
     }
     return guessTypeOfOneElement(value);
   }
-  static string guessTypeOfOneElement(const string &value) {
+  static string guessTypeOfOneElement(const string& value) {
     if (boost::iequals(value, string("true")) ||
        boost::iequals(value, string("false"))) {
       return "bool";
@@ -415,7 +415,7 @@ class TOnParameterTag: public TagHandler {
     if (pos_of_decimal_point != string::npos) {
       try {
         boost::lexical_cast<double>(value);
-      } catch(boost::bad_lexical_cast &) {
+      } catch(boost::bad_lexical_cast&) {
         return XML_TOKEN_DEPENDENCY_TYPE;
       }
       return "double";
@@ -423,13 +423,13 @@ class TOnParameterTag: public TagHandler {
 
     try {
       boost::lexical_cast<int>(value);
-    } catch(boost::bad_lexical_cast &) {
+    } catch(boost::bad_lexical_cast&) {
       return XML_TOKEN_DEPENDENCY_TYPE;
     }
     return "int";
   }
 
-  ltr::ParametersContainer *container;
+  ltr::ParametersContainer* container;
 };
 
 const char* TOnParameterTag::XML_TOKEN_DEPENDENCY_TYPE =
@@ -438,14 +438,14 @@ const char* TOnParameterTag::XML_TOKEN_DEPENDENCY_TYPE =
 
 class OnGeneralXmlToken: public TagHandler {
  public:
-  explicit OnGeneralXmlToken(ConfigParser *impl): TagHandler(impl) {
+  explicit OnGeneralXmlToken(ConfigParser* impl): TagHandler(impl) {
     parameters_executor = new TOnParameterTag(impl);
   }
   ~OnGeneralXmlToken() {
     delete parameters_executor;
   }
 
-  virtual void operator()(TiXmlElement *element) {
+  virtual void operator()(TiXmlElement* element) {
     cout << "TOnGeneralXmlToken" << endl;
 
     const char* name = element->Attribute(NAME_ATTR);
@@ -456,12 +456,12 @@ class OnGeneralXmlToken: public TagHandler {
       throw logic_error("no 'type' attribute");
     }
 
-    const char *approach = element->Attribute(APPROACH_ATTR);
+    const char* approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
       WARN("No approach defined '%s'. Try to define automatically.", name);
       approach = "";
     }
-    const char *tag_name = element->Value();
+    const char* tag_name = element->Value();
     if (!tag_name) {
       throw logic_error("no tag name");
     }
@@ -478,7 +478,7 @@ class OnGeneralXmlToken: public TagHandler {
   }
 
  private:
-  TOnParameterTag *parameters_executor;
+  TOnParameterTag* parameters_executor;
 };
 
 //============================= Launch parsing =================================
@@ -489,17 +489,17 @@ class OnCVLearnerTag: public TagHandler {
     info = NULL;
   }
   ~OnCVLearnerTag() { }
-  void setInfo(CrossvalidationLaunchInfo *ti) {
+  void setInfo(CrossvalidationLaunchInfo* ti) {
     info = ti;
   }
-  virtual void operator()(TiXmlElement *element) {
+  virtual void operator()(TiXmlElement* element) {
     cout << "TOnCVLearnerExecutor" << endl;
     assert(info);
     ltr::utility::SafeInsert(info->learners, element->GetText());
   }
 
  private:
-  CrossvalidationLaunchInfo *info;
+  CrossvalidationLaunchInfo* info;
 };
 
 class OnCVMeasureTag: public TagHandler {
@@ -508,17 +508,17 @@ class OnCVMeasureTag: public TagHandler {
     info = NULL;
   }
   ~OnCVMeasureTag() { }
-  void setInfo(CrossvalidationLaunchInfo *ti) {
+  void setInfo(CrossvalidationLaunchInfo* ti) {
     info = ti;
   }
-  virtual void operator()(TiXmlElement *element) {
+  virtual void operator()(TiXmlElement* element) {
     cout << "TOnCVMeasureExecutor" << endl;
     assert(info);
     ltr::utility::SafeInsert(info->measures, element->GetText());
   }
 
  private:
-  CrossvalidationLaunchInfo *info;
+  CrossvalidationLaunchInfo* info;
 };
 
 class OnCVDataTag: public TagHandler {
@@ -537,7 +537,7 @@ class OnCVDataTag: public TagHandler {
   }
 
  private:
-  CrossvalidationLaunchInfo *info;
+  CrossvalidationLaunchInfo* info;
 };
 
 
@@ -595,7 +595,7 @@ class OnPredictTag: public TagHandler {
   }
 
  private:
-  TrainLaunchInfo *info;
+  TrainLaunchInfo* info;
 };
 
 class OnCppGenTag: public TagHandler {
@@ -615,7 +615,7 @@ class OnCppGenTag: public TagHandler {
   }
 
  private:
-  TrainLaunchInfo *info;
+  TrainLaunchInfo* info;
 };
 
 class OnTrainTag: public TagHandler {
