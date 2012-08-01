@@ -9,12 +9,18 @@
 
 #include "logog/logog.h"
 
+#include "ltr/crossvalidation/crossvalidator.h"
+#include "ltr/crossvalidation/k_fold_simple_splitter.h"
+
 #include "ltr/data/utility/io_utility.h"
 
 #include "ltr/learners/learner.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 
+#include "ltr/measures/measure.h"
+#include "ltr/measures/dcg.h"
 #include "ltr/measures/ndcg.h"
+#include "ltr/measures/abs_error.h"
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/configurator.h"
@@ -38,6 +44,9 @@ using ltr::ObjectPair;
 using ltr::Log;
 using ltr::BestFeatureLearner;
 using ltr::NDCG;
+using ltr::DCG;
+
+using ltr::io_utility::loadDataSet;
 
 static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
   TXmlTokenSpecList* queue, TXmlTokenSpecList* circularity_check_queue) {
@@ -158,7 +167,7 @@ void LtrClient::initFrom(const string& file_name) {
 }
 
 template <class TElement>
-void LtrClient::executeTrain(Parameterized* parameterized,
+void LtrClient::launchTrain(Parameterized* parameterized,
                              const TrainLaunchInfo& train_info) {
   Learner<TElement>* learner =
     dynamic_cast<Learner<TElement>*>(parameterized);  //NOLINT
@@ -174,7 +183,7 @@ void LtrClient::executeTrain(Parameterized* parameterized,
   }
 
   const DataSet<TElement>& data_set =
-    ltr::io_utility::loadDataSet<TElement>(data_info.file, data_info.format);
+    loadDataSet<TElement>(data_info.file, data_info.format);
 
   cout << "\n\n\nvoid doLaunch\n";
   learner->learn(data_set);
@@ -213,6 +222,58 @@ void LtrClient::executeTrain(Parameterized* parameterized,
   }
 }
 
+template <class TElement>
+void LtrClient::launchCrossvalidation(
+  const CrossvalidationLaunchInfo& crossvalidation_info) {
+    boost::unordered_set<string>::const_iterator
+      learners_iterator = crossvalidation_info.learners.begin(),
+      measures_iterator = crossvalidation_info.measures.begin(),
+      datas_iterator = crossvalidation_info.datas.begin();
+
+    ltr::cv::CrossValidator<TElement> cross_validator;
+
+    for (; learners_iterator != crossvalidation_info.learners.end();
+         ++learners_iterator) {
+      const ParametrizedInfo& learner_info =
+        configurator_.findLearner(*learners_iterator);
+      const ParametersContainer& parameters =
+        Create(learner_info.getParameters(), configurator_.xmlTokenSpecs());
+      Parameterized* learner = Factory::instance()->
+        Create(learner_info.getType() + learner_info.getApproach(), parameters);
+      cross_validator.addLearner(dynamic_cast<Learner<TElement>*>(learner)); // NOLINT
+    }
+
+    // It will work when measures will be added.
+    /* for (; measures_iterator != crossvalidation_info.measures.end();
+            ++measures_iterator) {
+      const ParametrizedInfo& measure_info =
+        configurator_.findMeasure(*measures_iterator);
+      const ParametersContainer& parameters =
+        Create(measure_info.getParameters(), configurator_.xmlTokenSpecs());
+      Parameterized* measure = Factory::instance()->
+        Create(measure_info.getType() + measure_info.getApproach(), parameters);
+      cross_validator.addMeasure(dynamic_cast<Measure<TElement>*>(measure)); // NOLINT
+    }*/
+
+    DCG::Ptr measure = new DCG;
+    cross_validator.addMeasure(measure);
+
+    typename ltr::cv::KFoldSimpleSplitter<TElement>::Ptr splitter =
+      new ltr::cv::KFoldSimpleSplitter<TElement>;
+    cross_validator.addSplitter(splitter);
+
+    for (; datas_iterator != crossvalidation_info.datas.end();
+         ++datas_iterator) {
+      const TDataInfo& data_info = configurator_.findData(*datas_iterator);
+      typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
+      *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
+      cross_validator.addDataSet(data_set_ptr);
+    }
+
+    cross_validator.launch();
+    cout << cross_validator.toString();
+}
+
 void LtrClient::launch() {
   for (ConfigParser::TTrainInfos::const_iterator it =
        configurator_.trainInfos().begin();
@@ -232,9 +293,28 @@ void LtrClient::launch() {
       Create(learner_info.getType() + learner_info.getApproach(), parameters);
 
     if (learner_info.getApproach() == "listwise") {
-      executeTrain<ObjectList>(parameterized, train_info);
+      launchTrain<ObjectList>(parameterized, train_info);
     } else if (learner_info.getApproach() == "pairwise") {
-      executeTrain<ObjectPair>(parameterized, train_info);
+      launchTrain<ObjectPair>(parameterized, train_info);
+    } else {
+      assert(false && "Not implemented yet");
+    }
+  }
+
+  for (ConfigParser::TCrossvalidationInfos::const_iterator iterator =
+       configurator_.crossvalidationInfos().begin();
+       iterator != configurator_.crossvalidationInfos().end();
+       ++iterator) {
+    const CrossvalidationLaunchInfo& crossvalidation_info =
+      iterator->second;
+    const ParametrizedInfo& learner_info =
+      configurator_.findLearner(*crossvalidation_info.learners.begin());
+
+    if (learner_info.getApproach() == "listwise") {
+      launchCrossvalidation<ObjectList>(crossvalidation_info);
+      // We can't do that while we don't have measure for ObjectPair.
+      // } else if (learner_info.getApproach() == "pairwise") {
+      //   launchCrossvalidation<ObjectPair>(crossvalidation_info);
     } else {
       assert(false && "Not implemented yet");
     }
@@ -259,6 +339,7 @@ int main(int argc, char* argv[]) {
     ("BEST_FEATURElistwise");
 
   factory.registerType<NDCG>("NDCG");
+  factory.registerType<DCG>("DCG");
 
   LtrClient client;
 

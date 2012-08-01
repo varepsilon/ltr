@@ -25,8 +25,12 @@ class LtrClient {
 
  private:
   template <class TElement>
-  void executeTrain(Parameterized* parameterized,
+  void launchTrain(Parameterized* parameterized,
                     const TrainLaunchInfo& train_info);
+
+  template <class TElement>
+  void launchCrossvalidation(
+    const CrossvalidationLaunchInfo& crossvalidation_info);
 
   TXmlTokenSpecList getLoadQueue() const;
 

@@ -113,10 +113,10 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   void setInitialScorer(const GPScorer& scorer);
 
-  void addPopulationHandler(const BasePopulationHandler::Ptr
+  void addPopulationHandler(BasePopulationHandler::Ptr
                             new_population_handler);
 
-  void addGPOperation(const BaseGPOperation::Ptr
+  void addGPOperation(BaseGPOperation::Ptr
                       new_gp_operation);
 
   GET_SET(int, population_size);
@@ -244,13 +244,13 @@ void GPLearner<TElement>::setInitialScorer(const GPScorer& scorer) {
 
 template <typename TElement>
 void GPLearner<TElement>::addPopulationHandler(
-  const BasePopulationHandler::Ptr new_population_handler) {
+  BasePopulationHandler::Ptr new_population_handler) {
     population_handlers_.push_back(new_population_handler);
 }
 
 template <typename TElement>
 void GPLearner<TElement>::addGPOperation(
-  const BaseGPOperation::Ptr new_gp_operation) {
+  BaseGPOperation::Ptr new_gp_operation) {
     gp_operations_.push_back(new_gp_operation);
 }
 

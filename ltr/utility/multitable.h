@@ -181,7 +181,7 @@ MultiTable<T, N>::MultiTable(const vector<size_t>& table_size)
     throw logic_error("Bad number of input sizes in multitable constructor\n");
   }
   delete table_contents_;
-  table_contents = new boost::multi_array<T, N>(table_size);
+  table_contents_ = new boost::multi_array<T, N>(table_size);
   table_meta_info_.resize(table_size.size());
   for (size_t index = 0; index < table_size.size(); ++index) {
     table_meta_info_[index].axis_ticks_labels.resize(table_size[index]);
@@ -199,7 +199,7 @@ const T& MultiTable<T, N>::operator[] (
   if (multi_index.size() != N) {
     throw logic_error("Bad number of input sizes in multitable [] operator\n");
   }
-  return *table_contents_(multi_index);
+  return (*table_contents_)(multi_index);
 }
 
 template<typename T, size_t N>
@@ -207,7 +207,7 @@ T& MultiTable<T, N>::operator[] (const vector<size_t>& multi_index) {
   if (multi_index.size() != N) {
     throw logic_error("Bad number of input sizes in multitable [] operator\n");
   }
-  return *table_contents_(multi_index);
+  return (*table_contents_)(multi_index);
 }
 
 template<typename T, size_t N>

@@ -4,9 +4,10 @@
 #define LTR_CLIENT_CONFIGURATOR_H_
 
 #include <string>
-#include <boost/unordered_map.hpp>  //NOLINT
-#include <boost/unordered_set.hpp>  //NOLINT
 #include <list>
+
+#include <boost/unordered_map.hpp> // NOLINT
+#include <boost/unordered_set.hpp> // NOLINT
 
 #include "tinyxml/tinyxml.h"
 
@@ -82,7 +83,7 @@ class ConfigParser {
   typedef boost::unordered_map<string, ParametrizedInfo> TXmlTokenSpecs;
   typedef boost::unordered_map<string, TrainLaunchInfo> TTrainInfos;
   typedef boost::unordered_map<string, CrossvalidationLaunchInfo>
-                                                          TCrossvalidationInfos;
+    TCrossvalidationInfos;
 
   ConfigParser();
   ~ConfigParser();
