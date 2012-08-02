@@ -1,6 +1,22 @@
 # lets list all LTR's binaries
 # lets list all LTR's source binaries
 
+SET(LTR_DENSITY_ESTIMATORS_SCORERS ${Source_Path}/ltr/density_estimators/scorers/base_probability_density_estimator.h
+                                   ${Source_Path}/ltr/density_estimators/scorers/fisher_discriminant.h
+                                   ${Source_Path}/ltr/density_estimators/scorers/fisher_discriminant.cc
+                                   ${Source_Path}/ltr/density_estimators/scorers/non_linear_discriminant.h
+                                   ${Source_Path}/ltr/density_estimators/scorers/non_linear_discriminant.cc)
+
+SET(LTR_DENSITY_ESTIMATORS_LEARNERS ${Source_Path}/ltr/density_estimators/learners/base_probability_density_learner.h
+                                    ${Source_Path}/ltr/density_estimators/learners/fisher_discriminant_learner.h
+                                    ${Source_Path}/ltr/density_estimators/learners/fisher_discriminant_learner.cc
+                                    ${Source_Path}/ltr/density_estimators/learners/non_linear_discriminant_learner.h
+                                    ${Source_Path}/ltr/density_estimators/learners/non_linear_discriminant_learner.cc
+                                    ${Source_Path}/ltr/density_estimators/learners/normal_naive_bayes_learner.h
+                                    ${Source_Path}/ltr/density_estimators/learners/normal_naive_bayes_learner.cc
+                                    ${Source_Path}/ltr/density_estimators/learners/quadratic_discriminant_learner.h
+                                    ${Source_Path}/ltr/density_estimators/learners/quadratic_discriminant_learner.cc)
+
 SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set.cc
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc
              ${Source_Path}/ltr/data/object_list.h ${Source_Path}/ltr/data/object_list.cc
@@ -70,7 +86,10 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/indices.cc
               ${Source_Path}/ltr/utility/neighbor_weighter.h
               ${Source_Path}/ltr/utility/neighbor_weighter.cc
-              ${Source_Path}/ltr/utility/container_utility.h)
+              ${Source_Path}/ltr/utility/container_utility.h
+              ${Source_Path}/ltr/utility/eigen_converters.h
+              ${Source_Path}/ltr/utility/eigen_converters.cc
+              ${Source_Path}/ltr/utility/statistics_calculation.h)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
@@ -147,7 +166,7 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
 SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc
                    ${Source_Path}/ltr/learners/gp_learner/gp_primitives.h)
-
+                   
 SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/select_top_trees_strategy.h
@@ -215,6 +234,8 @@ SET(LTR_AGGREGATORS ${Source_Path}/ltr/aggregators/aggregator.h
                     ${Source_Path}/ltr/aggregators/vote_aggregator.cc)
 
 # lets divide binaries in groups, for comfort navigation
+SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})
+SOURCE_GROUP(density_estimators\\learners FILES ${LTR_DENSITY_ESTIMATORS_LEARNERS})
 SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS})
 SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
@@ -244,6 +265,7 @@ SET(LTR_ALL ${LTR_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
             ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS}
-            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY})
+            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY}
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS})
 
 INCLUDE_DIRECTORIES(${Source_Path})
