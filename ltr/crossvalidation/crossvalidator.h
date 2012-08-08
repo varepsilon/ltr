@@ -3,8 +3,6 @@
 #ifndef LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
 #define LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
 
-#include <logog/logog.h>
-
 #include <algorithm>
 #include <list>
 #include <string>
@@ -13,6 +11,8 @@
 #include "boost/multi_array.hpp"
 #include "boost/range.hpp"
 #include "boost/tuple/tuple.hpp"
+
+#include "logog/logog.h"
 
 #include "ltr/crossvalidation/splitter.h"
 
@@ -96,7 +96,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set measures");
   cross_validation_results_.setAxisLabel(0, "Measure");
   for (int measure_index = 0;
-       measure_index < measures_.size();
+       measure_index < (int)measures_.size();
        ++measure_index) {
     INFO("Setting %d tick label. Current measure is %s",
          measure_index,
@@ -109,7 +109,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set dataset");
   cross_validation_results_.setAxisLabel(1, "DataSet");
   for (int dataset_index = 0;
-       dataset_index < data_sets_.size();
+       dataset_index < (int)data_sets_.size();
        ++dataset_index) {
     INFO("Setting %d tick label", dataset_index);
     cross_validation_results_.setTickLabel(1, dataset_index, "dataset");
@@ -118,7 +118,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set Learners");
   cross_validation_results_.setAxisLabel(2, "Learner");
   for (int learner_index = 0;
-       learner_index < learners_.size();
+       learner_index < (int)learners_.size();
        ++learner_index) {
     INFO("Setting %d tick label", learner_index);
     cross_validation_results_.
@@ -128,7 +128,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set splitters");
   cross_validation_results_.setAxisLabel(3, "Splitter");
   for (int splitter_index = 0;
-       splitter_index < splitters_.size();
+       splitter_index < (int)splitters_.size();
        ++splitter_index) {
 //    INFO("Setting %d tick label", splitter_index);
     cross_validation_results_.
@@ -154,7 +154,7 @@ void CrossValidator<TElement>::launch() {
     size_t dataset_index = it.getMultiIndex()[1];
     size_t learner_index = it.getMultiIndex()[2];
     size_t splitter_index = it.getMultiIndex()[3];
-    for (size_t split_index = 0;
+    for (int split_index = 0;
          split_index < (*splitters_[splitter_index]).
          splitCount(*data_sets_[dataset_index]);
          ++split_index) {

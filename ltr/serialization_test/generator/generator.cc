@@ -12,7 +12,7 @@
 #include "ltr/learners/linear_composition/linear_composition_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
-#include "ltr/scorers/nearest_neighbor_scorer.h";
+#include "ltr/scorers/nearest_neighbor_scorer.h"
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/metrics/metric.h"

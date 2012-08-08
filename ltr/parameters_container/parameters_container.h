@@ -3,6 +3,8 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
+#pragma warning(disable: 4290)
+
 #include <list>
 #include <stdexcept>
 #include <string>

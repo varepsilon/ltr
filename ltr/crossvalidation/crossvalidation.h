@@ -43,7 +43,7 @@ namespace ltr {
         typename Splitter<TElement>::Ptr splitter) {
       INFO("Starting validation");
       vector<string> measure_names;
-      for (int i = 0; i < measures.size(); ++i) {
+      for (int i = 0; i < (int)measures.size(); ++i) {
         INFO("Adding %s measure, index eqaul to %d",
           measures[i]->alias().c_str(),
           i);
@@ -68,7 +68,7 @@ namespace ltr {
 
         vector<double> current_measure_values;
         for (int measure_index = 0;
-            measure_index < measures.size();
+            measure_index < (int)measures.size();
             ++measure_index) {
           current_measure_values.push_back(
             measures[measure_index]->average(current_splitted.test_set));

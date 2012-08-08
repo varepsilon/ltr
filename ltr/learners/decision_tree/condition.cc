@@ -1,12 +1,11 @@
 // Copyright 2012 Yandex
 
-#include <logog/logog.h>
+#include "logog/logog.h"
 
 #include "ltr/learners/decision_tree/condition.h"
 
 namespace ltr {
 namespace decision_tree {
-
 FakeCondition::Ptr FakeConditionPtr() {
   INFO("Creating pointer to FakeCondition.");
   return FakeCondition::Ptr(new FakeCondition);
@@ -22,5 +21,5 @@ OneFeatureCondition::Ptr OneFeatureConditionPtr(int feature_id) {
     feature_id);
   return OneFeatureCondition::Ptr(new OneFeatureCondition(feature_id));
 }
-}
-}
+};
+};

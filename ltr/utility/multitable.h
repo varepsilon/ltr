@@ -1,4 +1,5 @@
 // Copyright 2012 Yandex
+
 #ifndef LTR_UTILITY_MULTITABLE_H_
 #define LTR_UTILITY_MULTITABLE_H_
 
@@ -115,7 +116,9 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
   size_t second_size = table_contents_->shape()[second_axis_index];
 
   *out_stream << "\n";
-  for (int axis_index = 0; axis_index < multi_index->size(); ++axis_index) {
+  for (int axis_index = 0;
+       axis_index < (int)multi_index->size();
+       ++axis_index) {
     size_t tick_index = (*multi_index)[axis_index];
     if (axis_index != first_axis_index && axis_index != second_axis_index) {
       *out_stream << table_meta_info_[axis_index].axis_label << ":"
@@ -131,7 +134,7 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
        << table_meta_info_[second_axis_index].axis_label
        << "\n";
   *out_stream << "\t";
-  for (int second_index = 0; second_index < second_size; ++second_index) {
+  for (int second_index = 0; second_index < (int)second_size; ++second_index) {
     *out_stream
         << table_meta_info_
            [second_axis_index].axis_ticks_labels[second_index]
@@ -308,7 +311,7 @@ template<typename T, size_t N>
 const vector<size_t>& MultiTable<T, N>::Iterator::getMultiIndex() const {
   return this->multi_index_;
 }
-}
-}
+};
+};
 
 #endif  // LTR_UTILITY_MULTITABLE_H_
