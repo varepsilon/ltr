@@ -53,7 +53,8 @@ string RemoveNominalConverter::generateCppCode(
 
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
-  Object converted_object;
+  Object converted_object = input.deepCopy();
+  converted_object.features().clear();
   for (int input_feature_index = 0;
        input_feature_index < (int)input.features().size();
        ++input_feature_index) {

@@ -58,12 +58,10 @@ string PerFeatureLinearConverter::generateCppCode(
 
 void PerFeatureLinearConverter::applyImpl(const Object& input,
                                                 Object* output) const {
-  Object converted_object;
-  converted_object.features().resize(input.features().size());
+  Object converted_object = input.deepCopy();
   for (int feature_index = 0;
        feature_index < (int)input.features().size(); ++feature_index) {
-    converted_object[feature_index] =
-      input[feature_index] * factors_[feature_index];
+    converted_object[feature_index] *= factors_[feature_index];
     converted_object[feature_index] += shifts_[feature_index];
   }
   *output = converted_object;
