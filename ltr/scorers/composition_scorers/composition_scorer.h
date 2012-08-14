@@ -29,7 +29,7 @@ class CompositionScorer : public Scorer {
    */
   void clear();
 
-  size_t size() const;
+  int size() const;
 
   const ScorerAndWeight& operator[](size_t index) const;
   ScorerAndWeight& operator[](size_t index);

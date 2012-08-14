@@ -39,7 +39,7 @@ void Parser::startParsing(std::istream* in) {
     case NOMINAL: {
       feature_id_[raw_idx] = ++last_feature_index_;
       vector<string>& vals = raw_feature_info_[raw_idx].feature_values;
-      for (int index = 0; index < vals.size(); ++index)
+      for (int index = 0; index < (int)vals.size(); ++index)
         values[hash(vals[index])] = vals[index];
       feature_info_.addFeature(ltr::NOMINAL, values);
     } break;

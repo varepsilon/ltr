@@ -24,7 +24,7 @@ extern size_t serializable_objects_counter_;
 /** \class The interface class for objects, that can be serialized. That means
  * that a cpp code for those can be created.
  */
-class Serializable : public Aliaser {
+class Serializable {
   public:
   /** \typedef boost shared pointer to the Functor
    */
@@ -50,7 +50,6 @@ class Serializable : public Aliaser {
   /** The function creates cpp code for serializable object using default name.
    */
   string generateCppCode() const {
-    INFO("Starting to generate CPP code of %s", this->alias().c_str());
     return this->generateCppCode(this->getDefaultSerializableObjectName());
   }
   /** Returns unique id of the serializable object.

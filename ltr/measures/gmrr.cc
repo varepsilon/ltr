@@ -28,16 +28,16 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t number_of_objects_to_consider = number_of_objects_to_consider_;
-    if ((number_of_objects_to_consider == 0) || 
-        (number_of_objects_to_consider > labels.size())) {
+    int number_of_objects_to_consider = number_of_objects_to_consider_;
+    if ((number_of_objects_to_consider == 0) ||
+        (number_of_objects_to_consider > (int)labels.size())) {
       number_of_objects_to_consider = labels.size();
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
     int pos = 1;
-    for (int labels_index = 0; 
-         labels_index < number_of_objects_to_consider; 
+    for (int labels_index = 0;
+         labels_index < number_of_objects_to_consider;
          ++labels_index, ++pos) {
       if (labels[labels_index].actual < 0) {
         // todo: log here!

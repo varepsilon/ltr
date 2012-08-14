@@ -1,24 +1,26 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_MEASURES_MEASURE_H_
 #define LTR_MEASURES_MEASURE_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <stdexcept>
 #include <string>
 
-#include "ltr/interfaces/printable.h"
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/data_set.h"
+
 #include "ltr/interfaces/aliaser.h"
+#include "ltr/interfaces/printable.h"
 #include "ltr/interfaces/parameterized.h"
+
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 using std::logic_error;
@@ -142,7 +144,7 @@ double Measure<TElement>::average(const DataSet<TElement>& set) const {
   double sum = 0.0;
   int query_proceed = 0;
 
-  for (size_t i = 0; i < set.size(); ++i) {
+  for (int i = 0; i < set.size(); ++i) {
     query_proceed += 1;
     double val;
     val = this->operator()(set[i]);
@@ -162,7 +164,7 @@ double Measure<TElement>::weightedAverage(
   double sum = 0.0;
   double weights = 0.0;
 
-  for (size_t i = 0; i < set.size(); ++i) {
+  for (int i = 0; i < set.size(); ++i) {
     double w = set.getWeight(i);
     double val;
     val = w * this->operator()(set[i]);

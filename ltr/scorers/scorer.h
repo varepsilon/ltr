@@ -22,8 +22,9 @@ namespace ltr {
  * a value - its rank, or score
  */
 class Scorer : public SerializableFunctor<double>,
-    public Printable {
-  public:
+               public Printable,
+               public Aliaser {
+ public:
   typedef ltr::utility::shared_ptr<Scorer> Ptr;
   typedef ltr::utility::shared_ptr<Scorer> BasePtr;
 
@@ -40,9 +41,11 @@ class Scorer : public SerializableFunctor<double>,
   const FeatureConverterArray& feature_converters() const {
     return feature_converters_;
   }
+
   void set_feature_converters(const FeatureConverterArray& feature_converters) {
     this->feature_converters_ = feature_converters;
   }
+
   void addFeatureConverter(
     FeatureConverter::Ptr p_feature_converter) {
     this->feature_converters_.push_back(p_feature_converter);
@@ -109,8 +112,9 @@ class Scorer : public SerializableFunctor<double>,
 
   virtual ~Scorer() {}
 
-  private:
+ private:
   virtual double scoreImpl(const Object& obj) const = 0;
+
   virtual string generateCppCodeImpl(const string& function_name) const = 0;
 
   FeatureConverterArray feature_converters_;

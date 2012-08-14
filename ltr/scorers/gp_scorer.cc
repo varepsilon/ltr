@@ -94,7 +94,10 @@ void GPScorer::setContextToObject(const Object& object) const {
 
 void GPScorer::writeTreeAsStringOfCppCalls(std::ostream &output, // NOLINT
                                            int node_index) const {
-  assert(node_index < best_tree_.size());
+  if (node_index >= (int)best_tree_.size()) {
+    throw std::logic_error("Node index is out of range");
+  }
+
   int number_arguments =
     best_tree_[node_index].mPrimitive->getNumberArguments();
   if (number_arguments == 0) {

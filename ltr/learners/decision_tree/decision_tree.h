@@ -196,7 +196,7 @@ void DecisionTree<TValue>::removeVertex(typename Vertex<TValue>::Ptr vertex) {
   }
 
   if (vertex == this->root) {
-    INFO("Vertrx is from current tree.");
+    INFO("Vertex is from current tree.");
     this->root = typename Vertex<TValue>::Ptr(NULL);
     return;
   }

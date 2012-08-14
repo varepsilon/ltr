@@ -31,7 +31,7 @@ TEST_F(SplitterTest, LeaveOneOutSplitterTest) {
     used[test_object_feature] = true;
   }
 
-  for (int i = 0; i < used.size(); ++i) {
+  for (int i = 0; i < (int)used.size(); ++i) {
     EXPECT_TRUE(used[i]);
   }
 };

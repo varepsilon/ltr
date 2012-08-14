@@ -19,7 +19,7 @@ namespace utility {
       const ObjectList& object_list) {
     vector<PredictedAndActualLabels> output(object_list.size());
 
-    for (size_t index = 0; index < object_list.size(); ++index) {
+    for (int index = 0; index < (int)object_list.size(); ++index) {
       output[index].predicted = object_list[index].predicted_label();
       output[index].actual = object_list[index].actual_label();
     }

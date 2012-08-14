@@ -19,7 +19,7 @@ class SumAggregator : public Aggregator {
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     double result = 0;
-    for (int label_index = 0; label_index < labels.size(); ++label_index) {
+    for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
       result += labels[label_index] * weights[label_index];
     }
     return result;

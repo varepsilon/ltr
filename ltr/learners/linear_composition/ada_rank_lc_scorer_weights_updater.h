@@ -69,7 +69,7 @@ void AdaRankLCScorerWeightsUpdater<TElement>::updateWeights(
   double numerator = 0.0;
   double denominator = 0.0;
 
-  for (size_t i = 0; i < data.size(); ++i) {
+  for (int i = 0; i < data.size(); ++i) {
     double measure_value = this->measure_->operator()(data[i]);
     double normalized_measure_value =
       (measure_value - this->measure_->worst()) /

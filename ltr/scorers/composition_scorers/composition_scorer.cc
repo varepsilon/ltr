@@ -11,7 +11,7 @@ namespace ltr {
     weighted_scorers_.clear();
   }
 
-  size_t CompositionScorer::size() const {
+  int CompositionScorer::size() const {
     return weighted_scorers_.size();
   }
 

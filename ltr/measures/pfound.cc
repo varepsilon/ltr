@@ -20,9 +20,9 @@ namespace ltr {
     vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
     sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-    size_t number_of_objects_to_consider = number_of_objects_to_consider_;
-    if ((number_of_objects_to_consider == 0)
-        || (number_of_objects_to_consider > labels.size())) {
+    int number_of_objects_to_consider = number_of_objects_to_consider_;
+    if ((number_of_objects_to_consider == 0) ||
+        (number_of_objects_to_consider > (int)labels.size())) {
       number_of_objects_to_consider = labels.size();
     }
 

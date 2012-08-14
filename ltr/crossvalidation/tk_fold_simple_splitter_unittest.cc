@@ -24,7 +24,7 @@ using std::pair;
 const int k = 3;
 const int t = 4;
 
-TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {  
+TKFoldSimpleSplitter<Object> Use_k_t(int in_k, int in_t) {
   return TKFoldSimpleSplitter<Object>(in_k, in_t);
 }
 
@@ -59,7 +59,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
     }
 
     // every element expects being used in test data at least once
-    for (int i = 0; i < used.size(); ++i) {
+    for (int i = 0; i < (int)used.size(); ++i) {
       EXPECT_TRUE(used[i]);
     }
     // checking if test data sizes are close for different splits
@@ -77,7 +77,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
 // partition is a mapping from element to part's number
 bool Equal(const vector<int>& partition1, const vector<int>& partition2) {
   map<int, int> accordance;
-  for (int i = 0; i < partition1.size(); ++i) {
+  for (int i = 0; i < (int)partition1.size(); ++i) {
     map<int, int>::iterator found = accordance.find(partition1[i]);
     if (found == accordance.end()) {
       accordance.insert(pair<int, int>(partition1[i], partition2[i]));

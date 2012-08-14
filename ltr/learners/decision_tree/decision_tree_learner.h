@@ -48,8 +48,8 @@ class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters);
   /**
-    Function creates one decision or leaf vertex for given data.
-    Uses ConditionsLearner and SplittingQuality to create it.
+   * Function creates one decision or leaf vertex for given data.
+   * Uses ConditionsLearner and SplittingQuality to create it.
    */
   Vertex<double>::Ptr createOneVertex(const DataSet<Object>& data);
 

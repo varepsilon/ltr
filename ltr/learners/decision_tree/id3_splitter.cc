@@ -36,7 +36,7 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
     }
     std::sort(feature_values.begin(), feature_values.end());
     feature_values.resize(std::unique(feature_values.begin(),
-                   feature_values.end(), DoubleEqual) - feature_values.begin());
+      feature_values.end(), DoubleEqual) - feature_values.begin());
     if (feature_values.size() <= 1) {
       INFO("Number of features is less or equal than one.");
       current_feature++;
@@ -48,20 +48,20 @@ int ID3_Splitter::getNextConditions(vector<Condition::Ptr>* result) {
       int split_cnt = feature_split_count_;
       if (split_cnt < (int)feature_values.size()) {
         for (int i = 0; i < split_cnt; i++) {
-          numeric_split_values.
-            push_back(min_val + (max_val - min_val) / split_cnt * i);
+          numeric_split_values.push_back(
+            min_val + (max_val - min_val) / split_cnt * i);
         }
       } else {
         for (int i = 0; i + 1 < (int)feature_values.size(); i++) {
-          numeric_split_values.
-            push_back((feature_values[i] + feature_values[i+1]) / 2);
+          numeric_split_values.push_back(
+            (feature_values[i] + feature_values[i + 1]) / 2);
         }
       }
     } else {
       for (int i = 0; i + 1 < (int)feature_values.size();
-           i+= half_summs_step_) {
-        numeric_split_values.
-          push_back((feature_values[i] + feature_values[i+1]) / 2);
+           i += half_summs_step_) {
+        numeric_split_values.push_back(
+          (feature_values[i] + feature_values[i + 1]) / 2);
       }
     }
   }

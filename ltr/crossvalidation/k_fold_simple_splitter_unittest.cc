@@ -51,7 +51,7 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
   }
 
   // every element expects being used in test data at least once
-  for (int i = 0; i < used.size(); ++i) {
+  for (int i = 0; i < (int)used.size(); ++i) {
     EXPECT_TRUE(used[i]);
   }
   // checking if test data sizes are close for different splits
