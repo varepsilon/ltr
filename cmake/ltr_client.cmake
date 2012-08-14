@@ -10,6 +10,17 @@ set (LTR_CLIENT_SRC
      ${Source_Path}/ltr_client/ltr_client.h
      ${Source_Path}/ltr_client/configurator.cc
      ${Source_Path}/ltr_client/configurator.h
+     ${Source_Path}/ltr_client/utility/common_utility.h
+     ${Source_Path}/ltr_client/utility/crossvalidation_launch_info.h
+     ${Source_Path}/ltr_client/utility/crossvalidation_launch_info.cc
+     ${Source_Path}/ltr_client/utility/data_info.h
+     ${Source_Path}/ltr_client/utility/data_info.cc
+     ${Source_Path}/ltr_client/utility/parameterized_info.h
+     ${Source_Path}/ltr_client/utility/parameterized_info.cc
+     ${Source_Path}/ltr_client/utility/tag_handlers.h
+     ${Source_Path}/ltr_client/utility/tag_handlers.cc
+     ${Source_Path}/ltr_client/utility/train_launch_info.h
+     ${Source_Path}/ltr_client/utility/train_launch_info.cc
 )
 
 source_group(initers FILES ${INITERS_SRC})

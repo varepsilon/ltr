@@ -1,7 +1,0 @@
-// Copyright 2012 Yandex
-
-#ifndef LTR_CLIENT_LEARNER_FACTORY_H_
-#define LTR_CLIENT_LEARNER_FACTORY_H_
-
-
-#endif  // LTR_CLIENT_LEARNER_FACTORY_H_

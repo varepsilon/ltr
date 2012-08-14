@@ -1,7 +1,8 @@
 // Copyright 2012 Yandex
-
 #ifndef LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
 #define LTR_CROSSVALIDATION_CROSSVALIDATOR_H_
+
+#include <logog/logog.h>
 
 #include <algorithm>
 #include <list>
@@ -12,17 +13,12 @@
 #include "boost/range.hpp"
 #include "boost/tuple/tuple.hpp"
 
-#include "logog/logog.h"
-
 #include "ltr/crossvalidation/splitter.h"
-
 #include "ltr/data/data_set.h"
-
 #include "ltr/learners/learner.h"
-
 #include "ltr/measures/measure.h"
-
 #include "ltr/utility/multitable.h"
+
 
 using std::cerr;
 using std::cout;
@@ -36,67 +32,118 @@ using ltr::utility::MultiTable;
 
 namespace ltr {
 namespace cv {
-template <typename TElement>
+
+/**
+ * Performs crossvalidation and forms a printable set
+ * of tables called multitable.
+ * Multitable in CrossValidator contains 4 dimentions:
+ *  -learners
+ *  -splitters
+ *  -measures
+ *  -datasets
+ *
+ * To perform crossvalidation add to the crossvalidator datasets,
+ * measures, splitters, learners. Every entity must be contained in
+ * crossvalidtor at least once. After the initialization is done,
+ * perform "launch()" command.
+ *
+ * Crossvalidator is printable
+ */
+template <typename ObjectType>
 class CrossValidator {
  public:
+  /**
+   * Basic CrossValidator constructor
+   */
   CrossValidator();
-  void addDataSet(typename DataSet<TElement>::Ptr data_set);
-  void addMeasure(typename Measure<TElement>::Ptr measure);
-  void addLearner(typename Learner<TElement>::Ptr learner);
-  void addSplitter(typename Splitter<TElement>::Ptr splitter);
+  /**
+   * Adds a dataset to the CrossValidator instance
+   * @param data_set - data set to be inserted into crossvalidator
+   */
+  void addDataSet(const typename DataSet<ObjectType>::Ptr& data_set);
+  /**
+   * Adds a measure to the CrossValidator instance
+   * @param measure - measure to be inserted into crossvalidator
+   */
+  void addMeasure(const typename Measure<ObjectType>::Ptr& measure);
+  /**
+   * Adds a learner to the CrossValidator instance
+   * @param learner - data set to be inserted into crossvalidator
+   */
+  void addLearner(const typename Learner<ObjectType>::Ptr& learner);
+  /**
+   * Adds a splitter to the CrossValidator instance
+   * @param splitter - data set to be inserted into crossvalidator
+   */
+  void addSplitter(const typename Splitter<ObjectType>::Ptr& splitter);
+  /**
+   * Launches crossvalidation.
+   */
   void launch();
+  /**
+   * Resets crossvalidator: empties the containsers with datasets,
+   * measures, splitters, learners.
+   */
   void reset();
+  /**
+   * Converts a crossvalidation results to string.
+   * @returns string with crossvalidation results.
+   */
   string toString();
  private:
+  /**
+   * Sets the labels of the multitable instance according to the
+   * information in the alias.
+   */
   void setCrossValidationResultLabels();
   MultiTable<double, 4> cross_validation_results_;
-  vector<typename ltr::DataSet<TElement>::Ptr> data_sets_;
-  vector<typename ltr::Measure<TElement>::Ptr> measures_;
-  vector<typename ltr::Learner<TElement>::Ptr> learners_;
-  vector<typename ltr::cv::Splitter<TElement>::Ptr> splitters_;
+  vector<typename ltr::DataSet<ObjectType>::Ptr> data_sets_;
+  vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
+  vector<typename ltr::Learner<ObjectType>::Ptr> learners_;
+  vector<typename ltr::cv::Splitter<ObjectType>::Ptr> splitters_;
 };
 
-template <typename TElement>
-CrossValidator<TElement>::CrossValidator()
+template <typename ObjectType>
+CrossValidator<ObjectType>::CrossValidator()
   : cross_validation_results_()
   , data_sets_()
   , measures_()
   , learners_()
   , splitters_() {}
 
-template <typename TElement>
-void CrossValidator<TElement>::
-  addDataSet(typename DataSet<TElement>::Ptr data_set) {
+template <typename ObjectType>
+void CrossValidator<ObjectType>::
+  addDataSet(const typename DataSet<ObjectType>::Ptr& data_set) {
   data_sets_.push_back(data_set);
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::
-  addMeasure(typename Measure<TElement>::Ptr measure) {
+template <typename ObjectType>
+void CrossValidator<ObjectType>::
+  addMeasure(const typename Measure<ObjectType>::Ptr& measure) {
   measures_.push_back(measure);
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::addLearner(
-  typename Learner<TElement>::Ptr learner
+template <typename ObjectType>
+void CrossValidator<ObjectType>::addLearner(
+    const typename Learner<ObjectType>::Ptr& learner
     ) {
   learners_.push_back(learner);
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::
-  addSplitter(typename Splitter<TElement>::Ptr splitter) {
+template <typename ObjectType>
+void CrossValidator<ObjectType>::
+  addSplitter(const typename Splitter<ObjectType>::Ptr& splitter) {
   splitters_.push_back(splitter);
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::
+template <typename ObjectType>
+void CrossValidator<ObjectType>::
   setCrossValidationResultLabels() {
   INFO("Starting to set crossvalidation results labels.");
   INFO("Starting to set measures");
   cross_validation_results_.setAxisLabel(0, "Measure");
   for (int measure_index = 0;
-       measure_index < (int)measures_.size();
+       measure_index < measures_.size();
        ++measure_index) {
     INFO("Setting %d tick label. Current measure is %s",
          measure_index,
@@ -109,7 +156,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set dataset");
   cross_validation_results_.setAxisLabel(1, "DataSet");
   for (int dataset_index = 0;
-       dataset_index < (int)data_sets_.size();
+       dataset_index < data_sets_.size();
        ++dataset_index) {
     INFO("Setting %d tick label", dataset_index);
     cross_validation_results_.setTickLabel(1, dataset_index, "dataset");
@@ -118,7 +165,7 @@ void CrossValidator<TElement>::
   INFO("Starting to set Learners");
   cross_validation_results_.setAxisLabel(2, "Learner");
   for (int learner_index = 0;
-       learner_index < (int)learners_.size();
+       learner_index < learners_.size();
        ++learner_index) {
     INFO("Setting %d tick label", learner_index);
     cross_validation_results_.
@@ -128,16 +175,16 @@ void CrossValidator<TElement>::
   INFO("Starting to set splitters");
   cross_validation_results_.setAxisLabel(3, "Splitter");
   for (int splitter_index = 0;
-       splitter_index < (int)splitters_.size();
+       splitter_index < splitters_.size();
        ++splitter_index) {
-//    INFO("Setting %d tick label", splitter_index);
     cross_validation_results_.
         setTickLabel(3, splitter_index, splitters_[splitter_index]->alias());
   }
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::launch() {
+
+template <typename ObjectType>
+void CrossValidator<ObjectType>::launch() {
   INFO("Launching crossvalidator");
   vector<size_t> multi_size;
   multi_size.push_back(measures_.size());
@@ -154,11 +201,11 @@ void CrossValidator<TElement>::launch() {
     size_t dataset_index = it.getMultiIndex()[1];
     size_t learner_index = it.getMultiIndex()[2];
     size_t splitter_index = it.getMultiIndex()[3];
-    for (int split_index = 0;
+    for (size_t split_index = 0;
          split_index < (*splitters_[splitter_index]).
          splitCount(*data_sets_[dataset_index]);
          ++split_index) {
-      SplittedDataSet<TElement> splitted_data(
+      SplittedDataSet<ObjectType> splitted_data(
             splitters_[splitter_index]->split(
               split_index, *data_sets_[dataset_index]));
       learners_[learner_index]->reset();
@@ -176,8 +223,8 @@ void CrossValidator<TElement>::launch() {
   }
 }
 
-template <typename TElement>
-void CrossValidator<TElement>::reset() {
+template <typename ObjectType>
+void CrossValidator<ObjectType>::reset() {
   cross_validation_results_.clear();
   measures_.clear();
   data_sets_.clear();
@@ -185,11 +232,11 @@ void CrossValidator<TElement>::reset() {
   splitters_.clear();
 }
 
-template <typename TElement>
-string CrossValidator<TElement>::toString() {
+template <typename ObjectType>
+string CrossValidator<ObjectType>::toString() {
   return cross_validation_results_.toString();
 }
-};
-};
+}
+}
 
 #endif  // LTR_CROSSVALIDATION_CROSSVALIDATOR_H_

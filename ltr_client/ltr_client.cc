@@ -9,22 +9,17 @@
 
 #include "logog/logog.h"
 
-#include "ltr/crossvalidation/crossvalidator.h"
-#include "ltr/crossvalidation/k_fold_simple_splitter.h"
-
 #include "ltr/data/utility/io_utility.h"
 
 #include "ltr/learners/learner.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 
-#include "ltr/measures/measure.h"
-#include "ltr/measures/dcg.h"
 #include "ltr/measures/ndcg.h"
-#include "ltr/measures/abs_error.h"
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/configurator.h"
 #include "ltr_client/factory.h"
+#include "ltr_client/utility/parameterized_info.h"
 
 using std::cout;
 using std::find;
@@ -34,6 +29,7 @@ using std::vector;
 using std::endl;
 using std::ofstream;
 
+using ltr::io_utility::loadDataSet;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::Learner;
@@ -44,9 +40,8 @@ using ltr::ObjectPair;
 using ltr::Log;
 using ltr::BestFeatureLearner;
 using ltr::NDCG;
-using ltr::DCG;
 
-using ltr::io_utility::loadDataSet;
+typedef  string ParameterizedDependency;
 
 static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
   TXmlTokenSpecList* queue, TXmlTokenSpecList* circularity_check_queue) {
@@ -64,8 +59,8 @@ static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
     circularity_check_queue->push_back(spec);
 
     // add dependencies
-    for (TXmlTokenSpecList::const_iterator it = spec->dependencySpecs().begin();
-         it != spec->dependencySpecs().end();
+    for (TXmlTokenSpecList::const_iterator it = spec->dependency_specs().begin();
+         it != spec->dependency_specs().end();
          ++it) {
       const ParametrizedInfo* dep_spec = *it;
       if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
@@ -78,9 +73,9 @@ static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
     return true;
 }
 
-static TXmlTokenSpecList values(const ConfigParser::TXmlTokenSpecs& cont) {
+static TXmlTokenSpecList values(const ConfigParser::ParameterizedInfos& cont) {
   TXmlTokenSpecList values;
-  for (ConfigParser::TXmlTokenSpecs::const_iterator it = cont.begin();
+  for (ConfigParser::ParameterizedInfos::const_iterator it = cont.begin();
        it != cont.end();
        ++it) {
     const ParametrizedInfo& spec = it->second;
@@ -110,21 +105,21 @@ LtrClient::~LtrClient() {}
 
 static ParametersContainer Create(
   const ParametersContainer& src_parameters,
-  const ConfigParser::TXmlTokenSpecs& all_specs);
+  const ConfigParser::ParameterizedInfos& all_specs);
 
 static Parameterized* Create(const string& name,
-                             const ConfigParser::TXmlTokenSpecs& all_specs) {
-  ConfigParser::TXmlTokenSpecs::const_iterator it = all_specs.find(name);
+                             const ConfigParser::ParameterizedInfos& all_specs) {
+  ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
   assert(it != all_specs.end());
   const ParametrizedInfo* spec = &it->second;
   const ParametersContainer& parameters =
-    Create(spec->getParameters(), all_specs);
-  return Factory::instance()->Create(spec->getType(), parameters);
+    Create(spec->get_parameters(), all_specs);
+  return Factory::instance()->Create(spec->get_type(), parameters);
 }
 
 static ParametersContainer Create(
   const ParametersContainer& src_parameters,
-  const ConfigParser::TXmlTokenSpecs& all_specs) {
+  const ConfigParser::ParameterizedInfos& all_specs) {
     ParametersContainer result;
     for (ParametersContainer::StringAnyHash::const_iterator it =
          src_parameters.begin();
@@ -133,11 +128,11 @@ static ParametersContainer Create(
       const boost::any& parameter = it->second;
       const string& name = it->first;
 
-      if (const TXmlTokenDependency* dependency =
-          boost::any_cast<TXmlTokenDependency>(&parameter)) {
+      if (const ParameterizedDependency* dependency =
+          boost::any_cast<ParameterizedDependency>(&parameter)) {
         typedef vector<string> TStringVector;
         TStringVector strings;
-        boost::split(strings, dependency->parameter_name,
+        boost::split(strings, *dependency,
                      boost::is_any_of("\t "));
         assert(strings.size());
         if (strings.size() == 1) {
@@ -167,7 +162,7 @@ void LtrClient::initFrom(const string& file_name) {
 }
 
 template <class TElement>
-void LtrClient::launchTrain(Parameterized* parameterized,
+void LtrClient::executeTrain(Parameterized* parameterized,
                              const TrainLaunchInfo& train_info) {
   Learner<TElement>* learner =
     dynamic_cast<Learner<TElement>*>(parameterized);  //NOLINT
@@ -176,9 +171,9 @@ void LtrClient::launchTrain(Parameterized* parameterized,
   const ParametrizedInfo& learner_info =
     configurator_.findLearner(train_info.learner);
 
-  const TDataInfo& data_info = configurator_.findData(train_info.data);
+  const DataInfo& data_info = configurator_.findData(train_info.data);
 
-  if (learner_info.getApproach() != data_info.approach) {
+  if (learner_info.get_approach() != data_info.approach) {
     throw logic_error("Approach of learner and data does not coincide!");
   }
 
@@ -202,7 +197,7 @@ void LtrClient::launchTrain(Parameterized* parameterized,
       return;
     }
     const string& predict_file_path = configurator_.rootPath() +
-      learner_info.getName() + "." + predict + ".predicts";
+      learner_info.get_name() + "." + predict + ".predicts";
 
     Scorer::Ptr scorer = learner->make();
 
@@ -213,69 +208,17 @@ void LtrClient::launchTrain(Parameterized* parameterized,
 
     if (train_info.gen_cpp) {
       string cpp_file_path = configurator_.rootPath() +
-        learner_info.getName() + ".cpp";
+        learner_info.get_name() + ".cpp";
         ofstream fout(cpp_file_path.c_str());
-        fout << scorer->generateCppCode(learner_info.getName());
+        fout << scorer->generateCppCode(learner_info.get_name());
         fout.close();
         cout << "cpp code saved into " << cpp_file_path << endl;
     }
   }
 }
 
-template <class TElement>
-void LtrClient::launchCrossvalidation(
-  const CrossvalidationLaunchInfo& crossvalidation_info) {
-    boost::unordered_set<string>::const_iterator
-      learners_iterator = crossvalidation_info.learners.begin(),
-      measures_iterator = crossvalidation_info.measures.begin(),
-      datas_iterator = crossvalidation_info.datas.begin();
-
-    ltr::cv::CrossValidator<TElement> cross_validator;
-
-    for (; learners_iterator != crossvalidation_info.learners.end();
-         ++learners_iterator) {
-      const ParametrizedInfo& learner_info =
-        configurator_.findLearner(*learners_iterator);
-      const ParametersContainer& parameters =
-        Create(learner_info.getParameters(), configurator_.xmlTokenSpecs());
-      Parameterized* learner = Factory::instance()->
-        Create(learner_info.getType() + learner_info.getApproach(), parameters);
-      cross_validator.addLearner(dynamic_cast<Learner<TElement>*>(learner)); // NOLINT
-    }
-
-    // It will work when measures will be added.
-    /* for (; measures_iterator != crossvalidation_info.measures.end();
-            ++measures_iterator) {
-      const ParametrizedInfo& measure_info =
-        configurator_.findMeasure(*measures_iterator);
-      const ParametersContainer& parameters =
-        Create(measure_info.getParameters(), configurator_.xmlTokenSpecs());
-      Parameterized* measure = Factory::instance()->
-        Create(measure_info.getType() + measure_info.getApproach(), parameters);
-      cross_validator.addMeasure(dynamic_cast<Measure<TElement>*>(measure)); // NOLINT
-    }*/
-
-    DCG::Ptr measure = new DCG;
-    cross_validator.addMeasure(measure);
-
-    typename ltr::cv::KFoldSimpleSplitter<TElement>::Ptr splitter =
-      new ltr::cv::KFoldSimpleSplitter<TElement>;
-    cross_validator.addSplitter(splitter);
-
-    for (; datas_iterator != crossvalidation_info.datas.end();
-         ++datas_iterator) {
-      const TDataInfo& data_info = configurator_.findData(*datas_iterator);
-      typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
-      *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
-      cross_validator.addDataSet(data_set_ptr);
-    }
-
-    cross_validator.launch();
-    cout << cross_validator.toString();
-}
-
 void LtrClient::launch() {
-  for (ConfigParser::TTrainInfos::const_iterator it =
+  for (ConfigParser::TrainInfos::const_iterator it =
        configurator_.trainInfos().begin();
        it != configurator_.trainInfos().end();
        ++it) {
@@ -284,37 +227,18 @@ void LtrClient::launch() {
       configurator_.findLearner(train_info.learner);
 
     const ParametersContainer& parameters =
-      Create(learner_info.getParameters(), configurator_.xmlTokenSpecs());
+      Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
 
     cout << "\nvoid LtrClient::launch()\nparameters="
          << parameters.toString() << endl;
 
     Parameterized* parameterized = Factory::instance()->
-      Create(learner_info.getType() + learner_info.getApproach(), parameters);
+      Create(learner_info.get_type() + learner_info.get_approach(), parameters);
 
-    if (learner_info.getApproach() == "listwise") {
-      launchTrain<ObjectList>(parameterized, train_info);
-    } else if (learner_info.getApproach() == "pairwise") {
-      launchTrain<ObjectPair>(parameterized, train_info);
-    } else {
-      assert(false && "Not implemented yet");
-    }
-  }
-
-  for (ConfigParser::TCrossvalidationInfos::const_iterator iterator =
-       configurator_.crossvalidationInfos().begin();
-       iterator != configurator_.crossvalidationInfos().end();
-       ++iterator) {
-    const CrossvalidationLaunchInfo& crossvalidation_info =
-      iterator->second;
-    const ParametrizedInfo& learner_info =
-      configurator_.findLearner(*crossvalidation_info.learners.begin());
-
-    if (learner_info.getApproach() == "listwise") {
-      launchCrossvalidation<ObjectList>(crossvalidation_info);
-      // We can't do that while we don't have measure for ObjectPair.
-      // } else if (learner_info.getApproach() == "pairwise") {
-      //   launchCrossvalidation<ObjectPair>(crossvalidation_info);
+    if (learner_info.get_approach() == "listwise") {
+      executeTrain<ObjectList>(parameterized, train_info);
+    } else if (learner_info.get_approach() == "pairwise") {
+      executeTrain<ObjectPair>(parameterized, train_info);
     } else {
       assert(false && "Not implemented yet");
     }
@@ -339,7 +263,6 @@ int main(int argc, char* argv[]) {
     ("BEST_FEATURElistwise");
 
   factory.registerType<NDCG>("NDCG");
-  factory.registerType<DCG>("DCG");
 
   LtrClient client;
 

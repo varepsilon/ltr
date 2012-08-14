@@ -22,13 +22,13 @@ using ltr::ParametersContainer;
 
 class Factory {
  public:
+
   Factory() {
     assert(!self_);
     self_ = this;
   }
 
   ~Factory() {}
-
   static Factory* instance() {
     assert(self_);
     return self_;
@@ -37,42 +37,42 @@ class Factory {
   template <class T>
   void registerType(const string& name) {
     assert(name_creators_.find(name) == name_creators_.end());
-    name_creators_[name] = new TCreator<T>;
+    name_creators_[name] = new Creator<T>;
   }
 
   Parameterized* Create(const string& name,
                         const ParametersContainer& parameters) const {
     cout << "Factory::Create: Requested creating of " << name << endl;
-    TNameCreatorHash::const_iterator it = name_creators_.find(name);
+    NameCreatorHash::const_iterator it = name_creators_.find(name);
     assert(it != name_creators_.end());
-    const TAbstractCreator* creator = it->second;
+    const AbstractCreator* creator = it->second;
     return creator->create(parameters);
   }
 
  private:
-  class TAbstractCreator {
+  class AbstractCreator {
    public:
-    virtual ~TAbstractCreator() {}
+    virtual ~AbstractCreator() {}
 
     virtual Parameterized* create(
       const ParametersContainer& parameters) const = 0;
   };
 
   template <class T>
-  class TCreator: public TAbstractCreator {
+  class Creator: public AbstractCreator {
    public:
     virtual Parameterized* create(const ParametersContainer& parameters) const {
       return new T(parameters);
     }
   };
 
-  typedef boost::unordered_map<string, TAbstractCreator*> TNameCreatorHash;
+  typedef boost::unordered_map<string, AbstractCreator*> NameCreatorHash;
 
   Factory(const Factory&);
 
   Factory& operator=(const Factory&);
 
-  TNameCreatorHash name_creators_;
+  NameCreatorHash name_creators_;
 
   static Factory* self_;
 };

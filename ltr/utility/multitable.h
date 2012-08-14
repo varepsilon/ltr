@@ -23,31 +23,94 @@ using ltr::Printable;
 
 namespace ltr {
 namespace utility {
+/**
+ * This struct contains information about size of the dimension
+ * of the MultiTable.
+ */
 struct DimensionSize {
   int index;
   size_t size;
 };
 
+/**
+ * The less operator returns true if the left operand's field "size"
+ * is less than right operand's field "size"
+ * @param left - left operand
+ * @param right - right operand
+ * @returns boolean left.size < right.size
+ */
+
 bool operator<(const DimensionSize& left, const DimensionSize& right) {
   return left.size < right.size;
 }
 
+/**
+ * Class intended to store the multidimensional tables.
+ */
 template <typename T, size_t N>
 class MultiTable : public Printable {
  public:
+  /**
+   * Iterator to iterate over the elements
+   */
   class Iterator;
+  /**
+   * Basic constructor
+   */
   MultiTable();
+  /**
+   * Constructor with specified table_size
+   * (by default it is zero-vector)
+   * @param table_size - vector<size_t> multisize specification
+   */
   explicit MultiTable(const vector<size_t>& table_size);
+  /**
+   * Operator [] to get the access to the element
+   * by multiindex as by ordinary index.
+   * @param multiIndex - vector<size_t> specifies the position
+   * of the element
+   * @returns T& - the constant datum reference of the stored type.
+   */
   const T& operator[] (const vector<size_t>& multiIndex) const;
+  /**
+   * Non-constant implementation of the operator [].
+   * @param multiIndex - vector<size_t> specifies the position
+   * of the element
+   * @returns T - the datum reference of the stored type.
+   */
   T& operator[] (const vector<size_t>& multiIndex);
+  /**
+   * Sets axis label.
+   * @param axis_index - size_t number of the axis to set label.
+   * @param label - string label to set
+   */
   void setAxisLabel(const size_t axis_index, const string& label);
+  /**
+   * Sets tick label.
+   * @param axis_index - size_t index of the axis to modify
+   * @param tick_index - size_t index of the tick to set
+   * @param label - string label to set
+   */
   void setTickLabel(const size_t axis_index,
                     const size_t tick_index,
                     const string& label);
   virtual string toString() const;
+  /**
+   * Resizes the multitable.
+   * @param multi_size - new size of the multitable
+   */
   void resize(const vector<size_t>& multi_size);
+  /**
+   * Clears multitable
+   */
   void clear();
+  /**
+   * @returns iterator to the beginning of the multitable
+   */
   Iterator begin();
+  /**
+   * @returns iterator to the end of the multitable
+   */
   Iterator end();
  private:
   struct DimensionMetaInfo;
@@ -63,16 +126,50 @@ class MultiTable : public Printable {
                     stringstream* const out_stream) const;
 };
 
+/**
+ * Iteartor for a MultiTable class.
+ */
 template<typename T, size_t N>
 class MultiTable<T, N>::Iterator {
  public:
+  /**
+   * Basic copy constructor
+   * @param _instance - instance to copy
+   */
   Iterator(MultiTable<T, N>* _instance);
+  /**
+   * Constant operator *
+   * @returns value of type T (resolved iterator)
+   * T is stored type
+   */
   const T& operator*() const;
+  /**
+   * Operator *
+   * @returns value of type T (resolved iterator)
+   * T is stored type
+   */
   T& operator*();
+  /**
+   * operator ->
+   * @returns the pointer to the stored type
+   */
   T* operator->();
+  /**
+   * movement operator
+   * @returns Iterator moved to the next position
+   */
   Iterator operator++();
+  /**
+   * @returns a multiindex from Iterator instance
+   */
   const vector<size_t>& getMultiIndex() const;
+  /**
+   * @returns true if the iterators are at the same position
+   */
   bool operator==(const Iterator& right);
+  /**
+   * @returns false if the iterators are at the same position
+   */
   bool operator!=(const Iterator& right);
  private:
   vector<size_t> multi_index_;
