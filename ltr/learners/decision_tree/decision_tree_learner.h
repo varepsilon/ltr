@@ -20,9 +20,25 @@
 #include "ltr/scorers/decision_tree_scorer.h"
 
 using std::string;
+using std::vector;
 
 namespace ltr {
 namespace decision_tree {
+/**
+ * The Vertex with corresponding part of DataSet.
+ */
+struct VertexWithData {
+  VertexWithData(Vertex<double>::Ptr vertex, const DataSet<Object>& data)
+  : vertex(vertex),
+    data(data) {}
+
+  VertexWithData(const VertexWithData& other)
+  : vertex(other.vertex),
+    data(other.data) {}
+
+  Vertex<double>::Ptr vertex;
+  DataSet<Object> data;
+};
 /**
  * \class DecisionTreeLearner
  * Builds decision tree for given data.
@@ -47,11 +63,18 @@ class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters);
+
+  bool needToGenerateLeaf(const DataSet<Object>& data) const;
+
+  LeafVertex<double>::Ptr generateLeaf(const DataSet<Object>& data) const;
+
+  virtual void buildNextLayer(const vector<VertexWithData>& current_layer,
+                                    vector<VertexWithData>* next_layer);
   /**
-   * Function creates one decision or leaf vertex for given data.
+   * Function creates decision tree for given data.
    * Uses ConditionsLearner and SplittingQuality to create it.
    */
-  Vertex<double>::Ptr createOneVertex(const DataSet<Object>& data);
+  Vertex<double>::Ptr buildTree(const DataSet<Object>& data);
 
   void learnImpl(const DataSet<Object>& data, DecisionTreeScorer* scorer);
 
