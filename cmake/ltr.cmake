@@ -65,6 +65,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/numerical.cc
               ${Source_Path}/ltr/utility/murmur_hash.h
               ${Source_Path}/ltr/utility/murmur_hash.cc
+              ${Source_Path}/ltr/utility/multitable.h
               ${Source_Path}/ltr/utility/indices.h
               ${Source_Path}/ltr/utility/indices.cc
               ${Source_Path}/ltr/utility/neighbor_weighter.h
