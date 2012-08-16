@@ -4,6 +4,7 @@
 
 #include "ltr/data/object.h"
 #include "ltr/scorers/scorer.h"
+#include "ltr/utility/shared_ptr.h"
 
 using ltr::Object;
 
@@ -14,6 +15,7 @@ namespace ltr {
  */
 class BaseProbabilityDensityEstimator {
  public:
+  typedef ltr::utility::shared_ptr<BaseProbabilityDensityEstimator> Ptr;
   virtual double estimate(const Object& object, const double label) = 0;
   virtual ~BaseProbabilityDensityEstimator() {
   }

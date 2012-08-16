@@ -43,6 +43,9 @@ typedef map<Label, double> LabelToLinearBias;
  */
 class FisherDiscriminant : public BaseProbabilityDensityEstimator {
  public:
+  FisherDiscriminant() {
+  }
+
   FisherDiscriminant(const map<Label, VectorXd>& linear_factors,
                      const map<Label, double>& linear_biases) :
     linear_factors_(linear_factors),

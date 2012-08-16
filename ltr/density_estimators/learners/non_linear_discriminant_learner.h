@@ -8,6 +8,7 @@
 
 #include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
 #include "ltr/density_estimators/learners/base_probability_density_learner.h"
+#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 
@@ -16,6 +17,7 @@ using Eigen::VectorXd;
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::BaseProbabilityDensityLearner;
+using ltr::NonLinearDiscriminant;
 using ltr::DataSet;
 using ltr::Object;
 
@@ -24,16 +26,17 @@ namespace ltr {
  * \class Interface of discriminants that
  * can not be converted to linear separators
  */
-class NonLinearDiscriminantLearner : public BaseProbabilityDensityLearner {
+class NonLinearDiscriminantLearner : public
+  BaseProbabilityDensityLearner<NonLinearDiscriminant> {
  protected:
   virtual void calculateMean(const DataSet<Object>& data_set,
                              LabelToMean* result);
 
  private:
-  virtual void learnImpl(const DataSet<Object>& data_set,
-                         BaseProbabilityDensityEstimator* estimator);
   virtual void calculateCovarianceMatrix(const DataSet<Object>& data_set,
                                          LabelToCovarianceMatrix* result) = 0;
+  virtual void learnImpl(const DataSet<Object>& data_set,
+                         NonLinearDiscriminant* estimator);
 };
 };
 

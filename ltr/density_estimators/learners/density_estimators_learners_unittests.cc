@@ -52,8 +52,7 @@ TEST(DensityEstimatorsLearnersTests, TestFisherDiscriminantLearner) {
   data.add(object2);
   data.add(object3);
 
-  ltr::utility::shared_ptr<FisherDiscriminant> fisherScorer;
-  EXPECT_NO_THROW(fisherLearner.learn(data, fisherScorer.get()));
+  EXPECT_NO_THROW(fisherLearner.learn(data));
 }
 
 TEST(DensityEstimatorsLearnersTests, TestQuadraticDiscriminantLearner) {
@@ -72,9 +71,7 @@ TEST(DensityEstimatorsLearnersTests, TestQuadraticDiscriminantLearner) {
   data.add(object1);
   data.add(object2);
 
-  ltr::utility::shared_ptr<NonLinearDiscriminant> quadraticScorer;
-
-  EXPECT_NO_THROW(quadraticLearner.learn(data, quadraticScorer.get()));
+  EXPECT_NO_THROW(quadraticLearner.learn(data));
 }
 
 TEST(DensityEstimatorsLearnersTests, TestNormalNaiveBayesLearner) {
@@ -97,6 +94,5 @@ TEST(DensityEstimatorsLearnersTests, TestNormalNaiveBayesLearner) {
   data.add(object2);
   data.add(object3);
 
-  ltr::utility::shared_ptr<NonLinearDiscriminant> naiveScorer;
-  EXPECT_NO_THROW(naiveLearner.learn(data, naiveScorer.get()));
+  EXPECT_NO_THROW(naiveLearner.learn(data));
 }

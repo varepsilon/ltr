@@ -23,13 +23,13 @@ using ltr::ParametersContainer;
 using ltr::utility::NeighborWeighter;
 
 namespace ltr {
-template<class TElement>
 /**
- \brief GPLearner
+ \brief NNLearner
  Implements nearest neighbor approach.
  \tparam TElement object container of those the dataset consists (it should
  be Object).
  */
+template<class TElement>
 class NNLearner : public BaseLearner<TElement, NNScorer> {
  public:
   typedef ltr::utility::shared_ptr<NNLearner> Ptr;
@@ -64,7 +64,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 
  private:
   void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
-  virtual string getDefaultAlias() const {return "NearestNeightborScorer";}
+  virtual string getDefaultAlias() const {return "NearestNeightborLearner";}
 
   BaseMetric::Ptr metric_;
   NeighborWeighter::Ptr neighbor_weighter_;

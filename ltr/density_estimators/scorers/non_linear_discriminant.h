@@ -30,6 +30,9 @@ namespace ltr {
  */
 class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {
  public:
+  NonLinearDiscriminant() {
+  }
+
   NonLinearDiscriminant(const LabelToCovarianceMatrix& covariance_matrix,
                         const LabelToMean& mean) :
     covariance_matrix_(covariance_matrix),

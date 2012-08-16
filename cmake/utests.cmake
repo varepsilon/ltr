@@ -42,7 +42,8 @@ SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_prepr
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc
                       ${Source_Path}/ltr/learners/linear_learner/linear_learner_unittest.cc
                       ${Source_Path}/ltr/learners/gp_learner/gp_learner_unittest.cc
-					  ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc)
+					  ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc
+                      ${Source_Path}/ltr/learners/bayesian_learner/bayesian_learner_unittest.cc)
 
 SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
                       ${Source_Path}/ltr/measures/listwise_measures_unittest.cc
@@ -54,7 +55,8 @@ SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/gp_scorer_unittest.cc
-					 ${Source_Path}/ltr/scorers/nearest_neighbor_scorer_unittest.cc)
+					 ${Source_Path}/ltr/scorers/nearest_neighbor_scorer_unittest.cc
+                     ${Source_Path}/ltr/scorers/bayesian_scorer_unittest.cc)
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
                         ${Source_Path}/ltr/interfaces/aliaser_unittest.cc

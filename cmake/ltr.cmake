@@ -115,7 +115,9 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
                 ${Source_Path}/ltr/scorers/linear_scorer.h
                 ${Source_Path}/ltr/scorers/linear_scorer.cc
                 ${Source_Path}/ltr/scorers/nearest_neighbor_scorer.h
-                ${Source_Path}/ltr/scorers/nearest_neighbor_scorer.cc)
+                ${Source_Path}/ltr/scorers/nearest_neighbor_scorer.cc
+                ${Source_Path}/ltr/scorers/bayesian_scorer.h
+                ${Source_Path}/ltr/scorers/bayesian_scorer.cc)
 
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
@@ -161,12 +163,13 @@ SET(LTR_LEARNERS ${Source_Path}/ltr/learners/learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.h
                  ${Source_Path}/ltr/learners/linear_learner/linear_learner.cc
                  ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h
-                 ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc)
+                 ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc
+                 ${Source_Path}/ltr/learners/bayesian_learner/bayesian_learner.h)
 
 SET(LTR_GP_LEARNER ${Source_Path}/ltr/learners/gp_learner/gp_learner.h
                    ${Source_Path}/ltr/learners/gp_learner/gp_learner.cc
                    ${Source_Path}/ltr/learners/gp_learner/gp_primitives.h)
-                   
+
 SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_selection_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/select_top_trees_strategy.h

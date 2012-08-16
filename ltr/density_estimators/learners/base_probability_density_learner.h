@@ -2,14 +2,16 @@
 #ifndef LTR_DENSITY_ESTIMATORS_LEARNERS_BASE_PROBABILITY_DENSITY_LEARNER_H_
 #define LTR_DENSITY_ESTIMATORS_LEARNERS_BASE_PROBABILITY_DENSITY_LEARNER_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 
+#include <Eigen/Dense>  // NOLINT
+
 #include "ltr/utility/eigen_converters.h"
+#include "ltr/utility/shared_ptr.h"
 #include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
+
 
 using std::map;
 
@@ -43,15 +45,28 @@ typedef map<Label, MatrixXd> LabelToCovarianceMatrix;
  * \class Simple interface of the probability
  * density estimation learner
  */
+template<class TEstimator>
 class BaseProbabilityDensityLearner {
  public:
-  virtual void learn(const DataSet<Object>& data_set,
-                     BaseProbabilityDensityEstimator* estimator) {
-    learnImpl(data_set, estimator);
+  typedef ltr::utility::shared_ptr<BaseProbabilityDensityLearner> Ptr;
+  virtual void learn(const DataSet<Object>& data_set) {
+    learnImpl(data_set, &estimator_);
+  }
+
+  BaseProbabilityDensityLearner() {
   }
 
   virtual ~BaseProbabilityDensityLearner() {
   }
+
+  typename TEstimator::Ptr makeSpecific() const {
+    return typename TEstimator::Ptr(
+      new TEstimator(estimator_));
+  };
+
+  BaseProbabilityDensityEstimator::Ptr make() const {
+    return BaseProbabilityDensityEstimator::Ptr(makeSpecific());
+  };
 
  private:
 
@@ -61,7 +76,9 @@ class BaseProbabilityDensityLearner {
    * \param estimator is the pointer to the generated density estimator
    */
   virtual void learnImpl(const DataSet<Object>& data_set,
-                         BaseProbabilityDensityEstimator* estimator) = 0;
+                         TEstimator* estimator) = 0;
+
+  TEstimator estimator_;
 };
 };
 

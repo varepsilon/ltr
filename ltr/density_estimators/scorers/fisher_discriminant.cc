@@ -14,6 +14,6 @@ namespace ltr {
          ++feature_index) {
       features(feature_index) = object[feature_index];
     }
-    return log(features.dot(linear_factors_[label]) + linear_biases_[label]);
+    return features.dot(linear_factors_[label]) + linear_biases_[label];
   }
 };

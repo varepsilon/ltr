@@ -18,6 +18,7 @@ using Eigen::VectorXd;
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::BaseProbabilityDensityLearner;
+using ltr::FisherDiscriminant;
 using ltr::DataSet;
 using ltr::Object;
 
@@ -26,15 +27,17 @@ using ltr::LabelToLinearFactor;
 using ltr::LabelToLinearBias;
 
 namespace ltr {
-
 /**
  * \class Probability density learner that uses Fisher discriminant
  * to generate probability density estimator. To learn more visit
  * http://www.ics.uci.edu/~welling/classnotes/papers_class/Fisher-LDA.pdf
  */
-class FisherDiscriminantLearner : public BaseProbabilityDensityLearner {
+class FisherDiscriminantLearner : public
+  BaseProbabilityDensityLearner<FisherDiscriminant> {
+ public:
+  FisherDiscriminantLearner() {
+  }
  private:
-
   /**
    * Function that calculates the mean vector of every class of the
    * training data set
@@ -62,7 +65,7 @@ class FisherDiscriminantLearner : public BaseProbabilityDensityLearner {
    * Implementation of the learning of density estimator
    */
   virtual void learnImpl(const DataSet<Object>& data_set,
-                         BaseProbabilityDensityEstimator* estimator);
+                         FisherDiscriminant* estimator);
 };
 };
 

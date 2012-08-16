@@ -30,11 +30,11 @@ void NonLinearDiscriminantLearner::calculateMean(
 
 void NonLinearDiscriminantLearner::learnImpl(
     const DataSet<Object>& data_set,
-    BaseProbabilityDensityEstimator* estimator) {
+    NonLinearDiscriminant* estimator) {
   LabelToMean mean;
   LabelToCovarianceMatrix covariance_matrix;
   calculateMean(data_set, &mean);
   calculateCovarianceMatrix(data_set, &covariance_matrix);
-  estimator = new NonLinearDiscriminant(covariance_matrix, mean);
+  *estimator = NonLinearDiscriminant(covariance_matrix, mean);
 }
 };

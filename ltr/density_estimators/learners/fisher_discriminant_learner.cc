@@ -80,10 +80,10 @@ void FisherDiscriminantLearner::findLinearFactorsAndBiases(
 
 void FisherDiscriminantLearner::learnImpl(
     const DataSet<Object>& data_set,
-    BaseProbabilityDensityEstimator* estimator) {
+    FisherDiscriminant* estimator) {
   LabelToLinearFactor linear_factors;
   LabelToLinearBias linear_biases;
   findLinearFactorsAndBiases(data_set, &linear_factors, &linear_biases);
-  estimator = new FisherDiscriminant(linear_factors, linear_biases);
+  *estimator = FisherDiscriminant(linear_factors, linear_biases);
 }
 };

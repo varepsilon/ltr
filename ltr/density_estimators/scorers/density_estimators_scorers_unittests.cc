@@ -42,7 +42,7 @@ TEST(DensityEstimatorsScorersTests, TestFisherDiscriminant) {
   Object object;
   object << 2 << 5 << 1;
   EXPECT_TRUE(DoubleEqual(fisher.estimate(object, 1.0),
-                          log(2.0 + 10.0 + 3.0 + 1.0)));
+                          2.0 + 10.0 + 3.0 + 1.0));
 }
 
 TEST(DensityEstimatorsScorersTests, TestNonLinearDiscriminant) {
