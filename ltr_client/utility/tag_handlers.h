@@ -104,7 +104,7 @@ class OnConfigParser: public TagHandler {
  public:
   explicit OnConfigParser(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnConfigExecutor" << endl;
+    INFO("TOnConfigExecutor");
   }  // We already read it
 };
 
@@ -121,7 +121,7 @@ class TOnDataTag: public TagHandler {
    */
   explicit TOnDataTag(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnDataExecutor" << endl;
+    INFO("TOnDataExecutor");
 
     assert(element);
     const char* name = element->Attribute(NAME_ATTR);
@@ -186,7 +186,7 @@ class TOnParameterTag: public TagHandler {
    * @returns bool value
    */
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnParametersExecutor" << endl;
+    INFO("TOnParametersExecutor");
 
     assert(container);
 
@@ -203,8 +203,8 @@ class TOnParameterTag: public TagHandler {
         return;
     }
     const string* type = element->Attribute(string(TYPE_ATTR));
-    cout << "TOnParametersExecutor: name:" << name <<
-            " val: " << val << " type: " << type << endl;
+    INFO("TOnParametersExecutor: name:%s val:%s type:%d\n", name.c_str(),
+         val.c_str(), type);
     addParameter(name, type ? *type : guessType(val), val);
   }
 
@@ -264,20 +264,20 @@ class TOnParameterTag: public TagHandler {
                     const string& value) {
     if (type == "bool") {
       container->AddNew(name, toBool(value));
-      cout << "TOnParametersExecutor: Added bool " <<
-                   name << " " << toBool(value) << endl;
+      INFO("TOnParametersExecutor: Added bool %s %b\n",
+           name.c_str(), toBool(value));
     } else if (type == "double") {
       container->AddNew(name, toDouble(value));
-      cout << "TOnParametersExecutor: Added double " <<
-                   name << " " << toDouble(value) << endl;
+      INFO("TOnParametersExecutor: Added double %s %lf\n",
+           name.c_str(), toDouble(value));
     } else if (type == "int") {
       container->AddNew(name, toInt(value));
-      cout << "TOnParametersExecutor: Added int " <<
-                   name << " " << toInt(value) << endl;
+      INFO("TOnParametersExecutor: Added int %s %d\n",
+           name.c_str(), toInt(value));
     } else if (type == XML_TOKEN_DEPENDENCY_TYPE) {
       container->AddNew(name, ParameterizedDependency(value));
-      cout << "TOnParametersExecutor: Added TXmlTokenDependency " <<
-                   name << " " << value << endl;
+      INFO("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
+           name.c_str(), value.c_str());
     } else {
       assert(false && ("Adding " + type +
                           " is not implemented yet...").c_str());
@@ -292,8 +292,8 @@ class TOnParameterTag: public TagHandler {
    */
   static string guessType(const string& value) {
     const string::size_type pos_of_space = value.find(' ');
-    cout << "TOnParametersExecutor: guessing type of " <<
-                 value << " " << pos_of_space << " " << endl;
+    INFO("TOnParametersExecutor: guessing type of %s %d\n",
+         value.c_str(), pos_of_space);
 
     if (pos_of_space != string::npos) {  // some kind of list
       const string first_element = value.substr(0, pos_of_space);
@@ -364,7 +364,7 @@ class OnGeneralParameterized: public TagHandler {
    * @param element - TiXmlElement pointer to parse.
    */
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnGeneralXmlToken" << endl;
+    INFO("TOnGeneralXmlToken\n");
 
     const char* name = element->Attribute(NAME_ATTR);
     ParametrizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
@@ -385,8 +385,8 @@ class OnGeneralParameterized: public TagHandler {
     }
 
     spec.tag_name_ = tag_name;
-    spec.name_ = name;
-    spec.type_ = type;
+    spec.object_name_ = name;
+    spec.object_type_ = type;
     spec.approach_ = approach;
 
     parameters_executor->setContainer(&spec.parameters_);
@@ -429,7 +429,7 @@ class OnCVLearnerTag: public TagHandler {
    * leaner.
    */
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnCVLearnerExecutor" << endl;
+    INFO("TOnCVLearnerExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->learners, element->GetText());
   }
@@ -466,7 +466,7 @@ class OnCVMeasureTag: public TagHandler {
    * Must contain the measure.
    */
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnCVMeasureExecutor" << endl;
+    INFO("TOnCVMeasureExecutor");
     assert(info);
     ltr::utility::SafeInsert(info->measures, element->GetText());
   }
@@ -503,7 +503,7 @@ class OnCVDataTag: public TagHandler {
    * Must contain the dataset.
    */
   virtual void operator() (TiXmlElement* element) {
-    cout << "TOnCVDataExecutor" << endl;
+    INFO("TOnCVDataExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->datas, element->GetText());
   }
@@ -542,7 +542,7 @@ class OnCrossvalidationTag: public TagHandler {
    * Must contain the dataset.
    */
   virtual void operator()(TiXmlElement* element) {
-    cout << "TOnCrossvalidationExecutor" << endl;
+    INFO("TOnCrossvalidationExecutor\n");
 
     const char* fold = element->Attribute(FOLD_ATTR);
     if (!fold) {
@@ -592,7 +592,7 @@ class OnPredictTag: public TagHandler {
    * Must contain predict tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    cout << "TOnPredictExecutor" << endl;
+    INFO("TOnPredictExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->predicts, element->GetText());
   }
@@ -666,7 +666,7 @@ class OnTrainTag: public TagHandler {
    * Must contain the train tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    cout << "TOnTrainExecutor" << endl;
+    INFO("TOnTrainExecutor\n");
     const char* name = element->Attribute("name");
     const char* data = element->Attribute("data");
     const char* learner = element->Attribute("learner");
@@ -726,7 +726,7 @@ class OnLaunchTag: public TagHandler {
    * @param element - TiXmlElement pointer to the XML tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    cout << "TOnLaunchExecutor" << endl;
+    INFO("TOnLaunchExecutor\n");
     GenericParse(handlers_, element->FirstChildElement());
   }
 

@@ -36,6 +36,10 @@ namespace cv {
 /**
  * Performs crossvalidation and forms a printable set
  * of tables called multitable.
+ *
+ * Info about cross-validation can be found here:
+ * http://en.wikipedia.org/wiki/Cross-validation_(statistics)
+ *
  * Multitable in CrossValidator contains 4 dimentions:
  *  -learners
  *  -splitters

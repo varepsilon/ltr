@@ -180,11 +180,11 @@ void LtrClient::executeTrain(Parameterized* parameterized,
   const DataSet<TElement>& data_set =
     loadDataSet<TElement>(data_info.file, data_info.format);
 
-  cout << "\n\n\nvoid doLaunch\n";
+  INFO("\n\n\nvoid doLaunch\n");
   learner->learn(data_set);
 
-  cout << "\n\nTrain " << data_info.file << " finished. Report:"
-       << learner->report() << endl;
+  INFO("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
+       learner->report().c_str());
 
   for (boost::unordered_set<string>::const_iterator predict_it =
        train_info.predicts.begin();
@@ -193,7 +193,7 @@ void LtrClient::executeTrain(Parameterized* parameterized,
     const string& predict = *predict_it;
     if (configurator_.dataInfos().find(predict) ==
         configurator_.dataInfos().end()) {
-      cout << "Can't predict. Unknown data " << predict << endl;
+      INFO("Can't predict. Unknown data %s\n", predict.c_str());
       return;
     }
     const string& predict_file_path = configurator_.rootPath() +
@@ -203,8 +203,8 @@ void LtrClient::executeTrain(Parameterized* parameterized,
 
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
 
-    cout << "\nsaved predictions for '" << predict
-         << "' into " << predict_file_path << endl;
+    INFO("\nsaved predictions for '%s' into %s\n", predict.c_str(),
+         predict_file_path.c_str());
 
     if (train_info.gen_cpp) {
       string cpp_file_path = configurator_.rootPath() +
@@ -212,7 +212,7 @@ void LtrClient::executeTrain(Parameterized* parameterized,
         ofstream fout(cpp_file_path.c_str());
         fout << scorer->generateCppCode(learner_info.get_name());
         fout.close();
-        cout << "cpp code saved into " << cpp_file_path << endl;
+        INFO("cpp code saved into %s\n", cpp_file_path.c_str());
     }
   }
 }
@@ -229,8 +229,8 @@ void LtrClient::launch() {
     const ParametersContainer& parameters =
       Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
 
-    cout << "\nvoid LtrClient::launch()\nparameters="
-         << parameters.toString() << endl;
+    INFO("\nvoid LtrClient::launch()\nparameters=%s\n",
+         parameters.toString().c_str());
 
     Parameterized* parameterized = Factory::instance()->
       Create(learner_info.get_type() + learner_info.get_approach(), parameters);

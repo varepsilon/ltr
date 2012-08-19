@@ -37,8 +37,8 @@ class ParametrizedInfo {
    * @returns ParameterizedInfo constructed object.
    */
   ParametrizedInfo(const string& tag_name,
-                   const string& name,
-                   const string& type,
+                   const string& object_name,
+                   const string& object_type,
                    const string& approach,
                    ltr::ParametersContainer parameters);
   /**
@@ -96,8 +96,8 @@ class ParametrizedInfo {
 
  private:
   string tag_name_;
-  string name_;
-  string type_;
+  string object_name_;
+  string object_type_;
   string approach_;
   ltr::ParametersContainer parameters_;
   TXmlTokenSpecList dependency_specs_;

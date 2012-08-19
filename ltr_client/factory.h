@@ -13,6 +13,8 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 
+#include "logog/logog.h"
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -42,7 +44,7 @@ class Factory {
 
   Parameterized* Create(const string& name,
                         const ParametersContainer& parameters) const {
-    cout << "Factory::Create: Requested creating of " << name << endl;
+    INFO("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
     assert(it != name_creators_.end());
     const AbstractCreator* creator = it->second;

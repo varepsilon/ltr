@@ -37,20 +37,20 @@ void ParametrizedInfo::fill_dependency_list(
 
 ParametrizedInfo::ParametrizedInfo()
   : tag_name_()
-  , name_()
-  , type_()
+  , object_name_()
+  , object_type_()
   , approach_()
   , parameters_()
   , dependency_specs_() {}
 
 ParametrizedInfo::ParametrizedInfo(const string& tag_name,
-                 const string& name,
-                 const string& type,
+                 const string& object_name,
+                 const string& object_type,
                  const string& approach,
                  ltr::ParametersContainer parameters)
   : tag_name_(tag_name)
-  , name_(name)
-  , type_(type)
+  , object_name_(object_name)
+  , object_type_(object_type)
   , approach_(approach)
   , parameters_(parameters) {}
 
@@ -62,8 +62,8 @@ ParametrizedInfo& ParametrizedInfo::operator= (const ParametrizedInfo& other) {
   if (this == &other) {
     return *this;
   }
-  name_ = other.get_name();
-  type_ = other.get_type();
+  object_name_ = other.get_name();
+  object_type_ = other.get_type();
   approach_ = other.get_approach();
   parameters_ = other.get_parameters();
   dependency_specs_ = other.dependency_specs();
@@ -78,10 +78,10 @@ const string& ParametrizedInfo::get_tag_name() const {
   return tag_name_;
 }
 const string& ParametrizedInfo::get_name() const {
-  return name_;
+  return object_name_;
 }
 const string& ParametrizedInfo::get_type() const {
-  return type_;
+  return object_type_;
 }
 const string& ParametrizedInfo::get_approach() const {
   return approach_;

@@ -78,12 +78,11 @@ parseConfig(const string& file_name) {
                root_->FirstChildElement(),
                general_xml_token_);
 
-  cout << "\n\nEnd of loadConfig. Collected data:\n";
-  cout << "data_infos_\n" << ToString(dataInfos()) << endl;
-  cout << "xml_token_specs\n" << ToString(xmlTokenSpecs()) << endl;
-  cout << "train_infos\n" << ToString(trainInfos()) << endl;
-  cout << "crossvalidation_infos\n" << ToString(crossvalidationInfos())
-       << endl;
+  INFO("\n\nEnd of loadConfig. Collected data:\n");
+  INFO("data_infos_\n%s\n", ToString(dataInfos()).c_str());
+  INFO("xml_token_specs\n%s\n", ToString(xmlTokenSpecs()).c_str());
+  INFO("train_infos\n%s\n", ToString(trainInfos()).c_str());
+  INFO("crossvalidation_infos\n%s\n", ToString(crossvalidationInfos()).c_str());
 
   for (ParameterizedInfos::iterator it = xmlTokenSpecs().begin();
       it != xmlTokenSpecs().end();
