@@ -125,7 +125,8 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/reciprocal_rank.h ${Source_Path}/ltr/measures/reciprocal_rank.cc
                  ${Source_Path}/ltr/measures/pfound.h ${Source_Path}/ltr/measures/pfound.cc
                  ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
-                 ${Source_Path}/ltr/measures/normalized_measure.h)
+                 ${Source_Path}/ltr/measures/normalized_measure.h
+                 ${Source_Path}/ltr/measures/binary_classification_accuracy.h)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
                        ${Source_Path}/ltr/measures/utils/measure_utility.cc)
