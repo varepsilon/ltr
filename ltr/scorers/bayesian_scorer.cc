@@ -16,7 +16,8 @@ double BayesianScorer::scoreImpl(const Object& object) const {
     double probability = label_iterator->second;
     double current_score = log(probability) +
       estimator_->estimate(object, label);
-    if (current_score > max_score) {
+    if (current_score > max_score ||
+        label_iterator == prior_probability_.begin()) {
       max_score = current_score;
       result = label_iterator->first;
     }

@@ -11,6 +11,7 @@ using ltr::utility::LabelToCapacity;
 using ltr::utility::SplitDataSetByActualLabel;
 using ltr::utility::CalculateFeaturesVariance;
 using ltr::utility::StdVectorToEigenVector;
+using ltr::utility::InitEigenMatrix;
 
 namespace ltr {
 void NormalNaiveBayesLearner::calculateVariance(
@@ -32,6 +33,7 @@ void NormalNaiveBayesLearner::calculateVariance(
 void NormalNaiveBayesLearner::calculateCovarianceMatrix(
     const DataSet<Object>& data_set,
     LabelToCovarianceMatrix* result) {
+
   LabelToMean mean;
   map<double, VectorXd> variance;
   this->calculateMean(data_set, &mean);
@@ -43,6 +45,8 @@ void NormalNaiveBayesLearner::calculateCovarianceMatrix(
     double label = variance_iterator->first;
     int features_count = variance_iterator->second.size();
     (*result)[label] = MatrixXd(features_count, features_count);
+    InitEigenMatrix(&(*result)[label]);
+
     for (int feature_index = 0;
          feature_index < features_count;
          ++feature_index) {

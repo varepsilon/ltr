@@ -17,6 +17,8 @@ using ltr::utility::LabelToCapacity;
 using ltr::utility::SplitDataSetByActualLabel;
 using ltr::utility::CalculateFeaturesMean;
 using ltr::utility::StdVectorToEigenVector;
+using ltr::utility::InitEigenMatrix;
+using ltr::utility::InitEigenVector;
 
 namespace ltr {
 void FisherDiscriminantLearner::calculateMean(
@@ -42,6 +44,8 @@ void FisherDiscriminantLearner::calculateCovarianceMatrix(
     MatrixXd* result) {
   int features_count = mean.begin()->second.size();
   (*result) = MatrixXd(features_count, features_count);
+  InitEigenMatrix(result);
+
   for (int object_index = 0; object_index < data_set.size(); ++object_index) {
     VectorXd features =
       StdVectorToEigenVector(data_set[object_index].features());

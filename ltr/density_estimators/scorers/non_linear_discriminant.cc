@@ -2,13 +2,17 @@
 #include <cmath>
 
 #include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/utility/eigen_converters.h"
 
 using ltr::NonLinearDiscriminant;
+using ltr::utility::InitEigenMatrix;
+using ltr::utility::InitEigenVector;
 
 namespace ltr {
   double NonLinearDiscriminant::estimate(const Object& object,
                                          const double label) {
     VectorXd features(object.feature_count());
+    InitEigenVector(&features);
     for (int feature_index = 0;
          feature_index < object.feature_count();
          ++feature_index) {

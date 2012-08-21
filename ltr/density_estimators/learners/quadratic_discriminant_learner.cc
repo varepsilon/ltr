@@ -1,12 +1,14 @@
 // Copyright 2012 Yandex
 #include "ltr/density_estimators/learners/quadratic_discriminant_learner.h"
 #include "ltr/utility/statistics_calculation.h"
+#include "ltr/utility/eigen_converters.h"
 
 using ltr::QuadraticDiscriminantLearner;
 using ltr::LabelToMean;
 using ltr::LabelToCovarianceMatrix;
 using ltr::utility::CalculateLabelsCapacity;
 using ltr::utility::LabelToCapacity;
+using ltr::utility::InitEigenMatrix;
 
 namespace ltr {
 void QuadraticDiscriminantLearner::calculateCovarianceMatrix(
@@ -21,6 +23,7 @@ void QuadraticDiscriminantLearner::calculateCovarianceMatrix(
        ++mean_iterator) {
     (*result)[mean_iterator->first] = MatrixXd(mean_iterator->second.size(),
                                             mean_iterator->second.size());
+    InitEigenMatrix(&(*result)[mean_iterator->first]);
   }
 
   for (int object_index = 0; object_index < data_set.size(); ++object_index) {

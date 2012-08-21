@@ -49,5 +49,5 @@ TEST(BayesianLearnerTests, TestBayesianLearner) {
 
   Object object4;
   object4 << 1 << 0;
-  EXPECT_TRUE(DoubleEqual(0.0, scorer->score(object4)));
+  EXPECT_TRUE(DoubleEqual(1.0, scorer->score(object4)));
 }
