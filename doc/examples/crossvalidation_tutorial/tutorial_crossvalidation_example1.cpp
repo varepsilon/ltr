@@ -29,6 +29,8 @@ const int data_length = 5;
 const FeatureInfo fi(3);
 
 int main() {
+  ltr::Log log;
+
   DataSet<Object> data(fi);
   for (int i = 0; i < data_length; ++i) {
     Object object;

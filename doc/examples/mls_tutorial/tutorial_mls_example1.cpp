@@ -14,6 +14,8 @@ using ltr::DataSet;
 using ltr::Object;
 
 int main() {
+  ltr::Log log;
+
   DataSet<Object> data;
   Object train_object1, train_object2, train_object3;
 
