@@ -18,15 +18,24 @@ using ltr::Parameterized;
 class LtrClient {
  public:
   LtrClient();
+
   ~LtrClient();
+
   void initFrom(const string& file_name);
+
   void launch();
 
  private:
   template <class TElement>
-  void executeTrain(Parameterized* parameterized,
-                    const TrainLaunchInfo& train_info);
+  void launchTrain(Parameterized* parameterized,
+                   const TrainLaunchInfo& train_info);
+
+  template <class TElement>
+  void launchCrossvalidation(
+    const CrossvalidationLaunchInfo& crossvalidation_info);
+
   TXmlTokenSpecList getLoadQueue() const;
+
   ConfigParser configurator_;
 };
 
