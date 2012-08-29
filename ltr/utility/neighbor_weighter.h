@@ -5,10 +5,15 @@
 
 #include <string>
 
+#include "ltr/parameters_container/parameters_container.h"
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/interfaces/serializable.h"
+#include "ltr/interfaces/parameterized.h"
 
 using std::string;
+
+using ltr::Parameterized;
+using ltr::ParametersContainer;
 
 namespace ltr {
 namespace utility {
@@ -16,7 +21,7 @@ namespace utility {
   * Performs finding the weight of the neighbor
   * depending on the distance between objects and order of neighbor
   */
-class NeighborWeighter : public Serializable {
+class NeighborWeighter : public Serializable, public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<NeighborWeighter> Ptr;
   virtual double getWeight(double neighbor_distance, int neighbor_order) = 0;
@@ -25,6 +30,13 @@ class NeighborWeighter : public Serializable {
 
 class InverseLinearDistance : public NeighborWeighter {
  public:
+
+  InverseLinearDistance() {
+  }
+
+  explicit InverseLinearDistance(const ParametersContainer& parameters) {
+  }
+
   double getWeight(double neighbor_distance, int neighbor_order) {
     return 1.0 / neighbor_distance;
   }
@@ -42,6 +54,13 @@ class InverseLinearDistance : public NeighborWeighter {
 
 class InverseSquareDistance : public NeighborWeighter {
  public:
+
+  InverseSquareDistance() {
+  }
+
+  explicit InverseSquareDistance(const ParametersContainer& parameters) {
+  }
+
   double getWeight(double neighbor_distance, int neighbor_order) {
     return 1.0 / pow(neighbor_distance, 2.0);
   }
@@ -59,6 +78,12 @@ class InverseSquareDistance : public NeighborWeighter {
 
 class InverseOrder : public NeighborWeighter {
  public:
+  InverseOrder() {
+  }
+
+  explicit InverseOrder(const ParametersContainer& parameters) {
+  }
+
   double getWeight(double neighbor_distance, int neighbor_order) {
     return 1.0 / (neighbor_order + 1.0);
   }

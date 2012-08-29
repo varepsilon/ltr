@@ -8,9 +8,12 @@
 #include <vector>
 
 #include "ltr/aggregators/aggregator.h"
+#include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
 using std::map;
+
+using ltr::ParametersContainer;
 
 namespace ltr {
 /**
@@ -18,6 +21,12 @@ namespace ltr {
 */
 class VoteAggregator : public Aggregator {
  public:
+  VoteAggregator() {
+  }
+
+  explicit VoteAggregator(const ParametersContainer& parameters) {
+  }
+
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     map<double, double> voting;

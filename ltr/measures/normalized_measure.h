@@ -23,6 +23,9 @@ class NormalizedMeasure : public Measure<TElement> {
  public:
   typedef ltr::utility::shared_ptr<NormalizedMeasure> Ptr;
 
+  NormalizedMeasure() {
+  }
+
   explicit NormalizedMeasure(const ParametersContainer& parameters) {
     this->setParameters(parameters);
   }

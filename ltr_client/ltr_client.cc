@@ -9,6 +9,11 @@
 
 #include "logog/logog.h"
 
+#include "ltr/aggregators/aggregator.h"
+#include "ltr/aggregators/average_aggregator.h"
+#include "ltr/aggregators/vote_aggregator.h"
+
+#include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
 #include "ltr/crossvalidation/k_fold_simple_splitter.h"
 
@@ -16,15 +21,24 @@
 
 #include "ltr/learners/learner.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 
 #include "ltr/measures/measure.h"
 #include "ltr/measures/dcg.h"
 #include "ltr/measures/ndcg.h"
 #include "ltr/measures/abs_error.h"
 
+#include "ltr/metrics/metric.h"
+#include "ltr/metrics/euclidean_metric.h"
+
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/configurator.h"
 #include "ltr_client/factory.h"
+#include "ltr_client/registration.h"
+
+#include "ltr/utility/neighbor_weighter.h"
+
 
 using std::cout;
 using std::find;
@@ -34,6 +48,8 @@ using std::vector;
 using std::endl;
 using std::ofstream;
 
+using ltr::Aggregator;
+using ltr::AverageAggregator;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::Learner;
@@ -43,10 +59,17 @@ using ltr::ObjectList;
 using ltr::ObjectPair;
 using ltr::Log;
 using ltr::BestFeatureLearner;
+using ltr::LinearLearner;
+using ltr::EuclideanMetric;
+using ltr::Measure;
+using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
 
+using ltr::cv::Splitter;
+using ltr::cv::KFoldSimpleSplitter;
 using ltr::io_utility::loadDataSet;
+using ltr::utility::InverseLinearDistance;
 
 typedef  string ParameterizedDependency;
 
@@ -115,7 +138,7 @@ static ParametersContainer Create(
   const ParametersContainer& src_parameters,
   const ConfigParser::ParameterizedInfos& all_specs);
 
-static Parameterized* Create(const string& name,
+static boost::any Create(const string& name,
   const ConfigParser::ParameterizedInfos& all_specs) {
     ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
     assert(it != all_specs.end());
@@ -133,7 +156,7 @@ static ParametersContainer Create(
          src_parameters.begin();
          it != src_parameters.end();
          ++it) {
-      const boost::any& parameter = it->second;
+      boost::any& parameter = const_cast<boost::any&>(it->second);
       const string& name = it->first;
 
       if (const ParameterizedDependency* dependency =
@@ -154,7 +177,7 @@ static ParametersContainer Create(
           }
           result.AddNew(name, list);
         }
-      } else if (const ParametersContainer* cont =
+      } else if (const ParametersContainer::Ptr cont =
                  boost::any_cast<ParametersContainer>(&parameter)) {
         result.AddNew(name, Create(*cont, all_specs));
       } else {
@@ -170,14 +193,14 @@ void LtrClient::initFrom(const string& file_name) {
 }
 
 template <class TElement>
-void LtrClient::launchTrain(Parameterized* parameterized,
+void LtrClient::launchTrain(boost::any parameterized,
                             const TrainLaunchInfo& train_info) {
-  Learner<TElement>* learner =
-    dynamic_cast<Learner<TElement>*>(parameterized);  //NOLINT
+  typename Learner<TElement>::Ptr learner =
+    boost::any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
   assert(learner);
 
   const ParametrizedInfo& learner_info =
-    configurator_.findLearner(train_info.learner);
+    configurator_.findParametrized(train_info.learner);
 
   const DataInfo& data_info = configurator_.findData(train_info.data);
 
@@ -229,45 +252,47 @@ template <class TElement>
 void LtrClient::launchCrossvalidation(
   const CrossvalidationLaunchInfo& crossvalidation_info) {
     boost::unordered_set<string>::const_iterator
-      learners_iterator = crossvalidation_info.learners.begin(),
-      measures_iterator = crossvalidation_info.measures.begin(),
-      datas_iterator = crossvalidation_info.datas.begin();
+      learners_alias = crossvalidation_info.learners.begin(),
+      measures_alias = crossvalidation_info.measures.begin(),
+      datas_alias = crossvalidation_info.datas.begin();
+
 
     ltr::cv::CrossValidator<TElement> cross_validator;
 
-    for (; learners_iterator != crossvalidation_info.learners.end();
-         ++learners_iterator) {
+    for (; learners_alias != crossvalidation_info.learners.end();
+         ++learners_alias) {
       const ParametrizedInfo& learner_info =
-        configurator_.findLearner(*learners_iterator);
+        configurator_.findParametrized(*learners_alias);
       const ParametersContainer& parameters =
         Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
-      Parameterized* learner = Factory::instance()->Create(
+      boost::any learner = Factory::instance()->Create(
         learner_info.get_type() + learner_info.get_approach(), parameters);
-      cross_validator.addLearner(dynamic_cast<Learner<TElement>*>(learner)); // NOLINT
+      cross_validator.addLearner(
+        boost::any_cast<typename Learner<TElement>::Ptr>(learner));
     }
 
-    // It will work when measures will be added.
-    /* for (; measures_iterator != crossvalidation_info.measures.end();
-            ++measures_iterator) {
+    for (; measures_alias != crossvalidation_info.measures.end();
+            ++measures_alias) {
       const ParametrizedInfo& measure_info =
-        configurator_.findMeasure(*measures_iterator);
+        configurator_.findParametrized(*measures_alias);
       const ParametersContainer& parameters =
         Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
-      Parameterized* measure = Factory::instance()->
-        Create(measure_info.get_type() + measure_info.get_approach(), parameters);
-      cross_validator.addMeasure(dynamic_cast<Measure<TElement>*>(measure)); // NOLINT
-    }*/
+      boost::any measure = Factory::instance()->
+        Create(measure_info.get_type() + measure_info.get_approach(), parameters); // NOLINT
+      cross_validator.addMeasure(boost::any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
+    }
 
-    DCG::Ptr measure = new DCG;
-    cross_validator.addMeasure(measure);
+    const ParametrizedInfo& splitter_info =
+      configurator_.findParametrized(crossvalidation_info.splitter);
+    const ParametersContainer& parameters =
+      Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
+    boost::any splitter = Factory::instance()->
+      Create(splitter_info.get_type() + splitter_info.get_approach(), parameters); // NOLINT
+    cross_validator.addSplitter(boost::any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
 
-    typename ltr::cv::KFoldSimpleSplitter<TElement>::Ptr splitter =
-      new ltr::cv::KFoldSimpleSplitter<TElement>;
-    cross_validator.addSplitter(splitter);
-
-    for (; datas_iterator != crossvalidation_info.datas.end();
-         ++datas_iterator) {
-      const DataInfo& data_info = configurator_.findData(*datas_iterator);
+    for (; datas_alias != crossvalidation_info.datas.end();
+         ++datas_alias) {
+      const DataInfo& data_info = configurator_.findData(*datas_alias);
       typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
       *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
       cross_validator.addDataSet(data_set_ptr);
@@ -284,7 +309,7 @@ void LtrClient::launch() {
        ++it) {
     const TrainLaunchInfo& train_info = it->second;
     const ParametrizedInfo& learner_info =
-      configurator_.findLearner(train_info.learner);
+      configurator_.findParametrized(train_info.learner);
 
     const ParametersContainer& parameters =
       Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
@@ -292,7 +317,7 @@ void LtrClient::launch() {
     INFO("\nvoid LtrClient::launch()\nparameters=%s\n",
          parameters.toString().c_str());
 
-    Parameterized* parameterized = Factory::instance()->
+    boost::any parameterized = Factory::instance()->
       Create(learner_info.get_type() + learner_info.get_approach(), parameters);
 
     if (learner_info.get_approach() == "listwise") {
@@ -311,7 +336,7 @@ void LtrClient::launch() {
     const CrossvalidationLaunchInfo& crossvalidation_info =
       iterator->second;
     const ParametrizedInfo& learner_info =
-      configurator_.findLearner(*crossvalidation_info.learners.begin());
+      configurator_.findParametrized(*crossvalidation_info.learners.begin());
 
     if (learner_info.get_approach() == "listwise") {
       launchCrossvalidation<ObjectList>(crossvalidation_info);
@@ -323,6 +348,7 @@ void LtrClient::launch() {
     }
   }
 }
+
 
 // #define LOGOG_GROUP NULL
 
@@ -337,11 +363,7 @@ int main(int argc, char* argv[]) {
   }
 
   Factory factory;
-
-  factory.registerType<BestFeatureLearner<ObjectList> >
-    ("BEST_FEATURElistwise");
-
-  factory.registerType<NDCG>("NDCG");
+  RegisterAllTypes(&factory);
 
   LtrClient client;
 

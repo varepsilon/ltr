@@ -79,8 +79,22 @@ template<class TElement>
 void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                     NNScorer* scorer) {
   INFO("Learning started");
+  DataSet<Object> object_data;
+
+  for (int element_index = 0;
+       element_index < data.size();
+       ++element_index) {
+    PerObjectAccessor<const TElement>
+      per_object_accessor(&data[element_index]);
+    for (int object_index = 0;
+         object_index < per_object_accessor.object_count();
+         ++object_index) {
+       object_data.add(per_object_accessor.object(object_index));
+    }
+  }
+
   *scorer =  NNScorer(metric_,
-                      data,
+                      object_data,
                       neighbor_weighter_,
                       aggregator_,
                       number_of_neighbors_to_process_);

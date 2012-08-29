@@ -90,13 +90,12 @@ class ConfigParser {
    */
   CrossvalidationInfos& crossvalidationInfos();
   /**
-   * Performs a search in the xml tokens for the learner
-   * with given name
+   * Performs a search in the xml tokens for the Parametrized
+   * object with given name
    * @param name - string with the name of the learner
    * @returns ParametrizedInfo constant link
    */
-  const ParametrizedInfo& findLearner(const string& name) const;
-
+  const ParametrizedInfo& findParametrized(const string& name) const;
   /**
    * Performs a search in the xml tokens for the dataset
    * with given name
