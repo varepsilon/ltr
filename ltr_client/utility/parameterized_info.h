@@ -12,7 +12,7 @@ using std::string;
 using std::stringstream;
 
 class ParametrizedInfo;
-typedef std::list<const ParametrizedInfo*> TXmlTokenSpecList;
+typedef std::list<const ParametrizedInfo*> ParametrizedInfosList;
 
 /**
  * Contains information about any object that inherits
@@ -26,7 +26,7 @@ class ParametrizedInfo {
    * Dictionary with string keys and the
    * ParameterizedInfo stored type
    */
-  typedef boost::unordered_map<string, ParametrizedInfo> TXmlTokenSpecs;
+  typedef boost::unordered_map<string, ParametrizedInfo> ParametrizedInfos;
   /**
    * Basic constructor.
    * @returns ParameterizedInfo constructed object.
@@ -34,12 +34,15 @@ class ParametrizedInfo {
   ParametrizedInfo();
   /**
    * Another constructor implementation.
+   * @param category is the type of base class
+   * @param alias is the name of the entity
+   * @param type is the type of the derived class
    * @returns ParameterizedInfo constructed object.
    */
-  ParametrizedInfo(const string& tag_name,
-                   const string& object_name,
-                   const string& object_type,
-                   const string& approach,
+  ParametrizedInfo(const string& category,  // e.g. Measure, Learner
+                   const string& alias,     // e.g. NDCGlistwise
+                   const string& type,      // e.g. NDCG, KNN
+                   const string& approach,  // e.g. Listwise, Pointwise
                    ltr::ParametersContainer parameters);
   /**
    * Deep copy constructor.
@@ -82,17 +85,17 @@ class ParametrizedInfo {
    */
   const ltr::ParametersContainer& get_parameters() const;
   /**
-   * @returns the constant link to the TXmlTokenSpecs that
+   * @returns the constant link to the ParametrizedInfos that
    * contains dependency specifications.
    */
-  const TXmlTokenSpecList& dependency_specs() const;
+  const ParametrizedInfosList& dependency_specs() const;
   /**
    * Fills the dependency list.
-   * @param token_specifications - TXmlTokenSpecs constant object
+   * @param token_specifications - ParametrizedInfos constant object
    * link that contains all the registered objects.
    */
   void fill_dependency_list(
-      const TXmlTokenSpecs& token_specifications);
+      const ParametrizedInfos& token_specifications);
 
  private:
   string tag_name_;
@@ -100,7 +103,7 @@ class ParametrizedInfo {
   string object_type_;
   string approach_;
   ltr::ParametersContainer parameters_;
-  TXmlTokenSpecList dependency_specs_;
+  ParametrizedInfosList dependency_specs_;
 
   friend class ConfigParser;
   friend class OnGeneralParameterized;
@@ -113,4 +116,4 @@ class ParametrizedInfo {
  */
 string ToString(const ParametrizedInfo& Info);
 
-#endif LTR_CLIENT_UTILITY_PARAMETERIZED_INFO_H_
+#endif  // LTR_CLIENT_UTILITY_PARAMETERIZED_INFO_H_

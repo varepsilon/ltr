@@ -34,7 +34,7 @@ class LtrClient {
   void launchCrossvalidation(
     const CrossvalidationLaunchInfo& crossvalidation_info);
 
-  TXmlTokenSpecList getLoadQueue() const;
+  ParametrizedInfosList getLoadQueue() const;
 
   ConfigParser configurator_;
 };

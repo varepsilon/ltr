@@ -74,38 +74,40 @@ using ltr::utility::InverseLinearDistance;
 typedef  string ParameterizedDependency;
 
 static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
-  TXmlTokenSpecList* queue, TXmlTokenSpecList* circularity_check_queue) {
-    if (find(queue->begin(), queue->end(), spec) != queue->end()) {
-      return true;
-    }
-
-    // check for circular dependencies
-    TXmlTokenSpecList::const_iterator begin_it = find(
-      circularity_check_queue->begin(), circularity_check_queue->end(), spec);
-
-    if (begin_it != circularity_check_queue->end()) {
-      throw logic_error("Circular dependency detected!");
-    }
-    circularity_check_queue->push_back(spec);
-
-    // add dependencies
-    for (TXmlTokenSpecList::const_iterator it =
-         spec->dependency_specs().begin();
-         it != spec->dependency_specs().end();
-         ++it) {
-      const ParametrizedInfo* dep_spec = *it;
-      if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
-        throw logic_error("Can not resolve dependencies!");
-      }
-    }
-
-    // add self
-    queue->push_back(spec);
+    ParametrizedInfosList* queue,
+    ParametrizedInfosList* circularity_check_queue) {
+  if (find(queue->begin(), queue->end(), spec) != queue->end()) {
     return true;
+  }
+
+  // check for circular dependencies
+  ParametrizedInfosList::const_iterator begin_it = find(
+    circularity_check_queue->begin(), circularity_check_queue->end(), spec);
+
+  if (begin_it != circularity_check_queue->end()) {
+    throw logic_error("Circular dependency detected!");
+  }
+  circularity_check_queue->push_back(spec);
+
+  // add dependencies
+  for (ParametrizedInfosList::const_iterator it =
+        spec->dependency_specs().begin();
+        it != spec->dependency_specs().end();
+        ++it) {
+    const ParametrizedInfo* dep_spec = *it;
+    if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
+      throw logic_error("Can not resolve dependencies!");
+    }
+  }
+
+  // add self
+  queue->push_back(spec);
+  return true;
 }
 
-static TXmlTokenSpecList values(const ConfigParser::ParameterizedInfos& cont) {
-  TXmlTokenSpecList values;
+static ParametrizedInfosList values(
+    const ConfigParser::ParameterizedInfos& cont) {
+  ParametrizedInfosList values;
   for (ConfigParser::ParameterizedInfos::const_iterator it = cont.begin();
        it != cont.end();
        ++it) {
@@ -115,15 +117,16 @@ static TXmlTokenSpecList values(const ConfigParser::ParameterizedInfos& cont) {
   return values;
 }
 
-TXmlTokenSpecList LtrClient::getLoadQueue() const {
-  const TXmlTokenSpecList& all_specs = values(configurator_.xmlTokenSpecs());
+ParametrizedInfosList LtrClient::getLoadQueue() const {
+  const ParametrizedInfosList& all_specs =
+    values(configurator_.xmlTokenSpecs());
 
-  TXmlTokenSpecList result;
-  for (TXmlTokenSpecList::const_iterator it = all_specs.begin();
+  ParametrizedInfosList result;
+  for (ParametrizedInfosList::const_iterator it = all_specs.begin();
        it != all_specs.end();
        ++it) {
     const ParametrizedInfo* spec = *it;
-    TXmlTokenSpecList circularity_check_queue;
+    ParametrizedInfosList circularity_check_queue;
     BuildObjectCreationChain(spec, &result, &circularity_check_queue);
   }
   return result;
