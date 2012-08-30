@@ -27,7 +27,7 @@ class LtrClient {
 
  private:
   template <class TElement>
-  void launchTrain(Parameterized* parameterized,
+  void launchTrain(boost::any parameterized,
                    const TrainLaunchInfo& train_info);
 
   template <class TElement>

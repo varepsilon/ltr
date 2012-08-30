@@ -212,6 +212,10 @@ void CrossValidator<ObjectType>::launch() {
       SplittedDataSet<ObjectType> splitted_data(
             splitters_[splitter_index]->split(
               split_index, *data_sets_[dataset_index]));
+
+      //  Delete next two lines after fixing bugs!
+      if (splitted_data.test_set.size() == 0) continue;
+      if (splitted_data.train_set.size() == 0) continue;
       learners_[learner_index]->reset();
       learners_[learner_index]->learn(splitted_data.train_set);
 
@@ -219,6 +223,9 @@ void CrossValidator<ObjectType>::launch() {
             learners_[learner_index])->make();
       current_scorer->predict(splitted_data.test_set);
 
+      // Delete next two lines after fixing bugs!
+      if (splitted_data.test_set.size() == 0) continue;
+      if (splitted_data.train_set.size() == 0) continue;
       *it +=
           measures_[measure_index]->average(splitted_data.test_set) /
           (*splitters_[splitter_index]).splitCount(

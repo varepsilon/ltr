@@ -7,16 +7,18 @@
 
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/interfaces/serializable.h"
+#include "ltr/interfaces/parameterized.h"
 
 using std::vector;
 
 using ltr::Serializable;
+using ltr::Parameterized;
 
 namespace ltr {
 /**
   * Performs aggregation of objects weights and labels  
   */
-class Aggregator : public Serializable {
+class Aggregator : public Serializable, public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<Aggregator> Ptr;
   virtual double aggregate(const vector<double>& labels,

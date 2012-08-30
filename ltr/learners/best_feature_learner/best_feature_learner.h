@@ -27,6 +27,9 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
   typedef ltr::utility::shared_ptr<BestFeatureLearner> Ptr;
 
+  BestFeatureLearner() {
+  }
+
   explicit BestFeatureLearner(const ParametersContainer& parameters) {
     this->setParameters(parameters);
   }
@@ -45,9 +48,7 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    Measure<TElement> *msr =
-        parameters.Get<Parameterized *, Measure<TElement> *>("measure");
-    measure_ = typename Measure<TElement>::Ptr(msr);
+    measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
   }
   virtual void learnImpl(const DataSet<TElement>& data,
                          OneFeatureScorer* scorer);

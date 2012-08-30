@@ -12,7 +12,10 @@
 #include <boost/any.hpp> //NOLINT
 #include <boost/unordered_map.hpp> //NOLINT
 
+#include "ltr/utility/shared_ptr.h"
+
 #include "ltr/interfaces/printable.h"
+
 
 using std::list;
 using std::string;
@@ -28,6 +31,7 @@ namespace ltr {
 class ParametersContainer: public Printable {
  public:
   typedef boost::unordered_map<string, boost::any> StringAnyHash;
+  typedef ltr::utility::shared_ptr<ParametersContainer> Ptr;
 
   ParametersContainer();
   ParametersContainer(const ParametersContainer& other);
@@ -47,6 +51,13 @@ class ParametersContainer: public Printable {
    */
   StringAnyHash::const_iterator end() const {
     return name_value_hash_.end();
+  }
+  /**
+   * Returns true if the containter is empty,
+   * otherwise returns false
+   */
+  bool empty() const {
+    return name_value_hash_.empty();
   }
 
   template <class T>
@@ -108,7 +119,7 @@ class ParametersContainer: public Printable {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
-                             "\nactual type: " +
+                             "\nActual type: " +
                              iterator->second.type().name());
     }
   }

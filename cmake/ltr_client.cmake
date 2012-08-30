@@ -21,6 +21,7 @@ set (LTR_CLIENT_SRC
      ${Source_Path}/ltr_client/utility/tag_handlers.cc
      ${Source_Path}/ltr_client/utility/train_launch_info.h
      ${Source_Path}/ltr_client/utility/train_launch_info.cc
+     ${Source_Path}/ltr_client/registration.h
 )
 
 source_group(initers FILES ${INITERS_SRC})

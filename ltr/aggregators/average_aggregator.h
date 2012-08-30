@@ -7,8 +7,11 @@
 #include <string>
 
 #include "ltr/aggregators/aggregator.h"
+#include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
+
+using ltr::ParametersContainer;
 
 namespace ltr {
 /**
@@ -16,6 +19,13 @@ namespace ltr {
 */
 class AverageAggregator : public Aggregator {
  public:
+
+  AverageAggregator() {
+  }
+
+  explicit AverageAggregator(const ParametersContainer& parameters) {
+  }
+
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     double result = 0;

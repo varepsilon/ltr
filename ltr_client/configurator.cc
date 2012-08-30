@@ -124,17 +124,19 @@ ConfigParser::CrossvalidationInfos& ConfigParser::crossvalidationInfos() {
   return crossvalidation_infos;
 }
 
-const ParametrizedInfo& ConfigParser::findLearner(const string& name) const {
+const ParametrizedInfo& ConfigParser::findParametrized(
+    const string& name) const {
   for (ParameterizedInfos::const_iterator it = xml_token_specs.begin();
        it != xml_token_specs.end();
        ++it) {
     const ParametrizedInfo& spec = it->second;
-    if (spec.get_tag_name() == "learner" && spec.get_name() == name) {
+    if (spec.get_name() == name) {
       return spec;
     }
   }
-  throw logic_error("Can not find learner!");
+  throw logic_error("Can not find parametrized object!");
 }
+
 const DataInfo& ConfigParser::findData(const string& name) const {
   for (DataInfos::const_iterator it = dataInfos().begin();
        it != dataInfos().end();
@@ -147,9 +149,7 @@ const DataInfo& ConfigParser::findData(const string& name) const {
   throw logic_error("Can not find data!");
 }
 
+
 const string& ConfigParser::rootPath() const {
   return root_path_;
 }
-
-
-
