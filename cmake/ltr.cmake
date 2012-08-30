@@ -122,7 +122,6 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.cc
-                ${Source_Path}/ltr/scorers/composition_scorers/soft_composition_scorer.h
                 ${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.h
                 ${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.cc
                 ${Source_Path}/ltr/scorers/composition_scorers/order_statistic_composition_scorer.h
@@ -221,12 +220,13 @@ SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidator.h)
 
-SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear_composition_learner.h
-                           ${Source_Path}/ltr/learners/linear_composition/data_set_weights_updater.h
-                           ${Source_Path}/ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h
-                           ${Source_Path}/ltr/learners/linear_composition/ada_rank_data_set_weights_updater.h
-                           ${Source_Path}/ltr/learners/linear_composition/ada_rank_lc_scorer_weights_updater.h
-                           ${Source_Path}/ltr/learners/linear_composition/average_lc_scorer_weights_updater.h)
+SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_learner.h
+                    ${Source_Path}/ltr/learners/composition_learner/data_set_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/composition_scorer_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/average_composition_scorer_weights_updater.h
+					${Source_Path}/ltr/learners/composition_learner/linear_composition_learner.h)
 
 SET(LTR_AGGREGATORS ${Source_Path}/ltr/aggregators/aggregator.h
                     ${Source_Path}/ltr/aggregators/average_aggregator.h
@@ -245,7 +245,7 @@ SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\decision_tree FILES ${LTR_DECISION_TREE})
 SOURCE_GROUP(learners\\decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
-SOURCE_GROUP(learners\\linear_composition FILES ${LTR_LINEAR_COMPOSITION})
+SOURCE_GROUP(learners\\composition_learner FILES ${LTR_COMPOSITION})
 SOURCE_GROUP(learners\\gp FILES ${LTR_GP_LEARNER})
 SOURCE_GROUP(learners\\gp\\strategies FILES ${LTR_GP_LEARNER_STRATEGIES})
 SOURCE_GROUP(data\\utils FILES ${LTR_DATA_UTILS})
@@ -268,7 +268,7 @@ SET(LTR_ALL ${LTR_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
             ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS}
-            ${LTR_DATA_PREPROCESSORS} ${LTR_LINEAR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY}
+            ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY}
             ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS})
 
 INCLUDE_DIRECTORIES(${Source_Path})

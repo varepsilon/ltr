@@ -71,7 +71,7 @@ TEST(ToStringTest, TestToStringOperation) {
   ltr::gp::GPScorer gp_scorer;
   cout << gp_scorer.toString() << endl;
 
-  ltr::LinearCompositionScorer linearCompositionScorer;
+  ltr::composition::LinearCompositionScorer linearCompositionScorer;
   linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::FakeScorer()), 0.2);
   linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::gp::GPScorer), 0.7);
   linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::decision_tree::DecisionTreeScorer), 0.1);
