@@ -12,6 +12,70 @@ namespace ltr {
     - \ref TutorialFeatureConverters
   - \b Advanced \b topics
   
+\tableofcontents
+
+\section LTR About LTR
+Learning To Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
+\n
+User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).\n
+\n
+Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.
+
+\section PHILOSOPHY Philosophy of LTR
+From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.\n
+Many of these ideas are similar of even coincident for ranking, classification, regression.\n
+Some examples of decomposition:
+\li TreeNet(link) = Gradient Descent + Boosting + Desicion Tree learning
+\li SoftRank(link) = Gradient Descent + Neural Net learning + Smoothing Nondifferentiability
+\li RankPG(link) = Genetic Programming + Listwise ranking measure optimizing
+\li AdaBoost(link) = Boosting + Exponential loss function approximation + Pointwise measure optimizing
+\li AdaRank(link) = Boosting + Exponential loss function approximation + Listwise measure optimizing\n
+
+
+The main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.\n
+One can easily add any heuristic to a standard learning algorithm because all of heuristics are functors in LTR. So user can easily change any step of algorithm just defining new heuristic object and insert them into the code of origin algorithm.
+
+\section CONTENT What can you find in LTR?
+
+List of algorithms implemented in the current version of LTR:
+
+\li <b>Classification</b>\n
+k-nearest neighbour\n
+Naive Bayes\n
+QDA\n
+Fisher LDA\n
+\li <b>Regression</b>\n
+Linear regression (least square method)\n
+\li <b>Ranking</b>\n
+RankGP\n
+Linear ranker\n
+\li <b>Ensembles</b>\n
+Boosting\n
+Bagging\n
+RSM\n
+
+LTR is an actively growing project so this list will be expanded significantly.
+
+
+\section REQUIREMENTS Requirements
+\li Boost\n
+LTR assumes that you already have Boost(link) sources and some static libraries in your system.
+The detailed inatallation manual is here(link). 
+\li CMake\n
+LTR uses the CMake(link) build system so you should install it as described here(link). 
+
+\section COMPILER Compiler support
+LTR is standard C++98 and should be compatible with any common C++ compiler.
+LTR is being successfully built with the following compilers:
+\li MSVS (Visual Studio) 2008 and newer\n
+\li GCC 4.1 and newer\n
+
+\section LICENSE License
+Don't decide yet
+
+\section SUPPORT Get support
+If you want get help using LTR or send a bug report, please, write to address ltr.yaschool@yandex.ru
+  
    
 
 **/
