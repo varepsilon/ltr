@@ -8,5 +8,6 @@ var searchData=
   ['inf',['Inf',['../namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4',1,'ltr::utility']]],
   ['init_5fgrow_5fprobability_5f',['init_grow_probability_',['../classltr_1_1gp_1_1_g_p_learner.html#a8494a735b803873759daadb920eea2fa',1,'ltr::gp::GPLearner']]],
   ['input_5ffeature_5finfo_5f',['input_feature_info_',['../classltr_1_1_feature_converter.html#a80d3fcbc090e5777e1244bf272c82fe7',1,'ltr::FeatureConverter']]],
-  ['instance',['instance',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7e2a0c039bc4dd7dcf3a2b2edb511e04',1,'ltr::utility::MultiTable::Iterator']]]
+  ['instance',['instance',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7e2a0c039bc4dd7dcf3a2b2edb511e04',1,'ltr::utility::MultiTable::Iterator']]],
+  ['invalid_5findex',['INVALID_INDEX',['../classltr_1_1composition_1_1_max_weight_composition_scorer.html#a6be7dd4646a19fa5d727660ea490fd2c',1,'ltr::composition::MaxWeightCompositionScorer']]]
 ];

@@ -7,7 +7,7 @@ var searchData=
   ['dataset',['DataSet',['../classltr_1_1_data_set.html',1,'ltr']]],
   ['dataset_3c_20object_20_3e',['DataSet< Object >',['../classltr_1_1_data_set.html',1,'ltr']]],
   ['dataset_3c_20objecttype_20_3e',['DataSet< ObjectType >',['../classltr_1_1_data_set.html',1,'ltr']]],
-  ['datasetweightsupdater',['DataSetWeightsUpdater',['../classltr_1_1lc_1_1_data_set_weights_updater.html',1,'ltr::lc']]],
+  ['datasetweightsupdater',['DataSetWeightsUpdater',['../classltr_1_1composition_1_1_data_set_weights_updater.html',1,'ltr::composition']]],
   ['dcgformula',['DCGFormula',['../classltr_1_1_d_c_g_formula.html',1,'ltr']]],
   ['decisiontree',['DecisionTree',['../classltr_1_1decision__tree_1_1_decision_tree.html',1,'ltr::decision_tree']]],
   ['decisiontree_3c_20double_20_3e',['DecisionTree< double >',['../classltr_1_1decision__tree_1_1_decision_tree.html',1,'ltr::decision_tree']]],

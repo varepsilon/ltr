@@ -112,49 +112,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00007"></a>00007 <span class="preprocessor">#include &lt;vector&gt;</span>
 <a name="l00008"></a>00008 
 <a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="scorer_8h.html">ltr/scorers/scorer.h</a>&quot;</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="keyword">using</span> std::string;
-<a name="l00012"></a>00012 <span class="keyword">using</span> std::vector;
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="keyword">namespace </span>ltr {
-<a name="l00015"></a><a class="code" href="classltr_1_1_composition_scorer.html">00015</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_composition_scorer.html">CompositionScorer</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_scorer.html">Scorer</a> {
-<a name="l00016"></a>00016  <span class="keyword">public</span>:
-<a name="l00017"></a><a class="code" href="classltr_1_1_composition_scorer.html#ac3ff85b058094761f1f87f5238353870">00017</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;CompositionScorer&gt;</a> <a class="code" href="classltr_1_1_composition_scorer.html#ac3ff85b058094761f1f87f5238353870">Ptr</a>;
-<a name="l00018"></a>00018 
-<a name="l00019"></a><a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html">00019</a>   <span class="keyword">struct </span><a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html">ScorerAndWeight</a> {
-<a name="l00020"></a><a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a2b7a2e77010ec1f5474275469053e104">00020</a>     <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a2b7a2e77010ec1f5474275469053e104">scorer</a>;
-<a name="l00021"></a><a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a717807c7c06581a08dc67d77e5b121d5">00021</a>     <span class="keywordtype">double</span> <a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a717807c7c06581a08dc67d77e5b121d5">weight</a>;
-<a name="l00022"></a>00022 
-<a name="l00023"></a><a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a1c5335a8722e1581ca2003f1de9fae65">00023</a>     <a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a1c5335a8722e1581ca2003f1de9fae65">ScorerAndWeight</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> scorer_, <span class="keywordtype">double</span> weight_)
-<a name="l00024"></a>00024       : <a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a2b7a2e77010ec1f5474275469053e104">scorer</a>(scorer_), <a class="code" href="structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a717807c7c06581a08dc67d77e5b121d5">weight</a>(weight_) {}
-<a name="l00025"></a>00025   };
-<a name="l00026"></a>00026 
-<a name="l00030"></a>00030   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_composition_scorer.html#a25ae178596eb194d9c019b68fe795d87">clear</a>();
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_composition_scorer.html#a6d941a5d274e5c4221bf96ec00e9440e">size</a>() <span class="keyword">const</span>;
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <span class="keyword">const</span> ScorerAndWeight&amp; <a class="code" href="classltr_1_1_composition_scorer.html#adfedf51c84cf1e5efd002591937e8bc1">operator[]</a>(<span class="keywordtype">size_t</span> index) <span class="keyword">const</span>;
-<a name="l00035"></a>00035   ScorerAndWeight&amp; <a class="code" href="classltr_1_1_composition_scorer.html#adfedf51c84cf1e5efd002591937e8bc1">operator[]</a>(<span class="keywordtype">size_t</span> index);
-<a name="l00036"></a>00036   <span class="keyword">const</span> ScorerAndWeight&amp; <a class="code" href="classltr_1_1_composition_scorer.html#a057ec20543f56dd5f81d20cc8e5cc1dc">at</a>(<span class="keywordtype">size_t</span> index) <span class="keyword">const</span>;
-<a name="l00037"></a>00037   ScorerAndWeight&amp; <a class="code" href="classltr_1_1_composition_scorer.html#a057ec20543f56dd5f81d20cc8e5cc1dc">at</a>(<span class="keywordtype">size_t</span> index);
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_composition_scorer.html#acb9858b60b1dcc503a4c8e24796ef5b6">add</a>(<span class="keyword">const</span> ScorerAndWeight&amp; weighted_scorer);
-<a name="l00040"></a>00040   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_composition_scorer.html#acb9858b60b1dcc503a4c8e24796ef5b6">add</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> scorer, <span class="keywordtype">double</span> weight);
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="classltr_1_1_composition_scorer.html#a37cb4443333a032ec7de0bdfcaef5b1b">00042</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_composition_scorer.html#a37cb4443333a032ec7de0bdfcaef5b1b">~CompositionScorer</a>() {}
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044  <span class="keyword">private</span>:
-<a name="l00045"></a><a class="code" href="classltr_1_1_composition_scorer.html#a502567b5dea2355915ef0dd91c72189a">00045</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_composition_scorer.html#a502567b5dea2355915ef0dd91c72189a">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;CompositionScorer&quot;</span>;}
-<a name="l00046"></a><a class="code" href="classltr_1_1_composition_scorer.html#a4721dddc5aeaf3de7a8eed9f96d32d4b">00046</a>   vector&lt;ScorerAndWeight&gt; <a class="code" href="classltr_1_1_composition_scorer.html#a4721dddc5aeaf3de7a8eed9f96d32d4b">weighted_scorers_</a>;
-<a name="l00047"></a>00047 };
-<a name="l00048"></a>00048 };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="preprocessor">#endif  // LTR_SCORERS_COMPOSITION_SCORERS_COMPOSITION_SCORER_H_</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="parameterized_8h.html">ltr/interfaces/parameterized.h</a>&quot;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="keyword">using</span> std::string;
+<a name="l00013"></a>00013 <span class="keyword">using</span> std::vector;
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">namespace </span>ltr {
+<a name="l00016"></a>00016 <span class="keyword">namespace </span>composition {
+<a name="l00021"></a><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">00021</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_scorer.html">Scorer</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a> {
+<a name="l00022"></a>00022  <span class="keyword">public</span>:
+<a name="l00023"></a><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a7bd94a555cf1cc95ca14af65b0047e6a">00023</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;CompositionScorer&gt;</a> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a7bd94a555cf1cc95ca14af65b0047e6a">Ptr</a>;
+<a name="l00027"></a><a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html">00027</a>   <span class="keyword">struct </span><a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html">ScorerAndWeight</a> {
+<a name="l00028"></a><a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#a965ed8af877788f1c8d0d307c4837297">00028</a>     <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#a965ed8af877788f1c8d0d307c4837297">scorer</a>;
+<a name="l00029"></a><a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289">00029</a>     <span class="keywordtype">double</span> <a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289">weight</a>;
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa1d8fb87161ba00f1175ce4aa78ab241">00031</a>     <a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa1d8fb87161ba00f1175ce4aa78ab241">ScorerAndWeight</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> scorer_, <span class="keywordtype">double</span> weight_)
+<a name="l00032"></a>00032       : <a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#a965ed8af877788f1c8d0d307c4837297">scorer</a>(scorer_), <a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289">weight</a>(weight_) {}
+<a name="l00033"></a>00033   };
+<a name="l00037"></a>00037   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a33bcd36d3e0f9099c8a83521eedc4807">clear</a>();
+<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>() <span class="keyword">const</span>;
+<a name="l00045"></a>00045   <span class="keyword">const</span> ScorerAndWeight&amp; <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#abedce705f0a8851c5fc08c979fb80203">operator[]</a>(<span class="keywordtype">size_t</span> scorer_index) <span class="keyword">const</span>;
+<a name="l00049"></a>00049   ScorerAndWeight&amp; <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#abedce705f0a8851c5fc08c979fb80203">operator[]</a>(<span class="keywordtype">size_t</span> scorer_index);
+<a name="l00053"></a>00053   <span class="keyword">const</span> ScorerAndWeight&amp; <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a4bfc34d455a659cb9a1a2bf419a76822">at</a>(<span class="keywordtype">size_t</span> scorer_index) <span class="keyword">const</span>;
+<a name="l00057"></a>00057   ScorerAndWeight&amp; <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a4bfc34d455a659cb9a1a2bf419a76822">at</a>(<span class="keywordtype">size_t</span> scorer_index);
+<a name="l00061"></a>00061   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a3e0aa5298113866868e12834d4991859">add</a>(<span class="keyword">const</span> ScorerAndWeight&amp; weighted_scorer);
+<a name="l00065"></a>00065   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a3e0aa5298113866868e12834d4991859">add</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> scorer, <span class="keywordtype">double</span> weight = 1.0);
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a7672b9fd990dfd3def07d41aedc4ef50">00067</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a7672b9fd990dfd3def07d41aedc4ef50">~CompositionScorer</a>() {}
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069  <span class="keyword">private</span>:
+<a name="l00070"></a><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a0efa3c29d20d41a1928da79084a71b1c">00070</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a0efa3c29d20d41a1928da79084a71b1c">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;CompositionScorer&quot;</span>;}
+<a name="l00076"></a>00076   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#aba65d6d1df127cf9b32ed03dccd697b1">addImpl</a>(<span class="keyword">const</span> ScorerAndWeight&amp; weighted_scorer);
+<a name="l00077"></a>00077  <span class="keyword">protected</span>:
+<a name="l00078"></a><a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#aa781c238c0aee76167e870060dc0da62">00078</a>   vector&lt;ScorerAndWeight&gt; <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#aa781c238c0aee76167e870060dc0da62">weighted_scorers_</a>;
+<a name="l00079"></a>00079 };
+<a name="l00080"></a>00080 };
+<a name="l00081"></a>00081 };
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 <span class="preprocessor">#endif  // LTR_SCORERS_COMPOSITION_SCORERS_COMPOSITION_SCORER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:29 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:02 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

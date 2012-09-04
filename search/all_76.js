@@ -10,7 +10,7 @@ var searchData=
   ['value_5f',['value_',['../classltr_1_1decision__tree_1_1_leaf_vertex.html#a360a99e7279d64e7f0b45b4b3110522d',1,'ltr::decision_tree::LeafVertex']]],
   ['value_5ftype',['value_type',['../classltr_1_1utility_1_1shared__ptr.html#aa4fef65671a3ad018c02bf6359ebd30b',1,'ltr::utility::shared_ptr']]],
   ['values_5f',['values_',['../structltr_1_1_one_feature_info.html#af24fced631107e4274495b84f471f4cb',1,'ltr::OneFeatureInfo']]],
-  ['vertex',['vertex',['../structltr_1_1decision__tree_1_1_vertex_with_data.html#a5539455d0041c96e64ee1b3595c27649',1,'ltr::decision_tree::VertexWithData::vertex()'],['../classltr_1_1decision__tree_1_1_vertex.html#aca5da15d534f4da0d882f347a240b843',1,'ltr::decision_tree::Vertex::Vertex()'],['../classltr_1_1decision__tree_1_1_vertex.html#a1307cdbcc32fa2bf9685252d57dafad5',1,'ltr::decision_tree::Vertex::Vertex(Condition::Ptr condition)']]],
+  ['vertex',['Vertex',['../classltr_1_1decision__tree_1_1_vertex.html#aca5da15d534f4da0d882f347a240b843',1,'ltr::decision_tree::Vertex::Vertex()'],['../classltr_1_1decision__tree_1_1_vertex.html#a1307cdbcc32fa2bf9685252d57dafad5',1,'ltr::decision_tree::Vertex::Vertex(Condition::Ptr condition)'],['../structltr_1_1decision__tree_1_1_vertex_with_data.html#a5539455d0041c96e64ee1b3595c27649',1,'ltr::decision_tree::VertexWithData::vertex()']]],
   ['vertex',['Vertex',['../classltr_1_1decision__tree_1_1_vertex.html',1,'ltr::decision_tree']]],
   ['vertex_3c_20double_20_3e',['Vertex< double >',['../classltr_1_1decision__tree_1_1_vertex.html',1,'ltr::decision_tree']]],
   ['vertexptr',['VertexPtr',['../classltr_1_1decision__tree_1_1_decision_tree.html#aa58d8cd3c460cbcaed2326e4800ee60c',1,'ltr::decision_tree::DecisionTree']]],

@@ -98,38 +98,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#TutorialDataPreprocessor">DataPreprocessor</a><ul><li class="level2"><a href="#TutorialFakeDataPreprocessor">FakeDataPreprocessor</a></li>
-<li class="level2"><a href="#TutorialDataSampler">DataSampler</a></li>
-<li class="level2"><a href="#TutorialDataRandomSampler">DataRandomSampler</a></li>
-</ul>
-</li>
+<ul><li class="level1"><a href="#TutorialDataPreprocessor">DataPreprocessor</a></li>
+<li class="level1"><a href="#DataPreprocessorsList">List of all DataPrepocessors</a></li>
 </ul>
 </div>
 <div class="textblock"><h2><a class="anchor" id="TutorialDataPreprocessor"></a>
 DataPreprocessor</h2>
-<p>A base class for data preprocessors.</p>
-<p>Preprocesses <a class="el" href="classltr_1_1_data_set.html">DataSet</a>, e.g. delete or replicate elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. This can be usefull for better learning. Should not change <a class="el" href="classltr_1_1_object.html">Object</a> features and <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a> as it won't be saved in <a class="el" href="classltr_1_1_scorer.html">Scorer</a>. Use <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> for feature convertions.</p>
-<p>You can preprocess your data in this way:</p>
-<ul>
-<li><a class="el" href="classltr_1_1_data_preprocessor.html#a993ca1979bb2db285b2b561d79078a02">DataPreprocessor::apply</a>(const DataSet&lt;TElement&gt;&amp; input, DataSet&lt;TElement&gt;* output, bool check_parameters = true) <dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">input</td><td><a class="el" href="classltr_1_1_data_set.html">DataSet</a> to be preprocessed </td></tr>
-    <tr><td class="paramname">output</td><td>preprocessed <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </td></tr>
-    <tr><td class="paramname">check_parameters</td><td>whether perform <a class="el" href="classltr_1_1_parameterized.html#a1179ecf33cb6277323b390bffeca1244">Parameterized::checkParameters()</a> before launch</td></tr>
-  </table>
-  </dd>
-</dl>
-</li>
-</ul>
-<h3><a class="anchor" id="TutorialFakeDataPreprocessor"></a>
-FakeDataPreprocessor</h3>
-<p>Does nothing with input <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
-<h3><a class="anchor" id="TutorialDataSampler"></a>
-DataSampler</h3>
-<p>Samples elements with specififed indices from input <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. Duplication of indices leads to duplication of elements in the result sample.</p>
-<table  class="example">
+<p>Preprocesses <a class="el" href="classltr_1_1_data_set.html">DataSet</a>, e.g. filter noisy objects, change weights or replicate elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. This can be helpfull for better learning. DataPreprocessors should not change <a class="el" href="classltr_1_1_object.html">Object</a> features and <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>. Use <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> for feature convertions (see <a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a>).</p>
+<p>You can preprocess your data via <a class="el" href="classltr_1_1_data_preprocessor.html#a993ca1979bb2db285b2b561d79078a02">DataPreprocessor::apply</a> method. In the example below <a class="el" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">DataSampler</a> is used to sample object with specified indexes from <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
+<table class="doxtable">
 <tr>
-<td>Example: preprocessing data. </td></tr>
+<th>Example: Preprocessing data </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 
@@ -174,11 +153,7 @@ DataSampler</h3>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment">Before:
+</pre></div> </td><td><div class="fragment"><pre class="fragment">Before:
 [5.23, 1.53, -5.38]
 [2.21, -1.23, 0.32]
 [-2.12, 0.21, -6.09]
@@ -187,16 +162,35 @@ After:
 [5.23, 1.53, -5.38]
 [-2.12, 0.21, -6.09]
 
-</pre></div>  </td></tr>
+</pre></div> </td></tr>
 </table>
-<h3><a class="anchor" id="TutorialDataRandomSampler"></a>
-DataRandomSampler</h3>
-<p>Acts as <a class="el" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">DataSampler</a> with random indices each new applying (duplication may be allowed). </p>
+<p>The main usage of DataPreprocessors is to preprocess data before learning. In order to do this just use method <a class="el" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">Learner::addDataPreprocessor</a>.</p>
+<p>For example,</p>
+<div class="fragment"><pre class="fragment">LinearLearner linear_learner;
+linear_learner.addDataPreprocessor(<span class="keyword">new</span> DataRandomSampler());
+linear_learner.learn(data);
+</pre></div><p>which is equal to</p>
+<div class="fragment"><pre class="fragment">DataRandomSampler random_sampler();
+random_sampler.apply(data, &amp;preprocessed_data);
+LinearLearner linear_learner;
+linear_learner.learn(preprocessed_data);
+</pre></div><h2><a class="anchor" id="DataPreprocessorsList"></a>
+List of all DataPrepocessors</h2>
+<table class="doxtable">
+<tr>
+<th>DataPreprocessor </th><th>Description</th></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_fake_preprocessor.html" title="Does nothing with input DataSet.">FakePreprocessor</a> </td><td>Does nothing with input <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">DataSampler</a> </td><td>Samples elements with specififed indices from input <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_data_random_sampler.html" title="Acts as DataSampler with random indices each new applying (duplication may be allowed).">DataRandomSampler</a> </td><td>Acts as <a class="el" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">DataSampler</a> with random indices each new applying </td></tr>
+</table>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:03 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

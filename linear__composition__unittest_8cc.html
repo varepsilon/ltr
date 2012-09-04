@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Learning To Rank Library: ltr/learners/linear_composition/linear_composition_unittest.cc File Reference</title>
+<title>Learning To Rank Library: ltr/learners/composition_learner/linear_composition_unittest.cc File Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">ltr/learners/linear_composition/linear_composition_unittest.cc File Reference</div>  </div>
+<div class="title">ltr/learners/composition_learner/linear_composition_unittest.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br/>
@@ -112,12 +112,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="object_8h_source.html">ltr/data/object.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="feature__info_8h_source.html">ltr/data/feature_info.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="numerical_8h_source.html">ltr/utility/numerical.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="data__set__weights__updater_8h_source.html">ltr/learners/linear_composition/data_set_weights_updater.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="linear__composition__scorer__weights__updater_8h_source.html">ltr/learners/linear_composition/linear_composition_scorer_weights_updater.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="linear__composition__learner_8h_source.html">ltr/learners/linear_composition/linear_composition_learner.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="ada__rank__data__set__weights__updater_8h_source.html">ltr/learners/linear_composition/ada_rank_data_set_weights_updater.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="ada__rank__lc__scorer__weights__updater_8h_source.html">ltr/learners/linear_composition/ada_rank_lc_scorer_weights_updater.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="average__lc__scorer__weights__updater_8h_source.html">ltr/learners/linear_composition/average_lc_scorer_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="data__set__weights__updater_8h_source.html">ltr/learners/composition_learner/data_set_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="composition__scorer__weights__updater_8h_source.html">ltr/learners/composition_learner/composition_scorer_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="composition__learner_8h_source.html">ltr/learners/composition_learner/composition_learner.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="ada__rank__data__set__weights__updater_8h_source.html">ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="ada__rank__composition__scorer__weights__updater_8h_source.html">ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="average__composition__scorer__weights__updater_8h_source.html">ltr/learners/composition_learner/average_composition_scorer_weights_updater.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="linear__composition__scorer_8h_source.html">ltr/scorers/composition_scorers/linear_composition_scorer.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="best__feature__learner_8h_source.html">ltr/learners/best_feature_learner/best_feature_learner.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="abs__error_8h_source.html">ltr/measures/abs_error.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="true__point_8h_source.html">ltr/measures/true_point.h</a>&quot;</code><br/>
@@ -130,10 +131,10 @@ Classes</h2></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac6cbcf1780113450ce3692d4889ce498"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#ac6cbcf1780113450ce3692d4889ce498">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, SimpleLinearCompositionTest)</td></tr>
-<tr class="memitem:a124e99eb955b090d6bbb9a95588ea3ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#a124e99eb955b090d6bbb9a95588ea3ca">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, BeggingSimpleLinearCompositionTest)</td></tr>
+<tr class="memitem:af53d1be4870e46c32b6c3b38f3c4b34c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#af53d1be4870e46c32b6c3b38f3c4b34c">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, BaggingSimpleLinearCompositionTest)</td></tr>
 <tr class="memitem:afe9746b247a1ece101bf901a58b70741"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#afe9746b247a1ece101bf901a58b70741">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, RSMSimpleLinearCompositionTest)</td></tr>
 <tr class="memitem:a1543130b3a2e8e583400402bc5f97f11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#a1543130b3a2e8e583400402bc5f97f11">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, AdaRankDSWUSimpleLinearCompositionTest)</td></tr>
-<tr class="memitem:af69472a35eb7b7de2fbebc370246de7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#af69472a35eb7b7de2fbebc370246de7c">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, AdaRankLCSWUSimpleLinearCompositionTest)</td></tr>
+<tr class="memitem:ac74a643fa3fa69a66cfbc659be695911"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#ac74a643fa3fa69a66cfbc659be695911">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, AdaRankCSWUSimpleLinearCompositionTest)</td></tr>
 <tr class="memitem:a65ee27b7bd06b61d91f058dfa6b66cd3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linear__composition__unittest_8cc.html#a65ee27b7bd06b61d91f058dfa6b66cd3">TEST_F</a> (<a class="el" href="class_linear_composition_test.html">LinearCompositionTest</a>, AdaRankBeggingRSMSimpleLinearCompositionTest)</td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -167,7 +168,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a124e99eb955b090d6bbb9a95588ea3ca"></a>
+<a class="anchor" id="af53d1be4870e46c32b6c3b38f3c4b34c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -180,7 +181,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">BeggingSimpleLinearCompositionTest&#160;</td>
+          <td class="paramtype">BaggingSimpleLinearCompositionTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -248,7 +249,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af69472a35eb7b7de2fbebc370246de7c"></a>
+<a class="anchor" id="ac74a643fa3fa69a66cfbc659be695911"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -261,7 +262,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">AdaRankLCSWUSimpleLinearCompositionTest&#160;</td>
+          <td class="paramtype">AdaRankCSWUSimpleLinearCompositionTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -320,7 +321,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:02 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

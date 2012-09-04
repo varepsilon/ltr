@@ -9,7 +9,6 @@ var searchData=
   ['linear_5fcomposition_5fscorer_2ecc',['linear_composition_scorer.cc',['../linear__composition__scorer_8cc.html',1,'']]],
   ['linear_5fcomposition_5fscorer_2eh',['linear_composition_scorer.h',['../linear__composition__scorer_8h.html',1,'']]],
   ['linear_5fcomposition_5fscorer_5funittest_2ecc',['linear_composition_scorer_unittest.cc',['../linear__composition__scorer__unittest_8cc.html',1,'']]],
-  ['linear_5fcomposition_5fscorer_5fweights_5fupdater_2eh',['linear_composition_scorer_weights_updater.h',['../linear__composition__scorer__weights__updater_8h.html',1,'']]],
   ['linear_5fcomposition_5funittest_2ecc',['linear_composition_unittest.cc',['../linear__composition__unittest_8cc.html',1,'']]],
   ['linear_5flearner_2ecc',['linear_learner.cc',['../linear__learner_8cc.html',1,'']]],
   ['linear_5flearner_2eh',['linear_learner.h',['../linear__learner_8h.html',1,'']]],

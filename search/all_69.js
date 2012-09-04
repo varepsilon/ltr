@@ -31,17 +31,18 @@ var searchData=
   ['install_5ftutorial_2edox',['install_tutorial.dox',['../install__tutorial_8dox.html',1,'']]],
   ['instance',['instance',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7e2a0c039bc4dd7dcf3a2b2edb511e04',1,'ltr::utility::MultiTable::Iterator']]],
   ['interface',['Interface',['../class_interface.html',1,'']]],
-  ['inverselineardistance',['InverseLinearDistance',['../classltr_1_1utility_1_1_inverse_linear_distance.html',1,'ltr::utility']]],
+  ['invalid_5findex',['INVALID_INDEX',['../classltr_1_1composition_1_1_max_weight_composition_scorer.html#a6be7dd4646a19fa5d727660ea490fd2c',1,'ltr::composition::MaxWeightCompositionScorer']]],
   ['inverselineardistance',['InverseLinearDistance',['../classltr_1_1utility_1_1_inverse_linear_distance.html#a398129a4352751939660dded2c486516',1,'ltr::utility::InverseLinearDistance::InverseLinearDistance()'],['../classltr_1_1utility_1_1_inverse_linear_distance.html#abd19590ff53b7dffac4a47eebf724a63',1,'ltr::utility::InverseLinearDistance::InverseLinearDistance(const ParametersContainer &amp;parameters)']]],
-  ['inverseorder',['InverseOrder',['../classltr_1_1utility_1_1_inverse_order.html',1,'ltr::utility']]],
+  ['inverselineardistance',['InverseLinearDistance',['../classltr_1_1utility_1_1_inverse_linear_distance.html',1,'ltr::utility']]],
   ['inverseorder',['InverseOrder',['../classltr_1_1utility_1_1_inverse_order.html#ab930c0c3d03a2a26c980c1da5af5291a',1,'ltr::utility::InverseOrder::InverseOrder()'],['../classltr_1_1utility_1_1_inverse_order.html#adf5e8ed48546ac6efb389b0483ad9dcb',1,'ltr::utility::InverseOrder::InverseOrder(const ParametersContainer &amp;parameters)']]],
-  ['inversesquaredistance',['InverseSquareDistance',['../classltr_1_1utility_1_1_inverse_square_distance.html',1,'ltr::utility']]],
+  ['inverseorder',['InverseOrder',['../classltr_1_1utility_1_1_inverse_order.html',1,'ltr::utility']]],
   ['inversesquaredistance',['InverseSquareDistance',['../classltr_1_1utility_1_1_inverse_square_distance.html#ae9a8cfd2f673b66d7be722560a1fce60',1,'ltr::utility::InverseSquareDistance::InverseSquareDistance()'],['../classltr_1_1utility_1_1_inverse_square_distance.html#a6f7ee3c0f9ecc497a1f05ce65b1f7360',1,'ltr::utility::InverseSquareDistance::InverseSquareDistance(const ParametersContainer &amp;parameters)']]],
+  ['inversesquaredistance',['InverseSquareDistance',['../classltr_1_1utility_1_1_inverse_square_distance.html',1,'ltr::utility']]],
   ['io_5futility_2ecc',['io_utility.cc',['../io__utility_8cc.html',1,'']]],
   ['io_5futility_2eh',['io_utility.h',['../io__utility_8h.html',1,'']]],
   ['io_5futility_5funittest_2ecc',['io_utility_unittest.cc',['../io__utility__unittest_8cc.html',1,'']]],
   ['ioutilitytest',['IOUtilityTest',['../class_i_o_utility_test.html',1,'']]],
   ['isnan',['isNaN',['../namespaceltr_1_1utility.html#ab452afdf7027238f5b0c1419a8b85cef',1,'ltr::utility']]],
-  ['iterator',['Iterator',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7488aff687dd71fa2fc028569fc81749',1,'ltr::utility::MultiTable::Iterator']]],
-  ['iterator',['Iterator',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html',1,'ltr::utility::MultiTable']]]
+  ['iterator',['Iterator',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html',1,'ltr::utility::MultiTable']]],
+  ['iterator',['Iterator',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7488aff687dd71fa2fc028569fc81749',1,'ltr::utility::MultiTable::Iterator']]]
 ];

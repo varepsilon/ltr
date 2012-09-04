@@ -1,12 +1,12 @@
 var searchData=
 [
   ['weak_5fcondition_5f',['weak_condition_',['../classltr_1_1decision__tree_1_1_compare_condition.html#adee6e5e183d7fbe3adea6d61e8a6bef9',1,'ltr::decision_tree::CompareCondition']]],
-  ['weak_5flearner_5f',['weak_learner_',['../classltr_1_1lc_1_1_linear_composition_learner.html#a86c490df72d3dbc7f4deb9e13aab6543',1,'ltr::lc::LinearCompositionLearner']]],
+  ['weak_5flearner_5f',['weak_learner_',['../classltr_1_1composition_1_1_composition_learner.html#ab0e9e2c557395f07daa9653bdbea164c',1,'ltr::composition::CompositionLearner']]],
   ['weak_5fmeasure_5f',['weak_measure_',['../classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625',1,'ltr::NormalizedMeasure']]],
   ['weak_5fptr',['weak_ptr',['../classltr_1_1utility_1_1shared__ptr.html#a73fb185cab8b7bb5f231491bb497071c',1,'ltr::utility::shared_ptr']]],
   ['weakptr',['WeakPtr',['../classltr_1_1decision__tree_1_1_vertex.html#a70fe8f88945ec45448589f0c14a2a4c1',1,'ltr::decision_tree::Vertex']]],
-  ['weight',['weight',['../structltr_1_1_composition_scorer_1_1_scorer_and_weight.html#a717807c7c06581a08dc67d77e5b121d5',1,'ltr::CompositionScorer::ScorerAndWeight']]],
-  ['weighted_5fscorers_5f',['weighted_scorers_',['../classltr_1_1_composition_scorer.html#a4721dddc5aeaf3de7a8eed9f96d32d4b',1,'ltr::CompositionScorer']]],
+  ['weight',['weight',['../structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289',1,'ltr::composition::CompositionScorer::ScorerAndWeight']]],
+  ['weighted_5fscorers_5f',['weighted_scorers_',['../classltr_1_1composition_1_1_composition_scorer.html#aa781c238c0aee76167e870060dc0da62',1,'ltr::composition::CompositionScorer']]],
   ['weightedaverage',['weightedAverage',['../classltr_1_1_measure.html#ae6860e67d5739f7a72be93b4e806c758',1,'ltr::Measure']]],
   ['weights',['weights',['../classltr_1_1_linear_scorer.html#a279e52b67c142c84ba84b423a7ba0710',1,'ltr::LinearScorer']]],
   ['weights_5f',['weights_',['../classltr_1_1_data_set.html#aee6835ad051b537d83bca52b0225b753',1,'ltr::DataSet']]],

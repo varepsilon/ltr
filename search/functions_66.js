@@ -2,10 +2,10 @@ var searchData=
 [
   ['factor',['factor',['../classltr_1_1_per_feature_linear_converter.html#a5a651a0e1ab875874097d422c00b775f',1,'ltr::PerFeatureLinearConverter']]],
   ['factorial',['Factorial',['../indices__unittest_8cc.html#add2051c05ae0af82b9f85a7aed140679',1,'indices_unittest.cc']]],
+  ['fakecompositionscorerweightsupdater',['FakeCompositionScorerWeightsUpdater',['../classltr_1_1composition_1_1_fake_composition_scorer_weights_updater.html#af18005d309dd9246b4deac81a11c04bd',1,'ltr::composition::FakeCompositionScorerWeightsUpdater']]],
   ['fakeconditionptr',['FakeConditionPtr',['../namespaceltr_1_1decision__tree.html#aad01e4bce11dccdc0cf68607900def15',1,'ltr::decision_tree']]],
-  ['fakedatasetweightsupdater',['FakeDataSetWeightsUpdater',['../classltr_1_1lc_1_1_fake_data_set_weights_updater.html#a6070b684c49aa58c72be839346cfb3d1',1,'ltr::lc::FakeDataSetWeightsUpdater']]],
+  ['fakedatasetweightsupdater',['FakeDataSetWeightsUpdater',['../classltr_1_1composition_1_1_fake_data_set_weights_updater.html#afb31b61c70e2d93d03a92f227580fc7a',1,'ltr::composition::FakeDataSetWeightsUpdater']]],
   ['fakefeatureconverter',['FakeFeatureConverter',['../classltr_1_1_fake_feature_converter.html#a9e0ede8e611e42b980c3996b4df294f6',1,'ltr::FakeFeatureConverter']]],
-  ['fakelcscorerweightsupdater',['FakeLCScorerWeightsUpdater',['../classltr_1_1lc_1_1_fake_l_c_scorer_weights_updater.html#ae2cffe2bdc61ef919e4c7ec463677296',1,'ltr::lc::FakeLCScorerWeightsUpdater']]],
   ['fakescorer',['FakeScorer',['../classltr_1_1_fake_scorer.html#a66857412071e4629c8ad5f5d7d6192e0',1,'ltr::FakeScorer']]],
   ['feature_5fconverters',['feature_converters',['../classltr_1_1_scorer.html#a0517f127f1af9d812d8d11964e1fe690',1,'ltr::Scorer']]],
   ['feature_5fcount',['feature_count',['../classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef',1,'ltr::DataSet::feature_count()'],['../classltr_1_1_feature_info.html#ac401b4c48ca120c5c2ebba7007602a37',1,'ltr::FeatureInfo::feature_count()'],['../classltr_1_1_object.html#aa841806e10832406a57c2bd83541b112',1,'ltr::Object::feature_count()']]],

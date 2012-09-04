@@ -11,7 +11,6 @@ var searchData=
   ['serialization_5funittest_2ecc',['serialization_unittest.cc',['../serialization__unittest_8cc.html',1,'']]],
   ['shared_5fptr_2ecc',['shared_ptr.cc',['../shared__ptr_8cc.html',1,'']]],
   ['shared_5fptr_2eh',['shared_ptr.h',['../shared__ptr_8h.html',1,'']]],
-  ['soft_5fcomposition_5fscorer_2eh',['soft_composition_scorer.h',['../soft__composition__scorer_8h.html',1,'']]],
   ['splitter_2eh',['splitter.h',['../splitter_8h.html',1,'']]],
   ['splitter_5funittest_2eh',['splitter_unittest.h',['../splitter__unittest_8h.html',1,'']]],
   ['splitting_5fquality_2eh',['splitting_quality.h',['../splitting__quality_8h.html',1,'']]],

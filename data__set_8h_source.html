@@ -257,7 +257,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00225"></a>00225   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> element_index = 0;
 <a name="l00226"></a>00226        element_index &lt; (int)this-&gt;size();
 <a name="l00227"></a>00227        ++element_index) {
-<a name="l00228"></a>00228     result &lt;&lt; this-&gt;at(element_index);
+<a name="l00228"></a>00228     result.<a class="code" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">add</a>(this-&gt;at(element_index), this-&gt;getWeight(element_index));
 <a name="l00229"></a>00229   }
 <a name="l00230"></a>00230   <span class="keywordflow">return</span> result;
 <a name="l00231"></a>00231 }
@@ -321,7 +321,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:29 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:02 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

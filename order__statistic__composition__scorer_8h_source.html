@@ -115,32 +115,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00010"></a>00010 <span class="keyword">using</span> std::string;
 <a name="l00011"></a>00011 
 <a name="l00012"></a>00012 <span class="keyword">namespace </span>ltr {
-<a name="l00013"></a><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html">00013</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html">OrderStaticticCompositionScorer</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_composition_scorer.html">CompositionScorer</a> {
-<a name="l00014"></a>00014  <span class="keyword">public</span>:
-<a name="l00015"></a><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#ac7233aea27cefa2800844c9fd7ddc722">00015</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;OrderStaticticCompositionScorer&gt;</a> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#ac7233aea27cefa2800844c9fd7ddc722">Ptr</a>;
-<a name="l00016"></a>00016 
-<a name="l00017"></a><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a0921774b68f0a32c4a83f0d8ad4d7abe">00017</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a0921774b68f0a32c4a83f0d8ad4d7abe">OrderStaticticCompositionScorer</a>(<span class="keywordtype">double</span> ratio)
-<a name="l00018"></a>00018     : <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a64d719ced7b862a43592476966726bb2">ratio_</a>(ratio) {}
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a7e3922c4b3b45d80fbf70fea4cd6e06a">toString</a>() <span class="keyword">const</span>;
-<a name="l00021"></a>00021   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#ab80b2b552b33ac73e5e8e70795e87e8f">scoreImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023  <span class="keyword">private</span>:
-<a name="l00024"></a>00024   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a2d8fd64af7079e56843b487f81ae9824">generateCppCodeImpl</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
-<a name="l00025"></a><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#abb72e81244aa5b32b4659dd438fc78b4">00025</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#abb72e81244aa5b32b4659dd438fc78b4">getDefaultAlias</a>()<span class="keyword"> const </span>{
-<a name="l00026"></a>00026     <span class="keywordflow">return</span> <span class="stringliteral">&quot;OrderStaticticCompositionScorer&quot;</span>;
-<a name="l00027"></a>00027   }
-<a name="l00028"></a>00028 
-<a name="l00029"></a><a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a64d719ced7b862a43592476966726bb2">00029</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_order_statictic_composition_scorer.html#a64d719ced7b862a43592476966726bb2">ratio_</a>;
-<a name="l00030"></a>00030 };
-<a name="l00031"></a>00031 };
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#endif  // LTR_SCORERS_COMPOSITION_SCORERS_ORDER_STATISTIC_COMPOSITION_SCORER_H_</span>
+<a name="l00013"></a>00013 <span class="keyword">namespace </span>composition {
+<a name="l00020"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html">00020</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html">OrderStatisticCompositionScorer</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a> {
+<a name="l00021"></a>00021  <span class="keyword">public</span>:
+<a name="l00022"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a4abc41051f09a5459885e6814305769c">00022</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;OrderStatisticCompositionScorer&gt;</a> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a4abc41051f09a5459885e6814305769c">Ptr</a>;
+<a name="l00023"></a>00023 
+<a name="l00024"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aa9282619105f703df93d51256d3c8ff0">00024</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aa9282619105f703df93d51256d3c8ff0">OrderStatisticCompositionScorer</a>(<span class="keywordtype">double</span> ratio = 0.5)
+<a name="l00025"></a>00025     : <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">ratio_</a>(ratio) {}
+<a name="l00030"></a>00030   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aa9282619105f703df93d51256d3c8ff0">OrderStatisticCompositionScorer</a>
+<a name="l00031"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a99ceaef4f2f004f26c0db95931339b93">00031</a>       (<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00032"></a>00032     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#ac51c0bca83b15a063f2dbacb15dbe75b">setParameters</a>(parameters);
+<a name="l00033"></a>00033   }
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#ad083431b6d8cccb65a81668f2eed4e6f">toString</a>() <span class="keyword">const</span>;
+<a name="l00036"></a>00036   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a0df415ad74d759cca608021d7aaa9a96">scoreImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aa7e3a2d3df3bce543cc1f742ed12fbcf">00038</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aa7e3a2d3df3bce543cc1f742ed12fbcf">setDefaultParameters</a>() {
+<a name="l00039"></a>00039     <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">ratio_</a> = 0.5;
+<a name="l00040"></a>00040   }
+<a name="l00044"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aec3c0f831c24c10642ad6deb47674e37">00044</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#aec3c0f831c24c10642ad6deb47674e37">checkParameters</a>()<span class="keyword"> const </span>{
+<a name="l00045"></a>00045     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(0 &lt;= <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">ratio_</a> &lt;= 1);
+<a name="l00046"></a>00046   }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048   <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a36a82bc34742eecd0b6e54210ad65afe">GET_SET</a>(<span class="keywordtype">double</span>, ratio);
+<a name="l00049"></a>00049  <span class="keyword">private</span>:
+<a name="l00050"></a>00050   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a38aac56a72ea799bf5884ae3881d8ab7">generateCppCodeImpl</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<a name="l00051"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a9855d5dc37095a678f7a3e5838a98465">00051</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a9855d5dc37095a678f7a3e5838a98465">getDefaultAlias</a>()<span class="keyword"> const </span>{
+<a name="l00052"></a>00052     <span class="keywordflow">return</span> <span class="stringliteral">&quot;OrderStatisticCompositionScorer&quot;</span>;
+<a name="l00053"></a>00053   }
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a10a0709d71ee861c8c1545d6f17d859d">00055</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a10a0709d71ee861c8c1545d6f17d859d">setParametersImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00056"></a>00056     <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">ratio_</a> = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keywordtype">double</span>&gt;(<span class="stringliteral">&quot;RATIO&quot;</span>);
+<a name="l00057"></a>00057   }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">00059</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1composition_1_1_order_statistic_composition_scorer.html#a1a072eb947e6d106c4bbdfa9040bc5f6">ratio_</a>;
+<a name="l00060"></a>00060 };
+<a name="l00061"></a>00061 };
+<a name="l00062"></a>00062 };
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 <span class="preprocessor">#endif  // LTR_SCORERS_COMPOSITION_SCORERS_ORDER_STATISTIC_COMPOSITION_SCORER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:29 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:02 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

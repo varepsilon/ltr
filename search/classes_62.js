@@ -19,6 +19,7 @@ var searchData=
   ['baselearner_3c_20telement_2c_20linearscorer_20_3e',['BaseLearner< TElement, LinearScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20telement_2c_20nnscorer_20_3e',['BaseLearner< TElement, NNScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20telement_2c_20onefeaturescorer_20_3e',['BaseLearner< TElement, OneFeatureScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
+  ['baselearner_3c_20telement_2c_20tcompositionscorer_20_3e',['BaseLearner< TElement, TCompositionScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['basemetric',['BaseMetric',['../classltr_1_1_base_metric.html',1,'ltr']]],
   ['basendcg',['BaseNDCG',['../classltr_1_1_base_n_d_c_g.html',1,'ltr']]],
   ['basepopulationhandler',['BasePopulationHandler',['../classltr_1_1gp_1_1_base_population_handler.html',1,'ltr::gp']]],

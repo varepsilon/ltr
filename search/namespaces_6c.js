@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['composition',['composition',['../namespaceltr_1_1composition.html',1,'ltr']]],
   ['cv',['cv',['../namespaceltr_1_1cv.html',1,'ltr']]],
   ['decision_5ftree',['decision_tree',['../namespaceltr_1_1decision__tree.html',1,'ltr']]],
   ['gp',['gp',['../namespaceltr_1_1gp.html',1,'ltr']]],

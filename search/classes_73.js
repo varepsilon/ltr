@@ -1,7 +1,7 @@
 var searchData=
 [
   ['scorer',['Scorer',['../classltr_1_1_scorer.html',1,'ltr']]],
-  ['scorerandweight',['ScorerAndWeight',['../structltr_1_1_composition_scorer_1_1_scorer_and_weight.html',1,'ltr::CompositionScorer']]],
+  ['scorerandweight',['ScorerAndWeight',['../structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html',1,'ltr::composition::CompositionScorer']]],
   ['selecttoptreesstrategy',['SelectTopTreesStrategy',['../classltr_1_1gp_1_1_select_top_trees_strategy.html',1,'ltr::gp']]],
   ['serializable',['Serializable',['../classltr_1_1_serializable.html',1,'ltr']]],
   ['serializablefunctor',['SerializableFunctor',['../classltr_1_1_serializable_functor.html',1,'ltr']]],
@@ -25,7 +25,6 @@ var searchData=
   ['simple',['Simple',['../class_simple.html',1,'Simple'],['../class_simple.html',1,'Simple']]],
   ['sizeoverindex',['SizeOverIndex',['../struct_size_over_index.html',1,'']]],
   ['sizeoverindex',['SizeOverIndex',['../structltr_1_1cv_1_1_size_over_index.html',1,'ltr::cv']]],
-  ['softcompositionscorer',['SoftCompositionScorer',['../classltr_1_1_soft_composition_scorer.html',1,'ltr']]],
   ['splitteddataset',['SplittedDataSet',['../structltr_1_1cv_1_1_splitted_data_set.html',1,'ltr::cv']]],
   ['splitter',['Splitter',['../classltr_1_1cv_1_1_splitter.html',1,'ltr::cv']]],
   ['splitter_3c_20objecttype_20_3e',['Splitter< ObjectType >',['../classltr_1_1cv_1_1_splitter.html',1,'ltr::cv']]],

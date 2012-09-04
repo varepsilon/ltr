@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="textblock"><h2><a class="anchor" id="TutorialDataObject"></a>
 Object</h2>
-<p><a class="el" href="classltr_1_1_object.html">Object</a> is main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
+<p><a class="el" href="classltr_1_1_object.html">Object</a> is the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
 <h3><a class="anchor" id="TutorialDataObjectFeatures"></a>
 Features</h3>
 <p>Every <a class="el" href="classltr_1_1_object.html">Object</a> has several features with indexes 0, 1, 2... Every feature is a double value.</p>
@@ -123,11 +123,12 @@ Features</h3>
 <ul>
 <li><a class="el" href="">featureCount() </a> - returns number of features </li>
 <li><a class="el" href="classltr_1_1_object.html#ad63a366eb15a0f202578d408b5b4ebb5">features() </a> - returns vector of features </li>
+<li><a class="el" href="classltr_1_1_object.html#a1d6226a913a20dac3902b5f59a945b75">operator[](int i)</a>, <a class="el" href="classltr_1_1_object.html#a3907e628402d0119b9c7f8c26ea64445">at(int i)</a> - access to the i'th feature of the object </li>
 <li><a class="el" href="classltr_1_1_object.html#a031df6a2aee6d15b9f82446c7a296f7d">Object::operator&lt;&lt;(double value)</a> - adds new feature to the object</li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: operating with features. </td></tr>
+<th>Example: Operating with features </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
@@ -140,29 +141,37 @@ Features</h3>
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
   obj &lt;&lt; 1.1 &lt;&lt; 45.3 &lt;&lt; 23 &lt;&lt; 1e8;        <span class="comment">// Object contains now 4 features</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;obj = &quot;</span> &lt;&lt; obj &lt;&lt; endl;        <span class="comment">// You can print an object</span>
 
-  cout &lt;&lt; obj.feature_count() &lt;&lt; endl;     <span class="comment">// Method featureCount returns count of features in object</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;obj.feature_count() = &quot;</span> 
+           &lt;&lt; obj.feature_count() &lt;&lt; endl;     <span class="comment">// Method featureCount returns count of features in object</span>
 
-  obj &lt;&lt; 2.4;                             <span class="comment">// You can add new features at any time.</span>
-  cout &lt;&lt; obj.feature_count()              <span class="comment">// Returns 5</span>
-       &lt;&lt; endl &lt;&lt; endl;
+  obj &lt;&lt; 2.4;                              <span class="comment">// You can add new features at any time.</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;feature was added&quot;</span> &lt;&lt; endl;
 
-  cout &lt;&lt; obj.features()[0] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>        <span class="comment">// Two ways to get the feature value.</span>
-       &lt;&lt; obj.features().at(1) &lt;&lt; endl;   <span class="comment">//</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;obj.feature_count() = &quot;</span> 
+           &lt;&lt; obj.feature_count() &lt;&lt; endl;     <span class="comment">// Returns 5</span>
+
+  cout &lt;&lt; <span class="stringliteral">&quot;obj[0] = &quot;</span>  &lt;&lt; obj[0] &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>          <span class="comment">// Two ways to get the feature value.</span>
+       &lt;&lt; <span class="stringliteral">&quot;obj.at(1) = &quot;</span>  &lt;&lt; obj.at(1) &lt;&lt; endl;   <span class="comment">//</span>
 
   vector&lt;double&gt; new_features;
   new_features.push_back(1);
   new_features.push_back(5.0);
   new_features.push_back(2);
 
-  obj.features() = new_features;          <span class="comment">// You can also set all objects features an once.</span>
+  obj.features() = new_features;  <span class="comment">// You can also set all objects features at once.</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;obj = &quot;</span> &lt;&lt; obj;
+
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 23.00, 100000000.00]
+obj.feature_count() = 4
+feature was added
+obj.feature_count() = 5
+obj[0] = 1.1, obj.at(1) = 45.3
+obj = [1.00, 5.00, 2.00]
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectLabels"></a>
 Actual and predicted labels</h3>
@@ -174,9 +183,9 @@ Actual and predicted labels</h3>
 <li><a class="el" href="">actualLabel() </a> </li>
 <li><a class="el" href="">predictedLabel() </a></li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: operating with actual and predicted labels. </td></tr>
+<th>Example: Operating with actual and predicted labels </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
@@ -196,11 +205,9 @@ Actual and predicted labels</h3>
   cout &lt;&lt; obj.predicted_label();
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">23.65
+21.12
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectMetaInfo"></a>
 Meta info</h3>
@@ -209,9 +216,9 @@ Meta info</h3>
 <li><a class="el" href="">getMetaInfo(string name)   Object::setMetaInfo(string, string) setMetaInfo(string name, string value)</a> </li>
 <li><a class="el" href="">metaInfo()</a> - returns all meta information in <a class="el" href="namespaceltr.html#a821f045faa8de67bb75bad18aa686555">MetaInfo </a> container</li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: operating with meta info. </td></tr>
+<th>Example: Operating with meta info </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &lt;stdexcept&gt;</span>
@@ -239,24 +246,23 @@ Meta info</h3>
   cout &lt;&lt; obj.getMetaInfo(<span class="stringliteral">&quot;info2&quot;</span>) &lt;&lt; endl;
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">value1
+unknown meta info info2
+value2
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectCopying"></a>
 Copying objects</h3>
 <p>There are two ways to copy objects. </p>
 <ul>
-<li><a class="el" href="class_simple.html">Simple</a> copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo. <div class="fragment"><pre class="fragment"> Object b = a;                 <span class="comment">// This creates a simple copy.</span>
+<li>Simple copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo. <div class="fragment"><pre class="fragment"> Object b = a;                 <span class="comment">// This creates a simple copy.</span>
 </pre></div> </li>
 <li>Deep copy: creates real copy of the object. To use deep copy you should call <a class="el" href="classltr_1_1_object.html#a54c50845a2efd62c7b7ae51f8d9e2f2b">deepCopy()</a> <div class="fragment"><pre class="fragment"> Object b = a.deepCopy();      <span class="comment">// This creates a full copy.</span>
 </pre></div></li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: copying objects. </td></tr>
+<th>Example: Copying objects </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
@@ -271,38 +277,37 @@ Copying objects</h3>
 
   obj1 &lt;&lt; 2 &lt;&lt; 4 &lt;&lt; 6 &lt;&lt; 8;
 
-  obj2 = obj1;                    <span class="comment">// Simple copy</span>
+  obj2 = obj1;                <span class="comment">// Simple copy</span>
 
-  cout &lt;&lt; obj2.features()[1] &lt;&lt; endl;
-  obj1.features()[1] = -1;          <span class="comment">// After changing value in obj1</span>
-  cout &lt;&lt; obj2.features()[1]        <span class="comment">// Value in obj2 changes too</span>
+  cout &lt;&lt; obj2[1] &lt;&lt; endl;
+  obj1[1] = -1;               <span class="comment">// After changing value in obj1</span>
+  cout &lt;&lt; obj2[1]             <span class="comment">// Value in obj2 changes too</span>
        &lt;&lt; endl &lt;&lt; endl;
 
   obj2 = obj1.deepCopy();
 
-  cout &lt;&lt; obj2.features()[1] &lt;&lt; endl;
-  obj1.features()[1] = 5;           <span class="comment">// Now nothing changes in obj2</span>
-  cout &lt;&lt; obj2.features()[1];       <span class="comment">// After changing obj1</span>
+  cout &lt;&lt; obj2[1] &lt;&lt; endl;
+  obj1[1] = 5;                <span class="comment">// Now nothing changes in obj2</span>
+  cout &lt;&lt; obj2[1];            <span class="comment">// After changing obj1</span>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">4
+-1
+
+-1
+-1
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectPair"></a>
 ObjectPair</h2>
-<p><a class="el" href="class_class.html">Class</a> to operate pairs of object. Every pair contains two objects.</p>
-<p>There are two ways of operating objects: </p>
+<p><a class="el" href="class_class.html">Class</a> to operate pairs of object. Every pair contains two objects: </p>
 <ul>
-<li>ObjectPair::operator[](int id) </li>
-<li><a class="el" href="classltr_1_1_object_pair.html#a5bc9d0318053b4a97ae09dba7f1484eb">ObjectPair::first()</a>, <a class="el" href="classltr_1_1_object_pair.html#a16d1f72890a21590044b8a915f5793f0">ObjectPair::second()</a></li>
+<li><a class="el" href="classltr_1_1_object_pair.html#a5bc9d0318053b4a97ae09dba7f1484eb">ObjectPair::first</a>, <a class="el" href="classltr_1_1_object_pair.html#a16d1f72890a21590044b8a915f5793f0">ObjectPair::second</a></li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: manipulating ojects in pair. </td></tr>
+<th>Example: Manipulating objects in pair </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object__pair_8h.html">ltr/data/object_pair.h</a>&quot;</span>
@@ -314,24 +319,19 @@ ObjectPair</h2>
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_pair.html">ltr::ObjectPair</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-  ObjectPair pair1;
+  ObjectPair pair;
   Object obj1, obj2;
-  obj1 &lt;&lt; 1 &lt;&lt; 34 &lt;&lt; 5 &lt;&lt; 3;
-  obj2 &lt;&lt; 4 &lt;&lt; 65 &lt;&lt; 2 &lt;&lt; 5;
-  pair1.first = obj1;
-  pair1.second = obj2;
+  obj1 &lt;&lt; 1 &lt;&lt; 2 &lt;&lt; 3 &lt;&lt; 4;
+  obj2 &lt;&lt; 4 &lt;&lt; 6 &lt;&lt; 7 &lt;&lt; 8;
+  pair.first = obj1;
+  pair.second = obj2;
 
-  cout &lt;&lt; pair1.first.features()[0] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>
-       &lt;&lt; pair1.first.features()[3] &lt;&lt; endl;
-  cout &lt;&lt; pair1.first.features()[1] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>
-       &lt;&lt; pair1.second.features()[2];
+  cout &lt;&lt; <span class="stringliteral">&quot;pair = &quot;</span> &lt;&lt; pair &lt;&lt; endl;
+
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00], [4.00, 6.00, 7.00, 8.00])
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectList"></a>
 ObjectList</h2>
@@ -344,9 +344,9 @@ ObjectList</h2>
 <p>You can also add objects into list using operator&lt;&lt; or <a class="el" href="classltr_1_1_object_list.html#a92484286b47e88599df3467bad521296">add(Object) </a> method.<br/>
  List can be cleared by calling <a class="el" href="classltr_1_1_object_list.html#aa3e18d9e013370d3b00ddcca8200ec78">clear()</a> method.<br/>
  To find out, how many elements are there in the list, call the <a class="el" href="classltr_1_1_object_list.html#a4b1fcfadfe5de276876a03ac7e569dbe">size()</a> method.</p>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: managing <a class="el" href="classltr_1_1_object_list.html">ObjectList</a>. </td></tr>
+<th>Example: Managing ObjectList </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object__list_8h.html">ltr/data/object_list.h</a>&quot;</span>
@@ -373,11 +373,12 @@ ObjectList</h2>
   cout &lt;&lt; <span class="stringliteral">&quot;size of list: &quot;</span> &lt;&lt; list.size() &lt;&lt; endl;
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">list.at(0) = [1.40, 5.60, 12.50, 56.88]
+list[1] = [2.40, 7.60, 42.50, 12.88]
+size of list: 2
+list cleared
+size of list: 0
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataDataSet"></a>
 DataSet</h2>
@@ -412,9 +413,9 @@ Basic operations</h3>
 <ul>
 <li><a class="el" href="classltr_1_1_data_set.html#af2868844fcf27979623e388ad9785a3a">DataSet::deepCopy()</a> - creates a full copy of <a class="el" href="classltr_1_1_data_set.html">DataSet</a></li>
 </ul>
-<table  class="example">
+<table class="doxtable">
 <tr>
-<td>Example: basic <a class="el" href="classltr_1_1_data_set.html">DataSet</a> operations. </td></tr>
+<th>Example: Basic DataSet operations </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
@@ -438,6 +439,8 @@ Basic operations</h3>
   data.add(obj3, 2.12);
   data.add(obj4, 1.21);
 
+  cout &lt;&lt; <span class="stringliteral">&quot;data = &quot;</span> &lt;&lt; endl &lt;&lt; data &lt;&lt; endl; <span class="comment">// You can print DataSet</span>
+
   cout &lt;&lt; <span class="stringliteral">&quot;data.size() = &quot;</span> &lt;&lt; data.size() &lt;&lt; endl;
   cout &lt;&lt; <span class="stringliteral">&quot;data[0] = &quot;</span> &lt;&lt; data[0] &lt;&lt; endl;
   cout &lt;&lt; <span class="stringliteral">&quot;data.at(1) = &quot;</span> &lt;&lt; data.at(1) &lt;&lt; endl;
@@ -455,11 +458,22 @@ Basic operations</h3>
   cout &lt;&lt; <span class="stringliteral">&quot;data.size() = &quot;</span> &lt;&lt; data.size() &lt;&lt; endl;
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">data = 
+[12.00, 54.11]
+[1.30, 4.15]
+[10.30, 14.30]
+[19.00, 47.50]
+
+data.size() = 4
+data[0] = [12.00, 54.11]
+data.at(1) = [1.30, 4.15]
+data.getWeight(2) = 2.12
+data.getWeight(2) = 0.01
+called data.erase(1)
+data[1] = [10.30, 14.30]
+called data.clear()
+data.size() = 0
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataDataSetFeatureInfo"></a>
 Feature info</h3>
@@ -489,11 +503,7 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 <li><code>filename</code> - name of file to save data in </li>
 <li><code>format</code> - format to save data. Can be "smv-lite" or "yandex"</li>
 </ul>
-<table  class="example">
-<tr>
-<td>Example: loading <a class="el" href="classltr_1_1_data_set.html">DataSet</a> from file. </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &quot;<a class="code" href="io__utility_8h.html">ltr/data/utility/io_utility.h</a>&quot;</span>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &quot;<a class="code" href="io__utility_8h.html">ltr/data/utility/io_utility.h</a>&quot;</span>
 
 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a30640be8338829068b02b93a14769bb2">ltr::io_utility::loadDataSet</a>;
 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a88a9b672e2c7c15a13a0d20f59866426">ltr::io_utility::saveDataSet</a>;
@@ -501,16 +511,14 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-        DataSet&lt;Object&gt; = loadDataSet&lt;Object&gt;(<span class="stringliteral">&quot;test_file&quot;</span>, <span class="stringliteral">&quot;svm-lite&quot;</span>);
-        <span class="keywordflow">return</span> 0;
+  DataSet&lt;Object&gt; = loadDataSet&lt;Object&gt;(<span class="stringliteral">&quot;test_file&quot;</span>, <span class="stringliteral">&quot;svm-lite&quot;</span>);
+  <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-</table>
-</div></div><!-- contents -->
+</pre></div> </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 12:03:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 4 2012 22:58:03 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
