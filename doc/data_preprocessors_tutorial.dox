@@ -21,18 +21,23 @@ Example: Preprocessing data                      | Output:
 
 %The main usage of DataPreprocessors is to preprocess data before learning.
 In order to do this just use method Learner::addDataPreprocessor.
+
 For example,
 
-    LinearLearner linear_learner;
-    linear_learner.addDataPreprocessor(new DataRandomSampler());
-    linear_learner.learn(data);
+~~~~~~~~~~~~~~~{.cpp}
+LinearLearner linear_learner;
+linear_learner.addDataPreprocessor(new DataRandomSampler());
+linear_learner.learn(data);
+~~~~~~~~~~~~~~~
 
 which is equal to
 
-    DataRandomSampler random_sampler();
-    random_sampler.apply(data, &preprocessed_data);
-    LinearLearner linear_learner;
-    linear_learner.learn(preprocessed_data);
+~~~~~~~~~~~~~~~{.cpp}
+DataRandomSampler random_sampler();
+random_sampler.apply(data, &preprocessed_data);
+LinearLearner linear_learner;
+linear_learner.learn(preprocessed_data);
+~~~~~~~~~~~~~~~
 
 \section DataPreprocessorsList List of all DataPrepocessors
 

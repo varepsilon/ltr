@@ -20,6 +20,8 @@ int main() {
   data.add(obj3, 2.12);
   data.add(obj4, 1.21);
 
+  cout << "data = " << endl << data << endl; // You can print DataSet
+
   cout << "data.size() = " << data.size() << endl;
   cout << "data[0] = " << data[0] << endl;
   cout << "data.at(1) = " << data.at(1) << endl;

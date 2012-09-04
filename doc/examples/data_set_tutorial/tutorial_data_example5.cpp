@@ -8,16 +8,14 @@ using ltr::Object;
 using ltr::ObjectPair;
 
 int main() {
-  ObjectPair pair1;
+  ObjectPair pair;
   Object obj1, obj2;
-  obj1 << 1 << 34 << 5 << 3;
-  obj2 << 4 << 65 << 2 << 5;
-  pair1.first = obj1;
-  pair1.second = obj2;
+  obj1 << 1 << 2 << 3 << 4;
+  obj2 << 4 << 6 << 7 << 8;
+  pair.first = obj1;
+  pair.second = obj2;
 
-  cout << pair1.first.features()[0] << " "
-       << pair1.first.features()[3] << endl;
-  cout << pair1.first.features()[1] << " "
-       << pair1.second.features()[2];
+  cout << "pair = " << pair << endl;
+
   return 0;
 }
