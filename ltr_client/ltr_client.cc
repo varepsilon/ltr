@@ -1,57 +1,103 @@
-// Copyright 2011 Yandex
-
-#include "ltr_client/ltr_client.h"
+// Copyright 2012 Yandex
 
 #include <iostream>
+#include <stdexcept>
+#include <string>
 #include <vector>
 
-using std::cout;
-
 #include "boost/algorithm/string.hpp"
-#include "ltr_client/configurator.h"
-#include "ltr_client/factory.h"
-#include "ltr/learners/learner.h"
-#include "ltr/data/utility/io_utility.h"
-
-// For factory purposes
-#include "ltr/learners/best_feature_learner/best_feature_learner.h"
-#include "ltr/measures/ndcg.h"
 
 #include "logog/logog.h"
 
-class LtrClientPrivate {
- public:
-  template <class TElement>
-  void executeTrain(ltr::Parameterized* parameterized,
-                const TTrainInfo &train_info);
+#include "ltr/aggregators/aggregator.h"
+#include "ltr/aggregators/average_aggregator.h"
+#include "ltr/aggregators/vote_aggregator.h"
 
-  Configurator configurator;
-  TXmlTokenSpecList getLoadQueue() const;
-};
+#include "ltr/crossvalidation/splitter.h"
+#include "ltr/crossvalidation/crossvalidator.h"
+#include "ltr/crossvalidation/k_fold_simple_splitter.h"
 
-static bool BuildObjectCreationChain(const TXmlTokenSpec *spec,
-                           TXmlTokenSpecList *queue,
-                           TXmlTokenSpecList *circularity_check_queue) {
-  if (std::find(queue->begin(), queue->end(), spec) != queue->end())
+#include "ltr/data/utility/io_utility.h"
+
+#include "ltr/learners/learner.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
+
+#include "ltr/measures/measure.h"
+#include "ltr/measures/dcg.h"
+#include "ltr/measures/ndcg.h"
+#include "ltr/measures/abs_error.h"
+
+#include "ltr/metrics/metric.h"
+#include "ltr/metrics/euclidean_metric.h"
+
+#include "ltr_client/ltr_client.h"
+#include "ltr_client/configurator.h"
+#include "ltr_client/factory.h"
+#include "ltr_client/registration.h"
+
+#include "ltr/utility/neighbor_weighter.h"
+
+
+using std::cout;
+using std::find;
+using std::logic_error;
+using std::string;
+using std::vector;
+using std::endl;
+using std::ofstream;
+
+using ltr::Aggregator;
+using ltr::AverageAggregator;
+using ltr::Parameterized;
+using ltr::ParametersContainer;
+using ltr::Learner;
+using ltr::DataSet;
+using ltr::Scorer;
+using ltr::ObjectList;
+using ltr::ObjectPair;
+using ltr::Log;
+using ltr::BestFeatureLearner;
+using ltr::LinearLearner;
+using ltr::EuclideanMetric;
+using ltr::Measure;
+using ltr::NNLearner;
+using ltr::NDCG;
+using ltr::DCG;
+
+using ltr::cv::Splitter;
+using ltr::cv::KFoldSimpleSplitter;
+using ltr::io_utility::loadDataSet;
+using ltr::utility::InverseLinearDistance;
+
+typedef  string ParameterizedDependency;
+
+static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
+    ParametrizedInfosList* queue,
+    ParametrizedInfosList* circularity_check_queue) {
+  if (find(queue->begin(), queue->end(), spec) != queue->end()) {
     return true;
+  }
 
   // check for circular dependencies
-  TXmlTokenSpecList::const_iterator begin_it =
-      std::find(circularity_check_queue->begin(),
-                circularity_check_queue->end(),
-                spec);
+  ParametrizedInfosList::const_iterator begin_it = find(
+    circularity_check_queue->begin(), circularity_check_queue->end(), spec);
 
-  if (begin_it != circularity_check_queue->end())
-    throw std::logic_error("Circular dependency detected!");
+  if (begin_it != circularity_check_queue->end()) {
+    throw logic_error("Circular dependency detected!");
+  }
   circularity_check_queue->push_back(spec);
 
   // add dependencies
-  for (TXmlTokenSpecList::const_iterator it = spec->dependencySpecs().begin();
-      it != spec->dependencySpecs().end();
-      ++it) {
-    const TXmlTokenSpec *dep_spec = *it;
-    if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue))
-      throw std::logic_error("Can not resolve dependencies!");
+  for (ParametrizedInfosList::const_iterator it =
+        spec->dependency_specs().begin();
+        it != spec->dependency_specs().end();
+        ++it) {
+    const ParametrizedInfo* dep_spec = *it;
+    if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
+      throw logic_error("Can not resolve dependencies!");
+    }
   }
 
   // add self
@@ -59,214 +105,278 @@ static bool BuildObjectCreationChain(const TXmlTokenSpec *spec,
   return true;
 }
 
-static TXmlTokenSpecList values(const Configurator::TXmlTokenSpecs &cont) {
-  TXmlTokenSpecList values;
-  for (Configurator::TXmlTokenSpecs::const_iterator it = cont.begin();
-      it != cont.end();
-      ++it) {
-    const TXmlTokenSpec &spec = it->second;
+static ParametrizedInfosList values(
+    const ConfigParser::ParameterizedInfos& cont) {
+  ParametrizedInfosList values;
+  for (ConfigParser::ParameterizedInfos::const_iterator it = cont.begin();
+       it != cont.end();
+       ++it) {
+    const ParametrizedInfo& spec = it->second;
     values.push_back(&spec);
   }
   return values;
 }
 
-TXmlTokenSpecList LtrClientPrivate::getLoadQueue() const {
-  const TXmlTokenSpecList &all_specs = values(configurator.xmlTokenSpecs());
+ParametrizedInfosList LtrClient::getLoadQueue() const {
+  const ParametrizedInfosList& all_specs =
+    values(configurator_.xmlTokenSpecs());
 
-  TXmlTokenSpecList result;
-  for (TXmlTokenSpecList::const_iterator it = all_specs.begin();
-      it != all_specs.end();
-      ++it) {
-    const TXmlTokenSpec *spec = *it;
-    TXmlTokenSpecList circularity_check_queue;
+  ParametrizedInfosList result;
+  for (ParametrizedInfosList::const_iterator it = all_specs.begin();
+       it != all_specs.end();
+       ++it) {
+    const ParametrizedInfo* spec = *it;
+    ParametrizedInfosList circularity_check_queue;
     BuildObjectCreationChain(spec, &result, &circularity_check_queue);
   }
   return result;
 }
 
+LtrClient::LtrClient()
+: configurator_() {}
 
-LtrClient::LtrClient(): d(new LtrClientPrivate) {
+LtrClient::~LtrClient() {}
+
+static ParametersContainer Create(
+  const ParametersContainer& src_parameters,
+  const ConfigParser::ParameterizedInfos& all_specs);
+
+static boost::any Create(const string& name,
+  const ConfigParser::ParameterizedInfos& all_specs) {
+    ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
+    assert(it != all_specs.end());
+    const ParametrizedInfo* spec = &it->second;
+    const ParametersContainer& parameters =
+      Create(spec->get_parameters(), all_specs);
+    return Factory::instance()->Create(spec->get_type(), parameters);
 }
-LtrClient::~LtrClient() {
-  delete d;
-}
 
-static ltr::ParametersContainer Create(
-    const ltr::ParametersContainer &src_parameters,
-    const Configurator::TXmlTokenSpecs &all_specs);
+static ParametersContainer Create(
+  const ParametersContainer& src_parameters,
+  const ConfigParser::ParameterizedInfos& all_specs) {
+    ParametersContainer result;
+    for (ParametersContainer::StringAnyHash::const_iterator it =
+         src_parameters.begin();
+         it != src_parameters.end();
+         ++it) {
+      boost::any& parameter = const_cast<boost::any&>(it->second);
+      const string& name = it->first;
 
-static ltr::Parameterized *Create(const std::string &name,
-                               const Configurator::TXmlTokenSpecs &all_specs) {
-  Configurator::TXmlTokenSpecs::const_iterator it = all_specs.find(name);
-  assert(it != all_specs.end());
-  const TXmlTokenSpec *spec = &it->second;
-  const ltr::ParametersContainer &parameters =
-      Create(spec->getParameters(), all_specs);
-  return Factory::instance()->Create(spec->getType(), parameters);
-}
-static ltr::ParametersContainer Create(
-    const ltr::ParametersContainer &src_parameters,
-    const Configurator::TXmlTokenSpecs &all_specs) {
-
-  ltr::ParametersContainer result;
-  for (ltr::ParametersContainer::StringAnyHash::const_iterator it =
-       src_parameters.begin();
-      it != src_parameters.end();
-      ++it) {
-    const boost::any &parameter = it->second;
-    const std::string &name = it->first;
-
-    if (const TXmlTokenDependency *dependency =
-       boost::any_cast<TXmlTokenDependency>(&parameter)) {
-      typedef std::vector<std::string> TStringVector;
-      TStringVector strings;
-      boost::split(strings, dependency->parameter_name,
-                   boost::is_any_of("\t "));
-      assert(strings.size());
-      if (strings.size() == 1) {
-        result.AddNew(name, Create(strings[0], all_specs));
-      } else {
-        std::vector<boost::any> list;
-        for (TStringVector::const_iterator str_it = strings.begin();
-            str_it != strings.end();
-            ++str_it) {
-          list.push_back(Create(*str_it, all_specs));
+      if (const ParameterizedDependency* dependency =
+          boost::any_cast<ParameterizedDependency>(&parameter)) {
+        typedef vector<string> TStringVector;
+        TStringVector strings;
+        boost::split(strings, *dependency,
+                     boost::is_any_of("\t "));
+        assert(strings.size());
+        if (strings.size() == 1) {
+          result.AddNew(name, Create(strings[0], all_specs));
+        } else {
+          vector<boost::any> list;
+          for (TStringVector::const_iterator str_it = strings.begin();
+               str_it != strings.end();
+               ++str_it) {
+            list.push_back(Create(*str_it, all_specs));
+          }
+          result.AddNew(name, list);
         }
-        result.AddNew(name, list);
+      } else if (const ParametersContainer::Ptr cont =
+                 boost::any_cast<ParametersContainer>(&parameter)) {
+        result.AddNew(name, Create(*cont, all_specs));
+      } else {
+        result.AddNew(name, parameter);
       }
-    } else if (const ltr::ParametersContainer *cont =
-              boost::any_cast<ltr::ParametersContainer>(&parameter)) {
-      result.AddNew(name, Create(*cont, all_specs));
-    } else {
-      result.AddNew(name, parameter);
     }
-  }
-  return result;
+    return result;
 }
 
-void LtrClient::initFrom(const std::string &file_name) {
-  d->configurator.loadConfig(file_name);
-  d->getLoadQueue();  // check absence of circularity dependencies
-  /*const Configurator::TXmlTokenSpecs queue = d->getLoadQueue();
-  for (Configurator::TXmlTokenSpecs::const_iterator it = queue.begin();
-      it != queue.end();
-      ++it) {
-    const TXmlTokenSpec *spec = *it;
-    std::cout << "initFrom  " << ToString(*spec) << std::endl << std::endl;
-  }*/
+void LtrClient::initFrom(const string& file_name) {
+  configurator_.parseConfig(file_name);
+  getLoadQueue();  // check absence of circularity dependencies
 }
 
 template <class TElement>
-void LtrClientPrivate::executeTrain(ltr::Parameterized *parameterized,
-                                const TTrainInfo &train_info) {
-  ltr::Learner<TElement> *learner =                           //NOLINT
-      dynamic_cast<ltr::Learner<TElement> *>(parameterized);  //NOLINT
+void LtrClient::launchTrain(boost::any parameterized,
+                            const TrainLaunchInfo& train_info) {
+  typename Learner<TElement>::Ptr learner =
+    boost::any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
   assert(learner);
 
-  const TXmlTokenSpec &learner_info = configurator.findLearner(
-                                                           train_info.learner);
+  const ParametrizedInfo& learner_info =
+    configurator_.findParametrized(train_info.learner);
 
-  const TDataInfo &data_info = configurator.findData(train_info.data);
-  if (learner_info.getApproach() != data_info.approach)
-    throw std::logic_error("Approach of learner and data does not coincide!");
+  const DataInfo& data_info = configurator_.findData(train_info.data);
 
-  const ltr::DataSet<TElement> &data_set =
-                    ltr::io_utility::loadDataSet<TElement>(data_info.file_name,
-                                                            data_info.format);
+  if (learner_info.get_approach() != data_info.approach) {
+    throw logic_error("Approach of learner and data does not coincide!");
+  }
 
-  std::cout << "\n\n\nvoid doLaunch\n";
+  const DataSet<TElement>& data_set =
+    loadDataSet<TElement>(data_info.file, data_info.format);
+
+  INFO("\n\n\nvoid doLaunch\n");
   learner->learn(data_set);
 
-  std::cout << "\n\nTrain " << data_info.file_name << " finished. Report:"
-                        << learner->report() << std::endl;
+  INFO("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
+       learner->report().c_str());
 
-  for (boost::unordered_set<std::string>::const_iterator predict_it =
-      train_info.predicts.begin();
-      predict_it != train_info.predicts.end();
-      ++predict_it) {
-    const std::string &predict = *predict_it;
-    if (configurator.dataInfos().find(predict) ==
-       configurator.dataInfos().end()) {
-      std::cout << "Can't predict. Unknown data " << predict << std::endl;
+  for (boost::unordered_set<string>::const_iterator predict_it =
+       train_info.predicts.begin();
+       predict_it != train_info.predicts.end();
+       ++predict_it) {
+    const string& predict = *predict_it;
+    if (configurator_.dataInfos().find(predict) ==
+        configurator_.dataInfos().end()) {
+      INFO("Can't predict. Unknown data %s\n", predict.c_str());
       return;
     }
-    const std::string &predict_file_path = configurator.rootPath() +
-                                   learner_info.getName() + "."
-                                   + predict + ".predicts";
+    const string& predict_file_path = configurator_.rootPath() +
+      learner_info.get_name() + "." + predict + ".predicts";
 
-    ltr::Scorer::Ptr scorer = learner->make();
+    Scorer::Ptr scorer = learner->make();
+
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
-    std::cout << "\nsaved predictions for '" << predict
-                                    << "' into " << predict_file_path
-                                    << std::endl;
+
+    INFO("\nsaved predictions for '%s' into %s\n", predict.c_str(),
+         predict_file_path.c_str());
 
     if (train_info.gen_cpp) {
-        std::string cpp_file_path = configurator.rootPath() +
-                                    learner_info.getName() +
-                                    ".cpp";
-        std::ofstream fout(cpp_file_path.c_str());
-        fout << scorer->generateCppCode(learner_info.getName());
+      string cpp_file_path = configurator_.rootPath() +
+        learner_info.get_name() + ".cpp";
+        ofstream fout(cpp_file_path.c_str());
+        fout << scorer->generateCppCode(learner_info.get_name());
         fout.close();
-        std::cout  << "cpp code saved into " << cpp_file_path << std::endl;
+        INFO("cpp code saved into %s\n", cpp_file_path.c_str());
     }
   }
 }
 
+template <class TElement>
+void LtrClient::launchCrossvalidation(
+  const CrossvalidationLaunchInfo& crossvalidation_info) {
+    boost::unordered_set<string>::const_iterator
+      learners_alias = crossvalidation_info.learners.begin(),
+      measures_alias = crossvalidation_info.measures.begin(),
+      datas_alias = crossvalidation_info.datas.begin();
+
+
+    ltr::cv::CrossValidator<TElement> cross_validator;
+
+    for (; learners_alias != crossvalidation_info.learners.end();
+         ++learners_alias) {
+      const ParametrizedInfo& learner_info =
+        configurator_.findParametrized(*learners_alias);
+      const ParametersContainer& parameters =
+        Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
+      boost::any learner = Factory::instance()->Create(
+        learner_info.get_type() + learner_info.get_approach(), parameters);
+      cross_validator.addLearner(
+        boost::any_cast<typename Learner<TElement>::Ptr>(learner));
+    }
+
+    for (; measures_alias != crossvalidation_info.measures.end();
+            ++measures_alias) {
+      const ParametrizedInfo& measure_info =
+        configurator_.findParametrized(*measures_alias);
+      const ParametersContainer& parameters =
+        Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
+      boost::any measure = Factory::instance()->
+        Create(measure_info.get_type() + measure_info.get_approach(), parameters); // NOLINT
+      cross_validator.addMeasure(boost::any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
+    }
+
+    const ParametrizedInfo& splitter_info =
+      configurator_.findParametrized(crossvalidation_info.splitter);
+    const ParametersContainer& parameters =
+      Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
+    boost::any splitter = Factory::instance()->
+      Create(splitter_info.get_type() + splitter_info.get_approach(), parameters); // NOLINT
+    cross_validator.addSplitter(boost::any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
+
+    for (; datas_alias != crossvalidation_info.datas.end();
+         ++datas_alias) {
+      const DataInfo& data_info = configurator_.findData(*datas_alias);
+      typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
+      *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
+      cross_validator.addDataSet(data_set_ptr);
+    }
+
+    cross_validator.launch();
+    INFO(cross_validator.toString().c_str());
+}
+
 void LtrClient::launch() {
-  for (Configurator::TTrainInfos::const_iterator it =
-       d->configurator.trainInfos().begin();
-      it != d->configurator.trainInfos().end();
-      ++it) {
-    const TTrainInfo &train_info = it->second;
-    const TXmlTokenSpec &learner_info = d->configurator.findLearner(
-                                          train_info.learner);
+  for (ConfigParser::TrainInfos::const_iterator it =
+       configurator_.trainInfos().begin();
+       it != configurator_.trainInfos().end();
+       ++it) {
+    const TrainLaunchInfo& train_info = it->second;
+    const ParametrizedInfo& learner_info =
+      configurator_.findParametrized(train_info.learner);
 
-    const ltr::ParametersContainer &parameters = Create(
-                                               learner_info.getParameters(),
-                                               d->configurator.xmlTokenSpecs());
-    std::cout << "\nvoid LtrClient::launch()\n  parameters =" <<
-                 parameters.toString() << "\n";
-    ltr::Parameterized*
-        parameterized = Factory::instance()->Create(learner_info.getType() +
-                                                    learner_info.getApproach(),
-                                                    parameters);
+    const ParametersContainer& parameters =
+      Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
 
-    if (learner_info.getApproach() == "listwise") {
-      d->executeTrain<ltr::ObjectList>(parameterized, train_info);
-    } else if (learner_info.getApproach() == "pairwise") {
-      d->executeTrain<ltr::ObjectPair>(parameterized, train_info);
+    INFO("\nvoid LtrClient::launch()\nparameters=%s\n",
+         parameters.toString().c_str());
+
+    boost::any parameterized = Factory::instance()->
+      Create(learner_info.get_type() + learner_info.get_approach(), parameters);
+
+    if (learner_info.get_approach() == "listwise") {
+      launchTrain<ObjectList>(parameterized, train_info);
+    } else if (learner_info.get_approach() == "pairwise") {
+      launchTrain<ObjectPair>(parameterized, train_info);
+    } else {
+      assert(false && "Not implemented yet");
+    }
+  }
+
+  for (ConfigParser::CrossvalidationInfos::const_iterator iterator =
+       configurator_.crossvalidationInfos().begin();
+       iterator != configurator_.crossvalidationInfos().end();
+       ++iterator) {
+    const CrossvalidationLaunchInfo& crossvalidation_info =
+      iterator->second;
+    const ParametrizedInfo& learner_info =
+      configurator_.findParametrized(*crossvalidation_info.learners.begin());
+
+    if (learner_info.get_approach() == "listwise") {
+      launchCrossvalidation<ObjectList>(crossvalidation_info);
+      // We can't do that while we don't have measure for ObjectPair.
+      // } else if (learner_info.getApproach() == "pairwise") {
+      //   launchCrossvalidation<ObjectPair>(crossvalidation_info);
     } else {
       assert(false && "Not implemented yet");
     }
   }
 }
 
+
 // #define LOGOG_GROUP NULL
 
 // ===========================================================================
 
 int main(int argc, char* argv[]) {
-  ltr::Log LOG;
+  Log LOG;
 
   if (argc < 2) {
       ERR("config file  missing");
       return 1;
   }
-  Factory factory;
 
-  factory.registerType<ltr::BestFeatureLearner<ltr::ObjectList> >
-      ("BEST_FEATURElistwise");
-  factory.registerType<ltr::NDCG>("NDCG");
-  cout << "!!!!!!!!";
+  Factory factory;
+  RegisterAllTypes(&factory);
+
   LtrClient client;
+
   try {
       client.initFrom(argv[1]);
       client.launch();
-  } catch(const std::logic_error &err) {
+  } catch(const logic_error& err) {
       ERR("Failed: %s", err.what());
   } catch(...) {
       ERR("Caught exception");
   }
-
   return 0;
 }

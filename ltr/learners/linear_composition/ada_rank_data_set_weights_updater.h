@@ -1,18 +1,21 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_LEARNERS_LINEAR_COMPOSITION_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_LINEAR_COMPOSITION_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
-
-#include "ltr/utility/shared_ptr.h"
 
 #include <cmath>
 #include <string>
 #include <vector>
 
-#include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
-#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
+
 #include "ltr/learners/linear_composition/data_set_weights_updater.h"
+
+#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
+
+#include "ltr/utility/shared_ptr.h"
+
+#include "ltr/measures/measure.h"
 
 using std::string;
 using std::vector;
@@ -61,7 +64,7 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
   vector<double> measure_exps(data->size());
   double sum_exps = 0.0;
 
-  for (size_t data_index = 0; data_index < data->size(); ++data_index) {
+  for (int data_index = 0; data_index < data->size(); ++data_index) {
     double measure_value = this->measure_->operator()(data->at(data_index));
     double normalized_measure_value =
       (measure_value - this->measure_->worst()) /
@@ -72,7 +75,7 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     sum_exps += measure_value_exp;
   }
 
-  for (size_t data_index = 0; data_index < data->size(); ++data_index) {
+  for (int data_index = 0; data_index < data->size(); ++data_index) {
     data->setWeight(data_index, measure_exps[data_index] / sum_exps);
   }
 }

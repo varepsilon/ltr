@@ -1,0 +1,107 @@
+namespace ltr {
+/** \page TutorialMeasureLearnerScorer Tutorial page 5 - Learners, Scorers, Measures
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section TutorialMLS Measures, Learners, Scorers
+
+Suppose you are given set of objects and set of possible replies for this objects.
+You have to find function between objects and replies.
+Also you are given a set of (object, answer), where object is from object's set and answer is from set of replies.
+Set of such pairs called training data. You may assume that there is another set of objects called testing data.
+The machine learning problem is to predict answers for objects from testing data, using training data.
+
+There are three basic parts which we have to know to continue our tutorial.
+
+\li Measure. Measure is something like quality indicator.
+\li Learner. Learner is the main part and it process the data.
+\li Scorer. You may assume that scorer is a function (object -> real value).
+
+\subsection TutorialMLSMeasures Measures
+Let's try to explain what is the measure. Measure is function which helps us to estimate quality of our predictions for testing data.
+
+All available measures in LTR can be divided into three groups. Measures for classification problems, measures for regression problems and measures for ranking problems.
+Look below to see examples of measures for different problems' types.
+
+\subsubsection TutorialMLSMeasuresClassify Classification problem
+Consider the situation when we have set {0, 1} as a set of possible replies. We know classes for objects from some dataset.
+Suppose we develop algorithm which predict classes for object from this dataset. And our algorithm sometimes mismatch with real answers.
+Then the rate of mismatches can be a function which estimate quality of our algorithm. In this case the rate of mismatches is the measure.
+If rate equals to 0, then our algorithm is perfect.
+
+\subsubsection TutorialMLSMeasuresRegression Regression problem
+Consider the situation when we have set of all real numbers as a set of possible replies. Then we obtain regression problem.
+Our algorithm have to predict real value for every object from testing data. How we can estimate quality of algorithm in such case?
+One of well known ways is using squared error. Let real results for objects are x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>, and results of our algorithm are 
+y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>n</sub>. Then quality of algorithm can be evaluated using following formula: \f[quality = \sum\limits_{i=1}^n\left(\left(x_i-y_i\right)^2\right)\f]
+The smaller this sum is the better.
+
+\subsubsection TutorialMLSMeasureRanking Ranking problem
+This case is much more complicated than two previous. Usually we use DCG, normalized DCG measures and others here.
+
+\subsection TutorialLearnerScorer Learners and scorers
+
+Learner is a program which process the training data. If it is necessary learner gets measure as the input parameter.
+Usually learner trying to optimize measure according to the given problem.
+After learning learner outputs a scorer. Scorer is a function which associates real value with object.
+Then we get real values as a parameter of every object. This parameters are very useful. Let's describe some problems which
+can be solved using this information.
+
+\li Classification problem. 
+\li Regression problem. 
+\li Ranking problem. We need to sort available objects by score and we will get an order.
+
+How it works you can see at the example below.
+
+<table class="example">
+<tr><td>Example: operating with learners and scorers. Regression problem.</td></tr>
+<tr><td>
+\include tutorial_mls_example1.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_mls_example1.out
+</td></tr>
+</table>
+
+LTR supports different types of learners. Some of this types are linear learner, linear composition learner, decision tree learner.
+Each learner from LTR has its own scorer.
+
+Let's look at another example. Here we download data from file.
+
+<table class="example">
+<tr><td>Example: operating with learners and scorers.</td></tr>
+<tr><td>
+\code
+#include <iostream>
+
+#include "ltr/data/utility/io_utility.h"
+#include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/measures/dcg.h"
+#include "ltr/scorers/gp_scorer.h"
+
+using ltr::DataSet;
+using ltr::io_utility::loadDataSet;
+using ltr::io_utility::saveDataSet;
+
+int main() {
+  ltr::Measure<ltr::ObjectList>::Ptr dcg_measure(new ltr::DCG());
+  ltr::gp::GPLearner<ltr::ObjectList> gp_learner(dcg_measure);
+
+  DataSet<ltr::ObjectList> training_data =
+    loadDataSet<ltr::ObjectList>("training_data.txt", "YANDEX");
+  DataSet<ltr::ObjectList> testing_data =
+    loadDataSet<ltr::ObjectList>("testing_data.txt", "YANDEX");
+  
+  gp_learner.learn(training_data);
+
+  gp_learner.make()->predict(testing_data);
+
+  saveDataSet(testing_data, "result_data.txt", "YANDEX");
+}
+\endcode
+</td></tr>
+</table>
+**/
+}

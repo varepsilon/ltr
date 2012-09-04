@@ -26,11 +26,12 @@ class PerFeatureLinearConverter : public FeatureConverter {
   typedef ltr::utility::shared_ptr<PerFeatureLinearConverter> Ptr;
 
   explicit PerFeatureLinearConverter(
-    const FeatureInfo& input_feature_info = FeatureInfo()) {
-    resize(input_feature_info);
+    const FeatureInfo& input_feature_info = FeatureInfo())
+    : FeatureConverter(input_feature_info) {
+      resize(input_feature_info);
   }
 
-  virtual void fillOutputFeatureInfo();
+  virtual FeatureInfo convertFeatureInfo() const;
   /**
    * change expected feature info of input object and resizes
    * factors and shifts vectors
@@ -39,19 +40,19 @@ class PerFeatureLinearConverter : public FeatureConverter {
   /**
    * get component of factors vector
    */
-  double factor(size_t feature_index) const;
+  double factor(int feature_index) const;
   /**
    * set component of factors vector
    */
-  void set_factor(size_t feature_index, double coefficient);
+  void set_factor(int feature_index, double coefficient);
   /**
    * get component of shifts vector
    */
-  double shift(size_t feature_index) const;
+  double shift(int feature_index) const;
   /**
    * set component of shifts vector
    */
-  void set_shift(size_t feature_index, double shift);
+  void set_shift(int feature_index, double shift);
 
   virtual string generateCppCode(const string& function_name) const;
 
@@ -64,5 +65,4 @@ class PerFeatureLinearConverter : public FeatureConverter {
   vector<double> shifts_;
 };
 };
-
 #endif  // LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_

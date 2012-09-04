@@ -1,0 +1,54 @@
+namespace ltr {
+/** \page HowToCreateNewLearnerAndScorer How to create new learner and scorer
+	\ingroup Advanced
+
+\tableofcontents
+
+\section CreatingNewScorer Creating new scorer
+
+It is necessary to create a scorer before creating a learner. \n
+First of all you should create a scorer class inherited from Scorer abstract class. Let's call this class "NewScorer" \n
+It's recommended to create a typedef for the shared pointer:
+\code
+typedef ltr::utility::shared_ptr<NewScorer> Ptr;
+\endcode
+
+Then you should decide which field your scorer will content and create them. \n
+After this create constructors.\n
+Now you should create method scoreImpl, that has signature, written in the code below:
+\code
+virtual double scoreImpl(const Object& object) const
+\endcode
+
+scoreImpl is the most important method of the class. It implements scoring of the recieved object.
+
+Also NewScorer should contain method generateCppCodeImpl with such signature:
+\code
+virtual string generateCppCodeImpl(const string& object_name) const;
+\endcode
+This function will serialize object of NewClass into valid C++ code.
+
+
+
+\section CreatingNewLearner Creating new learner
+Now if you have created a NewScorer class, you can start to create an own learner. Let's call this class "NewLearner" \n
+This class must be inharited from BaseLearner.
+First of all you should create a typedef for the shared pointer:
+\code
+typedef ltr::utility::shared_ptr<NewLearner> Ptr;
+\endcode
+
+Then create fields that are necessary for the NewLearner.
+You should create at least two constructors. \n
+First container will recieve ParametersContainer and the second will recieve explicit parameters that will initialize field of the NewClass.
+
+After creating all this stuff, you can start to create the most important method of the learner - learnImpl:
+\code
+void learnImpl(const DataSet<TElement>& data, NewScorer* scorer)
+\endcode
+As you see, this function recieves learning data set and pointer to NewScorer. \n
+After the learning process this method must generate a NewScorer. \n
+Then you can use generated scorer to predict the labels of objects. \n
+
+**/
+}

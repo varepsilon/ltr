@@ -7,33 +7,29 @@
 #include <vector>
 #include <limits>
 
-#include "ltr/feature_converters/nan_to_average_converter.h"
+#include "ltr/feature_converters/nan_to_neutral_converter.h"
 #include "ltr/feature_converters/feature_converter_learner.h"
 
 namespace ltr {
 /**
- * Produces NanToAverageConverter
+ * Produces NanToNeutralConverter with average features neutral object.
  */
 template <typename TElement>
 class NanToAverageConverterLearner
-    : public BaseFeatureConverterLearner<TElement, NanToAverageConverter> {
+  : public BaseFeatureConverterLearner<TElement, NanToNeutralConverter> {
  public:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         NanToAverageConverter* feature_converter);
+                         NanToNeutralConverter* feature_converter);
 
-  virtual string toString() const {
-    return "NanToAverageConverterLearner";
-  }
+  virtual string toString() const;
 
  private:
-  virtual string getDefaultAlias() const {
-    return "NanToAverageConverterLearner";
-  }
+  virtual string getDefaultAlias() const;
 };
 
 template <typename TElement>
 void NanToAverageConverterLearner<TElement>::learnImpl(
-  const DataSet<TElement>& data_set, NanToAverageConverter* feature_converter) {
+  const DataSet<TElement>& data_set, NanToNeutralConverter* feature_converter) {
     vector<double> average_features_values(data_set.feature_count());
 
     for (int feature_index = 0;
@@ -57,7 +53,19 @@ void NanToAverageConverterLearner<TElement>::learnImpl(
       }
     }
 
-    feature_converter->set_average_features_values(average_features_values);
+    Object average_features_object;
+    average_features_object.features() = average_features_values;
+    feature_converter->set_neutral_object(average_features_object);
+}
+
+template <typename TElement>
+string NanToAverageConverterLearner<TElement>::toString() const {
+  return "NanToAverageConverterLearner";
+}
+
+template <typename TElement>
+string NanToAverageConverterLearner<TElement>::getDefaultAlias() const {
+  return "NanToAverageConverterLearner";
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_NAN_TO_AVERAGE_LEARNER_H_

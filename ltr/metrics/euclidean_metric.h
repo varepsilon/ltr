@@ -16,8 +16,20 @@ namespace ltr {
  */
 class EuclideanMetric : public BaseMetric {
  public:
+
+  EuclideanMetric() {
+  }
+
+  explicit EuclideanMetric(const ParametersContainer& parameters) {
+  }
+
   typedef ltr::utility::shared_ptr<EuclideanMetric> Ptr;
   virtual double distance(const ltr::Object& lhs, const ltr::Object& rhs);
+
+  /** the function generates code for the metric as cpp code function
+   * \param class_name the name for the class that would be created.
+   */
+  string generateCppCode(const string& function_name) const;
 
  private:
   virtual string getDefaultAlias() const;

@@ -7,30 +7,29 @@
 using std::logic_error;
 
 namespace ltr {
-void PerFeatureLinearConverter::fillOutputFeatureInfo()  {
-  output_feature_info_ = input_feature_info_;
+FeatureInfo PerFeatureLinearConverter::convertFeatureInfo() const {
+  return input_feature_info_;
 }
 
 void PerFeatureLinearConverter::resize(const FeatureInfo& input_feature_info) {
   factors_.resize(input_feature_info.feature_count(), 1.);
   shifts_.resize(input_feature_info.feature_count(), 0.);
-  fillOutputFeatureInfo();
 }
 
-double PerFeatureLinearConverter::factor(size_t feature_index) const {
+double PerFeatureLinearConverter::factor(int feature_index) const {
   return factors_[feature_index];
 }
 
-void PerFeatureLinearConverter::set_factor(size_t feature_index,
-                                                double coefficient) {
+void PerFeatureLinearConverter::set_factor(int feature_index,
+                                           double coefficient) {
   factors_[feature_index] = coefficient;
 }
 
-double PerFeatureLinearConverter::shift(size_t feature_index) const {
+double PerFeatureLinearConverter::shift(int feature_index) const {
   return shifts_[feature_index];
 }
 
-void PerFeatureLinearConverter::set_shift(size_t feature_index, double shift) {
+void PerFeatureLinearConverter::set_shift(int feature_index, double shift) {
   shifts_[feature_index] = shift;
 }
 
@@ -43,7 +42,7 @@ string PerFeatureLinearConverter::generateCppCode(
     append("(const std::vector<double>& features, ").
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n");
-    for (size_t i = 0; i < factors_.size(); i++) {
+    for (int i = 0; i < (int)factors_.size(); ++i) {
       code.
         append("  result->push_back(features[").
         append(boost::lexical_cast<string>(i)).
@@ -59,13 +58,13 @@ string PerFeatureLinearConverter::generateCppCode(
 
 void PerFeatureLinearConverter::applyImpl(const Object& input,
                                                 Object* output) const {
-  *output = input.deepCopy();
-#pragma omp parallel for
+  Object converted_object = input.deepCopy();
   for (int feature_index = 0;
-      feature_index < output->features().size(); ++feature_index) {
-    output->at(feature_index) *= factors_[feature_index];
-    output->at(feature_index) += shifts_[feature_index];
+       feature_index < (int)input.features().size(); ++feature_index) {
+    converted_object[feature_index] *= factors_[feature_index];
+    converted_object[feature_index] += shifts_[feature_index];
   }
+  *output = converted_object;
 }
 
 string PerFeatureLinearConverter::getDefaultAlias() const {

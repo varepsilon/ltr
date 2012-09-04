@@ -3,21 +3,28 @@
 #ifndef LTR_LEARNERS_LEARNER_H_
 #define LTR_LEARNERS_LEARNER_H_
 
-#include "ltr/utility/shared_ptr.h"
-
 #include <vector>
 #include <string>
 
 #include "ltr/data/data_set.h"
+
 #include "ltr/data_preprocessors/data_preprocessor.h"
+
 #include "ltr/feature_converters/feature_converter_learner.h"
+
 #include "ltr/interfaces/reporter.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/interfaces/parameterized.h"
+
 #include "ltr/measures/measure.h"
+
 #include "ltr/parameters_container/parameters_container.h"
+
 #include "ltr/scorers/scorer.h"
+
 #include "ltr/interfaces/printable.h"
+
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 using std::vector;
@@ -166,16 +173,17 @@ void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
   DataSet<TElement> source_data = data_set.deepCopy();
   DataSet<TElement> converted_data;
 
-  for (int i = 0; i < data_preprocessors_.size(); ++i) {
-    data_preprocessors_[i]->apply(source_data, &converted_data);
+  for (int index = 0; index < (int)data_preprocessors_.size(); ++index) {
+    data_preprocessors_[index]->apply(source_data, &converted_data);
     source_data = converted_data;
   }
 
   feature_converters_.clear();
-  for (size_t i = 0; i < feature_converter_learners_.size(); ++i) {
-    feature_converter_learners_[i]->learn(source_data);
-    feature_converters_.push_back(feature_converter_learners_[i]->make());
-    feature_converters_[i]->apply(source_data, &converted_data);
+  for (int index = 0;
+       index < (int)feature_converter_learners_.size(); ++index) {
+    feature_converter_learners_[index]->learn(source_data);
+    feature_converters_.push_back(feature_converter_learners_[index]->make());
+    feature_converters_[index]->apply(source_data, &converted_data);
     source_data = converted_data;
   }
 

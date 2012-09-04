@@ -12,7 +12,7 @@
 #include "ltr/measures/dcg.h"
 #include "ltr/measures/true_point.h"
 
-#include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/feature_converters/nan_to_neutral_converter.h"
 
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_primitives.h"
@@ -39,7 +39,7 @@ using ltr::Measure;
 
 using ltr::io_utility::loadDataSet;
 
-using ltr::NanToZeroConverter;
+using ltr::NanToNeutralConverter;
 
 using ltr::gp::GPLearner;
 using ltr::gp::GPScorer;
@@ -57,8 +57,11 @@ class GPLearnerTest : public ::testing::Test {
       path("data/imat2009/imat2009_learning_small.txt").string();
     learn_data = loadDataSet<Object>(learn_data_file_name, "YANDEX");
 
-    NanToZeroConverter::Ptr nan_to_zero_converter
-    (new NanToZeroConverter(learn_data.feature_info()));
+    NanToNeutralConverter::Ptr nan_to_zero_converter
+    (new NanToNeutralConverter(learn_data.feature_info()));
+    Object zero_features_object;
+    zero_features_object.features().assign(learn_data.feature_count(), 0.0);
+    nan_to_zero_converter->set_neutral_object(zero_features_object);
     nan_to_zero_converter->apply(learn_data, &learn_data);
   }
 

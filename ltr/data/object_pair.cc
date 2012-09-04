@@ -1,18 +1,18 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include <sstream>
 
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
+
 #include "ltr/utility/numerical.h"
 
 namespace ltr {
-
 ObjectPair::ObjectPair() {}
 
 ObjectPair::ObjectPair(const Object& first, const Object& second)
-                      : first(first),
-                        second(second) {}
+  : first(first),
+    second(second) {}
 
 ObjectPair ObjectPair::deepCopy() const {
   ObjectPair result = *this;
@@ -34,4 +34,4 @@ bool operator==(const ObjectPair& lhs, const ObjectPair& rhs) {
 bool operator!=(const ObjectPair& lhs, const ObjectPair& rhs) {
   return !(lhs == rhs);
 }
-}
+};

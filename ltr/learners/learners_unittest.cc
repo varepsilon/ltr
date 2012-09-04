@@ -16,7 +16,7 @@
 #include "ltr/measures/dcg.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/data/data_set.h"
-#include "ltr/feature_converters/nan_to_zero_converter.h"
+#include "ltr/feature_converters/nan_to_zero_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
 #include "ltr/scorers/linear_scorer.h"
 

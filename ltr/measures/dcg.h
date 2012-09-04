@@ -134,8 +134,8 @@ double BaseDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
   vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
   sort(labels.begin(), labels.end(), PredictedDecreasingActualIncreasing);
 
-  size_t n = this->number_of_objects_to_consider_;
-  if ((n == 0) || (n > labels.size())) {
+  int n = this->number_of_objects_to_consider_;
+  if ((n == 0) || (n > (int)labels.size())) {
     n = labels.size();
   }
 

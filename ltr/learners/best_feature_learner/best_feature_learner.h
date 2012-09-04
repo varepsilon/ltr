@@ -3,13 +3,13 @@
 #ifndef LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 #define LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include <logog/logog.h>
 
 #include <stdexcept>
 #include <string>
 #include <limits>
 
-
+#include "ltr/utility/shared_ptr.h"
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/one_feature_scorer.h"
 #include "ltr/measures/measure.h"
@@ -26,6 +26,9 @@ template< class TElement >
 class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
   typedef ltr::utility::shared_ptr<BestFeatureLearner> Ptr;
+
+  BestFeatureLearner() {
+  }
 
   explicit BestFeatureLearner(const ParametersContainer& parameters) {
     this->setParameters(parameters);
@@ -63,10 +66,13 @@ string BestFeatureLearner<TElement>::toString() const {
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
+  INFO("Starting learning");
   if (measure_.get() == 0) {
+    INFO("Measure is equal to zero");
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {
+    INFO("Data is empty");
     throw std::logic_error("There are no features for BF learner.");
   }
 
@@ -76,7 +82,7 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   current_scorer.predict(data);
   double best_measure_value = this->measure_->average(data);
 
-  for (size_t feature_index = 1;
+  for (int feature_index = 1;
        feature_index < data.feature_count();
        ++feature_index) {
     OneFeatureScorer current_scorer(feature_index);

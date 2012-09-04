@@ -48,7 +48,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   DataSet<Object> data;
   const int N = 145;
   const int featureN = 3;
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < N; ++i) {
     Object obj;
     for (int j = 0; j < featureN; j++)
       obj << static_cast<double>(randomizer.rand()) / 15332;
@@ -62,8 +62,9 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   const int max_list_size = 15;
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
-  for (int i = 0; i < N; i++) {
-    int cn = randomizer.rand() % (1 + max_list_size - min_list_size) + min_list_size;
+  for (int i = 0; i < N; ++i) {
+    int cn = randomizer.rand() %
+      (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
@@ -83,7 +84,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   DataSet<Object> data;
   const int N = 145;
   const int featureN = 3;
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < N; ++i) {
     Object obj;
     for (int j = 0; j < featureN; j++)
       obj << static_cast<double>(randomizer.rand()) / 15332;
@@ -95,8 +96,9 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
   const int max_list_size = 15;
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
-  for (int i = 0; i < N; i++) {
-    int cn = randomizer.rand() % (1 + max_list_size - min_list_size) + min_list_size;
+  for (int i = 0; i < N; ++i) {
+    int cn = randomizer.rand() %
+      (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
@@ -127,7 +129,7 @@ TEST_F(IOUtilityTest, TestingSavePredictions) {
   DataSet<Object> data;
   const int N = 145;
   const int featureN = 3;
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < N; ++i) {
     Object obj;
     for (int j = 0; j < featureN; j++)
       obj << static_cast<double>(randomizer.rand()) / 15332;

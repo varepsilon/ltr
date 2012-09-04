@@ -12,6 +12,14 @@
 #include "ltr/learners/linear_composition/linear_composition_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/scorers/nearest_neighbor_scorer.h"
+#include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
+#include "ltr/utility/neighbor_weighter.h"
+#include "ltr/metrics/metric.h"
+#include "ltr/metrics/euclidean_metric.h"
+#include "ltr/aggregators/aggregator.h"
+#include "ltr/aggregators/vote_aggregator.h"
+
 
 using ltr::BestFeatureLearner;
 using ltr::AbsError;
@@ -21,6 +29,10 @@ using ltr::gp::GPLearner;
 using ltr::lc::LinearCompositionLearner;
 using ltr::FeatureRandomSamplerLearner;
 using ltr::LinearLearner;
+using ltr::NNScorer;
+using ltr::utility::NeighborWeighter;
+using ltr::BaseMetric;
+using ltr::NNLearner;
 
 using serialization_test::Generator;
 
@@ -64,7 +76,14 @@ int main(int argc, char* argv[]) {
   rsm_lc_learner->learn(generator.train_data);
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 
+  NNLearner<Object>::Ptr
+    nn_learner(new NNLearner<Object>(new ltr::EuclideanMetric,
+                                     new ltr::utility::InverseLinearDistance,
+                                     new ltr::VoteAggregator,
+                                     2));
+
+  nn_learner->learn(generator.train_data);
+  generator.setScorerTest(nn_learner, "KNNScorer");
   generator.write(argv[1]);
   return 0;
 }
-

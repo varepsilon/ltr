@@ -3,6 +3,8 @@
 #ifndef LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 #define LTR_PARAMETERS_CONTAINER_PARAMETERS_CONTAINER_H_
 
+#pragma warning(disable: 4290)
+
 #include <list>
 #include <stdexcept>
 #include <string>
@@ -10,7 +12,10 @@
 #include <boost/any.hpp> //NOLINT
 #include <boost/unordered_map.hpp> //NOLINT
 
+#include "ltr/utility/shared_ptr.h"
+
 #include "ltr/interfaces/printable.h"
+
 
 using std::list;
 using std::string;
@@ -26,6 +31,7 @@ namespace ltr {
 class ParametersContainer: public Printable {
  public:
   typedef boost::unordered_map<string, boost::any> StringAnyHash;
+  typedef ltr::utility::shared_ptr<ParametersContainer> Ptr;
 
   ParametersContainer();
   ParametersContainer(const ParametersContainer& other);
@@ -46,6 +52,13 @@ class ParametersContainer: public Printable {
   StringAnyHash::const_iterator end() const {
     return name_value_hash_.end();
   }
+  /**
+   * Returns true if the containter is empty,
+   * otherwise returns false
+   */
+  bool empty() const {
+    return name_value_hash_.empty();
+  }
 
   template <class T>
   struct NameValue {
@@ -61,14 +74,14 @@ class ParametersContainer: public Printable {
   template <class T>
   list<NameValue<T> > getValuesByType() const {
     list<NameValue<T> > result;
-    for (StringAnyHash::const_iterator it = name_value_hash_.begin();
-         it != name_value_hash_.end();
-         ++it) {
-      T* value = boost::any_cast<T>(&it->second);
+    for (StringAnyHash::const_iterator iterator = name_value_hash_.begin();
+         iterator != name_value_hash_.end();
+         ++iterator) {
+      T* value = boost::any_cast<T>(&iterator->second);
       if (!value) {
         continue;
       }
-      result.push_back(NameValue<T>(it->first, *value));
+      result.push_back(NameValue<T>(iterator->first, *value));
     }
     return result;
   }
@@ -82,11 +95,11 @@ class ParametersContainer: public Printable {
   */
   template <class T>
   bool TypeCoincides(const string& name) const {
-    const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end()) {
+    const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
     }
-    return it->second.type() == typeid(T);
+    return iterator->second.type() == typeid(T);
   }
   /**
    * Returns value of parameter with given name
@@ -96,17 +109,18 @@ class ParametersContainer: public Printable {
   template<class T>
   T Get(const string& name) const
       throw(std::logic_error, std::bad_cast) {
-    const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end()) {
+    const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
     }
     try {
-      return boost::any_cast<T>(it->second);
+      return boost::any_cast<T>(iterator->second);
     } catch(const boost::bad_any_cast &exc) {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
-                             "\nactual type: " + it->second.type().name());
+                             "\nActual type: " +
+                             iterator->second.type().name());
     }
   }
   /**
@@ -116,12 +130,12 @@ class ParametersContainer: public Printable {
   template<class StoredType, class DesiredType>
   DesiredType Get(const string& name) const
       throw(std::logic_error, std::bad_cast) {
-    const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end())
+    const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end())
       throw std::logic_error("No such parameter name: " + name);
 
     try {
-      const StoredType &value = boost::any_cast<StoredType>(it->second);
+      const StoredType &value = boost::any_cast<StoredType>(iterator->second);
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
     } catch(const boost::bad_any_cast &exc) {
@@ -129,7 +143,8 @@ class ParametersContainer: public Printable {
                              "\nParameter name: " + name +
                              "\nRequested type: " +
                              typeid(StoredType).name() +
-                             "\nactual type: " + it->second.type().name());
+                             "\nactual type: " +
+                             iterator->second.type().name());
     } catch(const std::bad_cast &exc) {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
@@ -141,13 +156,13 @@ class ParametersContainer: public Printable {
   template<class T>
   const T& GetRef(const string& name) const
       throw(std::logic_error, std::bad_cast) {
-    const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end()) {
+    const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
     }
 
     try {
-      return *boost::any_cast<T>(&it->second);
+      return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
       throw std::logic_error(string(exc.what()) +
@@ -161,13 +176,13 @@ class ParametersContainer: public Printable {
   template<class T>
   T& GetRef(const string &name)
       throw(std::logic_error, std::bad_cast) {
-    const StringAnyHash::iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end()) {
+    const StringAnyHash::iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
     }
 
     try {
-      return *boost::any_cast<T>(&it->second);
+      return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
       throw std::logic_error(string(exc.what()) +
@@ -196,11 +211,11 @@ class ParametersContainer: public Printable {
    */
   template<class T>
   void SetExisting(const string& name, const T& value) {
-    const StringAnyHash::iterator it = name_value_hash_.find(name);
-    if (it == name_value_hash_.end()) {
+    const StringAnyHash::iterator iterator = name_value_hash_.find(name);
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
     }
-    it->second = value;
+    iterator->second = value;
   }
 
   /**
@@ -211,8 +226,8 @@ class ParametersContainer: public Printable {
    */
   template<class T>
   void AddNew(const string& name, const T& value) {
-    const StringAnyHash::const_iterator it = name_value_hash_.find(name);
-    if (it != name_value_hash_.end()) {
+    const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
+    if (iterator != name_value_hash_.end()) {
       throw std::logic_error("There is already exist such parameter: " + name);
     }
     name_value_hash_[name] = value;

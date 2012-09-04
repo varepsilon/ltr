@@ -31,7 +31,7 @@ namespace ltr {
  */
 template <typename TElement>
 class FeatureSamplerLearner
-    : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
+  : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
  public:
   typedef ltr::utility::shared_ptr<FeatureSamplerLearner> Ptr;
   /**
@@ -63,9 +63,8 @@ class FeatureSamplerLearner
 // template realizations
 
 template <typename TElement>
-FeatureSamplerLearner<TElement>::FeatureSamplerLearner(IndicesPtr indices) {
-  set_indices(indices);
-}
+FeatureSamplerLearner<TElement>::FeatureSamplerLearner(IndicesPtr indices)
+  : indices_(indices) {}
 
 template <typename TElement>
 FeatureSamplerLearner<TElement>::FeatureSamplerLearner(
@@ -107,7 +106,7 @@ template <typename TElement>
 string FeatureSamplerLearner<TElement>::toString() const {
   std::stringstream str;
     str << "FeatureSamplerLearner: indices = [";
-    for (int i = 0; i < indices_->size(); ++i) {
+    for (int i = 0; i < (int)indices_->size(); ++i) {
       if (i != 0) {
         str << ", ";
       }

@@ -68,7 +68,7 @@ namespace serialization_test {
     string output;
     output.append("vector<double> " + function_name + "() {\n");
     output.append("\tvector<double> test_labels;\n");
-    for (int i = 0; i < labels.size(); ++i) {
+    for (int i = 0; i < (int)labels.size(); ++i) {
       output.append("\ttest_labels.push_back(" +
         boost::lexical_cast<string>(labels[i]) + ");\n");
     }

@@ -49,7 +49,9 @@ Indices getIndicesFromString(const string& string_to_parse) {
   vector<string> lexemes;
   boost::split(lexemes, given_string, is_any_of(","));
   vector<int> result;
-  for (int lexeme_index = 0; lexeme_index < lexemes.size(); ++lexeme_index) {
+  for (int lexeme_index = 0;
+       lexeme_index < (int)lexemes.size();
+       ++lexeme_index) {
     string lexeme = lexemes[lexeme_index];
     if (lexeme.empty()) {
       throw logic_error("Invalid string format");

@@ -85,7 +85,6 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
 
     feature_converter_.set_input_feature_info(data_set.feature_info());
     learnImpl(data_set, &feature_converter_);
-    feature_converter_.fillOutputFeatureInfo();
   }
 
  private:
@@ -100,5 +99,4 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
   TFeatureConverter feature_converter_;
 };
 };
-
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_

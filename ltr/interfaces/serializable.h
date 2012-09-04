@@ -3,11 +3,16 @@
 #ifndef LTR_INTERFACES_SERIALIZABLE_H_
 #define LTR_INTERFACES_SERIALIZABLE_H_
 
-#include "ltr/utility/shared_ptr.h"
 #include <boost/lexical_cast.hpp>
+#include <logog/logog.h>
 
 #include <string>
 #include <iostream>
+
+
+
+#include "ltr/utility/shared_ptr.h"
+#include "ltr/interfaces/aliaser.h"
 
 using std::string;
 

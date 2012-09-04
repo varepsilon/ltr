@@ -82,7 +82,7 @@ FeatureRandomSamplerLearner<TElement>::FeatureRandomSamplerLearner(
 
 template <class TElement>
 void FeatureRandomSamplerLearner<TElement>::setDefaultParameters() {
-  set_sampling_fraction(0.3);
+  sampling_fraction_ = 0.3;
   set_seed(42);
 }
 
@@ -112,7 +112,7 @@ void FeatureRandomSamplerLearner<TElement>::set_seed(int seed) {
 template <typename TElement>
 void FeatureRandomSamplerLearner<TElement>::learnImpl(
     const DataSet<TElement>& data_set, FeatureSampler* feature_sampler) {
-  int sample_size = ceil(data_set.feature_count() * sampling_fraction_);
+  int sample_size = (int)ceil(data_set.feature_count() * sampling_fraction_);
   Indices indices;
   getRandomIndices(&indices, data_set.feature_count(), sample_size);
   feature_sampler->set_indices(indices);

@@ -1,6 +1,11 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
+SET(DENSITY_ESTIMATORS_TEST ${Source_Path}/ltr/density_estimators/learners/density_estimators_learners_unittests.cc
+                            ${Source_Path}/ltr/density_estimators/scorers/density_estimators_scorers_unittests.cc)
+
+SET(NEIGHBOR_WEIGHTER_TEST ${Source_Path}/ltr/data/neighbor_weighter_unittest.cc)
+
 SET(TOSTRING_TEST ${Source_Path}/ltr/data/tostring_unittest.cc)
 
 SET(INDICES_TEST ${Source_Path}/ltr/data/indices_unittest.cc)
@@ -8,6 +13,11 @@ SET(INDICES_TEST ${Source_Path}/ltr/data/indices_unittest.cc)
 SET(NUMERICAL_TEST ${Source_Path}/ltr/data/numerical_unittest.cc)
 
 SET(SAVE_PREDICTION_TEST ${Source_Path}/ltr/data/save_predictions_unittest.cc)
+
+SET(LTR_TWO_CLASS_CONVERTERS_TEST ${Source_Path}/ltr/utility/two_class_actual_label_converter_unittest.cc
+                                  ${Source_Path}/ltr/utility/two_class_predicted_label_converter_unittest.cc)
+
+SET(LTR_AGGREGATORS_TEST ${Source_Path}/ltr/aggregators/aggregators_unittest.cc)
 
 SET(LIST_TO_ALL_PAIRS_CONVERTER_TEST ${Source_Path}/ltr/data/list_to_all_pairs_converter_unittest.cc)
 
@@ -31,7 +41,9 @@ SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_prepr
 
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc
                       ${Source_Path}/ltr/learners/linear_learner/linear_learner_unittest.cc
-                      ${Source_Path}/ltr/learners/gp_learner/gp_learner_unittest.cc)
+                      ${Source_Path}/ltr/learners/gp_learner/gp_learner_unittest.cc
+					  ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc
+                      ${Source_Path}/ltr/learners/bayesian_learner/bayesian_learner_unittest.cc)
 
 SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
                       ${Source_Path}/ltr/measures/listwise_measures_unittest.cc
@@ -42,7 +54,9 @@ SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc
-                     ${Source_Path}/ltr/scorers/gp_scorer_unittest.cc)
+                     ${Source_Path}/ltr/scorers/gp_scorer_unittest.cc
+					 ${Source_Path}/ltr/scorers/nearest_neighbor_scorer_unittest.cc
+                     ${Source_Path}/ltr/scorers/bayesian_scorer_unittest.cc)
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
                         ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
@@ -61,6 +75,8 @@ SET(LTR_LINEAR_COMPOSITION ${Source_Path}/ltr/learners/linear_composition/linear
 
 SET(LTR_METRICS_TEST ${Source_Path}/ltr/metrics/metrics_unittest.cc)
 
+SOURCE_GROUP(density_estimators FILES ${DENSITY_ESTIMATORS_TEST})
+SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS_TEST})
 SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES_TEST})
 SOURCE_GROUP(parameters_container FILES ${LTR_PARAMETERS_CONTAINER_TEST})
 SOURCE_GROUP(scorers FILES ${LTR_SCORERS_TEST})
@@ -73,9 +89,10 @@ SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS_TEST})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS_TEST})
 
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST} ${LTR_OBJECT_LIST_TEST} 
-             ${LTR_FEATURE_INFO_TEST} ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST}
+SET(LTR_TEST ${LTR_AGGREGATORS_TEST} ${LTR_TWO_CLASS_CONVERTERS_TEST} ${NEIGHBOR_WEIGHTER_TEST} ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST}
+             ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST}
              ${LTR_IO_UILITY_TEST} ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE_TEST}
-             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_LINEAR_COMPOSITION} ${LTR_METRICS_TEST})
+             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_LINEAR_COMPOSITION} ${LTR_METRICS_TEST} ${DENSITY_ESTIMATORS_TEST})
+             
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)

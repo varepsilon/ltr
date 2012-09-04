@@ -1,38 +1,30 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
 #include "ltr/data/object.h"
+
 #include "ltr/data/utility/object_utility.h"
+
 #include "ltr/utility/numerical.h"
 
 using ltr::utility::DoubleEqualWithNaN;
 using ltr::utility::NaN;
 
 namespace ltr {
-
-Object::Object() : features_(new Features()),
-                   meta_info_(new MetaInfo()),
-                   actual_label_(1.0),
-                   predicted_label_(utility::NaN),
-                   feature_info_(new FeatureInfo()) {}
+Object::Object()
+  : features_(new Features()),
+    meta_info_(new MetaInfo()),
+    actual_label_(1.0),
+    predicted_label_(utility::NaN) {}
 
 Object::Object(const Object& object)
-              : features_(object.features_),
-                meta_info_(object.meta_info_),
-                actual_label_(object.actual_label_),
-                predicted_label_(object.predicted_label_),
-                feature_info_(object.feature_info_) {}
-
-Object::Object(const FeatureInfo& feature_info)
-              : meta_info_(new MetaInfo()),
-                actual_label_(1.0),
-                predicted_label_(utility::NaN),
-                feature_info_(new FeatureInfo(feature_info)),
-                features_(new Features(feature_info.feature_count(),
-                                       utility::NaN)) {}
+  : features_(object.features_),
+    meta_info_(object.meta_info_),
+    actual_label_(object.actual_label_),
+    predicted_label_(object.predicted_label_) {}
 
 const Features& Object::features() const {
   return *features_;
@@ -40,10 +32,6 @@ const Features& Object::features() const {
 
 Features& Object::features() {
   return *features_;
-}
-
-const FeatureInfo& Object::feature_info() const {
-  return *feature_info_;
 }
 
 const string& Object::getMetaInfo(const string& name) const {
@@ -58,24 +46,26 @@ void Object::setMetaInfo(const string& name, const string& value) {
 
 Object& Object::operator<<(double feature) {
   features_->push_back(feature);
-  feature_info_->addFeature(NUMERIC);
   return *this;
 }
 
-const double& Object::operator[](size_t feature_index) const {
+const double& Object::operator[](int feature_index) const {
   return at(feature_index);
 }
-double& Object::operator[](size_t feature_index) {
+
+double& Object::operator[](int feature_index) {
   return at(feature_index);
 }
-const double& Object::at(size_t feature_index) const {
-  if (feature_index < 0 || feature_index >= features_->size()) {
+
+const double& Object::at(int feature_index) const {
+  if (feature_index < 0 || feature_index >= (int)features_->size()) {
     throw std::logic_error("Error: feature index out of bounds");
   }
   return features_->at(feature_index);
 }
-double& Object::at(size_t feature_index) {
-  if (feature_index < 0 || feature_index >= features_->size()) {
+
+double& Object::at(int feature_index) {
+  if (feature_index < 0 || feature_index >= (int)features_->size()) {
     throw std::logic_error("Error: feature index out of bounds");
   }
   return features_->at(feature_index);
@@ -86,26 +76,14 @@ Object& Object::operator=(const Object& other)  {
   meta_info_ = other.meta_info_;
   actual_label_ = other.actual_label_;
   predicted_label_ = other.predicted_label_;
-  feature_info_ = other.feature_info_;
   return *this;
 }
 
 void Object::clear() {
   features_->clear();
-  feature_info_->clear();
 }
 
-void Object::setFeatureInfo(const FeatureInfo::Ptr feature_info) {
-  features_ = FeaturesPtr(new Features(feature_info->feature_count(), NaN));
-  feature_info_ = feature_info;
-}
-
-void Object::setFeatureInfo(const FeatureInfo& feature_info) {
-  features_ = FeaturesPtr(new Features(feature_info.feature_count(), NaN));
-  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_info));
-}
-
-size_t Object::feature_count() const {
+int Object::feature_count() const {
   return (*features_).size();
 }
 
@@ -129,7 +107,6 @@ Object Object::deepCopy() const {
   Object result = *this;
   result.features_.reset(new Features(*(this->features_)));
   result.meta_info_.reset(new map<string, string>(*(this->meta_info_)));
-  result.feature_info_.reset(new FeatureInfo(this->feature_info()));
   return result;
 }
 
@@ -152,12 +129,12 @@ string Object::toString() const {
 bool operator==(const Object& lhs, const Object& rhs) {
   return DoubleEqualWithNaN(*lhs.features_, *rhs.features_) &&
          *lhs.meta_info_ == *rhs.meta_info_ &&
-         *lhs.feature_info_ == *rhs.feature_info_ &&
          utility::DoubleEqualWithNaN(lhs.actual_label(), rhs.actual_label()) &&
-         utility::DoubleEqualWithNaN(lhs.predicted_label(), rhs.predicted_label());
+         utility::DoubleEqualWithNaN(lhs.predicted_label(),
+                                     rhs.predicted_label());
 }
 
 bool operator!=(const Object& lhs, const Object& rhs) {
     return !(lhs == rhs);
 }
-}
+};

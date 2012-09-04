@@ -52,29 +52,12 @@ class FeatureConverter : public Serializable,
 
   virtual ~FeatureConverter() {}
 
-  GET(FeatureInfo, input_feature_info);
-  GET(FeatureInfo, output_feature_info);
-
-  void set_input_feature_info(const FeatureInfo& input_feature_info) {
-    input_feature_info_ = input_feature_info;
-
-    // TO DO (what for?)
-    fillOutputFeatureInfo();
-  }
+  GET_SET(FeatureInfo, input_feature_info);
   /**
-  * Fills output_feature_info_ (Object may have another FeatureInfo
-  * after convertion, e.g. FeatureConverter may change the number of Object features)
-  */
-  virtual void fillOutputFeatureInfo() = 0;
-  /**
-   * Converts object features
-   * \param input object to be converted
-   * \param output converted object
+   * Fills output_feature_info_ (Object may have another FeatureInfo
+   * after convertion, e.g. FeatureConverter may change the number of Object features)
    */
-  void apply(const Object& input, Object* output) const {
-    CHECK(input.feature_info() == input_feature_info_);
-    applyImpl(input, output);
-  }
+  virtual FeatureInfo convertFeatureInfo() const = 0;
   /**
    * Converts features of all objects in dataset
    * \param input object to be converted
@@ -82,19 +65,24 @@ class FeatureConverter : public Serializable,
    */
   template<class TElement>
   void apply(const DataSet<TElement>& input, DataSet<TElement>* output) const;
+    /**
+   * Converts object features
+   * \param input object to be converted
+   * \param output converted object
+   */
+  // TO DO (try to do this private)
+  void apply(const Object& input, Object* output) const {
+    applyImpl(input, output);
+  }
 
  private:
   virtual void applyImpl(const Object& input, Object* output) const = 0;
 
  protected:
   /**
-  * \brief A FeatureInfo that an input Object is supposed to have
-  */
+   * \brief A FeatureInfo that an input Object is supposed to have
+   */
   FeatureInfo input_feature_info_;
-  /**
-  * \brief A FeatureInfo that an output Object will have
-  */
-  FeatureInfo output_feature_info_;
 };
 
 typedef std::vector<FeatureConverter::Ptr> FeatureConverterArray;
@@ -115,7 +103,7 @@ void FeatureConverter::apply(const DataSet<TElement>& input,
             &output_element.object(object_index));
     }
   }
-  output->set_feature_info(output_feature_info());
+  output->set_feature_info(convertFeatureInfo());
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

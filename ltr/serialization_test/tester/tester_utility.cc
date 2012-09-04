@@ -23,7 +23,7 @@ bool Equal(const vector<double>& left, const vector<double>& right) {
     return false;
   }
 
-  for (int i = 0; i < left.size(); ++i) {
+  for (int i = 0; i < (int)left.size(); ++i) {
     if (fabs(left[i] - right[i]) > COMPARE_EPS) {
       return false;
     }
@@ -33,7 +33,7 @@ bool Equal(const vector<double>& left, const vector<double>& right) {
 }
 
 ostream& operator<<(ostream& output, const Report& rep) {
-  for (int i = 0; i < rep.first.size(); ++i) {
+  for (int i = 0; i < (int)rep.first.size(); ++i) {
     output << rep.first[i] << "\t\t" << rep.second[i] << "\n";
   }
   return output;

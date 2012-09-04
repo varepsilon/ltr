@@ -45,11 +45,12 @@ TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
   vector<PointwiseMeasure::Ptr> abs_measure_vector;
   abs_measure_vector.push_back(abs_measure_error);
 
-  LeaveOneOutSplitter<Object>::Ptr loo_splitter(new LeaveOneOutSplitter<Object>);
+  LeaveOneOutSplitter<Object>::Ptr
+    loo_splitter(new LeaveOneOutSplitter<Object>);
 
   ValidationResult vr = Validate(data,
-                                 abs_measure_vector, 
-                                 best_feature_learner, 
+                                 abs_measure_vector,
+                                 best_feature_learner,
                                  loo_splitter);
 
   EXPECT_EQ(data_length, vr.getSplitCount());
@@ -57,7 +58,7 @@ TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
   EXPECT_EQ(1, vr.getMeasureNames().size());
   EXPECT_EQ(abs_measure_error->alias(), vr.getMeasureNames().at(0));
 
-  for (int split = 0; split < vr.getSplitCount(); ++split) {
+  for (int split = 0; split < (int)vr.getSplitCount(); ++split) {
     Object test_obj;
     test_obj << 1;
     EXPECT_EQ(1, vr.getScorer(split)->score(test_obj));

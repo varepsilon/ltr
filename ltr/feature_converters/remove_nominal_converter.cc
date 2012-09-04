@@ -6,16 +6,17 @@
 using ltr::utility::isNaN;
 
 namespace ltr {
-void RemoveNominalConverter::fillOutputFeatureInfo()  {
-  output_feature_info_.clear();
-  for (size_t input_feature_index = 0;
+FeatureInfo RemoveNominalConverter::convertFeatureInfo() const {
+  FeatureInfo output_feature_info;
+  for (int input_feature_index = 0;
        input_feature_index < input_feature_info_.feature_count();
        input_feature_index++) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
-      output_feature_info_.addFeature(
+      output_feature_info.addFeature(
         input_feature_info_.getFeatureType(input_feature_index));
     }
   }
+  return output_feature_info;
 }
 
 string RemoveNominalConverter::generateCppCode(
@@ -28,7 +29,7 @@ string RemoveNominalConverter::generateCppCode(
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n").
   append("  bool nominal[] = {");
-  for (size_t input_feature_index = 0;
+  for (int input_feature_index = 0;
        input_feature_index < input_feature_info_.feature_count();
        ++input_feature_index) {
     if (input_feature_index != 0) {
@@ -42,7 +43,7 @@ string RemoveNominalConverter::generateCppCode(
   }
   code.
     append("};\n").
-    append("  for (size_t i = 0; i < features.size(); ++i) {\n").
+    append("  for (int i = 0; i < features.size(); ++i) {\n").
     append("    if (!nominal[i])\n").
     append("      result->push_back(features[i]);\n").
     append("  }\n").
@@ -52,17 +53,16 @@ string RemoveNominalConverter::generateCppCode(
 
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
-  *output = Object(output_feature_info_);
-  output->features().resize(output_feature_info_.feature_count());
-  size_t output_feature_index = 0;
-  for (size_t input_feature_index = 0;
-       input_feature_index < input.features().size();
+  Object converted_object = input.deepCopy();
+  converted_object.features().clear();
+  for (int input_feature_index = 0;
+       input_feature_index < (int)input.features().size();
        ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
-      output->at(output_feature_index++)
-          = input[input_feature_index];
+      converted_object << input[input_feature_index];
     }
   }
+  *output = converted_object;
 }
 
 string RemoveNominalConverter::getDefaultAlias() const {

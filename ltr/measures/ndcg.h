@@ -41,7 +41,7 @@ class BaseNDCG : public ListwiseMeasure {
   explicit BaseNDCG(const ParametersContainer& parameters) {
     this->setParameters(parameters);
   }
-  
+
   explicit BaseNDCG(int number_of_objects_to_consider = 0) {
     number_of_objects_to_consider_ = number_of_objects_to_consider;
   }
@@ -93,8 +93,10 @@ string BaseNDCG<TDCGFormula>::toString() const {
 }
 
 template<class TDCGFormula>
-void BaseNDCG<TDCGFormula>::setParametersImpl(const ParametersContainer& parameters) {
-  number_of_objects_to_consider_ = parameters.template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+void BaseNDCG<TDCGFormula>::
+  setParametersImpl(const ParametersContainer& parameters) {
+    number_of_objects_to_consider_ =
+      parameters.template Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
 }
 
 template<class TDCGFormula>
@@ -102,8 +104,8 @@ double BaseNDCG<TDCGFormula>::get_measure(const ObjectList& objects) const {
   vector<PredictedAndActualLabels> labels = ExtractLabels(objects);
   sort(labels.begin(), labels.end(), ActualDecreasing);
 
-  size_t n = this->number_of_objects_to_consider_;
-  if ((n == 0) || (n > labels.size())) {
+  int n = this->number_of_objects_to_consider_;
+  if ((n == 0) || (n > (int)labels.size())) {
     n = labels.size();
   }
 

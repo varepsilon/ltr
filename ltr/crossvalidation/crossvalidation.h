@@ -3,6 +3,8 @@
 #ifndef LTR_CROSSVALIDATION_CROSSVALIDATION_H_
 #define LTR_CROSSVALIDATION_CROSSVALIDATION_H_
 
+#include <logog/logog.h>
+
 #include <string>
 #include <vector>
 
@@ -39,8 +41,12 @@ namespace ltr {
         const vector< typename Measure<TElement>::Ptr >& measures,
         typename Learner<TElement>::Ptr learner,
         typename Splitter<TElement>::Ptr splitter) {
+      INFO("Starting validation");
       vector<string> measure_names;
-      for (int i = 0; i < measures.size(); ++i) {
+      for (int i = 0; i < (int)measures.size(); ++i) {
+        INFO("Adding %s measure, index eqaul to %d",
+          measures[i]->alias().c_str(),
+          i);
         measure_names.push_back(measures[i]->alias());
       }
       ValidationResult output(measure_names);
@@ -48,6 +54,7 @@ namespace ltr {
       for (int split_index = 0;
           split_index < splitter->splitCount(data_set);
           ++split_index) {
+        INFO("Starting %d split", split_index);
         SplittedDataSet<TElement> current_splitted(
           splitter->split(split_index, data_set));
 
@@ -61,7 +68,7 @@ namespace ltr {
 
         vector<double> current_measure_values;
         for (int measure_index = 0;
-            measure_index < measures.size();
+            measure_index < (int)measures.size();
             ++measure_index) {
           current_measure_values.push_back(
             measures[measure_index]->average(current_splitted.test_set));

@@ -23,70 +23,70 @@ using ltr::TruePoint;
 class PointwiseMeasuresTest : public ::testing::Test {
   protected:
   virtual void SetUp() {
-    o1 << 1;
-    o1.set_actual_label(1.0);
-    o1.set_predicted_label(1.0);
+    object1 << 1;
+    object1.set_actual_label(1.0);
+    object1.set_predicted_label(1.0);
 
-    o2 << 2;
-    o2.set_actual_label(1.5);
-    o2.set_predicted_label(2.3);
+    object2 << 2;
+    object2.set_actual_label(1.5);
+    object2.set_predicted_label(2.3);
 
-    o3 << 3;
-    o3.set_actual_label(0.5);
-    o3.set_predicted_label(-0.5);
+    object3 << 3;
+    object3.set_actual_label(0.5);
+    object3.set_predicted_label(-0.5);
 
-    o4 << 4;
-    o4.set_actual_label(3.1);
-    o4.set_predicted_label(3.1);
+    object4 << 4;
+    object4.set_actual_label(3.1);
+    object4.set_predicted_label(3.1);
 
-    o5 << 5;
-    o5.set_actual_label(0.76);
-    o5.set_predicted_label(2.13);
+    object5 << 5;
+    object5.set_actual_label(0.76);
+    object5.set_predicted_label(2.13);
   }
 
   virtual void TearDown() {
   }
 
   protected:
-    Object o1;
-    Object o2;
-    Object o3;
-    Object o4;
-    Object o5;
+    Object object1;
+    Object object2;
+    Object object3;
+    Object object4;
+    Object object5;
 };
 
 TEST_F(PointwiseMeasuresTest, TestingAbsError) {
   AbsError ae;
-  EXPECT_TRUE(DoubleEqual(ae(o1), 0));
-  EXPECT_TRUE(DoubleEqual(ae(o2), 0.8));
-  EXPECT_TRUE(DoubleEqual(ae(o3), 1));
-  EXPECT_TRUE(DoubleEqual(ae(o4), 0));
-  EXPECT_TRUE(DoubleEqual(ae(o5), 1.37));
+  EXPECT_TRUE(DoubleEqual(ae(object1), 0));
+  EXPECT_TRUE(DoubleEqual(ae(object2), 0.8));
+  EXPECT_TRUE(DoubleEqual(ae(object3), 1));
+  EXPECT_TRUE(DoubleEqual(ae(object4), 0));
+  EXPECT_TRUE(DoubleEqual(ae(object5), 1.37));
 }
 
 TEST_F(PointwiseMeasuresTest, TestingAccuracy) {
   Accuracy<Object> ac;
-  EXPECT_EQ(1, ac(o1));
-  EXPECT_EQ(0, ac(o2));
-  EXPECT_EQ(0, ac(o3));
-  EXPECT_EQ(1, ac(o4));
-  EXPECT_EQ(0, ac(o5));
+  EXPECT_EQ(1, ac(object1));
+  EXPECT_EQ(0, ac(object2));
+  EXPECT_EQ(0, ac(object3));
+  EXPECT_EQ(1, ac(object4));
+  EXPECT_EQ(0, ac(object5));
 }
 
 TEST_F(PointwiseMeasuresTest, TestingSquaredError) {
   SquaredError se;
-  EXPECT_TRUE(DoubleEqual(se(o1), 0));
-  EXPECT_TRUE(DoubleEqual(se(o2), 0.64));
-  EXPECT_TRUE(DoubleEqual(se(o3), 1));
-  EXPECT_TRUE(DoubleEqual(se(o4), 0));
-  EXPECT_TRUE(DoubleEqual(se(o5), 1.8769));
+  EXPECT_TRUE(DoubleEqual(se(object1), 0));
+  EXPECT_TRUE(DoubleEqual(se(object2), 0.64));
+  EXPECT_TRUE(DoubleEqual(se(object3), 1));
+  EXPECT_TRUE(DoubleEqual(se(object4), 0));
+  EXPECT_TRUE(DoubleEqual(se(object5), 1.8769));
 }
 
 TEST_F(PointwiseMeasuresTest, TestingTruePoint) {
   TruePoint tp;
-  EXPECT_TRUE(DoubleEqual(tp(o1), 1.0));
-  EXPECT_TRUE(DoubleEqual(tp(o2), 0.555555555555556));
-  EXPECT_TRUE(DoubleEqual(tp(o3), 0.5));
-  EXPECT_TRUE(DoubleEqual(tp(o4), 1.0));
-  EXPECT_TRUE(DoubleEqual(tp(o5), 0.421940928270042));
+  EXPECT_TRUE(DoubleEqual(tp(object1), 1.0));
+  EXPECT_TRUE(DoubleEqual(tp(object2), 0.555555555555556));
+  EXPECT_TRUE(DoubleEqual(tp(object3), 0.5));
+  EXPECT_TRUE(DoubleEqual(tp(object4), 1.0));
+  EXPECT_TRUE(DoubleEqual(tp(object5), 0.421940928270042));
 }

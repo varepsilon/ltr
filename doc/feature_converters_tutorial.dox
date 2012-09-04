@@ -48,6 +48,11 @@ features[i] -> factors[i] * features[i] + shifts[i]
 
 Converts NaN features to zero values.
 
+\subsection TutorialNanToAverageConverter NanToAverageConverter
+
+Converts NaN features to average values of all non NaN features from other Objects. If some feature is
+NaN in all Objects this feature will be removed.
+
 \subsection TutorialNominalToBoolConverter NominalToBoolConverter
 
 Converts nominal features to boolean, and move they to the end of features list.
@@ -77,6 +82,16 @@ You can get your FeatureConverter in this way:
 \param check_parameters whether perform Parameterized::checkParameters() before launch
 
 \li FeatureConverterLearner::make()
+
+To add your own FeatureConverterLearner you should:
+
+<b>1)</b> Add your feature converter class inherited from FeatureConverter. Your class must have
+FeatureConverter::convertFeatureInfo() and FeatureConverter::applyImpl() methods;\n
+<b>2)</b> Add your feature converter learner class inherited from FeatureConverterLearner with type of elements and
+your feature converter class as parameters. Your class must have
+FeatureConverterLearner::learnImpl() private method;
+
+See NanToAverageConverterLearner as example.
 
 \subsection TutorialFakeFeatureConverterLearner FakeFeatureConverterLearner
 
@@ -119,6 +134,10 @@ Produces FeatureSampler with random indices
 \subsection TutorialNanToZeroConverterLearner NanToZeroConverterLearner
 
 Produces NanToZeroConverter.
+
+\subsection TutorialNanToAverageConverterLearner NanToAverageConverterLearner
+
+Produces NanToAverageConverter.
 
 \subsection TutorialNominalToBoolConverterLearner NominalToBoolConverterLearner
 

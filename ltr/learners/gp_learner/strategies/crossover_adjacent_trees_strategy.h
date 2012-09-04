@@ -17,8 +17,8 @@ using Puppy::Context;
 namespace ltr {
 namespace gp {
 /**
-* Crossover all adjacent trees in population.
-*/
+ * Crossover all adjacent trees in population.
+ */
 class CrossoverAdjacentTreesStrategy : public BasePopulationHandler {
  public:
   explicit CrossoverAdjacentTreesStrategy(double distribution_probability = 0.3,

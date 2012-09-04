@@ -1,8 +1,13 @@
-#ifndef LTR_shared_ptr
-#define LTR_shared_ptr
+// Copyright 2012 Yandex
 
-#include <boost/shared_ptr.hpp>
-using namespace boost;
+#ifndef LTR_UTILITY_SHARED_PTR_H_
+#define LTR_UTILITY_SHARED_PTR_H_
+
+#include <algorithm>
+
+#include <boost/shared_ptr.hpp> // NOLINT
+
+using namespace boost; // NOLINT
 
 namespace ltr {
 namespace utility {
@@ -24,7 +29,7 @@ class shared_ptr {
   }
 
   template<class Y>
-  shared_ptr(Y* p):
+  shared_ptr(Y* p): // NOLINT
     px(p),
     pn(p) {
     boost::detail::sp_enable_shared_from_this(this, p, p);
@@ -46,7 +51,7 @@ class shared_ptr {
 
   // generated copy constructor, destructor are fine
   template<class Y>
-  shared_ptr(weak_ptr<Y> const &r):
+  shared_ptr(weak_ptr<Y> const &r): // NOLINT
     pn(r.pn) {
     px = r.px;
   }
@@ -55,7 +60,7 @@ class shared_ptr {
   shared_ptr(weak_ptr<Y> const &r, boost::detail::sp_nothrow_tag):
     px(0),
     pn(r.pn, boost::detail::sp_nothrow_tag()) {
-    if(!pn.empty()) {
+    if (!pn.empty()) {
         px = r.px;
     }
   }
@@ -63,10 +68,10 @@ class shared_ptr {
   template<class Y>
 #if !defined(BOOST_SP_NO_SP_CONVERTIBLE)
   shared_ptr(shared_ptr<Y> const &r,
-             typename boost::detail::sp_enable_if_convertible<Y,T>::type =
+             typename boost::detail::sp_enable_if_convertible<Y, T>::type =
              boost::detail::sp_empty())
 #else
-  shared_ptr(shared_ptr<Y> const &r)
+  shared_ptr(shared_ptr<Y> const &r) // NOLINT
 #endif
   : px(r.px),
     pn(r.pn) {
@@ -108,14 +113,14 @@ class shared_ptr {
              boost::detail::polymorphic_cast_tag):
     px(dynamic_cast<element_type *>(r.px)),
     pn(r.pn) {
-    if(px == 0) {
+    if (px == 0) {
       boost::throw_exception(std::bad_cast());
     }
   }
 
 #ifndef BOOST_NO_AUTO_PTR
   template<class Y>
-  shared_ptr(std::auto_ptr<Y> &r):
+  shared_ptr(std::auto_ptr<Y> &r): // NOLINT
     px(r.get()),
     pn() {
     Y* tmp = r.get();
@@ -123,7 +128,8 @@ class shared_ptr {
     boost::detail::sp_enable_shared_from_this(this, tmp, tmp);
   }
 
-#if !defined(BOOST_NO_SFINAE) && !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
+#if !defined(BOOST_NO_SFINAE) && \
+  !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
   template<class Ap>
   shared_ptr(Ap r,
              typename boost::detail::sp_enable_if_auto_ptr<Ap, int>::type = 0):
@@ -135,9 +141,9 @@ class shared_ptr {
   }
 
 
-#endif // BOOST_NO_SFINAE, BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
+#endif  // BOOST_NO_SFINAE, BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 
-#endif // BOOST_NO_AUTO_PTR
+#endif  // BOOST_NO_AUTO_PTR
 
   shared_ptr& operator = (shared_ptr const& r) {
     this_type(r).swap(*this);
@@ -155,12 +161,13 @@ class shared_ptr {
 
 #ifndef BOOST_NO_AUTO_PTR
   template<class Y>
-  shared_ptr& operator = (std::auto_ptr<Y>& r) {
+  shared_ptr& operator = (std::auto_ptr<Y>& r) { // NOLINT
     this_type(r).swap(*this);
     return *this;
   }
 
-#if !defined( BOOST_NO_SFINAE ) && !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
+#if !defined( BOOST_NO_SFINAE ) && \
+  !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
 
   template<class Ap>
   typename boost::detail::sp_enable_if_auto_ptr<Ap, shared_ptr&>::type
@@ -169,9 +176,9 @@ class shared_ptr {
     return *this;
   }
 
-#endif // BOOST_NO_SFINAE, BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
+#endif  // BOOST_NO_SFINAE, BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 
-#endif // BOOST_NO_AUTO_PTR
+#endif  // BOOST_NO_AUTO_PTR
 
 // Move support
 
@@ -180,13 +187,14 @@ class shared_ptr {
   shared_ptr(shared_ptr&& r):
     px(r.px),
     pn() {
-    pn.swap( r.pn );
+    pn.swap(r.pn);
     r.px = 0;
   }
 
   template<class Y>
 #if !defined( BOOST_SP_NO_SP_CONVERTIBLE )
-  shared_ptr(shared_ptr<Y>&& r, typename boost::detail::sp_enable_if_convertible<Y,T>::type =
+  shared_ptr(shared_ptr<Y>&& r,
+    typename boost::detail::sp_enable_if_convertible<Y, T>::type =
     boost::detail::sp_empty())
 #else
   shared_ptr(shared_ptr<Y>&& r)
@@ -215,7 +223,7 @@ class shared_ptr {
 
   template<class Y>
   void reset(Y* p) {
-    BOOST_ASSERT(p == 0 || p != px); // catch self-reset errors
+    BOOST_ASSERT(p == 0 || p != px);  // catch self-reset errors
     this_type(p).swap(*this);
   }
 
@@ -249,13 +257,13 @@ class shared_ptr {
   }
 
 // implicit conversion to "bool"
-#include <boost/smart_ptr/detail/operator_bool.hpp>
+#include <boost/smart_ptr/detail/operator_bool.hpp> // NOLINT
 
   bool unique() const {
     return pn.unique();
   }
 
-  long use_count() const {
+  long use_count() const { // NOLINT
     return pn.use_count();
   }
 
@@ -273,7 +281,7 @@ class shared_ptr {
     return pn.get_deleter( ti );
   }
 
-  bool _internal_equiv( shared_ptr const & r ) const {
+  bool _internal_equiv(shared_ptr const & r) const {
     return px == r.px && pn == r.pn;
   }
 
@@ -374,7 +382,8 @@ inline T* get_pointer(shared_ptr<T> const &p) {
 
 #if !defined(BOOST_NO_IOSTREAM)
 
-#if defined(BOOST_NO_TEMPLATED_IOSTREAMS) || ( defined(__GNUC__) &&  (__GNUC__ < 3) )
+#if defined(BOOST_NO_TEMPLATED_IOSTREAMS) || \
+  (defined(__GNUC__) && (__GNUC__ < 3))
 template<class Y>
 std::ostream& operator << (std::ostream& os, shared_ptr<Y> const &p) {
   os << p.get();
@@ -383,31 +392,34 @@ std::ostream& operator << (std::ostream& os, shared_ptr<Y> const &p) {
 #else
 // in STLport's no-iostreams mode no iostream symbols can be used
 #ifndef _STLP_NO_IOSTREAMS
-#if defined(BOOST_MSVC) && BOOST_WORKAROUND(BOOST_MSVC, < 1300 && __SGI_STL_PORT)
-// MSVC6 has problems finding std::basic_ostream through the using declaration in namespace _STL
+#if defined(BOOST_MSVC) && \
+  BOOST_WORKAROUND(BOOST_MSVC, < 1300 && __SGI_STL_PORT)
+// MSVC6 has problems finding std::basic_ostream through the
+// using declaration in namespace _STL
 using std::basic_ostream;
 template<class E, class T, class Y>
-basic_ostream<E, T>& operator << (basic_ostream<E, T>& os, shared_ptr<Y> const& p)
+basic_ostream<E, T>& operator << (
+  basic_ostream<E, T>& os, shared_ptr<Y> const& p)
 #else
 template<class E, class T, class Y>
-std::basic_ostream<E, T>& operator << (std::basic_ostream<E, T>& os,
-                                        shared_ptr<Y> const &p)
+std::basic_ostream<E, T>& operator << (std::basic_ostream<E, T>& os, // NOLINT
+                                       shared_ptr<Y> const &p)
 #endif
-{
+{ // NOLINT
   os << p.get();
   return os;
 }
-#endif // _STLP_NO_IOSTREAMS
+#endif  // _STLP_NO_IOSTREAMS
 
-#endif // __GNUC__ < 3
+#endif  // __GNUC__ < 3
 
-#endif // !defined(BOOST_NO_IOSTREAM)
+#endif  // !defined(BOOST_NO_IOSTREAM)
 
 // get_deleter
 
-#if ( defined(__GNUC__) && BOOST_WORKAROUND(__GNUC__, < 3) ) || \
-    ( defined(__EDG_VERSION__) && BOOST_WORKAROUND(__EDG_VERSION__, <= 238) ) || \
-    ( defined(__HP_aCC) && BOOST_WORKAROUND(__HP_aCC, <= 33500) )
+#if (defined(__GNUC__) && BOOST_WORKAROUND(__GNUC__, < 3)) || \
+    (defined(__EDG_VERSION__) && BOOST_WORKAROUND(__EDG_VERSION__, <= 238)) || \
+    (defined(__HP_aCC) && BOOST_WORKAROUND(__HP_aCC, <= 33500))
 
 // g++ 2.9x doesn't allow static_cast<X const *>(void *)
 // apparently EDG 2.38 and HP aCC A.03.35 also don't accept it
@@ -450,7 +462,7 @@ inline shared_ptr<T> atomic_load_explicit(shared_ptr<T> const* p,
 
 template<class T>
 void atomic_store(shared_ptr<T>* p, shared_ptr<T> r) {
-  boost::detail::spinlock_pool<2>::scoped_lock lock( p );
+  boost::detail::spinlock_pool<2>::scoped_lock lock(p);
   p->swap(r);
 }
 
@@ -458,7 +470,7 @@ template<class T>
 inline void atomic_store_explicit(shared_ptr<T>* p,
                                   shared_ptr<T> r,
                                   memory_order /*mo*/) {
-  atomic_store( p, r ); // std::move( r )
+  atomic_store(p, r);  // std::move( r )
 }
 
 template<class T>
@@ -467,33 +479,34 @@ shared_ptr<T> atomic_exchange(shared_ptr<T>* p,
   boost::detail::spinlock& sp =
     boost::detail::spinlock_pool<2>::spinlock_for(p);
   sp.lock();
-  p->swap( r );
+  p->swap(r);
   sp.unlock();
-  return r; // return std::move( r )
+  return r;  // return std::move( r )
 }
 
 template<class T>
 shared_ptr<T> atomic_exchange_explicit(shared_ptr<T>* p,
                                             shared_ptr<T> r,
                                             memory_order /*mo*/) {
-  return atomic_exchange( p, r ); // std::move(r)
+  return atomic_exchange(p, r);  // std::move(r)
 }
 
 template<class T>
 bool atomic_compare_exchange(shared_ptr<T>* p,
                               shared_ptr<T>* v,
                               shared_ptr<T> w) {
-  boost::detail::spinlock & sp = boost::detail::spinlock_pool<2>::spinlock_for(p);
+  boost::detail::spinlock & sp =
+    boost::detail::spinlock_pool<2>::spinlock_for(p);
   sp.lock();
 
   if (p->_internal_equiv(*v)) {
-    p->swap( w );
+    p->swap(w);
     sp.unlock();
     return true;
   } else {
     shared_ptr<T> tmp(*p);
     sp.unlock();
-    tmp.swap( *v );
+    tmp.swap(*v);
     return false;
   }
 }
@@ -504,10 +517,10 @@ inline bool atomic_compare_exchange_explicit(shared_ptr<T>* p,
                                               shared_ptr<T> w,
                                               memory_order /*success*/,
                                               memory_order /*failure*/) {
-  return atomic_compare_exchange( p, v, w ); // std::move( w )
+  return atomic_compare_exchange( p, v, w );  // std::move( w )
 }
 
-#endif // !defined(BOOST_SP_NO_ATOMIC_ACCESS)
+#endif  // !defined(BOOST_SP_NO_ATOMIC_ACCESS)
 
 // hash_value
 
@@ -520,5 +533,4 @@ std::size_t hash_value(shared_ptr<T> const &p) {
 }
 };
 };
-
-#endif
+#endif  // LTR_UTILITY_SHARED_PTR_H_

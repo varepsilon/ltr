@@ -1,14 +1,14 @@
-// Copyright 2011 Yandex
-
-#include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_push_back_actor.hpp>
-#include <boost/spirit/include/classic_insert_at_actor.hpp>
-#include <boost/spirit/include/classic_assign_actor.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string/trim.hpp>
+// Copyright 2012 Yandex
 
 #include <stdexcept>
 #include <sstream>
+
+#include "boost/spirit/include/classic_core.hpp"
+#include "boost/spirit/include/classic_push_back_actor.hpp"
+#include "boost/spirit/include/classic_insert_at_actor.hpp"
+#include "boost/spirit/include/classic_assign_actor.hpp"
+#include "boost/lexical_cast.hpp"
+#include "boost/algorithm/string/trim.hpp"
 
 #include "ltr/data/utility/parsers/parse_yandex.h"
 #include "ltr/data/utility/io_utility.h"
@@ -37,85 +37,88 @@ using std::stringstream;
 using std::map;
 
 namespace ltr {
-  namespace io_utility {
-  const int YandexParser::raw_query_id_idx_ = 0;
-  const int YandexParser::raw_relevance_idx_ = -1;
-  void YandexParser::init(std::istream* in) {
-    raw_feature_info_[raw_query_id_idx_].feature_type = META;
-    raw_feature_info_[raw_query_id_idx_].feature_name = "queryId";
+namespace io_utility {
+const int YandexParser::raw_query_id_idx_ = 0;
+const int YandexParser::raw_relevance_idx_ = -1;
 
-    raw_feature_info_[raw_relevance_idx_].feature_type = CLASS;
-    raw_feature_info_[raw_relevance_idx_].feature_name = "Label";
-  }
-  void YandexParser::parseRawObject(string line_, RawObject* result) {
-    Object obj;
-    int qid = -1;
-    RawObject& features = *result;
-    int key;
-    double relevance;
-    rule<> number = *digit_p >> !('.' >> +digit_p);
-    string line = trim_copy(line_);
-    parse_info<> info = boost::spirit::classic::parse(line_.c_str(),
-        (real_p[assign_a(relevance)] >>
-         +(uint_p[assign_a(key)] >> ':' >>
-          number[insert_at_a(features, key)]) >>
-         !(ch_p('#') >> uint_p[assign_a(qid)]) >>
-         *anychar_p),
-         space_p);
-    if (!info.hit) {
-      throw std::logic_error("failed parse line " + line + " as Yandex");
-    }
-    features[raw_relevance_idx_] = lexical_cast<string>(relevance);
-    if (qid > -1)
-      features[raw_query_id_idx_] = lexical_cast<string>(qid);
-  }
-  void YandexParser::makeString(const Object& object, string* result) {
-    stringstream str;
-    str.precision(utility::DOUBLE_PRECISION);
-    str << object.actual_label() << " ";
-    for (size_t feature_index = 0;
-         feature_index < object.feature_count();
-         feature_index++) {
-      str << feature_index+1 << ":" 
-          << object[feature_index] << " ";
-    }
-    try {
-      str << "# " << object.getMetaInfo("queryId");
-    } catch(std::logic_error err) {}
-    *result = str.str();
-  }
+void YandexParser::init(std::istream* in) {
+  raw_feature_info_[raw_query_id_idx_].feature_type = META;
+  raw_feature_info_[raw_query_id_idx_].feature_name = "queryId";
 
-  ListwiseDataSet YandexParser::buildListwiseDataSet(
-      const std::vector<Object> &objects, const FeatureInfo& info) {
+  raw_feature_info_[raw_relevance_idx_].feature_type = CLASS;
+  raw_feature_info_[raw_relevance_idx_].feature_name = "Label";
+}
+
+void YandexParser::parseRawObject(string line_, RawObject* result) {
+  Object obj;
+  int qid = -1;
+  RawObject& features = *result;
+  int key;
+  double relevance;
+  rule<> number = *digit_p >> !('.' >> +digit_p);
+  string line = trim_copy(line_);
+  parse_info<> info = boost::spirit::classic::parse(line_.c_str(),
+    (real_p[assign_a(relevance)] >>
+    +(uint_p[assign_a(key)] >> ':' >>
+    number[insert_at_a(features, key)]) >>
+    !(ch_p('#') >> uint_p[assign_a(qid)]) >>
+    *anychar_p),
+    space_p);
+  if (!info.hit) {
+    throw std::logic_error("failed parse line " + line + " as Yandex");
+  }
+  features[raw_relevance_idx_] = lexical_cast<string>(relevance);
+  if (qid > -1)
+    features[raw_query_id_idx_] = lexical_cast<string>(qid);
+}
+
+void YandexParser::makeString(const Object& object, string* result) {
+  stringstream str;
+  str.precision(utility::DOUBLE_PRECISION);
+  str << object.actual_label() << " ";
+  for (int feature_index = 0;
+       feature_index < object.feature_count();
+       feature_index++) {
+    str << feature_index+1 << ":"
+        << object[feature_index] << " ";
+  }
+  try {
+    str << "# " << object.getMetaInfo("queryId");
+  } catch(std::logic_error err) {}
+  *result = str.str();
+}
+
+ListwiseDataSet YandexParser::buildListwiseDataSet(
+  const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectList> data(info);
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
     groupByIntMeta(objects, "queryId", &objects_);
 
-    for (object_iterator i = objects_.begin(); i != objects_.end(); i++) {
+    for (object_iterator i = objects_.begin(); i != objects_.end(); ++i) {
       ObjectList list;
-      for (int j = 0; j < i->second.size(); j++)
+      for (int j = 0; j < (int)i->second.size(); j++)
         list << i->second[j];
       data << list;
     }
     return data;
   }
 
-  PairwiseDataSet YandexParser::buildPairwiseDataSet(
-      const std::vector<Object> &objects, const FeatureInfo& info) {
+PairwiseDataSet YandexParser::buildPairwiseDataSet(
+  const std::vector<Object> &objects, const FeatureInfo& info) {
     DataSet<ObjectPair> data(info);
     map<int, vector<Object> > objects_;
     typedef map<int, vector<Object> >::iterator object_iterator;
 
     groupByIntMeta(objects, "queryId", &objects_);
 
-    for (object_iterator i = objects_.begin(); i != objects_.end(); i++)
-      for (int j = 0; j < i->second.size(); j++)
+    for (object_iterator i = objects_.begin(); i != objects_.end(); ++i)
+      for (int j = 0; j < (int)i->second.size(); j++)
         for (int k = 0; k < j; k++)
           data << ObjectPair(i->second[j], i->second[k]);
     return data;
-  }
-  };
+}
+};
 };
 

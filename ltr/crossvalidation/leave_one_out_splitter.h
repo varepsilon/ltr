@@ -3,12 +3,14 @@
 #ifndef LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 #define LTR_CROSSVALIDATION_LEAVE_ONE_OUT_SPLITTER_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include <logog/logog.h>
+
 #include <vector>
 #include <stdexcept>
 #include <string>
 
 #include "ltr/crossvalidation/splitter.h"
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 using std::vector;
@@ -36,8 +38,7 @@ class LeaveOneOutSplitter : public Splitter<TElement> {
 
   explicit LeaveOneOutSplitter
       (const ParametersContainer& parameters) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+    this->setParameters(parameters);
   }
 
   string toString() const;
@@ -59,6 +60,7 @@ string LeaveOneOutSplitter<TElement>::toString() const {
 template<class TElement>
 int LeaveOneOutSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
+  INFO("number of splits is equal to %d", base_set.size());
   return base_set.size();
 }
 
@@ -68,6 +70,7 @@ void LeaveOneOutSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
+  INFO("Starting leave one out splitting");
   if (split_index < 0 || split_index >= splitCount(base_set)) {
     throw logic_error(this->alias() +
       " index should be in range [0..dataset_size-1]");
@@ -80,6 +83,7 @@ void LeaveOneOutSplitter<TElement>::splitImpl(
   for (int index = 0; index < split_index; ++index) {
     train_set_indexes->push_back(index);
   }
+
   for (int index = split_index + 1; index < base_set.size(); ++index) {
     train_set_indexes->push_back(index);
   }

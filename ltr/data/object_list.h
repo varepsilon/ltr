@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2012 Yandex
 
 #ifndef LTR_DATA_OBJECT_LIST_H_
 #define LTR_DATA_OBJECT_LIST_H_
@@ -7,10 +7,11 @@
 #include <string>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h" //NOLINT
-
 #include "ltr/data/object.h"
+
 #include "ltr/interfaces/printable.h"
+
+#include "ltr/utility/shared_ptr.h"
 
 using std::vector;
 
@@ -32,16 +33,16 @@ namespace ltr {
   explicit ObjectList(const vector<Object>& objects);
   /** Returns a constant link to the ith object in the object list.
    */
-  const Object& operator[](size_t i) const;
+  const Object& operator[](int i) const;
   /** Returns a link to the ith object in the object list.
    */
-  Object& operator[](size_t i);
+  Object& operator[](int i);
   /** Returns a constant link to the ith object in the object list.
    */
-  const Object& at(size_t i) const;
+  const Object& at(int i) const;
   /** Returns a link to the ith object in the object list.
    */
-  Object& at(size_t i);
+  Object& at(int i);
   /** Adds a deep copy of the given object to the object list.
    */
   ObjectList& operator<<(const Object& object);
@@ -50,7 +51,7 @@ namespace ltr {
   void add(const Object& object);
   /** Returns the number of objects in the object list.
    */
-  size_t size() const;
+  int size() const;
   /** Removes all object from the object list.
    */
   void clear();
@@ -61,7 +62,6 @@ namespace ltr {
   /** Operator, checks whether two objects are equal.
    */
   friend bool operator==(const ObjectList& lhs, const ObjectList& rhs);
-
   /** 
    * Function for serialization list into string.
    */
@@ -72,13 +72,11 @@ namespace ltr {
    */
   ltr::utility::shared_ptr<vector<Object> > objects_;
 };
-
 /** Operator, checks whether two object_lists are equal.
  */
 bool operator==(const Object& lhs, const Object& rhs);
-
 /** Operator, checks whether two object_lists are not equal.
  */
 bool operator!=(const Object& lhs, const Object& rhs);
-}
+};
 #endif  // LTR_DATA_OBJECT_LIST_H_

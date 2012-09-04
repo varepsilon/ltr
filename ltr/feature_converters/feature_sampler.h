@@ -37,11 +37,9 @@ class FeatureSampler : public FeatureConverter {
   explicit FeatureSampler(const Indices& indices = Indices(),
                           const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info),
-      indices_(indices) {
-    fillOutputFeatureInfo();
-  }
+      indices_(indices) {}
 
-  virtual void fillOutputFeatureInfo();
+  virtual FeatureInfo convertFeatureInfo() const;
 
   virtual string generateCppCode(const string& function_name) const;
 

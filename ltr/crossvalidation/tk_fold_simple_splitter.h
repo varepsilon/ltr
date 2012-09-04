@@ -3,6 +3,8 @@
 #ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 
+#include <logog/logog.h>
+
 #include <algorithm>
 #include <vector>
 #include <functional>
@@ -39,13 +41,13 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
    */
   explicit TKFoldSimpleSplitter
       (const ParametersContainer& parameters) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+    this->setParameters(parameters);
   }
 
   explicit TKFoldSimpleSplitter
       (const int K = 10,
        const int T = 10) {
+    INFO("Setting K equal to %d and T equal to %d", K, T);
     K_ = K;
     T_ = T;
   }
@@ -98,12 +100,14 @@ string TKFoldSimpleSplitter<TElement>::toString() const {
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
+  INFO("Setting K equal to 10 and T eequal to 10");
   K_ = 10;
   T_ = 10;
 }
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::checkParameters() const {
+  INFO("Checking if K is greater than 1 and T is greater than 0");
   CHECK(K_ > 1); // NOLINT
   CHECK(T_ > 0); // NOLINT
 }
@@ -118,6 +122,7 @@ void TKFoldSimpleSplitter<TElement>::setParametersImpl(
 template<class TElement>
 int TKFoldSimpleSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
+  INFO("umber of splits is equal to %d", K_ * T_);
   return K_ * T_;
 }
 
@@ -127,6 +132,7 @@ void TKFoldSimpleSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
+  INFO("Starting TKFold splitting");
   if (split_index < 0 || split_index >= splitCount(base_set)) {
     throw logic_error(this-> alias() +
       " index should be in range [0..T*k-1]");

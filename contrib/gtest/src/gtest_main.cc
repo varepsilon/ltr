@@ -30,9 +30,11 @@
 #include <iostream>
 
 #include "gtest/gtest.h"
+#include "contrib/logog/logog.h"
 
 GTEST_API_ int main(int argc, char **argv) {
   std::cout << "Running main() from gtest_main.cc\n";
+  ltr::Log LOG("unittests_log.txt");
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
