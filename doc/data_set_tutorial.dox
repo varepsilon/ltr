@@ -6,7 +6,7 @@ namespace ltr {
 
 \section TutorialDataObject Object
 
-Object is main class to operate with data.
+Object is the main class to operate with data.
 Any object can contain several features and some meta information.
 Every feature has index and double value.
 Every Meta data has name (string) and value(string).

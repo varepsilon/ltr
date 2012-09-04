@@ -4,3 +4,4 @@ doc/html
 lib
 ltr/serialization_test/tester/tester.cc
 /ltr/serialization_test/tester/tester.cc.rule
+html/
