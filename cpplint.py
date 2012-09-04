@@ -8,7 +8,7 @@
 # a) the GNU General Public License as published by the Free Software
 # Foundation; either version 1, or (at your option) any later version, or
 #
-# b) the "Artistic License".
+# b) the "Artistic License".6
 
 # Here are some issues that I've had people identify in my code during reviews,
 # that I think are possible to flag automatically in a lint tool.  If these were
