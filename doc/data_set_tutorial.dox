@@ -19,18 +19,13 @@ Every Object has several features with indexes 0, 1, 2... Every feature is a dou
 You can operate with features using this functions:
 \li \link Object::featureCount() featureCount() \endlink - returns number of features
 \li \link Object::features() features() \endlink - returns vector of features
+\li \link Object::operator[] operator[](int i)\endlink, \link Object::at at(int i)\endlink - access to the i'th feature of the object
 \li Object::operator<<(double value) - adds new feature to the object
 
-<table class="example">
-<tr><td>Example: operating with features.</td></tr>
-<tr><td>
-\include tutorial_data_example1.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example1.out
-</td></tr>
-</table>
+Example: Operating with features                 | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example1.cpp              | \include tutorial_data_example1.out
+
 
 \subsection TutorialDataObjectLabels Actual and predicted labels
 
@@ -44,16 +39,9 @@ You can manage them, using this functions:
 \li \link Object::pedictedLabel() const predictedLabel() \endlink
 
 
-<table class="example">
-<tr><td>Example: operating with actual and predicted labels.</td></tr>
-<tr><td>
-\include tutorial_data_example2.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example2.out
-</td></tr>
-</table>
+Example: Operating with actual and predicted labels  | Output:
+-----------------------------------------------------|------------------
+\include tutorial_data_example2.cpp                  | \include tutorial_data_example2.out
 
 \subsection TutorialDataObjectMetaInfo Meta info
 
@@ -63,56 +51,33 @@ You can manage it, using this functions:
 \li \link Object::setMetaInfo(string, string) setMetaInfo(string name, string value)\endlink
 \li \link Object::metaInfo() metaInfo()\endlink - returns all meta information in \link ltr::MetaInfo MetaInfo \endlink container
 
-<table class="example">
-<tr><td>Example: operating with meta info.</td></tr>
-<tr><td>
-\include tutorial_data_example3.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example3.out
-</td></tr>
-</table>
+Example: Operating with meta info                | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example3.cpp              | \include tutorial_data_example3.out
 
 \subsection TutorialDataObjectCopying Copying objects
 
 There are two ways to copy objects.
-\li Simple copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo.
+\li %Simple copy: it doesn't create real copy of the object. It copyes only links to features and metaInfo.
 \code Object b = a;                 // This creates a simple copy.
 \endcode
 \li Deep copy: creates real copy of the object. To use deep copy you should call \link Object::deepCopy() const deepCopy()\endlink
 \code Object b = a.deepCopy();      // This creates a full copy.
 \endcode
 
-<table class="example">
-<tr><td>Example: copying objects.</td></tr>
-<tr><td>
-\include tutorial_data_example4.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example4.out
-</td></tr>
-</table>
+Example: Copying objects                         | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example4.cpp              | \include tutorial_data_example4.out
+
 
 \section TutorialDataObjectPair ObjectPair
 
-Class to operate pairs of object. Every pair contains two objects.
+Class to operate pairs of object. Every pair contains two objects:
+\li ObjectPair::first, ObjectPair::second
 
-There are two ways of operating objects:
-\li ObjectPair::operator[](int id)
-\li ObjectPair::first(), ObjectPair::second()
-
-<table class="example">
-<tr><td>Example: manipulating ojects in pair.</td></tr>
-<tr><td>
-\include tutorial_data_example5.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example5.out
-</td></tr>
-</table>
+Example: Manipulating objects in pair            | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example5.cpp              | \include tutorial_data_example5.out
 
 \section TutorialDataObjectList ObjectList
 
@@ -126,16 +91,9 @@ You can also add objects into list using operator<< or \link ObjectList::add(con
 List can be cleared by calling \link ObjectList::clear() clear()\endlink method.<br>
 To find out, how many elements are there in the list, call the \link ObjectList::size() size()\endlink method.
 
-<table class="example">
-<tr><td>Example: managing ObjectList.</td></tr>
-<tr><td>
-\include tutorial_data_example6.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example6.out
-</td></tr>
-</table>
+Example: Managing %ObjectList                    | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example6.cpp              | \include tutorial_data_example6.out
 
 \section TutorialDataDataSet DataSet
 
@@ -172,16 +130,10 @@ Function for basic operations:
 
 \li \link DataSet::deepCopy() const DataSet::deepCopy()\endlink - creates a full copy of DataSet
 
-<table class="example">
-<tr><td>Example: basic DataSet operations.</td></tr>
-<tr><td>
-\include tutorial_data_example7.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_example7.out
-</td></tr>
-</table>
+Example: Basic %DataSet operations               | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_example7.cpp              | \include tutorial_data_example7.out
+
 
 \subsection TutorialDataDataSetFeatureInfo Feature info
 
@@ -222,10 +174,7 @@ void ltr::io_utility::saveDataSet(const DataSet<TElement>& data,
 \li \c filename - name of file to save data in
 \li \c format - format to save data. Can be "smv-lite" or "yandex"
 
-<table class="example">
-<tr><td>Example: loading DataSet from file.</td></tr>
-<tr><td>
-\code
+~~~~~~~~{.cpp}
 #include "ltr/data/utility/io_utility.h"
 
 using ltr::io_utility::loadDataSet;
@@ -234,13 +183,10 @@ using ltr::io_utility::saveDataSet;
 using ltr::DataSet;
 
 int main() {
-	DataSet<Object> = loadDataSet<Object>("test_file", "svm-lite");
-	return 0;
+  DataSet<Object> = loadDataSet<Object>("test_file", "svm-lite");
+  return 0;
 }
-\endcode
-</tr></td>
-</table>
-
+~~~~~~~~
 
 **/
 }
