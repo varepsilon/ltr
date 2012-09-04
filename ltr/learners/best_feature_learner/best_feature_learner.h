@@ -27,6 +27,9 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
  public:
   typedef ltr::utility::shared_ptr<BestFeatureLearner> Ptr;
 
+  BestFeatureLearner() {
+  }
+
   explicit BestFeatureLearner(const ParametersContainer& parameters) {
     this->setParameters(parameters);
   }
@@ -34,8 +37,6 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
   explicit BestFeatureLearner(typename Measure<TElement>::Ptr pMeasure) {
     this->set_measure(pMeasure);
   }
-
-  string toString() const;
 
   void setDefaultParameters() {
     measure_ = typename Measure<TElement>::Ptr();
@@ -45,9 +46,7 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
-    Measure<TElement> *msr =
-        parameters.Get<Parameterized *, Measure<TElement> *>("measure");
-    measure_ = typename Measure<TElement>::Ptr(msr);
+    measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
   }
   virtual void learnImpl(const DataSet<TElement>& data,
                          OneFeatureScorer* scorer);
@@ -56,22 +55,16 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
   typename Measure<TElement>::Ptr measure_;
 };
 
-
-template<class TElement>
-string BestFeatureLearner<TElement>::toString() const {
-  return "Best feature learner with " + this->p_measure_->toString();
-}
-
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
   INFO("Starting learning");
   if (measure_.get() == 0) {
-    INFO("Measure is equal to zero");
+    ERR("Measure is not setted");
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {
-    INFO("Data is empty");
+    ERR("Data is empty");
     throw std::logic_error("There are no features for BF learner.");
   }
 
@@ -79,14 +72,14 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   size_t best_feature_index = 0;
   OneFeatureScorer current_scorer(best_feature_index);
   current_scorer.predict(data);
-  double best_measure_value = this->measure_->average(data);
+  double best_measure_value = this->measure_->weightedAverage(data);
 
   for (int feature_index = 1;
        feature_index < data.feature_count();
        ++feature_index) {
     OneFeatureScorer current_scorer(feature_index);
     current_scorer.predict(data);
-    double measure_value = this->measure_->average(data);
+    double measure_value = this->measure_->weightedAverage(data);
     if (this->measure_->better(measure_value, best_measure_value)) {
       best_measure_value = measure_value;
       best_feature_index = feature_index;

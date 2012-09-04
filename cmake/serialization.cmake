@@ -9,9 +9,8 @@ SET(Serialization_tester_SOURCES ${Source_Path}/ltr/serialization_test/tester/te
 
 SOURCE_GROUP(serialization FILES ${Serialization_tester_SOURCES})
 
-macro(MakeTester)
-	ADD_CUSTOM_COMMAND(
-	  OUTPUT ${Source_Path}/ltr/serialization_test/tester/tester.cc
-	  DEPENDS serialization_generator
-	  COMMAND serialization_generator ${Source_Path}/ltr/serialization_test/tester/tester.cc)
-endmacro()
+MACRO(CreateEmptyTesterFile)
+ADD_CUSTOM_COMMAND(OUTPUT ${Source_Path}/ltr/serialization_test/tester/tester.cc
+	COMMAND touch ${Source_Path}/ltr/serialization_test/tester/tester.cc
+	DEPENDS serialization_generator)
+ENDMACRO(CreateEmptyTesterFile)

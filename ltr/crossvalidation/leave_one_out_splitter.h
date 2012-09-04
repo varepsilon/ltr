@@ -38,8 +38,7 @@ class LeaveOneOutSplitter : public Splitter<TElement> {
 
   explicit LeaveOneOutSplitter
       (const ParametersContainer& parameters) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+    this->setParameters(parameters);
   }
 
   string toString() const;

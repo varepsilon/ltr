@@ -3,32 +3,34 @@
 #define LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
 
 #include <iostream>
+#include <string>
 
 using std::cout;
 using std::endl;
 
 typedef string ParameterizedDependency;
 
-namespace {
-static const char* const CONFIG          = "config";
-static const char* const ROOT            = "LTR_experiment";
-static const char* const ROOT_DIR        = "root_directory";
-static const char* const DATA            = "data";
-static const char* const LAUNCH          = "launch";
-static const char* const NAME_ATTR       = "name";
-static const char* const FORMAT_ATTR     = "format";
-static const char* const TYPE_ATTR       = "type";
-static const char* const APPROACH_ATTR   = "approach";
-static const char* const PARAMETERS      = "parameters";
-static const char* const WEAK_LEARNER    = "weak_learner";
-static const char* const TRAIN           = "train";
-static const char* const CROSSVALIDATION = "crossvalidation";
-static const char* const CPP_GEN         = "cpp";
-static const char* const PREDICT         = "predict";
-static const char* const FOLD_ATTR       = "fold";
+namespace { // NOLINT
+static const char* const CONFIG               = "config";
+static const char* const ROOT                 = "LTR_experiment";
+static const char* const ROOT_DIR             = "root_directory";
+static const char* const DATA                 = "data";
+static const char* const LAUNCH               = "launch";
+static const char* const NAME_ATTR            = "name";
+static const char* const FORMAT_ATTR          = "format";
+static const char* const TYPE_ATTR            = "type";
+static const char* const APPROACH_ATTR        = "approach";
+static const char* const PARAMETERS           = "parameters";
+static const char* const WEAK_LEARNER         = "weak_learner";
+static const char* const TRAIN                = "train";
+static const char* const CROSSVALIDATION      = "crossvalidation";
+static const char* const CPP_GEN              = "cpp";
+static const char* const PREDICT              = "predict";
+static const char* const FOLD_ATTR            = "fold";
 
-static const char* const LEARNER         = "learner";
-static const char* const MEASURE         = "measure";
+static const char* const LEARNER              = "learner";
+static const char* const MEASURE              = "measure";
+static const char* const AGGREGATOR           = "aggregator";
 }
 
 /**
@@ -670,6 +672,7 @@ class OnTrainTag: public TagHandler {
     const char* name = element->Attribute("name");
     const char* data = element->Attribute("data");
     const char* learner = element->Attribute("learner");
+
     if (!name) {
         ERR("Failed: <train> without name attribute");
         return;
@@ -734,4 +737,4 @@ class OnLaunchTag: public TagHandler {
   TagHandlers handlers_;
 };
 
-#endif LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
+#endif  // LTR_CLIENT_UTILITY_TAG_HANDLERS_H_

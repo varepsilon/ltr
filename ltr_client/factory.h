@@ -13,6 +13,8 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 
+#include "ltr/utility/shared_ptr.h"
+
 #include "logog/logog.h"
 
 using std::cout;
@@ -36,39 +38,44 @@ class Factory {
     return self_;
   }
 
-  template <class T>
+  template <class Base, class Derived>
   void registerType(const string& name) {
     assert(name_creators_.find(name) == name_creators_.end());
-    name_creators_[name] = new Creator<T>;
+    name_creators_[name] = AbstractCreator::Ptr(new Creator<Base, Derived>);
   }
 
-  Parameterized* Create(const string& name,
-                        const ParametersContainer& parameters) const {
+  boost::any Create(const string& name,
+                    const ParametersContainer& parameters) const {
     INFO("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
     assert(it != name_creators_.end());
-    const AbstractCreator* creator = it->second;
+    const AbstractCreator::Ptr creator = it->second;
     return creator->create(parameters);
   }
 
  private:
   class AbstractCreator {
    public:
+    typedef ltr::utility::shared_ptr<AbstractCreator> Ptr;
     virtual ~AbstractCreator() {}
 
-    virtual Parameterized* create(
+    virtual boost::any create(
       const ParametersContainer& parameters) const = 0;
   };
 
-  template <class T>
+  template <class Base, class Derived>
   class Creator: public AbstractCreator {
    public:
-    virtual Parameterized* create(const ParametersContainer& parameters) const {
-      return new T(parameters);
+    virtual boost::any create(const ParametersContainer& parameters) const {
+      if (!parameters.empty()) {
+        return ltr::utility::shared_ptr<Base>(new Derived(parameters));  // NOLINT
+      } else {
+        return ltr::utility::shared_ptr<Base>(new Derived());
+      }
     }
   };
 
-  typedef boost::unordered_map<string, AbstractCreator*> NameCreatorHash;
+  typedef boost::unordered_map<string, AbstractCreator::Ptr> NameCreatorHash;
 
   Factory(const Factory&);
 

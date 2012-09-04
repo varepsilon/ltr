@@ -102,7 +102,7 @@ class BaseLearner : public Learner<TElement> {
   virtual void learn(const DataSet<TElement>& data_set,
                      bool check_parameters = true);
   // \TODO ? We don't need it in base class as not all Learners support it
-  void setInitialScorer(const TScorer& scorer);
+  virtual void setInitialScorer(const TScorer& scorer);
   virtual void reset();
  private:
   /**
@@ -118,6 +118,7 @@ class BaseLearner : public Learner<TElement> {
   using Learner<TElement>::feature_converters_;
   using Learner<TElement>::feature_converter_learners_;
 
+ protected:
   TScorer scorer_;
 };
 

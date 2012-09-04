@@ -4,11 +4,11 @@
 #include "logog/logog.h"
 
 namespace ltr {
+namespace composition {
   double LinearCompositionScorer::scoreImpl(const Object& object) const {
-    INFO("Starting to score object");
     double result = 0.0;
-    for (size_t i = 0; i < size(); ++i) {
-      result += at(i).weight * ((*at(i).scorer)(object));
+    for (size_t scorer_index = 0; scorer_index < size(); ++scorer_index) {
+      result += at(scorer_index).weight * at(scorer_index).scorer->score(object);
     }
     return result;
   }
@@ -55,14 +55,5 @@ namespace ltr {
     str << "}";
     return str.str();
   }
-
-  const vector<double>& LinearCompositionScorer::gradient
-      (const vector<double>& weak_scores) const {
-    INFO("Starting to calculate a gradient of LinearCompositionScorer.");
-    vector<double> output(size());
-    for (size_t i = 0; i < size(); ++i) {
-      output[i] = at(i).weight;
-    }
-    return output;
-  }
+};
 };

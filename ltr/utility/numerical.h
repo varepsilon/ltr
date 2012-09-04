@@ -58,6 +58,11 @@ bool DoubleEqual(double lhs, double rhs);
 bool DoubleMoreOrEqual(double lhs, double rhs);
 bool DoubleLessOrEqual(double lhs, double rhs);
 bool DoubleNotEqual(double lhs, double rhs);
+
+template <class T>
+T NonNegative(T value) {
+  return (value >= 0) ? value : 0;
+}
 };
 };
 

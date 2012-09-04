@@ -1,3 +1,4 @@
+// Copyright 2012 Yandex
 #include <stdexcept>
 
 #include "ltr_client/utility/parameterized_info.h"
@@ -7,7 +8,7 @@ using std::logic_error;
 typedef string ParameterizedDependency;
 
 void ParametrizedInfo::fill_dependency_list(
-    const TXmlTokenSpecs& token_specs) {
+    const ParametrizedInfos& token_specs) {
   dependency_specs_.clear();
 
   typedef ltr::ParametersContainer::NameValue<const ParameterizedDependency>
@@ -22,7 +23,7 @@ void ParametrizedInfo::fill_dependency_list(
     const TNameValue& dependency = *my_dependency_it;
     const ParametrizedInfo* found = NULL;
 
-    TXmlTokenSpecs::const_iterator it = token_specs.find(
+    ParametrizedInfos::const_iterator it = token_specs.find(
           dependency.value);
     found = &it->second;
 
@@ -89,7 +90,7 @@ const string& ParametrizedInfo::get_approach() const {
 const ltr::ParametersContainer& ParametrizedInfo::get_parameters() const {
   return parameters_;
 }
-const TXmlTokenSpecList& ParametrizedInfo::dependency_specs() const {
+const ParametrizedInfosList& ParametrizedInfo::dependency_specs() const {
   return dependency_specs_;
 }
 
@@ -100,9 +101,10 @@ string ToString(const ParametrizedInfo& info) {
       << ", approach=" << info.get_approach()
       << ", parameters=" << info.get_parameters().toString()
          << ", my dependencies=(";
-  for (TXmlTokenSpecList::const_iterator it = info.dependency_specs().begin();
-      it != info.dependency_specs().end();
-      ++it) {
+  for (ParametrizedInfosList::const_iterator it =
+         info.dependency_specs().begin();
+       it != info.dependency_specs().end();
+       ++it) {
     out << (*it)->get_name() << ", ";
   }
   out << "))";

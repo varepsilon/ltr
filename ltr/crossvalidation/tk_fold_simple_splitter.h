@@ -41,8 +41,7 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
    */
   explicit TKFoldSimpleSplitter
       (const ParametersContainer& parameters) {
-    this->setDefaultParameters();
-    this->copyParameters(parameters);
+    this->setParameters(parameters);
   }
 
   explicit TKFoldSimpleSplitter

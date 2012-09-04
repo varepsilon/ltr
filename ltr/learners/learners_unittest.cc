@@ -67,23 +67,3 @@ TEST_F(LearnersTest, TestingBestFeatureLearner) {
 
   EXPECT_LE(measure_after, measure_before) << "It can't be worth.\n";
 };
-
-TEST_F(LearnersTest, TestingLinearLearner) {
-  DataSet<Object> data;
-  Object object1, object2, object3;
-  object1 << 1.2 << 1.9;
-  object2 << 1.7 << 512.1;
-  object3 << 5.9 << 0.2;
-
-  data.add(object1, 1.2);
-  data.add(object2, 0.5);
-  data.add(object3, 7.2);
-
-  ltr::LinearLearner<Object> learner;
-
-  learner.learn(data);
-
-  ltr::LinearScorer::Ptr scorer = learner.makeSpecific();
-
-  std::cout << scorer->generateCppCode();
-};

@@ -6,18 +6,26 @@
 #include <string>
 #include <vector>
 
-#include "ltr/scorers/composition_scorers/soft_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/composition_scorer.h"
 
 using std::string;
 using std::vector;
 
 namespace ltr {
-class LinearCompositionScorer : public SoftCompositionScorer {
+namespace composition {
+/**
+ * A composition scorer - contains other scorers with their weights. Scores as
+ * weighted linear composition of outputs of its weak scorers
+ */
+class LinearCompositionScorer : public CompositionScorer {
  public:
   typedef ltr::utility::shared_ptr<LinearCompositionScorer> Ptr;
 
-  virtual const vector<double>& gradient
-    (const vector<double>& weak_scores) const;
+  LinearCompositionScorer() {}
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
+  explicit LinearCompositionScorer(const ParametersContainer& parameters) {}
 
   virtual string toString() const;
   virtual double scoreImpl(const Object& object) const;
@@ -25,6 +33,7 @@ class LinearCompositionScorer : public SoftCompositionScorer {
  private:
   virtual string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "LinearCompositionScorer";}
+};
 };
 };
 

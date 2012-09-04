@@ -3,6 +3,7 @@
 #include "ltr/scorers/composition_scorers/median_composition_scorer.h"
 
 namespace ltr {
+namespace composition {
   string MedianCompositionScorer::toString() const {
     std::stringstream str;
     std::fixed(str);
@@ -15,4 +16,5 @@ namespace ltr {
     str << "}";
     return str.str();
   }
+};
 };

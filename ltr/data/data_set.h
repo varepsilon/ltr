@@ -225,7 +225,7 @@ DataSet<TElement> DataSet<TElement>::deepCopy() const {
   for (int element_index = 0;
        element_index < (int)this->size();
        ++element_index) {
-    result << this->at(element_index);
+    result.add(this->at(element_index), this->getWeight(element_index));
   }
   return result;
 }

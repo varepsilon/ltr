@@ -31,6 +31,9 @@ SET(Install_Path ${Source_Path}/lib)
 MESSAGE(STATUS "Source_Path           : ${Source_Path}")
 MESSAGE(STATUS "Install_Path          : ${Install_Path}")
 
+SET(CMAKE_DEBUG_POSTFIX "_d")
+MESSAGE(STATUS "CMAKE_DEBUG_POSTFIX   : ${CMAKE_DEBUG_POSTFIX}")
+
 ##########################################################################################
 # lets SETup OpenMP flags
 FIND_PACKAGE(OpenMP)
@@ -71,7 +74,7 @@ ADD_LIBRARY(ltr STATIC ${LTR_ALL})
 TARGET_LINK_LIBRARIES(ltr puppy logog ${Boost_LIBRARIES})
 
 # installing
-INSTALL(TARGETS ltr puppy logog ARCHIVE DESTINATION ${Install_Path})
+INSTALL(TARGETS ltr puppy logog ARCHIVE DESTINATION ${Install_Path} CONFIGURATIONS Debug Release)
 
 ##########################################################################################
 # lets SETup LTR_client
@@ -83,10 +86,15 @@ TARGET_LINK_LIBRARIES(ltr_client ltr tinyxml)
 # lets SETup generator project, which learns scorers and serialize them
 INCLUDE(${Source_Path}/cmake/serialization.cmake)
 ADD_EXECUTABLE(serialization_generator ${Serialization_generator_SOURCES})
-TARGET_LINK_LIBRARIES(serialization_generator ltr puppy ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(serialization_generator ltr puppy logog ${Boost_LIBRARIES})
+CreateEmptyTesterFile()
 
-# making tester.cc with scorer saved in code
-MakeTester()
+##########################################################################################
+# lets SETup RUN_SERIALIZATION fake project, which is for
+# making tester.cc file with scorers saved in code
+ADD_CUSTOM_TARGET(RUN_SERIALIZATION
+	COMMAND serialization_generator ${Source_Path}/ltr/serialization_test/tester/tester.cc)
+ADD_DEPENDENCIES(RUN_SERIALIZATION serialization_generator)
 
 ##########################################################################################
 # lets SETup Google Test
