@@ -6,42 +6,41 @@ namespace ltr {
 
 \section TutorialDataPreprocessor DataPreprocessor
 
-A base class for data preprocessors.
+Preprocesses DataSet, e.g. filter noisy objects, change weights or replicate elements in DataSet.
+This can be helpfull for better learning.
+DataPreprocessors should not change Object features and FeatureInfo.
+Use FeatureConverter for feature convertions (see \ref TutorialFeatureConverters).
 
-Preprocesses DataSet, e.g. delete or replicate elements in DataSet.
-This can be usefull for better learning.
-Should not change Object features and FeatureInfo as it won't be saved in Scorer.
-Use FeatureConverter for feature convertions.
+You can preprocess your data via DataPreprocessor::apply method.
+In the example below DataSampler is used to sample object with specified
+indexes from DataSet.
 
-You can preprocess your data in this way:
+Example: Preprocessing data                      | Output:
+-------------------------------------------------|------------------
+\include tutorial_data_preprocessor_example1.cpp | \include tutorial_data_preprocessor_example1.out
 
-\li DataPreprocessor::apply(const DataSet<TElement>& input, DataSet<TElement>* output, bool check_parameters = true)
-\param input DataSet to be preprocessed
-\param output preprocessed DataSet
-\param check_parameters whether perform Parameterized::checkParameters() before launch
+%The main usage of DataPreprocessors is to preprocess data before learning.
+In order to do this just use method Learner::addDataPreprocessor.
+For example,
 
-\subsection TutorialFakeDataPreprocessor FakeDataPreprocessor
+    LinearLearner linear_learner;
+    linear_learner.addDataPreprocessor(new DataRandomSampler());
+    linear_learner.learn(data);
 
-Does nothing with input DataSet.
+which is equal to
 
-\subsection TutorialDataSampler DataSampler
+    DataRandomSampler random_sampler();
+    random_sampler.apply(data, &preprocessed_data);
+    LinearLearner linear_learner;
+    linear_learner.learn(preprocessed_data);
 
-Samples elements with specififed indices from input DataSet.
-Duplication of indices leads to duplication of elements in the result sample.
+\section DataPreprocessorsList List of all DataPrepocessors
 
-<table class="example">
-<tr><td>Example: preprocessing data.</td></tr>
-<tr><td>
-\include tutorial_data_preprocessor_example1.cpp
-</td></tr>
-<tr><td>Output:</td></tr>
-<tr><td>
-\include tutorial_data_preprocessor_example1.out
-</td></tr>
-</table>
+%DataPreprocessor      | Description                                                
+-----------------------|------------------------------------------------------------
+FakePreprocessor       | Does nothing with input DataSet  
+DataSampler            | Samples elements with specififed indices from input DataSet
+DataRandomSampler      | Acts as DataSampler with random indices each new applying
 
-\subsection TutorialDataRandomSampler DataRandomSampler
-
-Acts as DataSampler with random indices each new applying (duplication may be allowed).
 **/
 }
