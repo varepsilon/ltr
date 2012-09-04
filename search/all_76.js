@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['validate',['Validate',['../namespaceltr_1_1cv.html#a0884926302a39d700d8a74527332514d',1,'ltr::cv']]],
+  ['validation_5fresult_2ecc',['validation_result.cc',['../validation__result_8cc.html',1,'']]],
+  ['validation_5fresult_2eh',['validation_result.h',['../validation__result_8h.html',1,'']]],
+  ['validation_5fresult_5funittest_2ecc',['validation_result_unittest.cc',['../validation__result__unittest_8cc.html',1,'']]],
+  ['validationresult',['ValidationResult',['../classltr_1_1cv_1_1_validation_result.html',1,'ltr::cv']]],
+  ['validationresult',['ValidationResult',['../classltr_1_1cv_1_1_validation_result.html#a499dd3bf575314364f3984ae431c886f',1,'ltr::cv::ValidationResult']]],
+  ['value',['value',['../structltr_1_1_parameters_container_1_1_name_value.html#a9ce139e047047d165b3b73fae1158411',1,'ltr::ParametersContainer::NameValue::value()'],['../classltr_1_1_functor.html#a5cef6e7135c39797841536f2dce03747',1,'ltr::Functor::value()'],['../classltr_1_1decision__tree_1_1_compare_condition.html#adc528f6ecec852a001600286c0603dcc',1,'ltr::decision_tree::CompareCondition::value()'],['../classltr_1_1decision__tree_1_1_decision_tree.html#a2a9cae251832670f2831310ec7971f6d',1,'ltr::decision_tree::DecisionTree::value()'],['../classltr_1_1decision__tree_1_1_decision_vertex.html#a14785083a81ca8d5df4adae805c13075',1,'ltr::decision_tree::DecisionVertex::value()'],['../classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e',1,'ltr::decision_tree::LeafVertex::value()'],['../classltr_1_1decision__tree_1_1_regression_vertex.html#ad54f023a632df07d4fd449df9c2d0863',1,'ltr::decision_tree::RegressionVertex::value()'],['../classltr_1_1decision__tree_1_1_splitting_quality.html#a534cd38aebe8e61d027b0a539aec2a05',1,'ltr::decision_tree::SplittingQuality::value()'],['../classltr_1_1decision__tree_1_1_fake_splitting_quality.html#a682e062d949bb633915dcc119742a36a',1,'ltr::decision_tree::FakeSplittingQuality::value()'],['../classltr_1_1decision__tree_1_1_sqr_error_quality.html#a1c90e6a3aa2ad859008518c706f3b009',1,'ltr::decision_tree::SqrErrorQuality::value()'],['../classltr_1_1_measure.html#a84665ea4d3b9af146b4a74cfbf2c786a',1,'ltr::Measure::value()'],['../classltr_1_1_scorer.html#ae5e5abf6e74b3c208cdf1632a912adab',1,'ltr::Scorer::value()']]],
+  ['value_5f',['value_',['../classltr_1_1decision__tree_1_1_leaf_vertex.html#a360a99e7279d64e7f0b45b4b3110522d',1,'ltr::decision_tree::LeafVertex']]],
+  ['value_5ftype',['value_type',['../classltr_1_1utility_1_1shared__ptr.html#aa4fef65671a3ad018c02bf6359ebd30b',1,'ltr::utility::shared_ptr']]],
+  ['values_5f',['values_',['../structltr_1_1_one_feature_info.html#af24fced631107e4274495b84f471f4cb',1,'ltr::OneFeatureInfo']]],
+  ['vertex',['vertex',['../structltr_1_1decision__tree_1_1_vertex_with_data.html#a5539455d0041c96e64ee1b3595c27649',1,'ltr::decision_tree::VertexWithData::vertex()'],['../classltr_1_1decision__tree_1_1_vertex.html#aca5da15d534f4da0d882f347a240b843',1,'ltr::decision_tree::Vertex::Vertex()'],['../classltr_1_1decision__tree_1_1_vertex.html#a1307cdbcc32fa2bf9685252d57dafad5',1,'ltr::decision_tree::Vertex::Vertex(Condition::Ptr condition)']]],
+  ['vertex',['Vertex',['../classltr_1_1decision__tree_1_1_vertex.html',1,'ltr::decision_tree']]],
+  ['vertex_3c_20double_20_3e',['Vertex< double >',['../classltr_1_1decision__tree_1_1_vertex.html',1,'ltr::decision_tree']]],
+  ['vertexptr',['VertexPtr',['../classltr_1_1decision__tree_1_1_decision_tree.html#aa58d8cd3c460cbcaed2326e4800ee60c',1,'ltr::decision_tree::DecisionTree']]],
+  ['vertexwithdata',['VertexWithData',['../structltr_1_1decision__tree_1_1_vertex_with_data.html',1,'ltr::decision_tree']]],
+  ['vertexwithdata',['VertexWithData',['../structltr_1_1decision__tree_1_1_vertex_with_data.html#aa955fc75bb82635685ecec88383081ec',1,'ltr::decision_tree::VertexWithData::VertexWithData(Vertex&lt; double &gt;::Ptr vertex, const DataSet&lt; Object &gt; &amp;data)'],['../structltr_1_1decision__tree_1_1_vertex_with_data.html#ae099d55df3fed36589552e2343b87dfd',1,'ltr::decision_tree::VertexWithData::VertexWithData(const VertexWithData &amp;other)']]],
+  ['vote_5faggregator_2ecc',['vote_aggregator.cc',['../vote__aggregator_8cc.html',1,'']]],
+  ['vote_5faggregator_2eh',['vote_aggregator.h',['../vote__aggregator_8h.html',1,'']]],
+  ['voteaggregator',['VoteAggregator',['../classltr_1_1_vote_aggregator.html',1,'ltr']]],
+  ['voteaggregator',['VoteAggregator',['../classltr_1_1_vote_aggregator.html#a59b2460852b07fbcc8066b0c59219049',1,'ltr::VoteAggregator::VoteAggregator()'],['../classltr_1_1_vote_aggregator.html#a7ba3cd1e0f2abdf7a8df42cdc74d77df',1,'ltr::VoteAggregator::VoteAggregator(const ParametersContainer &amp;parameters)']]]
+];
