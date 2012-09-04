@@ -10,15 +10,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="910"
-   height="586.94073"
+   width="900"
+   height="600"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.2 r9819"
    sodipodi:docname="logo.svg"
    inkscape:export-filename="C:\Yabracadabra\ltr1\doc\logo.png"
-   inkscape:export-xdpi="11.960273"
-   inkscape:export-ydpi="11.960273">
+   inkscape:export-xdpi="10.5"
+   inkscape:export-ydpi="10.5">
   <defs
      id="defs4">
     <linearGradient
@@ -82,11 +82,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(5,-470.42147)">
+     transform="translate(5,-457.3622)">
     <a
        id="a5262"
        style="fill:#faebd7"
-       transform="matrix(0.92974787,0,0,0.90874118,31.613457,69.481333)">
+       transform="matrix(0.92974787,0,0,0.90874118,27.150261,67.707545)">
       <path
          transform="translate(0,152.36218)"
          inkscape:connector-curvature="0"
@@ -111,80 +111,82 @@
     <text
        xml:space="preserve"
        style="font-size:80.60037231px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="100.51356"
-       y="949.17804"
+       x="95.853699"
+       y="947.479"
        id="text5271-3"
        sodipodi:linespacing="125%"
-       transform="scale(0.95779794,1.0440615)"><tspan
+       transform="scale(0.95779798,1.0440615)"><tspan
          sodipodi:role="line"
          id="tspan5273-1"
-         x="100.51356"
-         y="949.17804"
+         x="95.853699"
+         y="947.479"
          style="font-size:161.20074463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:Snap ITC;-inkscape-font-specification:Snap ITC">2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:334.37808228px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffd700;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="255.58961"
-       y="861.13324"
+       x="252.02229"
+       y="858.91394"
        id="text5307"
        sodipodi:linespacing="125%"
-       transform="scale(1.2511324,0.79927594)"><tspan
+       transform="scale(1.2511324,0.79927592)"><tspan
          sodipodi:role="line"
          id="tspan5309"
-         x="255.58961"
-         y="861.13324"
+         x="252.02229"
+         y="858.91394"
          style="font-size:334.37808228px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffd700;font-family:Showcard Gothic;-inkscape-font-specification:Showcard Gothic">T</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:315.44586182px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#c0c0c0;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="54.255684"
-       y="948.63983"
+       x="50.396599"
+       y="946.58856"
        id="text5311"
        sodipodi:linespacing="125%"
-       transform="scale(1.156542,0.86464652)"><tspan
+       transform="scale(1.156542,0.86464651)"><tspan
          sodipodi:role="line"
          id="tspan5313"
-         x="54.255684"
-         y="948.63983"
+         x="50.396599"
+         y="946.58856"
          style="font-size:315.44586182px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#c0c0c0;font-family:Showcard Gothic;-inkscape-font-specification:Showcard Gothic">L</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:279.89559937px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#a52a2a;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="554.70868"
-       y="960.05695"
+       x="550.76379"
+       y="958.05023"
        id="text5315"
        sodipodi:linespacing="125%"
-       transform="scale(1.1313987,0.8838617)"><tspan
+       transform="scale(1.1313987,0.88386171)"><tspan
          sodipodi:role="line"
          id="tspan5317"
-         x="554.70868"
-         y="960.05695"
+         x="550.76379"
+         y="958.05023"
          style="font-size:279.89559937px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#a52a2a;font-family:Showcard Gothic;-inkscape-font-specification:Showcard Gothic">R</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:100.69277954px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="388.89444"
-       y="899.27582"
+       x="384.48193"
+       y="897.48187"
        id="text5319"
        sodipodi:linespacing="125%"
-       transform="scale(1.0114921,0.98863848)"><tspan
+       transform="scale(1.0114921,0.98863847)"><tspan
          sodipodi:role="line"
          id="tspan5321"
-         x="388.89444"
-         y="899.27582"
+         x="384.48193"
+         y="897.48187"
          style="font-size:209.77662659px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Snap ITC;-inkscape-font-specification:Snap ITC">1</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:80.60037231px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="681.4295"
-       y="966.09021"
+       x="676.76965"
+       y="964.39117"
        id="text5271-3-1"
        sodipodi:linespacing="125%"
-       transform="scale(0.95779794,1.0440615)"><tspan
+       transform="scale(0.95779798,1.0440615)"
+       inkscape:export-xdpi="10.5"
+       inkscape:export-ydpi="10.5"><tspan
          sodipodi:role="line"
          id="tspan5273-1-7"
-         x="681.4295"
-         y="966.09021"
+         x="676.76965"
+         y="964.39117"
          style="font-size:161.20074463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:Snap ITC;-inkscape-font-specification:Snap ITC">3</tspan></text>
   </g>
 </svg>
