@@ -130,6 +130,7 @@ namespace serialization_test {
 
   void Generator::setScorerTest(Learner<Object>::Ptr learner,
       string test_name) {
+    learner->learn(train_data);
     Scorer::Ptr tested_scorer = learner->make();
     tested_scorer->predict(test_data);
 

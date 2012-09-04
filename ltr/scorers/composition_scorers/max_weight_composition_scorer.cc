@@ -1,5 +1,7 @@
 // Copyright 2011 Yandex
 
+#include <stdexcept>
+
 #include <logog/logog.h>
 
 #include "ltr/scorers/composition_scorers/max_weight_composition_scorer.h"
@@ -8,23 +10,40 @@
 using ltr::utility::DoubleLess;
 
 namespace ltr {
-  double MaxWeightCompositionScorer::scoreImpl(const Object& object) const {
-    INFO("Starting to score an object.");
-    size_t current_best_index = 0;
-    double current_biggest_weight = at(current_best_index).weight;
-    for (int index = 1; index < size(); ++index) {
-      if (DoubleLess(current_biggest_weight, at(index).weight)) {
-        current_best_index = index;
-        current_biggest_weight = at(current_best_index).weight;
-      }
+namespace composition {
+  void MaxWeightCompositionScorer::addImpl(const ScorerAndWeight& weighted_scorer) {
+    weighted_scorers_.push_back(weighted_scorer);
+    if (best_index_ == INVALID_INDEX ||
+        DoubleLess(at(best_index_).weight, weighted_scorer.weight)) {
+      best_index_ = static_cast<int>(size()) - 1;
     }
-    return (*at(current_best_index).scorer)(object);
+  }
+
+  void MaxWeightCompositionScorer::clear() {
+    weighted_scorers_.clear();
+    best_index_ = INVALID_INDEX;
+  }
+
+  double MaxWeightCompositionScorer::scoreImpl(const Object& object) const {
+    if (best_index_ == INVALID_INDEX) {
+      ERR("Can't score with no weak scorers");
+      throw std::logic_error
+        ("No weak scorers for MaxWeightCompositionScorer");
+    } else {
+      return at(best_index_).scorer->score(object);
+    }
   }
 
   string MaxWeightCompositionScorer::generateCppCodeImpl
       (const string& function_name) const {
-    string hpp_code = "Not implemented";
-    return hpp_code;
+    string code = at(best_index_).scorer->generateCppCode();
+    code.append("inline double ").
+      append(function_name).
+      append("(const std::vector< double >& features) {\n").
+      append("\treturn ").
+      append(at(best_index_).scorer->getDefaultSerializableObjectName()).
+      append("(features);\n}\n");
+    return code;
   }
 
   string MaxWeightCompositionScorer::toString() const {
@@ -39,4 +58,5 @@ namespace ltr {
     str << "}";
     return str.str();
   }
+};
 };

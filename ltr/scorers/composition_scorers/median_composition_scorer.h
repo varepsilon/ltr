@@ -10,12 +10,21 @@
 using std::string;
 
 namespace ltr {
-class MedianCompositionScorer : public OrderStaticticCompositionScorer {
+namespace composition {
+/**
+ * A composition scorer - contains other scorers with their weights. Scores as
+ * weighted median of outputs of its weak scorers
+ */
+class MedianCompositionScorer : public OrderStatisticCompositionScorer {
  public:
   typedef ltr::utility::shared_ptr<MedianCompositionScorer> Ptr;
 
   MedianCompositionScorer()
-    : OrderStaticticCompositionScorer(0.5) {}
+    : OrderStatisticCompositionScorer(0.5) {}
+  /**
+   * @param parameters Standart LTR parameter container with no parameters
+   */
+  explicit MedianCompositionScorer(const ParametersContainer& parameters) {}
 
   virtual string toString() const;
 
@@ -23,6 +32,7 @@ class MedianCompositionScorer : public OrderStaticticCompositionScorer {
   virtual string getDefaultAlias() const {
     return "MedianCompositionScorer";
   }
+};
 };
 };
 

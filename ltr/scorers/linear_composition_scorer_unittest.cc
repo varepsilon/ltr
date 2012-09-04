@@ -11,7 +11,7 @@
 
 using ltr::Object;
 using ltr::LinearScorer;
-using ltr::LinearCompositionScorer;
+using ltr::composition::LinearCompositionScorer;
 using ltr::OneFeatureScorer;
 using ltr::utility::DoubleEqual;
 using std::vector;

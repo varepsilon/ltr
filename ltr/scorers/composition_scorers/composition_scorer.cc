@@ -7,44 +7,50 @@
 using std::string;
 
 namespace ltr {
+namespace composition {
   void CompositionScorer::clear() {
     weighted_scorers_.clear();
   }
 
-  int CompositionScorer::size() const {
+  size_t CompositionScorer::size() const {
     return weighted_scorers_.size();
   }
 
   const CompositionScorer::ScorerAndWeight&
-      CompositionScorer::at(size_t index) const {
-    INFO("Getting scorer at %d index", index);
-    return weighted_scorers_.at(index);
+      CompositionScorer::at(size_t scorer_index) const {
+    DBUG("Getting scorer at %d index", scorer_index);
+    return weighted_scorers_.at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
-      CompositionScorer::at(size_t index) {
-    INFO("Getting scorer at %d index", index);
-    return weighted_scorers_.at(index);
+      CompositionScorer::at(size_t scorer_index) {
+    DBUG("Getting scorer at %d index", scorer_index);
+    return weighted_scorers_.at(scorer_index);
   }
   const CompositionScorer::ScorerAndWeight&
-      CompositionScorer::operator[](size_t index) const {
-    INFO("Setting scorer at %d index", index);
-    return at(index);
+      CompositionScorer::operator[](size_t scorer_index) const {
+    DBUG("Setting scorer at %d index", scorer_index);
+    return at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
-      CompositionScorer::operator[](size_t index) {
-    INFO("Setting scorer at %d index", index);
-    return at(index);
+      CompositionScorer::operator[](size_t scorer_index) {
+    DBUG("Setting scorer at %d index", scorer_index);
+    return at(scorer_index);
   }
 
-  void CompositionScorer::add
+  void CompositionScorer::addImpl
       (const ScorerAndWeight& weighted_scorer) {
-    INFO("Adding a scorer and weight");
+    DBUG("Adding a scorer and weight equal to %lf", weighted_scorer.weight);
     weighted_scorers_.push_back(weighted_scorer);
   }
 
   void CompositionScorer::add
-      (Scorer::Ptr scorer, double weight) {
-    INFO("Adding a scorer with a weight equal to %lf", weight);
-    weighted_scorers_.push_back(ScorerAndWeight(scorer, weight));
+      (const ScorerAndWeight& weighted_scorer) {
+    addImpl(weighted_scorer);
   }
+
+  void CompositionScorer::add
+      (Scorer::Ptr scorer, double weight) {
+    addImpl(ScorerAndWeight(scorer, weight));
+  }
+};
 };
