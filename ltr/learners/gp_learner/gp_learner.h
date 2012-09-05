@@ -207,11 +207,11 @@ void GPLearner<TElement>::setDefaultParameters() {
 
 template <typename TElement>
 void GPLearner<TElement>::checkParameters() const {
-  CHECK(population_size_ > 0);
-  CHECK(number_of_generations_ > 0);
-  CHECK(min_init_depth_ > 0);
-  CHECK(max_init_depth_ > min_init_depth_ - 1);
-  CHECK(0.0 <= init_grow_probability_ && init_grow_probability_ <= 1.0);
+  CHECK(population_size_ > 0); // NOLINT
+  CHECK(number_of_generations_ > 0); // NOLINT
+  CHECK(min_init_depth_ > 0); // NOLINT
+  CHECK(max_init_depth_ > min_init_depth_ - 1); // NOLINT
+  CHECK(0.0 <= init_grow_probability_ && init_grow_probability_ <= 1.0); // NOLINT
 }
 
 template <typename TElement>
