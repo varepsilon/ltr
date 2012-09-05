@@ -120,144 +120,147 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00015"></a>00015 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_pair.html">ltr::ObjectPair</a>;
 <a name="l00016"></a>00016 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_list.html">ltr::ObjectList</a>;
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00019"></a><a class="code" href="class_per_object_accessor.html">00019</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a> {
-<a name="l00020"></a>00020  <span class="keyword">public</span>:
-<a name="l00021"></a><a class="code" href="class_per_object_accessor.html#a1ef88de565929b24b101a5f6e07fc07c">00021</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor.html#a1ef88de565929b24b101a5f6e07fc07c">PerObjectAccessor</a>(TElement* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>() <span class="keyword">const</span>;
+<a name="l00018"></a>00018 <span class="keyword">namespace </span>ltr {
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00021"></a><a class="code" href="classltr_1_1_per_object_accessor.html">00021</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a> {
+<a name="l00022"></a>00022  <span class="keyword">public</span>:
+<a name="l00023"></a><a class="code" href="classltr_1_1_per_object_accessor.html#ac96b2a1a589e8255fe7065cc58e7abff">00023</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor.html#ac96b2a1a589e8255fe7065cc58e7abff">PerObjectAccessor</a>(TElement* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor.html#a1edfd618585e5768fc0a1009a85e5f92">object</a>(<span class="keywordtype">int</span> object_index);
+<a name="l00025"></a>00025   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>() <span class="keyword">const</span>;
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027  <span class="keyword">private</span>:
-<a name="l00028"></a><a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">00028</a>   TElement* <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>;
-<a name="l00029"></a>00029 };
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="comment">// template realization</span>
+<a name="l00027"></a>00027   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor.html#ac2eec239870a4ebf1f0a2a7388162fc5">object</a>(<span class="keywordtype">int</span> object_index);
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029  <span class="keyword">private</span>:
+<a name="l00030"></a><a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">00030</a>   TElement* <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>;
+<a name="l00031"></a>00031 };
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">template</span>&lt;&gt;
-<a name="l00034"></a><a class="code" href="class_per_object_accessor_3_01_object_01_4.html">00034</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt; {
-<a name="l00035"></a>00035  <span class="keyword">public</span>:
-<a name="l00036"></a><a class="code" href="class_per_object_accessor_3_01_object_01_4.html#abb5891229b43eba680fb17c24dcb8432">00036</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01_object_01_4.html#abb5891229b43eba680fb17c24dcb8432">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object.html">Object</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a144ba87e8a53a28310f8ccca89eff7c1">00038</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a144ba87e8a53a28310f8ccca89eff7c1">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00039"></a>00039     <span class="keywordflow">return</span> 1;
-<a name="l00040"></a>00040   }
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a172a6e4db7728186aff0754d73cd178f">00042</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a172a6e4db7728186aff0754d73cd178f">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00043"></a>00043     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00044"></a>00044     <span class="keywordflow">return</span> *<a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>;
-<a name="l00045"></a>00045   }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047  <span class="keyword">private</span>:
-<a name="l00048"></a><a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a0b37a65290622f22ce0a78414d708b77">00048</a>   <a class="code" href="classltr_1_1_object.html">Object</a>* <a class="code" href="class_per_object_accessor_3_01_object_01_4.html#a0b37a65290622f22ce0a78414d708b77">element_</a>;
-<a name="l00049"></a>00049 };
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">template</span>&lt;&gt;
-<a name="l00052"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html">00052</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object.html">Object</a>&gt; {
-<a name="l00053"></a>00053  <span class="keyword">public</span>:
-<a name="l00054"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#a80a6480449a68e14c530d5e351a9d5af">00054</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#a80a6480449a68e14c530d5e351a9d5af">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00055"></a>00055 
-<a name="l00056"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#ad300eb60e506d8abee7bbf5487c8f2ba">00056</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#ad300eb60e506d8abee7bbf5487c8f2ba">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00057"></a>00057     <span class="keywordflow">return</span> 1;
-<a name="l00058"></a>00058   }
-<a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#ac5c4c9381d167e25c864ef5939d46dee">00060</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#ac5c4c9381d167e25c864ef5939d46dee">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00061"></a>00061     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00062"></a>00062     <span class="keywordflow">return</span> *<a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>;
-<a name="l00063"></a>00063   }
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065  <span class="keyword">private</span>:
-<a name="l00066"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#a0d9033b3a4db48b3b157726a5e15617d">00066</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>* <a class="code" href="class_per_object_accessor_3_01const_01_object_01_4.html#a0d9033b3a4db48b3b157726a5e15617d">element_</a>;
-<a name="l00067"></a>00067 };
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 <span class="keyword">template</span>&lt;&gt;
-<a name="l00071"></a><a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html">00071</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>&gt; {
-<a name="l00072"></a>00072  <span class="keyword">public</span>:
-<a name="l00073"></a><a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a33b15a6f8475ea0700297f8d1e5af2bb">00073</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a33b15a6f8475ea0700297f8d1e5af2bb">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00074"></a>00074 
-<a name="l00075"></a><a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#acc7c02f11d30f20832ada8c64c544aab">00075</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#acc7c02f11d30f20832ada8c64c544aab">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00076"></a>00076     <span class="keywordflow">return</span> 2;
-<a name="l00077"></a>00077   }
-<a name="l00078"></a>00078 
-<a name="l00079"></a><a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a54e31ea40ecce83c604ca07aa64b1da7">00079</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a54e31ea40ecce83c604ca07aa64b1da7">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00080"></a>00080     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00081"></a>00081     <span class="keywordflow">if</span> (object_index == 0) {
-<a name="l00082"></a>00082       <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;first;
-<a name="l00083"></a>00083     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (object_index == 1) {
-<a name="l00084"></a>00084       <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;second;
-<a name="l00085"></a>00085     }
-<a name="l00086"></a>00086   }
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088  <span class="keyword">private</span>:
-<a name="l00089"></a><a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a3c3fe67b2bdab1a920640d44dfff40c6">00089</a>   <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* <a class="code" href="class_per_object_accessor_3_01_object_pair_01_4.html#a3c3fe67b2bdab1a920640d44dfff40c6">element_</a>;
-<a name="l00090"></a>00090 };
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 <span class="keyword">template</span>&lt;&gt;
-<a name="l00093"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html">00093</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>&gt; {
-<a name="l00094"></a>00094  <span class="keyword">public</span>:
-<a name="l00095"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1c789dc93d5311258c0321dcc83f158d">00095</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1c789dc93d5311258c0321dcc83f158d">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00096"></a>00096 
-<a name="l00097"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1f3414a6289a08ba49dc3fcdb8148eae">00097</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1f3414a6289a08ba49dc3fcdb8148eae">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00098"></a>00098     <span class="keywordflow">return</span> 2;
-<a name="l00099"></a>00099   }
-<a name="l00100"></a>00100 
-<a name="l00101"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1a5324e4c58a5b02ac9405473cc1a492">00101</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#a1a5324e4c58a5b02ac9405473cc1a492">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00102"></a>00102     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00103"></a>00103     <span class="keywordflow">if</span> (object_index == 0) {
-<a name="l00104"></a>00104       <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;first;
-<a name="l00105"></a>00105     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (object_index == 1) {
-<a name="l00106"></a>00106       <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;second;
-<a name="l00107"></a>00107     }
-<a name="l00108"></a>00108   }
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110  <span class="keyword">private</span>:
-<a name="l00111"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#ae456856b1fd0fe9ed4ee2407d4554eb7">00111</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* <a class="code" href="class_per_object_accessor_3_01const_01_object_pair_01_4.html#ae456856b1fd0fe9ed4ee2407d4554eb7">element_</a>;
-<a name="l00112"></a>00112 };
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 <span class="keyword">template</span>&lt;&gt;
-<a name="l00115"></a><a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html">00115</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object_list.html">ObjectList</a>&gt; {
-<a name="l00116"></a>00116  <span class="keyword">public</span>:
-<a name="l00117"></a><a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a403ea4d7fd8ba8e523dbb5034488e9d8">00117</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a403ea4d7fd8ba8e523dbb5034488e9d8">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00118"></a>00118 
-<a name="l00119"></a><a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a5f05d01e82715af5f405acbeffb993cf">00119</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a5f05d01e82715af5f405acbeffb993cf">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00120"></a>00120     <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;size();
-<a name="l00121"></a>00121   }
-<a name="l00122"></a>00122 
-<a name="l00123"></a><a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a8ef6d7c45c85be40bee2b96b52b23f00">00123</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a8ef6d7c45c85be40bee2b96b52b23f00">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00124"></a>00124     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00125"></a>00125     <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;at(object_index);
-<a name="l00126"></a>00126   }
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128  <span class="keyword">private</span>:
-<a name="l00129"></a><a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a03fe7003a7cd912f2c1339994d467459">00129</a>   <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* <a class="code" href="class_per_object_accessor_3_01_object_list_01_4.html#a03fe7003a7cd912f2c1339994d467459">element_</a>;
-<a name="l00130"></a>00130 };
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132 <span class="keyword">template</span>&lt;&gt;
-<a name="l00133"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html">00133</a> <span class="keyword">class </span><a class="code" href="class_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>&gt; {
-<a name="l00134"></a>00134  <span class="keyword">public</span>:
-<a name="l00135"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#ab759fe5189aca61f126633f6b4899b8e">00135</a>   <span class="keyword">explicit</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#ab759fe5189aca61f126633f6b4899b8e">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* element) : <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>(element) {}
-<a name="l00136"></a>00136 
-<a name="l00137"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#a36f0e176462001b811bc71925e50f5ae">00137</a>   <span class="keywordtype">int</span> <a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#a36f0e176462001b811bc71925e50f5ae">object_count</a>()<span class="keyword"> const </span>{
-<a name="l00138"></a>00138     <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;size();
-<a name="l00139"></a>00139   }
-<a name="l00140"></a>00140 
-<a name="l00141"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#ae3c030ea64a2a2c7442dbef1ffbc6d9e">00141</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#ae3c030ea64a2a2c7442dbef1ffbc6d9e">object</a>(<span class="keywordtype">int</span> object_index) {
-<a name="l00142"></a>00142     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>());
-<a name="l00143"></a>00143     <span class="keywordflow">return</span> <a class="code" href="class_per_object_accessor.html#a9b847f60f8a074a4af8ef98371b09c55">element_</a>-&gt;at(object_index);
-<a name="l00144"></a>00144   }
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146  <span class="keyword">private</span>:
-<a name="l00147"></a><a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#a1b8ac528a5773a740bf8b5c822e3f88c">00147</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* <a class="code" href="class_per_object_accessor_3_01const_01_object_list_01_4.html#a1b8ac528a5773a740bf8b5c822e3f88c">element_</a>;
-<a name="l00148"></a>00148 };
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150 <span class="preprocessor">#endif  // LTR_DATA_PER_OBJECT_ACCESSOR_H_</span>
+<a name="l00033"></a>00033 <span class="comment">// template realization</span>
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="keyword">template</span>&lt;&gt;
+<a name="l00036"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html">00036</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt; {
+<a name="l00037"></a>00037  <span class="keyword">public</span>:
+<a name="l00038"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#a26c4dab7b9a7f387e749ff63cf17f6e6">00038</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#a26c4dab7b9a7f387e749ff63cf17f6e6">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object.html">Object</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#a81a75495155b99e1296c7330c5ca953a">00040</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#a81a75495155b99e1296c7330c5ca953a">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00041"></a>00041     <span class="keywordflow">return</span> 1;
+<a name="l00042"></a>00042   }
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#ace3aee251d3f304cf2e8952669947a52">00044</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#ace3aee251d3f304cf2e8952669947a52">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00045"></a>00045     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00046"></a>00046     <span class="keywordflow">return</span> *<a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>;
+<a name="l00047"></a>00047   }
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049  <span class="keyword">private</span>:
+<a name="l00050"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#aad65e3b7fec26fe263e79ed6759cea7d">00050</a>   <a class="code" href="classltr_1_1_object.html">Object</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_01_4.html#aad65e3b7fec26fe263e79ed6759cea7d">element_</a>;
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="keyword">template</span>&lt;&gt;
+<a name="l00054"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html">00054</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object.html">Object</a>&gt; {
+<a name="l00055"></a>00055  <span class="keyword">public</span>:
+<a name="l00056"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a7543e4dffee4b3ab8e01d9570606d192">00056</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a7543e4dffee4b3ab8e01d9570606d192">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00057"></a>00057 
+<a name="l00058"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a2834120030c1aa4ebc1b140f6e45257a">00058</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a2834120030c1aa4ebc1b140f6e45257a">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00059"></a>00059     <span class="keywordflow">return</span> 1;
+<a name="l00060"></a>00060   }
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a606a214035a5bd019158eba5a67031c7">00062</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a606a214035a5bd019158eba5a67031c7">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00063"></a>00063     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00064"></a>00064     <span class="keywordflow">return</span> *<a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>;
+<a name="l00065"></a>00065   }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067  <span class="keyword">private</span>:
+<a name="l00068"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a45c162160abeb3d9b8cedfa38dc3093a">00068</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_01_4.html#a45c162160abeb3d9b8cedfa38dc3093a">element_</a>;
+<a name="l00069"></a>00069 };
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="keyword">template</span>&lt;&gt;
+<a name="l00073"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html">00073</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>&gt; {
+<a name="l00074"></a>00074  <span class="keyword">public</span>:
+<a name="l00075"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#aec5b9280a6b9c1a0f3543aacc224cb17">00075</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#aec5b9280a6b9c1a0f3543aacc224cb17">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00076"></a>00076 
+<a name="l00077"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#a8d0c141365fa29a7a016488c65c2751c">00077</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#a8d0c141365fa29a7a016488c65c2751c">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00078"></a>00078     <span class="keywordflow">return</span> 2;
+<a name="l00079"></a>00079   }
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#ad94d67a896f5fcadffe829193b5e844d">00081</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#ad94d67a896f5fcadffe829193b5e844d">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00082"></a>00082     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00083"></a>00083     <span class="keywordflow">if</span> (object_index == 0) {
+<a name="l00084"></a>00084       <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;first;
+<a name="l00085"></a>00085     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (object_index == 1) {
+<a name="l00086"></a>00086       <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;second;
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088   }
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090  <span class="keyword">private</span>:
+<a name="l00091"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#a54623d973b279bbef67c0189a4e7f173">00091</a>   <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_pair_01_4.html#a54623d973b279bbef67c0189a4e7f173">element_</a>;
+<a name="l00092"></a>00092 };
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094 <span class="keyword">template</span>&lt;&gt;
+<a name="l00095"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html">00095</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>&gt; {
+<a name="l00096"></a>00096  <span class="keyword">public</span>:
+<a name="l00097"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a30f4765d3cc23ca20870dd0295d6ce7c">00097</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a30f4765d3cc23ca20870dd0295d6ce7c">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00098"></a>00098 
+<a name="l00099"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a81310fcbe59c2dba0ceabb5c6e2db463">00099</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a81310fcbe59c2dba0ceabb5c6e2db463">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00100"></a>00100     <span class="keywordflow">return</span> 2;
+<a name="l00101"></a>00101   }
+<a name="l00102"></a>00102 
+<a name="l00103"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#aa5b8e7c2b47b46d0682270e8cca7a3e8">00103</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#aa5b8e7c2b47b46d0682270e8cca7a3e8">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00104"></a>00104     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00105"></a>00105     <span class="keywordflow">if</span> (object_index == 0) {
+<a name="l00106"></a>00106       <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;first;
+<a name="l00107"></a>00107     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (object_index == 1) {
+<a name="l00108"></a>00108       <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;second;
+<a name="l00109"></a>00109     }
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112  <span class="keyword">private</span>:
+<a name="l00113"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a2d1570b9994301d6fed6ef81a9129db7">00113</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object_pair.html">ObjectPair</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_pair_01_4.html#a2d1570b9994301d6fed6ef81a9129db7">element_</a>;
+<a name="l00114"></a>00114 };
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116 <span class="keyword">template</span>&lt;&gt;
+<a name="l00117"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html">00117</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;<a class="code" href="classltr_1_1_object_list.html">ObjectList</a>&gt; {
+<a name="l00118"></a>00118  <span class="keyword">public</span>:
+<a name="l00119"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a33b92bf81ead8b7639c28c9b6912a1d8">00119</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a33b92bf81ead8b7639c28c9b6912a1d8">PerObjectAccessor</a>(<a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00120"></a>00120 
+<a name="l00121"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a5039b31fa8941ee747e3dd937ed9ccae">00121</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a5039b31fa8941ee747e3dd937ed9ccae">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00122"></a>00122     <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;size();
+<a name="l00123"></a>00123   }
+<a name="l00124"></a>00124 
+<a name="l00125"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#ad7254cf15fd614a6ed35d054beff450f">00125</a>   <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#ad7254cf15fd614a6ed35d054beff450f">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00126"></a>00126     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00127"></a>00127     <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;at(object_index);
+<a name="l00128"></a>00128   }
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130  <span class="keyword">private</span>:
+<a name="l00131"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a80b1ab890aa5bc43c2e184dac5b45664">00131</a>   <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01_object_list_01_4.html#a80b1ab890aa5bc43c2e184dac5b45664">element_</a>;
+<a name="l00132"></a>00132 };
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="keyword">template</span>&lt;&gt;
+<a name="l00135"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html">00135</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a>&lt;const <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>&gt; {
+<a name="l00136"></a>00136  <span class="keyword">public</span>:
+<a name="l00137"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a2d951129df14bdf3190f03226db5694c">00137</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a2d951129df14bdf3190f03226db5694c">PerObjectAccessor</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* element) : <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>(element) {}
+<a name="l00138"></a>00138 
+<a name="l00139"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a031ad31bb01f4820308fb65be54a596c">00139</a>   <span class="keywordtype">int</span> <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a031ad31bb01f4820308fb65be54a596c">object_count</a>()<span class="keyword"> const </span>{
+<a name="l00140"></a>00140     <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;size();
+<a name="l00141"></a>00141   }
+<a name="l00142"></a>00142 
+<a name="l00143"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a6387af9b09705d842ca909dcca56eaa2">00143</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#a6387af9b09705d842ca909dcca56eaa2">object</a>(<span class="keywordtype">int</span> object_index) {
+<a name="l00144"></a>00144     <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(object_index &lt; <a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>());
+<a name="l00145"></a>00145     <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_per_object_accessor.html#a1ba34c07ff577085b896e6d838adccd6">element_</a>-&gt;at(object_index);
+<a name="l00146"></a>00146   }
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148  <span class="keyword">private</span>:
+<a name="l00149"></a><a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#accb605d1197fa6e36ac5bce490776181">00149</a>   <span class="keyword">const</span> <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>* <a class="code" href="classltr_1_1_per_object_accessor_3_01const_01_object_list_01_4.html#accb605d1197fa6e36ac5bce490776181">element_</a>;
+<a name="l00150"></a>00150 };
+<a name="l00151"></a>00151 }
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153 <span class="preprocessor">#endif  // LTR_DATA_PER_OBJECT_ACCESSOR_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 4 2012 23:16:05 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 5 2012 13:02:24 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
