@@ -15,6 +15,8 @@ using ltr::Object;
 using ltr::ObjectPair;
 using ltr::ObjectList;
 
+namespace ltr {
+
 template<class TElement>
 class PerObjectAccessor {
  public:
@@ -146,5 +148,6 @@ class PerObjectAccessor<const ObjectList> {
  private:
   const ObjectList* element_;
 };
+}
 
 #endif  // LTR_DATA_PER_OBJECT_ACCESSOR_H_

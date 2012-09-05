@@ -14,9 +14,9 @@ template <class TElement>
 void PrintActualLabels(const TElement &element) {
   PerObjectAccessor<const TElement> per_object_accessor(&element);
   for (int object_index = 0;
-	   object_index < per_object_accessor.object_count(); ++object_index) {
-	cout << "actual[" << object_index << "] ="
-		 << per_object_accessor.object(object_index).actual_label() << endl;
+       object_index < per_object_accessor.object_count(); ++object_index) {
+       cout << "actual[" << object_index << "] = "
+            << per_object_accessor.object(object_index).actual_label() << endl;
   }
 }
 

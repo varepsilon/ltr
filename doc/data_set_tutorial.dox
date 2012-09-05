@@ -72,7 +72,7 @@ Example: Copying objects                         | Output:
 
 \section TutorialDataObjectPair ObjectPair
 
-Class to operate pairs of object. Every pair contains two objects:
+%Class to operate pairs of object. Every pair contains two objects:
 \li ObjectPair::first, ObjectPair::second
 
 Example: Manipulating objects in pair            | Output:
@@ -81,7 +81,7 @@ Example: Manipulating objects in pair            | Output:
 
 \section TutorialDataObjectList ObjectList
 
-Class to operate pairs of object. Every list contains several objects.
+%Class to operate pairs of object. Every list contains several objects.
 
 There are several ways to get object from a list.
 \li \link ObjectList::at(const size_t) at(const size_t id) \endlink
@@ -91,9 +91,16 @@ You can also add objects into list using operator<< or \link ObjectList::add(con
 List can be cleared by calling \link ObjectList::clear() clear()\endlink method.<br>
 To find out, how many elements are there in the list, call the \link ObjectList::size() size()\endlink method.
 
-Example: Managing %ObjectList                    | Output:
+\section TutorialDataPerObjectAccessor PerObjectAccessor
+
+Object, ObjectPair and ObjectList are currently main data types used in LTR.
+If you want to write a code handling all of them PerObjectAccessor is what you need.
+It allows you to access an individual Object in all this containers by index.
+In the example below function for printing actual labels is implemented.
+
+Example: Working with %PerObjectAccessor         | Output:
 -------------------------------------------------|------------------
-\include tutorial_data_example6.cpp              | \include tutorial_data_example6.out
+\include tutorial_data_per_object.cpp            | \include tutorial_data_per_object.out
 
 \section TutorialDataDataSet DataSet
 
