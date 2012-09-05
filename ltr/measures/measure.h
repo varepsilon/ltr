@@ -58,16 +58,10 @@ class Measure : public Aliaser, public Parameterized, public Printable {
   }
 
   /**
-   * Gets average measure value of all elements (as if all elements have equal weights)
-   * @param set - input dataset of objects, to count average measure on
-   */
-  double average(const DataSet<TElement>& set) const;
-
-  /**
    * Gets average measure value of all elements (using for counting average weights from dataset)
    * @param set - input dataset of objects, to count average measure on
    */
-  double weightedAverage(const DataSet<TElement>& set) const;
+  double average(const DataSet<TElement>& set) const;
   /**
    * Returns if expected better value of measure is really better than expected worse one.
    * There are two types of measures: when bigger measure is better (e.g. accuracy)
@@ -136,26 +130,7 @@ double Measure<TElement>::operator()(const TElement& element) const {
 };
 
 template<class TElement>
-double Measure<TElement>::average(const DataSet<TElement>& set) const {
-  if (set.size() == 0) {
-    throw logic_error(alias() + " gained empty set");
-  }
-
-  double sum = 0.0;
-  int query_proceed = 0;
-
-  for (int i = 0; i < set.size(); ++i) {
-    query_proceed += 1;
-    double val;
-    val = this->operator()(set[i]);
-    sum += val;
-  }
-  sum /= static_cast<double>(query_proceed);
-  return sum;
-}
-
-template<class TElement>
-double Measure<TElement>::weightedAverage(
+double Measure<TElement>::average(
     const DataSet<TElement>& set) const {
   if (set.size() == 0) {
     throw logic_error(alias() + " gained empty set");

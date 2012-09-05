@@ -53,16 +53,12 @@ TEST(MeasureTest, MeasureTest) {
   data_set.add(object4, 1.2);
 
   AbsError ae;
-  EXPECT_TRUE(DoubleEqual(ae.average(data_set), 3.125));
-  EXPECT_TRUE(DoubleEqual(ae.weightedAverage(data_set), 2.063829787234042));
+  EXPECT_TRUE(DoubleEqual(ae.average(data_set), 2.063829787234042));
   EXPECT_ANY_THROW(ae.average(empty_data_set));
-  EXPECT_ANY_THROW(ae.weightedAverage(empty_data_set));
 
   SquaredError se;
-  EXPECT_TRUE(DoubleEqual(se.average(data_set), 16.3125));
-  EXPECT_TRUE(DoubleEqual(se.weightedAverage(data_set), 9.191489361702127));
+  EXPECT_TRUE(DoubleEqual(se.average(data_set), 9.191489361702127));
   EXPECT_ANY_THROW(se.average(empty_data_set));
-  EXPECT_ANY_THROW(se.weightedAverage(empty_data_set));
 
   ObjectList empty_olist;
   AveragePrecision ap;

@@ -72,14 +72,14 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   size_t best_feature_index = 0;
   OneFeatureScorer current_scorer(best_feature_index);
   current_scorer.predict(data);
-  double best_measure_value = this->measure_->weightedAverage(data);
+  double best_measure_value = this->measure_->average(data);
 
   for (int feature_index = 1;
        feature_index < data.feature_count();
        ++feature_index) {
     OneFeatureScorer current_scorer(feature_index);
     current_scorer.predict(data);
-    double measure_value = this->measure_->weightedAverage(data);
+    double measure_value = this->measure_->average(data);
     if (this->measure_->better(measure_value, best_measure_value)) {
       best_measure_value = measure_value;
       best_feature_index = feature_index;

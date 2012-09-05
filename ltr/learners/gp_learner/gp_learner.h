@@ -384,7 +384,7 @@ void GPLearner<TElement>::evaluatePopulation(const DataSet<TElement>& data) {
 
     // This line yields a topic for research. Why so?
     //
-    double measureVal = this->measure_->weightedAverage(data);
+    double measureVal = this->measure_->average(data);
 
     population_[tree_index].mFitness = static_cast<float>(measureVal);
     population_[tree_index].mValid = true;
