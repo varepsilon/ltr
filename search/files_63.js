@@ -15,7 +15,6 @@ var searchData=
   ['conditions_5flearner_2eh',['conditions_learner.h',['../conditions__learner_8h.html',1,'']]],
   ['config_2eh',['config.h',['../config_8h.html',1,'']]],
   ['container_5futility_2eh',['container_utility.h',['../container__utility_8h.html',1,'']]],
-  ['contributors_2edox',['contributors.dox',['../contributors_8dox.html',1,'']]],
   ['creating_5flearner_5fand_5fscorer_5ftutorial_2edox',['creating_learner_and_scorer_tutorial.dox',['../creating__learner__and__scorer__tutorial_8dox.html',1,'']]],
   ['crossover_5fadjacent_5ftrees_5fstrategy_2ecc',['crossover_adjacent_trees_strategy.cc',['../crossover__adjacent__trees__strategy_8cc.html',1,'']]],
   ['crossover_5fadjacent_5ftrees_5fstrategy_2eh',['crossover_adjacent_trees_strategy.h',['../crossover__adjacent__trees__strategy_8h.html',1,'']]],

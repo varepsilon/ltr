@@ -243,11 +243,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00207"></a>00207 
 <a name="l00208"></a>00208 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
 <a name="l00209"></a><a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a440a481489f215f82e4ed0f913aaa33f">00209</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a440a481489f215f82e4ed0f913aaa33f">GPLearner&lt;TElement&gt;::checkParameters</a>()<span class="keyword"> const </span>{
-<a name="l00210"></a>00210   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(population_size_ &gt; 0); <span class="comment">// NOLINT</span>
-<a name="l00211"></a>00211   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(number_of_generations_ &gt; 0); <span class="comment">// NOLINT</span>
-<a name="l00212"></a>00212   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(min_init_depth_ &gt; 0); <span class="comment">// NOLINT</span>
-<a name="l00213"></a>00213   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(max_init_depth_ &gt; min_init_depth_ - 1); <span class="comment">// NOLINT</span>
-<a name="l00214"></a>00214   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(0.0 &lt;= init_grow_probability_ &amp;&amp; init_grow_probability_ &lt;= 1.0); <span class="comment">// NOLINT</span>
+<a name="l00210"></a>00210   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(population_size_ &gt; 0);
+<a name="l00211"></a>00211   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(number_of_generations_ &gt; 0);
+<a name="l00212"></a>00212   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(min_init_depth_ &gt; 0);
+<a name="l00213"></a>00213   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(max_init_depth_ &gt; min_init_depth_ - 1);
+<a name="l00214"></a>00214   <a class="code" href="parameterized_8h.html#a7b0a4b3c393708bef4a73475d5c2656c">CHECK</a>(0.0 &lt;= init_grow_probability_ &amp;&amp; init_grow_probability_ &lt;= 1.0);
 <a name="l00215"></a>00215 }
 <a name="l00216"></a>00216 
 <a name="l00217"></a>00217 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
@@ -420,7 +420,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00384"></a>00384 
 <a name="l00385"></a>00385     <span class="comment">// This line yields a topic for research. Why so?</span>
 <a name="l00386"></a>00386     <span class="comment">//</span>
-<a name="l00387"></a>00387     <span class="keywordtype">double</span> measureVal = this-&gt;measure_-&gt;average(data);
+<a name="l00387"></a>00387     <span class="keywordtype">double</span> measureVal = this-&gt;measure_-&gt;weightedAverage(data);
 <a name="l00388"></a>00388 
 <a name="l00389"></a>00389     population_[tree_index].mFitness = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(measureVal);
 <a name="l00390"></a>00390     population_[tree_index].mValid = <span class="keyword">true</span>;
@@ -433,7 +433,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:14:53 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2012 12:22:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
