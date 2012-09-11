@@ -1,7 +1,6 @@
 var searchData=
 [
   ['p_5fbreak_5f',['p_break_',['../classltr_1_1_p_found.html#a35e893197bc7ced796340b2d21723ff8',1,'ltr::PFound']]],
-  ['params',['params',['../classltr_1_1_parameters_container_old.html#a2df5adfe777ec0f425c9ef285f2a670a',1,'ltr::ParametersContainerOld']]],
   ['parent_5f',['parent_',['../classltr_1_1decision__tree_1_1_vertex.html#a01e2b7648a61e76f6d204eef7dbf7857',1,'ltr::decision_tree::Vertex']]],
   ['parsenextfeature',['parseNextFeature',['../classltr_1_1io__utility_1_1_a_r_f_f_parser.html#aa3852d7c2bfaecc2fe3b42a2d78d0242',1,'ltr::io_utility::ARFFParser']]],
   ['parser_5f',['parser_',['../classltr_1_1io__utility_1_1_a_r_f_f_parser_1_1_next_feature_parser.html#ab0d379d10a3bc1061e525a89745f6c3d',1,'ltr::io_utility::ARFFParser::NextFeatureParser']]],

@@ -106,6 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li class="level1"><a href="#TutorialDataObjectPair">ObjectPair</a></li>
 <li class="level1"><a href="#TutorialDataObjectList">ObjectList</a></li>
+<li class="level1"><a href="#TutorialDataPerObjectAccessor">PerObjectAccessor</a></li>
 <li class="level1"><a href="#TutorialDataDataSet">DataSet</a><ul><li class="level2"><a href="#TutorialDataDataSetBasicOperations">Basic operations</a></li>
 <li class="level2"><a href="#TutorialDataDataSetFeatureInfo">Feature info</a></li>
 <li class="level2"><a href="#TutorialDataDataSetSavingAndLoading">Loading and saving into files</a></li>
@@ -115,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="textblock"><h2><a class="anchor" id="TutorialDataObject"></a>
 Object</h2>
-<p><a class="el" href="classltr_1_1_object.html">Object</a> is the the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
+<p><a class="el" href="classltr_1_1_object.html">Object</a> is the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
 <h3><a class="anchor" id="TutorialDataObjectFeatures"></a>
 Features</h3>
 <p>Every <a class="el" href="classltr_1_1_object.html">Object</a> has several features with indexes 0, 1, 2... Every feature is a double value.</p>
@@ -301,7 +302,7 @@ Copying objects</h3>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectPair"></a>
 ObjectPair</h2>
-<p><a class="el" href="class_class.html">Class</a> to operate pairs of object. Every pair contains two objects: </p>
+<p>Class to operate pairs of object. Every pair contains two objects: </p>
 <ul>
 <li><a class="el" href="classltr_1_1_object_pair.html#a5bc9d0318053b4a97ae09dba7f1484eb">ObjectPair::first</a>, <a class="el" href="classltr_1_1_object_pair.html#a16d1f72890a21590044b8a915f5793f0">ObjectPair::second</a></li>
 </ul>
@@ -335,7 +336,7 @@ ObjectPair</h2>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectList"></a>
 ObjectList</h2>
-<p><a class="el" href="class_class.html">Class</a> to operate pairs of object. Every list contains several objects.</p>
+<p>Class to operate pairs of object. Every list contains several objects.</p>
 <p>There are several ways to get object from a list. </p>
 <ul>
 <li><a class="el" href="">at(const size_t id) </a> </li>
@@ -344,40 +345,51 @@ ObjectList</h2>
 <p>You can also add objects into list using operator&lt;&lt; or <a class="el" href="classltr_1_1_object_list.html#a92484286b47e88599df3467bad521296">add(Object) </a> method.<br/>
  List can be cleared by calling <a class="el" href="classltr_1_1_object_list.html#aa3e18d9e013370d3b00ddcca8200ec78">clear()</a> method.<br/>
  To find out, how many elements are there in the list, call the <a class="el" href="classltr_1_1_object_list.html#a4b1fcfadfe5de276876a03ac7e569dbe">size()</a> method.</p>
+<h2><a class="anchor" id="TutorialDataPerObjectAccessor"></a>
+PerObjectAccessor</h2>
+<p><a class="el" href="classltr_1_1_object.html">Object</a>, <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> and <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> are currently main data types used in LTR. If you want to write a code handling all of them <a class="el" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a> is what you need. It allows you to access an individual <a class="el" href="classltr_1_1_object.html">Object</a> in all this containers by index. In the example below function for printing actual labels is implemented.</p>
 <table class="doxtable">
 <tr>
-<th>Example: Managing ObjectList </th><th>Output:</th></tr>
+<th>Example: Working with PerObjectAccessor </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
+
 <span class="preprocessor">#include &quot;<a class="code" href="object__list_8h.html">ltr/data/object_list.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="per__object__accessor_8h.html">ltr/data/per_object_accessor.h</a>&quot;</span>
 
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_list.html">ltr::ObjectList</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_per_object_accessor.html">ltr::PerObjectAccessor</a>;
+
+<span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
+<span class="keywordtype">void</span> PrintActualLabels(<span class="keyword">const</span> TElement &amp;element) {
+  PerObjectAccessor&lt;const TElement&gt; per_object_accessor(&amp;element);
+  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> object_index = 0;
+       object_index &lt; per_object_accessor.object_count(); ++object_index) {
+       cout &lt;&lt; <span class="stringliteral">&quot;actual[&quot;</span> &lt;&lt; object_index &lt;&lt; <span class="stringliteral">&quot;] = &quot;</span>
+            &lt;&lt; per_object_accessor.object(object_index).actual_label() &lt;&lt; endl;
+  }
+}
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   ObjectList list;
   Object obj1, obj2, obj3, obj4;
-  obj1 &lt;&lt; 1.4 &lt;&lt; 5.6 &lt;&lt; 12.5 &lt;&lt; 56.88;
-  obj2 &lt;&lt; 2.4 &lt;&lt; 7.6 &lt;&lt; 42.5 &lt;&lt; 12.88;
-  list &lt;&lt; obj1 &lt;&lt; obj2;
+  obj1.set_actual_label(10);
+  obj2.set_actual_label(20);
+  obj3.set_actual_label(30);
+  obj4.set_actual_label(40);
+  list &lt;&lt; obj1 &lt;&lt; obj2 &lt;&lt; obj3 &lt;&lt; obj4;
 
-  cout &lt;&lt; <span class="stringliteral">&quot;list.at(0) = &quot;</span> &lt;&lt; list.at(0) &lt;&lt; endl;
-  cout &lt;&lt; <span class="stringliteral">&quot;list[1] = &quot;</span> &lt;&lt; list[1] &lt;&lt; endl;
-
-  cout &lt;&lt; <span class="stringliteral">&quot;size of list: &quot;</span> &lt;&lt; list.size() &lt;&lt; endl;
-  list.clear();
-  cout &lt;&lt; <span class="stringliteral">&quot;list cleared&quot;</span> &lt;&lt; endl;
-  cout &lt;&lt; <span class="stringliteral">&quot;size of list: &quot;</span> &lt;&lt; list.size() &lt;&lt; endl;
+  PrintActualLabels(list);
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment">list.at(0) = [1.40, 5.60, 12.50, 56.88]
-list[1] = [2.40, 7.60, 42.50, 12.88]
-size of list: 2
-list cleared
-size of list: 0
+</pre></div> </td><td><div class="fragment"><pre class="fragment">actual[0] = 10
+actual[1] = 20
+actual[2] = 30
+actual[3] = 40
 </pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataDataSet"></a>
@@ -518,7 +530,7 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:22:31 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2012 12:35:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

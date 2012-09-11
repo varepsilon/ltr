@@ -7,7 +7,6 @@ var searchData=
   ['labeltolinearfactor',['LabelToLinearFactor',['../namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5',1,'ltr']]],
   ['labeltomean',['LabelToMean',['../namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c',1,'ltr']]],
   ['labeltopriorprobability',['LabelToPriorProbability',['../classltr_1_1_bayesian_scorer.html#acad1fb0deb71f25aae22cbaa2ee17390',1,'ltr::BayesianScorer::LabelToPriorProbability()'],['../namespaceltr.html#a2d1c15582137e90dd23f1ba9df2253ec',1,'ltr::LabelToPriorProbability()']]],
-  ['list',['List',['../namespaceltr.html#a606dacb7f7569b51363e756f8182be21',1,'ltr']]],
   ['listwisedataset',['ListwiseDataSet',['../namespaceltr.html#ab8c5ffa671d9d6ad44967d8ffcc67864',1,'ltr']]],
   ['listwisemeasure',['ListwiseMeasure',['../namespaceltr.html#ab08ff2cf87b70b0b82c09e32a613a5dd',1,'ltr']]]
 ];

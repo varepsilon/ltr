@@ -6,8 +6,6 @@ var searchData=
   ['parameterized_5funittest_2ecc',['parameterized_unittest.cc',['../parameterized__unittest_8cc.html',1,'']]],
   ['parameters_5fcontainer_2ecc',['parameters_container.cc',['../parameters__container_8cc.html',1,'']]],
   ['parameters_5fcontainer_2eh',['parameters_container.h',['../parameters__container_8h.html',1,'']]],
-  ['parameters_5fcontainer_5fold_2ecc',['parameters_container_old.cc',['../parameters__container__old_8cc.html',1,'']]],
-  ['parameters_5fcontainer_5fold_2eh',['parameters_container_old.h',['../parameters__container__old_8h.html',1,'']]],
   ['parameters_5fcontainer_5funittest_2ecc',['parameters_container_unittest.cc',['../parameters__container__unittest_8cc.html',1,'']]],
   ['parse_5farff_2ecc',['parse_arff.cc',['../parse__arff_8cc.html',1,'']]],
   ['parse_5farff_2eh',['parse_arff.h',['../parse__arff_8h.html',1,'']]],

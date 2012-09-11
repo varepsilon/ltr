@@ -149,103 +149,82 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058   }
 <a name="l00059"></a>00059 
 <a name="l00064"></a>00064   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">average</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; <span class="keyword">set</span>) <span class="keyword">const</span>;
-<a name="l00065"></a>00065 
-<a name="l00070"></a>00070   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#ae6860e67d5739f7a72be93b4e806c758">weightedAverage</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; <span class="keyword">set</span>) <span class="keyword">const</span>;
-<a name="l00076"></a>00076   <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">better</a>(<span class="keywordtype">double</span> expected_better, <span class="keywordtype">double</span> expected_worse) <span class="keyword">const</span>;
-<a name="l00077"></a>00077 
-<a name="l00081"></a>00081   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#a9395f3dc60d3076df37c166372c852cc">worst</a>() <span class="keyword">const</span> = 0;
-<a name="l00085"></a>00085   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#aeeac4a5ebcd5047e046aa8a980b385d5">best</a>() <span class="keyword">const</span> = 0;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="keyword">private</span>:
-<a name="l00091"></a>00091   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">checkResult</a>(<span class="keywordtype">double</span> result) <span class="keyword">const</span>;
-<a name="l00096"></a>00096   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#a8eaa7b5cb779a05a4881e523b0456580">get_measure</a>(<span class="keyword">const</span> TElement&amp; element) <span class="keyword">const</span> = 0;
-<a name="l00097"></a>00097 };
-<a name="l00098"></a>00098 
-<a name="l00099"></a><a class="code" href="namespaceltr.html#a8aaa4b82ec8ae13fd6ef68babbb54472">00099</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;Object&gt;</a> <a class="code" href="namespaceltr.html#a8aaa4b82ec8ae13fd6ef68babbb54472">PointwiseMeasure</a>;
-<a name="l00100"></a><a class="code" href="namespaceltr.html#ad300011045bf38c9be8b1061b768847c">00100</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;ObjectPair&gt;</a> <a class="code" href="namespaceltr.html#ad300011045bf38c9be8b1061b768847c">PairwiseMeasure</a>;
-<a name="l00101"></a><a class="code" href="namespaceltr.html#ab08ff2cf87b70b0b82c09e32a613a5dd">00101</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;ObjectList&gt;</a> <a class="code" href="namespaceltr.html#ab08ff2cf87b70b0b82c09e32a613a5dd">ListwiseMeasure</a>;
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103 <span class="comment">// template realizations</span>
-<a name="l00104"></a>00104 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00105"></a><a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">00105</a> <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">Measure&lt;TElement&gt;::better</a>(<span class="keywordtype">double</span> expected_better,
-<a name="l00106"></a>00106     <span class="keywordtype">double</span> expected_worse)<span class="keyword"> const </span>{
-<a name="l00107"></a>00107   <span class="keywordflow">if</span> (worst() &lt; best()) {
-<a name="l00108"></a>00108     <span class="keywordflow">return</span> expected_worse &lt; expected_better;
-<a name="l00109"></a>00109   } <span class="keywordflow">else</span> {
-<a name="l00110"></a>00110     <span class="keywordflow">return</span> expected_worse &gt; expected_better;
-<a name="l00111"></a>00111   }
-<a name="l00112"></a>00112 }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00115"></a><a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">00115</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">Measure&lt;TElement&gt;::checkResult</a>(<span class="keywordtype">double</span> result)<span class="keyword"> const </span>{
-<a name="l00116"></a>00116   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#ab452afdf7027238f5b0c1419a8b85cef">isNaN</a>(result)) {
-<a name="l00117"></a>00117     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; NaN calculated&quot;</span>);
-<a name="l00118"></a>00118   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#adb0b86104b6aa52e13b0e0c51cc3f778">DoubleMore</a>(result, max(best(), worst()))) {
-<a name="l00119"></a>00119     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; calculated &gt; &quot;</span> +
-<a name="l00120"></a>00120       boost::lexical_cast&lt;string&gt;(max(best(), worst())));
-<a name="l00121"></a>00121   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#a192f6621b133b2349d23c281ebba1069">DoubleLess</a>(result, min(best(), worst()))) {
-<a name="l00122"></a>00122     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; calculated &lt; &quot;</span> +
-<a name="l00123"></a>00123       boost::lexical_cast&lt;string&gt;(min(best(), worst())));
-<a name="l00124"></a>00124   }
-<a name="l00125"></a>00125 }
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00128"></a><a class="code" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">00128</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">Measure&lt;TElement&gt;::operator()</a>(<span class="keyword">const</span> TElement&amp; element)<span class="keyword"> const </span>{
-<a name="l00129"></a>00129   <a class="code" href="class_per_object_accessor.html">PerObjectAccessor&lt;const TElement&gt;</a> per_object_accessor(&amp;element);
-<a name="l00130"></a>00130   <span class="keywordflow">if</span> (per_object_accessor.<a class="code" href="class_per_object_accessor.html#aa4e627c914bc29ea42b6d1373f027824">object_count</a>() == 0) {
-<a name="l00131"></a>00131     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; gained empty list&quot;</span>);
-<a name="l00132"></a>00132   }
-<a name="l00133"></a>00133   <span class="keywordtype">double</span> measure = get_measure(element);
-<a name="l00134"></a>00134   checkResult(measure);
-<a name="l00135"></a>00135   <span class="keywordflow">return</span> measure;
-<a name="l00136"></a>00136 };
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00139"></a><a class="code" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">00139</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">Measure&lt;TElement&gt;::average</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; <span class="keyword">set</span>)<span class="keyword"> const </span>{
-<a name="l00140"></a>00140   <span class="keywordflow">if</span> (<span class="keyword">set</span>.size() == 0) {
-<a name="l00141"></a>00141     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; gained empty set&quot;</span>);
-<a name="l00142"></a>00142   }
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144   <span class="keywordtype">double</span> sum = 0.0;
-<a name="l00145"></a>00145   <span class="keywordtype">int</span> query_proceed = 0;
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <span class="keyword">set</span>.size(); ++i) {
-<a name="l00148"></a>00148     query_proceed += 1;
-<a name="l00149"></a>00149     <span class="keywordtype">double</span> val;
-<a name="l00150"></a>00150     val = this-&gt;operator()(<span class="keyword">set</span>[i]);
-<a name="l00151"></a>00151     sum += val;
-<a name="l00152"></a>00152   }
-<a name="l00153"></a>00153   sum /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(query_proceed);
-<a name="l00154"></a>00154   <span class="keywordflow">return</span> sum;
-<a name="l00155"></a>00155 }
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00158"></a><a class="code" href="classltr_1_1_measure.html#ae6860e67d5739f7a72be93b4e806c758">00158</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#ae6860e67d5739f7a72be93b4e806c758">Measure&lt;TElement&gt;::weightedAverage</a>(
-<a name="l00159"></a>00159     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; <span class="keyword">set</span>)<span class="keyword"> const </span>{
-<a name="l00160"></a>00160   <span class="keywordflow">if</span> (<span class="keyword">set</span>.size() == 0) {
-<a name="l00161"></a>00161     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; gained empty set&quot;</span>);
-<a name="l00162"></a>00162   }
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164   <span class="keywordtype">double</span> sum = 0.0;
-<a name="l00165"></a>00165   <span class="keywordtype">double</span> weights = 0.0;
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <span class="keyword">set</span>.size(); ++i) {
-<a name="l00168"></a>00168     <span class="keywordtype">double</span> w = <span class="keyword">set</span>.getWeight(i);
-<a name="l00169"></a>00169     <span class="keywordtype">double</span> val;
-<a name="l00170"></a>00170     val = w * this-&gt;operator()(<span class="keyword">set</span>[i]);
-<a name="l00171"></a>00171     weights += w;
-<a name="l00172"></a>00172     sum += val;
-<a name="l00173"></a>00173   }
-<a name="l00174"></a>00174   <span class="keywordflow">return</span> sum / weights;
-<a name="l00175"></a>00175 }
-<a name="l00176"></a>00176 };
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178 <span class="preprocessor">#endif  // LTR_MEASURES_MEASURE_H_</span>
+<a name="l00070"></a>00070   <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">better</a>(<span class="keywordtype">double</span> expected_better, <span class="keywordtype">double</span> expected_worse) <span class="keyword">const</span>;
+<a name="l00071"></a>00071 
+<a name="l00075"></a>00075   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#a9395f3dc60d3076df37c166372c852cc">worst</a>() <span class="keyword">const</span> = 0;
+<a name="l00079"></a>00079   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#aeeac4a5ebcd5047e046aa8a980b385d5">best</a>() <span class="keyword">const</span> = 0;
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081   <span class="keyword">private</span>:
+<a name="l00085"></a>00085   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">checkResult</a>(<span class="keywordtype">double</span> result) <span class="keyword">const</span>;
+<a name="l00090"></a>00090   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#a8eaa7b5cb779a05a4881e523b0456580">get_measure</a>(<span class="keyword">const</span> TElement&amp; element) <span class="keyword">const</span> = 0;
+<a name="l00091"></a>00091 };
+<a name="l00092"></a>00092 
+<a name="l00093"></a><a class="code" href="namespaceltr.html#a8aaa4b82ec8ae13fd6ef68babbb54472">00093</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;Object&gt;</a> <a class="code" href="namespaceltr.html#a8aaa4b82ec8ae13fd6ef68babbb54472">PointwiseMeasure</a>;
+<a name="l00094"></a><a class="code" href="namespaceltr.html#ad300011045bf38c9be8b1061b768847c">00094</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;ObjectPair&gt;</a> <a class="code" href="namespaceltr.html#ad300011045bf38c9be8b1061b768847c">PairwiseMeasure</a>;
+<a name="l00095"></a><a class="code" href="namespaceltr.html#ab08ff2cf87b70b0b82c09e32a613a5dd">00095</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_measure.html">Measure&lt;ObjectList&gt;</a> <a class="code" href="namespaceltr.html#ab08ff2cf87b70b0b82c09e32a613a5dd">ListwiseMeasure</a>;
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 <span class="comment">// template realizations</span>
+<a name="l00098"></a>00098 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00099"></a><a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">00099</a> <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">Measure&lt;TElement&gt;::better</a>(<span class="keywordtype">double</span> expected_better,
+<a name="l00100"></a>00100     <span class="keywordtype">double</span> expected_worse)<span class="keyword"> const </span>{
+<a name="l00101"></a>00101   <span class="keywordflow">if</span> (worst() &lt; best()) {
+<a name="l00102"></a>00102     <span class="keywordflow">return</span> expected_worse &lt; expected_better;
+<a name="l00103"></a>00103   } <span class="keywordflow">else</span> {
+<a name="l00104"></a>00104     <span class="keywordflow">return</span> expected_worse &gt; expected_better;
+<a name="l00105"></a>00105   }
+<a name="l00106"></a>00106 }
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00109"></a><a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">00109</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_measure.html#a39476d9af7240872a17e88c56ee8d2f7">Measure&lt;TElement&gt;::checkResult</a>(<span class="keywordtype">double</span> result)<span class="keyword"> const </span>{
+<a name="l00110"></a>00110   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#ab452afdf7027238f5b0c1419a8b85cef">isNaN</a>(result)) {
+<a name="l00111"></a>00111     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; NaN calculated&quot;</span>);
+<a name="l00112"></a>00112   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#adb0b86104b6aa52e13b0e0c51cc3f778">DoubleMore</a>(result, max(best(), worst()))) {
+<a name="l00113"></a>00113     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; calculated &gt; &quot;</span> +
+<a name="l00114"></a>00114       boost::lexical_cast&lt;string&gt;(max(best(), worst())));
+<a name="l00115"></a>00115   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#a192f6621b133b2349d23c281ebba1069">DoubleLess</a>(result, min(best(), worst()))) {
+<a name="l00116"></a>00116     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; calculated &lt; &quot;</span> +
+<a name="l00117"></a>00117       boost::lexical_cast&lt;string&gt;(min(best(), worst())));
+<a name="l00118"></a>00118   }
+<a name="l00119"></a>00119 }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00122"></a><a class="code" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">00122</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">Measure&lt;TElement&gt;::operator()</a>(<span class="keyword">const</span> TElement&amp; element)<span class="keyword"> const </span>{
+<a name="l00123"></a>00123   <a class="code" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor&lt;const TElement&gt;</a> per_object_accessor(&amp;element);
+<a name="l00124"></a>00124   <span class="keywordflow">if</span> (per_object_accessor.<a class="code" href="classltr_1_1_per_object_accessor.html#a55ebbb7e8a85f3ec37fd9d2bdfb91ffb">object_count</a>() == 0) {
+<a name="l00125"></a>00125     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; gained empty list&quot;</span>);
+<a name="l00126"></a>00126   }
+<a name="l00127"></a>00127   <span class="keywordtype">double</span> measure = get_measure(element);
+<a name="l00128"></a>00128   checkResult(measure);
+<a name="l00129"></a>00129   <span class="keywordflow">return</span> measure;
+<a name="l00130"></a>00130 };
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00133"></a><a class="code" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">00133</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">Measure&lt;TElement&gt;::average</a>(
+<a name="l00134"></a>00134     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; <span class="keyword">set</span>)<span class="keyword"> const </span>{
+<a name="l00135"></a>00135   <span class="keywordflow">if</span> (<span class="keyword">set</span>.size() == 0) {
+<a name="l00136"></a>00136     <span class="keywordflow">throw</span> logic_error(alias() + <span class="stringliteral">&quot; gained empty set&quot;</span>);
+<a name="l00137"></a>00137   }
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139   <span class="keywordtype">double</span> sum = 0.0;
+<a name="l00140"></a>00140   <span class="keywordtype">double</span> weights = 0.0;
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <span class="keyword">set</span>.size(); ++i) {
+<a name="l00143"></a>00143     <span class="keywordtype">double</span> w = <span class="keyword">set</span>.getWeight(i);
+<a name="l00144"></a>00144     <span class="keywordtype">double</span> val;
+<a name="l00145"></a>00145     val = w * this-&gt;operator()(<span class="keyword">set</span>[i]);
+<a name="l00146"></a>00146     weights += w;
+<a name="l00147"></a>00147     sum += val;
+<a name="l00148"></a>00148   }
+<a name="l00149"></a>00149   <span class="keywordflow">return</span> sum / weights;
+<a name="l00150"></a>00150 }
+<a name="l00151"></a>00151 };
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153 <span class="preprocessor">#endif  // LTR_MEASURES_MEASURE_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:22:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2012 12:35:18 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
