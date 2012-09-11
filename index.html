@@ -97,31 +97,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Main page </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="DOCUMENTATION"></a>
-Documentation</h2>
-<ul>
-<li><b>Tutorial</b> <ul>
-<li><a class="el" href="_how_to_install.html">How To Install</a></li>
-<li><a class="el" href="_tutorial_data.html">Tutorial page 1 - Data manipulation</a></li>
-<li><a class="el" href="_crossvalidation_data.html">Tutorial page 2 - Testing of algorithms</a></li>
-<li><a class="el" href="_tutorial_data_preprocessors.html">Tutorial page 3 - Data preprocessors</a></li>
-<li><a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a></li>
-<li><a class="el" href="_tutorial_measure_learner_scorer.html">Tutorial page 5 - Learners, Scorers, Measures</a></li>
-<li><a class="el" href="_quality_table.html">Tutorial page 6 - Quality</a></li>
-</ul>
-</li>
-<li><b>Advanced</b> <b>topics</b> <ul>
-<li><a class="el" href="_how_to_create_new_learner_and_scorer.html">How to create new learner and scorer</a></li>
-</ul>
-</li>
-</ul>
-<h2><a class="anchor" id="LTR"></a>
+<div class="textblock"><h2><a class="anchor" id="LTR"></a>
 About LTR</h2>
-<p>Learning to Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
+<p>Learning to Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href="http://en.wikipedia.org/wiki/Learning_to_rank">ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
  <br/>
- User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).<br/>
- <br/>
- Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
+</p>
 <h2><a class="anchor" id="PHILOSOPHY"></a>
 Philosophy of LTR</h2>
 <p>From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.<br/>
@@ -135,39 +115,44 @@ Philosophy of LTR</h2>
 <li>AdaRank(link) = Boosting + Exponential loss function approximation + Listwise measure optimizing<br/>
 </li>
 </ul>
-<p><a class="el" href="class_the.html">The</a> main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.<br/>
+<p>The main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.<br/>
  One can easily add any heuristic to a standard learning algorithm because all of heuristics are functors in LTR. So user can easily change any step of algorithm just defining new heuristic object and insert them into the code of origin algorithm.</p>
+<p>User can write code performing learning and testing by himself or can use console application with human-readable configuration file.<br/>
+ <br/>
+ Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
 <h2><a class="anchor" id="CONTENT"></a>
 What can you find in LTR?</h2>
 <p>List of algorithms implemented in the current version of LTR:</p>
+<p>Classification | ---------------------| kNN | Naive Bayes | QDA | Fisher LDA |</p>
+<p>Regression | -----------------------| LSM |</p>
+<p>Ranking | -----------------------| RankGP | Linear ranker |</p>
+<p>Ensembles | -----------------------| Boosting | Bagging | RSM |</p>
+<p>LTR is an actively growing project so this list will be expanded significantly.</p>
+<p>Quality on some public datasets is presented <a class="el" href="_quality_table.html">here</a>.</p>
+<h2><a class="anchor" id="DOCUMENTATION"></a>
+Documentation</h2>
 <ul>
-<li><b>Classification</b><br/>
- k-nearest neighbour<br/>
- Naive Bayes<br/>
- QDA<br/>
- Fisher LDA<br/>
- </li>
-<li><b>Regression</b><br/>
- Linear regression (least square method)<br/>
- </li>
-<li><b>Ranking</b><br/>
- RankGP<br/>
- Linear ranker<br/>
- </li>
-<li><b>Ensembles</b><br/>
- Boosting<br/>
- Bagging<br/>
- RSM<br/>
+<li><b>Tutorials</b> <ul>
+<li><a class="el" href="_how_to_install.html">How To Install</a></li>
+<li><a class="el" href="_tutorial_data.html">Tutorial page 1 - Data manipulation</a></li>
+<li><a class="el" href="_crossvalidation_data.html">Tutorial page 2 - Testing of algorithms</a></li>
+<li><a class="el" href="_tutorial_data_preprocessors.html">Tutorial page 3 - Data preprocessors</a></li>
+<li><a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a></li>
+<li><a class="el" href="_tutorial_measure_learner_scorer.html">Tutorial page 5 - Learners, Scorers, Measures</a></li>
+</ul>
+</li>
+<li><b>Advanced</b> <b>topics</b> <ul>
+<li><a class="el" href="_how_to_create_new_learner_and_scorer.html">How to create new learner and scorer</a></li>
+</ul>
 </li>
 </ul>
-<p>LTR is an actively growing project so this list will be expanded significantly.</p>
 <h2><a class="anchor" id="REQUIREMENTS"></a>
 Requirements</h2>
 <ul>
 <li>Boost<br/>
- LTR assumes that you already have Boost(link) sources and some static libraries in your system. <a class="el" href="class_the.html">The</a> detailed inatallation manual is here(link). </li>
+ LTR assumes that you already have <a href="http://www.boost.org">Boost</a> sources and some static libraries in your system. <a class="el" href="class_the.html">The</a> detailed inatallation manual is <a class="el" href="_how_to_install.html">here</a>. </li>
 <li>CMake<br/>
- LTR uses the CMake(link) build system so you should install it as described here(link).</li>
+ LTR uses the <a href="http://www.cmake.org">CMake</a> build system so you should install it.</li>
 </ul>
 <h2><a class="anchor" id="COMPILER"></a>
 Compiler support</h2>
@@ -180,7 +165,10 @@ Compiler support</h2>
 </ul>
 <h2><a class="anchor" id="LICENSE"></a>
 License</h2>
-<p>Don't decide yet</p>
+<p>Haven't decide yet</p>
+<h2><a class="anchor" id="CONTRIBUTORS"></a>
+Contributors</h2>
+<p>You can see the full list of project participants <a class="el" href="_contributors.html">here</a>.</p>
 <h2><a class="anchor" id="SUPPORT"></a>
 Get support</h2>
 <p>If you want get help using LTR or send a bug report, please, write to address <a href="#" onclick="location.href='mai'+'lto:'+'ltr'+'.y'+'asc'+'ho'+'ol@'+'ya'+'nde'+'x.'+'ru'; return false;">ltr.y<span style="display: none;">.nosp@m.</span>asch<span style="display: none;">.nosp@m.</span>ool@y<span style="display: none;">.nosp@m.</span>ande<span style="display: none;">.nosp@m.</span>x.ru</a> </p>
@@ -188,7 +176,7 @@ Get support</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 5 2012 13:02:30 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2012 12:14:59 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
