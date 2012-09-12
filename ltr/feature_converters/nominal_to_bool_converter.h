@@ -17,6 +17,9 @@ class NominalToBoolConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<NominalToBoolConverter> Ptr;
 
+  explicit NominalToBoolConverter(const ParametersContainer& parameters) {
+  }
+
   NominalToBoolConverter(const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info) {}
 

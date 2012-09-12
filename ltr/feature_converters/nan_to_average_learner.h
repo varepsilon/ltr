@@ -18,6 +18,12 @@ template <typename TElement>
 class NanToAverageConverterLearner
   : public BaseFeatureConverterLearner<TElement, NanToNeutralConverter> {
  public:
+  explicit NanToAverageConverterLearner(const ParametersContainer& parameters) {
+  }
+
+  NanToAverageConverterLearner() {
+  }
+
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NanToNeutralConverter* feature_converter);
 

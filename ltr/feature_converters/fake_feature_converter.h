@@ -21,6 +21,9 @@ namespace ltr {
  */
 class FakeFeatureConverter : public FeatureConverter {
  public:
+  explicit FakeFeatureConverter(const ParametersContainer& parameters) {
+  }
+
   typedef ltr::utility::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())

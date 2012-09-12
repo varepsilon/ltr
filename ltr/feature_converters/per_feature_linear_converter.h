@@ -25,6 +25,9 @@ class PerFeatureLinearConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<PerFeatureLinearConverter> Ptr;
 
+  explicit PerFeatureLinearConverter(const ParametersContainer& parameters) {
+  }
+
   explicit PerFeatureLinearConverter(
     const FeatureInfo& input_feature_info = FeatureInfo())
     : FeatureConverter(input_feature_info) {

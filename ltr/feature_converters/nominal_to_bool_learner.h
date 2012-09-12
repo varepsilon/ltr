@@ -16,6 +16,13 @@ template <typename TElement>
 class NominalToBoolConverterLearner
   : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
  public:
+  explicit NominalToBoolConverterLearner(
+    const ParametersContainer& parameters) {
+  }
+
+  NominalToBoolConverterLearner() {
+  }
+
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NominalToBoolConverter* feature_converter);
 

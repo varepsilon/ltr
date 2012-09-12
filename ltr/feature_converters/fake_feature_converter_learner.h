@@ -24,6 +24,12 @@ class FakeFeatureConverterLearner
 
   virtual string toString() const;
 
+  explicit FakeFeatureConverterLearner(const ParametersContainer& parameters) {
+  }
+
+  FakeFeatureConverterLearner() {
+  }
+
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          FakeFeatureConverter *feature_converter);

@@ -24,6 +24,9 @@ class NanToNeutralConverter : public FeatureConverter {
  public:
   typedef ltr::utility::shared_ptr<NanToNeutralConverter> Ptr;
 
+  explicit NanToNeutralConverter(const ParametersContainer& parameters) {
+  }
+
   NanToNeutralConverter(const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info) {}
 
