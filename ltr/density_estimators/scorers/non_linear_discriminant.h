@@ -33,6 +33,9 @@ class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {
   NonLinearDiscriminant() {
   }
 
+  explicit NonLinearDiscriminant(const ParametersContainer& parameters) {
+  }
+
   NonLinearDiscriminant(const LabelToCovarianceMatrix& covariance_matrix,
                         const LabelToMean& mean) :
     covariance_matrix_(covariance_matrix),

@@ -46,6 +46,9 @@ class FisherDiscriminant : public BaseProbabilityDensityEstimator {
   FisherDiscriminant() {
   }
 
+  explicit FisherDiscriminant(const ParametersContainer& parameters) {
+  }
+
   FisherDiscriminant(const map<Label, VectorXd>& linear_factors,
                      const map<Label, double>& linear_biases) :
     linear_factors_(linear_factors),

@@ -34,6 +34,9 @@ class FeatureSampler : public FeatureConverter {
   /**
    * \param indices indices of features to sample
    */
+  explicit FeatureSampler(const ParametersContainer& parameters) {
+  }
+
   explicit FeatureSampler(const Indices& indices = Indices(),
                           const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info),

@@ -8,7 +8,11 @@
 #include "ltr/feature_converters/remove_nominal_converter.h"
 #include "ltr/feature_converters/feature_converter_learner.h"
 
+#include "ltr/parameters_container/parameters_container.h"
+
 using std::string;
+
+using ltr::ParametersContainer;
 
 namespace ltr {
 /**
@@ -18,6 +22,13 @@ template <typename TElement>
 class RemoveNominalConverterLearner
   : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
  public:
+  explicit RemoveNominalConverterLearner(
+    const ParametersContainer& parameters) {
+  }
+
+  RemoveNominalConverterLearner() {
+  }
+
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          RemoveNominalConverter* feature_converter);
 

@@ -15,6 +15,10 @@ namespace ltr {
  */
 class RemoveNominalConverter : public FeatureConverter {
  public:
+
+  explicit RemoveNominalConverter(const ParametersContainer& parameters) {
+  }
+
   typedef ltr::utility::shared_ptr<RemoveNominalConverter> Ptr;
 
   RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())

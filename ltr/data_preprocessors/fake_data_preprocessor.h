@@ -21,6 +21,12 @@ class FakePreprocessor : public DataPreprocessor<TElement> {
  public:
   typedef ltr::utility::shared_ptr<FakePreprocessor> Ptr;
 
+  explicit FakePreprocessor(const ParametersContainer& parameters) {
+  }
+
+  FakePreprocessor() {
+  }
+
   virtual string toString() const {
     return this->alias();
   }

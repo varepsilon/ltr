@@ -16,6 +16,12 @@ template <typename TElement>
 class NanToZeroConverterLearner
   : public BaseFeatureConverterLearner<TElement, NanToNeutralConverter> {
  public:
+  explicit NanToZeroConverterLearner(const ParametersContainer& parameters) {
+  }
+
+  NanToZeroConverterLearner() {
+  }
+
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          NanToNeutralConverter* feature_converter);
 
