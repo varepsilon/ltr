@@ -62,13 +62,13 @@
 #include "ltr/metrics/euclidean_metric.h"
 #include "ltr/metrics/manhattan_metric.h"
 
-#include "ltr/density_estimators/learners/base_probability_density_learner.h"
-#include "ltr/density_estimators/learners/fisher_discriminant_learner.h"
-#include "ltr/density_estimators/learners/normal_naive_bayes_learner.h"
-#include "ltr/density_estimators/learners/quadratic_discriminant_learner.h"
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
-#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/density_estimators/base_probability_density_learner.h"
+#include "ltr/density_estimators/fisher_discriminant_density_learner.h"
+#include "ltr/density_estimators/normal_naive_bayes_density_learner.h"
+#include "ltr/density_estimators/quadratic_discriminant_density_learner.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
+#include "ltr/density_estimators/non_linear_discriminant.h"
 
 #include "ltr_client/factory.h"
 #include "ltr_client/ltr_client.h"
@@ -139,12 +139,16 @@ using ltr::cv::TKFoldSimpleSplitter;
 using ltr::cv::LeaveOneOutSplitter;
 
 using ltr::BaseProbabilityDensityLearner;
-using ltr::FisherDiscriminantLearner;
-using ltr::NormalNaiveBayesLearner;
-using ltr::QuadraticDiscriminantLearner;
+using ltr::FisherDiscriminantDensityLearner;
+using ltr::NormalNaiveBayesDensityLearner;
+using ltr::QuadraticDiscriminantDensityLearner;
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::FisherDiscriminant;
 using ltr::NonLinearDiscriminant;
+
+using ltr::FisherDiscriminantLearner;
+using ltr::NormalNaiveBayesLearner;
+using ltr::QuadraticDiscriminantLearner;
 
 using ltr::gp::GPLearner;
 
@@ -238,6 +242,9 @@ void RegisterAllTypes(Factory* factory) {
 
   REGISTER(BaseProbabilityDensityEstimator, FisherDiscriminant);
   REGISTER(BaseProbabilityDensityEstimator, NonLinearDiscriminant);
+
+  REGISTER_EVERY_WISE(Learner, FisherDiscriminantLearner);
+  REGISTER_EVERY_WISE(Learner, QuadraticDiscriminantLearner);
 }
 
 #endif  // LTR_CLIENT_REGISTRATION_H_

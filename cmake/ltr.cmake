@@ -1,21 +1,17 @@
 # lets list all LTR's binaries
 # lets list all LTR's source binaries
 
-SET(LTR_DENSITY_ESTIMATORS_SCORERS ${Source_Path}/ltr/density_estimators/scorers/base_probability_density_estimator.h
-                                   ${Source_Path}/ltr/density_estimators/scorers/fisher_discriminant.h
-                                   ${Source_Path}/ltr/density_estimators/scorers/fisher_discriminant.cc
-                                   ${Source_Path}/ltr/density_estimators/scorers/non_linear_discriminant.h
-                                   ${Source_Path}/ltr/density_estimators/scorers/non_linear_discriminant.cc)
+SET(LTR_DENSITY_ESTIMATORS_SCORERS ${Source_Path}/ltr/density_estimators/base_probability_density_estimator.h
+                                   ${Source_Path}/ltr/density_estimators/fisher_discriminant.h
+                                   ${Source_Path}/ltr/density_estimators/fisher_discriminant.cc
+                                   ${Source_Path}/ltr/density_estimators/non_linear_discriminant.h
+                                   ${Source_Path}/ltr/density_estimators/non_linear_discriminant.cc)
 
-SET(LTR_DENSITY_ESTIMATORS_LEARNERS ${Source_Path}/ltr/density_estimators/learners/base_probability_density_learner.h
-                                    ${Source_Path}/ltr/density_estimators/learners/fisher_discriminant_learner.h
-                                    ${Source_Path}/ltr/density_estimators/learners/fisher_discriminant_learner.cc
-                                    ${Source_Path}/ltr/density_estimators/learners/non_linear_discriminant_learner.h
-                                    ${Source_Path}/ltr/density_estimators/learners/non_linear_discriminant_learner.cc
-                                    ${Source_Path}/ltr/density_estimators/learners/normal_naive_bayes_learner.h
-                                    ${Source_Path}/ltr/density_estimators/learners/normal_naive_bayes_learner.cc
-                                    ${Source_Path}/ltr/density_estimators/learners/quadratic_discriminant_learner.h
-                                    ${Source_Path}/ltr/density_estimators/learners/quadratic_discriminant_learner.cc)
+SET(LTR_DENSITY_ESTIMATORS_LEARNERS ${Source_Path}/ltr/density_estimators/base_probability_density_learner.h
+                                    ${Source_Path}/ltr/density_estimators/fisher_discriminant_density_learner.h
+                                    ${Source_Path}/ltr/density_estimators/non_linear_discriminant_density_learner.h
+                                    ${Source_Path}/ltr/density_estimators/normal_naive_bayes_density_learner.h
+                                    ${Source_Path}/ltr/density_estimators/quadratic_discriminant_density_learner.h)
 
 SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set.cc
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc

@@ -7,12 +7,12 @@
 
 #include "gtest/gtest.h"
 
-#include "ltr/density_estimators/learners/fisher_discriminant_learner.h"
-#include "ltr/density_estimators/learners/quadratic_discriminant_learner.h"
-#include "ltr/density_estimators/learners/normal_naive_bayes_learner.h"
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
-#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/density_estimators/fisher_discriminant_density_learner.h"
+#include "ltr/density_estimators/quadratic_discriminant_density_learner.h"
+#include "ltr/density_estimators/normal_naive_bayes_density_learner.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
+#include "ltr/density_estimators/non_linear_discriminant.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/data/data_set.h"
@@ -24,16 +24,16 @@ using Eigen::MatrixXd;
 
 
 using ltr::DataSet;
-using ltr::QuadraticDiscriminantLearner;
-using ltr::NormalNaiveBayesLearner;
+using ltr::QuadraticDiscriminantDensityLearner;
+using ltr::NormalNaiveBayesDensityLearner;
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::FisherDiscriminant;
-using ltr::FisherDiscriminantLearner;
+using ltr::FisherDiscriminantDensityLearner;
 using ltr::NonLinearDiscriminant;
 using ltr::utility::DoubleEqual;
 
-TEST(DensityEstimatorsLearnersTests, TestFisherDiscriminantLearner) {
-  FisherDiscriminantLearner fisherLearner;
+TEST(DensityEstimatorsLearnersTests, TestFisherDiscriminantDensityLearner) {
+  FisherDiscriminantDensityLearner<Object> fisherLearner;
 
   Object object1;
   Object object2;
@@ -55,8 +55,8 @@ TEST(DensityEstimatorsLearnersTests, TestFisherDiscriminantLearner) {
   EXPECT_NO_THROW(fisherLearner.learn(data));
 }
 
-TEST(DensityEstimatorsLearnersTests, TestQuadraticDiscriminantLearner) {
-  QuadraticDiscriminantLearner quadraticLearner;
+TEST(DensityEstimatorsLearnersTests, TestQuadraticDiscriminantDensityLearner) {
+  QuadraticDiscriminantDensityLearner<Object> quadraticLearner;
 
   Object object1;
   Object object2;
@@ -74,8 +74,8 @@ TEST(DensityEstimatorsLearnersTests, TestQuadraticDiscriminantLearner) {
   EXPECT_NO_THROW(quadraticLearner.learn(data));
 }
 
-TEST(DensityEstimatorsLearnersTests, TestNormalNaiveBayesLearner) {
-  NormalNaiveBayesLearner naiveLearner;
+TEST(DensityEstimatorsLearnersTests, TestNormalNaiveBayesDensityLearner) {
+  NormalNaiveBayesDensityLearner<Object> naiveLearner;
 
   Object object1;
   Object object2;

@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
-#ifndef LTR_DENSITY_ESTIMATORS_SCORERS_NON_LINEAR_DISCRIMINANT_H_
-#define LTR_DENSITY_ESTIMATORS_SCORERS_NON_LINEAR_DISCRIMINANT_H_
+#ifndef LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_H_
+#define LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_H_
 
 #include <Eigen/Dense>
 
@@ -8,8 +8,8 @@
 #include <map>
 
 #include "ltr/data/object.h"
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
-#include "ltr/density_estimators/learners/base_probability_density_learner.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/base_probability_density_learner.h"
 
 using std::vector;
 using std::map;
@@ -50,4 +50,4 @@ class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {
 };
 };
 
-#endif  // LTR_DENSITY_ESTIMATORS_SCORERS_NON_LINEAR_DISCRIMINANT_H_
+#endif  // LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_H_

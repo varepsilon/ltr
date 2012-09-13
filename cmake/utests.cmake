@@ -1,8 +1,8 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
-SET(DENSITY_ESTIMATORS_TEST ${Source_Path}/ltr/density_estimators/learners/density_estimators_learners_unittests.cc
-                            ${Source_Path}/ltr/density_estimators/scorers/density_estimators_scorers_unittests.cc)
+SET(DENSITY_ESTIMATORS_TEST ${Source_Path}/ltr/density_estimators/density_estimators_learners_unittests.cc
+                            ${Source_Path}/ltr/density_estimators/density_estimators_scorers_unittests.cc)
 
 SET(NEIGHBOR_WEIGHTER_TEST ${Source_Path}/ltr/data/neighbor_weighter_unittest.cc)
 

@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 #include <cmath>
 
-#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/density_estimators/non_linear_discriminant.h"
 #include "ltr/utility/eigen_converters.h"
 
 using ltr::NonLinearDiscriminant;

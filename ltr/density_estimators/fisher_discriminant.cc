@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 #include <cmath>
 
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
 #include "ltr/utility/eigen_converters.h"
 
 using ltr::FisherDiscriminant;

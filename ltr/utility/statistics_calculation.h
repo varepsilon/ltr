@@ -9,6 +9,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/utility/indices.h"
+#include "ltr/data/per_object_accessor.h"
 
 using std::map;
 using std::vector;
@@ -30,7 +31,12 @@ template<class TElement>
 LabelToCapacity CalculateLabelsCapacity(const DataSet<TElement>& data) {
   map<double, int> result;
   for (int element_index = 0; element_index < data.size(); ++element_index) {
-    ++result[data[element_index].actual_label()];
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
+    for (int object_index = 0;
+         object_index < per_object_accessor.object_count();
+         ++object_index) {
+      ++result[per_object_accessor.object(object_index).actual_label()];
+    }
   }
   return result;
 }
@@ -41,20 +47,24 @@ LabelToCapacity CalculateLabelsCapacity(const DataSet<TElement>& data) {
 template<class TElement>
 void SplitDataSetByActualLabel(
     const DataSet<TElement>& data,
-    vector<DataSet<TElement> > *splitted_data_set) {
-  map<double, Indices> subsets_indices;
+    vector<DataSet<Object> > *splitted_data_set) {
+  map<double, DataSet<Object> > subsets_elements;
   for (int element_index = 0; element_index < data.size(); ++element_index) {
-    int label = data[element_index].actual_label();
-    subsets_indices[label].push_back(element_index);
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
+    for (int object_index = 0;
+         object_index < per_object_accessor.object_count();
+         ++object_index) {
+      int label = per_object_accessor.object(object_index).actual_label();
+      subsets_elements[label].add(per_object_accessor.object(object_index));
+    }
   }
 
   splitted_data_set->clear();
-  for (map<double, Indices>::iterator subsets_indices_iterator =
-         subsets_indices.begin();
-       subsets_indices_iterator != subsets_indices.end();
-       ++subsets_indices_iterator) {
-    splitted_data_set->
-      push_back(data.lightSubset(subsets_indices_iterator->second));
+  for (map<double, DataSet<Object> >::iterator subsets_elements_iterator =
+         subsets_elements.begin();
+       subsets_elements_iterator != subsets_elements.end();
+       ++subsets_elements_iterator) {
+    splitted_data_set->push_back(subsets_elements_iterator->second);
   }
 }
 
@@ -64,20 +74,31 @@ void SplitDataSetByActualLabel(
 template<class TElement>
 void CalculateFeaturesMean(const DataSet<TElement>& data,
                            vector<double>* mean) {
-  int number_of_features = data[0].feature_count();
+  PerObjectAccessor<const TElement> per_object_accessor(&data[0]);
+  int number_of_features = per_object_accessor.object(0).feature_count();
+
   mean->assign(number_of_features, 0);
+  int data_size = 0;
+
   for (int element_index = 0; element_index < data.size(); ++element_index) {
-    for (int feature_index = 0;
-         feature_index < number_of_features;
-         ++feature_index) {
-      (*mean)[feature_index] += data[element_index][feature_index];
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
+    for (int object_index = 0;
+         object_index < per_object_accessor.object_count();
+         ++object_index) {
+      ++data_size;
+      for (int feature_index = 0;
+           feature_index < number_of_features;
+           ++feature_index) {
+        (*mean)[feature_index] +=
+          per_object_accessor.object(object_index)[feature_index];
+      }
     }
   }
 
   for (int feature_index = 0;
        feature_index < number_of_features;
        ++feature_index) {
-    (*mean)[feature_index] /= data.size();
+    (*mean)[feature_index] /= data_size;
   }
 }
 
@@ -92,19 +113,28 @@ void CalculateFeaturesVariance(const DataSet<TElement>& data,
 
   int number_of_features = data[0].feature_count();
   variance->assign(number_of_features, 0);
+  int data_size = 0;
+
   for (int element_index = 0; element_index < data.size(); ++element_index) {
-    for (int feature_index = 0;
-         feature_index < number_of_features;
-         ++feature_index) {
-      (*variance)[feature_index] +=
-        pow(data[element_index][feature_index] - mean[feature_index], 2.0);
+    PerObjectAccessor<const TElement> per_object_accessor(&data[element_index]);
+    for (int object_index = 0;
+         object_index < per_object_accessor.object_count();
+         ++object_index) {
+      ++data_size;
+      for (int feature_index = 0;
+           feature_index < number_of_features;
+           ++feature_index) {
+        (*variance)[feature_index] +=
+          pow(per_object_accessor.object(object_index)[feature_index] -
+                mean[feature_index], 2.0);
+      }
     }
   }
 
   for (int feature_index = 0;
        feature_index < number_of_features;
        ++feature_index) {
-    (*variance)[feature_index] /= data.size();
+    (*variance)[feature_index] /= data_size;
   }
 }
 
@@ -116,7 +146,7 @@ static void CalculateActualLabelToFeaturesMean(
     const DataSet<TElement>& data,
     map<double, vector<double> >* result) {
 
-  vector<DataSet<TElement> > splitted_data;
+  vector<DataSet<Object> > splitted_data;
   SplitDataSetByActualLabel(data, &splitted_data);
 
   result->clear();

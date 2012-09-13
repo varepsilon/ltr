@@ -7,9 +7,9 @@
 
 #include "gtest/gtest.h"
 
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
-#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
+#include "ltr/density_estimators/non_linear_discriminant.h"
 #include "ltr/utility/numerical.h"
 
 using std::map;
