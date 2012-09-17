@@ -146,7 +146,8 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/pfound.h ${Source_Path}/ltr/measures/pfound.cc
                  ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
                  ${Source_Path}/ltr/measures/normalized_measure.h
-                 ${Source_Path}/ltr/measures/binary_classification_accuracy.h)
+                 ${Source_Path}/ltr/measures/binary_classification_accuracy.h
+				 ${Source_Path}/ltr/measures/binary_classification_margin.h)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
                        ${Source_Path}/ltr/measures/utils/measure_utility.cc)
@@ -224,9 +225,11 @@ SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_
                     ${Source_Path}/ltr/learners/composition_learner/data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h
+					${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/average_composition_scorer_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/linear_composition_learner.h)
+					${Source_Path}/ltr/learners/composition_learner/linear_composition_learner.h
+					${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
 
 SET(LTR_AGGREGATORS ${Source_Path}/ltr/aggregators/aggregator.h
                     ${Source_Path}/ltr/aggregators/average_aggregator.h

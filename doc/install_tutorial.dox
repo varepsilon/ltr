@@ -7,12 +7,14 @@ namespace ltr {
 \section InstallingLTR Installing LTR
 
 Assuming you already have downloaded LTR to you computer, LTR's root directory is supposed to contain CMakeLists.txt
-file and the following folders: cmake, contrib, data, doc, ltr, ltr_client, serialization_test and utility.
+file and the following folders: cmake, contrib, data, doc, ltr and ltr_client.
 
 \subsection InstallingBoost Installing Boost
 
 %The simplest way to install boost under Windows is to use an installer from
 <a href=http://www.boostpro.com/download>http://www.boostpro.com/download</a>.
+Unix users can read %the official tutorial from
+<a href=http://www.boost.org/doc/libs/1_51_0/more/getting_started/unix-variants.html>http://www.boost.org/doc/libs/1_51_0/more/getting_started/unix-variants.html</a>.
 
 Now LTR uses only <i>multithreaded</i> and <i>multithreaded debug</i> versions of boost, but it is recommended to install DLL variants too.
 
@@ -23,7 +25,7 @@ and add CMake to the system PATH.
 
 \subsection ConfiguringLTR Configuring LTR
 
-Create a directory for building, the default name is <LTR_root>/build. Further shell commands will be written as if you've chosen
+Create a directory for building, the default name of which is <LTR_root>/build. Further shell commands will be written as if you've chosen
 the default <LTR_root>/build directory for building. From the chosen directory run the following shell command:
 
 \code
@@ -51,7 +53,7 @@ If you are an LTR's developer, it might be useful to have a shell-script file li
 As you already have created your favorite IDE's project, compiling will now be simple.
 (For example, in Visual Studio one just has to build an ALL_BUILD project.)
 
-After building you can run unittests from <LTR_root>/build. In Visual Studio, by setting ltr_test as a
+After building you can run unittests from <LTR_root>/build. In Visual Studio it can be done, by setting ltr_test as a
 startup project and pressing Ctrl+F5.
 
 It is important that after successful build you should build an INSTALL project, or (depending on your system and IDE) run
@@ -60,7 +62,7 @@ It is important that after successful build you should build an INSTALL project,
 make install
 \endcode
 
-This will create an <LTR_root>/lib directory with 3 static libraries in there: ltr, ltr_utility and puppy. If you want to
+This will create an <LTR_root>/lib directory with 3 static libraries in there: ltr, logog and puppy (with "_d" suffix if the debug build has been used). If you want to
 use LTR in your project, you have to link to these libraries.
 
 \section LinkingtoLTR Linking to LTR
@@ -85,7 +87,7 @@ Strings no. 10-12 specify a directory for header files of the test project and l
 
 Finally, the ADD_EXECUTABLE command creates an executable project called test_executable from sources listed in the
 Test_SOURCES variable. Then, the TARGET_LINK_LIBRARIES command makes test_executable project use LTR by invoking
-LTR_libs variable, defined in SetUpLTR macro.
+LTR_libs variable, defined in SetUpLTR macro call.
 
 
 **/

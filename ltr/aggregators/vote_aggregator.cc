@@ -1,3 +1,3 @@
 // Copyright 2012 Yandex
 
-#include "ltr/aggregators/average_aggregator.h"
+#include "ltr/aggregators/vote_aggregator.h"

@@ -11,7 +11,9 @@
 #include "ltr/learners/composition_learner/composition_scorer_weights_updater.h"
 
 #include "ltr/learners/composition_learner/composition_learner.h"
+#include "ltr/learners/composition_learner/ada_boost_learner.h"
 #include "ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h"
+#include "ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h"
 #include "ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h"
 #include "ltr/learners/composition_learner/average_composition_scorer_weights_updater.h"
 
@@ -153,10 +155,11 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
   CompositionLearner<Object, LinearCompositionScorer> ada_linear_composition_learner;
 
   AbsError::Ptr abs_error(new AbsError);
+  TruePoint::Ptr true_point(new TruePoint);
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_rank_data_set_weight_updater(
-      new AdaRankDataSetWeightsUpdater<Object>(abs_error));
+      new AdaRankDataSetWeightsUpdater<Object>(true_point));
   ada_linear_composition_learner.set_data_set_weights_updater(ada_rank_data_set_weight_updater);
 
   BestFeatureLearner<Object>::Ptr 

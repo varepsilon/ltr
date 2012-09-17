@@ -103,12 +103,12 @@ class Scorer : public SerializableFunctor<double>,
   }
 
   template <class TElement>
-  void predict(const DataSet<TElement>& elements);
+  void predict(const DataSet<TElement>& elements) const;
 
   template <class TElement>
-  void predict(const TElement& element);
+  void predict(const TElement& element) const;
 
-  string generateLocalClassName(size_t index);
+  string generateLocalClassName(size_t index) const;
 
   virtual ~Scorer() {}
 
