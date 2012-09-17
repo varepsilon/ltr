@@ -134,26 +134,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00033"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">00033</a>   <a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">NonLinearDiscriminant</a>() {
 <a name="l00034"></a>00034   }
 <a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#a442674cb867da4751045d55feff43de0">00036</a>   <a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">NonLinearDiscriminant</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr.html#a5998f2608a29d55641c9ffe6f6cd2446">LabelToCovarianceMatrix</a>&amp; covariance_matrix,
-<a name="l00037"></a>00037                         <span class="keyword">const</span> <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a>&amp; mean) :
-<a name="l00038"></a>00038     <a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">covariance_matrix_</a>(covariance_matrix),
-<a name="l00039"></a>00039     <a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">mean_</a>(mean) {
-<a name="l00040"></a>00040   }
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a744cd9b47a57113063d638d947e5587c">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label);
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044  <span class="keyword">private</span>:
-<a name="l00045"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">00045</a>   <a class="code" href="namespaceltr.html#a5998f2608a29d55641c9ffe6f6cd2446">LabelToCovarianceMatrix</a> <a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">covariance_matrix_</a>;
-<a name="l00046"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">00046</a>   <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">mean_</a>;
-<a name="l00047"></a>00047 };
-<a name="l00048"></a>00048 };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="preprocessor">#endif  // LTR_DENSITY_ESTIMATORS_SCORERS_NON_LINEAR_DISCRIMINANT_H_</span>
+<a name="l00036"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#a7688cfee436289bb149209232d2150bb">00036</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a7688cfee436289bb149209232d2150bb">NonLinearDiscriminant</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00037"></a>00037   }
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#a442674cb867da4751045d55feff43de0">00039</a>   <a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">NonLinearDiscriminant</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr.html#a5998f2608a29d55641c9ffe6f6cd2446">LabelToCovarianceMatrix</a>&amp; covariance_matrix,
+<a name="l00040"></a>00040                         <span class="keyword">const</span> <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a>&amp; mean) :
+<a name="l00041"></a>00041     <a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">covariance_matrix_</a>(covariance_matrix),
+<a name="l00042"></a>00042     <a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">mean_</a>(mean) {
+<a name="l00043"></a>00043   }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a744cd9b47a57113063d638d947e5587c">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047  <span class="keyword">private</span>:
+<a name="l00048"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">00048</a>   <a class="code" href="namespaceltr.html#a5998f2608a29d55641c9ffe6f6cd2446">LabelToCovarianceMatrix</a> <a class="code" href="classltr_1_1_non_linear_discriminant.html#aec7d3a98f1fb5ec06fa12a02b10af1d3">covariance_matrix_</a>;
+<a name="l00049"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">00049</a>   <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">mean_</a>;
+<a name="l00050"></a>00050 };
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="preprocessor">#endif  // LTR_DENSITY_ESTIMATORS_SCORERS_NON_LINEAR_DISCRIMINANT_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:58:27 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 17 2012 18:34:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

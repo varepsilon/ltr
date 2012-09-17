@@ -120,62 +120,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00018"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html">00018</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html">NanToAverageConverterLearner</a>
 <a name="l00019"></a>00019   : <span class="keyword">public</span> <a class="code" href="classltr_1_1_base_feature_converter_learner.html" title="A base class for FeatureConverter learners.">BaseFeatureConverterLearner</a>&lt;TElement, NanToNeutralConverter&gt; {
 <a name="l00020"></a>00020  <span class="keyword">public</span>:
-<a name="l00021"></a>00021   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5" title="Learn input dataset and train feature converter.">learnImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00022"></a>00022                          <a class="code" href="classltr_1_1_nan_to_neutral_converter.html">NanToNeutralConverter</a>* feature_converter);
+<a name="l00021"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ab8872667e257e9bd400485ea891dd94a">00021</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ab8872667e257e9bd400485ea891dd94a">NanToAverageConverterLearner</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00022"></a>00022   }
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">toString</a>() <span class="keyword">const</span>;
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026  <span class="keyword">private</span>:
-<a name="l00027"></a>00027   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">getDefaultAlias</a>() <span class="keyword">const</span>;
-<a name="l00028"></a>00028 };
+<a name="l00024"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a42d10c2963e067e9c9cb6d2dba3d86ee">00024</a>   <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a42d10c2963e067e9c9cb6d2dba3d86ee">NanToAverageConverterLearner</a>() {
+<a name="l00025"></a>00025   }
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5" title="Learn input dataset and train feature converter.">learnImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
+<a name="l00028"></a>00028                          <a class="code" href="classltr_1_1_nan_to_neutral_converter.html">NanToNeutralConverter</a>* feature_converter);
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
-<a name="l00031"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5">00031</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5" title="Learn input dataset and train feature converter.">NanToAverageConverterLearner&lt;TElement&gt;::learnImpl</a>(
-<a name="l00032"></a>00032   <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set, <a class="code" href="classltr_1_1_nan_to_neutral_converter.html">NanToNeutralConverter</a>* feature_converter) {
-<a name="l00033"></a>00033     vector&lt;double&gt; average_features_values(data_set.<a class="code" href="classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef">feature_count</a>());
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> feature_index = 0;
-<a name="l00036"></a>00036          feature_index &lt; (int)data_set.<a class="code" href="classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef">feature_count</a>(); ++feature_index) {
-<a name="l00037"></a>00037       <span class="keywordtype">double</span> current_feature_average_value = 0.0;
-<a name="l00038"></a>00038       <span class="keywordtype">int</span> number_of_non_nan_features = 0;
-<a name="l00039"></a>00039       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> object_index = 0;
-<a name="l00040"></a>00040            object_index &lt; (int)data_set.<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++object_index) {
-<a name="l00041"></a>00041         <span class="keywordflow">if</span> (!<a class="code" href="namespaceltr_1_1utility.html#ab452afdf7027238f5b0c1419a8b85cef">isNaN</a>(data_set[object_index][feature_index])) {
-<a name="l00042"></a>00042           current_feature_average_value +=
-<a name="l00043"></a>00043             data_set[object_index][feature_index];
-<a name="l00044"></a>00044           ++number_of_non_nan_features;
-<a name="l00045"></a>00045         }
-<a name="l00046"></a>00046       }
-<a name="l00047"></a>00047       <span class="keywordflow">if</span> (number_of_non_nan_features == 0) {
-<a name="l00048"></a>00048         average_features_values[feature_index] =
-<a name="l00049"></a>00049           numeric_limits&lt;double&gt;::quiet_NaN();
-<a name="l00050"></a>00050       } <span class="keywordflow">else</span> {
-<a name="l00051"></a>00051         average_features_values[feature_index] =
-<a name="l00052"></a>00052           current_feature_average_value / number_of_non_nan_features;
-<a name="l00053"></a>00053       }
-<a name="l00054"></a>00054     }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <a class="code" href="classltr_1_1_object.html">Object</a> average_features_object;
-<a name="l00057"></a>00057     average_features_object.<a class="code" href="classltr_1_1_object.html#a7003e54ec457dde67737bfb1a8f37a23">features</a>() = average_features_values;
-<a name="l00058"></a>00058     feature_converter-&gt;set_neutral_object(average_features_object);
-<a name="l00059"></a>00059 }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
-<a name="l00062"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">00062</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">NanToAverageConverterLearner&lt;TElement&gt;::toString</a>()<span class="keyword"> const </span>{
-<a name="l00063"></a>00063   <span class="keywordflow">return</span> <span class="stringliteral">&quot;NanToAverageConverterLearner&quot;</span>;
-<a name="l00064"></a>00064 }
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
-<a name="l00067"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">00067</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">NanToAverageConverterLearner&lt;TElement&gt;::getDefaultAlias</a>()<span class="keyword"> const </span>{
-<a name="l00068"></a>00068   <span class="keywordflow">return</span> <span class="stringliteral">&quot;NanToAverageConverterLearner&quot;</span>;
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 };
-<a name="l00071"></a>00071 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_NAN_TO_AVERAGE_LEARNER_H_</span>
+<a name="l00030"></a>00030   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">toString</a>() <span class="keyword">const</span>;
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032  <span class="keyword">private</span>:
+<a name="l00033"></a>00033   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">getDefaultAlias</a>() <span class="keyword">const</span>;
+<a name="l00034"></a>00034 };
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
+<a name="l00037"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5">00037</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a305ea89ec963faf5f2d2a4f6a61fcfc5" title="Learn input dataset and train feature converter.">NanToAverageConverterLearner&lt;TElement&gt;::learnImpl</a>(
+<a name="l00038"></a>00038   <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set, <a class="code" href="classltr_1_1_nan_to_neutral_converter.html">NanToNeutralConverter</a>* feature_converter) {
+<a name="l00039"></a>00039     vector&lt;double&gt; average_features_values(data_set.<a class="code" href="classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef">feature_count</a>());
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> feature_index = 0;
+<a name="l00042"></a>00042          feature_index &lt; (int)data_set.<a class="code" href="classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef">feature_count</a>(); ++feature_index) {
+<a name="l00043"></a>00043       <span class="keywordtype">double</span> current_feature_average_value = 0.0;
+<a name="l00044"></a>00044       <span class="keywordtype">int</span> number_of_non_nan_features = 0;
+<a name="l00045"></a>00045       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> object_index = 0;
+<a name="l00046"></a>00046            object_index &lt; (int)data_set.<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++object_index) {
+<a name="l00047"></a>00047         <span class="keywordflow">if</span> (!<a class="code" href="namespaceltr_1_1utility.html#ab452afdf7027238f5b0c1419a8b85cef">isNaN</a>(data_set[object_index][feature_index])) {
+<a name="l00048"></a>00048           current_feature_average_value +=
+<a name="l00049"></a>00049             data_set[object_index][feature_index];
+<a name="l00050"></a>00050           ++number_of_non_nan_features;
+<a name="l00051"></a>00051         }
+<a name="l00052"></a>00052       }
+<a name="l00053"></a>00053       <span class="keywordflow">if</span> (number_of_non_nan_features == 0) {
+<a name="l00054"></a>00054         average_features_values[feature_index] =
+<a name="l00055"></a>00055           numeric_limits&lt;double&gt;::quiet_NaN();
+<a name="l00056"></a>00056       } <span class="keywordflow">else</span> {
+<a name="l00057"></a>00057         average_features_values[feature_index] =
+<a name="l00058"></a>00058           current_feature_average_value / number_of_non_nan_features;
+<a name="l00059"></a>00059       }
+<a name="l00060"></a>00060     }
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062     <a class="code" href="classltr_1_1_object.html">Object</a> average_features_object;
+<a name="l00063"></a>00063     average_features_object.<a class="code" href="classltr_1_1_object.html#a7003e54ec457dde67737bfb1a8f37a23">features</a>() = average_features_values;
+<a name="l00064"></a>00064     feature_converter-&gt;set_neutral_object(average_features_object);
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
+<a name="l00068"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">00068</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#a2fde5fefaae5bec26510699ddadc90ee">NanToAverageConverterLearner&lt;TElement&gt;::toString</a>()<span class="keyword"> const </span>{
+<a name="l00069"></a>00069   <span class="keywordflow">return</span> <span class="stringliteral">&quot;NanToAverageConverterLearner&quot;</span>;
+<a name="l00070"></a>00070 }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
+<a name="l00073"></a><a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">00073</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_nan_to_average_converter_learner.html#ac61995d8da1457cdbc6a74b4f5761cd9">NanToAverageConverterLearner&lt;TElement&gt;::getDefaultAlias</a>()<span class="keyword"> const </span>{
+<a name="l00074"></a>00074   <span class="keywordflow">return</span> <span class="stringliteral">&quot;NanToAverageConverterLearner&quot;</span>;
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 };
+<a name="l00077"></a>00077 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_NAN_TO_AVERAGE_LEARNER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:58:27 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 17 2012 18:34:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

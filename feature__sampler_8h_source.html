@@ -132,33 +132,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00031"></a><a class="code" href="classltr_1_1_feature_sampler.html">00031</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_feature_sampler.html" title="Samples features with specified indices.">FeatureSampler</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> {
 <a name="l00032"></a>00032   <span class="keyword">public</span>:
 <a name="l00033"></a><a class="code" href="classltr_1_1_feature_sampler.html#a62c8126bba0996784b6ae827db3fc363">00033</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;FeatureSampler&gt;</a> <a class="code" href="classltr_1_1_feature_sampler.html#a62c8126bba0996784b6ae827db3fc363">Ptr</a>;
-<a name="l00037"></a><a class="code" href="classltr_1_1_feature_sampler.html#a539a67a76dcd46ad04629038cf729a55">00037</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_feature_sampler.html#a539a67a76dcd46ad04629038cf729a55">FeatureSampler</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>&amp; indices = <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>(),
-<a name="l00038"></a>00038                           <span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; <a class="code" href="crossvalidation__unittest_8cc.html#aa840e4a188067b160006315daedd6e90">feature_info</a> = <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>())
-<a name="l00039"></a>00039     : <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a>(<a class="code" href="crossvalidation__unittest_8cc.html#aa840e4a188067b160006315daedd6e90">feature_info</a>),
-<a name="l00040"></a>00040       <a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">indices_</a>(indices) {}
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a> <a class="code" href="classltr_1_1_feature_sampler.html#abaa848809a9077c861a2469c15650154">convertFeatureInfo</a>() <span class="keyword">const</span>;
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046   <a class="code" href="classltr_1_1_feature_sampler.html#aac7cde6064cef0138e610f472cbf8166">GET</a>(<a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>, indices);
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_feature_sampler.html#a449a093d38aaf5b7aa1338e93633cd7d">set_indices</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>&amp; indices);
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050  <span class="keyword">private</span>:
-<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_feature_sampler.html#a12b683ffc49e8478e4c9a7c344b0dece">applyImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; input, <a class="code" href="classltr_1_1_object.html">Object</a>* output) <span class="keyword">const</span>;
+<a name="l00037"></a><a class="code" href="classltr_1_1_feature_sampler.html#ad5f580f6dba5d68177d2b1237c7d9af6">00037</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_feature_sampler.html#ad5f580f6dba5d68177d2b1237c7d9af6">FeatureSampler</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00038"></a>00038   }
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="classltr_1_1_feature_sampler.html#a539a67a76dcd46ad04629038cf729a55">00040</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_feature_sampler.html#ad5f580f6dba5d68177d2b1237c7d9af6">FeatureSampler</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>&amp; indices = <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>(),
+<a name="l00041"></a>00041                           <span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; <a class="code" href="crossvalidation__unittest_8cc.html#aa840e4a188067b160006315daedd6e90">feature_info</a> = <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>())
+<a name="l00042"></a>00042     : <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a>(<a class="code" href="crossvalidation__unittest_8cc.html#aa840e4a188067b160006315daedd6e90">feature_info</a>),
+<a name="l00043"></a>00043       <a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">indices_</a>(indices) {}
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a> <a class="code" href="classltr_1_1_feature_sampler.html#abaa848809a9077c861a2469c15650154">convertFeatureInfo</a>() <span class="keyword">const</span>;
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <a class="code" href="classltr_1_1_feature_sampler.html#aac7cde6064cef0138e610f472cbf8166">GET</a>(<a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>, indices);
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_feature_sampler.html#a449a093d38aaf5b7aa1338e93633cd7d">set_indices</a>(<span class="keyword">const</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>&amp; indices);
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_feature_sampler.html#a02342a8a7f022a0055291de93c6f48c7">getDefaultAlias</a>() <span class="keyword">const</span>;
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">00055</a>   <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a> <a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">indices_</a>;
-<a name="l00056"></a>00056 };
-<a name="l00057"></a>00057 };
-<a name="l00058"></a>00058 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_</span>
+<a name="l00053"></a>00053  <span class="keyword">private</span>:
+<a name="l00054"></a>00054   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_feature_sampler.html#a12b683ffc49e8478e4c9a7c344b0dece">applyImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; input, <a class="code" href="classltr_1_1_object.html">Object</a>* output) <span class="keyword">const</span>;
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_feature_sampler.html#a02342a8a7f022a0055291de93c6f48c7">getDefaultAlias</a>() <span class="keyword">const</span>;
+<a name="l00057"></a>00057 
+<a name="l00058"></a><a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">00058</a>   <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a> <a class="code" href="classltr_1_1_feature_sampler.html#a6be54ccabbfee13b9f1f6caadbe4cd19">indices_</a>;
+<a name="l00059"></a>00059 };
+<a name="l00060"></a>00060 };
+<a name="l00061"></a>00061 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_FEATURE_SAMPLER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:58:27 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 17 2012 18:34:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

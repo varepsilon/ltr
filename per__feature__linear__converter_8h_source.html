@@ -123,36 +123,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025  <span class="keyword">public</span>:
 <a name="l00026"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a19e19b0b07999a773e0ad35f83d6e4a8">00026</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;PerFeatureLinearConverter&gt;</a> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a19e19b0b07999a773e0ad35f83d6e4a8">Ptr</a>;
 <a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a79821fa27be2a0ccb806725dd94dd460">00028</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a79821fa27be2a0ccb806725dd94dd460">PerFeatureLinearConverter</a>(
-<a name="l00029"></a>00029     <span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; input_feature_info = <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>())
-<a name="l00030"></a>00030     : <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a>(input_feature_info) {
-<a name="l00031"></a>00031       <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a195bb8b68958e0d8c27a905b52aef44c">resize</a>(input_feature_info);
-<a name="l00032"></a>00032   }
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a7d30c566b50b7ef5ebae8c110dbc231d">convertFeatureInfo</a>() <span class="keyword">const</span>;
-<a name="l00039"></a>00039   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a195bb8b68958e0d8c27a905b52aef44c">resize</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; input_feature_info);
-<a name="l00043"></a>00043   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a5a651a0e1ab875874097d422c00b775f">factor</a>(<span class="keywordtype">int</span> feature_index) <span class="keyword">const</span>;
-<a name="l00047"></a>00047   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a161619db6ad463cbe42aa5e157af7000">set_factor</a>(<span class="keywordtype">int</span> feature_index, <span class="keywordtype">double</span> coefficient);
-<a name="l00051"></a>00051   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a843c9d5b3c6a7850756464808c7978eb">shift</a>(<span class="keywordtype">int</span> feature_index) <span class="keyword">const</span>;
-<a name="l00055"></a>00055   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6accf765d42190a8c03bda322c37bca4">set_shift</a>(<span class="keywordtype">int</span> feature_index, <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a843c9d5b3c6a7850756464808c7978eb">shift</a>);
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059  <span class="keyword">private</span>:
-<a name="l00060"></a>00060   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a02592e7ca80a1a171625513e817e0553">applyImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; input, <a class="code" href="classltr_1_1_object.html">Object</a>* output) <span class="keyword">const</span>;
+<a name="l00028"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a237968867a32e3e1ed30a57cb073875e">00028</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a237968867a32e3e1ed30a57cb073875e">PerFeatureLinearConverter</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00029"></a>00029   }
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a79821fa27be2a0ccb806725dd94dd460">00031</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a237968867a32e3e1ed30a57cb073875e">PerFeatureLinearConverter</a>(
+<a name="l00032"></a>00032     <span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; input_feature_info = <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>())
+<a name="l00033"></a>00033     : <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a>(input_feature_info) {
+<a name="l00034"></a>00034       <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a195bb8b68958e0d8c27a905b52aef44c">resize</a>(input_feature_info);
+<a name="l00035"></a>00035   }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a7d30c566b50b7ef5ebae8c110dbc231d">convertFeatureInfo</a>() <span class="keyword">const</span>;
+<a name="l00042"></a>00042   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a195bb8b68958e0d8c27a905b52aef44c">resize</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_feature_info.html">FeatureInfo</a>&amp; input_feature_info);
+<a name="l00046"></a>00046   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a5a651a0e1ab875874097d422c00b775f">factor</a>(<span class="keywordtype">int</span> feature_index) <span class="keyword">const</span>;
+<a name="l00050"></a>00050   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a161619db6ad463cbe42aa5e157af7000">set_factor</a>(<span class="keywordtype">int</span> feature_index, <span class="keywordtype">double</span> coefficient);
+<a name="l00054"></a>00054   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a843c9d5b3c6a7850756464808c7978eb">shift</a>(<span class="keywordtype">int</span> feature_index) <span class="keyword">const</span>;
+<a name="l00058"></a>00058   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6accf765d42190a8c03bda322c37bca4">set_shift</a>(<span class="keywordtype">int</span> feature_index, <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a843c9d5b3c6a7850756464808c7978eb">shift</a>);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
 <a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a2c2ec85eb916167f6fc80f4414fc5c17">getDefaultAlias</a>() <span class="keyword">const</span>;
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6aab129337de7aca522f03c6e014115a">00064</a>   vector&lt;double&gt; <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6aab129337de7aca522f03c6e014115a">factors_</a>;
-<a name="l00065"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac">00065</a>   vector&lt;double&gt; <a class="code" href="classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac">shifts_</a>;
-<a name="l00066"></a>00066 };
-<a name="l00067"></a>00067 };
-<a name="l00068"></a>00068 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_</span>
+<a name="l00062"></a>00062  <span class="keyword">private</span>:
+<a name="l00063"></a>00063   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a02592e7ca80a1a171625513e817e0553">applyImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; input, <a class="code" href="classltr_1_1_object.html">Object</a>* output) <span class="keyword">const</span>;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a2c2ec85eb916167f6fc80f4414fc5c17">getDefaultAlias</a>() <span class="keyword">const</span>;
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6aab129337de7aca522f03c6e014115a">00067</a>   vector&lt;double&gt; <a class="code" href="classltr_1_1_per_feature_linear_converter.html#a6aab129337de7aca522f03c6e014115a">factors_</a>;
+<a name="l00068"></a><a class="code" href="classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac">00068</a>   vector&lt;double&gt; <a class="code" href="classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac">shifts_</a>;
+<a name="l00069"></a>00069 };
+<a name="l00070"></a>00070 };
+<a name="l00071"></a>00071 <span class="preprocessor">#endif  // LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 12:58:27 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 17 2012 18:34:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
