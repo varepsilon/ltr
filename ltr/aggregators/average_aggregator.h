@@ -29,10 +29,12 @@ class AverageAggregator : public Aggregator {
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     double result = 0;
+    double weights_sum = 0;
     for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
       result += labels[label_index] * weights[label_index];
+      weights_sum += weights[label_index];
     }
-    return result / labels.size();
+    return result / weights_sum;
   }
 
   string generateCppCode(const string& function_name) const {

@@ -27,7 +27,8 @@ TEST(Aggregators, AggregatorsTest) {
   weights.push_back(0.7);
   weights.push_back(0.1);
 
-  EXPECT_TRUE(DoubleEqual((1.0 * 0.2 + 2.0 * 0.7 + 3.0 * 0.1) / 3.0,
+  EXPECT_TRUE(DoubleEqual((1.0 * 0.2 + 2.0 * 0.7 + 3.0 * 0.1) /
+                          (0.2 + 0.7 + 0.1),
                           average_aggregator->aggregate(labels, weights)));
 
   Aggregator::Ptr sum_aggregator = new SumAggregator;

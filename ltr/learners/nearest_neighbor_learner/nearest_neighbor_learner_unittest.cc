@@ -56,5 +56,5 @@ TEST(NNLearner, NNLearnerTest) {
   NNScorer::Ptr nn_scorer_ptr = nn_learner.makeSpecific();
   Object score_object;
   score_object << 0.0 << 0.0 << 0.0;
-  EXPECT_TRUE(DoubleEqual(1.0, nn_scorer_ptr->operator()(score_object)));
+  EXPECT_TRUE(DoubleEqual(4. / 3., nn_scorer_ptr->operator()(score_object)));
 }

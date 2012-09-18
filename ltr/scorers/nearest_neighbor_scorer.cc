@@ -36,7 +36,7 @@ struct DistanceToNeighbor {
   int neighbor_id;
 
   bool operator<(const DistanceToNeighbor& arg) const {
-    return this->neighbor_id < arg.neighbor_id;
+    return this->distance < arg.distance;
   }
 };
 

@@ -153,7 +153,7 @@ using ltr::PointwiseMeasure;
 using ltr::PairwiseMeasure;
 
 using ltr::utility::InverseLinearDistance;
-using ltr::utility::InverseSquareDistance;
+using ltr::utility::InversePowerDistance;
 using ltr::utility::InverseOrder;
 
 string name_storage; // NOLINT
@@ -214,7 +214,7 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER(BaseMetric, ManhattanMetric);
 
   REGISTER(NeighborWeighter, InverseLinearDistance);
-  REGISTER(NeighborWeighter, InverseSquareDistance);
+  REGISTER(NeighborWeighter, InversePowerDistance);
   REGISTER(NeighborWeighter, InverseOrder);
 
   REGISTER(FeatureConverter, FakeFeatureConverter);

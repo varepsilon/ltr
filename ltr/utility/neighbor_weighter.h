@@ -32,48 +32,78 @@ class InverseLinearDistance : public NeighborWeighter {
  public:
 
   InverseLinearDistance() {
+    min_distance_ = 1e-9;
   }
+
+  explicit InverseLinearDistance(double min_distance):
+    min_distance_(min_distance) {}
 
   explicit InverseLinearDistance(const ParametersContainer& parameters) {
   }
 
-  double getWeight(double neighbor_distance, int neighbor_order) {
+  virtual double getWeight(double neighbor_distance, int neighbor_order) {
+    if (neighbor_distance < min_distance_) {
+      return min_distance_;
+    }
     return 1.0 / neighbor_distance;
   }
 
   string generateCppCode(const string& function_name) const {
     string result;
     result += "double " + function_name + "(double dist, double order) {\n";
+    result += "  double min_distance = " +
+      boost::lexical_cast<string, double>(min_distance_) + ";\n";
+    result += "  if (dist < min_distance) {\n";
+    result += "    return 1. / min_distance;\n";
+    result += "  }\n";
     result += "  return 1.0 / dist;\n";
     result += "}\n";
     return result;
   }
  private:
+  double min_distance_;
   virtual string getDefaultAlias() const {return "Inverse linear distance";}
 };
 
-class InverseSquareDistance : public NeighborWeighter {
+class InversePowerDistance: public NeighborWeighter {
  public:
 
-  InverseSquareDistance() {
+  InversePowerDistance() {
+    power_ = 2.;
+    min_distance_ = 1e-9;
   }
 
-  explicit InverseSquareDistance(const ParametersContainer& parameters) {
+  explicit InversePowerDistance(double power, double min_distance = 1e-9):
+    power_(power), min_distance_(min_distance) {}
+
+  explicit InversePowerDistance(const ParametersContainer& parameters) {
   }
 
-  double getWeight(double neighbor_distance, int neighbor_order) {
-    return 1.0 / pow(neighbor_distance, 2.0);
+  virtual double getWeight(double neighbor_distance, int neighbor_order) {
+    if (neighbor_distance < min_distance_) {
+      return 1. / pow(min_distance_, power_);
+    }
+    return 1.0 / pow(neighbor_distance, power_);
   }
 
   string generateCppCode(const string& function_name) const {
     string result;
     result += "double " + function_name + "(double dist, double order) {\n";
-    result += "  return 1.0 / pow(dist, 2.0);\n";
+    result += "  double power = " +
+      boost::lexical_cast<string, double>(power_) + ";\n";
+    result += "  double min_distance = " +
+      boost::lexical_cast<string, double>(min_distance_) + ";\n";
+    result += "  if (dist < min_distance) {\n";
+    result += "    return 1. / pow(min_distance, power);\n";
+    result += "  }\n";
+    result += "  return 1.0 / pow(dist, power);\n";
     result += "}\n";
     return result;
   }
  private:
-  virtual string getDefaultAlias() const {return "Inverse sqaure distance";}
+  double power_;
+  double min_distance_;
+  virtual string getDefaultAlias() const {return "Inverse power distance";}
 };
 
 class InverseOrder : public NeighborWeighter {
@@ -84,7 +114,7 @@ class InverseOrder : public NeighborWeighter {
   explicit InverseOrder(const ParametersContainer& parameters) {
   }
 
-  double getWeight(double neighbor_distance, int neighbor_order) {
+  virtual double getWeight(double neighbor_distance, int neighbor_order) {
     return 1.0 / (neighbor_order + 1.0);
   }
 

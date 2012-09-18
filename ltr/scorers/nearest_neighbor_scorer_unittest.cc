@@ -53,5 +53,5 @@ TEST(NNScorer, NNScorerTest) {
   Object score_object;
   score_object << 0.0 << 0.0 << 0.0;
 
-  EXPECT_TRUE(DoubleEqual(1.0, nn_scorer(score_object)));
+  EXPECT_TRUE(DoubleEqual(4. / 3., nn_scorer(score_object)));
 }
