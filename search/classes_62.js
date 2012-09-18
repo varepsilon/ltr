@@ -13,6 +13,7 @@ var searchData=
   ['basegpoperation',['BaseGPOperation',['../classltr_1_1gp_1_1_base_g_p_operation.html',1,'ltr::gp']]],
   ['baselearner',['BaseLearner',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20object_2c_20decisiontreescorer_20_3e',['BaseLearner< Object, DecisionTreeScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
+  ['baselearner_3c_20object_2c_20linearcompositionscorer_20_3e',['BaseLearner< Object, LinearCompositionScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20telement_2c_20bayesianscorer_20_3e',['BaseLearner< TElement, BayesianScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20telement_2c_20gpscorer_20_3e',['BaseLearner< TElement, GPScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
   ['baselearner_3c_20telement_2c_20linearcompositionscorer_20_3e',['BaseLearner< TElement, LinearCompositionScorer >',['../classltr_1_1_base_learner.html',1,'ltr']]],
@@ -31,5 +32,6 @@ var searchData=
   ['bayesianscorer',['BayesianScorer',['../classltr_1_1_bayesian_scorer.html',1,'ltr']]],
   ['bestfeaturelearner',['BestFeatureLearner',['../classltr_1_1_best_feature_learner.html',1,'ltr']]],
   ['binaryclassificationaccuracy',['BinaryClassificationAccuracy',['../classltr_1_1_binary_classification_accuracy.html',1,'ltr']]],
+  ['binaryclassificationmargin',['BinaryClassificationMargin',['../classltr_1_1_binary_classification_margin.html',1,'ltr']]],
   ['brief',['brief',['../classbrief.html',1,'']]]
 ];

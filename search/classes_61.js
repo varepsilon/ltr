@@ -2,6 +2,8 @@ var searchData=
 [
   ['abserror',['AbsError',['../classltr_1_1_abs_error.html',1,'ltr']]],
   ['accuracy',['Accuracy',['../classltr_1_1_accuracy.html',1,'ltr']]],
+  ['adaboostdatasetweightsupdater',['AdaBoostDataSetWeightsUpdater',['../classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html',1,'ltr::composition']]],
+  ['adaboostlearner',['AdaBoostLearner',['../classltr_1_1composition_1_1_ada_boost_learner.html',1,'ltr::composition']]],
   ['adarankdatasetweightsupdater',['AdaRankDataSetWeightsUpdater',['../classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html',1,'ltr::composition']]],
   ['adaranklcscorerweightsupdater',['AdaRankLCScorerWeightsUpdater',['../classltr_1_1lc_1_1_ada_rank_l_c_scorer_weights_updater.html',1,'ltr::lc']]],
   ['adarankscorerweightsupdater',['AdaRankScorerWeightsUpdater',['../classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html',1,'ltr::composition']]],

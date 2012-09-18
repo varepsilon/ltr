@@ -121,82 +121,86 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="composition__scorer_8h.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</span>
 <a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="data__set__weights__updater_8h.html">ltr/learners/composition_learner/data_set_weights_updater.h</a>&quot;</span>
 <a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="linear__composition__scorer_8h.html">ltr/scorers/composition_scorers/linear_composition_scorer.h</a>&quot;</span>
+<a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="keyword">using</span> std::string;
-<a name="l00026"></a>00026 <span class="keyword">using</span> std::vector;
-<a name="l00027"></a>00027 <span class="keyword">using</span> std::exp;
-<a name="l00028"></a>00028 <span class="keyword">using</span> std::logic_error;
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">using</span> <a class="code" href="classltr_1_1_measure.html">ltr::Measure</a>;
-<a name="l00031"></a>00031 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>ltr {
-<a name="l00034"></a>00034 <span class="keyword">namespace </span>composition {
-<a name="l00040"></a>00040 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00041"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html">00041</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html">AdaRankDataSetWeightsUpdater</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_data_set_weights_updater.html">DataSetWeightsUpdater</a>&lt;TElement&gt; {
-<a name="l00042"></a>00042  <span class="keyword">public</span>:
-<a name="l00043"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#abb4df31f08cfc9e8d2c7a02f0a5a30c9">00043</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaRankDataSetWeightsUpdater&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#abb4df31f08cfc9e8d2c7a02f0a5a30c9">Ptr</a>;
-<a name="l00044"></a>00044 
-<a name="l00048"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a6dca2e11fe169cf02ab074f514d7dd17">00048</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a6dca2e11fe169cf02ab074f514d7dd17">AdaRankDataSetWeightsUpdater</a>(
-<a name="l00049"></a>00049       <span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters = <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>()) {
-<a name="l00050"></a>00050     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#aea58f21fbc4599fb71b3103d661e9062">setDefaultParameters</a>();
-<a name="l00051"></a>00051   }
-<a name="l00055"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#aa72dc3fd180ab7df807824a55b0e22e4">00055</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#aa72dc3fd180ab7df807824a55b0e22e4">AdaRankDataSetWeightsUpdater</a>(<span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> measure) {
-<a name="l00056"></a>00056     this-&gt;set_measure(measure);
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">updateWeights</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>* data,
-<a name="l00060"></a>00060       <span class="keyword">const</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&amp; composition_scorer) <span class="keyword">const</span>;
-<a name="l00061"></a>00061  <span class="keyword">private</span>:
-<a name="l00062"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#ac7263e922aa905aa2ce3b3b24e84b658">00062</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#ac7263e922aa905aa2ce3b3b24e84b658">getDefaultAlias</a>()<span class="keyword"> const </span>{
-<a name="l00063"></a>00063     <span class="keywordflow">return</span> <span class="stringliteral">&quot;AdaRankDataSetWeightsUpdater&quot;</span>;
-<a name="l00064"></a>00064   }
-<a name="l00065"></a>00065 };
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="comment">// template realizations</span>
-<a name="l00068"></a>00068 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00069"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">00069</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">AdaRankDataSetWeightsUpdater&lt;TElement&gt;::updateWeights</a>(
-<a name="l00070"></a>00070     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>* data,
-<a name="l00071"></a>00071     <span class="keyword">const</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&amp; composition_scorer)<span class="keyword"> const </span>{
-<a name="l00072"></a>00072   <span class="keywordflow">if</span> (composition_scorer.<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>() == 0) {
-<a name="l00073"></a>00073     ERR(<span class="stringliteral">&quot;Zero-length scorer as an input&quot;</span>);
-<a name="l00074"></a>00074     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Zero-length scorer for &quot;</span> + this-&gt;getDefaultAlias());
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076   <span class="keywordtype">int</span> last_scorer_index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(composition_scorer.<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>()) - 1;
-<a name="l00077"></a>00077   composition_scorer[last_scorer_index].scorer-&gt;<a class="code" href="classltr_1_1_scorer.html#a54e872082ab3313d0d588d7eb158edc2">predict</a>(*data);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   vector&lt;double&gt; weighted_measure_exps(data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>());
-<a name="l00080"></a>00080   <span class="keywordtype">double</span> sum_of_weighted_exps = 0.0;
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0; element_index &lt; data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++element_index) {
-<a name="l00083"></a>00083     <span class="keywordtype">double</span> measure_value = this-&gt;measure_-&gt;value(data-&gt;<a class="code" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">at</a>(element_index));
-<a name="l00084"></a>00084     <span class="keywordtype">double</span> normalized_measure_value =
-<a name="l00085"></a>00085       (measure_value - this-&gt;measure_-&gt;worst()) /
-<a name="l00086"></a>00086       (this-&gt;measure_-&gt;best() - this-&gt;measure_-&gt;worst());
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088     <span class="keywordtype">double</span> measure_value_exp = exp(-normalized_measure_value);
-<a name="l00089"></a>00089     weighted_measure_exps[element_index] = measure_value_exp * data-&gt;<a class="code" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(element_index);
-<a name="l00090"></a>00090     sum_of_weighted_exps += weighted_measure_exps[element_index];
-<a name="l00091"></a>00091   }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0; element_index &lt; data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++element_index) {
-<a name="l00094"></a>00094     data-&gt;<a class="code" href="classltr_1_1_data_set.html#ac64be8f8531671d838570ed2786d6e86">setWeight</a>(element_index, weighted_measure_exps[element_index] / sum_of_weighted_exps);
+<a name="l00023"></a>00023 <span class="keyword">using</span> std::string;
+<a name="l00024"></a>00024 <span class="keyword">using</span> std::vector;
+<a name="l00025"></a>00025 <span class="keyword">using</span> std::exp;
+<a name="l00026"></a>00026 <span class="keyword">using</span> std::logic_error;
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="keyword">using</span> <a class="code" href="classltr_1_1_measure.html">ltr::Measure</a>;
+<a name="l00029"></a>00029 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>ltr {
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>composition {
+<a name="l00038"></a>00038 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00039"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html">00039</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html">AdaRankDataSetWeightsUpdater</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_data_set_weights_updater.html">DataSetWeightsUpdater</a>&lt;TElement&gt; {
+<a name="l00040"></a>00040  <span class="keyword">public</span>:
+<a name="l00041"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#abb4df31f08cfc9e8d2c7a02f0a5a30c9">00041</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaRankDataSetWeightsUpdater&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#abb4df31f08cfc9e8d2c7a02f0a5a30c9">Ptr</a>;
+<a name="l00042"></a>00042 
+<a name="l00046"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a6dca2e11fe169cf02ab074f514d7dd17">00046</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a6dca2e11fe169cf02ab074f514d7dd17">AdaRankDataSetWeightsUpdater</a>(
+<a name="l00047"></a>00047       <span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters = <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>()) {
+<a name="l00048"></a>00048     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#aea58f21fbc4599fb71b3103d661e9062">setDefaultParameters</a>();
+<a name="l00049"></a>00049   }
+<a name="l00053"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#aa72dc3fd180ab7df807824a55b0e22e4">00053</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#aa72dc3fd180ab7df807824a55b0e22e4">AdaRankDataSetWeightsUpdater</a>(<span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> measure) {
+<a name="l00054"></a>00054     this-&gt;set_measure(measure);
+<a name="l00055"></a>00055   }
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">updateWeights</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>* data,
+<a name="l00058"></a>00058       <span class="keyword">const</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&amp; composition_scorer) <span class="keyword">const</span>;
+<a name="l00059"></a>00059  <span class="keyword">private</span>:
+<a name="l00060"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#ac7263e922aa905aa2ce3b3b24e84b658">00060</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#ac7263e922aa905aa2ce3b3b24e84b658">getDefaultAlias</a>()<span class="keyword"> const </span>{
+<a name="l00061"></a>00061     <span class="keywordflow">return</span> <span class="stringliteral">&quot;AdaRankDataSetWeightsUpdater&quot;</span>;
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063 };
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 <span class="comment">// template realizations</span>
+<a name="l00066"></a>00066 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00067"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">00067</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html#a1485a6c82f6cb372122e4563a0ef8e91">AdaRankDataSetWeightsUpdater&lt;TElement&gt;::updateWeights</a>(
+<a name="l00068"></a>00068     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>* data,
+<a name="l00069"></a>00069     <span class="keyword">const</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&amp; composition_scorer)<span class="keyword"> const </span>{
+<a name="l00070"></a>00070   <span class="keywordflow">if</span> (composition_scorer.<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>() == 0) {
+<a name="l00071"></a>00071     ERR(<span class="stringliteral">&quot;Zero-length scorer as an input&quot;</span>);
+<a name="l00072"></a>00072     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Zero-length scorer for &quot;</span> + this-&gt;getDefaultAlias());
+<a name="l00073"></a>00073   }
+<a name="l00074"></a>00074   <span class="keywordflow">if</span> (this-&gt;measure_-&gt;best() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00075"></a>00075       this-&gt;measure_-&gt;best() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00076"></a>00076       this-&gt;measure_-&gt;worst() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00077"></a>00077       this-&gt;measure_-&gt;worst() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a>) {
+<a name="l00078"></a>00078     ERR(<span class="stringliteral">&quot;Can&#39;t work with an infinity measure&quot;</span>);
+<a name="l00079"></a>00079     <span class="keywordflow">throw</span> std::logic_error(this-&gt;getDefaultAlias() + <span class="stringliteral">&quot; has an infinity measure&quot;</span>);
+<a name="l00080"></a>00080   }
+<a name="l00081"></a>00081   composition_scorer.<a class="code" href="classltr_1_1_scorer.html#ab1377230385c8a4d3ad36ffdb18e278c">predict</a>(*data);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   vector&lt;double&gt; measure_exps(data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>());
+<a name="l00084"></a>00084   <span class="keywordtype">double</span> sum_of_exps = 0.0;
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0; element_index &lt; data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++element_index) {
+<a name="l00087"></a>00087     <span class="keywordtype">double</span> measure_value = this-&gt;measure_-&gt;value(data-&gt;<a class="code" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">at</a>(element_index));
+<a name="l00088"></a>00088     <span class="keywordtype">double</span> normalized_measure_value =
+<a name="l00089"></a>00089       (measure_value - this-&gt;measure_-&gt;worst()) /
+<a name="l00090"></a>00090       (this-&gt;measure_-&gt;best() - this-&gt;measure_-&gt;worst());
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keywordtype">double</span> measure_value_exp = exp(-2 * normalized_measure_value);
+<a name="l00093"></a>00093     measure_exps[element_index] = measure_value_exp;
+<a name="l00094"></a>00094     sum_of_exps += measure_exps[element_index];
 <a name="l00095"></a>00095   }
-<a name="l00096"></a>00096 }
-<a name="l00097"></a>00097 };
-<a name="l00098"></a>00098 };
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_</span>
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0; element_index &lt; data-&gt;<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++element_index) {
+<a name="l00098"></a>00098     data-&gt;<a class="code" href="classltr_1_1_data_set.html#ac64be8f8531671d838570ed2786d6e86">setWeight</a>(element_index, measure_exps[element_index] / sum_of_exps);
+<a name="l00099"></a>00099   }
+<a name="l00100"></a>00100 }
+<a name="l00101"></a>00101 };
+<a name="l00102"></a>00102 };
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 17 2012 18:34:19 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 12:08:12 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

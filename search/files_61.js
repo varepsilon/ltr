@@ -3,6 +3,8 @@ var searchData=
   ['abs_5ferror_2eh',['abs_error.h',['../abs__error_8h.html',1,'']]],
   ['accuracy_2ecc',['accuracy.cc',['../accuracy_8cc.html',1,'']]],
   ['accuracy_2eh',['accuracy.h',['../accuracy_8h.html',1,'']]],
+  ['ada_5fboost_5fdata_5fset_5fweights_5fupdater_2eh',['ada_boost_data_set_weights_updater.h',['../ada__boost__data__set__weights__updater_8h.html',1,'']]],
+  ['ada_5fboost_5flearner_2eh',['ada_boost_learner.h',['../ada__boost__learner_8h.html',1,'']]],
   ['ada_5frank_5fcomposition_5fscorer_5fweights_5fupdater_2eh',['ada_rank_composition_scorer_weights_updater.h',['../ada__rank__composition__scorer__weights__updater_8h.html',1,'']]],
   ['ada_5frank_5fdata_5fset_5fweights_5fupdater_2eh',['ada_rank_data_set_weights_updater.h',['../ada__rank__data__set__weights__updater_8h.html',1,'']]],
   ['ada_5frank_5flc_5fscorer_5fweights_5fupdater_2eh',['ada_rank_lc_scorer_weights_updater.h',['../ada__rank__lc__scorer__weights__updater_8h.html',1,'']]],

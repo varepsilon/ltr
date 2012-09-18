@@ -10,6 +10,7 @@ var searchData=
   ['composition_5fscorer_2eh',['composition_scorer.h',['../composition__scorer_8h.html',1,'']]],
   ['composition_5fscorer_5funittest_2ecc',['composition_scorer_unittest.cc',['../composition__scorer__unittest_8cc.html',1,'']]],
   ['composition_5fscorer_5fweights_5fupdater_2eh',['composition_scorer_weights_updater.h',['../composition__scorer__weights__updater_8h.html',1,'']]],
+  ['composition_5ftutorial_2edox',['composition_tutorial.dox',['../composition__tutorial_8dox.html',1,'']]],
   ['condition_2ecc',['condition.cc',['../condition_8cc.html',1,'']]],
   ['condition_2eh',['condition.h',['../condition_8h.html',1,'']]],
   ['conditions_5flearner_2eh',['conditions_learner.h',['../conditions__learner_8h.html',1,'']]],

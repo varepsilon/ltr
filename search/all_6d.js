@@ -25,6 +25,7 @@ var searchData=
   ['mean_5f',['mean_',['../classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b',1,'ltr::NonLinearDiscriminant']]],
   ['measure',['Measure',['../classltr_1_1_measure.html',1,'ltr']]],
   ['measure_2eh',['measure.h',['../measure_8h.html',1,'']]],
+  ['measure_3c_20object_20_3e',['Measure< Object >',['../classltr_1_1_measure.html',1,'ltr']]],
   ['measure_3c_20objecttype_20_3e',['Measure< ObjectType >',['../classltr_1_1_measure.html',1,'ltr']]],
   ['measure_5f',['measure_',['../classltr_1_1_best_feature_learner.html#adeb38ae8d2aa9174252740ba233bb805',1,'ltr::BestFeatureLearner::measure_()'],['../classltr_1_1composition_1_1_composition_scorer_weights_updater.html#a20c93af93618dbc68efa8abb69f1a571',1,'ltr::composition::CompositionScorerWeightsUpdater::measure_()'],['../classltr_1_1composition_1_1_data_set_weights_updater.html#a945021202710c15f8362c688bd2e259b',1,'ltr::composition::DataSetWeightsUpdater::measure_()'],['../classltr_1_1gp_1_1_g_p_learner.html#a02910a9e020e0ded1fe13e102a2a13d2',1,'ltr::gp::GPLearner::measure_()']]],
   ['measure_5fnames',['measure_names',['../classltr_1_1cv_1_1_validation_result.html#a0ae486e3a38462a7c25b3f4d49ce5629',1,'ltr::cv::ValidationResult']]],
