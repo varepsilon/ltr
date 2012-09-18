@@ -15,6 +15,7 @@ var searchData=
   ['meta_5finfo_5f',['meta_info_',['../classltr_1_1_object.html#a37e9cc1ce6f803bd000c625a9f1e6afb',1,'ltr::Object']]],
   ['metric_5f',['metric_',['../classltr_1_1_n_n_learner.html#a0b2c5fcbbcaa12d369fad1319a7a88d2',1,'ltr::NNLearner::metric_()'],['../classltr_1_1_n_n_scorer.html#a4c646056bb85e857caee6dcd616f0323',1,'ltr::NNScorer::metric_()']]],
   ['min_5f',['min_',['../classltr_1_1_feature_normalizer_learner.html#ac43d9801806b99f4e866a3f9ea553ed5',1,'ltr::FeatureNormalizerLearner']]],
+  ['min_5fdistance_5f',['min_distance_',['../classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d',1,'ltr::utility::InverseLinearDistance::min_distance_()'],['../classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32',1,'ltr::utility::InversePowerDistance::min_distance_()']]],
   ['min_5finit_5fdepth_5f',['min_init_depth_',['../classltr_1_1gp_1_1_g_p_learner.html#aa46e93178336e33c41f2c028e5def783',1,'ltr::gp::GPLearner']]],
   ['min_5fvertex_5fsize_5f',['min_vertex_size_',['../classltr_1_1decision__tree_1_1_decision_tree_learner.html#a4c433b8f58fb5c28336fd06297749a39',1,'ltr::decision_tree::DecisionTreeLearner']]],
   ['multi_5findex_5f',['multi_index_',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#aaac639b32059874236118f4125f35849',1,'ltr::utility::MultiTable::Iterator']]],

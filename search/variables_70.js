@@ -8,6 +8,7 @@ var searchData=
   ['population_5f',['population_',['../classltr_1_1gp_1_1_g_p_learner.html#ad3af5d015a092f07e94da48b7b76bf9d',1,'ltr::gp::GPLearner']]],
   ['population_5fhandlers_5f',['population_handlers_',['../classltr_1_1gp_1_1_g_p_learner.html#a8ec96129cbbc600c82473c14c2dd34b3',1,'ltr::gp::GPLearner']]],
   ['population_5fsize_5f',['population_size_',['../classltr_1_1gp_1_1_g_p_learner.html#aeabfbab990765e8b846145540c6efaaf',1,'ltr::gp::GPLearner']]],
+  ['power_5f',['power_',['../classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66',1,'ltr::utility::InversePowerDistance']]],
   ['precision',['precision',['../classltr_1_1gp_1_1_ephemeral.html#a96e9dca79a6bb4f910bc7873fa8bde2b',1,'ltr::gp::Ephemeral::precision()'],['../numerical__unittest_8cc.html#a4f214e901f7e6a79fe34cb2cdc0b071e',1,'precision():&#160;numerical_unittest.cc']]],
   ['predicted',['predicted',['../structltr_1_1utility_1_1_predicted_and_actual_labels.html#aed445c05e64cae71203ea2d26225b6ab',1,'ltr::utility::PredictedAndActualLabels']]],
   ['predicted_5flabel_5f',['predicted_label_',['../classltr_1_1_object.html#a7512146fba65efd297f1d9607b21b3a5',1,'ltr::Object']]],

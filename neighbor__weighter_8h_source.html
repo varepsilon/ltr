@@ -133,81 +133,111 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a>00032  <span class="keyword">public</span>:
 <a name="l00033"></a>00033 
 <a name="l00034"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a398129a4352751939660dded2c486516">00034</a>   <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a398129a4352751939660dded2c486516">InverseLinearDistance</a>() {
-<a name="l00035"></a>00035   }
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#abd19590ff53b7dffac4a47eebf724a63">00037</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#abd19590ff53b7dffac4a47eebf724a63">InverseLinearDistance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
-<a name="l00038"></a>00038   }
-<a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#add14d91571879a41f04afb4026ab3a24">00040</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#add14d91571879a41f04afb4026ab3a24">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
-<a name="l00041"></a>00041     <span class="keywordflow">return</span> 1.0 / neighbor_distance;
+<a name="l00035"></a>00035     <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a> = 1e-9;
+<a name="l00036"></a>00036   }
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a298603c0ab3d90ed2f9c83c6cacbb5b5">00038</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a398129a4352751939660dded2c486516">InverseLinearDistance</a>(<span class="keywordtype">double</span> min_distance):
+<a name="l00039"></a>00039     <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a>(min_distance) {}
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#abd19590ff53b7dffac4a47eebf724a63">00041</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#abd19590ff53b7dffac4a47eebf724a63">InverseLinearDistance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
 <a name="l00042"></a>00042   }
 <a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#aa96276b969e585543c27ee65e84d34e2">00044</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#aa96276b969e585543c27ee65e84d34e2">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00045"></a>00045     <span class="keywordtype">string</span> result;
-<a name="l00046"></a>00046     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
-<a name="l00047"></a>00047     result += <span class="stringliteral">&quot;  return 1.0 / dist;\n&quot;</span>;
-<a name="l00048"></a>00048     result += <span class="stringliteral">&quot;}\n&quot;</span>;
-<a name="l00049"></a>00049     <span class="keywordflow">return</span> result;
-<a name="l00050"></a>00050   }
-<a name="l00051"></a>00051  <span class="keyword">private</span>:
-<a name="l00052"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a39a59c87907cbe27a920d855954e9b59">00052</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a39a59c87907cbe27a920d855954e9b59">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse linear distance&quot;</span>;}
-<a name="l00053"></a>00053 };
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html">00055</a> <span class="keyword">class </span><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html">InverseSquareDistance</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1utility_1_1_neighbor_weighter.html">NeighborWeighter</a> {
-<a name="l00056"></a>00056  <span class="keyword">public</span>:
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#ae9a8cfd2f673b66d7be722560a1fce60">00058</a>   <a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#ae9a8cfd2f673b66d7be722560a1fce60">InverseSquareDistance</a>() {
-<a name="l00059"></a>00059   }
-<a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a6f7ee3c0f9ecc497a1f05ce65b1f7360">00061</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a6f7ee3c0f9ecc497a1f05ce65b1f7360">InverseSquareDistance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00044"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a1058693e9509e907fa41c25176e45e58">00044</a>   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a1058693e9509e907fa41c25176e45e58">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
+<a name="l00045"></a>00045     <span class="keywordflow">if</span> (neighbor_distance &lt; <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a>) {
+<a name="l00046"></a>00046       <span class="keywordflow">return</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a>;
+<a name="l00047"></a>00047     }
+<a name="l00048"></a>00048     <span class="keywordflow">return</span> 1.0 / neighbor_distance;
+<a name="l00049"></a>00049   }
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#aa96276b969e585543c27ee65e84d34e2">00051</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#aa96276b969e585543c27ee65e84d34e2">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
+<a name="l00052"></a>00052     <span class="keywordtype">string</span> result;
+<a name="l00053"></a>00053     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
+<a name="l00054"></a>00054     result += <span class="stringliteral">&quot;  double min_distance = &quot;</span> +
+<a name="l00055"></a>00055       boost::lexical_cast&lt;string, <span class="keywordtype">double</span>&gt;(<a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a>) + <span class="stringliteral">&quot;;\n&quot;</span>;
+<a name="l00056"></a>00056     result += <span class="stringliteral">&quot;  if (dist &lt; min_distance) {\n&quot;</span>;
+<a name="l00057"></a>00057     result += <span class="stringliteral">&quot;    return 1. / min_distance;\n&quot;</span>;
+<a name="l00058"></a>00058     result += <span class="stringliteral">&quot;  }\n&quot;</span>;
+<a name="l00059"></a>00059     result += <span class="stringliteral">&quot;  return 1.0 / dist;\n&quot;</span>;
+<a name="l00060"></a>00060     result += <span class="stringliteral">&quot;}\n&quot;</span>;
+<a name="l00061"></a>00061     <span class="keywordflow">return</span> result;
 <a name="l00062"></a>00062   }
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a4939498fcd86316ff0a6362f9b811ba6">00064</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a4939498fcd86316ff0a6362f9b811ba6">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
-<a name="l00065"></a>00065     <span class="keywordflow">return</span> 1.0 / pow(neighbor_distance, 2.0);
-<a name="l00066"></a>00066   }
+<a name="l00063"></a>00063  <span class="keyword">private</span>:
+<a name="l00064"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">00064</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a703e2e705b1ceb25dd4f029ccf98fb8d">min_distance_</a>;
+<a name="l00065"></a><a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a39a59c87907cbe27a920d855954e9b59">00065</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_linear_distance.html#a39a59c87907cbe27a920d855954e9b59">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse linear distance&quot;</span>;}
+<a name="l00066"></a>00066 };
 <a name="l00067"></a>00067 
-<a name="l00068"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a2dc6db8996005afb41f26fd985b88b2e">00068</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a2dc6db8996005afb41f26fd985b88b2e">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00069"></a>00069     <span class="keywordtype">string</span> result;
-<a name="l00070"></a>00070     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
-<a name="l00071"></a>00071     result += <span class="stringliteral">&quot;  return 1.0 / pow(dist, 2.0);\n&quot;</span>;
-<a name="l00072"></a>00072     result += <span class="stringliteral">&quot;}\n&quot;</span>;
-<a name="l00073"></a>00073     <span class="keywordflow">return</span> result;
+<a name="l00068"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html">00068</a> <span class="keyword">class </span><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html">InversePowerDistance</a>: <span class="keyword">public</span> <a class="code" href="classltr_1_1utility_1_1_neighbor_weighter.html">NeighborWeighter</a> {
+<a name="l00069"></a>00069  <span class="keyword">public</span>:
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#aa621098356abddafdd4c59d6a008fa1f">00071</a>   <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#aa621098356abddafdd4c59d6a008fa1f">InversePowerDistance</a>() {
+<a name="l00072"></a>00072     <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a> = 2.;
+<a name="l00073"></a>00073     <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a> = 1e-9;
 <a name="l00074"></a>00074   }
-<a name="l00075"></a>00075  <span class="keyword">private</span>:
-<a name="l00076"></a><a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a2436f355bdac04406d831abd022eee26">00076</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_square_distance.html#a2436f355bdac04406d831abd022eee26">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse sqaure distance&quot;</span>;}
-<a name="l00077"></a>00077 };
+<a name="l00075"></a>00075 
+<a name="l00076"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ab906bdb282dffb4185f6011d034d4f9f">00076</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#aa621098356abddafdd4c59d6a008fa1f">InversePowerDistance</a>(<span class="keywordtype">double</span> power, <span class="keywordtype">double</span> min_distance = 1e-9):
+<a name="l00077"></a>00077     <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a>(power), <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a>(min_distance) {}
 <a name="l00078"></a>00078 
-<a name="l00079"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html">00079</a> <span class="keyword">class </span><a class="code" href="classltr_1_1utility_1_1_inverse_order.html">InverseOrder</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1utility_1_1_neighbor_weighter.html">NeighborWeighter</a> {
-<a name="l00080"></a>00080  <span class="keyword">public</span>:
-<a name="l00081"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#ab930c0c3d03a2a26c980c1da5af5291a">00081</a>   <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#ab930c0c3d03a2a26c980c1da5af5291a">InverseOrder</a>() {
-<a name="l00082"></a>00082   }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#adf5e8ed48546ac6efb389b0483ad9dcb">00084</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#adf5e8ed48546ac6efb389b0483ad9dcb">InverseOrder</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
-<a name="l00085"></a>00085   }
-<a name="l00086"></a>00086 
-<a name="l00087"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a7ec15df1749563eb767a218c38d3e146">00087</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a7ec15df1749563eb767a218c38d3e146">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
-<a name="l00088"></a>00088     <span class="keywordflow">return</span> 1.0 / (neighbor_order + 1.0);
-<a name="l00089"></a>00089   }
-<a name="l00090"></a>00090 
-<a name="l00091"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a6eda153fc7ba1f2810e36f5cf54a33a9">00091</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a6eda153fc7ba1f2810e36f5cf54a33a9">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00092"></a>00092     <span class="keywordtype">string</span> result;
-<a name="l00093"></a>00093     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
-<a name="l00094"></a>00094     result += <span class="stringliteral">&quot;  return 1.0 / (order + 1.0);\n&quot;</span>;
-<a name="l00095"></a>00095     result += <span class="stringliteral">&quot;}\n&quot;</span>;
-<a name="l00096"></a>00096     <span class="keywordflow">return</span> result;
-<a name="l00097"></a>00097   }
-<a name="l00098"></a>00098  <span class="keyword">private</span>:
-<a name="l00099"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a3ed24a072231a5af358ce7bac65c2bed">00099</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a3ed24a072231a5af358ce7bac65c2bed">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse order&quot;</span>;}
-<a name="l00100"></a>00100 };
-<a name="l00101"></a>00101 };
-<a name="l00102"></a>00102 };
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104 <span class="preprocessor">#endif  // LTR_UTILITY_NEIGHBOR_WEIGHTER_H_</span>
+<a name="l00079"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#aa9e070e6d53eb8eccf7eca7b340249f5">00079</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#aa9e070e6d53eb8eccf7eca7b340249f5">InversePowerDistance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00080"></a>00080   }
+<a name="l00081"></a>00081 
+<a name="l00082"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a14c380118fdf72b7da30a7eb119da8ec">00082</a>   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a14c380118fdf72b7da30a7eb119da8ec">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
+<a name="l00083"></a>00083     <span class="keywordflow">if</span> (neighbor_distance &lt; <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a>) {
+<a name="l00084"></a>00084       <span class="keywordflow">return</span> 1. / pow(<a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a>, <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a>);
+<a name="l00085"></a>00085     }
+<a name="l00086"></a>00086     <span class="keywordflow">return</span> 1.0 / pow(neighbor_distance, <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a>);
+<a name="l00087"></a>00087   }
+<a name="l00088"></a>00088 
+<a name="l00089"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#af05b1abaa8e9fa4c582baa50e8df7977">00089</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#af05b1abaa8e9fa4c582baa50e8df7977">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
+<a name="l00090"></a>00090     <span class="keywordtype">string</span> result;
+<a name="l00091"></a>00091     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
+<a name="l00092"></a>00092     result += <span class="stringliteral">&quot;  double power = &quot;</span> +
+<a name="l00093"></a>00093       boost::lexical_cast&lt;string, <span class="keywordtype">double</span>&gt;(<a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a>) + <span class="stringliteral">&quot;;\n&quot;</span>;
+<a name="l00094"></a>00094     result += <span class="stringliteral">&quot;  double min_distance = &quot;</span> +
+<a name="l00095"></a>00095       boost::lexical_cast&lt;string, <span class="keywordtype">double</span>&gt;(<a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a>) + <span class="stringliteral">&quot;;\n&quot;</span>;
+<a name="l00096"></a>00096     result += <span class="stringliteral">&quot;  if (dist &lt; min_distance) {\n&quot;</span>;
+<a name="l00097"></a>00097     result += <span class="stringliteral">&quot;    return 1. / pow(min_distance, power);\n&quot;</span>;
+<a name="l00098"></a>00098     result += <span class="stringliteral">&quot;  }\n&quot;</span>;
+<a name="l00099"></a>00099     result += <span class="stringliteral">&quot;  return 1.0 / pow(dist, power);\n&quot;</span>;
+<a name="l00100"></a>00100     result += <span class="stringliteral">&quot;}\n&quot;</span>;
+<a name="l00101"></a>00101     <span class="keywordflow">return</span> result;
+<a name="l00102"></a>00102   }
+<a name="l00103"></a>00103  <span class="keyword">private</span>:
+<a name="l00104"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">00104</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a95e1845c7fc1ce7195c63988f4113f66">power_</a>;
+<a name="l00105"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">00105</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#ad04ecee639c8020e0f29149b72366d32">min_distance_</a>;
+<a name="l00106"></a><a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a40ceb924851939869cc28645a545b1bc">00106</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_power_distance.html#a40ceb924851939869cc28645a545b1bc">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse power distance&quot;</span>;}
+<a name="l00107"></a>00107 };
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html">00109</a> <span class="keyword">class </span><a class="code" href="classltr_1_1utility_1_1_inverse_order.html">InverseOrder</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1utility_1_1_neighbor_weighter.html">NeighborWeighter</a> {
+<a name="l00110"></a>00110  <span class="keyword">public</span>:
+<a name="l00111"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#ab930c0c3d03a2a26c980c1da5af5291a">00111</a>   <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#ab930c0c3d03a2a26c980c1da5af5291a">InverseOrder</a>() {
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113 
+<a name="l00114"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#adf5e8ed48546ac6efb389b0483ad9dcb">00114</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#adf5e8ed48546ac6efb389b0483ad9dcb">InverseOrder</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00115"></a>00115   }
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a453b10c98be11032c6f7f8b0434464ec">00117</a>   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a453b10c98be11032c6f7f8b0434464ec">getWeight</a>(<span class="keywordtype">double</span> neighbor_distance, <span class="keywordtype">int</span> neighbor_order) {
+<a name="l00118"></a>00118     <span class="keywordflow">return</span> 1.0 / (neighbor_order + 1.0);
+<a name="l00119"></a>00119   }
+<a name="l00120"></a>00120 
+<a name="l00121"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a6eda153fc7ba1f2810e36f5cf54a33a9">00121</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a6eda153fc7ba1f2810e36f5cf54a33a9">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
+<a name="l00122"></a>00122     <span class="keywordtype">string</span> result;
+<a name="l00123"></a>00123     result += <span class="stringliteral">&quot;double &quot;</span> + function_name + <span class="stringliteral">&quot;(double dist, double order) {\n&quot;</span>;
+<a name="l00124"></a>00124     result += <span class="stringliteral">&quot;  return 1.0 / (order + 1.0);\n&quot;</span>;
+<a name="l00125"></a>00125     result += <span class="stringliteral">&quot;}\n&quot;</span>;
+<a name="l00126"></a>00126     <span class="keywordflow">return</span> result;
+<a name="l00127"></a>00127   }
+<a name="l00128"></a>00128  <span class="keyword">private</span>:
+<a name="l00129"></a><a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a3ed24a072231a5af358ce7bac65c2bed">00129</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1utility_1_1_inverse_order.html#a3ed24a072231a5af358ce7bac65c2bed">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;Inverse order&quot;</span>;}
+<a name="l00130"></a>00130 };
+<a name="l00131"></a>00131 };
+<a name="l00132"></a>00132 };
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="preprocessor">#endif  // LTR_UTILITY_NEIGHBOR_WEIGHTER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 18 2012 12:14:11 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 14:50:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
