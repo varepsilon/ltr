@@ -1,72 +1,40 @@
 namespace ltr {
-/** \page QualityTable Tutorial page 6 - Quality
+/** \page QualityTable Quality
     \ingroup Tutorial
 
 \tableofcontents
 
 \section Results Results of learners test
 
-\subsection ResultsImat2009 Results on imat2009
 <table>
-<tr><td>Learner</td><td>DataSet</td><td>Score</td><td>Notes</td></tr>
+<tr><td>Learner</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>Notes</td></tr>
+<tr><td>Linear Learner</td><td>4.178930</td><td>-</td><td>-</td><td>-</td><td>works fast</td></tr>
 
-<tr><td>Linear Learner</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>4.178930</td><td>works fast</td></tr>
+<tr><td>Best Feature Learner</td><td>3.018777</td><td>-</td><td>-</td><td>-</td><td>works fast, measure: AbsError</td></tr>
 
-<tr><td>Best Feature Learner</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.018777</td><td>works fast, measure: AbsError</td></tr>
-
-<tr><td>GP Learner</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.770800</td><td>population_size = 100, number_of_generations = 20,
+<tr><td>GP Learner</td><td>3.770800</td><td>-</td><td>-</td><td>-</td><td>population_size = 100, number_of_generations = 20,
 measure: DCG, works very slow</td></tr>
 
-<tr><td>GP Learner</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.763814</td><td>population_size = 100, number_of_generations = 100,
+<tr><td>GP Learner</td><td>3.763814</td><td>-</td><td>-</td><td>-</td><td>population_size = 100, number_of_generations = 100,
 measure: DCG, works very slow</td></tr>
 
-<tr><td>GP Learner (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.711743</td><td>population_size = 10, number_of_generations = 3,
+<tr><td>GP Learner (old version)</td><td>3.711743</td><td>-</td><td>-</td><td>-</td><td>population_size = 10, number_of_generations = 3,
 measure: DCG, works very slow</td></tr>
 
-<tr><td>GP Learner (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.707123</td><td>population_size = 10, number_of_generations = 3,
+<tr><td>GP Learner (old version)</td><td>3.707123</td><td>-</td><td>-</td><td>-</td><td>population_size = 10, number_of_generations = 3,
 measure: PFound, works very slow</td></tr>
 
-<tr><td>GP Learner (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.731683</td><td>population_size = 10, number_of_generations = 3,
+<tr><td>GP Learner (old version)</td><td>3.731683</td><td>-</td><td>-</td><td>-</td><td>population_size = 10, number_of_generations = 3,
 measure: NDCG, works very slow</td></tr>
-</table>
 
-\subsection ResultsLiverDisorders Results on Liver Disorders
-<table>
-<tr><td>Learner</td><td>DataSet</td><td>Score</td><td>Notes</td></tr>
-<tr><td>LinearLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.695652<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BestFeatureLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.57971<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.57971<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 5 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.42029<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 17 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.42029<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
-<tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.553623<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BayesianLearner with FisherDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.542029<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td></td>0.637681<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-</table>
-
-\subsection ResultsAustralian Results on Australian
-<table>
-<tr><td>Learner</td><td>DataSet</td><td>Score</td><td>Notes</td></tr>
-<tr><td>LinearLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.857971<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BestFeatureLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.444928<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.546377<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 5 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.6<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 17 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.636232<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
-<tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.804348<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BayesianLearner with FisherDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.650725<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td></td>0.828986<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-</table>
-
-\subsection ResultsGerman Results on German
-<table>
-<tr><td>Learner</td><td>DataSet</td><td>Score</td><td>Notes</td></tr>
-<tr><td>LinearLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.773000<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>BestFeatureLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.3<td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.662<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 5 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.685<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 17 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.7<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
-<tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.723<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
-<tr><td>BayesianLearner with FisherDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.628<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
-<tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td></td>0.699<td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
+<tr><td>LinearLearner</td><td>-</td><td>0.695652</td><td>0.857971</td><td>0.773000</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
+<tr><td>BestFeatureLearner</td><td>-</td><td>0.57971</td><td>0.444928</td><td>0.3</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
+<tr><td>NearestNeighborLearner</td><td>-</td><td>0.57971</td><td>0.546377</td><td>0.662</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 5 neighbors</td></tr>
+<tr><td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.6</td><td>0.685</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 17 neighbors</td></tr>
+<tr><td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.636232</td><td>0.7</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
+<tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td>-</td><td>0.553623</td><td>0.804348</td><td>0.723</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
+<tr><td>BayesianLearner with FisherDiscriminantLearner</td><td>-</td><td>0.542029</td><td>0.650725</td><td>0.628</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
+<tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td>-</td><td>0.637681</td><td>0.828986</td><td>0.699</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 </table>
 
 **/
