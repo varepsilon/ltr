@@ -66,8 +66,12 @@ Quality on some public datasets is presented \ref QualityTable "here".
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
     - \ref TutorialMeasureLearnerScorer
+    - \ref TutorialComposition
+
   - \b Advanced \b topics
     - \ref HowToCreateNewLearnerAndScorer
+    - \ref HowToWriteUnittests
+    - \ref HowToCheckSerialization
 
 \section REQUIREMENTS Requirements
 \li Boost\n

@@ -1,0 +1,75 @@
+namespace ltr {
+/** \page TutorialComposition Tutorial page 7 - Composition of algorithms
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section TutorialCompositionWhatIs What is composition?
+
+In LTR one deals with scorers, which are simply functions over objects.
+Each scorer is a result of work of a particular learner on a dataset (although one can create a scorer directly for testing purposes).
+
+So, assume we have learned several different learners on the same dataset and receive some scorers.
+Part of these scorers is good on some data elements, and another part is good on another elements.
+And the question is: could we combine these scorers to produce a better one?
+
+\subsection TutorialCompositionScorer Composition Scorer
+
+%The class that represents the combination of scorers (which usually are called weak scorers) is CompositionScorer.
+It holds weak scorers with their weights, but does not specify the way they are combined - it is determined in CompositionScorer's inheritors.
+
+\subsection TutorialCompositionScorerList List of main CompositionScorers
+
+%CompositionScorer         | Description
+---------------------------|------------------------------------------------------------
+LinearCompositionScorer    | Scores as weighted average of weak scorers
+MaxWeightCompositionScorer | Scores as the weak scorer with the max weight
+MedianCompositionScorer    | Scores as weighted median of weak scorers
+
+\section TutorialCompositionLearner Composition Learner
+
+As far as LTR has composition scorers, it has a learner for them, a composition learner. How does it work?
+
+First, a composition learner must be able to produce weak scorers to tie them up into a composition one,
+so one of learner's parameters is a weak learner.
+
+Second, the weights in composition scorer need to be setted, and the class CompositionScorerWeightsUpdater is responsible for this.
+
+Third, it is a good idea to learn a weak scorer, paying attention on hard (for previous scorers) data elements.
+I. e. the weight distribution over data elements is new for learning a new weak scorer, and LTR has the DataSetWeightsUpdater class for such a work.
+
+\subsection TutorialCompositionLearningProcess Learning process
+
+To use a composition learner one should create it and specify weak learner, CompositionScorerWeightsUpdater, DataSetWeightsUpdater,
+the type of CompositionScorer which the learner is supposed to create, and the number of iterations. Note that some CompositionScorerWeightsUpdaters
+may not work properly with some CompositionScorer types, for example, CompositionScorerWeightsUpdater that implements the gradient boosting
+may require from CompositionScorer type to have a gradient method.
+
+Composition learner works as follows:
+  - sets equal weights to the dataset
+  - repeats (as many times as is setted in parameters)
+    - learns the weak learner on the dataset with current weights, and uppends the resulted weak scorer to the composition one (with 1.0 weight)
+    - updates the weights of the composition scorer
+    - updates the weights of the dataset
+
+\section TutorialCompositionExamples Examples
+
+\subsection TutorialCompositionRSM RSM
+
+This is an example of implementing RSM (random subspace method, see http://en.wikipedia.org/wiki/Random_subspace_method) with the linear composition learner.
+Default DataSetWeightsUpdater and CompositionScorerWeightsUpdater do nothing.
+
+\include composition_tutorial_RSM.cpp
+
+\subsection TutorialCompositionAdaBoost Classic AdaBoost
+
+This example represents a classic AdaBoost composition algorithm (see http://www.robots.ox.ac.uk/~az/lectures/cv/adaboost_matas.pdf) on the best feature learner.
+
+\include composition_tutorial_ada_boost.cpp
+
+Also, the very same thing can be done in a shorter way:
+
+\include composition_tutorial_ada_boost_short.cpp
+
+**/
+}

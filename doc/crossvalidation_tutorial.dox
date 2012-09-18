@@ -8,7 +8,7 @@ namespace ltr {
 
 There are two approaches in the testing of algorithms.
 First approach needs two datasets.
-The first dataset is training and the second is testing.
+%The first dataset is training and the second is testing.
 Algorithm is learnt with the first dataset.
 And after the learning the algorithm is ought to be tested with the second dataset.
 But this approach needs a lot of data and usually there is a small amount of available data.

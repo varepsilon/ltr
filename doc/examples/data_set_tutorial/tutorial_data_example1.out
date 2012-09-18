@@ -1,6 +1,0 @@
-obj = [1.10, 45.30, 23.00, 100000000.00]
-obj.feature_count() = 4
-feature was added
-obj.feature_count() = 5
-obj[0] = 1.1, obj.at(1) = 45.3
-obj = [1.00, 5.00, 2.00]

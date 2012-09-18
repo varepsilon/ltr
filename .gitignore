@@ -1,7 +1,7 @@
 build
-doc/html
+html
+doc/build
 *.out
 lib
 ltr/serialization_test/tester/tester.cc
-/ltr/serialization_test/tester/tester.cc.rule
-html/
+ltr/serialization_test/tester/tester.cc.rule

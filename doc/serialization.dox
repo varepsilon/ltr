@@ -1,0 +1,46 @@
+namespace ltr {
+/** \page HowToCheckSerialization How to check serialization
+	\ingroup Advanced
+
+\tableofcontents
+
+\section SerializationWhatIs What is serialization?
+
+%The main result of using LTR may be the scorer trained on user data. It is useful to be able to work with the scorer independently
+from LTR, and the library provides the ability of saving scorers into C++ source files.
+
+\section SerializationOfAScorer Writing a serialization for a new scorer
+
+While writing a new scorer in LTR one must specify a pure virtual member function with the following signature:
+
+\code
+private:
+  virtual string generateCppCodeImpl(const string& function_name) const;
+\endcode
+
+This method outputs a piece of C++ code, including a function with the name of <function_name> parameter of the generateCppCodeImpl call.
+%The printed function must have the following signature:
+
+\code
+double <function_name>(const std::vector<double>& features);
+\endcode
+
+\section SerializationChecking Checking serialization
+
+So, you've written a new scorer (with a learner that produces it), and want to check if your serialization is correct.
+For this purpose there is a serialization_generator project in LTR. There in the generator.cc file within the main function
+you may see a code like this:
+
+\code
+ID3_Learner::Ptr id3_learner(new ID3_Learner);
+generator.setScorerTest(id3_learner, "ID3Learner");
+\endcode
+
+For checking your scorer do the same thing - create a learner and put it into a generator.setScorerTest call with the second parameter of
+the learner's name.
+
+Then build the RUN_SERIALIZATION project (it is skipped by default) - this will cause appearing of new unittests, wich may check the correctness
+of your serialization. %The new unittests can be run with others.
+
+**/
+}

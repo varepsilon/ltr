@@ -107,6 +107,9 @@ void AdaRankScorerWeightsUpdater<TElement, TCompositionScorer>::updateWeights(
   }
 
   double result_weight = 0.5 * log(numerator/denominator);
+  if (result_weight < 0) {
+    WARN("Negative weight in composition");
+  }
 
   (*composition_scorer)[last_scorer_index].weight = result_weight;
 }

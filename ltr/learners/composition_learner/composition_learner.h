@@ -131,6 +131,10 @@ void CompositionLearner<TElement, TCompositionScorer>::learnImpl(
     const DataSet<TElement>& data, TCompositionScorer* scorer) {
   INFO("Learning has been started");
 
+  for (int element_index = 0; element_index < data.size(); ++element_index) {
+    data.setWeight(element_index, 1.0 / data.size());
+  }
+
   for (int iteration = 0;
       iteration < number_of_iterations_;
       ++iteration) {

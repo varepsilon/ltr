@@ -11,6 +11,8 @@
 #include "ltr/measures/accuracy.h"
 #include "ltr/measures/squared_error.h"
 #include "ltr/measures/true_point.h"
+#include "ltr/measures/binary_classification_margin.h"
+#include "ltr/measures/binary_classification_accuracy.h"
 
 using ltr::Object;
 using ltr::utility::DoubleEqual;

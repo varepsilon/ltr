@@ -1,0 +1,45 @@
+namespace ltr {
+/** \page HowToWriteUnittests How to write unittests
+	\ingroup Advanced
+
+\tableofcontents
+
+\section UnittestsGTest GTest
+
+In LTR we use googletest testing framework from http://code.google.com/p/googletest. This document is a very short introduction
+to unittesting, for more information see the documentation here http://code.google.com/p/googletest/wiki/Documentation.
+
+\section UnittestsBasics Basics
+
+Unittest is a code, which uses some staff from our library which is needed to be checked, and verifies if while
+running that staff certain assertions do not fail.
+
+To create a unittest one takes a .cc file, already listed in <LTR_ROOT>/cmake/utests.cmake, which contains files for ltr_test project,
+or creates a new one in the folder with the files to be tested, and adds the new file to the list. In the file the main piece of code,
+within which your test code would be placed, is as follows:
+
+\include unittest_basics.cc
+
+TestName here is the name of the test that you will see in a report. For convinience usually closely-related tests are packed
+in the test sets, the name of the one here is TestSetName. Also, TEST is a gtest macro, defined in gtest.h.
+
+\section UnittestsAssertions Assertions
+
+Now lets put some code to be tested inside TEST macro and use some assertions, provided by gtest.
+
+\include unittest_assertions.cc
+
+Every code within any TEST macro will be compiled and ran separately, and if while testing any of the EXPECT assertions would be failed,
+you'll see a report on that.
+
+One may see that all the tests from the previous example use the same variables.
+There is a way to shorten the code with the help of TEST_F macro.
+
+\include unittest_fixture.cc
+
+\section UnittestsRunning Running unittests
+
+See \ref BuildingLTR for detail information.
+
+**/
+}
