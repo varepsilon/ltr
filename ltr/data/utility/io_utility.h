@@ -150,7 +150,10 @@ DataSet<TElement> loadDataSet(const string& filename,
       objects[object_index] << ltr::utility::NaN;
     }
   }
-  return buildDataSet<TElement>(parser, objects, parser->featureInfo());
+  DataSet<TElement> result =
+    buildDataSet<TElement>(parser, objects, parser->featureInfo());
+  result.set_alias(filename);
+  return result;
 }
 
 
@@ -224,7 +227,6 @@ void savePredictions(const DataSet<TElement>& data,
     }
   }
   file.close();
-
 }
 };
 };

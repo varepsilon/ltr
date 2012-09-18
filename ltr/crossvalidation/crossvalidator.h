@@ -163,7 +163,9 @@ void CrossValidator<ObjectType>::
        dataset_index < data_sets_.size();
        ++dataset_index) {
     INFO("Setting %d tick label", dataset_index);
-    cross_validation_results_.setTickLabel(1, dataset_index, "dataset");
+    cross_validation_results_.setTickLabel(1,
+                                           dataset_index,
+                                           data_sets_[dataset_index]->alias());
   }
 
   INFO("Starting to set Learners");

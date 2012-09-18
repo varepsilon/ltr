@@ -221,10 +221,9 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
       *out_stream << table_meta_info_[axis_index].axis_label << ":"
                   << table_meta_info_[axis_index].
                      axis_ticks_labels[tick_index]
-                  << "\t";
+                  << "\n";
     }
   }
-  *out_stream << "\n";
   *out_stream << "Table ROW: "
        << table_meta_info_[first_axis_index].axis_label
        << " COLUMN: "
