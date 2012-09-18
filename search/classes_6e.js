@@ -11,7 +11,8 @@ var searchData=
   ['nominaltoboolconverter',['NominalToBoolConverter',['../classltr_1_1_nominal_to_bool_converter.html',1,'ltr']]],
   ['nominaltoboolconverterlearner',['NominalToBoolConverterLearner',['../classltr_1_1_nominal_to_bool_converter_learner.html',1,'ltr']]],
   ['nonlineardiscriminant',['NonLinearDiscriminant',['../classltr_1_1_non_linear_discriminant.html',1,'ltr']]],
-  ['nonlineardiscriminantlearner',['NonLinearDiscriminantLearner',['../classltr_1_1_non_linear_discriminant_learner.html',1,'ltr']]],
+  ['nonlineardiscriminantdensitylearner',['NonLinearDiscriminantDensityLearner',['../classltr_1_1_non_linear_discriminant_density_learner.html',1,'ltr']]],
   ['normalizedmeasure',['NormalizedMeasure',['../classltr_1_1_normalized_measure.html',1,'ltr']]],
+  ['normalnaivebayesdensitylearner',['NormalNaiveBayesDensityLearner',['../classltr_1_1_normal_naive_bayes_density_learner.html',1,'ltr']]],
   ['normalnaivebayeslearner',['NormalNaiveBayesLearner',['../classltr_1_1_normal_naive_bayes_learner.html',1,'ltr']]]
 ];

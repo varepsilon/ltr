@@ -114,6 +114,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 This is the complete list of members for <a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a>, including all inherited members.<table>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">add</a>(const TElement &amp;element)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a01a3fe8f84d88f1d8c7cc36f38a93479">add</a>(const TElement &amp;element, double weight)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_aliaser.html#aed83636a00a3f2a239e3c798f06c6b70">alias</a>() const </td><td><a class="el" href="classltr_1_1_aliaser.html">ltr::Aliaser</a></td><td><code> [inline, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">at</a>(int element_index) const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a4ea2371039408c3f123ba1b70d955f1f">at</a>(int element_index)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#aac34ecb57f749c0c4659d903a7eeb0cc">clear</a>()</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
@@ -124,24 +125,27 @@ This is the complete list of members for <a class="el" href="classltr_1_1_data_s
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a4794cca524a7da383c45afbb1cdec2ef">feature_count</a>() const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a6b173f125c05565128da0ab8486b2e5c">feature_info</a>() const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a3d7127b144e7b2b3815636a95a5c22e4">feature_info_</a></td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td><code> [private]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a650e506095d0217ae5cd7d27d335ceac">getDefaultAlias</a>() const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td><code> [inline, private, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(int element_index) const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#aa8ebcb36995ad8f83d2e08463ac4ee77">lightSubset</a>(const vector&lt; int &gt; &amp;indices) const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a21d150613486a6473d4444add71f3255">operator&lt;&lt;</a>(const TElement &amp;element)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#ac1b9e1fdd411603be60803c94c9e8a5a">operator[]</a>(int element_index) const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a69d2c85c72f7ee0ea5ab039484e15d39">operator[]</a>(int element_index)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a39572627b0bef56071c46c5d789feba7">Ptr</a> typedef</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_aliaser.html#a23b86856eda31414479bc737fd816c02">set_alias</a>(const string &amp;alias)</td><td><a class="el" href="classltr_1_1_aliaser.html">ltr::Aliaser</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a3f55fbbbc45a116a5b4c1ac2948b89d4">set_feature_info</a>(const FeatureInfo &amp;feature_info)</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#ac64be8f8531671d838570ed2786d6e86">setWeight</a>(int element_index, double weight) const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>() const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#a37827958f5e0ca3222db5be5018dea21">toString</a>() const </td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#aee6835ad051b537d83bca52b0225b753">weights_</a></td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td><code> [private]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_aliaser.html#af04d56c0290b58d35cd60e54dfee63dc">~Aliaser</a>()</td><td><a class="el" href="classltr_1_1_aliaser.html">ltr::Aliaser</a></td><td><code> [inline, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_data_set.html#aefd318b63e7e4045d41e6b26f31c2edf">~DataSet</a>()</td><td><a class="el" href="classltr_1_1_data_set.html">ltr::DataSet&lt; TElement &gt;</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_printable.html#a3743831cea0da959ffb198c37e1621eb">~Printable</a>()</td><td><a class="el" href="classltr_1_1_printable.html">ltr::Printable</a></td><td><code> [inline, virtual]</code></td></tr>
 </table></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 18 2012 14:50:15 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 15:46:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

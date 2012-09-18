@@ -17,6 +17,7 @@ var searchData=
   ['featuresampler',['FeatureSampler',['../classltr_1_1_feature_sampler.html',1,'ltr']]],
   ['featuresamplerlearner',['FeatureSamplerLearner',['../classltr_1_1_feature_sampler_learner.html',1,'ltr']]],
   ['fisherdiscriminant',['FisherDiscriminant',['../classltr_1_1_fisher_discriminant.html',1,'ltr']]],
+  ['fisherdiscriminantdensitylearner',['FisherDiscriminantDensityLearner',['../classltr_1_1_fisher_discriminant_density_learner.html',1,'ltr']]],
   ['fisherdiscriminantlearner',['FisherDiscriminantLearner',['../classltr_1_1_fisher_discriminant_learner.html',1,'ltr']]],
   ['functor',['Functor',['../classltr_1_1_functor.html',1,'ltr']]],
   ['functor_3c_20double_20_3e',['Functor< double >',['../classltr_1_1_functor.html',1,'ltr']]]

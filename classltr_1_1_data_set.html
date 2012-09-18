@@ -110,6 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ltr::DataSet&lt; TElement &gt; Class Template Reference</div>  </div>
@@ -124,6 +125,7 @@ Inheritance diagram for ltr::DataSet&lt; TElement &gt;:</div>
   <img src="classltr_1_1_data_set.png" usemap="#ltr::DataSet&lt; TElement &gt;_map" alt=""/>
   <map id="ltr::DataSet&lt; TElement &gt;_map" name="ltr::DataSet&lt; TElement &gt;_map">
 <area href="classltr_1_1_printable.html" alt="ltr::Printable" shape="rect" coords="0,0,148,24"/>
+<area href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="ltr::Aliaser" shape="rect" coords="158,0,306,24"/>
 </map>
  </div></div>
 
@@ -156,6 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af2868844fcf27979623e388ad9785a3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_data_set.html#af2868844fcf27979623e388ad9785a3a">deepCopy</a> () const </td></tr>
 <tr class="memitem:aa8ebcb36995ad8f83d2e08463ac4ee77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_data_set.html#aa8ebcb36995ad8f83d2e08463ac4ee77">lightSubset</a> (const vector&lt; int &gt; &amp;indices) const </td></tr>
 <tr class="memitem:a37827958f5e0ca3222db5be5018dea21"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_data_set.html#a37827958f5e0ca3222db5be5018dea21">toString</a> () const </td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a650e506095d0217ae5cd7d27d335ceac"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_data_set.html#a650e506095d0217ae5cd7d27d335ceac">getDefaultAlias</a> () const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ae8c87a9884b3d5a1ae4de14bed27046c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr</a><br class="typebreak"/>
@@ -408,6 +413,26 @@ template&lt;typename TElement &gt; </div>
 </div>
 <div class="memdoc">
 <p>Returns <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>, objects with the same <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a> are allowed to be stored in the <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a650e506095d0217ae5cd7d27d335ceac"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElement&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual string <a class="el" href="classltr_1_1_data_set.html">ltr::DataSet</a>&lt; TElement &gt;::<a class="el" href="classltr_1_1_data_set.html#a650e506095d0217ae5cd7d27d335ceac">getDefaultAlias</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline, private, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Implements <a class="el" href="classltr_1_1_aliaser.html#ad724414573ec5df2cc00bb5aaa57e9d0">ltr::Aliaser</a>.</p>
 
 </div>
 </div>
@@ -670,7 +695,7 @@ template&lt;typename TElement&gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 18 2012 14:50:15 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 15:46:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

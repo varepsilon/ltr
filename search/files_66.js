@@ -22,7 +22,6 @@ var searchData=
   ['feature_5fsampler_5flearner_2eh',['feature_sampler_learner.h',['../feature__sampler__learner_8h.html',1,'']]],
   ['fisher_5fdiscriminant_2ecc',['fisher_discriminant.cc',['../fisher__discriminant_8cc.html',1,'']]],
   ['fisher_5fdiscriminant_2eh',['fisher_discriminant.h',['../fisher__discriminant_8h.html',1,'']]],
-  ['fisher_5fdiscriminant_5flearner_2ecc',['fisher_discriminant_learner.cc',['../fisher__discriminant__learner_8cc.html',1,'']]],
-  ['fisher_5fdiscriminant_5flearner_2eh',['fisher_discriminant_learner.h',['../fisher__discriminant__learner_8h.html',1,'']]],
+  ['fisher_5fdiscriminant_5fdensity_5flearner_2eh',['fisher_discriminant_density_learner.h',['../fisher__discriminant__density__learner_8h.html',1,'']]],
   ['functor_2eh',['functor.h',['../functor_8h.html',1,'']]]
 ];

@@ -4,7 +4,7 @@ var searchData=
   ['_7eaggregator',['~Aggregator',['../classltr_1_1_aggregator.html#ad4b08025d08959144b50ed3444b6f4d6',1,'ltr::Aggregator']]],
   ['_7ealiaser',['~Aliaser',['../classltr_1_1_aliaser.html#af04d56c0290b58d35cd60e54dfee63dc',1,'ltr::Aliaser']]],
   ['_7ebaseprobabilitydensityestimator',['~BaseProbabilityDensityEstimator',['../classltr_1_1_base_probability_density_estimator.html#a340e3350fcee3d4014f8ecb285d3748d',1,'ltr::BaseProbabilityDensityEstimator']]],
-  ['_7ebaseprobabilitydensitylearner',['~BaseProbabilityDensityLearner',['../classltr_1_1_base_probability_density_learner.html#a606b2fd1fe9c378aa9a8f691ba2eaa87',1,'ltr::BaseProbabilityDensityLearner']]],
+  ['_7ebaseprobabilitydensitylearner',['~BaseProbabilityDensityLearner',['../classltr_1_1_base_probability_density_learner.html#a72c78c7495f3c6fee192e3d76a152bcd',1,'ltr::BaseProbabilityDensityLearner']]],
   ['_7ecompositionscorer',['~CompositionScorer',['../classltr_1_1composition_1_1_composition_scorer.html#a7672b9fd990dfd3def07d41aedc4ef50',1,'ltr::composition::CompositionScorer']]],
   ['_7edatapreprocessor',['~DataPreprocessor',['../classltr_1_1_data_preprocessor.html#a605b610cca3149ce32223819963e6253',1,'ltr::DataPreprocessor']]],
   ['_7edataset',['~DataSet',['../classltr_1_1_data_set.html#aefd318b63e7e4045d41e6b26f31c2edf',1,'ltr::DataSet']]],
