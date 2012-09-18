@@ -51,7 +51,8 @@ Quality on some public datasets is presented \ref QualityTable "here".
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
     - \ref TutorialMeasureLearnerScorer
-    - \ref TutorialComposition
+    - \ref TutorialBayesianClassification
+    - \ref TutorialComposition    
 
   - \b Advanced \b topics
     - \ref HowToCreateNewLearnerAndScorer
