@@ -31,27 +31,12 @@ Each trained ranker/classifier/regressor can be serialized in C++ code so it can
 List of algorithms implemented in the current version of LTR:
 
 
-Classification       |
----------------------|   
-kNN                  |
-Naive Bayes          |
-QDA                  |
-Fisher LDA           |
-
-Regression             |
------------------------|
-LSM                    |
-
-Ranking                |
------------------------|
-RankGP                 |
-Linear ranker          |
-
-Ensembles              |
------------------------|
-Boosting               |
-Bagging                |
-RSM                    |
+Classification       | Regression          | Ranking      | Ensembles    |
+---------------------|---------------------|--------------|--------------|  
+kNN                  | LSM                 |RankGP        |Boosting      |
+Naive Bayes          |                     |Linear ranker |Bagging       |
+QDA                  |                     |              |RSM           |
+Fisher LDA           |                     |              |              |
 
 LTR is an actively growing project so this list will be expanded significantly.
 
