@@ -57,6 +57,9 @@ Quality on some public datasets is presented \ref QualityTable "here".
     - \ref HowToCreateNewLearnerAndScorer
     - \ref HowToWriteUnittests
     - \ref HowToCheckSerialization
+    
+  - \b Other \b information
+    - \ref QualityTable
 
 \section REQUIREMENTS Requirements
 \li Boost\n
