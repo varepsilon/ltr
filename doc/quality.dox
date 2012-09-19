@@ -35,6 +35,20 @@ measure: NDCG, works very slow</td></tr>
 <tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td>-</td><td>0.553623</td><td>0.804348</td><td>0.723</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 <tr><td>BayesianLearner with FisherDiscriminantLearner</td><td>-</td><td>0.542029</td><td>0.650725</td><td>0.628</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 <tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td>-</td><td>0.637681</td><td>0.828986</td><td>0.699</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
+<tr><td>DecisionTreeLearner with ID3Splitter</td>
+<td>-</td><td>0.663782</td><td>0.862319</td><td>0.738</td>
+<td>Measure: BinaryClassificationAccuracy, Splitter: KFoldSimpleSplitter
+
+LeafGenerator: MostCommonLabelLeafGenerator
+
+StopSplittingCriteria: SameLabelStopSplittingCriteria, DataSizeStopSplittingCriteria</td></tr>
+<tr><td>DecisionTreeLearner with ObliviousTreeSplitter</td>
+<td>-</td><td>0.657479</td><td>0.853623</td><td>0.741</td>
+<td>Measure: BinaryClassificationAccuracy, Splitter: KFoldSimpleSplitter
+
+LeafGenerator: MostCommonLabelLeafGenerator
+
+StopSplittingCriteria: SameLabelStopSplittingCriteria, DataSizeStopSplittingCriteria</td></tr>
 </table>
 
 **/
