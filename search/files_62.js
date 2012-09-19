@@ -2,6 +2,7 @@ var searchData=
 [
   ['base_5fprobability_5fdensity_5festimator_2eh',['base_probability_density_estimator.h',['../base__probability__density__estimator_8h.html',1,'']]],
   ['base_5fprobability_5fdensity_5flearner_2eh',['base_probability_density_learner.h',['../base__probability__density__learner_8h.html',1,'']]],
+  ['bayesian_5fclassification_5ftutorial_2edox',['bayesian_classification_tutorial.dox',['../bayesian__classification__tutorial_8dox.html',1,'']]],
   ['bayesian_5flearner_2eh',['bayesian_learner.h',['../bayesian__learner_8h.html',1,'']]],
   ['bayesian_5flearner_5funittest_2ecc',['bayesian_learner_unittest.cc',['../bayesian__learner__unittest_8cc.html',1,'']]],
   ['bayesian_5fscorer_2ecc',['bayesian_scorer.cc',['../bayesian__scorer_8cc.html',1,'']]],
