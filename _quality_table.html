@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Learning To Rank Library: Tutorial page 6 - Quality</title>
+<title>Learning To Rank Library: Quality</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -94,125 +94,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">Tutorial page 6 - Quality </div>  </div>
+<div class="title">Quality </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#Results">Results of learners test</a><ul><li class="level2"><a href="#ResultsImat2009">Results on imat2009</a></li>
-<li class="level2"><a href="#ResultsLiverDisorders">Results on Liver Disorders</a></li>
-<li class="level2"><a href="#ResultsAustralian">Results on Australian</a></li>
-<li class="level2"><a href="#ResultsGerman">Results on German</a></li>
-</ul>
-</li>
+<ul><li class="level1"><a href="#Results">Results of learners test</a></li>
 </ul>
 </div>
 <div class="textblock"><h2><a class="anchor" id="Results"></a>
 Results of learners test</h2>
-<h3><a class="anchor" id="ResultsImat2009"></a>
-Results on imat2009</h3>
 <table class="doxtable">
 <tr>
-<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a class="el" href="classltr_1_1_data_set.html">DataSet</a></td><td>Score</td><td><p class="starttd">Notes</p>
+<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>Notes </td></tr>
+<tr>
+<td>Linear <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>4.178930</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">works fast</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>Linear <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>4.178930</td><td><p class="starttd">works fast</p>
+<td>Best Feature <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.018777</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">works fast, measure: <a class="el" href="classltr_1_1_abs_error.html">AbsError</a></p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>Best Feature <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.018777</td><td><p class="starttd">works fast, measure: <a class="el" href="classltr_1_1_abs_error.html">AbsError</a></p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.770800</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 20, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.770800</td><td><p class="starttd">population_size = 100, number_of_generations = 20, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.763814</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 100, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.763814</td><td><p class="starttd">population_size = 100, number_of_generations = 100, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.711743</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.711743</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.707123</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: <a class="el" href="classltr_1_1_p_found.html">PFound</a>, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.707123</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: <a class="el" href="classltr_1_1_p_found.html">PFound</a>, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.731683</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: NDCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td>3.731683</td><td>population_size = 10, number_of_generations = 3, measure: NDCG, works very slow </td></tr>
-</table>
-<h3><a class="anchor" id="ResultsLiverDisorders"></a>
-Results on Liver Disorders</h3>
-<table class="doxtable">
+<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td>-</td><td>0.695652</td><td>0.857971</td><td>0.773000</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a class="el" href="classltr_1_1_data_set.html">DataSet</a></td><td>Score</td><td>Notes </td></tr>
+<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td>-</td><td>0.57971</td><td>0.444928</td><td>0.3</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.695652</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td>NearestNeighborLearner</td><td>-</td><td>0.57971</td><td>0.546377</td><td>0.662</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 5 neighbors </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.57971</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.6</td><td>0.685</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 17 neighbors </td></tr>
 <tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.57971</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 5 neighbors </td></tr>
+<td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.636232</td><td>0.7</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
 <tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.42029</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 17 neighbors </td></tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td>-</td><td>0.553623</td><td>0.804348</td><td>0.723</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.42029</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td>-</td><td>0.542029</td><td>0.650725</td><td>0.628</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.553623</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.542029</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td>0.637681</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-</table>
-<h3><a class="anchor" id="ResultsAustralian"></a>
-Results on Australian</h3>
-<table class="doxtable">
-<tr>
-<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a class="el" href="classltr_1_1_data_set.html">DataSet</a></td><td>Score</td><td>Notes </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.857971</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.444928</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.546377</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 5 neighbors </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.6</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 17 neighbors </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.636232</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.804348</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.650725</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td>0.828986</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-</table>
-<h3><a class="anchor" id="ResultsGerman"></a>
-Results on German</h3>
-<table class="doxtable">
-<tr>
-<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a class="el" href="classltr_1_1_data_set.html">DataSet</a></td><td>Score</td><td>Notes </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.773000</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.3</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.662</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 5 neighbors </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.685</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 17 neighbors </td></tr>
-<tr>
-<td>NearestNeighborLearner</td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.7</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.723</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.628</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
-<tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td>0.699</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO, 30 neighbors </td></tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td>-</td><td>0.637681</td><td>0.828986</td><td>0.699</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 </table>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 18 2012 15:46:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 19 2012 12:52:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
