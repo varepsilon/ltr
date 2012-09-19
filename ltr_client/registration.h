@@ -245,6 +245,7 @@ void RegisterAllTypes(Factory* factory) {
 
   REGISTER_EVERY_WISE(Learner, FisherDiscriminantLearner);
   REGISTER_EVERY_WISE(Learner, QuadraticDiscriminantLearner);
+  REGISTER_EVERY_WISE(Learner, NormalNaiveBayesLearner);
 }
 
 #endif  // LTR_CLIENT_REGISTRATION_H_
