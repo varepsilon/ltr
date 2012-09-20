@@ -21,8 +21,8 @@
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/metrics/metric.h"
 #include "ltr/metrics/euclidean_metric.h"
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 
 
 using ltr::BestFeatureLearner;
@@ -77,7 +77,8 @@ int main(int argc, char* argv[]) {
     rsm_max_weight_composition_learner(
       new CompositionLearner<Object, MaxWeightCompositionScorer>);
   rsm_max_weight_composition_learner->set_weak_learner(bf_learner);
-  generator.setScorerTest(rsm_max_weight_composition_learner, "RSMMaxWeightCompositionLearner");
+  generator.setScorerTest(
+    rsm_max_weight_composition_learner, "RSMMaxWeightCompositionLearner");
 
   CompositionLearner<Object, OrderStatisticCompositionScorer>::Ptr
     rsm_order_statistic_composition_learner(
@@ -87,14 +88,16 @@ int main(int argc, char* argv[]) {
     "RSMOrderStatisticCompositionLearner");
 
   CompositionLearner<Object, MedianCompositionScorer>::Ptr
-    rsm_median_composition_learner(new CompositionLearner<Object, MedianCompositionScorer>);
+    rsm_median_composition_learner(
+    new CompositionLearner<Object, MedianCompositionScorer>);
   rsm_median_composition_learner->set_weak_learner(bf_learner);
-  generator.setScorerTest(rsm_median_composition_learner, "RSMMedianCompositionLearner");
+  generator.setScorerTest(
+    rsm_median_composition_learner, "RSMMedianCompositionLearner");
 
   NNLearner<Object>::Ptr
     nn_learner(new NNLearner<Object>(new ltr::EuclideanMetric,
                                      new ltr::utility::InverseLinearDistance,
-                                     new ltr::VoteAggregator,
+                                     new ltr::VotePredictionsAggregator,
                                      2));
   generator.setScorerTest(nn_learner, "KNNScorer");
 

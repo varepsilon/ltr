@@ -1,12 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_AGGREGATORS_SUM_AGGREGATOR_H_
-#define LTR_AGGREGATORS_SUM_AGGREGATOR_H_
+#ifndef LTR_PREDICTIONS_AGGREGATORS_AVERAGE_PREDICTIONS_AGGREGATOR_H_
+#define LTR_PREDICTIONS_AGGREGATORS_AVERAGE_PREDICTIONS_AGGREGATOR_H_
 
 #include <vector>
 #include <string>
 
-#include "ltr/aggregators/aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
@@ -15,23 +15,29 @@ using ltr::ParametersContainer;
 
 namespace ltr {
 /**
-* Performs sum aggregation of objects weights and labels
+* Performs average aggregation of objects weights and labels
 */
-class SumAggregator : public Aggregator {
+class AveragePredictionsAggregator : public PredictionsAggregator {
  public:
-  SumAggregator() {
+
+  AveragePredictionsAggregator() {
   }
 
-  explicit SumAggregator(const ParametersContainer& parameters) {
+  explicit AveragePredictionsAggregator(
+    const ParametersContainer& parameters) {
   }
 
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     double result = 0;
-    for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
+    double weights_sum = 0;
+    for (int label_index = 0;
+         label_index < (int)labels.size();
+         ++label_index) {
       result += labels[label_index] * weights[label_index];
+      weights_sum += weights[label_index];
     }
-    return result;
+    return result / weights_sum;
   }
 
   string generateCppCode(const string& function_name) const {
@@ -42,13 +48,15 @@ class SumAggregator : public Aggregator {
     result += " for (int index = 0; index < labels.size(); ++index) {\n";
     result += "   result += labels[index] * weights[index];\n";
     result += " }\n";
-    result += " return result;\n";
+    result += " return result / labels.size();\n";
     result += "}\n";
     return result;
   }
  private:
-  virtual string getDefaultAlias() const {return "Sum aggregator";}
+  virtual string getDefaultAlias() const {
+    return "Average predictions aggregator";
+  }
 };
 };
 
-#endif  // LTR_AGGREGATORS_SUM_AGGREGATOR_H_
+#endif  // LTR_PREDICTIONS_AGGREGATORS_AVERAGE_PREDICTIONS_AGGREGATOR_H_

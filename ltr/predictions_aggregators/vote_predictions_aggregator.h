@@ -1,13 +1,13 @@
 // copyright 2012 Yandex
 
-#ifndef LTR_AGGREGATORS_VOTE_AGGREGATOR_H_
-#define LTR_AGGREGATORS_VOTE_AGGREGATOR_H_
+#ifndef LTR_PREDICTIONS_AGGREGATORS_VOTE_PREDICTIONS_AGGREGATOR_H_
+#define LTR_PREDICTIONS_AGGREGATORS_VOTE_PREDICTIONS_AGGREGATOR_H_
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "ltr/aggregators/aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
@@ -19,12 +19,12 @@ namespace ltr {
 /**
 * Performs voting aggregation of objects weights and labels
 */
-class VoteAggregator : public Aggregator {
+class VotePredictionsAggregator : public PredictionsAggregator {
  public:
-  VoteAggregator() {
+  VotePredictionsAggregator() {
   }
 
-  explicit VoteAggregator(const ParametersContainer& parameters) {
+  explicit VotePredictionsAggregator(const ParametersContainer& parameters) {
   }
 
   double aggregate(const vector<double>& labels,
@@ -65,8 +65,8 @@ class VoteAggregator : public Aggregator {
     return result;
   }
  private:
-  virtual string getDefaultAlias() const {return "Vote aggregator";}
+  virtual string getDefaultAlias() const {return "Vote predictions aggregator";}
 };
 };
 
-#endif  // LTR_AGGREGATORS_VOTE_AGGREGATOR_H_
+#endif  // LTR_PREDICTIONS_AGGREGATORS_VOTE_PREDICTIONS_AGGREGATOR_H_

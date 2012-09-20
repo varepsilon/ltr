@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_AGGREGATORS_AGGREGATOR_H_
-#define LTR_AGGREGATORS_AGGREGATOR_H_
+#ifndef LTR_PREDICTIONS_AGGREGATORS_PREDICTIONS_AGGREGATOR_H_
+#define LTR_PREDICTIONS_AGGREGATORS_PREDICTIONS_AGGREGATOR_H_
 
 #include <vector>
 
@@ -18,13 +18,13 @@ namespace ltr {
 /**
   * Performs aggregation of objects weights and labels  
   */
-class Aggregator : public Serializable, public Parameterized {
+class PredictionsAggregator : public Serializable, public Parameterized {
  public:
-  typedef ltr::utility::shared_ptr<Aggregator> Ptr;
+  typedef ltr::utility::shared_ptr<PredictionsAggregator> Ptr;
   virtual double aggregate(const vector<double>& labels,
                            const vector<double>& weights) = 0;
-  virtual ~Aggregator() {}
+  virtual ~PredictionsAggregator() {}
 };
 };
 
-#endif  // LTR_AGGREGATORS_AGGREGATOR_H_
+#endif  // LTR_PREDICTIONS_AGGREGATORS_PREDICTIONS_AGGREGATOR_H_

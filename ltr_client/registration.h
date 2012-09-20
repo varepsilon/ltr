@@ -4,10 +4,10 @@
 
 #include <string>
 #include <typeinfo>
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
-#include "ltr/aggregators/sum_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
@@ -78,8 +78,8 @@
 
 using std::string;
 
-using ltr::Aggregator;
-using ltr::AverageAggregator;
+using ltr::PredictionsAggregator;
+using ltr::AveragePredictionsAggregator;
 using ltr::AbsError;
 using ltr::Accuracy;
 using ltr::AveragePrecision;
@@ -108,8 +108,8 @@ using ltr::Measure;
 using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
-using ltr::SumAggregator;
-using ltr::VoteAggregator;
+using ltr::SumPredictionsAggregator;
+using ltr::VotePredictionsAggregator;
 
 using ltr::FeatureConverter;
 using ltr::FakeFeatureConverter;
@@ -187,9 +187,9 @@ string name_storage; // NOLINT
 
 
 void RegisterAllTypes(Factory* factory) {
-  REGISTER(Aggregator, AverageAggregator);
-  REGISTER(Aggregator, SumAggregator);
-  REGISTER(Aggregator, VoteAggregator);
+  REGISTER(PredictionsAggregator, AveragePredictionsAggregator);
+  REGISTER(PredictionsAggregator, SumPredictionsAggregator);
+  REGISTER(PredictionsAggregator, VotePredictionsAggregator);
 
   REGISTER_EVERY_WISE(Splitter, KFoldSimpleSplitter);
   REGISTER_EVERY_WISE(Splitter, TKFoldSimpleSplitter);

@@ -227,18 +227,18 @@ SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_
 					${Source_Path}/ltr/learners/composition_learner/linear_composition_learner.h
 					${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
 
-SET(LTR_AGGREGATORS ${Source_Path}/ltr/aggregators/aggregator.h
-                    ${Source_Path}/ltr/aggregators/average_aggregator.h
-                    ${Source_Path}/ltr/aggregators/average_aggregator.cc
-                    ${Source_Path}/ltr/aggregators/sum_aggregator.h
-                    ${Source_Path}/ltr/aggregators/sum_aggregator.cc
-                    ${Source_Path}/ltr/aggregators/vote_aggregator.h
-                    ${Source_Path}/ltr/aggregators/vote_aggregator.cc)
+SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/average_predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/average_predictions_aggregator.cc
+                    ${Source_Path}/ltr/predictions_aggregators/sum_predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/sum_predictions_aggregator.cc
+                    ${Source_Path}/ltr/predictions_aggregators/vote_predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/vote_predictions_aggregator.cc)
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})
 SOURCE_GROUP(density_estimators\\learners FILES ${LTR_DENSITY_ESTIMATORS_LEARNERS})
-SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS})
+SOURCE_GROUP(predictions_aggregators FILES ${LTR_PREDICTIONS_AGGREGATORS})
 SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
@@ -263,7 +263,7 @@ SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 
-SET(LTR_ALL ${LTR_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
+SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
             ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
             ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS}

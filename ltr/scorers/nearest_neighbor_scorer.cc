@@ -79,13 +79,13 @@ double NNScorer::scoreImpl(const Object& object) const {
     weights[weight_index] *=
       data_.getWeight(distances_to_neighbors[weight_index].neighbor_id);
   }
-  return aggregator_->aggregate(labels, weights);
+  return predictions_aggregator_->aggregate(labels, weights);
 }
 
 string NNScorer::generateCppCodeImpl(const string& function_name) const {
   string result;
   result += metric_->generateCppCode("distance");
-  result += aggregator_->generateCppCode("aggregator");
+  result += predictions_aggregator_->generateCppCode("aggregator");
   result += neighbor_weighter_->generateCppCode("weighter");
 
   result += "double " + function_name +

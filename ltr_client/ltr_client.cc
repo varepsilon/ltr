@@ -9,9 +9,9 @@
 
 #include "logog/logog.h"
 
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
@@ -48,8 +48,8 @@ using std::vector;
 using std::endl;
 using std::ofstream;
 
-using ltr::Aggregator;
-using ltr::AverageAggregator;
+using ltr::PredictionsAggregator;
+using ltr::AveragePredictionsAggregator;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::Learner;

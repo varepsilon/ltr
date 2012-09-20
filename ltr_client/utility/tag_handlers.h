@@ -30,7 +30,8 @@ static const char* const FOLD_ATTR            = "fold";
 
 static const char* const LEARNER              = "learner";
 static const char* const MEASURE              = "measure";
-static const char* const AGGREGATOR           = "aggregator";
+static const char* const PREDICTIONS_AGGREGATOR =
+  "predictions_aggregator";
 }
 
 /**

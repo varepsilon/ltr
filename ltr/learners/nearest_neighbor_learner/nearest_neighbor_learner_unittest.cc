@@ -3,9 +3,9 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
@@ -16,7 +16,7 @@
 
 using std::vector;
 
-using ltr::Aggregator;
+using ltr::PredictionsAggregator;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::NNScorer;
@@ -27,7 +27,7 @@ using ltr::utility::NeighborWeighter;
 TEST(NNLearner, NNLearnerTest) {
   NNLearner<Object> nn_learner(new ltr::EuclideanMetric,
                                new ltr::utility::InverseLinearDistance,
-                               new ltr::AverageAggregator,
+                               new ltr::AveragePredictionsAggregator,
                                2);
 
   DataSet<Object> data;

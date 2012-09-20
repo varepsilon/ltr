@@ -1,12 +1,12 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_AGGREGATORS_AVERAGE_AGGREGATOR_H_
-#define LTR_AGGREGATORS_AVERAGE_AGGREGATOR_H_
+#ifndef LTR_PREDICTIONS_AGGREGATORS_SUM_PREDICTIONS_AGGREGATOR_H_
+#define LTR_PREDICTIONS_AGGREGATORS_SUM_PREDICTIONS_AGGREGATOR_H_
 
 #include <vector>
 #include <string>
 
-#include "ltr/aggregators/aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 using std::vector;
@@ -15,26 +15,23 @@ using ltr::ParametersContainer;
 
 namespace ltr {
 /**
-* Performs average aggregation of objects weights and labels
+* Performs sum aggregation of objects weights and labels
 */
-class AverageAggregator : public Aggregator {
+class SumPredictionsAggregator : public PredictionsAggregator {
  public:
-
-  AverageAggregator() {
+  SumPredictionsAggregator() {
   }
 
-  explicit AverageAggregator(const ParametersContainer& parameters) {
+  explicit SumPredictionsAggregator(const ParametersContainer& parameters) {
   }
 
   double aggregate(const vector<double>& labels,
                    const vector<double>& weights) {
     double result = 0;
-    double weights_sum = 0;
     for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
       result += labels[label_index] * weights[label_index];
-      weights_sum += weights[label_index];
     }
-    return result / weights_sum;
+    return result;
   }
 
   string generateCppCode(const string& function_name) const {
@@ -45,13 +42,14 @@ class AverageAggregator : public Aggregator {
     result += " for (int index = 0; index < labels.size(); ++index) {\n";
     result += "   result += labels[index] * weights[index];\n";
     result += " }\n";
-    result += " return result / labels.size();\n";
+    result += " return result;\n";
     result += "}\n";
     return result;
   }
  private:
-  virtual string getDefaultAlias() const {return "Average aggregator";}
+  virtual string getDefaultAlias() const {return "Sum predictions aggregator";}
 };
 };
 
-#endif  // LTR_AGGREGATORS_AVERAGE_AGGREGATOR_H_
+#endif  // LTR_PREDICTIONS_AGGREGATORS_SUM_PREDICTIONS_AGGREGATOR_H_
+
