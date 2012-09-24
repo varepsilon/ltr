@@ -4,9 +4,16 @@ namespace ltr {
 \section LTR About LTR
 
 <a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href=http://en.wikipedia.org/wiki/Learning_to_rank>ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
-\n
+\n 
 
 \tableofcontents
+
+\section LTR About LTR
+Learning To Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
+\n
+User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).\n
+\n
+Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.
 
 \section PHILOSOPHY Philosophy of LTR
 From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.\n
@@ -47,7 +54,7 @@ Quality on some public datasets is presented \ref QualityTable "here".
   - \b Tutorials
     - \ref HowToInstall
     - \ref TutorialData
-    - \ref CrossvalidationData 
+    - \ref HowToUseCrossvalidation
     - \ref TutorialDataPreprocessors
     - \ref TutorialFeatureConverters
     - \ref TutorialMeasureLearnerScorer

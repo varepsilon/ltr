@@ -64,7 +64,7 @@ class CrossValidator {
    * Adds a dataset to the CrossValidator instance
    * @param data_set - data set to be inserted into crossvalidator
    */
-  void addDataSet(const typename DataSet<ObjectType>::Ptr& data_set);
+  void addDataSet(const DataSet<ObjectType>& data_set);
   /**
    * Adds a measure to the CrossValidator instance
    * @param measure - measure to be inserted into crossvalidator
@@ -101,7 +101,7 @@ class CrossValidator {
    */
   void setCrossValidationResultLabels();
   MultiTable<double, 4> cross_validation_results_;
-  vector<typename ltr::DataSet<ObjectType>::Ptr> data_sets_;
+  vector<typename ltr::DataSet<ObjectType> > data_sets_;
   vector<typename ltr::Measure<ObjectType>::Ptr> measures_;
   vector<typename ltr::Learner<ObjectType>::Ptr> learners_;
   vector<typename ltr::cv::Splitter<ObjectType>::Ptr> splitters_;
@@ -117,7 +117,7 @@ CrossValidator<ObjectType>::CrossValidator()
 
 template <typename ObjectType>
 void CrossValidator<ObjectType>::
-  addDataSet(const typename DataSet<ObjectType>::Ptr& data_set) {
+  addDataSet(const DataSet<ObjectType>& data_set) {
   data_sets_.push_back(data_set);
 }
 
@@ -163,9 +163,10 @@ void CrossValidator<ObjectType>::
        dataset_index < data_sets_.size();
        ++dataset_index) {
     INFO("Setting %d tick label", dataset_index);
-    cross_validation_results_.setTickLabel(1,
-                                           dataset_index,
-                                           data_sets_[dataset_index]->alias());
+    cross_validation_results_.
+        setTickLabel(1,
+                     dataset_index,
+                     data_sets_[dataset_index].alias());
   }
 
   INFO("Starting to set Learners");
@@ -209,11 +210,11 @@ void CrossValidator<ObjectType>::launch() {
     size_t splitter_index = it.getMultiIndex()[3];
     for (size_t split_index = 0;
          split_index < (*splitters_[splitter_index]).
-         splitCount(*data_sets_[dataset_index]);
+         splitCount(data_sets_[dataset_index]);
          ++split_index) {
       SplittedDataSet<ObjectType> splitted_data(
             splitters_[splitter_index]->split(
-              split_index, *data_sets_[dataset_index]));
+              split_index, data_sets_[dataset_index]));
 
       //  Delete next two lines after fixing bugs!
       if (splitted_data.test_set.size() == 0) continue;
@@ -231,7 +232,7 @@ void CrossValidator<ObjectType>::launch() {
       *it +=
           measures_[measure_index]->average(splitted_data.test_set) /
           (*splitters_[splitter_index]).splitCount(
-            *data_sets_[dataset_index]);
+            data_sets_[dataset_index]);
     }
   }
 }

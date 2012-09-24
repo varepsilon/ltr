@@ -296,9 +296,9 @@ void LtrClient::launchCrossvalidation(
     for (; datas_alias != crossvalidation_info.datas.end();
          ++datas_alias) {
       const DataInfo& data_info = configurator_.findData(*datas_alias);
-      typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
-      *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
-      cross_validator.addDataSet(data_set_ptr);
+      DataSet<TElement> data_set = DataSet<TElement>();
+      data_set = loadDataSet<TElement>(data_info.file, data_info.format);
+      cross_validator.addDataSet(data_set);
     }
 
     cross_validator.launch();

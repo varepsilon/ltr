@@ -14,8 +14,11 @@
 #include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h"
 #include "ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h"
+#include "ltr/data/object.h"
 
 using std::string;
+//using ltr::Object;
+//using ltr::composition::LinearCompositionScorer;
 
 namespace ltr {
 namespace composition {
