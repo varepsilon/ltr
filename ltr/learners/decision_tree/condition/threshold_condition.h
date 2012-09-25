@@ -3,6 +3,8 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_CONDITION_THRESHOLD_CONDITION_H_
 #define LTR_LEARNERS_DECISION_TREE_CONDITION_THRESHOLD_CONDITION_H_
 
+#include <string>
+
 #include "ltr/data/object.h"
 
 #include "ltr/learners/decision_tree/condition/condition.h"
@@ -27,6 +29,8 @@ class ThresholdCondition : public Condition {
    * Return 1 if object feature belongs to half-interval and 0 otherwise.
    */
   double value(const Object& object) const;
+
+  virtual string generateCppCode(const string& function_name) const;
 
  private:
   int feature_index_;

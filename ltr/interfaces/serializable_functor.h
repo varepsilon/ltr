@@ -9,7 +9,6 @@
 #include "ltr/interfaces/serializable.h"
 
 namespace ltr {
-
 template <typename TValue>
 class SerializableFunctor : public Functor<TValue>, public Serializable {
   public:

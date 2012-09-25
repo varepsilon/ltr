@@ -3,7 +3,11 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_CONDITION_CONDITION_H_
 #define LTR_LEARNERS_DECISION_TREE_CONDITION_CONDITION_H_
 
+#include <string>
+
 #include "ltr/data/object.h"
+
+#include "ltr/interfaces/serializable.h"
 
 #include "ltr/utility/shared_ptr.h"
 
@@ -13,7 +17,7 @@ namespace decision_tree {
  * Condition is a base class for decision tree conditions.
  * It returns a value for tested Object.
  */
-class Condition {
+class Condition : public Serializable {
  public:
   typedef ltr::utility::shared_ptr<Condition> Ptr;
 
@@ -31,6 +35,17 @@ class FakeCondition : public Condition {
   FakeCondition() {}
 
   double value(const Object& object) const {return 1.0;}
+
+  virtual string generateCppCode(const string& function_name) const {
+    string hpp_code;
+
+    hpp_code.
+      append("inline double ").
+      append(function_name + "_id_" + lexical_cast<string>(this->getId())).
+      append("(const std::vector<double>& features) {return 1;}\n\n");
+
+    return hpp_code;
+  }
 };
 };
 };

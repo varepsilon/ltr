@@ -62,19 +62,19 @@ int main(int argc, char* argv[]) {
       new BestFeatureLearner<Object>(abs_error));
   generator.setScorerTest(bf_learner, "BFLearner");
 
-  /*GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
-  generator.setScorerTest(gp_learner, "GPLearner");*/
+  GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
+  generator.setScorerTest(gp_learner, "GPLearner");
 
   DecisionTreeLearner::Ptr ID3 = new DecisionTreeLearner(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
-  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria);
+  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria(1));
   ID3->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
   generator.setScorerTest(ID3, "ID3");
 
   DecisionTreeLearner::Ptr ODT = new DecisionTreeLearner(
     new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
-  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria);
-  ID3->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+  ODT->addStopSplittingCriteria(new DataSizeStopSplittingCriteria(1));
+  ODT->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
   generator.setScorerTest(ODT, "ObliviousTree");
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);

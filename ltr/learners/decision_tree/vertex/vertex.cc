@@ -13,9 +13,5 @@ void Vertex::addChild(Vertex::Ptr child, Condition::Ptr condition) {
 bool Vertex::hasChild() const {
   return !childrens_.empty();
 }
-
-string Vertex::generateCppCode(const string& function_name) const {
-  return generateVertexCppCode(function_name, 0, 0);
-}
 };
 };

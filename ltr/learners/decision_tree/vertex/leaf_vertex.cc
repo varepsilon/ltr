@@ -16,20 +16,22 @@ void LeafVertex::set_value(double value) {
   value_ = value;
 }
 
-string LeafVertex::generateVertexCppCode(
-  const string& function_name, int level_id, int vertex_id) const {
-    string hpp_code;
+string LeafVertex::generateCppCode(const string& function_name) const {
+  string hpp_code;
 
-    hpp_code.
-      append("inline double ").
-      append(function_name).
-      append("_level_" + lexical_cast<string>(level_id)).
-      append("_vertex_" + lexical_cast<string>(vertex_id)).
-      append("(const std::vector<double>& features) {return ").
-      append(lexical_cast<string>(value_)).
-      append(";}\n");
+  hpp_code.
+    append("inline double ").
+    append(function_name).
+    append("(const std::vector<double>& features) {return ").
+    append(lexical_cast<string>(value_)).
+    append(";}\n\n");
 
-    return hpp_code;
+  return hpp_code;
+}
+
+string LeafVertex::generateCppCodeWithId(const string& function_name) const {
+  return generateCppCode(
+    function_name + "_id_" + lexical_cast<string>(this->getId()));
 }
 
 string LeafVertex::getDefaultAlias() const {

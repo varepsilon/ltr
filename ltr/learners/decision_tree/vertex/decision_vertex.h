@@ -19,12 +19,17 @@ class DecisionVertex : public Vertex {
 
   DecisionVertex() {}
 
-  double value(const Object& object) const;
+  virtual double value(const Object& object) const;
 
-  string generateVertexCppCode(
-    const string& function_name, int level_id, int vertex_id) const;
+  virtual string generateCppCode(const string& function_name) const;
+
+  virtual string generateCppCodeWithId(const string& function_name) const;
 
  private:
+  Vertex::Ptr findBestChild(const Object& object) const;
+
+  string generateCppCodeImpl(const string& function_name, bool add_id) const;
+
   virtual string getDefaultAlias() const;
 };
 };

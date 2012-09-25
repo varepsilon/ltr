@@ -19,12 +19,13 @@ class LeafVertex : public Vertex {
 
   explicit LeafVertex(double value) : value_(value) {}
 
-  double value(const Object& object) const;
+  virtual double value(const Object& object) const;
 
   void set_value(double value);
 
-  string generateVertexCppCode(
-    const string& function_name, int level_id, int vertex_id) const;
+  virtual string generateCppCode(const string& function_name) const;
+
+  virtual string generateCppCodeWithId(const string& function_name) const;
 
  private:
   virtual string getDefaultAlias() const;

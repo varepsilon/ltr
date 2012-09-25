@@ -41,10 +41,9 @@ class Vertex : public SerializableFunctor<double> {
    */
   bool hasChild() const;
 
-  string generateCppCode(const string& function_name) const;
+  virtual double value(const Object& object) const = 0;
 
-  virtual string generateVertexCppCode(
-    const string& function_name, int level_id, int vertex_id) const = 0;
+  virtual string generateCppCodeWithId(const string& function_name) const = 0;
 
  protected:
   vector<Vertex::Ptr> childrens_;

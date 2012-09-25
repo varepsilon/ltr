@@ -38,7 +38,7 @@ class DecisionTree : public SerializableFunctor<double> {
    */
   void setRoot(Vertex::Ptr root);
 
-  string generateCppCode(const string& function_name) const;
+  virtual string generateCppCode(const string& function_name) const;
 
  private:
   virtual string getDefaultAlias() const;
