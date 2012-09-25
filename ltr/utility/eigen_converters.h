@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "ltr/data/object.h";
+#include "ltr/data/object.h"
 
 using std::vector;
 

@@ -20,39 +20,50 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
              ${Source_Path}/ltr/data/per_object_accessor.h)
 
-SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
-                      ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
-                      ${Source_Path}/ltr/learners/decision_tree/id3_learner.h
+SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
+                      ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc
 
-                      ${Source_Path}/ltr/learners/decision_tree/conditions_learner.h
-                      ${Source_Path}/ltr/learners/decision_tree/splitting_quality.h
+                      ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
+                      ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
+                      
+                      ${Source_Path}/ltr/learners/decision_tree/base_splitter.h
+                      ${Source_Path}/ltr/learners/decision_tree/base_splitter.cc
+
+                      ${Source_Path}/ltr/learners/decision_tree/oblivious_tree_splitter.h
+                      ${Source_Path}/ltr/learners/decision_tree/oblivious_tree_splitter.cc
 
                       ${Source_Path}/ltr/learners/decision_tree/id3_splitter.h
-                      ${Source_Path}/ltr/learners/decision_tree/id3_splitter.cc
-                      ${Source_Path}/ltr/learners/decision_tree/sqr_error_quality.h
+                      ${Source_Path}/ltr/learners/decision_tree/id3_splitter.cc)
 
-                      ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
-                      ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc
-                      ${Source_Path}/ltr/learners/decision_tree/classification_result.h
-                      ${Source_Path}/ltr/learners/decision_tree/classification_result.cc
+SET(LTR_DECISION_TREE_CONDITION ${Source_Path}/ltr/learners/decision_tree/condition/condition.h
+                                ${Source_Path}/ltr/learners/decision_tree/condition/threshold_condition.h
+                                ${Source_Path}/ltr/learners/decision_tree/condition/threshold_condition.cc)                      
 
-                      ${Source_Path}/ltr/learners/decision_tree/leaf_vertex.h
-                      ${Source_Path}/ltr/learners/decision_tree/decision_vertex.h
-                      ${Source_Path}/ltr/learners/decision_tree/regression_vertex.h
+SET(LTR_DECISION_TREE_LEAF_GENERATOR ${Source_Path}/ltr/learners/decision_tree/leaf_generator/leaf_generator.h
+                                     ${Source_Path}/ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h
+                                     ${Source_Path}/ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.cc)
 
-                      ${Source_Path}/ltr/learners/decision_tree/condition.h
-                      ${Source_Path}/ltr/learners/decision_tree/condition.cc
-                      ${Source_Path}/ltr/learners/decision_tree/compare_condition.h
-                      ${Source_Path}/ltr/learners/decision_tree/compare_condition.cc)
-
-SET(LTR_DECISION_TREE_UTILITY ${Source_Path}/ltr/learners/decision_tree/utility/utility.h
-                              ${Source_Path}/ltr/learners/decision_tree/utility/utility.cc)
+SET(LTR_DECISION_TREE_SPLIT_CRITERIA ${Source_Path}/ltr/learners/decision_tree/split_criteria/stop_splitting_criteria.h
+                                     ${Source_Path}/ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h
+                                     ${Source_Path}/ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.cc
+                                     ${Source_Path}/ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.h
+                                     ${Source_Path}/ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.cc)
+                                
+SET(LTR_DECISION_TREE_VERTEX ${Source_Path}/ltr/learners/decision_tree/vertex/vertex.h
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/vertex.cc
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/vertex_with_data.h
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/decision_vertex.h
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/decision_vertex.cc
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/leaf_vertex.h
+                             ${Source_Path}/ltr/learners/decision_tree/vertex/leaf_vertex.cc)
 
 SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
                    ${Source_Path}/ltr/data/utility/data_set_converters.h
                    ${Source_Path}/ltr/data/utility/data_set_converters.cc
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
-                   ${Source_Path}/ltr/data/utility/data_set_statistics.cc)
+                   ${Source_Path}/ltr/data/utility/data_set_statistics.cc
+                   ${Source_Path}/ltr/data/utility/data_set_label_statistics.h
+                   ${Source_Path}/ltr/data/utility/data_set_label_statistics.cc)
 
 SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/io_utility.cc
@@ -243,7 +254,10 @@ SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\decision_tree FILES ${LTR_DECISION_TREE})
-SOURCE_GROUP(learners\\decision_tree\\utils FILES ${LTR_DECISION_TREE_UTILITY})
+SOURCE_GROUP(learners\\decision_tree\\condition FILES ${LTR_DECISION_TREE_CONDITION})
+SOURCE_GROUP(learners\\decision_tree\\vertex FILES ${LTR_DECISION_TREE_VERTEX})
+SOURCE_GROUP(learners\\decision_tree\\leaf_generator FILES ${LTR_DECISION_TREE_LEAF_GENERATOR})
+SOURCE_GROUP(learners\\decision_tree\\split_criteria FILES ${LTR_DECISION_TREE_SPLIT_CRITERIA})
 SOURCE_GROUP(learners\\composition_learner FILES ${LTR_COMPOSITION})
 SOURCE_GROUP(learners\\gp FILES ${LTR_GP_LEARNER})
 SOURCE_GROUP(learners\\gp\\strategies FILES ${LTR_GP_LEARNER_STRATEGIES})
@@ -265,9 +279,10 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
             ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES}
-            ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS}
-            ${LTR_CROSSVALIDATION} ${LTR_DECISION_TREE} ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS}
-            ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION} ${LTR_DECISION_TREE_UTILITY}
+            ${LTR_FEATURE_CONVERTERS} ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION}
+            ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
+            ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
+            ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS})
 
 INCLUDE_DIRECTORIES(${Source_Path})

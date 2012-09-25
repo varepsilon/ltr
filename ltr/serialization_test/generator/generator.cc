@@ -6,7 +6,12 @@
 
 #include "ltr/measures/measure.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
-#include "ltr/learners/decision_tree/id3_learner.h"
+#include "ltr/learners/decision_tree/decision_tree_learner.h"
+#include "ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h"
+#include "ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.h"
+#include "ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h"
+#include "ltr/learners/decision_tree/id3_splitter.h"
+#include "ltr/learners/decision_tree/oblivious_tree_splitter.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/composition_learner/composition_learner.h"
@@ -28,7 +33,12 @@
 using ltr::BestFeatureLearner;
 using ltr::AbsError;
 using ltr::Measure;
-using ltr::ID3_Learner;
+using ltr::decision_tree::DecisionTreeLearner;
+using ltr::decision_tree::MostCommonLabelLeafGenerator;
+using ltr::decision_tree::DataSizeStopSplittingCriteria;
+using ltr::decision_tree::SameLabelStopSplittingCriteria;
+using ltr::decision_tree::ID3Splitter;
+using ltr::decision_tree::ObliviousTreeSplitter;
 using ltr::gp::GPLearner;
 using ltr::composition::CompositionLearner;
 using ltr::composition::LinearCompositionScorer;
@@ -56,11 +66,20 @@ int main(int argc, char* argv[]) {
       new BestFeatureLearner<Object>(abs_error));
   generator.setScorerTest(bf_learner, "BFLearner");
 
-  GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
-  generator.setScorerTest(gp_learner, "GPLearner");
+  /*GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
+  generator.setScorerTest(gp_learner, "GPLearner");*/
 
-  ID3_Learner::Ptr id3_learner(new ID3_Learner);
-  generator.setScorerTest(id3_learner, "ID3Learner");
+  DecisionTreeLearner::Ptr ID3 = new DecisionTreeLearner(
+    new ID3Splitter, new MostCommonLabelLeafGenerator);
+  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria);
+  ID3->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+  generator.setScorerTest(ID3, "ID3");
+
+  DecisionTreeLearner::Ptr ODT = new DecisionTreeLearner(
+    new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
+  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria);
+  ID3->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+  generator.setScorerTest(ODT, "ObliviousTree");
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
   generator.setScorerTest(linear_learner, "LinearLearner");

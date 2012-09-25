@@ -16,13 +16,12 @@
 
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/gp_learner/gp_primitives.h"
-#include "ltr/learners/gp_learner/strategies/population_handler.h"
 
+#include "ltr/learners/gp_learner/strategies/population_handler.h"
 #include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
-
 #include "ltr/learners/gp_learner/strategies/select_top_trees_strategy.h"
 #include "ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h"
 

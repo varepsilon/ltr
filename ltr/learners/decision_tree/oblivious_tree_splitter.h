@@ -1,7 +1,7 @@
 // Copyright 2012 Yandex
 
-#ifndef LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
-#define LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
+#ifndef LTR_LEARNERS_DECISION_TREE_OBLIVIOUS_TREE_SPLITTER_H_
+#define LTR_LEARNERS_DECISION_TREE_OBLIVIOUS_TREE_SPLITTER_H_
 
 #include <vector>
 #include <string>
@@ -15,17 +15,17 @@ using std::vector;
 namespace ltr {
 namespace decision_tree {
 /**
- * \class ID3Splitter Implements ID3 splitting aplorithm.
- * For each vertex at given layer checks all the possible features
- * and determines the one that has the highest quality.
+ * \class ObliviousTreeSplitter Implements ObliviousTree splitting aplorithm.
+ * Checks all the possible features and determines the one that
+ * has the highest layer quality.
  * For continious features try all possible thresholds
  * between two adjacent values of a feature.
  */
-class ID3Splitter : public BaseSplitter {
+class ObliviousTreeSplitter : public BaseSplitter {
  public:
-  typedef ltr::utility::shared_ptr<ID3Splitter> Ptr;
+  typedef ltr::utility::shared_ptr<ObliviousTreeSplitter> Ptr;
 
-  ID3Splitter() {}
+  ObliviousTreeSplitter() {}
 
   string toString() const;
 
@@ -35,4 +35,4 @@ class ID3Splitter : public BaseSplitter {
 };
 };
 
-#endif  // LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
+#endif  // LTR_LEARNERS_DECISION_TREE_OBLIVIOUS_TREE_SPLITTER_H_
