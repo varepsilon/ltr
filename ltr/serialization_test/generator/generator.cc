@@ -17,6 +17,7 @@
 #include "ltr/learners/composition_learner/composition_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/learners/bayesian_learner/bayesian_learner.h"
 #include "ltr/scorers/nearest_neighbor_scorer.h"
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 #include "ltr/utility/neighbor_weighter.h"
@@ -45,6 +46,8 @@ using ltr::NNScorer;
 using ltr::utility::NeighborWeighter;
 using ltr::BaseMetric;
 using ltr::NNLearner;
+using ltr::FisherDiscriminantLearner;
+using ltr::NormalNaiveBayesLearner;
 using ltr::SumPredictionsAggregator;
 using ltr::composition::CompositionScorer;
 
@@ -97,6 +100,14 @@ int main(int argc, char* argv[]) {
                                      new ltr::VotePredictionsAggregator,
                                      2));
   generator.setScorerTest(nn_learner, "KNNScorer");
+
+  FisherDiscriminantLearner<Object>::Ptr
+    fisher_learner(new FisherDiscriminantLearner<Object>);
+  generator.setScorerTest(fisher_learner, "FisherDiscriminant");
+
+  NormalNaiveBayesLearner<Object>::Ptr
+    naive_learner(new NormalNaiveBayesLearner<Object>);
+  generator.setScorerTest(naive_learner, "NaiveBayes");
 
   generator.write(argv[1]);
   return 0;

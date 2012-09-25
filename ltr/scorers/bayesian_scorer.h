@@ -36,9 +36,7 @@ class BayesianScorer : public Scorer {
 
  private:
   virtual double scoreImpl(const Object& object) const;
-  virtual string generateCppCodeImpl(const string& function_name) const {
-    return "";
-  }
+  virtual string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "BayesianScorer";}
 
   LabelToPriorProbability prior_probability_;

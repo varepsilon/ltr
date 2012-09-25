@@ -5,6 +5,7 @@
 #include <Eigen/Dense>
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "ltr/data/object.h"
@@ -12,6 +13,7 @@
 
 using std::vector;
 using std::map;
+using std::string;
 
 using Eigen::VectorXd;
 
@@ -56,6 +58,8 @@ class FisherDiscriminant : public BaseProbabilityDensityEstimator {
   }
 
   virtual double estimate(const Object& object, const double label);
+
+  virtual string generateCppCode(const string& function_name) const;
 
  private:
   LabelToLinearFactor linear_factors_;

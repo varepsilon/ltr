@@ -6,18 +6,21 @@
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/interfaces/serializable.h"
 #include "ltr/parameters_container/parameters_container.h"
 
 using ltr::Object;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
+using ltr::Serializable;
 
 namespace ltr {
 
 /**
  * \class Simple interface of the probability density estimator
  */
-class BaseProbabilityDensityEstimator : public Parameterized {
+class BaseProbabilityDensityEstimator
+  : public Parameterized, public Serializable {
  public:
   typedef ltr::utility::shared_ptr<BaseProbabilityDensityEstimator> Ptr;
   virtual double estimate(const Object& object, const double label) = 0;

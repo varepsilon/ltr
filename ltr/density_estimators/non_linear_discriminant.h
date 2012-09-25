@@ -4,15 +4,18 @@
 
 #include <Eigen/Dense>
 
-#include <vector>
 #include <map>
+#include <string>
+#include <vector>
+
 
 #include "ltr/data/object.h"
 #include "ltr/density_estimators/base_probability_density_estimator.h"
 #include "ltr/density_estimators/base_probability_density_learner.h"
 
-using std::vector;
 using std::map;
+using std::string;
+using std::vector;
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -44,7 +47,10 @@ class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {
 
   virtual double estimate(const Object& object, const double label);
 
+  virtual string generateCppCode(const string& function_name) const;
+
  private:
+
   LabelToCovarianceMatrix covariance_matrix_;
   LabelToMean mean_;
 };

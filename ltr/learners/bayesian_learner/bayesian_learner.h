@@ -72,6 +72,7 @@ class FisherDiscriminantLearner
   : public BayesianLearner<TElement,
                            FisherDiscriminantDensityLearner<TElement> > {
  public:
+  typedef ltr::utility::shared_ptr<FisherDiscriminantLearner> Ptr;
   FisherDiscriminantLearner() {
   }
 
@@ -84,6 +85,7 @@ class NormalNaiveBayesLearner
   : public BayesianLearner<TElement,
                            NormalNaiveBayesDensityLearner<TElement> > {
  public:
+  typedef ltr::utility::shared_ptr<NormalNaiveBayesLearner> Ptr;
   NormalNaiveBayesLearner() {
   }
 
@@ -96,6 +98,7 @@ class QuadraticDiscriminantLearner
   : public BayesianLearner<TElement,
                            QuadraticDiscriminantDensityLearner<TElement> > {
  public:
+  typedef ltr::utility::shared_ptr<QuadraticDiscriminantLearner> Ptr;
   QuadraticDiscriminantLearner() {
   }
 
