@@ -1,0 +1,56 @@
+namespace ltr {
+/** \page TutorialBayesianClassification Tutorial page 6 - Bayesian Classification
+    \ingroup Tutorial
+
+\tableofcontents
+
+Bayesian classifiers are simple classification algorithms, that use the idea of probability density.
+
+Such algorithms try to find a probability of every class using training dataset. And then choose the class with the highest probability for classifiable object.
+
+To learn more visit http://en.wikipedia.org/wiki/Bayesian_inference
+
+\section TutorialDensityEstimation Density Estimation
+You can estimate probability density of some particular DataSet with LTR.
+
+First of all choose the estimation algorithm (Naive Bayes, QDA or Fisher LDA).
+
+After this, declare required probability density learner
+(NormalNaiveBayesDensityLearner, QuadraticDiscriminantDensityLearner respectively or FisherDiscriminantDensityLearner).
+
+Then learn declared estimation learner on some dataset using ::learn() method and create a BaseProbabilityDensityEstimator object
+using ::make() method.
+
+Now you can use generated BaseProbabilityDensityEstimator for probability density estimation
+
+\subsection DensityEstimatorsList List of all density estimation learners
+
+%Density estimation learner          | Description
+-------------------------------------|------------------------------------------------------------------------
+NormalNaiveBayesDensityLearner       | Assumes the independence of features
+QuadraticDiscriminantDensityLearner  | Assumes that the measurements from each class are normally distributed
+FisherDiscriminantDensityLearner     | Assumes that the resulting combination may be used as a linear classifier
+
+\section TutorialBayesianClassificator Bayesian Classification
+LTR allows to use different algorithms of unparameterized Bayesian classification such as Naive Bayes, Quadratic Discriminant and Fisher Discriminant.
+
+To implement Bayesian Classification was used common approach: there is a class BayesianLearner that recieves DataSet and generates BayesianScorer. BayesianScorer
+can be used to score new objects.
+
+Known, that the main idea of Bayesian Classification is the estimation of the probability density and after this choosing the class depending on probabilities for every classifiable object.
+
+The main field of BayesianLearner is estimator_. It keeps the pointer to probability density estimator and use it to classify objects.
+
+To use Bayesian Learner you need to:
+\li choose estimation algorithm
+\li according to chosen algorothm, declare either FisherDiscriminantLearner or NormalNaiveBayesLearner or QuadraticDiscriminantLearner
+\li learn the declared classifier on some DataSet with ::learn() method
+\li generate classifier with ::make() method
+
+
+Example: usage of LTR Bayesian classification          | Output:
+-------------------------------------------------------|------------------
+\include bayesian_classification_tutorial_example1.cpp | \include bayesian_classification_tutorial_example1.out
+
+**/
+}

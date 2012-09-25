@@ -13,6 +13,7 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/feature_info.h"
 #include "ltr/data/per_object_accessor.h"
+#include "ltr/interfaces/aliaser.h"
 
 using std::vector;
 
@@ -26,7 +27,7 @@ const double DEFAULT_ELEMENT_WEIGHT = 1.0;
  *  Object, ObjectPair or ObjectList.
  */
 template <typename TElement>
-class DataSet : public Printable {
+class DataSet : public Printable, public Aliaser {
  public:
   /** Shared pointer type to the DataSet.
    */
@@ -114,6 +115,10 @@ class DataSet : public Printable {
   /** Shared pointer to the vector of elements' weights.
    */
   ltr::utility::shared_ptr<vector<double> > weights_;
+
+  virtual string getDefaultAlias() const {
+    return "DataSet";
+  }
 };
 /** \typedef Type for a data set that implements pointwise approach.
  */

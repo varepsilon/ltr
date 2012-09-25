@@ -1,8 +1,8 @@
 # lets list tests' binaries
 # it reflect the LTR_lib structure
 
-SET(DENSITY_ESTIMATORS_TEST ${Source_Path}/ltr/density_estimators/learners/density_estimators_learners_unittests.cc
-                            ${Source_Path}/ltr/density_estimators/scorers/density_estimators_scorers_unittests.cc)
+SET(DENSITY_ESTIMATORS_TEST ${Source_Path}/ltr/density_estimators/density_estimators_learners_unittests.cc
+                            ${Source_Path}/ltr/density_estimators/density_estimators_scorers_unittests.cc)
 
 SET(NEIGHBOR_WEIGHTER_TEST ${Source_Path}/ltr/data/neighbor_weighter_unittest.cc)
 
@@ -17,7 +17,7 @@ SET(SAVE_PREDICTION_TEST ${Source_Path}/ltr/data/save_predictions_unittest.cc)
 SET(LTR_TWO_CLASS_CONVERTERS_TEST ${Source_Path}/ltr/utility/two_class_actual_label_converter_unittest.cc
                                   ${Source_Path}/ltr/utility/two_class_predicted_label_converter_unittest.cc)
 
-SET(LTR_AGGREGATORS_TEST ${Source_Path}/ltr/aggregators/aggregators_unittest.cc)
+SET(LTR_PREDICTIONS_AGGREGATORS_TEST ${Source_Path}/ltr/predictions_aggregators/predictions_aggregators_unittest.cc)
 
 SET(LIST_TO_ALL_PAIRS_CONVERTER_TEST ${Source_Path}/ltr/data/list_to_all_pairs_converter_unittest.cc)
 
@@ -70,8 +70,11 @@ SET(LTR_CROSSVALIDATION_TEST ${Source_Path}/ltr/crossvalidation/splitter_unittes
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/validation_result_unittest.cc
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_unittest.cc)
-                        
+                        ${Source_Path}/ltr/crossvalidation/crossvalidation_unittest.cc
+                        ${Source_Path}/ltr/crossvalidation/crossvalidator_unittest.cc)
+
+SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc)
+
 SET(LTR_COMPOSITION_TEST ${Source_Path}/ltr/learners/composition_learner/linear_composition_unittest.cc
 						 ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)
 
@@ -90,12 +93,13 @@ SOURCE_GROUP(linear_composition FILES ${LTR_LINEAR_COMPOSITION_TEST})
 SOURCE_GROUP(feature_converters FILES ${LTR_FEATURE_CONVERTERS_TEST})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS_TEST})
 SOURCE_GROUP(learners\\composition_learner FILES ${LTR_COMPOSITION_TEST})
+SOURCE_GROUP(utility FILES ${LTR_UTILITY_TEST})
 
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${LTR_AGGREGATORS_TEST} ${LTR_TWO_CLASS_CONVERTERS_TEST} ${NEIGHBOR_WEIGHTER_TEST} ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST}
+SET(LTR_TEST ${LTR_PREDICTIONS_AGGREGATORS_TEST} ${LTR_TWO_CLASS_CONVERTERS_TEST} ${NEIGHBOR_WEIGHTER_TEST} ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST}
              ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST}
              ${LTR_IO_UILITY_TEST} ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION_TEST} ${LTR_DECISION_TREE_TEST}
-             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_COMPOSITION_TEST} ${LTR_METRICS_TEST} ${DENSITY_ESTIMATORS_TEST})
+             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_COMPOSITION_TEST} ${LTR_METRICS_TEST} ${DENSITY_ESTIMATORS_TEST} ${LTR_UTILITY_TEST})
 
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)

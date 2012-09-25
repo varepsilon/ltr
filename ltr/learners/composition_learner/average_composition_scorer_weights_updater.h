@@ -28,9 +28,9 @@ namespace composition {
  * CompositionScorerWeightsUpdater wich holds composition scorer's weights equal to
  * 1.0 / (composition length)
  */
-template <class TElement, class TCompositionScorer>
+template <class TElement>
 class AverageCompositionScorerWeightsUpdater
-  : public CompositionScorerWeightsUpdater<TElement, TCompositionScorer> {
+  : public CompositionScorerWeightsUpdater<TElement> {
  public:
   typedef ltr::utility::shared_ptr<AverageCompositionScorerWeightsUpdater> Ptr;
 
@@ -43,7 +43,7 @@ class AverageCompositionScorerWeightsUpdater
   }
 
   void updateWeights(const DataSet<TElement>& data,
-      TCompositionScorer* composition_scorer) const;
+      CompositionScorer* composition_scorer) const;
  private:
   virtual string getDefaultAlias() const {
     return "AverageCompositionScorerWeightsUpdater";
@@ -51,12 +51,14 @@ class AverageCompositionScorerWeightsUpdater
 };
 
 // template realizations
-template <class TElement, class TCompositionScorer>
-void AverageCompositionScorerWeightsUpdater<TElement, TCompositionScorer>::updateWeights(
+template <class TElement>
+void AverageCompositionScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
-    TCompositionScorer* composition_scorer) const {
+    CompositionScorer* composition_scorer) const {
   double weight = 1.0 / composition_scorer->size();
-  for (int scorer_index = 0; scorer_index < composition_scorer->size(); ++scorer_index) {
+  for (int scorer_index = 0;
+       scorer_index < composition_scorer->size();
+       ++scorer_index) {
     composition_scorer->at(scorer_index).weight = weight;
   }
 }

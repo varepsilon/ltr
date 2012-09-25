@@ -9,10 +9,9 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr/learners/composition_learner/composition_learner.h"
-#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
-#include "ltr/scorers/composition_scorers/max_weight_composition_scorer.h"
-#include "ltr/scorers/composition_scorers/median_composition_scorer.h"
-#include "ltr/scorers/composition_scorers/order_statistic_composition_scorer.h"
+#include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/max_weight_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/order_statistic_predictions_aggregator.h"
 #include "ltr/learners/best_feature_learner/best_feature_learner.h"
 #include "ltr/measures/abs_error.h"
 #include "ltr/measures/true_point.h"
@@ -23,14 +22,13 @@ using ltr::FeatureInfo;
 using ltr::utility::DoubleEqual;
 using ltr::ParametersContainer;
 
-using ltr::composition::LinearCompositionScorer;
-using ltr::composition::MaxWeightCompositionScorer;
-using ltr::composition::MedianCompositionScorer;
-using ltr::composition::OrderStatisticCompositionScorer;
 using ltr::composition::CompositionLearner;
 using ltr::BestFeatureLearner;
 using ltr::AbsError;
 using ltr::TruePoint;
+using ltr::SumPredictionsAggregator;
+using ltr::MaxWeightPredictionsAggregator;
+using ltr::OrderStatisticPredictionsAggregator;
 
 const int data_size = 11;
 
@@ -53,7 +51,9 @@ class CompositionLearnerTest : public ::testing::Test {
 };
 
 TEST_F(CompositionLearnerTest, LinearCompositionLearnerTest) {
-  CompositionLearner<Object, LinearCompositionScorer> linear_composition_learner(9);
+  CompositionLearner<Object>
+    linear_composition_learner(9);
+  linear_composition_learner.setDefaultScorer();
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -62,7 +62,8 @@ TEST_F(CompositionLearnerTest, LinearCompositionLearnerTest) {
   linear_composition_learner.set_weak_learner(best_feature_learner);
 
   linear_composition_learner.learn(data);
-  LinearCompositionScorer::Ptr linear_composition_scorer = linear_composition_learner.makeSpecific();
+  CompositionScorer::Ptr linear_composition_scorer =
+    linear_composition_learner.makeSpecific();
 
   EXPECT_EQ(9, linear_composition_scorer->size());
   for (int i = 0; i < linear_composition_scorer->size(); ++i) {
@@ -73,7 +74,12 @@ TEST_F(CompositionLearnerTest, LinearCompositionLearnerTest) {
 }
 
 TEST_F(CompositionLearnerTest, MaxWeightCompositionLearnerTest) {
-  CompositionLearner<Object, MaxWeightCompositionScorer> composition_learner(9);
+  MaxWeightPredictionsAggregator::Ptr aggregator(
+    new MaxWeightPredictionsAggregator);
+  CompositionScorer scorer(aggregator);
+  CompositionLearner<Object>
+    composition_learner(9);
+  composition_learner.setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -82,7 +88,8 @@ TEST_F(CompositionLearnerTest, MaxWeightCompositionLearnerTest) {
   composition_learner.set_weak_learner(best_feature_learner);
 
   composition_learner.learn(data);
-  MaxWeightCompositionScorer::Ptr composition_scorer = composition_learner.makeSpecific();
+  CompositionScorer::Ptr composition_scorer =
+    composition_learner.makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {
@@ -93,7 +100,12 @@ TEST_F(CompositionLearnerTest, MaxWeightCompositionLearnerTest) {
 }
 
 TEST_F(CompositionLearnerTest, MedianCompositionLearnerTest) {
-  CompositionLearner<Object, MedianCompositionScorer> composition_learner(9);
+  OrderStatisticPredictionsAggregator::Ptr
+    aggregator(new OrderStatisticPredictionsAggregator);
+  CompositionScorer scorer(aggregator);
+  CompositionLearner<Object>
+    composition_learner(9);
+  composition_learner.setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -102,7 +114,8 @@ TEST_F(CompositionLearnerTest, MedianCompositionLearnerTest) {
   composition_learner.set_weak_learner(best_feature_learner);
 
   composition_learner.learn(data);
-  MedianCompositionScorer::Ptr composition_scorer = composition_learner.makeSpecific();
+  CompositionScorer::Ptr composition_scorer =
+    composition_learner.makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {
@@ -113,10 +126,11 @@ TEST_F(CompositionLearnerTest, MedianCompositionLearnerTest) {
 }
 
 TEST_F(CompositionLearnerTest, OrderStaticticCompositionLearnerTest) {
-  OrderStatisticCompositionScorer os_composition_scorer(0.3);
-  CompositionLearner<Object, OrderStatisticCompositionScorer>
+  OrderStatisticPredictionsAggregator::Ptr aggregator(
+    new OrderStatisticPredictionsAggregator(0.3));
+  CompositionLearner<Object>
     composition_learner(9);
-  composition_learner.setInitialScorer(os_composition_scorer);
+  composition_learner.setInitialScorer(CompositionScorer(aggregator));
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -125,7 +139,8 @@ TEST_F(CompositionLearnerTest, OrderStaticticCompositionLearnerTest) {
   composition_learner.set_weak_learner(best_feature_learner);
 
   composition_learner.learn(data);
-  OrderStatisticCompositionScorer::Ptr composition_scorer = composition_learner.makeSpecific();
+  CompositionScorer::Ptr composition_scorer =
+    composition_learner.makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {

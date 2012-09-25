@@ -4,10 +4,10 @@
 
 #include <string>
 #include <typeinfo>
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
-#include "ltr/aggregators/sum_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
@@ -62,13 +62,13 @@
 #include "ltr/metrics/euclidean_metric.h"
 #include "ltr/metrics/manhattan_metric.h"
 
-#include "ltr/density_estimators/learners/base_probability_density_learner.h"
-#include "ltr/density_estimators/learners/fisher_discriminant_learner.h"
-#include "ltr/density_estimators/learners/normal_naive_bayes_learner.h"
-#include "ltr/density_estimators/learners/quadratic_discriminant_learner.h"
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
-#include "ltr/density_estimators/scorers/non_linear_discriminant.h"
+#include "ltr/density_estimators/base_probability_density_learner.h"
+#include "ltr/density_estimators/fisher_discriminant_density_learner.h"
+#include "ltr/density_estimators/normal_naive_bayes_density_learner.h"
+#include "ltr/density_estimators/quadratic_discriminant_density_learner.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
+#include "ltr/density_estimators/non_linear_discriminant.h"
 
 #include "ltr_client/factory.h"
 #include "ltr_client/ltr_client.h"
@@ -78,8 +78,8 @@
 
 using std::string;
 
-using ltr::Aggregator;
-using ltr::AverageAggregator;
+using ltr::PredictionsAggregator;
+using ltr::AveragePredictionsAggregator;
 using ltr::AbsError;
 using ltr::Accuracy;
 using ltr::AveragePrecision;
@@ -108,8 +108,8 @@ using ltr::Measure;
 using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
-using ltr::SumAggregator;
-using ltr::VoteAggregator;
+using ltr::SumPredictionsAggregator;
+using ltr::VotePredictionsAggregator;
 
 using ltr::FeatureConverter;
 using ltr::FakeFeatureConverter;
@@ -139,12 +139,16 @@ using ltr::cv::TKFoldSimpleSplitter;
 using ltr::cv::LeaveOneOutSplitter;
 
 using ltr::BaseProbabilityDensityLearner;
-using ltr::FisherDiscriminantLearner;
-using ltr::NormalNaiveBayesLearner;
-using ltr::QuadraticDiscriminantLearner;
+using ltr::FisherDiscriminantDensityLearner;
+using ltr::NormalNaiveBayesDensityLearner;
+using ltr::QuadraticDiscriminantDensityLearner;
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::FisherDiscriminant;
 using ltr::NonLinearDiscriminant;
+
+using ltr::FisherDiscriminantLearner;
+using ltr::NormalNaiveBayesLearner;
+using ltr::QuadraticDiscriminantLearner;
 
 using ltr::gp::GPLearner;
 
@@ -153,7 +157,7 @@ using ltr::PointwiseMeasure;
 using ltr::PairwiseMeasure;
 
 using ltr::utility::InverseLinearDistance;
-using ltr::utility::InverseSquareDistance;
+using ltr::utility::InversePowerDistance;
 using ltr::utility::InverseOrder;
 
 string name_storage; // NOLINT
@@ -183,9 +187,9 @@ string name_storage; // NOLINT
 
 
 void RegisterAllTypes(Factory* factory) {
-  REGISTER(Aggregator, AverageAggregator);
-  REGISTER(Aggregator, SumAggregator);
-  REGISTER(Aggregator, VoteAggregator);
+  REGISTER(PredictionsAggregator, AveragePredictionsAggregator);
+  REGISTER(PredictionsAggregator, SumPredictionsAggregator);
+  REGISTER(PredictionsAggregator, VotePredictionsAggregator);
 
   REGISTER_EVERY_WISE(Splitter, KFoldSimpleSplitter);
   REGISTER_EVERY_WISE(Splitter, TKFoldSimpleSplitter);
@@ -214,7 +218,7 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER(BaseMetric, ManhattanMetric);
 
   REGISTER(NeighborWeighter, InverseLinearDistance);
-  REGISTER(NeighborWeighter, InverseSquareDistance);
+  REGISTER(NeighborWeighter, InversePowerDistance);
   REGISTER(NeighborWeighter, InverseOrder);
 
   REGISTER(FeatureConverter, FakeFeatureConverter);
@@ -238,6 +242,10 @@ void RegisterAllTypes(Factory* factory) {
 
   REGISTER(BaseProbabilityDensityEstimator, FisherDiscriminant);
   REGISTER(BaseProbabilityDensityEstimator, NonLinearDiscriminant);
+
+  REGISTER_EVERY_WISE(Learner, FisherDiscriminantLearner);
+  REGISTER_EVERY_WISE(Learner, QuadraticDiscriminantLearner);
+  REGISTER_EVERY_WISE(Learner, NormalNaiveBayesLearner);
 }
 
 #endif  // LTR_CLIENT_REGISTRATION_H_

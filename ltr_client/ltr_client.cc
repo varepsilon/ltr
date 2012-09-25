@@ -9,9 +9,9 @@
 
 #include "logog/logog.h"
 
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
@@ -48,8 +48,8 @@ using std::vector;
 using std::endl;
 using std::ofstream;
 
-using ltr::Aggregator;
-using ltr::AverageAggregator;
+using ltr::PredictionsAggregator;
+using ltr::AveragePredictionsAggregator;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::Learner;
@@ -296,9 +296,9 @@ void LtrClient::launchCrossvalidation(
     for (; datas_alias != crossvalidation_info.datas.end();
          ++datas_alias) {
       const DataInfo& data_info = configurator_.findData(*datas_alias);
-      typename DataSet<TElement>::Ptr data_set_ptr = new DataSet<TElement>;
-      *data_set_ptr = loadDataSet<TElement>(data_info.file, data_info.format);
-      cross_validator.addDataSet(data_set_ptr);
+      DataSet<TElement> data_set = DataSet<TElement>();
+      data_set = loadDataSet<TElement>(data_info.file, data_info.format);
+      cross_validator.addDataSet(data_set);
     }
 
     cross_validator.launch();
@@ -327,8 +327,8 @@ void LtrClient::launch() {
       launchTrain<ObjectList>(parameterized, train_info);
     } else if (learner_info.get_approach() == "pairwise") {
       launchTrain<ObjectPair>(parameterized, train_info);
-    } else {
-      assert(false && "Not implemented yet");
+    } else if (learner_info.get_approach() == "pointwise") {
+      launchTrain<Object>(parameterized, train_info);
     }
   }
 
@@ -343,11 +343,14 @@ void LtrClient::launch() {
 
     if (learner_info.get_approach() == "listwise") {
       launchCrossvalidation<ObjectList>(crossvalidation_info);
-      // We can't do that while we don't have measure for ObjectPair.
-      // } else if (learner_info.getApproach() == "pairwise") {
-      //   launchCrossvalidation<ObjectPair>(crossvalidation_info);
-    } else {
-      assert(false && "Not implemented yet");
+    }
+
+    if (learner_info.get_approach() == "pairwise") {
+      launchCrossvalidation<ObjectPair>(crossvalidation_info);
+    }
+
+    if (learner_info.get_approach() == "pointwise") {
+      launchCrossvalidation<Object>(crossvalidation_info);
     }
   }
 }
@@ -361,8 +364,8 @@ int main(int argc, char* argv[]) {
   Log LOG;
 
   if (argc < 2) {
-      ERR("config file  missing");
-      return 1;
+    ERR("config file  missing");
+    return 1;
   }
 
   Factory factory;
@@ -371,12 +374,12 @@ int main(int argc, char* argv[]) {
   LtrClient client;
 
   try {
-      client.initFrom(argv[1]);
-      client.launch();
+    client.initFrom(argv[1]);
+    client.launch();
   } catch(const logic_error& err) {
-      ERR("Failed: %s", err.what());
+    ERR("Failed: %s", err.what());
   } catch(...) {
-      ERR("Caught exception");
+    ERR("Caught exception");
   }
   return 0;
 }

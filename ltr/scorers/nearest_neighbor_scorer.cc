@@ -36,7 +36,7 @@ struct DistanceToNeighbor {
   int neighbor_id;
 
   bool operator<(const DistanceToNeighbor& arg) const {
-    return this->neighbor_id < arg.neighbor_id;
+    return this->distance < arg.distance;
   }
 };
 
@@ -79,13 +79,13 @@ double NNScorer::scoreImpl(const Object& object) const {
     weights[weight_index] *=
       data_.getWeight(distances_to_neighbors[weight_index].neighbor_id);
   }
-  return aggregator_->aggregate(labels, weights);
+  return predictions_aggregator_->aggregate(labels, weights);
 }
 
 string NNScorer::generateCppCodeImpl(const string& function_name) const {
   string result;
   result += metric_->generateCppCode("distance");
-  result += aggregator_->generateCppCode("aggregator");
+  result += predictions_aggregator_->generateCppCode("aggregator");
   result += neighbor_weighter_->generateCppCode("weighter");
 
   result += "double " + function_name +
@@ -98,7 +98,7 @@ string NNScorer::generateCppCodeImpl(const string& function_name) const {
   for (int neighbor_index = 0;
        neighbor_index < data_.size();
        ++neighbor_index) {
-    string object_name = "object" + boost::lexical_cast<string>(neighbor_index);
+    string object_name = "object" + lexical_cast<string>(neighbor_index);
     result += "Object " + object_name + ";\n";
     for (int feature_index = 0;
          feature_index < data_[neighbor_index].feature_count();
@@ -107,6 +107,10 @@ string NNScorer::generateCppCodeImpl(const string& function_name) const {
         lexical_cast<string>(data_[neighbor_index][feature_index]);
       result += ";\n";
     }
+    result += object_name +
+              ".set_actual_label(" +
+              lexical_cast<string>(data_[neighbor_index].actual_label()) +
+              ");\n";
     result += " data.add(" + object_name + ");\n";
   }
 

@@ -3,9 +3,9 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-#include "ltr/aggregators/aggregator.h"
-#include "ltr/aggregators/average_aggregator.h"
-#include "ltr/aggregators/vote_aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/utility/numerical.h"
@@ -15,7 +15,7 @@
 
 using std::vector;
 
-using ltr::Aggregator;
+using ltr::PredictionsAggregator;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::NNScorer;
@@ -47,11 +47,11 @@ TEST(NNScorer, NNScorerTest) {
   NNScorer nn_scorer(new ltr::EuclideanMetric,
                      data,
                      new ltr::utility::InverseLinearDistance,
-                     new ltr::AverageAggregator,
+                     new ltr::AveragePredictionsAggregator,
                      2);
 
   Object score_object;
   score_object << 0.0 << 0.0 << 0.0;
 
-  EXPECT_TRUE(DoubleEqual(1.0, nn_scorer(score_object)));
+  EXPECT_TRUE(DoubleEqual(4. / 3., nn_scorer(score_object)));
 }

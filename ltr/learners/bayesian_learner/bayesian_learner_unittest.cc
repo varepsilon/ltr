@@ -5,9 +5,9 @@
 
 #include <gtest/gtest.h> // NOLINT
 
-#include "ltr/density_estimators/learners/base_probability_density_learner.h"
-#include "ltr/density_estimators/learners/fisher_discriminant_learner.h"
-#include "ltr/density_estimators/scorers/fisher_discriminant.h"
+#include "ltr/density_estimators/base_probability_density_learner.h"
+#include "ltr/density_estimators/fisher_discriminant_density_learner.h"
+#include "ltr/density_estimators/fisher_discriminant.h"
 #include "ltr/learners/bayesian_learner/bayesian_learner.h"
 #include "ltr/scorers/bayesian_scorer.h"
 #include "ltr/data/data_set.h"
@@ -23,6 +23,7 @@ using ltr::BayesianScorer;
 using ltr::BayesianLearner;
 using ltr::FisherDiscriminant;
 using ltr::FisherDiscriminantLearner;
+using ltr::FisherDiscriminantDensityLearner;
 using ltr::BaseProbabilityDensityLearner;
 using ltr::utility::DoubleEqual;
 
@@ -43,7 +44,7 @@ TEST(BayesianLearnerTests, TestBayesianLearner) {
   data.add(object1);
   data.add(object2);
   data.add(object3);
-  BayesianLearner<Object, FisherDiscriminantLearner> learner;
+  FisherDiscriminantLearner<Object> learner;
   learner.learn(data);
   BayesianScorer::Ptr scorer = learner.makeSpecific();
 

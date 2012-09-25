@@ -5,16 +5,19 @@
 
 #include "ltr/utility/numerical.h"
 #include "ltr/data/object.h"
-#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
+#include "ltr/scorers/composition_scorers/composition_scorer.h"
 #include "ltr/scorers/linear_scorer.h"
 #include "ltr/scorers/one_feature_scorer.h"
+#include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
+
+using std::vector;
 
 using ltr::Object;
 using ltr::LinearScorer;
-using ltr::composition::LinearCompositionScorer;
+using ltr::composition::CompositionScorer;
+using ltr::SumPredictionsAggregator;
 using ltr::OneFeatureScorer;
 using ltr::utility::DoubleEqual;
-using std::vector;
 
 TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   vector<double> weights1(2);
@@ -27,7 +30,8 @@ TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   Object obj1;
   obj1 << 1.2;
 
-  LinearCompositionScorer lcs1;
+  SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
+  CompositionScorer lcs1(aggregator);
   lcs1.add(ls1, 5.2);
   lcs1.add(ofs1, 4.2);
 
@@ -50,7 +54,7 @@ TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   LinearScorer::Ptr ls2(new LinearScorer(weights2));
   LinearScorer::Ptr ls3(new LinearScorer(weights3));
 
-  LinearCompositionScorer lcs2;
+  CompositionScorer lcs2(aggregator);
   lcs2.add(ls2, 2.1);
   lcs2.add(ls3, 0.7);
 

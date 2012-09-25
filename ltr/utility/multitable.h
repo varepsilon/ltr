@@ -40,7 +40,7 @@ struct DimensionSize {
  * @returns boolean left.size < right.size
  */
 
-bool operator<(const DimensionSize& left, const DimensionSize& right) {
+inline bool operator<(const DimensionSize& left, const DimensionSize& right) {
   return left.size < right.size;
 }
 
@@ -221,10 +221,9 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
       *out_stream << table_meta_info_[axis_index].axis_label << ":"
                   << table_meta_info_[axis_index].
                      axis_ticks_labels[tick_index]
-                  << "\t";
+                  << "\n";
     }
   }
-  *out_stream << "\n";
   *out_stream << "Table ROW: "
        << table_meta_info_[first_axis_index].axis_label
        << " COLUMN: "

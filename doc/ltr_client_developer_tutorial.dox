@@ -1,0 +1,83 @@
+namespace ltr {
+/** \page TutorialLTRClientForDeveloper LTR Client tutorial for developer
+    \ingroup Advanced
+
+\tableofcontents
+
+To work with LTR user must create configuration file. Then config will be processed by LTR Client and the program will start to work.
+
+LTR config is simple XML file, where user describes the experiment.
+
+\section RegisteringNewClass How to register new class
+
+If you have created some new class, you can easily make it available to use in LTR client.
+
+First of all your class must be inherited from Parameterized interface and it must have constructor with ParametersContainer argument.
+
+Then you just need to register new class in the file register.h
+
+Registration can be done with a help of macros. There are 5 different registration macros.
+
+4 macros are used for registration of such classes, that have TElement template parameter (learners, splitters and measures)
+
+And one macro is used for registration classes that have no such parameter.
+
+Every macro must receive two arguments. First - the name of the base class and the second is the name of the derived class.
+
+%Macro                 | Description
+-----------------------|--------------------------------------------------------------
+REGISTER               | Registers class that has no TElement template parameter
+REGISTER_POINTWISE     | Registers class with pointwise approach (Object elements)
+REGISTER_PAIRWISE      | Registers class with pairwise approach (ObjectPair elements)
+REGISTER_LISTWISE      | Registers class with listwise approach (ObjectList elements)
+REGISTER_EVERY_WISE    | Registers class with every approach
+
+Here is an example of registration of some classes:
+~~~~~~~~~~~~~~~{.cpp}
+REGISTER(Aggregator, VoteAggregator);
+REGISTER_EVERY_WISE(Splitter, KFoldSimpleSplitter);
+REGISTER_POINTWISE(Learner, LinearLearner);
+~~~~~~~~~~~~~~~
+
+\section HowItWorks How LTR Client works
+The main class of client is LtrClient.
+
+It parses config with the help of ConfigParser.
+
+If LtrClient doesn't find any errors in the config, it creates all objects that were requested in config and starts to process the experiment.
+
+\subsection Factory Factory
+First of all there is a Factory object. In the beggining of work it registers all classes according to register.h file.
+
+Registration of new class creates a pointer to the Creator with recieved template parameters (Base class and derived class) and adds this pointer to the hashtable.
+
+Creator is simple class that has only one method - Creator::create.
+
+When LtrClient needs to create some object declared in the config, it calls Creator::create method.
+
+This method returns requested object casted to boost::any.
+
+\subsection ConfigParser Config Parser
+LtrClient contains ConfigParser object. This object parses recieved XML config file. The parsing occurs with the help of TinyXML library.
+
+During the config processing, ConfigParser calls different parsers depending on detected tags.
+
+%Parser                 | Description
+------------------------|------------------------------------------------------------------
+TOnDataTag              | handles dataset tag (data)
+TOnParameterTag         | parses the parameters of any parameterized tag
+OnGeneralParameterized  | handles the general xml token
+OnCVLearnerTag          | handles crossvalidation tag
+OnCVMeasureTag          | handles measure inside the crossvalidator XML instance
+OnCVDataTag             | handles dataset tag (data) inside the crossvalidator XML instance
+OnCrossvalidationTag    | handles crossvalidation tag
+OnPredictTag            | handles predict tag
+OnCppGenTag             | handles cpp tag
+OnTrainTag              | handles train tag
+OnLaunchTag             | handles launch tag
+
+
+
+
+**/
+}

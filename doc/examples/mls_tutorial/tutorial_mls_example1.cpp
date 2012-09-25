@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 
-#include "ltr\data\data_set.h"
-#include "ltr\data\object.h"
-#include "ltr\learners\linear_learner\linear_learner.h"
-#include "ltr\scorers\linear_scorer.h"
+#include "ltr/data/data_set.h"
+#include "ltr/data/object.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/scorers/linear_scorer.h"
 
 using std::cout;
 using std::vector;
@@ -21,7 +21,7 @@ int main() {
 
   train_object1 << 1.2 << 12.9;                                                 // create new object from training data
   train_object1.set_actual_label(1);                                            // set new actual label
-  train_object2 << 2.4 << 25.8; 
+  train_object2 << 2.4 << 25.8;
   train_object2.set_actual_label(2);
   train_object3 << 0.3 << 3.225;
   train_object3.set_actual_label(0.25);

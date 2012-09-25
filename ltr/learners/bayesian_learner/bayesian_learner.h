@@ -9,8 +9,11 @@
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/bayesian_scorer.h"
 #include "ltr/parameters_container/parameters_container.h"
-#include "ltr/density_estimators/learners/base_probability_density_learner.h"
-#include "ltr/density_estimators/scorers/base_probability_density_estimator.h"
+#include "ltr/density_estimators/base_probability_density_learner.h"
+#include "ltr/density_estimators/base_probability_density_estimator.h"
+#include "ltr/density_estimators/fisher_discriminant_density_learner.h"
+#include "ltr/density_estimators/normal_naive_bayes_density_learner.h"
+#include "ltr/density_estimators/quadratic_discriminant_density_learner.h"
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/utility/statistics_calculation.h"
 
@@ -22,6 +25,9 @@ using ltr::BaseProbabilityDensityEstimator;
 using ltr::ParametersContainer;
 using ltr::utility::CalculateLabelsCapacity;
 using ltr::Label;
+using ltr::FisherDiscriminantDensityLearner;
+using ltr::NormalNaiveBayesDensityLearner;
+using ltr::QuadraticDiscriminantDensityLearner;
 
 namespace ltr {
 template <class TElement, class TDensityLearner>
@@ -30,6 +36,9 @@ class BayesianLearner : public BaseLearner<TElement, BayesianScorer> {
   typedef ltr::utility::shared_ptr<BayesianLearner> Ptr;
 
   BayesianLearner() {
+  }
+
+  explicit BayesianLearner(const ParametersContainer& parameters) {
   }
 
  private:
@@ -57,6 +66,43 @@ void BayesianLearner<TElement, TDensityLearner>::learnImpl(
   density_learner_.learn(data);
   *scorer = BayesianScorer(prior_probability, density_learner_.make());
 }
+
+template <class TElement>
+class FisherDiscriminantLearner
+  : public BayesianLearner<TElement,
+                           FisherDiscriminantDensityLearner<TElement> > {
+ public:
+  FisherDiscriminantLearner() {
+  }
+
+  explicit FisherDiscriminantLearner(const ParametersContainer& parameters) {
+  }
+};
+
+template <class TElement>
+class NormalNaiveBayesLearner
+  : public BayesianLearner<TElement,
+                           NormalNaiveBayesDensityLearner<TElement> > {
+ public:
+  NormalNaiveBayesLearner() {
+  }
+
+  explicit NormalNaiveBayesLearner(const ParametersContainer& parameters) {
+  }
+};
+
+template <class TElement>
+class QuadraticDiscriminantLearner
+  : public BayesianLearner<TElement,
+                           QuadraticDiscriminantDensityLearner<TElement> > {
+ public:
+  QuadraticDiscriminantLearner() {
+  }
+
+  explicit QuadraticDiscriminantLearner(
+    const ParametersContainer& parameters) {
+  }
+};
 };
 
 #endif  // LTR_LEARNERS_BAYESIAN_LEARNER_BAYESIAN_LEARNER_H_

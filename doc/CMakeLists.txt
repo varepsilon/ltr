@@ -21,6 +21,13 @@ INCLUDE (${LTR_Source_Path}/cmake/setup_ltr.cmake)
 SetUpLTR(${LTR_Source_Path})
 
 ##########################################################################################
+# lets add datafiles
+
+EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${LTR_Source_Path}/data
+	${PROJECT_BINARY_DIR}/data)
+
+##########################################################################################
 # lets make executables
 INCLUDE (${Doc_Path}/sources.cmake)
 
@@ -28,10 +35,10 @@ SET(index 0)
 FOREACH(Cfile ${Sources})
 	MATH(EXPR index "${index} + 1")
 	SET(Cname "Doc${index}")
-	
+
 	ADD_EXECUTABLE(${Cname} ${Cfile}.cpp)
 	TARGET_LINK_LIBRARIES(${Cname} ${LTR_libs})
-	
+
 	ADD_CUSTOM_COMMAND(
         TARGET ${Cname} POST_BUILD
         COMMAND ${Cname} > ${Cfile}.out)

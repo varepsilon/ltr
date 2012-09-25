@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "ltr/aggregators/aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/scorer.h"
@@ -17,7 +17,7 @@
 using std::string;
 using std::vector;
 
-using ltr::Aggregator;
+using ltr::PredictionsAggregator;
 using ltr::DataSet;
 using ltr::Object;
 using ltr::utility::NeighborWeighter;
@@ -39,12 +39,12 @@ class NNScorer : public Scorer {
   NNScorer(BaseMetricPtr metric,
            DataSet<Object> data,
            NeighborWeighter::Ptr neighbor_weighter,
-           Aggregator::Ptr aggregator,
+           PredictionsAggregator::Ptr predictions_aggregator,
            int number_of_neighbors_to_process) :
     metric_(metric),
     data_(data),
     neighbor_weighter_(neighbor_weighter),
-    aggregator_(aggregator),
+    predictions_aggregator_(predictions_aggregator),
     number_of_neighbors_to_process_(number_of_neighbors_to_process) {
   }
 
@@ -65,7 +65,7 @@ class NNScorer : public Scorer {
   BaseMetricPtr metric_;
   DataSet<Object> data_;
   NeighborWeighter::Ptr neighbor_weighter_;
-  Aggregator::Ptr aggregator_;
+  PredictionsAggregator::Ptr predictions_aggregator_;
   int number_of_neighbors_to_process_;
 };
 };

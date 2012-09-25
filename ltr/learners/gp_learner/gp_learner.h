@@ -329,26 +329,19 @@ void GPLearner<TElement>::
       reset();
     }
 
-    std::cout << "Evaluating data for the first time.\n";
+    INFO("Evaluating data for the first time.\n");
     this->evaluatePopulation(data);
 
-    std::cout << "The population looks like: \n";
-    for (int tree_index = 0;
-         tree_index < (int)population_.size(); ++tree_index) {
-      using ::operator <<;
-      std::cout << population_[tree_index] << std::endl;
-    }
-
-    std::cout << "Evolution begins.\n";
+    INFO("Evolution begins.\n");
     for (int generationIdx = 0;
          generationIdx < number_of_generations_;
          ++generationIdx) {
-      std::cout << "Generation "<< generationIdx << ".\n";
+      INFO("Generation %d\n", generationIdx);
 
-      std::cout << "Calling strategy\n";
+      INFO("Calling strategy\n");
       this->evaluationStepImpl();
 
-      std::cout << "Evaluation.\n";
+      INFO("Evaluation.\n");
       this->evaluatePopulation(data);
 
       int best_tree_index = 0;
@@ -360,12 +353,8 @@ void GPLearner<TElement>::
         }
       }
 
-      std::cout
-        << "The best one is number " << best_tree_index << ".\n";
-      using ::operator <<;
+      INFO("The best one is number %d\n", best_tree_index);
       best_tree_ = population_[best_tree_index];
-      std::cout << best_tree_ << std::endl;
-      std::cout << "with fitness " << best_tree_.mFitness << "\n";
     }
     // \TODO ? rewrite with setters and getters
     *scorer = GPScorer(best_tree_, context_, feature_count_);

@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 
+#include "boost/filesystem/path.hpp"
+
+#include "fstream"
+
 #include "ltr/crossvalidation/crossvalidation.h"
 #include "ltr/crossvalidation/leave_one_out_splitter.h"
 #include "ltr/crossvalidation/validation_result.h"
@@ -11,59 +15,78 @@
 #include "ltr/measures/measure.h"
 #include "ltr/scorers/fake_scorer.h"
 
+#include <iostream>
+#include <algorithm>
+#include "ltr/data/object_list.h"
+#include "ltr/data/data_set.h"
+#include "ltr/data/utility/io_utility.h"
+#include "ltr/measures/dcg.h"
+#include "ltr/measures/ndcg.h"
+#include "ltr/learners/best_feature_learner/best_feature_learner.h"
+#include "ltr/learners/linear_learner/linear_learner.h"
+#include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
+#include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/feature_converters/nan_to_zero_learner.h"
+#include "ltr/crossvalidation/leave_one_out_splitter.h"
+#include "ltr/crossvalidation/crossvalidator.h"
+
 using std::cout;
-using std::endl;
 using std::vector;
-
-using ltr::AbsError;
+using std::endl;
+using ltr::ObjectList;
+using ltr::DataSet;
+using ltr::io_utility::loadDataSet;
+using ltr::Measure;
+using ltr::DCG;
+using ltr::NDCG;
 using ltr::BestFeatureLearner;
+using ltr::FeatureConverter;
+using ltr::NanToZeroConverterLearner;
 using ltr::cv::LeaveOneOutSplitter;
-using ltr::cv::Validate;
-using ltr::cv::ValidationResult;
-using ltr::FeatureInfo;
-using ltr::FakeScorer;
-using ltr::Object;
-using ltr::PointwiseMeasure;
+using ltr::cv::CrossValidator;
+using ltr::Log;
+using ltr::LinearLearner;
+using ltr::NNLearner;
+using ltr::gp::GPLearner;
 
-const int data_length = 5;
-const FeatureInfo fi(3);
+using std::fstream;
 
 int main() {
-  ltr::Log log;
+  Log log("log.txt");
+  DataSet<ObjectList> test_data = loadDataSet<ObjectList>(
+          "data/imat2009/imat2009_test_small.txt", "Yandex");
+  DataSet<ObjectList> train_data = loadDataSet<ObjectList>(
+          "data/imat2009/imat2009_learning_small.txt", "Yandex");
 
-  DataSet<Object> data(fi);
-  for (int i = 0; i < data_length; ++i) {
-    Object object;
-    object << 0.7 * i + 0.3 << 0.2 * i * i * i - 0.8 << i * i * 2.7 - 3.4 * i;
-    data.add(object);
-  }
-  FakeScorer::Ptr fscorer(new FakeScorer());
-  fscorer->predict(data);
+  NanToZeroConverterLearner<ObjectList> converter;
+  converter.learn(train_data);
+  FeatureConverter::Ptr remove_nan = converter.make();
 
-  AbsError::Ptr ab_measure(new AbsError);
-  BestFeatureLearner<Object>::Ptr bfl(
-    new BestFeatureLearner<Object>(ab_measure));
+  remove_nan->apply(train_data, &train_data);
+  remove_nan->apply(test_data, &test_data);
 
-  vector<PointwiseMeasure::Ptr> abm_vector;
-  abm_vector.push_back(ab_measure);
+  Measure<ObjectList>::Ptr measure_one(new DCG());
+  Measure<ObjectList>::Ptr measure_two(new NDCG());
+  BestFeatureLearner<ObjectList>::Ptr learner_one =
+      new BestFeatureLearner<ObjectList>(measure_one);
+  learner_one->learn(train_data);
 
-  LeaveOneOutSplitter<Object>::Ptr spl(new LeaveOneOutSplitter<Object>);
+  GPLearner<ObjectList>::Ptr learner_two =
+      new GPLearner<ObjectList>(measure_one);
+  learner_two->learn(train_data);
 
-  ValidationResult vr = Validate(data, abm_vector, bfl, spl);
+  LeaveOneOutSplitter<ObjectList>::Ptr splitter=
+      new LeaveOneOutSplitter<ObjectList>();
 
-  cout << vr.getSplitCount() << endl;
-  cout << vr.getMeasureValues(0).size() << endl;
-  cout << vr.getMeasureNames().size() << endl;
-  for (int measure_index = 0;
-       measure_index < vr.getMeasureNames().size();
-       ++measure_index) {
-     cout << vr.getMeasureNames()[measure_index] << endl;
-  }
+  CrossValidator<ObjectList> cross_validator;
+  cross_validator.addDataSet(train_data);
+  cross_validator.addLearner(learner_one);
+  cross_validator.addLearner(learner_two);
+  cross_validator.addMeasure(measure_one);
+  cross_validator.addMeasure(measure_two);
+  cross_validator.addSplitter(splitter);
+  cross_validator.launch();
+  cout << cross_validator.toString();
 
-  for (int split = 0; split < vr.getSplitCount(); ++split) {
-    Object test_object;
-    test_object << 1;
-    cout << vr.getScorer(split)->score(test_object) << " "
-         << vr.getMeasureValues(split).at(0) << endl;
-  }
-};
+  return 0;
+}

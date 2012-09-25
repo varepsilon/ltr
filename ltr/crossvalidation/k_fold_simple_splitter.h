@@ -105,6 +105,11 @@ void KFoldSimpleSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
+  if (K_ > base_set.size()) {
+    throw logic_error(
+          string("In KFoldSimpleSplitter: Split fold is larger than") +
+          string("a dataset size. ERROR"));
+  }
   INFO("Starting to split dataset with the split index equal to %d",
     split_index);
   if (split_index < 0 || split_index >= splitCount(base_set)) {

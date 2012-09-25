@@ -5,19 +5,20 @@
 
 #include <vector>
 #include <string>
-#include <functional>
 
 #include "logog/logog.h"
 
 #include "ltr/learners/learner.h"
 
-#include "ltr/learners/decision_tree/utility/utility.h"
-#include "ltr/learners/decision_tree/decision_vertex.h"
-#include "ltr/learners/decision_tree/leaf_vertex.h"
-#include "ltr/learners/decision_tree/splitting_quality.h"
-#include "ltr/learners/decision_tree/conditions_learner.h"
+#include "ltr/learners/decision_tree/base_splitter.h"
+#include "ltr/learners/decision_tree/leaf_generator/leaf_generator.h"
+#include "ltr/learners/decision_tree/split_criteria/stop_splitting_criteria.h"
+#include "ltr/learners/decision_tree/vertex/decision_vertex.h"
+#include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
 
 #include "ltr/scorers/decision_tree_scorer.h"
+
+#include "ltr/utility/shared_ptr.h"
 
 using std::string;
 using std::vector;
@@ -25,71 +26,49 @@ using std::vector;
 namespace ltr {
 namespace decision_tree {
 /**
- * The Vertex with corresponding part of DataSet.
- */
-struct VertexWithData {
-  VertexWithData(Vertex<double>::Ptr vertex, const DataSet<Object>& data)
-  : vertex(vertex),
-    data(data) {}
-
-  VertexWithData(const VertexWithData& other)
-  : vertex(other.vertex),
-    data(other.data) {}
-
-  Vertex<double>::Ptr vertex;
-  DataSet<Object> data;
-};
-/**
  * \class DecisionTreeLearner
  * Builds decision tree for given data.
  */
 class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
  public:
-  void setDefaultParameters();
+  typedef ltr::utility::shared_ptr<DecisionTreeLearner> Ptr;
 
-  void checkParameters() const;
+  explicit DecisionTreeLearner(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+  }
 
-  GET_SET(ConditionsLearner::Ptr, conditions_learner);
-  GET_SET(SplittingQuality::Ptr, splitting_quality);
-  GET_SET(int, min_vertex_size);
-  GET_SET(double, label_eps);
-
-  explicit DecisionTreeLearner(const ParametersContainer& parameters);
+  DecisionTreeLearner(BaseSplitter::Ptr splitter,
+                      LeafGenerator::Ptr leaf_generator)
+  : splitter_(splitter),
+    leaf_generator_(leaf_generator) {}
 
   string toString() const;
 
-  explicit DecisionTreeLearner(
-    int min_vertex_size = 3, double label_eps = 0.001);
+  void addStopSplittingCriteria(StopSplittingCriteria::Ptr new_criteria);
+
+  GET_SET(BaseSplitter::Ptr, splitter);
+  GET_SET(LeafGenerator::Ptr, leaf_generator);
+  GET_SET(vector<StopSplittingCriteria::Ptr>, stop_splitting_criterias);
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters);
-
-  bool needToGenerateLeaf(const DataSet<Object>& data) const;
-
-  LeafVertex<double>::Ptr generateLeaf(const DataSet<Object>& data) const;
-
-  virtual void buildNextLayer(const vector<VertexWithData>& current_layer,
-                                    vector<VertexWithData>* next_layer);
   /**
    * Function creates decision tree for given data.
-   * Uses ConditionsLearner and SplittingQuality to create it.
+   * Uses BaseSplitter to create it.
    */
-  Vertex<double>::Ptr buildTree(const DataSet<Object>& data);
+  Vertex::Ptr buildTree(const DataSet<Object>& data);
+
+  bool needToStopSplitting(const DataSet<Object>& data) const;
+
+  LeafVertex::Ptr generateLeaf(const DataSet<Object>& data) const;
 
   void learnImpl(const DataSet<Object>& data, DecisionTreeScorer* scorer);
 
   virtual string getDefaultAlias() const;
 
-  int min_vertex_size_;
-  double label_eps_;
-  /**
-   * Object, used to generate different conditions for splitting data set
-   */
-  ConditionsLearner::Ptr conditions_learner_;
-  /**
-   * Object, used to select the best split of the data set
-   */
-  SplittingQuality::Ptr splitting_quality_;
+  BaseSplitter::Ptr splitter_;
+  LeafGenerator::Ptr leaf_generator_;
+  vector<StopSplittingCriteria::Ptr> stop_splitting_criterias_;
 };
 };
 };

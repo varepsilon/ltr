@@ -8,7 +8,7 @@
 using ltr::utility::DoubleEqual;
 using ltr::utility::NeighborWeighter;
 using ltr::utility::InverseLinearDistance;
-using ltr::utility::InverseSquareDistance;
+using ltr::utility::InversePowerDistance;
 
 TEST(NeighborWeighter, TestWeighter) {
   NeighborWeighter::Ptr neighbor_weighter1 =
@@ -16,7 +16,7 @@ TEST(NeighborWeighter, TestWeighter) {
   EXPECT_TRUE(DoubleEqual(0.5, neighbor_weighter1->getWeight(2.0, 10)));
 
   NeighborWeighter::Ptr neighbor_weighter2 =
-    new ltr::utility::InverseSquareDistance;
+    new ltr::utility::InversePowerDistance(2);
   EXPECT_TRUE(DoubleEqual(0.25, neighbor_weighter2->getWeight(2.0, 3)));
 
   NeighborWeighter::Ptr neighbor_weighter3 =

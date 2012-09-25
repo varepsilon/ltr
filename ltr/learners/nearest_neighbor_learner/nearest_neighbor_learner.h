@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "ltr/aggregators/aggregator.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/learners/learner.h"
 #include "ltr/metrics/metric.h"
 #include "ltr/parameters_container/parameters_container.h"
@@ -16,7 +16,7 @@
 #include "ltr/utility/shared_ptr.h"
 #include "ltr/utility/neighbor_weighter.h"
 
-using ltr::Aggregator;
+using ltr::PredictionsAggregator;
 using ltr::BaseMetric;
 using ltr::NNScorer;
 using ltr::ParametersContainer;
@@ -42,24 +42,25 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
     metric_ = parameters.Get<BaseMetric::Ptr>("metric");
     neighbor_weighter_ =
       parameters.Get<NeighborWeighter::Ptr>("neighbor_weighter");
-    aggregator_ = parameters.Get<Aggregator::Ptr>("aggregator");
+    predictions_aggregator_
+      = parameters.Get<PredictionsAggregator::Ptr>("predictions_aggregator");
     number_of_neighbors_to_process_ =
       parameters.Get<int>("number_of_neighbors_to_process");
   }
 
   NNLearner(BaseMetric::Ptr metric,
             NeighborWeighter::Ptr neighbor_weighter,
-            Aggregator::Ptr aggregator,
+            PredictionsAggregator::Ptr predictions_aggregator,
             int number_of_neighbors_to_process) :
     metric_(metric),
     neighbor_weighter_(neighbor_weighter),
-    aggregator_(aggregator),
+    predictions_aggregator_(predictions_aggregator),
     number_of_neighbors_to_process_(number_of_neighbors_to_process) {
   }
 
   GET_SET(typename BaseMetric::Ptr, metric);
   GET_SET(NeighborWeighter::Ptr, neighbor_weighter);
-  GET_SET(Aggregator::Ptr, aggregator);
+  GET_SET(PredictionsAggregator::Ptr, predictions_aggregator);
   GET_SET(int, number_of_neighbors_to_process);
 
  private:
@@ -68,7 +69,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 
   BaseMetric::Ptr metric_;
   NeighborWeighter::Ptr neighbor_weighter_;
-  Aggregator::Ptr aggregator_;
+  PredictionsAggregator::Ptr predictions_aggregator_;
   int number_of_neighbors_to_process_;
 };
 
@@ -96,7 +97,7 @@ void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   *scorer =  NNScorer(metric_,
                       object_data,
                       neighbor_weighter_,
-                      aggregator_,
+                      predictions_aggregator_,
                       number_of_neighbors_to_process_);
 }
 };
