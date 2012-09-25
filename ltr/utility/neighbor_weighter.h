@@ -54,7 +54,7 @@ class InverseLinearDistance : public NeighborWeighter {
     result += "  double min_distance = " +
       boost::lexical_cast<string, double>(min_distance_) + ";\n";
     result += "  if (dist < min_distance) {\n";
-    result += "    return 1. / min_distance;\n";
+    result += "    return min_distance;\n";
     result += "  }\n";
     result += "  return 1.0 / dist;\n";
     result += "}\n";

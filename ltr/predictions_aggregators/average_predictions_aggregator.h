@@ -45,10 +45,12 @@ class AveragePredictionsAggregator : public PredictionsAggregator {
     result += "double " + function_name + " (const vector<double>& labels,\n";
     result += "                        const vector<double>& weights) {\n";
     result += " double result = 0;\n";
+    result += " double weights_sum = 0;\n";
     result += " for (int index = 0; index < labels.size(); ++index) {\n";
     result += "   result += labels[index] * weights[index];\n";
+    result += "   weights_sum += weights[index];\n";
     result += " }\n";
-    result += " return result / labels.size();\n";
+    result += " return result / weights_sum;\n";
     result += "}\n";
     return result;
   }
