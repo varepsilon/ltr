@@ -3,10 +3,11 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_COMPOSITION_LEARNER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_COMPOSITION_LEARNER_H_
 
+#include <logog/logog.h>
+
 #include <string>
 #include <functional>
 
-#include <logog/logog.h>
 #include "ltr/utility/shared_ptr.h"
 
 #include "ltr/measures/measure.h"
@@ -15,6 +16,8 @@
 #include "ltr/learners/learner.h"
 #include "ltr/learners/composition_learner/data_set_weights_updater.h"
 #include "ltr/learners/composition_learner/composition_scorer_weights_updater.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
+#include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
 
 using std::string;
 
@@ -26,6 +29,8 @@ using ltr::composition::FakeDataSetWeightsUpdater;
 using ltr::composition::FakeCompositionScorerWeightsUpdater;
 using ltr::composition::CompositionScorerWeightsUpdater;
 using ltr::composition::DataSetWeightsUpdater;
+using ltr::PredictionsAggregator;
+using ltr::SumPredictionsAggregator;
 
 namespace ltr {
 namespace composition {
@@ -46,9 +51,9 @@ namespace composition {
  * elements before each weak learner's learn() call. Provides the variability
  * of weak scorers. By default is fake, so dataset weights remain constant
  */
-template <class TElement, class TCompositionScorer>
+template <class TElement>
 class CompositionLearner
-    : public BaseLearner<TElement, TCompositionScorer> {
+    : public BaseLearner<TElement, CompositionScorer> {
  public:
   typedef ltr::utility::shared_ptr<CompositionLearner> Ptr;
   /**
@@ -62,7 +67,7 @@ class CompositionLearner
       const ParametersContainer& parameters)
       : data_set_weights_updater_(new FakeDataSetWeightsUpdater<TElement>),
         composition_scorer_weights_updater_
-        (new FakeCompositionScorerWeightsUpdater<TElement, TCompositionScorer>) {
+        (new FakeCompositionScorerWeightsUpdater<TElement>) {
     this->setDefaultParameters();
     this->setParameters(parameters);
   }
@@ -71,17 +76,27 @@ class CompositionLearner
     int number_of_iterations = 10,
     typename DataSetWeightsUpdater<TElement>::Ptr
       data_set_weights_updater = new FakeDataSetWeightsUpdater<TElement>,
-    typename CompositionScorerWeightsUpdater<TElement, TCompositionScorer>::Ptr
+    typename CompositionScorerWeightsUpdater<TElement>::Ptr
       composition_scorer_weights_updater =
-        (new FakeCompositionScorerWeightsUpdater<TElement, TCompositionScorer>()))
+        (new FakeCompositionScorerWeightsUpdater<TElement>()))
     : data_set_weights_updater_(data_set_weights_updater),
       composition_scorer_weights_updater_(composition_scorer_weights_updater) {
     number_of_iterations_ = number_of_iterations;
+    this->setDefaultScorer();
+  }
+  /**
+   * Set default scorer
+   */
+  void setDefaultScorer() {
+    SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
+    CompositionScorer scorer(aggregator);
+    this->setInitialScorer(scorer);
   }
   /**
    * Clears parameters and sets NUMBER_OF_ITERATIONS = 10
    */
   void setDefaultParameters() {
+    this->setDefaultScorer();
     number_of_iterations_ = 10;
   }
   /**
@@ -89,14 +104,13 @@ class CompositionLearner
    */
   void checkParameters() const {
     CHECK(number_of_iterations_ > 0); // NOLINT
-    this->scorer_.checkParameters();
   }
 
   /**
    * Sets the CompositionScorerWeightsUpdater parameter for the composition learner
    */
   void set_composition_scorer_weights_updater(
-    typename CompositionScorerWeightsUpdater<TElement, TCompositionScorer>::Ptr
+    typename CompositionScorerWeightsUpdater<TElement>::Ptr
       composition_scorer_weights_updater) {
     composition_scorer_weights_updater_
       = composition_scorer_weights_updater;
@@ -114,21 +128,21 @@ class CompositionLearner
     number_of_iterations_ = parameters.Get<int>("NUMBER_OF_ITERATIONS");
   }
 
-  typename CompositionScorerWeightsUpdater<TElement, TCompositionScorer>::Ptr
+  typename CompositionScorerWeightsUpdater<TElement>::Ptr
     composition_scorer_weights_updater_;
   typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater_;
 
   void learnImpl(const DataSet<TElement>& data,
-                 TCompositionScorer* scorer);
+                 CompositionScorer* scorer);
   virtual string getDefaultAlias() const {return "CompositionLearner";}
 
   int number_of_iterations_;
 };
 
 // template realizations
-template <class TElement, class TCompositionScorer>
-void CompositionLearner<TElement, TCompositionScorer>::learnImpl(
-    const DataSet<TElement>& data, TCompositionScorer* scorer) {
+template <class TElement>
+void CompositionLearner<TElement>::learnImpl(
+    const DataSet<TElement>& data, CompositionScorer* scorer) {
   INFO("Learning has been started");
 
   for (int element_index = 0; element_index < data.size(); ++element_index) {

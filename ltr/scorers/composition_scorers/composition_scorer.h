@@ -8,6 +8,7 @@
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/interfaces/parameterized.h"
+#include "ltr/predictions_aggregators/predictions_aggregator.h"
 
 using std::string;
 using std::vector;
@@ -18,9 +19,14 @@ namespace composition {
  * Scorer, which contains other scorers with their weights. The way of
  * aggregating that weighted scorers is specified in descendant classes
  */
-class CompositionScorer : public Scorer, public Parameterized {
+class CompositionScorer : public Scorer, Parameterized {
  public:
   typedef ltr::utility::shared_ptr<CompositionScorer> Ptr;
+
+  CompositionScorer() {}
+
+  explicit CompositionScorer(PredictionsAggregator::Ptr predictions_aggregator):
+    predictions_aggregator_(predictions_aggregator) {}
   /**
    * Holds a scorer with its weight
    */
@@ -34,7 +40,7 @@ class CompositionScorer : public Scorer, public Parameterized {
   /**
    * Removes all scorers from composition
    */
-  virtual void clear();
+  void clear();
   /**
    * Returns number of weighted scorers in composition
    */
@@ -64,8 +70,15 @@ class CompositionScorer : public Scorer, public Parameterized {
    */
   void add(Scorer::Ptr scorer, double weight = 1.0);
 
-  virtual ~CompositionScorer() {}
+  void setAggregator(PredictionsAggregator::Ptr aggregator) {
+    predictions_aggregator_ = aggregator;
+  }
 
+  GET_SET(PredictionsAggregator::Ptr, predictions_aggregator);
+
+  virtual double scoreImpl(const Object& object) const;
+
+  string toString() const { return "";}
  private:
   virtual string getDefaultAlias() const {return "CompositionScorer";}
   /**
@@ -73,7 +86,15 @@ class CompositionScorer : public Scorer, public Parameterized {
    * optimizing scoring of a composition by calculating some extras in
    * this method. See MaxWeightCompositionScorer as example.
    */
-  virtual void addImpl(const ScorerAndWeight& weighted_scorer);
+  PredictionsAggregator::Ptr predictions_aggregator_;
+  virtual string generateCppCodeImpl(const string& function_name) const {
+    return "Composition Scorer";
+  }
+  virtual void setParametersImpl(
+    const ParametersContainer& parameters) {
+    predictions_aggregator_ =
+      parameters.Get<PredictionsAggregator::Ptr>("PREDICTIONS_AGGREGATOR");
+  }
  protected:
   vector<ScorerAndWeight> weighted_scorers_;
 };

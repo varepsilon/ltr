@@ -128,15 +128,7 @@ SET(LTR_SCORERS ${Source_Path}/ltr/scorers/scorer.h
 
 SET(LTR_COMPOSITION_SCORERS
                 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.h
-                ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.cc
-                ${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.h
-                ${Source_Path}/ltr/scorers/composition_scorers/linear_composition_scorer.cc
-                ${Source_Path}/ltr/scorers/composition_scorers/order_statistic_composition_scorer.h
-                ${Source_Path}/ltr/scorers/composition_scorers/order_statistic_composition_scorer.cc
-                ${Source_Path}/ltr/scorers/composition_scorers/median_composition_scorer.h
-                ${Source_Path}/ltr/scorers/composition_scorers/median_composition_scorer.cc
-                ${Source_Path}/ltr/scorers/composition_scorers/max_weight_composition_scorer.h
-                ${Source_Path}/ltr/scorers/composition_scorers/max_weight_composition_scorer.cc)
+                ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer.cc)
 
 SET(LTR_PARAMETERS_CONTAINER ${Source_Path}/ltr/parameters_container/parameters_container.h
                              ${Source_Path}/ltr/parameters_container/parameters_container.cc)
@@ -235,7 +227,6 @@ SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_
 					${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/average_composition_scorer_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/linear_composition_learner.h
 					${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
 
 SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predictions_aggregator.h
@@ -244,7 +235,11 @@ SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predi
                     ${Source_Path}/ltr/predictions_aggregators/sum_predictions_aggregator.h
                     ${Source_Path}/ltr/predictions_aggregators/sum_predictions_aggregator.cc
                     ${Source_Path}/ltr/predictions_aggregators/vote_predictions_aggregator.h
-                    ${Source_Path}/ltr/predictions_aggregators/vote_predictions_aggregator.cc)
+                    ${Source_Path}/ltr/predictions_aggregators/vote_predictions_aggregator.cc
+                    ${Source_Path}/ltr/predictions_aggregators/max_weight_predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/max_weight_predictions_aggregator.cc
+                    ${Source_Path}/ltr/predictions_aggregators/order_statistic_predictions_aggregator.h
+                    ${Source_Path}/ltr/predictions_aggregators/order_statistic_predictions_aggregator.cc)
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})

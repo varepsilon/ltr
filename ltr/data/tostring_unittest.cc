@@ -16,9 +16,9 @@
 #include "ltr/scorers/decision_tree_scorer.h"
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/scorers/gp_scorer.h"
-#include "ltr/scorers/composition_scorers/linear_composition_scorer.h"
 #include "ltr/scorers/linear_scorer.h"
 #include "ltr/scorers/one_feature_scorer.h"
+#include "ltr/scorers/composition_scorers/composition_scorer.h"
 
 using std::cout;
 using std::endl;
@@ -71,13 +71,12 @@ TEST(ToStringTest, TestToStringOperation) {
   ltr::gp::GPScorer gp_scorer;
   cout << gp_scorer.toString() << endl;
 
-  ltr::composition::LinearCompositionScorer linearCompositionScorer;
-  linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::FakeScorer()), 0.2);
-  linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::gp::GPScorer), 0.7);
-  linearCompositionScorer.add(ltr::Scorer::Ptr(new ltr::decision_tree::DecisionTreeScorer), 0.1);
-
-  cout << linearCompositionScorer.toString() << endl;
-  linearCompositionScorer.clear();
+  ltr::composition::CompositionScorer composition_scorer;
+  composition_scorer.add(ltr::Scorer::Ptr(new ltr::FakeScorer()), 0.2);
+  composition_scorer.add(ltr::Scorer::Ptr(new ltr::gp::GPScorer), 0.7);
+  composition_scorer.add(ltr::Scorer::Ptr(
+    new ltr::decision_tree::DecisionTreeScorer), 0.1);
+  cout << composition_scorer.toString() << endl;
 
   ltr::LinearScorer linear_scorer(vector<double>(5, 0.3));
   cout << linear_scorer.toString() << endl;

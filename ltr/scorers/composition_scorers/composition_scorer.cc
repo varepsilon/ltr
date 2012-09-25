@@ -37,20 +37,24 @@ namespace composition {
     return at(scorer_index);
   }
 
-  void CompositionScorer::addImpl
+  void CompositionScorer::add
       (const ScorerAndWeight& weighted_scorer) {
     DBUG("Adding a scorer and weight equal to %lf", weighted_scorer.weight);
     weighted_scorers_.push_back(weighted_scorer);
   }
 
   void CompositionScorer::add
-      (const ScorerAndWeight& weighted_scorer) {
-    addImpl(weighted_scorer);
+      (Scorer::Ptr scorer, double weight) {
+    add(ScorerAndWeight(scorer, weight));
   }
 
-  void CompositionScorer::add
-      (Scorer::Ptr scorer, double weight) {
-    addImpl(ScorerAndWeight(scorer, weight));
+  double CompositionScorer::scoreImpl(const Object& object) const {
+    vector<double> weights(size()), labels(size());
+    for (int index = 0; index < size(); ++index) {
+      weights[index] = at(index).weight;
+      labels[index] = at(index).scorer->score(object);
+    }
+    return predictions_aggregator_->aggregate(labels, weights);
   }
 };
 };
