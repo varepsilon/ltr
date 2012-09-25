@@ -40,7 +40,7 @@ struct DimensionSize {
  * @returns boolean left.size < right.size
  */
 
-bool operator<(const DimensionSize& left, const DimensionSize& right) {
+inline bool operator<(const DimensionSize& left, const DimensionSize& right) {
   return left.size < right.size;
 }
 
