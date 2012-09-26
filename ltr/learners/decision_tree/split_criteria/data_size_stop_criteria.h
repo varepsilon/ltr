@@ -12,7 +12,7 @@
 namespace ltr {
 namespace decision_tree {
 /**
- * DataSizeStopSplittingCriteria decide to generate leaf when
+ * DataSizeStopSplittingCriteria decides to generate leaf when
  * data size less then min_vertex_size.
  */
 class DataSizeStopSplittingCriteria : public StopSplittingCriteria {

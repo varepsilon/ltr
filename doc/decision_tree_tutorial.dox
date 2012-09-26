@@ -1,0 +1,62 @@
+namespace ltr {
+/** \page TutorialDecisionTree Tutorial page 8 -  Decision Trees
+    \ingroup Tutorial
+
+\tableofcontents
+
+A decision tree is a learner that uses a tree-like graph or model of decisions and their possible consequences.
+
+To learn more visit http://en.wikipedia.org/wiki/Decision_tree
+
+If you want to use DecisionTree algorithm you should choose some parameters which are used to build tree:
+\li BaseSplitter
+\li StopSplittingCriteria
+\li LeafGenerator
+
+\section TutorialSplitter Splitters
+
+Splitter is used to generate next layer of vertices in tree by given current layer.
+
+\subsection SplittersList List of available splitters
+
+%Splitter              | Description
+-----------------------|------------------------------------------------------------------------------------------------------------------------------
+ID3Splitter            | Implements ID3 splitting aplorithm (http://en.wikipedia.org/wiki/ID3_algorithm)
+ObliviousTreeSplitter  | Implements ObliviousTree splitting aplorithm (<a href = "http://ijcai.org/Past%20Proceedings/IJCAI-95-VOL2/PDF/008.pdf"> Oblivious decision trees graphs and top down pruning </a>)
+
+\section TutorialStopSplittingCriteria Stop splitting criterias
+
+StopSplittingCriteria checks the given data and desides should we generate leaf now or not.
+
+\subsection StopSplittingCriteriasList List of available stop splitting criterias
+
+%StopSplittingCriteria          | Description
+--------------------------------|--------------------------------------------------------------------------------------
+SameLabelStopSplittingCriteria  | It decides to generate leaf when all actual labels in data are equal or almost equal
+DataSizeStopSplittingCriteria   | It decides to generate leaf when data size less then min_vertex_size (parameter)
+
+\section TutorialLeafGenerator Leaf generators
+
+StopSplittingCriteria checks the given data and desides should we generate leaf now or not.
+
+\subsection LeafGeneratorsList List of available leaf generators
+
+%LeafGenerator                | Description
+------------------------------|-----------------------------------------------------------------------------------
+MostCommonLabelLeafGenerator  | Generate the leaf with value equals to the most common actual label in given data
+
+\section TutorialDecisionTreeLearner Decision tree learner
+
+To use LTR DecisionTreeLearner you need to:
+\li Decide what parameters of DecisionTree are good for you and declare this parameters
+\li Create DecisionTreeLearner with selected Splitter and LeafGenerator
+\li Add selected StopSplittingCriteria using addStopSplittingCriteria() method (you can add more than one criteria if needed)
+\li Learn DecisionTreeLearner on your DaraSet using learn() method
+\li Make Scorer using make() method
+
+Example: usage of LTR DecisionTreeLearner    | Output:
+---------------------------------------------|------------------
+\include decision_tree_tutorial_example1.cpp | \include decision_tree_tutorial_example1.out
+
+**/
+}

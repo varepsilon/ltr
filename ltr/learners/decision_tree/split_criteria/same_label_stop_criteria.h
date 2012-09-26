@@ -12,7 +12,7 @@
 namespace ltr {
 namespace decision_tree {
 /**
- * SameLabelStopSplittingCriteria decide to generate leaf when all
+ * SameLabelStopSplittingCriteria decides to generate leaf when all
  * actual labels in data are equal or almost equal.
  */
 class SameLabelStopSplittingCriteria : public StopSplittingCriteria {
