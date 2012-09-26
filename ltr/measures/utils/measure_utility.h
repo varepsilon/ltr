@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ltr/data/object_list.h"
+#include "ltr/data/data_set.h"
 
 using std::vector;
 using std::pair;
@@ -21,7 +22,16 @@ namespace utility {
     double actual;
   };
 
-  vector<PredictedAndActualLabels> ExtractLabels(const ObjectList& data_set);
+  template <class TElement>
+  vector<PredictedAndActualLabels> ExtractLabels(const TElement& data_set) {
+    vector<PredictedAndActualLabels> output(data_set.size());
+
+    for (int index = 0; index < (int)data_set.size(); ++index) {
+      output[index].predicted = data_set[index].predicted_label();
+      output[index].actual = data_set[index].actual_label();
+    }
+    return output;
+  }
 
   // first "decreasing" or "increasing" is applied first
   bool PredictedDecreasingActualIncreasing(

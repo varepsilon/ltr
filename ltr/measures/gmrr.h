@@ -42,7 +42,7 @@ class GMRR: public ListwiseMeasure {
   virtual void checkParameters() const {
     CHECK(number_of_objects_to_consider_ >= 0);
     CHECK(max_label_ >= 0);
-   }
+  }
 
   double best() const {
     return 1.0;
@@ -63,7 +63,8 @@ class GMRR: public ListwiseMeasure {
   virtual string getDefaultAlias() const {return "GMRR";}
   virtual void setParametersImpl(const ParametersContainer& parameters) {
     max_label_ = parameters.Get<double>("MAX_LABEL");
-    number_of_objects_to_consider_ = parameters.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
+    number_of_objects_to_consider_ =
+      parameters.Get<int>("NUMBER_OF_OBJECTS_TO_CONSIDER");
   }
 };
 };

@@ -12,6 +12,7 @@
 #include "ltr/data/object_list.h"
 #include "ltr/data/data_set.h"
 #include "ltr/utility/numerical.h"
+#include "ltr/measures/auc.h"
 
 using ltr::Object;
 using ltr::ObjectList;
@@ -23,6 +24,7 @@ using ltr::SquaredError;
 using ltr::AveragePrecision;
 using ltr::Accuracy;
 using ltr::NormalizedMeasure;
+using ltr::AUC;
 
 TEST(MeasureTest, MeasureTest) {
   Object object1;
@@ -94,4 +96,47 @@ TEST(MeasureTest, NormalizedMeasureTest) {
   obj.set_predicted_label(1);
   EXPECT_EQ(norm.value(obj), 1);
   EXPECT_EQ(norm2.value(obj), -1);
+}
+
+TEST(MeasureTest, AUCTest) {
+  AUC::Ptr auc(new AUC());
+  DataSet<Object> data_set;
+  Object object1, object2, object3, object4, object5, object6;
+  object1.set_actual_label(1);
+  object2.set_actual_label(1);
+  object3.set_actual_label(0);
+  object4.set_actual_label(0);
+  object1.set_predicted_label(0.3);
+  object2.set_predicted_label(0.27);
+  object3.set_predicted_label(0.31);
+  object4.set_predicted_label(0.01);
+  data_set.add(object1);
+  data_set.add(object2);
+  data_set.add(object3);
+  data_set.add(object4);
+
+  EXPECT_TRUE(DoubleEqual(0.5, auc->operator()(data_set)));
+
+  DataSet<Object> data_set2;
+  object1.set_actual_label(0);
+  object2.set_actual_label(1);
+  object3.set_actual_label(0);
+  object4.set_actual_label(1);
+  object6.set_actual_label(1);
+  object5.set_actual_label(0);
+  object1.set_predicted_label(0.9);
+  object2.set_predicted_label(0.8);
+  object3.set_predicted_label(0.7);
+  object4.set_predicted_label(0.6);
+  object6.set_predicted_label(0.55);
+  object5.set_predicted_label(0.5);
+  data_set2.add(object1);
+  data_set2.add(object2);
+  data_set2.setWeight(1, 5);
+  data_set2.add(object3);
+  data_set2.add(object4);
+  data_set2.add(object5);
+  data_set2.add(object6);
+
+  EXPECT_TRUE(DoubleEqual(12. / 21, auc->operator()(data_set2)));
 }

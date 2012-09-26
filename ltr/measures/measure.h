@@ -48,7 +48,8 @@ class Measure : public Aliaser, public Parameterized, public Printable {
    * Value of measure(quality of algorithm)
    * @param element - element(single object, pair or list) for counting measure on
    */
-  double operator()(const TElement& element) const;
+  virtual double operator()(const TElement& element) const;
+  virtual double operator()(const DataSet<TElement>& data_set) const;
   /**
    * Value of measure(quality of algorithm)
    * @param element - element(single object, pair or list) for counting measure on
@@ -128,6 +129,11 @@ double Measure<TElement>::operator()(const TElement& element) const {
   checkResult(measure);
   return measure;
 };
+
+template<class TElement>
+double Measure<TElement>::operator()(const DataSet<TElement>& data_set) const {
+  return this->average(data_set);
+}
 
 template<class TElement>
 double Measure<TElement>::average(

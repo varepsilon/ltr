@@ -146,7 +146,8 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
                  ${Source_Path}/ltr/measures/normalized_measure.h
                  ${Source_Path}/ltr/measures/binary_classification_accuracy.h
-				 ${Source_Path}/ltr/measures/binary_classification_margin.h)
+				 ${Source_Path}/ltr/measures/binary_classification_margin.h
+                 ${Source_Path}/ltr/measures/auc.h ${Source_Path}/ltr/measures/auc.cc)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
                        ${Source_Path}/ltr/measures/utils/measure_utility.cc)
