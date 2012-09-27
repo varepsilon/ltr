@@ -108,53 +108,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_</span>
 <a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;functional&gt;</span>
-<a name="l00008"></a>00008 
-<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;logog/logog.h&gt;</span>
-<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
-<a name="l00011"></a>00011 
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="binary__classification__accuracy_8h.html">ltr/measures/binary_classification_accuracy.h</a>&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="binary__classification__margin_8h.html">ltr/measures/binary_classification_margin.h</a>&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="linear__composition__scorer_8h.html">ltr/scorers/composition_scorers/linear_composition_scorer.h</a>&quot;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="ada__boost__data__set__weights__updater_8h.html">ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h</a>&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="ada__rank__composition__scorer__weights__updater_8h.html">ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h</a>&quot;</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keyword">using</span> std::string;
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;logog/logog.h&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;functional&gt;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="binary__classification__accuracy_8h.html">ltr/measures/binary_classification_accuracy.h</a>&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="binary__classification__margin_8h.html">ltr/measures/binary_classification_margin.h</a>&quot;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="composition__scorer_8h.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="ada__boost__data__set__weights__updater_8h.html">ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h</a>&quot;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="ada__rank__composition__scorer__weights__updater_8h.html">ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h</a>&quot;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &quot;<a class="code" href="sum__predictions__aggregator_8h.html">ltr/predictions_aggregators/sum_predictions_aggregator.h</a>&quot;</span>
 <a name="l00019"></a>00019 
-<a name="l00020"></a>00020 <span class="keyword">namespace </span>ltr {
-<a name="l00021"></a>00021 <span class="keyword">namespace </span>composition {
-<a name="l00022"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html">00022</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html">AdaBoostLearner</a>
-<a name="l00023"></a>00023     : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;Object, LinearCompositionScorer&gt; {
-<a name="l00024"></a>00024  <span class="keyword">public</span>:
-<a name="l00025"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a4998b25cdefd7e6cc08ede1ae10b9a30">00025</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaBoostLearner&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a4998b25cdefd7e6cc08ede1ae10b9a30">Ptr</a>;
-<a name="l00026"></a>00026 
-<a name="l00027"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">00027</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">AdaBoostLearner</a>(
-<a name="l00028"></a>00028       <span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters)
-<a name="l00029"></a>00029       : <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>, <a class="code" href="classltr_1_1composition_1_1_linear_composition_scorer.html">LinearCompositionScorer</a>&gt;(10,
-<a name="l00030"></a>00030           new <a class="code" href="classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html">AdaBoostDataSetWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(new <a class="code" href="classltr_1_1_binary_classification_margin.html">BinaryClassificationMargin</a>),
-<a name="l00031"></a>00031           new <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">AdaRankScorerWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>, <a class="code" href="classltr_1_1composition_1_1_linear_composition_scorer.html">LinearCompositionScorer</a>&gt;(new <a class="code" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>)) {
-<a name="l00032"></a>00032     this-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_learner.html#af16976f67028f92bc0c240b0410cf9f7">setDefaultParameters</a>();
-<a name="l00033"></a>00033     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#ac51c0bca83b15a063f2dbacb15dbe75b">setParameters</a>(parameters);
-<a name="l00034"></a>00034   }
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5623ea839a6f86fbb85cf6c2986194fe">00036</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">AdaBoostLearner</a>(
-<a name="l00037"></a>00037     <span class="keywordtype">int</span> number_of_iterations = 10)
-<a name="l00038"></a>00038     : <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>, <a class="code" href="classltr_1_1composition_1_1_linear_composition_scorer.html">LinearCompositionScorer</a>&gt;(number_of_iterations,
-<a name="l00039"></a>00039           new <a class="code" href="classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html">AdaBoostDataSetWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(new <a class="code" href="classltr_1_1_binary_classification_margin.html">BinaryClassificationMargin</a>),
-<a name="l00040"></a>00040           new <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">AdaRankScorerWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>, <a class="code" href="classltr_1_1composition_1_1_linear_composition_scorer.html">LinearCompositionScorer</a>&gt;(new <a class="code" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>)) {
-<a name="l00041"></a>00041   }
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 };
-<a name="l00044"></a>00044 };
-<a name="l00045"></a>00045 };
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_</span>
+<a name="l00020"></a>00020 <span class="keyword">using</span> std::string;
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 <span class="keyword">namespace </span>ltr {
+<a name="l00023"></a>00023 <span class="keyword">namespace </span>composition {
+<a name="l00024"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html">00024</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html">AdaBoostLearner</a>
+<a name="l00025"></a>00025     : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;Object&gt; {
+<a name="l00026"></a>00026  <span class="keyword">public</span>:
+<a name="l00027"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a4998b25cdefd7e6cc08ede1ae10b9a30">00027</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaBoostLearner&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a4998b25cdefd7e6cc08ede1ae10b9a30">Ptr</a>;
+<a name="l00028"></a>00028 
+<a name="l00029"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">00029</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">AdaBoostLearner</a>(
+<a name="l00030"></a>00030       <span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters)
+<a name="l00031"></a>00031       : <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(10,
+<a name="l00032"></a>00032           new <a class="code" href="classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html">AdaBoostDataSetWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(
+<a name="l00033"></a>00033             new <a class="code" href="classltr_1_1_binary_classification_margin.html">BinaryClassificationMargin</a>),
+<a name="l00034"></a>00034           new <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">AdaRankScorerWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(
+<a name="l00035"></a>00035             new <a class="code" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>)) {
+<a name="l00036"></a>00036     this-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_learner.html#a85b83efeb7d0b53af75c71d3600a2a45">setDefaultParameters</a>();
+<a name="l00037"></a>00037     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#ac51c0bca83b15a063f2dbacb15dbe75b">setParameters</a>(parameters);
+<a name="l00038"></a>00038   }
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5623ea839a6f86fbb85cf6c2986194fe">00040</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_boost_learner.html#a5d9da74a26e01ef94a7e58c1b0913447">AdaBoostLearner</a>(
+<a name="l00041"></a>00041     <span class="keywordtype">int</span> number_of_iterations = 10)
+<a name="l00042"></a>00042     : <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">CompositionLearner</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(
+<a name="l00043"></a>00043         number_of_iterations,
+<a name="l00044"></a>00044         new <a class="code" href="classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html">AdaBoostDataSetWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(
+<a name="l00045"></a>00045           new <a class="code" href="classltr_1_1_binary_classification_margin.html">BinaryClassificationMargin</a>),
+<a name="l00046"></a>00046         new <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">AdaRankScorerWeightsUpdater</a>&lt;<a class="code" href="classltr_1_1_object.html">Object</a>&gt;(
+<a name="l00047"></a>00047           new <a class="code" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>)) {
+<a name="l00048"></a>00048   }
+<a name="l00049"></a>00049 };
+<a name="l00050"></a>00050 };
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

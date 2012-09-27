@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['labelstatistic',['LabelStatistic',['../structltr_1_1utility_1_1_label_statistic.html',1,'ltr::utility']]],
+  ['labelstatisticcomputer',['LabelStatisticComputer',['../classltr_1_1utility_1_1_label_statistic_computer.html',1,'ltr::utility']]],
+  ['leafgenerator',['LeafGenerator',['../classltr_1_1decision__tree_1_1_leaf_generator.html',1,'ltr::decision_tree']]],
   ['leafvertex',['LeafVertex',['../classltr_1_1decision__tree_1_1_leaf_vertex.html',1,'ltr::decision_tree']]],
   ['learner',['Learner',['../classltr_1_1_learner.html',1,'ltr']]],
   ['learner_3c_20object_20_3e',['Learner< Object >',['../classltr_1_1_learner.html',1,'ltr']]],
@@ -8,8 +11,6 @@ var searchData=
   ['leaveoneoutsplitter',['LeaveOneOutSplitter',['../classltr_1_1cv_1_1_leave_one_out_splitter.html',1,'ltr::cv']]],
   ['lessactual',['LessActual',['../classltr_1_1_less_actual.html',1,'ltr']]],
   ['lesspredicted',['LessPredicted',['../classltr_1_1_less_predicted.html',1,'ltr']]],
-  ['linearcompositionlearner',['LinearCompositionLearner',['../classltr_1_1composition_1_1_linear_composition_learner.html',1,'ltr::composition']]],
-  ['linearcompositionscorer',['LinearCompositionScorer',['../classltr_1_1composition_1_1_linear_composition_scorer.html',1,'ltr::composition']]],
   ['linearcompositiontest',['LinearCompositionTest',['../class_linear_composition_test.html',1,'']]],
   ['linearlearner',['LinearLearner',['../classltr_1_1_linear_learner.html',1,'ltr']]],
   ['linearscorer',['LinearScorer',['../classltr_1_1_linear_scorer.html',1,'ltr']]],

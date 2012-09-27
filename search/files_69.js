@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['id3_5flearner_2ecc',['id3_learner.cc',['../id3__learner_8cc.html',1,'']]],
-  ['id3_5flearner_2eh',['id3_learner.h',['../id3__learner_8h.html',1,'']]],
   ['id3_5fsplitter_2ecc',['id3_splitter.cc',['../id3__splitter_8cc.html',1,'']]],
   ['id3_5fsplitter_2eh',['id3_splitter.h',['../id3__splitter_8h.html',1,'']]],
   ['indices_2ecc',['indices.cc',['../indices_8cc.html',1,'']]],

@@ -365,75 +365,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00329"></a>00329       reset();
 <a name="l00330"></a>00330     }
 <a name="l00331"></a>00331 
-<a name="l00332"></a>00332     std::cout &lt;&lt; <span class="stringliteral">&quot;Evaluating data for the first time.\n&quot;</span>;
+<a name="l00332"></a>00332     INFO(<span class="stringliteral">&quot;Evaluating data for the first time.\n&quot;</span>);
 <a name="l00333"></a>00333     this-&gt;evaluatePopulation(data);
 <a name="l00334"></a>00334 
-<a name="l00335"></a>00335     std::cout &lt;&lt; <span class="stringliteral">&quot;The population looks like: \n&quot;</span>;
-<a name="l00336"></a>00336     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> tree_index = 0;
-<a name="l00337"></a>00337          tree_index &lt; (int)population_.size(); ++tree_index) {
-<a name="l00338"></a>00338       using ::operator &lt;&lt;;
-<a name="l00339"></a>00339       std::cout &lt;&lt; population_[tree_index] &lt;&lt; std::endl;
-<a name="l00340"></a>00340     }
-<a name="l00341"></a>00341 
-<a name="l00342"></a>00342     std::cout &lt;&lt; <span class="stringliteral">&quot;Evolution begins.\n&quot;</span>;
-<a name="l00343"></a>00343     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> generationIdx = 0;
-<a name="l00344"></a>00344          generationIdx &lt; number_of_generations_;
-<a name="l00345"></a>00345          ++generationIdx) {
-<a name="l00346"></a>00346       std::cout &lt;&lt; <span class="stringliteral">&quot;Generation &quot;</span>&lt;&lt; generationIdx &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;
-<a name="l00347"></a>00347 
-<a name="l00348"></a>00348       std::cout &lt;&lt; <span class="stringliteral">&quot;Calling strategy\n&quot;</span>;
-<a name="l00349"></a>00349       this-&gt;evaluationStepImpl();
-<a name="l00350"></a>00350 
-<a name="l00351"></a>00351       std::cout &lt;&lt; <span class="stringliteral">&quot;Evaluation.\n&quot;</span>;
-<a name="l00352"></a>00352       this-&gt;evaluatePopulation(data);
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354       <span class="keywordtype">int</span> best_tree_index = 0;
-<a name="l00355"></a>00355       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> tree_index = 1;
-<a name="l00356"></a>00356            tree_index &lt; (int)population_.size(); ++tree_index) {
-<a name="l00357"></a>00357         <span class="keywordflow">if</span> (population_[best_tree_index].mFitness &lt;
-<a name="l00358"></a>00358             population_[tree_index].mFitness) {
-<a name="l00359"></a>00359           best_tree_index = tree_index;
-<a name="l00360"></a>00360         }
-<a name="l00361"></a>00361       }
+<a name="l00335"></a>00335     INFO(<span class="stringliteral">&quot;Evolution begins.\n&quot;</span>);
+<a name="l00336"></a>00336     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> generationIdx = 0;
+<a name="l00337"></a>00337          generationIdx &lt; number_of_generations_;
+<a name="l00338"></a>00338          ++generationIdx) {
+<a name="l00339"></a>00339       INFO(<span class="stringliteral">&quot;Generation %d\n&quot;</span>, generationIdx);
+<a name="l00340"></a>00340 
+<a name="l00341"></a>00341       INFO(<span class="stringliteral">&quot;Calling strategy\n&quot;</span>);
+<a name="l00342"></a>00342       this-&gt;evaluationStepImpl();
+<a name="l00343"></a>00343 
+<a name="l00344"></a>00344       INFO(<span class="stringliteral">&quot;Evaluation.\n&quot;</span>);
+<a name="l00345"></a>00345       this-&gt;evaluatePopulation(data);
+<a name="l00346"></a>00346 
+<a name="l00347"></a>00347       <span class="keywordtype">int</span> best_tree_index = 0;
+<a name="l00348"></a>00348       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> tree_index = 1;
+<a name="l00349"></a>00349            tree_index &lt; (int)population_.size(); ++tree_index) {
+<a name="l00350"></a>00350         <span class="keywordflow">if</span> (population_[best_tree_index].mFitness &lt;
+<a name="l00351"></a>00351             population_[tree_index].mFitness) {
+<a name="l00352"></a>00352           best_tree_index = tree_index;
+<a name="l00353"></a>00353         }
+<a name="l00354"></a>00354       }
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356       INFO(<span class="stringliteral">&quot;The best one is number %d\n&quot;</span>, best_tree_index);
+<a name="l00357"></a>00357       best_tree_ = population_[best_tree_index];
+<a name="l00358"></a>00358     }
+<a name="l00359"></a>00359     <span class="comment">// \TODO ? rewrite with setters and getters</span>
+<a name="l00360"></a>00360     *scorer = <a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html">GPScorer</a>(best_tree_, context_, feature_count_);
+<a name="l00361"></a>00361 }
 <a name="l00362"></a>00362 
-<a name="l00363"></a>00363       std::cout
-<a name="l00364"></a>00364         &lt;&lt; <span class="stringliteral">&quot;The best one is number &quot;</span> &lt;&lt; best_tree_index &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;
-<a name="l00365"></a>00365       using ::operator &lt;&lt;;
-<a name="l00366"></a>00366       best_tree_ = population_[best_tree_index];
-<a name="l00367"></a>00367       std::cout &lt;&lt; best_tree_ &lt;&lt; std::endl;
-<a name="l00368"></a>00368       std::cout &lt;&lt; <span class="stringliteral">&quot;with fitness &quot;</span> &lt;&lt; best_tree_.mFitness &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00363"></a>00363 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
+<a name="l00364"></a><a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a4711875bc272b7054a364e59fc5b26df">00364</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a4711875bc272b7054a364e59fc5b26df">GPLearner&lt;TElement&gt;::evaluatePopulation</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data) {
+<a name="l00365"></a>00365   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> tree_index = 0;
+<a name="l00366"></a>00366        tree_index &lt; (int)population_.size(); ++tree_index) {
+<a name="l00367"></a>00367     <span class="keywordflow">if</span> (population_[tree_index].mValid) {
+<a name="l00368"></a>00368       <span class="keywordflow">continue</span>;
 <a name="l00369"></a>00369     }
-<a name="l00370"></a>00370     <span class="comment">// \TODO ? rewrite with setters and getters</span>
-<a name="l00371"></a>00371     *scorer = <a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html">GPScorer</a>(best_tree_, context_, feature_count_);
-<a name="l00372"></a>00372 }
+<a name="l00370"></a>00370     <a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html">GPScorer</a> gp_scorer(population_[tree_index], context_, feature_count_);
+<a name="l00371"></a>00371 
+<a name="l00372"></a>00372     gp_scorer.<a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html#aaa403753df80c67d96d2b7a00ad60785">markDataSet</a>(data);
 <a name="l00373"></a>00373 
-<a name="l00374"></a>00374 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> TElement&gt;
-<a name="l00375"></a><a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a4711875bc272b7054a364e59fc5b26df">00375</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_g_p_learner.html#a4711875bc272b7054a364e59fc5b26df">GPLearner&lt;TElement&gt;::evaluatePopulation</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data) {
-<a name="l00376"></a>00376   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> tree_index = 0;
-<a name="l00377"></a>00377        tree_index &lt; (int)population_.size(); ++tree_index) {
-<a name="l00378"></a>00378     <span class="keywordflow">if</span> (population_[tree_index].mValid) {
-<a name="l00379"></a>00379       <span class="keywordflow">continue</span>;
-<a name="l00380"></a>00380     }
-<a name="l00381"></a>00381     <a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html">GPScorer</a> gp_scorer(population_[tree_index], context_, feature_count_);
-<a name="l00382"></a>00382 
-<a name="l00383"></a>00383     gp_scorer.<a class="code" href="classltr_1_1gp_1_1_g_p_scorer.html#aaa403753df80c67d96d2b7a00ad60785">markDataSet</a>(data);
-<a name="l00384"></a>00384 
-<a name="l00385"></a>00385     <span class="comment">// This line yields a topic for research. Why so?</span>
-<a name="l00386"></a>00386     <span class="comment">//</span>
-<a name="l00387"></a>00387     <span class="keywordtype">double</span> measureVal = this-&gt;measure_-&gt;average(data);
-<a name="l00388"></a>00388 
-<a name="l00389"></a>00389     population_[tree_index].mFitness = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(measureVal);
-<a name="l00390"></a>00390     population_[tree_index].mValid = <span class="keyword">true</span>;
-<a name="l00391"></a>00391   }
-<a name="l00392"></a>00392 }
-<a name="l00393"></a>00393 };
-<a name="l00394"></a>00394 };
-<a name="l00395"></a>00395 <span class="preprocessor">#endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_</span>
+<a name="l00374"></a>00374     <span class="comment">// This line yields a topic for research. Why so?</span>
+<a name="l00375"></a>00375     <span class="comment">//</span>
+<a name="l00376"></a>00376     <span class="keywordtype">double</span> measureVal = this-&gt;measure_-&gt;average(data);
+<a name="l00377"></a>00377 
+<a name="l00378"></a>00378     population_[tree_index].mFitness = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(measureVal);
+<a name="l00379"></a>00379     population_[tree_index].mValid = <span class="keyword">true</span>;
+<a name="l00380"></a>00380   }
+<a name="l00381"></a>00381 }
+<a name="l00382"></a>00382 };
+<a name="l00383"></a>00383 };
+<a name="l00384"></a>00384 <span class="preprocessor">#endif  // LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

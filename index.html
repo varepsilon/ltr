@@ -102,6 +102,13 @@ About LTR</h2>
 <p><a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href="http://en.wikipedia.org/wiki/Learning_to_rank">ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
  <br/>
 </p>
+<h2><a class="anchor" id="LTR"></a>
+About LTR</h2>
+<p>Learning To Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
+ <br/>
+ User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).<br/>
+ <br/>
+ Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
 <h2><a class="anchor" id="PHILOSOPHY"></a>
 Philosophy of LTR</h2>
 <p>From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.<br/>
@@ -143,12 +150,13 @@ Documentation</h2>
 <li><b>Tutorials</b> <ul>
 <li><a class="el" href="_how_to_install.html">How To Install</a></li>
 <li><a class="el" href="_tutorial_data.html">Tutorial page 1 - Data manipulation</a></li>
-<li><a class="el" href="_crossvalidation_data.html">Tutorial page 2 - Testing of algorithms</a></li>
+<li><a class="el" href="_how_to_use_crossvalidation.html">Tutorial page 2 - Testing of algorithms</a></li>
 <li><a class="el" href="_tutorial_data_preprocessors.html">Tutorial page 3 - Data preprocessors</a></li>
 <li><a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a></li>
 <li><a class="el" href="_tutorial_measure_learner_scorer.html">Tutorial page 5 - Learners, Scorers, Measures</a></li>
 <li><a class="el" href="_tutorial_bayesian_classification.html">Tutorial page 6 - Bayesian Classification</a></li>
 <li><a class="el" href="_tutorial_composition.html">Tutorial page 7 - Composition of algorithms</a></li>
+<li><a class="el" href="_tutorial_decision_tree.html">Tutorial page 8 - Decision Trees</a></li>
 </ul>
 </li>
 </ul>
@@ -157,6 +165,7 @@ Documentation</h2>
 <li><a class="el" href="_how_to_create_new_learner_and_scorer.html">How to create new learner and scorer</a></li>
 <li><a class="el" href="_how_to_write_unittests.html">How to write unittests</a></li>
 <li><a class="el" href="_how_to_check_serialization.html">How to check serialization</a></li>
+<li><a class="el" href="_tutorial_l_t_r_client_for_developer.html">LTR Client tutorial for developer</a></li>
 </ul>
 </li>
 </ul>
@@ -185,7 +194,7 @@ Compiler support</h2>
 </ul>
 <h2><a class="anchor" id="LICENSE"></a>
 License</h2>
-<p>Haven't decide yet</p>
+<p>LTR is licensed under the BSD license.</p>
 <h2><a class="anchor" id="CONTRIBUTORS"></a>
 Contributors</h2>
 <p>You can see the full list of project participants <a class="el" href="_contributors.html">here</a>.</p>
@@ -196,7 +205,7 @@ Get support</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:53 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

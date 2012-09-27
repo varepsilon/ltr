@@ -101,89 +101,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Defines</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">ltr/learners/decision_tree/decision_tree_unittest.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;gtest/gtest.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="numerical_8h_source.html">ltr/utility/numerical.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="decision__tree_8h_source.html">ltr/learners/decision_tree/decision_tree.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="leaf__vertex_8h_source.html">ltr/learners/decision_tree/leaf_vertex.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="decision__vertex_8h_source.html">ltr/learners/decision_tree/decision_vertex.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="regression__vertex_8h_source.html">ltr/learners/decision_tree/regression_vertex.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="compare__condition_8h_source.html">ltr/learners/decision_tree/compare_condition.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="object_8h_source.html">ltr/data/object.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="data__set_8h_source.html">ltr/data/data_set.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="decision__tree__learner_8h_source.html">ltr/learners/decision_tree/decision_tree_learner.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="oblivious__tree__splitter_8h_source.html">ltr/learners/decision_tree/oblivious_tree_splitter.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="id3__splitter_8h_source.html">ltr/learners/decision_tree/id3_splitter.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="most__common__label__leaf__generator_8h_source.html">ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="same__label__stop__criteria_8h_source.html">ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_decision_tree_test.html">DecisionTreeTest</a></td></tr>
-<tr><td colspan="2"><h2><a name="define-members"></a>
-Defines</h2></td></tr>
-<tr class="memitem:a16bcdd65ecdd3313af9e393538fa7fa8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#a16bcdd65ecdd3313af9e393538fa7fa8">LESS</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa07a82b7a19b40b3ee11c834f97cde8fc">ltr::decision_tree::LESS</a></td></tr>
-<tr class="memitem:ae27a03218878a9af9d7d946e186f8598"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#ae27a03218878a9af9d7d946e186f8598">GREATER</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa6c4026b6ab34893eb8989a0b2090237b">ltr::decision_tree::GREATER</a></td></tr>
-<tr class="memitem:a214c717b2e51e1993a749ac99df7de58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#a214c717b2e51e1993a749ac99df7de58">EQUAL</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa0b87a1268a5140ed055c56e706120912">ltr::decision_tree::EQUAL</a></td></tr>
-<tr class="memitem:a614280d3e3f728dabdfdf89ddb566551"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#a614280d3e3f728dabdfdf89ddb566551">GREATER_OR_EQUAL</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa38129fb790749f7b0f10a4e9221dd60b">ltr::decision_tree::GREATER_OR_EQUAL</a></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aae9eec9717fb6ba80ea9362fdee70291"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#aae9eec9717fb6ba80ea9362fdee70291">TEST_F</a> (<a class="el" href="class_decision_tree_test.html">DecisionTreeTest</a>, TestingBasicOperations)</td></tr>
-<tr class="memitem:ae64de6a5330752dae245ad7f41a31afb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#ae64de6a5330752dae245ad7f41a31afb">TEST_F</a> (<a class="el" href="class_decision_tree_test.html">DecisionTreeTest</a>, TestingRegressionVertrex)</td></tr>
+<tr class="memitem:a0c00219a7023eaf7a8690ef07c4a05f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#a0c00219a7023eaf7a8690ef07c4a05f6">TEST_F</a> (<a class="el" href="class_decision_tree_test.html">DecisionTreeTest</a>, TestingObliviousTree)</td></tr>
+<tr class="memitem:abd0db43d7a42526814a56fb25384edb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decision__tree__unittest_8cc.html#abd0db43d7a42526814a56fb25384edb7">TEST_F</a> (<a class="el" href="class_decision_tree_test.html">DecisionTreeTest</a>, TestingID3)</td></tr>
 </table>
-<hr/><h2>Define Documentation</h2>
-<a class="anchor" id="a214c717b2e51e1993a749ac99df7de58"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="decision__tree__unittest_8cc.html#a214c717b2e51e1993a749ac99df7de58">EQUAL</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa0b87a1268a5140ed055c56e706120912">ltr::decision_tree::EQUAL</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae27a03218878a9af9d7d946e186f8598"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="decision__tree__unittest_8cc.html#ae27a03218878a9af9d7d946e186f8598">GREATER</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa6c4026b6ab34893eb8989a0b2090237b">ltr::decision_tree::GREATER</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a614280d3e3f728dabdfdf89ddb566551"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="decision__tree__unittest_8cc.html#a614280d3e3f728dabdfdf89ddb566551">GREATER_OR_EQUAL</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa38129fb790749f7b0f10a4e9221dd60b">ltr::decision_tree::GREATER_OR_EQUAL</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a16bcdd65ecdd3313af9e393538fa7fa8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="decision__tree__unittest_8cc.html#a16bcdd65ecdd3313af9e393538fa7fa8">LESS</a>&#160;&#160;&#160;<a class="el" href="namespaceltr_1_1decision__tree.html#acd8bcdf3650c6d1f7e696df9455dc7aaa07a82b7a19b40b3ee11c834f97cde8fc">ltr::decision_tree::LESS</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="aae9eec9717fb6ba80ea9362fdee70291"></a>
+<a class="anchor" id="a0c00219a7023eaf7a8690ef07c4a05f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -196,7 +137,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TestingBasicOperations&#160;</td>
+          <td class="paramtype">TestingObliviousTree&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -210,7 +151,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae64de6a5330752dae245ad7f41a31afb"></a>
+<a class="anchor" id="abd0db43d7a42526814a56fb25384edb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -223,7 +164,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TestingRegressionVertrex&#160;</td>
+          <td class="paramtype">TestingID3&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -241,7 +182,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

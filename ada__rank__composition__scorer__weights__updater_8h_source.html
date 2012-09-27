@@ -108,19 +108,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_</span>
 <a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;stdexcept&gt;</span>
-<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;algorithm&gt;</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;limits&gt;</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;logog/logog.h&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>  <span class="comment">// NOLINT</span>
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="numerical_8h.html">ltr/utility/numerical.h</a>&quot;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="composition__scorer_8h.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</span>
-<a name="l00018"></a>00018 <span class="preprocessor">#include &quot;<a class="code" href="numerical_8h.html">ltr/utility/numerical.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;logog/logog.h&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;stdexcept&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;algorithm&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;limits&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>  <span class="comment">// NOLINT</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="numerical_8h.html">ltr/utility/numerical.h</a>&quot;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &quot;<a class="code" href="composition__scorer_8h.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</span>
 <a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="scorer_8h.html">ltr/scorers/scorer.h</a>&quot;</span>
 <a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="composition__scorer__weights__updater_8h.html">ltr/learners/composition_learner/composition_scorer_weights_updater.h</a>&quot;</span>
 <a name="l00021"></a>00021 
@@ -138,84 +138,91 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00033"></a>00033 
 <a name="l00034"></a>00034 <span class="keyword">namespace </span>ltr {
 <a name="l00035"></a>00035 <span class="keyword">namespace </span>composition {
-<a name="l00041"></a>00041 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TCompositionScorer&gt;
+<a name="l00041"></a>00041 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
 <a name="l00042"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">00042</a> <span class="keyword">class </span><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html">AdaRankScorerWeightsUpdater</a>
-<a name="l00043"></a>00043   : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer_weights_updater.html">CompositionScorerWeightsUpdater</a>&lt;TElement, TCompositionScorer&gt; {
+<a name="l00043"></a>00043   : <span class="keyword">public</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer_weights_updater.html">CompositionScorerWeightsUpdater</a>&lt;TElement&gt; {
 <a name="l00044"></a>00044  <span class="keyword">public</span>:
-<a name="l00045"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a25f310e296e1cd38ca5ae17b0fa7aafe">00045</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaRankScorerWeightsUpdater&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a25f310e296e1cd38ca5ae17b0fa7aafe">Ptr</a>;
+<a name="l00045"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#aba5b983aa2dc55f7fb3ef611e57175e3">00045</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;AdaRankScorerWeightsUpdater&gt;</a> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#aba5b983aa2dc55f7fb3ef611e57175e3">Ptr</a>;
 <a name="l00046"></a>00046 
-<a name="l00050"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a3736dcbd46d68d0bd7f656a7e9a479d2">00050</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a3736dcbd46d68d0bd7f656a7e9a479d2">AdaRankScorerWeightsUpdater</a>(
+<a name="l00050"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ac79a8f55811957e1af2a872091c73e24">00050</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ac79a8f55811957e1af2a872091c73e24">AdaRankScorerWeightsUpdater</a>(
 <a name="l00051"></a>00051       <span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters = <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>()) {
 <a name="l00052"></a>00052     this-&gt;<a class="code" href="classltr_1_1_parameterized.html#aea58f21fbc4599fb71b3103d661e9062">setDefaultParameters</a>();
 <a name="l00053"></a>00053   }
-<a name="l00057"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab71911a92ee9eca862c195b378c5f40c">00057</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab71911a92ee9eca862c195b378c5f40c">AdaRankScorerWeightsUpdater</a>(<span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> measure) {
-<a name="l00058"></a>00058     this-&gt;set_measure(measure);
-<a name="l00059"></a>00059   }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab51e2a6de7e3d6ea7024e818bad09ac1">updateWeights</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data,
-<a name="l00062"></a>00062       TCompositionScorer* composition_scorer) <span class="keyword">const</span>;
-<a name="l00063"></a>00063  <span class="keyword">private</span>:
-<a name="l00064"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a50a8aa3620c5e322aa6ec277e1c62599">00064</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a50a8aa3620c5e322aa6ec277e1c62599">getDefaultAlias</a>()<span class="keyword"> const </span>{
-<a name="l00065"></a>00065     <span class="keywordflow">return</span> <span class="stringliteral">&quot;AdaRankScorerWeightsUpdater&quot;</span>;
-<a name="l00066"></a>00066   }
-<a name="l00067"></a>00067 };
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 <span class="comment">// template realizations</span>
-<a name="l00070"></a>00070 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TCompositionScorer&gt;
-<a name="l00071"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab51e2a6de7e3d6ea7024e818bad09ac1">00071</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab51e2a6de7e3d6ea7024e818bad09ac1">AdaRankScorerWeightsUpdater&lt;TElement, TCompositionScorer&gt;::updateWeights</a>(
-<a name="l00072"></a>00072     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data,
-<a name="l00073"></a>00073     TCompositionScorer* composition_scorer)<span class="keyword"> const </span>{
-<a name="l00074"></a>00074   <span class="keywordflow">if</span> (composition_scorer-&gt;size() == 0) {
-<a name="l00075"></a>00075     ERR(<span class="stringliteral">&quot;Zero-length scorer as an input&quot;</span>);
-<a name="l00076"></a>00076     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Zero-length scorer for &quot;</span> + this-&gt;getDefaultAlias());
-<a name="l00077"></a>00077   }
-<a name="l00078"></a>00078   <span class="keywordflow">if</span> (this-&gt;measure_-&gt;best() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00079"></a>00079       this-&gt;measure_-&gt;best() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00080"></a>00080       this-&gt;measure_-&gt;worst() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00081"></a>00081       this-&gt;measure_-&gt;worst() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a>) {
-<a name="l00082"></a>00082     ERR(<span class="stringliteral">&quot;Can&#39;t work with an infinity measure&quot;</span>);
-<a name="l00083"></a>00083     <span class="keywordflow">throw</span> std::logic_error(this-&gt;getDefaultAlias() + <span class="stringliteral">&quot; has an infinity measure&quot;</span>);
-<a name="l00084"></a>00084   }
-<a name="l00085"></a>00085   <span class="keywordtype">int</span> last_scorer_index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(composition_scorer-&gt;size()) - 1;
-<a name="l00086"></a>00086   composition_scorer-&gt;at(last_scorer_index).scorer-&gt;predict(data);
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <span class="keywordtype">double</span> numerator = 0.0;
-<a name="l00089"></a>00089   <span class="keywordtype">double</span> denominator = 0.0;
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0; element_index &lt; data.<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++element_index) {
-<a name="l00092"></a>00092     <span class="keywordtype">double</span> measure_value = this-&gt;measure_-&gt;value(data[element_index]);
-<a name="l00093"></a>00093     <span class="keywordtype">double</span> normalized_measure_value =
-<a name="l00094"></a>00094       (measure_value - this-&gt;measure_-&gt;worst()) /
-<a name="l00095"></a>00095       (this-&gt;measure_-&gt;best() - this-&gt;measure_-&gt;worst());
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097     numerator += data.<a class="code" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(element_index) * normalized_measure_value;
-<a name="l00098"></a>00098     denominator += data.<a class="code" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(element_index) * (1 - normalized_measure_value);
-<a name="l00099"></a>00099   }
+<a name="l00057"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a9b4c74b87ffc03fc8f437a51c7f6f72f">00057</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ac79a8f55811957e1af2a872091c73e24">AdaRankScorerWeightsUpdater</a>(
+<a name="l00058"></a>00058     <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> measure) {
+<a name="l00059"></a>00059     this-&gt;set_measure(measure);
+<a name="l00060"></a>00060   }
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a7045c147a649af95750fc1a356a3a18b">updateWeights</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data,
+<a name="l00063"></a>00063       <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>* composition_scorer) <span class="keyword">const</span>;
+<a name="l00064"></a>00064  <span class="keyword">private</span>:
+<a name="l00065"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a32f23622c4909802f67ee4036c97d884">00065</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a32f23622c4909802f67ee4036c97d884">getDefaultAlias</a>()<span class="keyword"> const </span>{
+<a name="l00066"></a>00066     <span class="keywordflow">return</span> <span class="stringliteral">&quot;AdaRankScorerWeightsUpdater&quot;</span>;
+<a name="l00067"></a>00067   }
+<a name="l00068"></a>00068 };
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070 <span class="comment">// template realizations</span>
+<a name="l00071"></a>00071 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00072"></a><a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a7045c147a649af95750fc1a356a3a18b">00072</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a7045c147a649af95750fc1a356a3a18b">AdaRankScorerWeightsUpdater&lt;TElement&gt;::updateWeights</a>(
+<a name="l00073"></a>00073     <span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data,
+<a name="l00074"></a>00074     <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>* composition_scorer)<span class="keyword"> const </span>{
+<a name="l00075"></a>00075   <span class="keywordflow">if</span> (composition_scorer-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>() == 0) {
+<a name="l00076"></a>00076     ERR(<span class="stringliteral">&quot;Zero-length scorer as an input&quot;</span>);
+<a name="l00077"></a>00077     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Zero-length scorer for &quot;</span> + this-&gt;getDefaultAlias());
+<a name="l00078"></a>00078   }
+<a name="l00079"></a>00079   <span class="keywordflow">if</span> (this-&gt;measure_-&gt;best() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00080"></a>00080       this-&gt;measure_-&gt;best() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00081"></a>00081       this-&gt;measure_-&gt;worst() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
+<a name="l00082"></a>00082       this-&gt;measure_-&gt;worst() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a>) {
+<a name="l00083"></a>00083     ERR(<span class="stringliteral">&quot;Can&#39;t work with an infinity measure&quot;</span>);
+<a name="l00084"></a>00084     <span class="keywordflow">throw</span>
+<a name="l00085"></a>00085       std::logic_error(this-&gt;getDefaultAlias() + <span class="stringliteral">&quot; has an infinity measure&quot;</span>);
+<a name="l00086"></a>00086   }
+<a name="l00087"></a>00087   <span class="keywordtype">int</span> last_scorer_index = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(composition_scorer-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a82ae02f03acb20f70b53255a0a97e32c">size</a>()) - 1;
+<a name="l00088"></a>00088   composition_scorer-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a4bfc34d455a659cb9a1a2bf419a76822">at</a>(last_scorer_index).<a class="code" href="structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#a965ed8af877788f1c8d0d307c4837297">scorer</a>-&gt;<a class="code" href="classltr_1_1_scorer.html#ab1377230385c8a4d3ad36ffdb18e278c">predict</a>(data);
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <span class="keywordtype">double</span> numerator = 0.0;
+<a name="l00091"></a>00091   <span class="keywordtype">double</span> denominator = 0.0;
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> element_index = 0;
+<a name="l00094"></a>00094        element_index &lt; data.<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>();
+<a name="l00095"></a>00095        ++element_index) {
+<a name="l00096"></a>00096     <span class="keywordtype">double</span> measure_value = this-&gt;measure_-&gt;value(data[element_index]);
+<a name="l00097"></a>00097     <span class="keywordtype">double</span> normalized_measure_value =
+<a name="l00098"></a>00098       (measure_value - this-&gt;measure_-&gt;worst()) /
+<a name="l00099"></a>00099       (this-&gt;measure_-&gt;best() - this-&gt;measure_-&gt;worst());
 <a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#a83458360aa307d13a5fbe652dcd29ac5">DoubleEqual</a>(denominator, 0.0)) {
-<a name="l00102"></a>00102     <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> best_scorer = (*composition_scorer)[last_scorer_index].scorer;
-<a name="l00103"></a>00103     composition_scorer-&gt;clear();
-<a name="l00104"></a>00104     composition_scorer-&gt;add(best_scorer, 1.0);
-<a name="l00105"></a>00105     WARN(<span class="stringliteral">&quot;Ideal weak scorer has been found&quot;</span>);
-<a name="l00106"></a>00106     <span class="keywordflow">return</span>;
-<a name="l00107"></a>00107   }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="keywordtype">double</span> result_weight = 0.5 * log(numerator/denominator);
-<a name="l00110"></a>00110   <span class="keywordflow">if</span> (result_weight &lt; 0) {
-<a name="l00111"></a>00111     WARN(<span class="stringliteral">&quot;Negative weight in composition&quot;</span>);
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114   (*composition_scorer)[last_scorer_index].weight = result_weight;
-<a name="l00115"></a>00115 }
-<a name="l00116"></a>00116 };
-<a name="l00117"></a>00117 };
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_</span>
+<a name="l00101"></a>00101     numerator += data.<a class="code" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(element_index) *
+<a name="l00102"></a>00102       normalized_measure_value;
+<a name="l00103"></a>00103     denominator += data.<a class="code" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">getWeight</a>(element_index) *
+<a name="l00104"></a>00104       (1 - normalized_measure_value);
+<a name="l00105"></a>00105   }
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#a83458360aa307d13a5fbe652dcd29ac5">DoubleEqual</a>(denominator, 0.0)) {
+<a name="l00108"></a>00108     <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> best_scorer =
+<a name="l00109"></a>00109       (*composition_scorer)[last_scorer_index].scorer;
+<a name="l00110"></a>00110     composition_scorer-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a33bcd36d3e0f9099c8a83521eedc4807">clear</a>();
+<a name="l00111"></a>00111     composition_scorer-&gt;<a class="code" href="classltr_1_1composition_1_1_composition_scorer.html#a3e0aa5298113866868e12834d4991859">add</a>(best_scorer, 1.0);
+<a name="l00112"></a>00112     WARN(<span class="stringliteral">&quot;Ideal weak scorer has been found&quot;</span>);
+<a name="l00113"></a>00113     <span class="keywordflow">return</span>;
+<a name="l00114"></a>00114   }
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   <span class="keywordtype">double</span> result_weight = 0.5 * log(numerator/denominator);
+<a name="l00117"></a>00117   <span class="keywordflow">if</span> (result_weight &lt; 0) {
+<a name="l00118"></a>00118     WARN(<span class="stringliteral">&quot;Negative weight in composition&quot;</span>);
+<a name="l00119"></a>00119   }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121   (*composition_scorer)[last_scorer_index].weight = result_weight;
+<a name="l00122"></a>00122 }
+<a name="l00123"></a>00123 };
+<a name="l00124"></a>00124 };
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126 <span class="preprocessor">#endif  // LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

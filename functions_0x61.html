@@ -171,24 +171,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classltr_1_1lc_1_1_ada_rank_l_c_scorer_weights_updater.html#aa440f7605b083b2286b2063a81474cc6">ltr::lc::AdaRankLCScorerWeightsUpdater&lt; TElement &gt;</a>
 </li>
 <li>AdaRankScorerWeightsUpdater()
-: <a class="el" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#ab71911a92ee9eca862c195b378c5f40c">ltr::composition::AdaRankScorerWeightsUpdater&lt; TElement, TCompositionScorer &gt;</a>
-</li>
-<li>add()
-: <a class="el" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">ltr::DataSet&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1_object_list.html#a92484286b47e88599df3467bad521296">ltr::ObjectList</a>
-, <a class="el" href="classltr_1_1composition_1_1_composition_scorer.html#a3e0aa5298113866868e12834d4991859">ltr::composition::CompositionScorer</a>
+: <a class="el" href="classltr_1_1composition_1_1_ada_rank_scorer_weights_updater.html#a9b4c74b87ffc03fc8f437a51c7f6f72f">ltr::composition::AdaRankScorerWeightsUpdater&lt; TElement &gt;</a>
 </li>
 <li>Add()
 : <a class="el" href="classltr_1_1gp_1_1_add.html#a15f93c682722ab1adc90e30f6165ba47">ltr::gp::Add</a>
 </li>
+<li>add()
+: <a class="el" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">ltr::DataSet&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_object_list.html#a92484286b47e88599df3467bad521296">ltr::ObjectList</a>
+, <a class="el" href="classltr_1_1utility_1_1_label_statistic_computer.html#a93296911493cb08703ee0877be23f035">ltr::utility::LabelStatisticComputer</a>
+, <a class="el" href="classltr_1_1composition_1_1_composition_scorer.html#a3e0aa5298113866868e12834d4991859">ltr::composition::CompositionScorer</a>
+</li>
 <li>addChild()
-: <a class="el" href="classltr_1_1decision__tree_1_1_vertex.html#a4dcab03ea2a682ab8b2da05d061e4713">ltr::decision_tree::Vertex&lt; TValue &gt;</a>
+: <a class="el" href="classltr_1_1decision__tree_1_1_vertex.html#a869a2414ea50533358cfb0468960ac92">ltr::decision_tree::Vertex</a>
 </li>
 <li>addDataPreprocessor()
 : <a class="el" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">ltr::Learner&lt; TElement &gt;</a>
 </li>
 <li>addDataSet()
-: <a class="el" href="classltr_1_1cv_1_1_cross_validator.html#a49f57af73591a57c44bf3d3e89ab713d">ltr::cv::CrossValidator&lt; ObjectType, ScorerType &gt;</a>
+: <a class="el" href="classltr_1_1cv_1_1_cross_validator.html#a22f7bcf9b0bf6540cb5b001f392b499c">ltr::cv::CrossValidator&lt; ObjectType, ScorerType &gt;</a>
 </li>
 <li>addFeature()
 : <a class="el" href="classltr_1_1_feature_info.html#ab1983d9f60172d03f4152d2aa129e1c8">ltr::FeatureInfo</a>
@@ -201,10 +202,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>addGPOperation()
 : <a class="el" href="classltr_1_1gp_1_1_g_p_learner.html#aa1a2ef4ed703ad99a99157271c4b8fa1">ltr::gp::GPLearner&lt; TElement &gt;</a>
-</li>
-<li>addImpl()
-: <a class="el" href="classltr_1_1composition_1_1_composition_scorer.html#aba65d6d1df127cf9b32ed03dccd697b1">ltr::composition::CompositionScorer</a>
-, <a class="el" href="classltr_1_1composition_1_1_max_weight_composition_scorer.html#a4d12dd8a209df7d5bb9552d188345606">ltr::composition::MaxWeightCompositionScorer</a>
 </li>
 <li>addLearner()
 : <a class="el" href="classltr_1_1cv_1_1_cross_validator.html#a1f65e214777c8200a334464b00800411">ltr::cv::CrossValidator&lt; ObjectType, ScorerType &gt;</a>
@@ -224,15 +221,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>addSplitter()
 : <a class="el" href="classltr_1_1cv_1_1_cross_validator.html#a69333322ac0f2758640877affac8ef4b">ltr::cv::CrossValidator&lt; ObjectType, ScorerType &gt;</a>
 </li>
-<li>aggregate()
-: <a class="el" href="classltr_1_1_aggregator.html#a1a36e883a99822016b065e43da6ae625">ltr::Aggregator</a>
-, <a class="el" href="classltr_1_1_average_aggregator.html#acae63d2c303872843198b57dc79138ba">ltr::AverageAggregator</a>
-, <a class="el" href="classltr_1_1_sum_aggregator.html#a50661cdc730407c03cba2cb98d4c64ad">ltr::SumAggregator</a>
-, <a class="el" href="classltr_1_1_vote_aggregator.html#a9c5957694c0e82eb0d14bce899c26d35">ltr::VoteAggregator</a>
+<li>addStopSplittingCriteria()
+: <a class="el" href="classltr_1_1decision__tree_1_1_decision_tree_learner.html#a78c40fa400f295eaa271d2c6cd4c9adc">ltr::decision_tree::DecisionTreeLearner</a>
 </li>
-<li>aggregator_
-: <a class="el" href="classltr_1_1_n_n_learner.html#ad8ed85f629ae24101f0b3bc3ed59baa1">ltr::NNLearner&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1_n_n_scorer.html#afc7ce7c73c5e12738edcc1e9e6ac0b45">ltr::NNScorer</a>
+<li>aggregate()
+: <a class="el" href="classltr_1_1_predictions_aggregator.html#ac17b02aea63ba106a50aba88237327df">ltr::PredictionsAggregator</a>
+, <a class="el" href="classltr_1_1_average_predictions_aggregator.html#ac8f851e63d4052ec44b7380594f59b98">ltr::AveragePredictionsAggregator</a>
+, <a class="el" href="classltr_1_1_max_weight_predictions_aggregator.html#aa7960c234aec55ef10ed9d37b177359f">ltr::MaxWeightPredictionsAggregator</a>
+, <a class="el" href="classltr_1_1_order_statistic_predictions_aggregator.html#afa2fa784e29b13f6bf41e19638882f3c">ltr::OrderStatisticPredictionsAggregator</a>
+, <a class="el" href="classltr_1_1_sum_predictions_aggregator.html#a8a911f40dd616ded4b907acc525aca03">ltr::SumPredictionsAggregator</a>
+, <a class="el" href="classltr_1_1_vote_predictions_aggregator.html#a1092ba09cf54e869d592cfd5e66412e6">ltr::VotePredictionsAggregator</a>
 </li>
 <li>alias()
 : <a class="el" href="classltr_1_1_aliaser.html#aed83636a00a3f2a239e3c798f06c6b70">ltr::Aliaser</a>
@@ -246,46 +244,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classltr_1_1_reporter.html#a70c3d2b32e7f99f786c58c436371f3cf">ltr::Reporter</a>
 </li>
 <li>apply()
-: <a class="el" href="classltr_1_1_feature_converter.html#a70f27b5df60d7c3bc6bc2cb0e62173d6">ltr::FeatureConverter</a>
-, <a class="el" href="classltr_1_1_data_preprocessor.html#a993ca1979bb2db285b2b561d79078a02">ltr::DataPreprocessor&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1_feature_converter.html#a567234df60d35ea7ef859af28273429d">ltr::FeatureConverter</a>
+: <a class="el" href="classltr_1_1_data_preprocessor.html#a993ca1979bb2db285b2b561d79078a02">ltr::DataPreprocessor&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_feature_converter.html#a70f27b5df60d7c3bc6bc2cb0e62173d6">ltr::FeatureConverter</a>
 </li>
 <li>applyImpl()
-: <a class="el" href="classltr_1_1_fake_feature_converter.html#ab01496bede842657bb4189d8e8785473">ltr::FakeFeatureConverter</a>
+: <a class="el" href="classltr_1_1_fake_preprocessor.html#a0a72bf97c9e4bba49e1f4732a89e23a4">ltr::FakePreprocessor&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_remove_nominal_converter.html#a12bc7f3df43aaf19e964a43ca874dccc">ltr::RemoveNominalConverter</a>
+, <a class="el" href="classltr_1_1_feature_sampler.html#a12b683ffc49e8478e4c9a7c344b0dece">ltr::FeatureSampler</a>
 , <a class="el" href="classltr_1_1_nan_to_neutral_converter.html#ad68aaf150859ed7ddcf01a2cfc759fef">ltr::NanToNeutralConverter</a>
 , <a class="el" href="classltr_1_1_nominal_to_bool_converter.html#a8e88ec8499678bef855bbdeb5e0e006c">ltr::NominalToBoolConverter</a>
-, <a class="el" href="classltr_1_1_feature_converter.html#a4ab2a75a95d8b30e148344f59c29ddd2">ltr::FeatureConverter</a>
-, <a class="el" href="classltr_1_1_remove_nominal_converter.html#a12bc7f3df43aaf19e964a43ca874dccc">ltr::RemoveNominalConverter</a>
-, <a class="el" href="classltr_1_1_fake_preprocessor.html#a0a72bf97c9e4bba49e1f4732a89e23a4">ltr::FakePreprocessor&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_fake_feature_converter.html#ab01496bede842657bb4189d8e8785473">ltr::FakeFeatureConverter</a>
 , <a class="el" href="classltr_1_1_per_feature_linear_converter.html#a02592e7ca80a1a171625513e817e0553">ltr::PerFeatureLinearConverter</a>
-, <a class="el" href="classltr_1_1_feature_sampler.html#a12b683ffc49e8478e4c9a7c344b0dece">ltr::FeatureSampler</a>
-, <a class="el" href="classltr_1_1_data_sampler.html#a38786bc9a3524daaa8a4c4150a519e1a">ltr::DataSampler&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_feature_converter.html#a4ab2a75a95d8b30e148344f59c29ddd2">ltr::FeatureConverter</a>
 , <a class="el" href="classltr_1_1_data_random_sampler.html#a8674105e550670c7c0e3c8a0ab85498d">ltr::DataRandomSampler&lt; TElement &gt;</a>
 , <a class="el" href="classltr_1_1_data_preprocessor.html#aa976e79d7b7f69da6ea0b636e761a351">ltr::DataPreprocessor&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_data_sampler.html#a38786bc9a3524daaa8a4c4150a519e1a">ltr::DataSampler&lt; TElement &gt;</a>
 </li>
 <li>arff_arff_test_file_name
 : <a class="el" href="class_i_o_utility_test.html#a5b56c5e55c29752c3ad418ba7b78da93">IOUtilityTest</a>
 </li>
 <li>at()
-: <a class="el" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">ltr::DataSet&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1_object.html#a3907e628402d0119b9c7f8c26ea64445">ltr::Object</a>
+: <a class="el" href="classltr_1_1_object_list.html#ad8d80c4880caa93e0fb8d6cae6b7f0d9">ltr::ObjectList</a>
+, <a class="el" href="classltr_1_1composition_1_1_composition_scorer.html#a4bfc34d455a659cb9a1a2bf419a76822">ltr::composition::CompositionScorer</a>
 , <a class="el" href="classltr_1_1_object_list.html#a47677166bc24973b66430119cc31929c">ltr::ObjectList</a>
-, <a class="el" href="classltr_1_1_object.html#a07af40844b48418fa330c0ffd6a98327">ltr::Object</a>
+, <a class="el" href="classltr_1_1_object.html#a3907e628402d0119b9c7f8c26ea64445">ltr::Object</a>
 , <a class="el" href="classltr_1_1composition_1_1_composition_scorer.html#af29705b5c14ebc6d7b3e9076c6c93fb3">ltr::composition::CompositionScorer</a>
+, <a class="el" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">ltr::DataSet&lt; TElement &gt;</a>
+, <a class="el" href="classltr_1_1_object.html#a07af40844b48418fa330c0ffd6a98327">ltr::Object</a>
 , <a class="el" href="classltr_1_1_data_set.html#a4ea2371039408c3f123ba1b70d955f1f">ltr::DataSet&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1_object_list.html#ad8d80c4880caa93e0fb8d6cae6b7f0d9">ltr::ObjectList</a>
+</li>
+<li>AUC()
+: <a class="el" href="classltr_1_1_a_u_c.html#ab10abaca5124c444d25426cd00f83db0">ltr::AUC</a>
 </li>
 <li>average()
 : <a class="el" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">ltr::Measure&lt; TElement &gt;</a>
 </li>
-<li>AverageAggregator()
-: <a class="el" href="classltr_1_1_average_aggregator.html#a0e77da1ec828927413cc689c25b3d845">ltr::AverageAggregator</a>
-</li>
 <li>AverageCompositionScorerWeightsUpdater()
-: <a class="el" href="classltr_1_1composition_1_1_average_composition_scorer_weights_updater.html#a2f9462940788d24dea2dab83ec11113e">ltr::composition::AverageCompositionScorerWeightsUpdater&lt; TElement, TCompositionScorer &gt;</a>
+: <a class="el" href="classltr_1_1composition_1_1_average_composition_scorer_weights_updater.html#a567a4bfaa14d5984e49132f29ea42f98">ltr::composition::AverageCompositionScorerWeightsUpdater&lt; TElement &gt;</a>
 </li>
 <li>AveragePrecision()
-: <a class="el" href="classltr_1_1_average_precision.html#ad6c11853e1b7d8318d95ecc621c43348">ltr::AveragePrecision</a>
+: <a class="el" href="classltr_1_1_average_precision.html#a355478a9a3d4d0aaea42010e26b82272">ltr::AveragePrecision</a>
+</li>
+<li>AveragePredictionsAggregator()
+: <a class="el" href="classltr_1_1_average_predictions_aggregator.html#a4396a9854c42c4b2fe2ffe1e5dba06c5">ltr::AveragePredictionsAggregator</a>
 </li>
 <li>axis_label
 : <a class="el" href="structltr_1_1utility_1_1_multi_table_1_1_dimension_meta_info.html#a13cb394122f6e00c6e080e6368e7841a">ltr::utility::MultiTable&lt; T, N &gt;::DimensionMetaInfo</a>
@@ -298,7 +299,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:53 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

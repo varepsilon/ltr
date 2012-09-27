@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Learning To Rank Library: ltr/learners/decision_tree/condition.h File Reference</title>
+<title>Learning To Rank Library: ltr/learners/decision_tree/condition/condition.h File Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -100,40 +100,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">ltr/learners/decision_tree/condition.h File Reference</div>  </div>
+<div class="title">ltr/learners/decision_tree/condition/condition.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="serializable__functor_8h_source.html">ltr/interfaces/serializable_functor.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="fake__scorer_8h_source.html">ltr/scorers/fake_scorer.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="one__feature__scorer_8h_source.html">ltr/scorers/one_feature_scorer.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &lt;string&gt;</code><br/>
+<code>#include &quot;<a class="el" href="object_8h_source.html">ltr/data/object.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="serializable_8h_source.html">ltr/interfaces/serializable.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="shared__ptr_8h_source.html">ltr/utility/shared_ptr.h</a>&quot;</code><br/>
 </div>
 <p><a href="condition_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1decision__tree_1_1_condition.html">ltr::decision_tree::Condition</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1decision__tree_1_1_fake_condition.html">ltr::decision_tree::FakeCondition</a></td></tr>
 <tr><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceltr"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr.html">ltr</a></td></tr>
 <tr class="memitem:namespaceltr_1_1decision__tree"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html">ltr::decision_tree</a></td></tr>
-<tr><td colspan="2"><h2><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a3da866f18320a49ce8f6e2b0bdf9f6a9"><td class="memItemLeft" align="right" valign="top">typedef SerializableFunctor<br class="typebreak"/>
-&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#a3da866f18320a49ce8f6e2b0bdf9f6a9">ltr::decision_tree::Condition</a></td></tr>
-<tr class="memitem:ae2c357b933942f266b517d9f4a5b17d4"><td class="memItemLeft" align="right" valign="top">typedef FakeScorer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#ae2c357b933942f266b517d9f4a5b17d4">ltr::decision_tree::FakeCondition</a></td></tr>
-<tr class="memitem:aec168e3af11a80cf5089a5f93e176a88"><td class="memItemLeft" align="right" valign="top">typedef OneFeatureScorer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#aec168e3af11a80cf5089a5f93e176a88">ltr::decision_tree::OneFeatureCondition</a></td></tr>
-<tr><td colspan="2"><h2><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aad01e4bce11dccdc0cf68607900def15"><td class="memItemLeft" align="right" valign="top">FakeCondition::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#aad01e4bce11dccdc0cf68607900def15">ltr::decision_tree::FakeConditionPtr</a> ()</td></tr>
-<tr class="memitem:a9f194f895b0e23f94196d01f19f8a133"><td class="memItemLeft" align="right" valign="top">OneFeatureCondition::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#a9f194f895b0e23f94196d01f19f8a133">ltr::decision_tree::OneFeatureConditionPtr</a> ()</td></tr>
-<tr class="memitem:aededea8d36c62619671e050aa6aabfb6"><td class="memItemLeft" align="right" valign="top">OneFeatureCondition::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1decision__tree.html#aededea8d36c62619671e050aa6aabfb6">ltr::decision_tree::OneFeatureConditionPtr</a> (int feature_id)</td></tr>
 </table>
 </div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -9,9 +9,9 @@ var searchData=
   ['dataset_3c_20objecttype_20_3e',['DataSet< ObjectType >',['../classltr_1_1_data_set.html',1,'ltr']]],
   ['datasetweightsupdater',['DataSetWeightsUpdater',['../classltr_1_1composition_1_1_data_set_weights_updater.html',1,'ltr::composition']]],
   ['datasetweightsupdater_3c_20object_20_3e',['DataSetWeightsUpdater< Object >',['../classltr_1_1composition_1_1_data_set_weights_updater.html',1,'ltr::composition']]],
+  ['datasizestopsplittingcriteria',['DataSizeStopSplittingCriteria',['../classltr_1_1decision__tree_1_1_data_size_stop_splitting_criteria.html',1,'ltr::decision_tree']]],
   ['dcgformula',['DCGFormula',['../classltr_1_1_d_c_g_formula.html',1,'ltr']]],
   ['decisiontree',['DecisionTree',['../classltr_1_1decision__tree_1_1_decision_tree.html',1,'ltr::decision_tree']]],
-  ['decisiontree_3c_20double_20_3e',['DecisionTree< double >',['../classltr_1_1decision__tree_1_1_decision_tree.html',1,'ltr::decision_tree']]],
   ['decisiontreelearner',['DecisionTreeLearner',['../classltr_1_1decision__tree_1_1_decision_tree_learner.html',1,'ltr::decision_tree']]],
   ['decisiontreescorer',['DecisionTreeScorer',['../classltr_1_1decision__tree_1_1_decision_tree_scorer.html',1,'ltr::decision_tree']]],
   ['decisiontreetest',['DecisionTreeTest',['../class_decision_tree_test.html',1,'']]],
@@ -23,5 +23,6 @@ var searchData=
   ['dimensionmetainfo',['DimensionMetaInfo',['../structltr_1_1utility_1_1_multi_table_1_1_dimension_meta_info.html',1,'ltr::utility::MultiTable']]],
   ['dimensionsize',['DimensionSize',['../structltr_1_1utility_1_1_dimension_size.html',1,'ltr::utility']]],
   ['distancetoneighbor',['DistanceToNeighbor',['../structltr_1_1_distance_to_neighbor.html',1,'ltr']]],
-  ['divide',['Divide',['../classltr_1_1gp_1_1_divide.html',1,'ltr::gp']]]
+  ['divide',['Divide',['../classltr_1_1gp_1_1_divide.html',1,'ltr::gp']]],
+  ['doublelesscomparator',['DoubleLessComparator',['../classltr_1_1utility_1_1_double_less_comparator.html',1,'ltr::utility']]]
 ];

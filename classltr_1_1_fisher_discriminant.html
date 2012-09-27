@@ -122,8 +122,9 @@ Inheritance diagram for ltr::FisherDiscriminant:</div>
  <div class="center">
   <img src="classltr_1_1_fisher_discriminant.png" usemap="#ltr::FisherDiscriminant_map" alt=""/>
   <map id="ltr::FisherDiscriminant_map" name="ltr::FisherDiscriminant_map">
-<area href="classltr_1_1_base_probability_density_estimator.html" alt="ltr::BaseProbabilityDensityEstimator" shape="rect" coords="0,56,210,80"/>
+<area href="classltr_1_1_base_probability_density_estimator.html" alt="ltr::BaseProbabilityDensityEstimator" shape="rect" coords="110,56,320,80"/>
 <area href="classltr_1_1_parameterized.html" alt="ltr::Parameterized" shape="rect" coords="0,0,210,24"/>
+<area href="classltr_1_1_serializable.html" alt="ltr::Serializable" shape="rect" coords="220,0,430,24"/>
 </map>
  </div></div>
 
@@ -135,6 +136,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a725e9656d4ccd2065202fd39f512b3e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant.html#a725e9656d4ccd2065202fd39f512b3e1">FisherDiscriminant</a> (const <a class="el" href="classltr_1_1_parameters_container.html">ParametersContainer</a> &amp;parameters)</td></tr>
 <tr class="memitem:a29f8a99ededfa90b00102afd03d2dcb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant.html#a29f8a99ededfa90b00102afd03d2dcb7">FisherDiscriminant</a> (const map&lt; <a class="el" href="namespaceltr.html#a94af0e19f8df5820ea8e0b5a88cba7bd">Label</a>, VectorXd &gt; &amp;linear_factors, const map&lt; <a class="el" href="namespaceltr.html#a94af0e19f8df5820ea8e0b5a88cba7bd">Label</a>, double &gt; &amp;linear_biases)</td></tr>
 <tr class="memitem:a12a69c79d818723581aaad278d40c00f"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant.html#a12a69c79d818723581aaad278d40c00f">estimate</a> (const <a class="el" href="classltr_1_1_object.html">Object</a> &amp;object, const double label)</td></tr>
+<tr class="memitem:a3f4c9173907193888fb1deb15334b015"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant.html#a3f4c9173907193888fb1deb15334b015">generateCppCode</a> (const string &amp;function_name) const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a9f9c8192ae032c09819b11b45c1f5703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">LabelToLinearFactor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant.html#a9f9c8192ae032c09819b11b45c1f5703">linear_factors_</a></td></tr>
@@ -231,6 +233,32 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3f4c9173907193888fb1deb15334b015"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classltr_1_1_fisher_discriminant.html#a3f4c9173907193888fb1deb15334b015">ltr::FisherDiscriminant::generateCppCode</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>serrializable_object_name</em></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p><a class="el" href="class_the.html">The</a> function creates cpp code for serializable object using given name. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serrializable_object_name</td><td>name that should be used for naming the object (function or class) within the generated cpp code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classltr_1_1_serializable.html#a8895d0f4cacfe92ce6e908d510a1b67d">ltr::Serializable</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Member Data Documentation</h2>
 <a class="anchor" id="ae7429f197eb38b4ddad84ee298804572"></a>
 <div class="memitem">
@@ -266,7 +294,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:48 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:10 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

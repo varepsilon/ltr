@@ -105,7 +105,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_vars_0x65.html#index_e"><span>e</span></a></li>
       <li class="current"><a href="functions_vars_0x66.html#index_f"><span>f</span></a></li>
       <li><a href="functions_vars_0x67.html#index_g"><span>g</span></a></li>
-      <li><a href="functions_vars_0x68.html#index_h"><span>h</span></a></li>
       <li><a href="functions_vars_0x69.html#index_i"><span>i</span></a></li>
       <li><a href="functions_vars_0x6b.html#index_k"><span>k</span></a></li>
       <li><a href="functions_vars_0x6c.html#index_l"><span>l</span></a></li>
@@ -142,6 +141,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>factors_
 : <a class="el" href="classltr_1_1_per_feature_linear_converter.html#a6aab129337de7aca522f03c6e014115a">ltr::PerFeatureLinearConverter</a>
 </li>
+<li>feature
+: <a class="el" href="structltr_1_1decision__tree_1_1_feature_with_label_and_weight.html#a696c28995cc2e9be4fadef532c56b8ab">ltr::decision_tree::FeatureWithLabelAndWeight</a>
+</li>
 <li>feature_converter_
 : <a class="el" href="classltr_1_1_base_feature_converter_learner.html#a407e88e41c2c18ee789feed03eb41797">ltr::BaseFeatureConverterLearner&lt; TElement, TFeatureConverter &gt;</a>
 </li>
@@ -153,8 +155,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classltr_1_1_scorer.html#a3cb03c1bd72675b7079c897fde4a26bb">ltr::Scorer</a>
 </li>
 <li>feature_count_
-: <a class="el" href="classltr_1_1gp_1_1_g_p_learner.html#a47469e1b78a4d88546560f86baa2d0d7">ltr::gp::GPLearner&lt; TElement &gt;</a>
-, <a class="el" href="classltr_1_1gp_1_1_g_p_scorer.html#a9a9932c777076ef68ea4893d24346434">ltr::gp::GPScorer</a>
+: <a class="el" href="classltr_1_1gp_1_1_g_p_scorer.html#a9a9932c777076ef68ea4893d24346434">ltr::gp::GPScorer</a>
+, <a class="el" href="classltr_1_1gp_1_1_g_p_learner.html#a47469e1b78a4d88546560f86baa2d0d7">ltr::gp::GPLearner&lt; TElement &gt;</a>
+</li>
+<li>feature_index
+: <a class="el" href="structltr_1_1decision__tree_1_1_threshold.html#a322f4436efc501d6506c20674697fd79">ltr::decision_tree::Threshold</a>
+</li>
+<li>feature_index_
+: <a class="el" href="classltr_1_1decision__tree_1_1_threshold_condition.html#abce7c27c47ff03031cc3b0f7c2a1b134">ltr::decision_tree::ThresholdCondition</a>
 </li>
 <li>feature_info_
 : <a class="el" href="classltr_1_1_data_set.html#a3d7127b144e7b2b3815636a95a5c22e4">ltr::DataSet&lt; TElement &gt;</a>
@@ -163,33 +171,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>feature_name
 : <a class="el" href="structltr_1_1io__utility_1_1_parser_1_1_one_feature_raw_info.html#a680b68d64c854a814028b77253952287">ltr::io_utility::Parser::OneFeatureRawInfo</a>
 </li>
-<li>feature_split_count_
-: <a class="el" href="classltr_1_1decision__tree_1_1_i_d3___splitter.html#a0a2d9cace35a35c570c8bb4598037b15">ltr::decision_tree::ID3_Splitter</a>
-</li>
 <li>feature_type
 : <a class="el" href="structltr_1_1io__utility_1_1_parser_1_1_one_feature_raw_info.html#af89608627de0f1200f17b5853cf5a29d">ltr::io_utility::Parser::OneFeatureRawInfo</a>
 </li>
 <li>feature_values
 : <a class="el" href="structltr_1_1io__utility_1_1_parser_1_1_one_feature_raw_info.html#aa05de3a3d143ee63eea51a9bda28546e">ltr::io_utility::Parser::OneFeatureRawInfo</a>
-, <a class="el" href="classltr_1_1decision__tree_1_1_i_d3___splitter.html#aee7f9bc2a960717ff16e543eec9e771c">ltr::decision_tree::ID3_Splitter</a>
 </li>
 <li>features_
-: <a class="el" href="classltr_1_1_object.html#a1e9b5fdcd2b815a6b1e7ce269c431c74">ltr::Object</a>
-, <a class="el" href="classltr_1_1io__utility_1_1_a_r_f_f_parser.html#aca87f66c5938d5dfcd1c79891fa486be">ltr::io_utility::ARFFParser</a>
+: <a class="el" href="classltr_1_1io__utility_1_1_a_r_f_f_parser.html#aca87f66c5938d5dfcd1c79891fa486be">ltr::io_utility::ARFFParser</a>
+, <a class="el" href="classltr_1_1_object.html#a1e9b5fdcd2b815a6b1e7ce269c431c74">ltr::Object</a>
 </li>
 <li>first
-: <a class="el" href="structserialization__test_1_1_report.html#a4f220451273134eb4855c46c83f6fc55">serialization_test::Report</a>
-, <a class="el" href="classltr_1_1_object_pair.html#a5bc9d0318053b4a97ae09dba7f1484eb">ltr::ObjectPair</a>
-</li>
-<li>first_child_
-: <a class="el" href="classltr_1_1decision__tree_1_1_vertex.html#a964db045a4b3982e2097da3760eeed78">ltr::decision_tree::Vertex&lt; TValue &gt;</a>
+: <a class="el" href="classltr_1_1_object_pair.html#a5bc9d0318053b4a97ae09dba7f1484eb">ltr::ObjectPair</a>
+, <a class="el" href="structserialization__test_1_1_report.html#a4f220451273134eb4855c46c83f6fc55">serialization_test::Report</a>
 </li>
 </ul>
 </div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:53 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

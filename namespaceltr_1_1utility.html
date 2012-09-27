@@ -119,6 +119,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1utility_1_1_list_to_pair_convertion_strategy.html">ListToPairConvertionStrategy</a></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1utility_1_1_list_to_all_pairs_converter.html">ListToAllPairsConverter</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1utility_1_1_double_less_comparator.html">DoubleLessComparator</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structltr_1_1utility_1_1_label_statistic.html">LabelStatistic</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1utility_1_1_label_statistic_computer.html">LabelStatisticComputer</a></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structltr_1_1utility_1_1_dimension_size.html">DimensionSize</a></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1utility_1_1_multi_table.html">MultiTable</a></td></tr>
@@ -153,9 +156,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a9ddafeaa415a572f68740c8050344d2d"><td class="memItemLeft" align="right" valign="top">template void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a9ddafeaa415a572f68740c8050344d2d">getFeaturesMinMaxValues&lt; Object &gt;</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object.html">Object</a> &gt; &amp;data_set, vector&lt; double &gt; *min_features_values, vector&lt; double &gt; *max_features_values)</td></tr>
 <tr class="memitem:a1616a29ea205f04ac7d95099cdd3e188"><td class="memItemLeft" align="right" valign="top">template void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a1616a29ea205f04ac7d95099cdd3e188">getFeaturesMinMaxValues&lt; ObjectPair &gt;</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> &gt; &amp;data_set, vector&lt; double &gt; *min_features_values, vector&lt; double &gt; *max_features_values)</td></tr>
 <tr class="memitem:a1c8a004cf20ea6053657b68d06b0c6d4"><td class="memItemLeft" align="right" valign="top">template void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a1c8a004cf20ea6053657b68d06b0c6d4">getFeaturesMinMaxValues&lt; ObjectList &gt;</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> &gt; &amp;data_set, vector&lt; double &gt; *min_features_values, vector&lt; double &gt; *max_features_values)</td></tr>
-<tr class="memitem:abd0ba1ce5bcb6386175b41c237659e2c"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#abd0ba1ce5bcb6386175b41c237659e2c">ExtractLabels</a> (const <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> &amp;object_list)</td></tr>
+<tr class="memitem:a3eb032a3ab8c12f9baedc4c6fc262015"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a3eb032a3ab8c12f9baedc4c6fc262015">getDataSetEntropy</a> (const <a class="el" href="classltr_1_1utility_1_1_label_statistic_computer.html">LabelStatisticComputer</a> &amp;label_stat_computer)</td></tr>
+<tr class="memitem:af23ae63de49986a88b4167970ef318cf"><td class="memTemplParams" colspan="2">template&lt;typename TElement &gt; </td></tr>
+<tr class="memitem:af23ae63de49986a88b4167970ef318cf"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#af23ae63de49986a88b4167970ef318cf">getDataSetEntropy</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data)</td></tr>
 <tr class="memitem:a0bd4c679332105f4f06287ce4f0f63ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a0bd4c679332105f4f06287ce4f0f63ba">PredictedDecreasingActualIncreasing</a> (const <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &amp;left, const <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &amp;right)</td></tr>
 <tr class="memitem:a65991fdabe12053ebc1898ece16606d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#a65991fdabe12053ebc1898ece16606d2">ActualDecreasing</a> (const <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &amp;left, const <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &amp;right)</td></tr>
+<tr class="memitem:aea52492295ed1c38573f3d66859eb075"><td class="memTemplParams" colspan="2">template&lt;class TElement &gt; </td></tr>
+<tr class="memitem:aea52492295ed1c38573f3d66859eb075"><td class="memTemplItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#aea52492295ed1c38573f3d66859eb075">ExtractLabels</a> (const TElement &amp;data_set)</td></tr>
 <tr class="memitem:aa24b3fe40a602b41e146abe6c32d51f8"><td class="memTemplParams" colspan="2">template&lt;class TCont &gt; </td></tr>
 <tr class="memitem:aa24b3fe40a602b41e146abe6c32d51f8"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceltr_1_1utility.html#aa24b3fe40a602b41e146abe6c32d51f8">Contains</a> (const TCont &amp;cont, const typename TCont::key_type &amp;key)</td></tr>
 <tr class="memitem:a4ee46a4f5bf2846d37f7076c3e697f2a"><td class="memTemplParams" colspan="2">template&lt;class ValueType &gt; </td></tr>
@@ -1094,15 +1101,17 @@ template&lt;class TElement &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="abd0ba1ce5bcb6386175b41c237659e2c"></a>
+<a class="anchor" id="aea52492295ed1c38573f3d66859eb075"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class TElement &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; <a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a> &gt; <a class="el" href="namespaceltr_1_1utility.html#abd0ba1ce5bcb6386175b41c237659e2c">ltr::utility::ExtractLabels</a> </td>
+          <td class="memname">vector&lt;<a class="el" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">PredictedAndActualLabels</a>&gt; <a class="el" href="namespaceltr_1_1utility.html#aea52492295ed1c38573f3d66859eb075">ltr::utility::ExtractLabels</a> </td>
           <td>(</td>
-          <td class="paramtype">const ObjectList &amp;&#160;</td>
-          <td class="paramname"><em>object_list</em></td><td>)</td>
+          <td class="paramtype">const TElement &amp;&#160;</td>
+          <td class="paramname"><em>data_set</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1149,6 +1158,42 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a3eb032a3ab8c12f9baedc4c6fc262015"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="namespaceltr_1_1utility.html#a3eb032a3ab8c12f9baedc4c6fc262015">ltr::utility::getDataSetEntropy</a> </td>
+          <td>(</td>
+          <td class="paramtype">const LabelStatisticComputer &amp;&#160;</td>
+          <td class="paramname"><em>label_stat_computer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af23ae63de49986a88b4167970ef318cf"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElement &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="namespaceltr_1_1utility.html#a3eb032a3ab8c12f9baedc4c6fc262015">ltr::utility::getDataSetEntropy</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a81a7454113f17f8773784464cce73265"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1158,7 +1203,7 @@ template&lt;typename TElement &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="namespaceltr_1_1utility.html#a81a7454113f17f8773784464cce73265">ltr::utility::getFeaturesMinMaxValues</a> </td>
           <td>(</td>
-          <td class="paramtype">const DataSet&lt; TElement &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;&#160;</td>
           <td class="paramname"><em>dataset</em>, </td>
         </tr>
         <tr>
@@ -1181,7 +1226,7 @@ template&lt;typename TElement &gt; </div>
       </table>
 </div>
 <div class="memdoc">
-<p>This function calculates min and max features for given dataset. Used in normalizing converter and decision trees. </p>
+<p>This function calculates min and max features for given dataset. </p>
 
 </div>
 </div>
@@ -1192,7 +1237,7 @@ template&lt;typename TElement &gt; </div>
         <tr>
           <td class="memname">template void <a class="el" href="namespaceltr_1_1utility.html#a81a7454113f17f8773784464cce73265">ltr::utility::getFeaturesMinMaxValues</a>&lt; <a class="el" href="classltr_1_1_object.html">Object</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const DataSet&lt; <a class="el" href="classltr_1_1_object.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object.html">Object</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>data_set</em>, </td>
         </tr>
         <tr>
@@ -1225,7 +1270,7 @@ template&lt;typename TElement &gt; </div>
         <tr>
           <td class="memname">template void <a class="el" href="namespaceltr_1_1utility.html#a81a7454113f17f8773784464cce73265">ltr::utility::getFeaturesMinMaxValues</a>&lt; <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const DataSet&lt; <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>data_set</em>, </td>
         </tr>
         <tr>
@@ -1258,7 +1303,7 @@ template&lt;typename TElement &gt; </div>
         <tr>
           <td class="memname">template void <a class="el" href="namespaceltr_1_1utility.html#a81a7454113f17f8773784464cce73265">ltr::utility::getFeaturesMinMaxValues</a>&lt; <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const DataSet&lt; <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>data_set</em>, </td>
         </tr>
         <tr>
@@ -1568,7 +1613,7 @@ template&lt;class T , class U &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td><code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -2081,7 +2126,7 @@ template&lt;class Value &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:52 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

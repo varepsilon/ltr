@@ -150,10 +150,10 @@ Learners and scorers</h3>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &lt;vector&gt;</span>
 
-<span class="preprocessor">#include &quot;ltr\data\data_set.h&quot;</span>
-<span class="preprocessor">#include &quot;ltr\data\object.h&quot;</span>
-<span class="preprocessor">#include &quot;ltr\learners\linear_learner\linear_learner.h&quot;</span>
-<span class="preprocessor">#include &quot;ltr\scorers\linear_scorer.h&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="linear__learner_8h.html">ltr/learners/linear_learner/linear_learner.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="linear__scorer_8h.html">ltr/scorers/linear_scorer.h</a>&quot;</span>
 
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
@@ -170,7 +170,7 @@ Learners and scorers</h3>
 
   train_object1 &lt;&lt; 1.2 &lt;&lt; 12.9;                                                 <span class="comment">// create new object from training data</span>
   train_object1.set_actual_label(1);                                            <span class="comment">// set new actual label</span>
-  train_object2 &lt;&lt; 2.4 &lt;&lt; 25.8; 
+  train_object2 &lt;&lt; 2.4 &lt;&lt; 25.8;
   train_object2.set_actual_label(2);
   train_object3 &lt;&lt; 0.3 &lt;&lt; 3.225;
   train_object3.set_actual_label(0.25);
@@ -198,7 +198,16 @@ Learners and scorers</h3>
 <tr>
 <td>Output: </td></tr>
 <tr>
-<td><div class="fragment"><pre class="fragment"></pre></div>  </td></tr>
+<td><div class="fragment"><pre class="fragment">/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:49: info: Learning started
+/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 0 element.
+/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 1 element.
+/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 2 element.
+/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:67: info: Calculating XTW matrix
+train_object1 score = 1
+train_object2 score = 2
+train_object3 score = 0.25
+test_object1 score = 10
+</pre></div>  </td></tr>
 </table>
 <p>LTR supports different types of learners. Some of this types are linear learner, linear composition learner, decision tree learner. Each learner from LTR has its own scorer.</p>
 <p>Let's look at another example. Here we download data from file.</p>
@@ -238,7 +247,7 @@ Learners and scorers</h3>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

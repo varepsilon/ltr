@@ -105,38 +105,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ltr/scorers/composition_scorers/composition_scorer_unittest.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;vector&gt;</code><br/>
-<code>#include &lt;gtest/gtest.h&gt;</code><br/>
+<div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
 <code>#include &quot;<a class="el" href="numerical_8h_source.html">ltr/utility/numerical.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="object_8h_source.html">ltr/data/object.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="linear__composition__scorer_8h_source.html">ltr/scorers/composition_scorers/linear_composition_scorer.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="max__weight__composition__scorer_8h_source.html">ltr/scorers/composition_scorers/max_weight_composition_scorer.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="median__composition__scorer_8h_source.html">ltr/scorers/composition_scorers/median_composition_scorer.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="order__statistic__composition__scorer_8h_source.html">ltr/scorers/composition_scorers/order_statistic_composition_scorer.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="one__feature__scorer_8h_source.html">ltr/scorers/one_feature_scorer.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="composition__scorer_8h_source.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="sum__predictions__aggregator_8h_source.html">ltr/predictions_aggregators/sum_predictions_aggregator.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="max__weight__predictions__aggregator_8h_source.html">ltr/predictions_aggregators/max_weight_predictions_aggregator.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="order__statistic__predictions__aggregator_8h_source.html">ltr/predictions_aggregators/order_statistic_predictions_aggregator.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a83d853d088989fc9541365b423dac3ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#a83d853d088989fc9541365b423dac3ce">TEST</a> (CompositionScorer, LinearCompositionScorerTest)</td></tr>
-<tr class="memitem:ac1d469fbdd3d28d952c9ec288754cdb2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#ac1d469fbdd3d28d952c9ec288754cdb2">TEST</a> (CompositionScorer, MaxWeightCompositionScorerTest)</td></tr>
-<tr class="memitem:a4098df247119680ee0ae3a3b16dd1cc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#a4098df247119680ee0ae3a3b16dd1cc7">TEST</a> (CompositionScorer, MedianCompositionScorerTest)</td></tr>
-<tr class="memitem:aba5075d225597d662c4b6061053ba6e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#aba5075d225597d662c4b6061053ba6e5">TEST</a> (CompositionScorer, OrderStaticticCompositionScorerTest)</td></tr>
+<tr class="memitem:ac5e5d46bf3699735dfb68305139759b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#ac5e5d46bf3699735dfb68305139759b5">TEST</a> (<a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>, CompositionScorerWithSumAggregationTest)</td></tr>
+<tr class="memitem:a2b3a70f1da5bfec15dd9342cc23fc59d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#a2b3a70f1da5bfec15dd9342cc23fc59d">TEST</a> (<a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>, CompositionScorerWithMaxWeightAggregationTest)</td></tr>
+<tr class="memitem:a742efbef75b2946e29abc3b33a0b62b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#a742efbef75b2946e29abc3b33a0b62b6">TEST</a> (<a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>, CompositionScorerWithMedianAggregationTest)</td></tr>
+<tr class="memitem:ad1c90df33dc1ef42646adbb12b40d808"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="composition__scorer__unittest_8cc.html#ad1c90df33dc1ef42646adbb12b40d808">TEST</a> (<a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>, CompositionScorerWithOrderStatisticAggregationTest)</td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a83d853d088989fc9541365b423dac3ce"></a>
+<a class="anchor" id="ac5e5d46bf3699735dfb68305139759b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="two__class__predicted__label__converter__unittest_8cc.html#aaee62476dea5a9f8cd9a4c2efc8c096b">TEST</a> </td>
           <td>(</td>
-          <td class="paramtype">CompositionScorer&#160;</td>
+          <td class="paramtype"><a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">LinearCompositionScorerTest&#160;</td>
+          <td class="paramtype">CompositionScorerWithSumAggregationTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -150,20 +150,20 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac1d469fbdd3d28d952c9ec288754cdb2"></a>
+<a class="anchor" id="a2b3a70f1da5bfec15dd9342cc23fc59d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="two__class__predicted__label__converter__unittest_8cc.html#aaee62476dea5a9f8cd9a4c2efc8c096b">TEST</a> </td>
           <td>(</td>
-          <td class="paramtype">CompositionScorer&#160;</td>
+          <td class="paramtype"><a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MaxWeightCompositionScorerTest&#160;</td>
+          <td class="paramtype">CompositionScorerWithMaxWeightAggregationTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -177,20 +177,20 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4098df247119680ee0ae3a3b16dd1cc7"></a>
+<a class="anchor" id="a742efbef75b2946e29abc3b33a0b62b6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="two__class__predicted__label__converter__unittest_8cc.html#aaee62476dea5a9f8cd9a4c2efc8c096b">TEST</a> </td>
           <td>(</td>
-          <td class="paramtype">CompositionScorer&#160;</td>
+          <td class="paramtype"><a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MedianCompositionScorerTest&#160;</td>
+          <td class="paramtype">CompositionScorerWithMedianAggregationTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -204,20 +204,20 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aba5075d225597d662c4b6061053ba6e5"></a>
+<a class="anchor" id="ad1c90df33dc1ef42646adbb12b40d808"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="two__class__predicted__label__converter__unittest_8cc.html#aaee62476dea5a9f8cd9a4c2efc8c096b">TEST</a> </td>
           <td>(</td>
-          <td class="paramtype">CompositionScorer&#160;</td>
+          <td class="paramtype"><a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">CompositionScorer</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">OrderStaticticCompositionScorerTest&#160;</td>
+          <td class="paramtype">CompositionScorerWithOrderStatisticAggregationTest&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -235,7 +235,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

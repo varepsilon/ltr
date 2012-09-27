@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Learning To Rank Library: ltr/learners/decision_tree/condition.h Source File</title>
+<title>Learning To Rank Library: ltr/learners/decision_tree/condition/condition.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -100,38 +100,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ltr/learners/decision_tree/condition.h</div>  </div>
+<div class="title">ltr/learners/decision_tree/condition/condition.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="condition_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// Copyright 2012 Yandex</span>
 <a name="l00002"></a>00002 
-<a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_DECISION_TREE_CONDITION_H_</span>
-<a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_DECISION_TREE_CONDITION_H_</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_DECISION_TREE_CONDITION_CONDITION_H_</span>
+<a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_DECISION_TREE_CONDITION_CONDITION_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="serializable__functor_8h.html">ltr/interfaces/serializable_functor.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="fake__scorer_8h.html">ltr/scorers/fake_scorer.h</a>&quot;</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="one__feature__scorer_8h.html">ltr/scorers/one_feature_scorer.h</a>&quot;</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="keyword">namespace </span>ltr {
-<a name="l00012"></a>00012 <span class="keyword">namespace </span>decision_tree {
-<a name="l00013"></a><a class="code" href="namespaceltr_1_1decision__tree.html#a3da866f18320a49ce8f6e2b0bdf9f6a9">00013</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_serializable_functor.html">SerializableFunctor&lt;double&gt;</a> <a class="code" href="namespaceltr_1_1decision__tree.html#a3da866f18320a49ce8f6e2b0bdf9f6a9">Condition</a>;
-<a name="l00014"></a>00014 
-<a name="l00015"></a><a class="code" href="namespaceltr_1_1decision__tree.html#ae2c357b933942f266b517d9f4a5b17d4">00015</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_fake_scorer.html">FakeScorer</a> <a class="code" href="namespaceltr_1_1decision__tree.html#ae2c357b933942f266b517d9f4a5b17d4">FakeCondition</a>;
-<a name="l00016"></a><a class="code" href="namespaceltr_1_1decision__tree.html#aec168e3af11a80cf5089a5f93e176a88">00016</a> <span class="keyword">typedef</span> <a class="code" href="classltr_1_1_one_feature_scorer.html">OneFeatureScorer</a> <a class="code" href="namespaceltr_1_1decision__tree.html#aec168e3af11a80cf5089a5f93e176a88">OneFeatureCondition</a>;
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">FakeCondition::Ptr</a> <a class="code" href="namespaceltr_1_1decision__tree.html#aad01e4bce11dccdc0cf68607900def15">FakeConditionPtr</a>();
-<a name="l00019"></a>00019 <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">OneFeatureCondition::Ptr</a> <a class="code" href="namespaceltr_1_1decision__tree.html#a9f194f895b0e23f94196d01f19f8a133">OneFeatureConditionPtr</a>();
-<a name="l00020"></a>00020 <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">OneFeatureCondition::Ptr</a> <a class="code" href="namespaceltr_1_1decision__tree.html#a9f194f895b0e23f94196d01f19f8a133">OneFeatureConditionPtr</a>(<span class="keywordtype">int</span> feature_id);
-<a name="l00021"></a>00021 };
-<a name="l00022"></a>00022 };
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="serializable_8h.html">ltr/interfaces/serializable.h</a>&quot;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="keyword">namespace </span>ltr {
+<a name="l00015"></a>00015 <span class="keyword">namespace </span>decision_tree {
+<a name="l00020"></a><a class="code" href="classltr_1_1decision__tree_1_1_condition.html">00020</a> <span class="keyword">class </span><a class="code" href="classltr_1_1decision__tree_1_1_condition.html">Condition</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_serializable.html">Serializable</a> {
+<a name="l00021"></a>00021  <span class="keyword">public</span>:
+<a name="l00022"></a><a class="code" href="classltr_1_1decision__tree_1_1_condition.html#acb531deb9f0323ae4aadff82d0faf8ba">00022</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;Condition&gt;</a> <a class="code" href="classltr_1_1decision__tree_1_1_condition.html#acb531deb9f0323ae4aadff82d0faf8ba">Ptr</a>;
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="preprocessor">#endif  // LTR_LEARNERS_DECISION_TREE_CONDITION_H_</span>
+<a name="l00024"></a><a class="code" href="classltr_1_1decision__tree_1_1_condition.html#ac91b29a2089726cd822ee3c94e967498">00024</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1decision__tree_1_1_condition.html#ac91b29a2089726cd822ee3c94e967498">~Condition</a>() {}
+<a name="l00025"></a>00025   <span class="comment">/*</span>
+<a name="l00026"></a>00026 <span class="comment">   * Returns the confidence that object satisfied this condition.</span>
+<a name="l00027"></a>00027 <span class="comment">   */</span>
+<a name="l00028"></a>00028   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_condition.html#ad4050e3ee357ebb980aab0e03a631b7d">value</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span> = 0;
+<a name="l00029"></a>00029 };
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html">00031</a> <span class="keyword">class </span><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html">FakeCondition</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1decision__tree_1_1_condition.html">Condition</a> {
+<a name="l00032"></a>00032  <span class="keyword">public</span>:
+<a name="l00033"></a><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#aebe79c6ec2aede041280a2153653f160">00033</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;FakeCondition&gt;</a> <a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#aebe79c6ec2aede041280a2153653f160">Ptr</a>;
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#af57c43ace01d9192b0b78399aea8d5a6">00035</a>   <a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#af57c43ace01d9192b0b78399aea8d5a6">FakeCondition</a>() {}
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#a58493368517554eb3852fbdd3fa201fe">00037</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#a58493368517554eb3852fbdd3fa201fe">value</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>)<span class="keyword"> const </span>{<span class="keywordflow">return</span> 1.0;}
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#a8c5c0f5d99c631183e4fbbab94ae5a95">00039</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1decision__tree_1_1_fake_condition.html#a8c5c0f5d99c631183e4fbbab94ae5a95">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
+<a name="l00040"></a>00040     <span class="keywordtype">string</span> hpp_code;
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     hpp_code.
+<a name="l00043"></a>00043       append(<span class="stringliteral">&quot;inline double &quot;</span>).
+<a name="l00044"></a>00044       append(function_name + <span class="stringliteral">&quot;_id_&quot;</span> + lexical_cast&lt;string&gt;(this-&gt;<a class="code" href="classltr_1_1_serializable.html#a29d6f52ea16a24699a475580731697b6">getId</a>())).
+<a name="l00045"></a>00045       append(<span class="stringliteral">&quot;(const std::vector&lt;double&gt;&amp; features) {return 1;}\n\n&quot;</span>);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047     <span class="keywordflow">return</span> hpp_code;
+<a name="l00048"></a>00048   }
+<a name="l00049"></a>00049 };
+<a name="l00050"></a>00050 };
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="preprocessor">#endif  // LTR_LEARNERS_DECISION_TREE_CONDITION_CONDITION_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

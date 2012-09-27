@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Learning To Rank Library: ltr/learners/decision_tree/leaf_vertex.h Source File</title>
+<title>Learning To Rank Library: ltr/learners/decision_tree/vertex/leaf_vertex.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -100,95 +100,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ltr/learners/decision_tree/leaf_vertex.h</div>  </div>
+<div class="title">ltr/learners/decision_tree/vertex/leaf_vertex.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="leaf__vertex_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// Copyright 2012 Yandex</span>
 <a name="l00002"></a>00002 
-<a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_DECISION_TREE_LEAF_VERTEX_H_</span>
-<a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_DECISION_TREE_LEAF_VERTEX_H_</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_DECISION_TREE_VERTEX_LEAF_VERTEX_H_</span>
+<a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_DECISION_TREE_VERTEX_LEAF_VERTEX_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
 <a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="utility_8h.html">ltr/learners/decision_tree/utility/utility.h</a>&quot;</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="decision__tree_8h.html">ltr/learners/decision_tree/decision_tree.h</a>&quot;</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="keyword">namespace </span>ltr {
-<a name="l00012"></a>00012 <span class="keyword">namespace </span>decision_tree {
-<a name="l00016"></a>00016 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00017"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">00017</a> <span class="keyword">class </span><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">LeafVertex</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1decision__tree_1_1_vertex.html">Vertex</a>&lt;TValue&gt; {
-<a name="l00018"></a>00018  <span class="keyword">public</span>:
-<a name="l00019"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a03fd69f677f1fcda047da85ec4599e5d">00019</a>   <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;LeafVertex&lt;TValue&gt;</a> &gt; <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a03fd69f677f1fcda047da85ec4599e5d">Ptr</a>;
-<a name="l00020"></a>00020 
-<a name="l00021"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#aa0ff4beab6207b1b3b68600a5afa5d65">00021</a>   <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#aa0ff4beab6207b1b3b68600a5afa5d65">LeafVertex</a>() : <a class="code" href="classltr_1_1decision__tree_1_1_vertex.html">Vertex</a>&lt;TValue&gt;() {}
-<a name="l00022"></a>00022 
-<a name="l00023"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae13454a8125066c0595f729b600fc59d">00023</a>   <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#aa0ff4beab6207b1b3b68600a5afa5d65">LeafVertex</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Condition::Ptr</a> <a class="code" href="classltr_1_1decision__tree_1_1_vertex.html#afb98e5502c4b1a20460276f023064a3a">condition</a>, <span class="keyword">const</span> TValue&amp; <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e">value</a>)
-<a name="l00024"></a>00024   : <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a360a99e7279d64e7f0b45b4b3110522d">value_</a>(value),
-<a name="l00025"></a>00025     <a class="code" href="classltr_1_1decision__tree_1_1_vertex.html">Vertex</a>&lt;TValue&gt;(condition) {}
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027   TValue <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e">value</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae7962ef1c6670ddf0a7cbf13e02237d7">setValue</a>(TValue <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e">value</a>);
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="vertex_8h.html">ltr/learners/decision_tree/vertex/vertex.h</a>&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">namespace </span>ltr {
+<a name="l00011"></a>00011 <span class="keyword">namespace </span>decision_tree {
+<a name="l00016"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">00016</a> <span class="keyword">class </span><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">LeafVertex</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1decision__tree_1_1_vertex.html">Vertex</a> {
+<a name="l00017"></a>00017  <span class="keyword">public</span>:
+<a name="l00018"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a60192c20ec8a46c1769244fdb3303437">00018</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;LeafVertex&gt;</a> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a60192c20ec8a46c1769244fdb3303437">Ptr</a>;
+<a name="l00019"></a>00019 
+<a name="l00020"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#affc037b8f1464192234d83ccb5c83a2c">00020</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#affc037b8f1464192234d83ccb5c83a2c">LeafVertex</a>(<span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#adb1708d342398d77111b433d20bfd71b">value</a>) : <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae32bc1049f32adb6c07623b09c4fca5e">value_</a>(value) {}
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#adb1708d342398d77111b433d20bfd71b">value</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a4e3666a2c141f60a4759eb4a32c7ec33">set_value</a>(<span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#adb1708d342398d77111b433d20bfd71b">value</a>);
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a5315750897e1ff1e1852fee5c246234b">generateCppCodeWithId</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030  <span class="keyword">private</span>:
+<a name="l00031"></a>00031   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a94449cea6e52090ce5df19cd9ae1a047">getDefaultAlias</a>() <span class="keyword">const</span>;
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033  <span class="keyword">private</span>:
-<a name="l00034"></a>00034   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a3a3b172573e00966209d8a6abd33a5e6">getDefaultAlias</a>() <span class="keyword">const</span>;
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a360a99e7279d64e7f0b45b4b3110522d">00036</a>   TValue <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a360a99e7279d64e7f0b45b4b3110522d">value_</a>;
-<a name="l00037"></a>00037 };
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00040"></a><a class="code" href="namespaceltr_1_1decision__tree.html#a1e02163b7d932575d1ed229b85aefea5">00040</a> <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">LeafVertex&lt;TValue&gt;::Ptr</a> <a class="code" href="namespaceltr_1_1decision__tree.html#a1e02163b7d932575d1ed229b85aefea5">LeafVertexPtr</a>() {
-<a name="l00041"></a>00041   <span class="keywordflow">return</span> <span class="keyword">typename</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a03fd69f677f1fcda047da85ec4599e5d">LeafVertex&lt;TValue&gt;::Ptr</a>(<span class="keyword">new</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">LeafVertex&lt;TValue&gt;</a>());
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00045"></a>00045 <span class="keyword">typename</span> LeafVertex&lt;TValue&gt;::Ptr
-<a name="l00046"></a><a class="code" href="namespaceltr_1_1decision__tree.html#a7c8c191fb33a723ec25d31e44f1598d6">00046</a>   <a class="code" href="namespaceltr_1_1decision__tree.html#a1e02163b7d932575d1ed229b85aefea5">LeafVertexPtr</a>(<a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Condition::Ptr</a> condition, <span class="keyword">const</span> TValue&amp; value) {
-<a name="l00047"></a>00047     <span class="keywordflow">return</span> <span class="keyword">typename</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a03fd69f677f1fcda047da85ec4599e5d">LeafVertex&lt;TValue&gt;::Ptr</a>(
-<a name="l00048"></a>00048       <span class="keyword">new</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html">LeafVertex&lt;TValue&gt;</a>(condition, value));
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00052"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e">00052</a> TValue <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#abb65ba739376446f705ea0ac5db5464e">LeafVertex&lt;TValue&gt;::value</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>)<span class="keyword"> const </span>{
-<a name="l00053"></a>00053   <span class="keywordflow">return</span> value_;
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00057"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae7962ef1c6670ddf0a7cbf13e02237d7">00057</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae7962ef1c6670ddf0a7cbf13e02237d7">LeafVertex&lt;TValue&gt;::setValue</a>(TValue value) {
-<a name="l00058"></a>00058   value_ = value;
-<a name="l00059"></a>00059 }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00062"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a69ef8c0d044a78eb1595d9ad408c7f0d">00062</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">LeafVertex&lt;TValue&gt;::generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00063"></a>00063   <span class="keywordtype">string</span> hpp_code;
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065   hpp_code.
-<a name="l00066"></a>00066     append(<span class="stringliteral">&quot;inline &quot;</span>).
-<a name="l00067"></a>00067     append(ClassName&lt;TValue&gt;()).
-<a name="l00068"></a>00068     append(<span class="stringliteral">&quot; &quot;</span>).
-<a name="l00069"></a>00069     append(function_name).
-<a name="l00070"></a>00070     append(<span class="stringliteral">&quot;(const std::vector&lt;double&gt;&amp; features) { return &quot;</span>).
-<a name="l00071"></a>00071     append(boost::lexical_cast&lt;string&gt;(value_)).
-<a name="l00072"></a>00072     append(<span class="stringliteral">&quot;; }\n&quot;</span>);
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074   <span class="keywordflow">return</span> hpp_code;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TValue&gt;
-<a name="l00078"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a3a3b172573e00966209d8a6abd33a5e6">00078</a> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#a3a3b172573e00966209d8a6abd33a5e6">LeafVertex&lt;TValue&gt;::getDefaultAlias</a>()<span class="keyword"> const </span>{
-<a name="l00079"></a>00079   <span class="keywordflow">return</span> <span class="stringliteral">&quot;Leaf Vertex&quot;</span>;
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 };
-<a name="l00082"></a>00082 };
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="preprocessor">#endif  // LTR_LEARNERS_DECISION_TREE_LEAF_VERTEX_H_</span>
+<a name="l00033"></a><a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae32bc1049f32adb6c07623b09c4fca5e">00033</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1decision__tree_1_1_leaf_vertex.html#ae32bc1049f32adb6c07623b09c4fca5e">value_</a>;
+<a name="l00034"></a>00034 };
+<a name="l00035"></a>00035 };
+<a name="l00036"></a>00036 };
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="preprocessor">#endif  // LTR_LEARNERS_DECISION_TREE_VERTEX_LEAF_VERTEX_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

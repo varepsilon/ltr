@@ -128,16 +128,17 @@ Inheritance diagram for ltr::Measure&lt; TElement &gt;:</div>
 <area href="classltr_1_1_printable.html" alt="ltr::Printable" shape="rect" coords="454,0,671,24"/>
 <area href="classltr_1_1_abs_error.html" alt="ltr::AbsError" shape="rect" coords="454,112,671,136"/>
 <area href="classltr_1_1_accuracy.html" alt="ltr::Accuracy&lt; TElement &gt;" shape="rect" coords="454,168,671,192"/>
-<area href="classltr_1_1_average_precision.html" alt="ltr::AveragePrecision" shape="rect" coords="454,224,671,248"/>
-<area href="classltr_1_1_base_d_c_g.html" alt="ltr::BaseDCG&lt; TDCGFormula &gt;" shape="rect" coords="454,280,671,304"/>
-<area href="classltr_1_1_base_n_d_c_g.html" alt="ltr::BaseNDCG&lt; TDCGFormula &gt;" shape="rect" coords="454,336,671,360"/>
-<area href="classltr_1_1_binary_classification_accuracy.html" alt="ltr::BinaryClassificationAccuracy" shape="rect" coords="454,392,671,416"/>
-<area href="classltr_1_1_binary_classification_margin.html" alt="ltr::BinaryClassificationMargin" shape="rect" coords="454,448,671,472"/>
-<area href="classltr_1_1_g_m_r_r.html" alt="ltr::GMRR" shape="rect" coords="454,504,671,528"/>
-<area href="classltr_1_1_normalized_measure.html" alt="ltr::NormalizedMeasure&lt; TElement &gt;" shape="rect" coords="454,560,671,584"/>
-<area href="classltr_1_1_p_found.html" alt="ltr::PFound" shape="rect" coords="454,616,671,640"/>
-<area href="classltr_1_1_reciprocal_rank.html" alt="ltr::ReciprocalRank" shape="rect" coords="454,672,671,696"/>
-<area href="classltr_1_1_true_point.html" alt="ltr::TruePoint" shape="rect" coords="454,728,671,752"/>
+<area href="classltr_1_1_a_u_c.html" alt="ltr::AUC" shape="rect" coords="454,224,671,248"/>
+<area href="classltr_1_1_average_precision.html" alt="ltr::AveragePrecision" shape="rect" coords="454,280,671,304"/>
+<area href="classltr_1_1_base_d_c_g.html" alt="ltr::BaseDCG&lt; TDCGFormula &gt;" shape="rect" coords="454,336,671,360"/>
+<area href="classltr_1_1_base_n_d_c_g.html" alt="ltr::BaseNDCG&lt; TDCGFormula &gt;" shape="rect" coords="454,392,671,416"/>
+<area href="classltr_1_1_binary_classification_accuracy.html" alt="ltr::BinaryClassificationAccuracy" shape="rect" coords="454,448,671,472"/>
+<area href="classltr_1_1_binary_classification_margin.html" alt="ltr::BinaryClassificationMargin" shape="rect" coords="454,504,671,528"/>
+<area href="classltr_1_1_g_m_r_r.html" alt="ltr::GMRR" shape="rect" coords="454,560,671,584"/>
+<area href="classltr_1_1_normalized_measure.html" alt="ltr::NormalizedMeasure&lt; TElement &gt;" shape="rect" coords="454,616,671,640"/>
+<area href="classltr_1_1_p_found.html" alt="ltr::PFound" shape="rect" coords="454,672,671,696"/>
+<area href="classltr_1_1_reciprocal_rank.html" alt="ltr::ReciprocalRank" shape="rect" coords="454,728,671,752"/>
+<area href="classltr_1_1_true_point.html" alt="ltr::TruePoint" shape="rect" coords="454,784,671,808"/>
 </map>
  </div></div>
 
@@ -153,7 +154,8 @@ Public Types</h2></td></tr>
 &lt; <a class="el" href="classltr_1_1_measure.html">Measure</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#abf584868c8ad18e79d96d9aed4fbc007">BasePtr</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abcc33fa395f9ae83e4efdd6f1b80685f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">operator()</a> (const TElement &amp;element) const </td></tr>
+<tr class="memitem:abcc33fa395f9ae83e4efdd6f1b80685f"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#abcc33fa395f9ae83e4efdd6f1b80685f">operator()</a> (const TElement &amp;element) const </td></tr>
+<tr class="memitem:ab03133a3c2738aa9cc35fd190653f044"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#ab03133a3c2738aa9cc35fd190653f044">operator()</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set) const </td></tr>
 <tr class="memitem:a84665ea4d3b9af146b4a74cfbf2c786a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#a84665ea4d3b9af146b4a74cfbf2c786a">value</a> (const TElement &amp;element) const </td></tr>
 <tr class="memitem:ace9e389b93e30db0a92eebb0777ed77e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#ace9e389b93e30db0a92eebb0777ed77e">average</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;set) const </td></tr>
 <tr class="memitem:a745907347965867d29cd6045bd700002"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_measure.html#a745907347965867d29cd6045bd700002">better</a> (double expected_better, double expected_worse) const </td></tr>
@@ -248,7 +250,7 @@ template&lt;class TElement&gt; </div>
 <div class="memdoc">
 <p>Returns the best measure's possible value or ltr::Inf if unlimited </p>
 
-<p>Implemented in <a class="el" href="classltr_1_1_base_d_c_g.html#aeec3bfd139e800cfb2fc4065e6aed977">ltr::BaseDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_p_found.html#a25c0746418791fd6a50d2a0641d9022e">ltr::PFound</a>, <a class="el" href="classltr_1_1_base_n_d_c_g.html#aa1d27deaf2aacac2450877492ec165d1">ltr::BaseNDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_g_m_r_r.html#a7794ceba03bae823cb5d5dede4ecd5f0">ltr::GMRR</a>, <a class="el" href="classltr_1_1_reciprocal_rank.html#a0b6d7956d2760df3f309ce920153b353">ltr::ReciprocalRank</a>, <a class="el" href="classltr_1_1_average_precision.html#acf25f41da64752cadcade85efc93b81b">ltr::AveragePrecision</a>, <a class="el" href="classltr_1_1_abs_error.html#a5dfde21073292c4ad9808ab3a0ca95ee">ltr::AbsError</a>, <a class="el" href="classltr_1_1_squared_error.html#a15a8fca92c48cc6dd27de9e0cf8ae0a4">ltr::SquaredError</a>, <a class="el" href="classltr_1_1_binary_classification_margin.html#a2ba877d3d28c5754a488b93b9416a247">ltr::BinaryClassificationMargin</a>, <a class="el" href="classltr_1_1_true_point.html#a629192c6142124bf8c2b9f76ce68ab27">ltr::TruePoint</a>, <a class="el" href="classltr_1_1_binary_classification_accuracy.html#ae23336fdef0e1dbe79320ae608125bde">ltr::BinaryClassificationAccuracy</a>, and <a class="el" href="classltr_1_1_accuracy.html#a2302f08b600470bf38085eea0a103cc2">ltr::Accuracy&lt; TElement &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classltr_1_1_base_d_c_g.html#aeec3bfd139e800cfb2fc4065e6aed977">ltr::BaseDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_p_found.html#a25c0746418791fd6a50d2a0641d9022e">ltr::PFound</a>, <a class="el" href="classltr_1_1_base_n_d_c_g.html#aa1d27deaf2aacac2450877492ec165d1">ltr::BaseNDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_a_u_c.html#afd7fd57cdb9f6bd7d0439148842ed7ca">ltr::AUC</a>, <a class="el" href="classltr_1_1_g_m_r_r.html#a7794ceba03bae823cb5d5dede4ecd5f0">ltr::GMRR</a>, <a class="el" href="classltr_1_1_reciprocal_rank.html#a0b6d7956d2760df3f309ce920153b353">ltr::ReciprocalRank</a>, <a class="el" href="classltr_1_1_average_precision.html#acf25f41da64752cadcade85efc93b81b">ltr::AveragePrecision</a>, <a class="el" href="classltr_1_1_abs_error.html#a5dfde21073292c4ad9808ab3a0ca95ee">ltr::AbsError</a>, <a class="el" href="classltr_1_1_squared_error.html#a15a8fca92c48cc6dd27de9e0cf8ae0a4">ltr::SquaredError</a>, <a class="el" href="classltr_1_1_binary_classification_margin.html#a2ba877d3d28c5754a488b93b9416a247">ltr::BinaryClassificationMargin</a>, <a class="el" href="classltr_1_1_true_point.html#a629192c6142124bf8c2b9f76ce68ab27">ltr::TruePoint</a>, <a class="el" href="classltr_1_1_binary_classification_accuracy.html#ae23336fdef0e1dbe79320ae608125bde">ltr::BinaryClassificationAccuracy</a>, and <a class="el" href="classltr_1_1_accuracy.html#a2302f08b600470bf38085eea0a103cc2">ltr::Accuracy&lt; TElement &gt;</a>.</p>
 
 </div>
 </div>
@@ -341,7 +343,7 @@ template&lt;class TElement&gt; </div>
           <td>(</td>
           <td class="paramtype">const TElement &amp;&#160;</td>
           <td class="paramname"><em>element</em></td><td>)</td>
-          <td> const</td>
+          <td> const<code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -353,6 +355,25 @@ template&lt;class TElement&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ab03133a3c2738aa9cc35fd190653f044"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class TElement&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classltr_1_1_measure.html">ltr::Measure</a>&lt; TElement &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data_set</em></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
 
 </div>
 </div>
@@ -399,7 +420,7 @@ template&lt;class TElement&gt; </div>
 <div class="memdoc">
 <p>Returns the worst measure's possible value or -ltr::Inf if unlimited </p>
 
-<p>Implemented in <a class="el" href="classltr_1_1_base_d_c_g.html#aab7d90de8be6b4b1846b54fc16de4402">ltr::BaseDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_p_found.html#acc08bf1cee4d7ecfcf6f8c8ad9cdfa15">ltr::PFound</a>, <a class="el" href="classltr_1_1_base_n_d_c_g.html#a31423bf8ae1c8203d19efe7a6986d57c">ltr::BaseNDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_g_m_r_r.html#a8c8fff5be8ee5818c5ba7ae6dfac6b7b">ltr::GMRR</a>, <a class="el" href="classltr_1_1_reciprocal_rank.html#a39b9a21088fb525056f1af15346989bb">ltr::ReciprocalRank</a>, <a class="el" href="classltr_1_1_average_precision.html#a1b82b58d6a31496172393f0511236102">ltr::AveragePrecision</a>, <a class="el" href="classltr_1_1_binary_classification_margin.html#adaeafca1bf215b634586aa5ccc125f4c">ltr::BinaryClassificationMargin</a>, <a class="el" href="classltr_1_1_squared_error.html#ad5a5c04a00374c7ca275c1389c8a3960">ltr::SquaredError</a>, <a class="el" href="classltr_1_1_binary_classification_accuracy.html#a4d5fb3685d1861e0cbe893d8ce9e7e73">ltr::BinaryClassificationAccuracy</a>, <a class="el" href="classltr_1_1_true_point.html#a5843f87ccb4d4cf1b13c95b3a0f716b8">ltr::TruePoint</a>, <a class="el" href="classltr_1_1_abs_error.html#ab0e09d78feff35f52e63902cd69e6f60">ltr::AbsError</a>, and <a class="el" href="classltr_1_1_accuracy.html#afbe25464bb4bfd1652908add55aea8c0">ltr::Accuracy&lt; TElement &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classltr_1_1_base_d_c_g.html#aab7d90de8be6b4b1846b54fc16de4402">ltr::BaseDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_p_found.html#acc08bf1cee4d7ecfcf6f8c8ad9cdfa15">ltr::PFound</a>, <a class="el" href="classltr_1_1_base_n_d_c_g.html#a31423bf8ae1c8203d19efe7a6986d57c">ltr::BaseNDCG&lt; TDCGFormula &gt;</a>, <a class="el" href="classltr_1_1_g_m_r_r.html#a8c8fff5be8ee5818c5ba7ae6dfac6b7b">ltr::GMRR</a>, <a class="el" href="classltr_1_1_reciprocal_rank.html#a39b9a21088fb525056f1af15346989bb">ltr::ReciprocalRank</a>, <a class="el" href="classltr_1_1_a_u_c.html#a0783eb780f799f41501afa1b9ee00b44">ltr::AUC</a>, <a class="el" href="classltr_1_1_average_precision.html#a1b82b58d6a31496172393f0511236102">ltr::AveragePrecision</a>, <a class="el" href="classltr_1_1_binary_classification_margin.html#adaeafca1bf215b634586aa5ccc125f4c">ltr::BinaryClassificationMargin</a>, <a class="el" href="classltr_1_1_squared_error.html#ad5a5c04a00374c7ca275c1389c8a3960">ltr::SquaredError</a>, <a class="el" href="classltr_1_1_binary_classification_accuracy.html#a4d5fb3685d1861e0cbe893d8ce9e7e73">ltr::BinaryClassificationAccuracy</a>, <a class="el" href="classltr_1_1_true_point.html#a5843f87ccb4d4cf1b13c95b3a0f716b8">ltr::TruePoint</a>, <a class="el" href="classltr_1_1_abs_error.html#ab0e09d78feff35f52e63902cd69e6f60">ltr::AbsError</a>, and <a class="el" href="classltr_1_1_accuracy.html#afbe25464bb4bfd1652908add55aea8c0">ltr::Accuracy&lt; TElement &gt;</a>.</p>
 
 </div>
 </div>
@@ -410,7 +431,7 @@ template&lt;class TElement&gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:50 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:12 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

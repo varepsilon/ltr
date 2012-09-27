@@ -13,6 +13,6 @@ var searchData=
   ['top_5ffraction_5f',['top_fraction_',['../classltr_1_1gp_1_1_select_top_trees_strategy.html#ada1c881d74625e6d7188e52e075fa67f',1,'ltr::gp::SelectTopTreesStrategy']]],
   ['train_5fdata',['train_data',['../classserialization__test_1_1_generator.html#a9e74592c514718d77d93e1047fca86c4',1,'serialization_test::Generator']]],
   ['train_5fset',['train_set',['../structltr_1_1cv_1_1_splitted_data_set.html#a673d39224dcdf9ab99a1eb057c4e09f2',1,'ltr::cv::SplittedDataSet']]],
-  ['tree_5f',['tree_',['../classltr_1_1decision__tree_1_1_decision_tree_scorer.html#a9870e6f97d0f0a7c83a9461557366b49',1,'ltr::decision_tree::DecisionTreeScorer']]],
+  ['tree_5f',['tree_',['../classltr_1_1decision__tree_1_1_decision_tree_scorer.html#a1ec1a4b1d6a1dc647d2dce00689aa06b',1,'ltr::decision_tree::DecisionTreeScorer']]],
   ['type_5f',['type_',['../structltr_1_1_one_feature_info.html#ac29dff6794d68c96e46cc7063d23621b',1,'ltr::OneFeatureInfo']]]
 ];

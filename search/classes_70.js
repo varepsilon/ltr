@@ -15,6 +15,7 @@ var searchData=
   ['pfound',['PFound',['../classltr_1_1_p_found.html',1,'ltr']]],
   ['pointwisemeasurestest',['PointwiseMeasuresTest',['../class_pointwise_measures_test.html',1,'']]],
   ['predictedandactuallabels',['PredictedAndActualLabels',['../structltr_1_1utility_1_1_predicted_and_actual_labels.html',1,'ltr::utility']]],
+  ['predictionsaggregator',['PredictionsAggregator',['../classltr_1_1_predictions_aggregator.html',1,'ltr']]],
   ['printable',['Printable',['../classltr_1_1_printable.html',1,'ltr']]],
-  ['probability',['probability',['../classprobability.html',1,'probability'],['../classprobability.html',1,'probability'],['../class_probability.html',1,'Probability'],['../class_probability.html',1,'Probability'],['../class_probability.html',1,'Probability']]]
+  ['probability',['Probability',['../class_probability.html',1,'Probability'],['../class_probability.html',1,'Probability'],['../classprobability.html',1,'probability'],['../classprobability.html',1,'probability'],['../class_probability.html',1,'Probability']]]
 ];

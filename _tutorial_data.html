@@ -166,7 +166,13 @@ Features</h3>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 23.00, 100000000.00]
+obj.feature_count() = 4
+feature was added
+obj.feature_count() = 5
+obj[0] = 1.1, obj.at(1) = 45.3
+obj = [1.00, 5.00, 2.00]
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectLabels"></a>
 Actual and predicted labels</h3>
@@ -200,7 +206,9 @@ Actual and predicted labels</h3>
   cout &lt;&lt; obj.predicted_label();
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">23.65
+21.12
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectMetaInfo"></a>
 Meta info</h3>
@@ -239,7 +247,10 @@ Meta info</h3>
   cout &lt;&lt; obj.getMetaInfo(<span class="stringliteral">&quot;info2&quot;</span>) &lt;&lt; endl;
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">value1
+unknown meta info info2
+value2
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectCopying"></a>
 Copying objects</h3>
@@ -282,7 +293,12 @@ Copying objects</h3>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">4
+-1
+
+-1
+-1
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectPair"></a>
 ObjectPair</h2>
@@ -315,7 +331,8 @@ ObjectPair</h2>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00], [4.00, 6.00, 7.00, 8.00])
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectList"></a>
 ObjectList</h2>
@@ -494,7 +511,7 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

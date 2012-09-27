@@ -123,7 +123,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00018"></a>00018 <span class="keyword">using</span> std::logic_error;
 <a name="l00019"></a>00019 <span class="keyword">using</span> std::vector;
 <a name="l00020"></a>00020 <span class="keyword">using</span> <a class="code" href="structltr_1_1utility_1_1_predicted_and_actual_labels.html">ltr::utility::PredictedAndActualLabels</a>;
-<a name="l00021"></a>00021 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#abd0ba1ce5bcb6386175b41c237659e2c">ltr::utility::ExtractLabels</a>;
+<a name="l00021"></a>00021 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#aea52492295ed1c38573f3d66859eb075">ltr::utility::ExtractLabels</a>;
 <a name="l00022"></a>00022 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a0bd4c679332105f4f06287ce4f0f63ba">ltr::utility::PredictedDecreasingActualIncreasing</a>;
 <a name="l00023"></a>00023 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a65991fdabe12053ebc1898ece16606d2">ltr::utility::ActualDecreasing</a>;
 <a name="l00024"></a>00024 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a83458360aa307d13a5fbe652dcd29ac5">ltr::utility::DoubleEqual</a>;
@@ -191,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TDCGFormula&gt;
 <a name="l00103"></a><a class="code" href="classltr_1_1_base_n_d_c_g.html#a8c59f8af3ad03540295b26834a2bc016">00103</a> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_base_n_d_c_g.html#a8c59f8af3ad03540295b26834a2bc016">BaseNDCG&lt;TDCGFormula&gt;::get_measure</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object_list.html">ObjectList</a>&amp; objects)<span class="keyword"> const </span>{
-<a name="l00104"></a>00104   vector&lt;PredictedAndActualLabels&gt; labels = <a class="code" href="namespaceltr_1_1utility.html#abd0ba1ce5bcb6386175b41c237659e2c">ExtractLabels</a>(objects);
+<a name="l00104"></a>00104   vector&lt;PredictedAndActualLabels&gt; labels = <a class="code" href="namespaceltr_1_1utility.html#aea52492295ed1c38573f3d66859eb075">ExtractLabels</a>(objects);
 <a name="l00105"></a>00105   sort(labels.begin(), labels.end(), <a class="code" href="namespaceltr_1_1utility.html#a65991fdabe12053ebc1898ece16606d2">ActualDecreasing</a>);
 <a name="l00106"></a>00106 
 <a name="l00107"></a>00107   <span class="keywordtype">int</span> n = this-&gt;number_of_objects_to_consider_;
@@ -236,7 +236,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:46 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

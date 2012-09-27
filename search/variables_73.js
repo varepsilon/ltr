@@ -11,12 +11,10 @@ var searchData=
   ['seed_5f',['seed_',['../classltr_1_1_data_random_sampler.html#a999e7139a35d5b2c80131b3bbe8216f8',1,'ltr::DataRandomSampler::seed_()'],['../classltr_1_1_feature_random_sampler_learner.html#a179a1c8d7dba939f181e1c384f9e9ba5',1,'ltr::FeatureRandomSamplerLearner::seed_()'],['../classltr_1_1gp_1_1_g_p_learner.html#a1f33573d26e6ce1904cb6f753a56281f',1,'ltr::gp::GPLearner::seed_()']]],
   ['serializable_5fobjects_5fcounter_5f',['serializable_objects_counter_',['../namespaceltr.html#afac5bdfed169c5bb6f08ee4096dd945a',1,'ltr']]],
   ['shifts_5f',['shifts_',['../classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac',1,'ltr::PerFeatureLinearConverter']]],
-  ['sibling_5f',['sibling_',['../classltr_1_1decision__tree_1_1_vertex.html#a0fa47a8886421ddff19d7914d116ed5b',1,'ltr::decision_tree::Vertex']]],
   ['size',['size',['../structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05',1,'ltr::utility::DimensionSize']]],
   ['sizeval',['sizeVal',['../structltr_1_1cv_1_1_size_over_index.html#a6117c03f465cb0e7c873cdf42b530805',1,'ltr::cv::SizeOverIndex::sizeVal()'],['../struct_size_over_index.html#a397c8cada8056e0e3506c9e6e7ffacf3',1,'SizeOverIndex::sizeVal()']]],
-  ['split_5ffeature_5fn_5ftimes_5f',['split_feature_n_times_',['../classltr_1_1decision__tree_1_1_i_d3___splitter.html#ae2412f68a4a6bef4268b3c4df899f0c8',1,'ltr::decision_tree::ID3_Splitter']]],
-  ['split_5findex',['split_index',['../classltr_1_1decision__tree_1_1_i_d3___splitter.html#afab3d0619a21b3531c921c101dcd108d',1,'ltr::decision_tree::ID3_Splitter']]],
+  ['splitter_5f',['splitter_',['../classltr_1_1decision__tree_1_1_decision_tree_learner.html#afbc0059f7146931d7a1f7a50ad7c7e29',1,'ltr::decision_tree::DecisionTreeLearner']]],
   ['splitters_5f',['splitters_',['../classltr_1_1cv_1_1_cross_validator.html#a7721d8ed6b6dda62b41b60a67b059e3e',1,'ltr::cv::CrossValidator']]],
-  ['splitting_5fquality_5f',['splitting_quality_',['../classltr_1_1decision__tree_1_1_decision_tree_learner.html#a334b3f0a1ed33271c3d514003b4327ff',1,'ltr::decision_tree::DecisionTreeLearner']]],
+  ['stop_5fsplitting_5fcriterias_5f',['stop_splitting_criterias_',['../classltr_1_1decision__tree_1_1_decision_tree_learner.html#a4b2f50273ddb1034c033cf2223261563',1,'ltr::decision_tree::DecisionTreeLearner']]],
   ['svm_5farff_5ftest_5ffile_5fname',['svm_arff_test_file_name',['../class_i_o_utility_test.html#a2530c4b60c3bc5ed0a717967c7b23105',1,'IOUtilityTest']]]
 ];

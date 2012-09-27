@@ -116,7 +116,7 @@ Writing a serialization for a new scorer</h2>
 </pre></div><h2><a class="anchor" id="SerializationChecking"></a>
 Checking serialization</h2>
 <p>So, you've written a new scorer (with a learner that produces it), and want to check if your serialization is correct. For this purpose there is a serialization_generator project in LTR. There in the <a class="el" href="generator_8cc.html">generator.cc</a> file within the main function you may see a code like this:</p>
-<div class="fragment"><pre class="fragment"><a class="code" href="classltr_1_1_learner.html#a5a92bfb8da2c470c4ea075e19fc92d66">ID3_Learner::Ptr</a> id3_learner(<span class="keyword">new</span> ID3_Learner);
+<div class="fragment"><pre class="fragment">ID3_Learner::Ptr id3_learner(<span class="keyword">new</span> ID3_Learner);
 generator.setScorerTest(id3_learner, <span class="stringliteral">&quot;ID3Learner&quot;</span>);
 </pre></div><p>For checking your scorer do the same thing - create a learner and put it into a generator.setScorerTest call with the second parameter of the learner's name.</p>
 <p>Then build the RUN_SERIALIZATION project (it is skipped by default) - this will cause appearing of new unittests, wich may check the correctness of your serialization. The new unittests can be run with others. </p>
@@ -124,7 +124,7 @@ generator.setScorerTest(id3_learner, <span class="stringliteral">&quot;ID3Learne
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 20 2012 14:15:47 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 15:31:09 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

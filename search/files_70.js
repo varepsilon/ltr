@@ -22,6 +22,8 @@ var searchData=
   ['pfound_2eh',['pfound.h',['../pfound_8h.html',1,'']]],
   ['pointwise_5fmeasures_5funittest_2ecc',['pointwise_measures_unittest.cc',['../pointwise__measures__unittest_8cc.html',1,'']]],
   ['population_5fhandler_2eh',['population_handler.h',['../population__handler_8h.html',1,'']]],
+  ['predictions_5faggregator_2eh',['predictions_aggregator.h',['../predictions__aggregator_8h.html',1,'']]],
+  ['predictions_5faggregators_5funittest_2ecc',['predictions_aggregators_unittest.cc',['../predictions__aggregators__unittest_8cc.html',1,'']]],
   ['printable_2ecc',['printable.cc',['../printable_8cc.html',1,'']]],
   ['printable_2eh',['printable.h',['../printable_8h.html',1,'']]]
 ];

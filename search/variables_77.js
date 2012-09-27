@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['weak_5fcondition_5f',['weak_condition_',['../classltr_1_1decision__tree_1_1_compare_condition.html#adee6e5e183d7fbe3adea6d61e8a6bef9',1,'ltr::decision_tree::CompareCondition']]],
-  ['weak_5flearner_5f',['weak_learner_',['../classltr_1_1composition_1_1_composition_learner.html#ab0e9e2c557395f07daa9653bdbea164c',1,'ltr::composition::CompositionLearner']]],
+  ['weak_5flearner_5f',['weak_learner_',['../classltr_1_1composition_1_1_composition_learner.html#a28e7e2fca9e9babd80837e2a040e3b51',1,'ltr::composition::CompositionLearner']]],
   ['weak_5fmeasure_5f',['weak_measure_',['../classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625',1,'ltr::NormalizedMeasure']]],
-  ['weight',['weight',['../structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289',1,'ltr::composition::CompositionScorer::ScorerAndWeight']]],
+  ['weight',['weight',['../structltr_1_1utility_1_1_label_statistic.html#ade4d9ff2ea35bf17b135d7ffdcd6f364',1,'ltr::utility::LabelStatistic::weight()'],['../structltr_1_1decision__tree_1_1_feature_with_label_and_weight.html#a15caa8fcf1861585432c056cc9b263b7',1,'ltr::decision_tree::FeatureWithLabelAndWeight::weight()'],['../structltr_1_1composition_1_1_composition_scorer_1_1_scorer_and_weight.html#aa47929fa2432891b0434299f23e85289',1,'ltr::composition::CompositionScorer::ScorerAndWeight::weight()']]],
   ['weighted_5fscorers_5f',['weighted_scorers_',['../classltr_1_1composition_1_1_composition_scorer.html#aa781c238c0aee76167e870060dc0da62',1,'ltr::composition::CompositionScorer']]],
   ['weights',['weights',['../classltr_1_1_linear_scorer.html#a279e52b67c142c84ba84b423a7ba0710',1,'ltr::LinearScorer']]],
   ['weights_5f',['weights_',['../classltr_1_1_data_set.html#aee6835ad051b537d83bca52b0225b753',1,'ltr::DataSet']]],
