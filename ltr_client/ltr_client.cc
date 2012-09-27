@@ -360,26 +360,21 @@ void LtrClient::launch() {
 
 // ===========================================================================
 
-int main(int argc, char* argv[]) {
+int main() {
   Log LOG;
-
-  if (argc < 2) {
-    ERR("config file  missing");
-    return 1;
-  }
-
   Factory factory;
   RegisterAllTypes(&factory);
 
   LtrClient client;
 
+  string filename = "C:\\NewRepository\\ltr1\\ltr_client\\config.cfg";
   try {
-    client.initFrom(argv[1]);
-    client.launch();
+      client.initFrom(filename);
+      client.launch();
   } catch(const logic_error& err) {
-    ERR("Failed: %s", err.what());
+      ERR("Failed: %s", err.what());
   } catch(...) {
-    ERR("Caught exception");
+      ERR("Caught exception");
   }
   return 0;
 }
