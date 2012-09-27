@@ -26,9 +26,7 @@ measure: NDCG, works very slow</td></tr>
 
 <tr><td>LinearLearner</td><td>4.178930</td><td>0.695652</td><td>0.857971</td><td>0.773000</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 <tr><td>BestFeatureLearner</td><td>3.018777</td><td>0.57971</td><td>0.444928</td><td>0.3</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
-<tr><td>NearestNeighborLearner</td><td>-</td><td>0.57971</td><td>0.546377</td><td>0.662</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 5 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.6</td><td>0.685</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 17 neighbors</td></tr>
-<tr><td>NearestNeighborLearner</td><td>-</td><td>0.42029</td><td>0.636232</td><td>0.7</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO, 30 neighbors</td></tr>
+<tr><td>NNLearner</td><td>-</td><td>0.648256</td><td>0.785507</td><td>0.681</td><td>Measure: Accuracy, Splitter: LOO, 1 neighbor</td></tr>
 <tr><td>BayesianLearner with NormalNaiveBayesLearner</td><td>-</td><td>0.553623</td><td>0.804348</td><td>0.723</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 <tr><td>BayesianLearner with FisherDiscriminantLearner</td><td>-</td><td>0.542029</td><td>0.650725</td><td>0.628</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
 <tr><td>BayesianLearner with QuadraticDiscriminantLearner</td><td>-</td><td>0.637681</td><td>0.828986</td><td>0.699</td><td>Measure: BinaryClassificationAccuracy, Splitter: LOO</td></tr>
