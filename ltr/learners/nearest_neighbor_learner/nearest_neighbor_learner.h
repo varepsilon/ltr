@@ -3,8 +3,6 @@
 #ifndef LTR_LEARNERS_NEAREST_NEIGHBOR_LEARNER_NEAREST_NEIGHBOR_LEARNER_H_
 #define LTR_LEARNERS_NEAREST_NEIGHBOR_LEARNER_NEAREST_NEIGHBOR_LEARNER_H_
 
-#include <logog/logog.h>
-
 #include <string>
 #include <vector>
 

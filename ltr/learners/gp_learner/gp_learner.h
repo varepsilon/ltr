@@ -6,6 +6,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <functional>
 
@@ -329,19 +330,19 @@ void GPLearner<TElement>::
       reset();
     }
 
-    INFO("Evaluating data for the first time.\n");
+    DBUG("Evaluating data for the first time");
     this->evaluatePopulation(data);
 
-    INFO("Evolution begins.\n");
+    DBUG("Evolution begins.\n");
     for (int generationIdx = 0;
          generationIdx < number_of_generations_;
          ++generationIdx) {
-      INFO("Generation %d\n", generationIdx);
+      DBUG("Generation %d", generationIdx);
 
-      INFO("Calling strategy\n");
+      DBUG("Calling strategy");
       this->evaluationStepImpl();
 
-      INFO("Evaluation.\n");
+      DBUG("Evaluation");
       this->evaluatePopulation(data);
 
       int best_tree_index = 0;
@@ -353,8 +354,13 @@ void GPLearner<TElement>::
         }
       }
 
-      INFO("The best one is number %d\n", best_tree_index);
+      DBUG("The best one is number %d", best_tree_index);
+      using ::operator <<;
+      stringstream log_out;
       best_tree_ = population_[best_tree_index];
+      log_out << best_tree_ << " | ";
+      log_out << "with fitness " << best_tree_.mFitness;
+      DBUG(log_out.str().c_str());
     }
     // \TODO ? rewrite with setters and getters
     *scorer = GPScorer(best_tree_, context_, feature_count_);

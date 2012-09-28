@@ -82,5 +82,3 @@ string ParametersContainer::toString() const {
   return out.str();
 }
 }
-
-

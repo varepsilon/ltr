@@ -3,8 +3,6 @@
 #ifndef LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 #define LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_
 
-#include <logog/logog.h>
-
 #include <stdexcept>
 #include <string>
 #include <limits>

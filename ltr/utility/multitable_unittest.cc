@@ -1,4 +1,4 @@
-//Copyright 2012 Yandex
+// Copyright 2012 Yandex
 
 #include <gtest/gtest.h>
 

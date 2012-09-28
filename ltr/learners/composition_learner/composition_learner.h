@@ -155,13 +155,13 @@ void CompositionLearner<TElement>::learnImpl(
     INFO("Iteration #%d has been started", iteration);
     this->weak_learner_->reset();
     this->weak_learner_->learn(data);
-    INFO("Weak learner have been learned");
+    DBUG("Weak learner have been learned");
     Scorer::Ptr weak_scorer = this->weak_learner_->make();
     scorer->add(weak_scorer, 1.0);
     composition_scorer_weights_updater_->updateWeights(data, scorer);
-    INFO("Composition scorer's weights have been updated");
+    DBUG("Composition scorer's weights have been updated");
     data_set_weights_updater_->updateWeights(&data, *scorer);
-    INFO("Dataset's weights have been updated");
+    DBUG("Dataset's weights have been updated");
   }
 
   INFO("Learning has been ended");

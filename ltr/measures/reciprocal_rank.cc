@@ -40,7 +40,7 @@ namespace ltr {
     }
 
     if (!relevant_found) {
-      // todo: log here!
+      WARN("No relevant found");
     }
     return result;
   }

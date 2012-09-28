@@ -41,9 +41,9 @@ struct DistanceToNeighbor {
 };
 
 double NNScorer::scoreImpl(const Object& object) const {
-  INFO("Starting to score an object with the NNScorer");
+  DBUG("Starting to score an object with the NNScorer");
 
-  INFO("Starting to find distances to neighbors");
+  DBUG("Starting to find distances to neighbors");
   vector<DistanceToNeighbor> distances_to_neighbors(data_.size());
   for (int neighbor_index = 0;
        neighbor_index < data_.size();

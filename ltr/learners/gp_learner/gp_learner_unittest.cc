@@ -80,8 +80,6 @@ TEST_F(GPLearnerTest, GPLearnerTest) {
   gp_learner.learn(learn_data_listwise);
 
   GPScorer::Ptr scorer = gp_learner.makeSpecific();
-
-  cout << scorer->generateCppCode();
 };
 
 TEST_F(GPLearnerTest, DefaultSelectionStrategyTest) {

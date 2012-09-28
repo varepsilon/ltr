@@ -6,3 +6,5 @@ ada_learner.set_weak_learner(bf_learner);
 
 ada_learner.learn(data);
 LinearCompositionScorer::Ptr ada_scorer = ada_learner.makeSpecific();
+
+std::cout << *ada_scorer;

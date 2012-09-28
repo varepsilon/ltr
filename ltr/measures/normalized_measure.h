@@ -52,8 +52,10 @@ class NormalizedMeasure : public Measure<TElement> {
   }
 
   virtual void checkParameters() {
-    if (best_ == worst_)
+    if (best_ == worst_) {
+      ERR("Best and worst values must be different");
       throw std::logic_error("Best and worst values must be different");
+    }
   }
 
   virtual void setDefaultParameters() {
@@ -92,21 +94,21 @@ class NormalizedMeasure : public Measure<TElement> {
   }
 
   virtual double get_measure(const TElement& element) const {
-    if (weak_measure_ == NULL)
+    if (weak_measure_ == NULL) {
+      ERR("No weak measure");
       throw std::logic_error("No weak measure");
+    }
     if (weak_measure_->best() == utility::Inf ||
         weak_measure_->best() == -utility::Inf ||
         weak_measure_->worst() == utility::Inf ||
         weak_measure_->worst() == -utility::Inf) {
-      throw std::logic_error("can't normalize infinity measure");
+      ERR("Can't normalize infinity measure");
+      throw std::logic_error("Can't normalize infinity measure");
     }
-// using best_ directly?
-    double best = best_;
-    double worst = worst_;
     return (weak_measure_->value(element) - weak_measure_->worst()) *
-              (best - worst) /
+              (best_ - worst_) /
                 (weak_measure_->best() - weak_measure_->worst())
-            + worst;
+            + worst_;
   }
 };
 }

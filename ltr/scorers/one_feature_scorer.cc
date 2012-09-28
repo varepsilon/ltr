@@ -19,7 +19,7 @@ namespace ltr {
 
   string OneFeatureScorer::generateCppCodeImpl(
       const string& function_name) const {
-    INFO("Starting to generate CPP code of OneFeatureScorer");
+    INFO("Starting to generate CPP code for OneFeatureScorer");
     string hpp_code;
 
     hpp_code.

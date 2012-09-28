@@ -59,7 +59,9 @@ Composition learner works as follows:
 This is an example of implementing RSM (random subspace method, see http://en.wikipedia.org/wiki/Random_subspace_method) with the linear composition learner.
 Default DataSetWeightsUpdater and CompositionScorerWeightsUpdater do nothing.
 
-\include composition_tutorial_RSM.cpp
+Example: Random Subspace Method                  | Output:
+-------------------------------------------------|------------------
+\include composition_tutorial_RSM.cpp            | \include composition_tutorial_RSM.out
 
 \subsection TutorialCompositionAdaBoost Classic AdaBoost
 

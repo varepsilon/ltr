@@ -34,6 +34,7 @@ const Serializable* GPScorer::puppyPrimitiveHandleToPSerializable(
   const Serializable* serializable =
     dynamic_cast<const Serializable*>(puppy_primitive.getPointer());
   if (!serializable) {
+    ERR("All primitives in GP should be Serializable");
     throw std::logic_error(
       "All primitives in GP should implement Serializable"
       "interface to generate code for GPScprer.");
@@ -42,7 +43,7 @@ const Serializable* GPScorer::puppyPrimitiveHandleToPSerializable(
 }
 
 double GPScorer::scoreImpl(const Object& object) const {
-  INFO("Starting to score an object with the gp_learner");
+  DBUG("Starting to score an object with the gp_learner");
   assert(feature_count_ == object.feature_count());
   setContextToObject(object);
   double score;
@@ -95,6 +96,7 @@ void GPScorer::setContextToObject(const Object& object) const {
 void GPScorer::writeTreeAsStringOfCppCalls(std::ostream &output, // NOLINT
                                            int node_index) const {
   if (node_index >= (int)best_tree_.size()) {
+    ERR("Node index is out of range");
     throw std::logic_error("Node index is out of range");
   }
 

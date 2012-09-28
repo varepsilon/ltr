@@ -5,6 +5,8 @@
 
 #pragma warning(disable: 4290)
 
+#include <logog/logog.h>
+
 #include <list>
 #include <stdexcept>
 #include <string>
@@ -116,6 +118,7 @@ class ParametersContainer: public Printable {
     try {
       return boost::any_cast<T>(iterator->second);
     } catch(const boost::bad_any_cast &exc) {
+      ERR("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
@@ -131,14 +134,16 @@ class ParametersContainer: public Printable {
   DesiredType Get(const string& name) const
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
-    if (iterator == name_value_hash_.end())
+    if (iterator == name_value_hash_.end()) {
       throw std::logic_error("No such parameter name: " + name);
+    }
 
     try {
       const StoredType &value = boost::any_cast<StoredType>(iterator->second);
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
     } catch(const boost::bad_any_cast &exc) {
+      ERR("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " +
@@ -165,6 +170,7 @@ class ParametersContainer: public Printable {
       return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
+      ERR("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());
@@ -185,6 +191,7 @@ class ParametersContainer: public Printable {
       return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
+      ERR("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());

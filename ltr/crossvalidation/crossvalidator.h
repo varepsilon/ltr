@@ -20,8 +20,6 @@
 #include "ltr/utility/multitable.h"
 
 
-using std::cerr;
-using std::cout;
 using std::list;
 using std::reverse;
 using std::sort;
@@ -143,13 +141,13 @@ void CrossValidator<ObjectType>::
 template <typename ObjectType>
 void CrossValidator<ObjectType>::
   setCrossValidationResultLabels() {
-  INFO("Starting to set crossvalidation results labels.");
-  INFO("Starting to set measures");
+  DBUG("Starting to set crossvalidation results labels.");
+  DBUG("Starting to set measures");
   cross_validation_results_.setAxisLabel(0, "Measure");
   for (int measure_index = 0;
        measure_index < measures_.size();
        ++measure_index) {
-    INFO("Setting %d tick label. Current measure is %s",
+    DBUG("Setting %d tick label. Current measure is %s",
          measure_index,
          measures_[measure_index]->alias().c_str());
     cross_validation_results_.setTickLabel(0,
@@ -157,29 +155,29 @@ void CrossValidator<ObjectType>::
                                            measures_[measure_index]->alias());
   }
 
-  INFO("Starting to set dataset");
+  DBUG("Starting to set dataset");
   cross_validation_results_.setAxisLabel(1, "DataSet");
   for (int dataset_index = 0;
        dataset_index < data_sets_.size();
        ++dataset_index) {
-    INFO("Setting %d tick label", dataset_index);
+    DBUG("Setting %d tick label", dataset_index);
     cross_validation_results_.
         setTickLabel(1,
                      dataset_index,
                      data_sets_[dataset_index].alias());
   }
 
-  INFO("Starting to set Learners");
+  DBUG("Starting to set Learners");
   cross_validation_results_.setAxisLabel(2, "Learner");
   for (int learner_index = 0;
        learner_index < learners_.size();
        ++learner_index) {
-    INFO("Setting %d tick label", learner_index);
+    DBUG("Setting %d tick label", learner_index);
     cross_validation_results_.
         setTickLabel(2, learner_index, learners_[learner_index]->alias());
   }
 
-  INFO("Starting to set splitters");
+  DBUG("Starting to set splitters");
   cross_validation_results_.setAxisLabel(3, "Splitter");
   for (int splitter_index = 0;
        splitter_index < splitters_.size();
@@ -192,7 +190,7 @@ void CrossValidator<ObjectType>::
 
 template <typename ObjectType>
 void CrossValidator<ObjectType>::launch() {
-  INFO("Launching crossvalidator");
+  DBUG("Launching crossvalidator");
   vector<size_t> multi_size;
   multi_size.push_back(measures_.size());
   multi_size.push_back(data_sets_.size());

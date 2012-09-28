@@ -3,6 +3,11 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_H_
 
+#include <boost/weak_ptr.hpp>
+#include <logog/logog.h>
+
+#include <map>
+#include <cmath>
 #include <string>
 #include <vector>
 #include <stdexcept>

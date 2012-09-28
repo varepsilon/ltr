@@ -1,4 +1,4 @@
-//Copyright 2012 Yandex
+// Copyright 2012 Yandex
 
 #include <gtest/gtest.h>
 #include <string>
@@ -32,8 +32,8 @@ TEST(CrossValidatorTest, SimpleTest) {
 
   Object obj_instance;
 
-  for(int train_index = 0; train_index < 100; ++train_index) {
-    for(int count = 0; count < 5; ++count) {
+  for (int train_index = 0; train_index < 100; ++train_index) {
+    for (int count = 0; count < 5; ++count) {
       obj_instance << train_index;
     }
     obj_instance.set_actual_label(train_index);
@@ -46,8 +46,8 @@ TEST(CrossValidatorTest, SimpleTest) {
 
   obj_list_instance.clear();
 
-  for(int train_index = 0; train_index < 100; ++train_index) {
-    for(int count = 0; count < 5; ++count) {
+  for (int train_index = 0; train_index < 100; ++train_index) {
+    for (int count = 0; count < 5; ++count) {
       obj_instance << -train_index;
     }
     obj_instance.set_actual_label(train_index);

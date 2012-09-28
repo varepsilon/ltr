@@ -3,6 +3,8 @@
 #ifndef LTR_MEASURES_MEASURE_H_
 #define LTR_MEASURES_MEASURE_H_
 
+#include <logog/logog.h>
+
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <stdexcept>

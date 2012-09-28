@@ -10,5 +10,6 @@ SET(Sources ${Doc_Path}/examples/data_set_tutorial/tutorial_data_example1
             ${Doc_Path}/examples/feature_converter_tutorial/tutorial_feature_converter_example1
             ${Doc_Path}/examples/feature_converter_tutorial/tutorial_feature_converter_example2
             ${Doc_Path}/examples/crossvalidation_tutorial/tutorial_crossvalidation_example1
-			${Doc_Path}/examples/mls_tutorial/tutorial_mls_example1
-            ${Doc_Path}/examples/decision_tree_tutorial/decision_tree_tutorial_example1)
+            ${Doc_Path}/examples/mls_tutorial/tutorial_mls_example1
+            ${Doc_Path}/examples/decision_tree_tutorial/decision_tree_tutorial_example1
+            ${Doc_Path}/examples/composition_tutorial/composition_tutorial_RSM)

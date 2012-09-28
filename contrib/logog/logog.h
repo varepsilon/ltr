@@ -13,10 +13,12 @@ namespace ltr {
     Log() {
       LOGOG_INITIALIZE();
       target_ = TargetPtr(new logog::Cout);
+      logog::GetDefaultFormatter().SetShowTimeOfDay(true);
     }
     Log(const char* filename) {
       LOGOG_INITIALIZE();
       target_ = TargetPtr(new logog::LogFile(filename));
+      logog::GetDefaultFormatter().SetShowTimeOfDay(true);
     }
     void setTargetAsFile(const char* filename) {
       target_ = TargetPtr(new logog::LogFile(filename));

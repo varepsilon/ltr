@@ -33,7 +33,14 @@ class FakeScorer : public Scorer {
   }
 
   string generateCppCodeImpl(const string& function_name) const {
-    return "Not implemented.";
+    string code;
+    code.
+      append("inline double ").
+      append(function_name).
+      append("(const std::vector<double>& features) { return ").
+      append(boost::lexical_cast<string>(score_value_)).
+      append("; }\n");
+    return code;
   }
   virtual string getDefaultAlias() const {return "FakeScorer";}
 

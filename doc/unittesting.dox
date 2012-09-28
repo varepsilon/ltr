@@ -29,7 +29,7 @@ Now lets put some code to be tested inside TEST macro and use some assertions, p
 
 \include unittest_assertions.cc
 
-Every code within any TEST macro will be compiled and ran separately, and if while testing any of the EXPECT assertions would be failed,
+Every code within any TEST macro will be compiled and run separately, and if while testing any of the EXPECT assertions would be failed,
 you'll see a report on that.
 
 One may see that all the tests from the previous example use the same variables.

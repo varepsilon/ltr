@@ -60,7 +60,7 @@ string LeaveOneOutSplitter<TElement>::toString() const {
 template<class TElement>
 int LeaveOneOutSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
-  INFO("number of splits is equal to %d", base_set.size());
+  DBUG("number of splits is equal to %d", base_set.size());
   return base_set.size();
 }
 
@@ -70,8 +70,9 @@ void LeaveOneOutSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
-  INFO("Starting leave one out splitting");
+  DBUG("Starting leave one out splitting");
   if (split_index < 0 || split_index >= splitCount(base_set)) {
+    ERR("Index should be in range [0..dataset_size-1]");
     throw logic_error(this->alias() +
       " index should be in range [0..dataset_size-1]");
   }

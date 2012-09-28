@@ -3,6 +3,8 @@
 #ifndef LTR_LEARNERS_LEARNER_H_
 #define LTR_LEARNERS_LEARNER_H_
 
+#include <logog/logog.h>
+
 #include <vector>
 #include <string>
 

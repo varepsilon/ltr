@@ -74,7 +74,7 @@ ADD_LIBRARY(ltr STATIC ${LTR_ALL})
 TARGET_LINK_LIBRARIES(ltr puppy logog ${Boost_LIBRARIES})
 
 # installing
-INSTALL(TARGETS ltr puppy logog ARCHIVE DESTINATION ${Install_Path} CONFIGURATIONS Debug Release)
+INSTALL(TARGETS ltr puppy logog ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup LTR_client

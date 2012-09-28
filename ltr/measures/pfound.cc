@@ -27,27 +27,23 @@ namespace ltr {
     }
 
     double p_look = 1.0, p_relevance = 0.0, result = 0.0;
-// why not using p_break_ directly?
-    double p_break = p_break_;
     double max_label = max_label_;
 
     for (int labels_index = 0;
          labels_index < number_of_objects_to_consider;
          ++labels_index) {
       if (labels[labels_index].actual < 0) {
-        // todo: log here!
-        // throw logic_error(alias() + " some actual object label < 0");
+        WARN("Some actual object label < 0");
         labels[labels_index].actual = 0;
       }
       if (labels[labels_index].actual > max_label) {
-        // todo: log here!
-        // throw logic_error(alias() + " some actual object label > MAX_LABEL");
+        WARN("Some actual object label > MAX_LABEL");
         labels[labels_index].actual = max_label;
       }
       p_relevance = labels[labels_index].actual / max_label;
 
       result += p_look * p_relevance;
-      p_look *= (1 - p_relevance) * (1 - p_break);
+      p_look *= (1 - p_relevance) * (1 - p_break_);
     }
     return result;
   }

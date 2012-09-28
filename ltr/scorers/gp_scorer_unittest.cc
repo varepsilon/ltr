@@ -53,10 +53,10 @@ TEST(GPScorer, GPScorerTest) {
   Object object1;
   object1 << 1.3 << 1.7 << 9.2;
 
-  std::cout << gp_scorer(object1) << std::endl;
+  INFO("%f", gp_scorer(object1));
 
   Object object2;
   object2 << 1.9 << 15.8 << 0.7;
 
-  std::cout << gp_scorer(object2) << std::endl;
+  INFO("%f", gp_scorer(object2));
 }

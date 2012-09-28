@@ -35,7 +35,7 @@ namespace ltr {
     }
     double metric;
     if (relevant_amount == 0) {
-      // todo: log here!
+      WARN("No relevants found");
       metric = 0;  // the worst
     } else {
       metric = ans / relevant_amount;

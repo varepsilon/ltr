@@ -3,10 +3,10 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_DECISION_TREE_LEARNER_H_
 #define LTR_LEARNERS_DECISION_TREE_DECISION_TREE_LEARNER_H_
 
+#include <logog/logog.h>
+
 #include <vector>
 #include <string>
-
-#include "logog/logog.h"
 
 #include "ltr/learners/learner.h"
 

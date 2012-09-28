@@ -4,7 +4,6 @@
 #define LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 
 #include <Eigen/Dense>
-#include <logog/logog.h>
 
 #include <string>
 #include <vector>
@@ -49,7 +48,6 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   INFO("Learning started");
   VectorXd Y(data.size());
   for (int i = 0; i < Y.size(); ++i) {
-    INFO("Getting the label of %d element.", i);
     Y(i) = data[i].actual_label();
   }
 

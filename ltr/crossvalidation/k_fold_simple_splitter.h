@@ -3,6 +3,8 @@
 #ifndef LTR_CROSSVALIDATION_K_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_K_FOLD_SIMPLE_SPLITTER_H_
 
+#include <logog/logog.h>
+
 #include <vector>
 #include <functional>
 #include <stdexcept>
@@ -12,7 +14,6 @@
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/utility/shared_ptr.h"
-#include "logog/logog.h"
 
 using std::string;
 using std::vector;
@@ -77,13 +78,13 @@ string KFoldSimpleSplitter<TElement>::toString() const {
 
 template<class TElement>
 void KFoldSimpleSplitter<TElement>::setDefaultParameters() {
-  INFO("Setting default K value equal to 10");
+  DBUG("Setting default K value equal to 10");
   this->K_ = 10;
 }
 
 template<class TElement>
 void KFoldSimpleSplitter<TElement>::checkParameters() const {
-  INFO("Checking if K is greater then 1");
+  DBUG("Checking if K is greater then 1");
   CHECK(this->K_ >= 2); // NOLINT
 }
 
@@ -105,7 +106,10 @@ void KFoldSimpleSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
+  DBUG("Starting to split dataset with the split index equal to %d",
+    split_index);
   if (K_ > base_set.size()) {
+    ERR("Split fold is larger than dataset");
     throw logic_error(
           string("In KFoldSimpleSplitter: Split fold is larger than") +
           string("a dataset size. ERROR"));
@@ -113,6 +117,7 @@ void KFoldSimpleSplitter<TElement>::splitImpl(
   INFO("Starting to split dataset with the split index equal to %d",
     split_index);
   if (split_index < 0 || split_index >= splitCount(base_set)) {
+    ERR("Index should be in range [0..k-1]");
     throw logic_error(this->alias() +
       " index should be in range [0..k-1]");
   }

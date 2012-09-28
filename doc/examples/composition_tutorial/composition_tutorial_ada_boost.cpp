@@ -18,3 +18,5 @@ linear_composition_learner.set_weak_learner(bf_learner);
 
 linear_composition_learner.learn(data);
 LinearCompositionScorer::Ptr linear_composition_scorer = linear_composition_learner.makeSpecific();
+
+std::cout << *linear_composition_scorer;

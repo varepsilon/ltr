@@ -108,7 +108,7 @@ TEST_F(DecisionTreeTest, TestingObliviousTree) {
 
   Scorer::Ptr decision_tree_scorer = decision_tree_learner.make();
 
-  std::cout << decision_tree_scorer->generateCppCode("fun");
+  DBUG(decision_tree_scorer->generateCppCode("fun").c_str());
 
   Object test_point1;
   test_point1 << 0.5 << 0.7;

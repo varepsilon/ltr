@@ -3,10 +3,9 @@
 #include "ltr/scorers/linear_scorer.h"
 
 #include <boost/lexical_cast.hpp>
+#include <logog/logog.h>
 #include <string>
 #include <sstream>
-
-#include "logog/logog.h"
 
 using std::string;
 using boost::lexical_cast;
@@ -27,10 +26,10 @@ string LinearScorer::toString() const {
   return str.str();
 }
 
-double LinearScorer::scoreImpl(const Object& obj) const {
+double LinearScorer::scoreImpl(const Object& object) const {
   double output = weights[0];
-  for (int i = 0; i < (int)obj.features().size(); ++i) {
-    output += obj[i] * weights[i + 1];
+  for (int i = 0; i < (int)object.features().size(); ++i) {
+    output += object[i] * weights[i + 1];
   }
   return output;
 }
