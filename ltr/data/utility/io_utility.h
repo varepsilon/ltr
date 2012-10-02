@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "boost/filesystem/path.hpp"
+
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/parsers/parser.h"
 #include "ltr/scorers/scorer.h"
@@ -39,7 +41,7 @@ DataSet<TElement> loadDataSet(const string& filename,
  * Function to save data set into file.
  * @param data - data set to save
  * @param filename - path to file
- * @param format - data format (SVMLIGHT, yandex, arff) 
+ * @param format - data format (SVMLIGHT, yandex, arff)
  * @code
  * saveDataSet(data, "dataset.txt", "SVMLIGHT");
  * @endcode
