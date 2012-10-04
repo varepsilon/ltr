@@ -1,17 +1,13 @@
 namespace ltr {
 
 /** \mainpage Main page
-\section LTR About LTR
-
-<a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href=http://en.wikipedia.org/wiki/Learning_to_rank>ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
-\n 
 
 \tableofcontents
 
 \section LTR About LTR
-Learning To Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
-\n
-User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).\n
+<a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href=http://en.wikipedia.org/wiki/Learning_to_rank>ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.\n
+\n 
+User can write code performing learning and testing by himself \ref HowToCreateNewLearnerAndScorer "here" or can use console application with human-readable configuration file.\n
 \n
 Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.
 
@@ -19,11 +15,11 @@ Each trained ranker/classifier/regressor can be serialized in C++ code so it can
 From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.\n
 Many of these ideas are similar of even coincident for ranking, classification, regression.\n
 Some examples of decomposition:
-\li TreeNet(link) = Gradient Descent + Boosting + Desicion Tree learning
-\li SoftRank(link) = Gradient Descent + Neural Net learning + Smoothing Nondifferentiability
-\li RankPG(link) = Genetic Programming + Listwise ranking measure optimizing
-\li AdaBoost(link) = Boosting + Exponential loss function approximation + Pointwise measure optimizing
-\li AdaRank(link) = Boosting + Exponential loss function approximation + Listwise measure optimizing\n
+\li <a href=http://www.salford-systems.com/en/products/treenet>TreeNet</a> = Gradient Descent + Boosting + Desicion Tree learning
+\li <a href=http://research.microsoft.com/pubs/63585/softrankwsdm08submitted.pdf>SoftRank</a> = Gradient Descent + Neural Net learning + Smoothing Nondifferentiability
+\li <a href=http://front.cc.nctu.edu.tw/Richfiles/18182-jyyeh-LR4IR07.pdf>RankPG</a> = Genetic Programming + Listwise ranking measure optimizing
+\li <a href=http://www.robots.ox.ac.uk/~az/lectures/cv/adaboost_matas.pdf>AdaBoost</a> = Boosting + Exponential loss function approximation + Pointwise measure optimizing
+\li <a href=http://research.microsoft.com/en-us/people/hangli/xu-sigir07.pdf>AdaRank</a> = Boosting + Exponential loss function approximation + Listwise measure optimizing\n
 
 
 %The main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.\n
@@ -74,7 +70,7 @@ Quality on some public datasets is presented \ref QualityTable "here".
 \section REQUIREMENTS Requirements
 \li Boost\n
 LTR assumes that you already have <a href=http://www.boost.org>Boost</a> sources and some static libraries in your system.
-The detailed inatallation manual is \ref HowToInstall "here". 
+%The detailed inatallation manual is \ref HowToInstall "here". 
 \li CMake\n
 LTR uses the <a href=http://www.cmake.org>CMake</a> build system so you should install it. 
 
@@ -85,7 +81,7 @@ LTR is being successfully built with the following compilers:
 \li GCC 4.1 and newer\n
 
 \section LICENSE License
-LTR is licensed under the BSD license.
+LTR IS LICENSED UNDER THE BSD LICENSE. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 \section CONTRIBUTORS Contributors
 You can see the full list of project participants \ref Contributors "here".
