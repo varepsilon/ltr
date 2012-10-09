@@ -6,6 +6,7 @@ if [ "$OS" = "Windows_NT" ]; then
   $COMSPEC /c '..\jenkins\build.cmd'
 else
   cmake ../
+  make -j$JOBS RUN_SERIALIZATION
   make -j$JOBS
 fi
 ./ltr_test

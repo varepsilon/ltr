@@ -30,13 +30,13 @@ class NNScorer : public Scorer {
  public:
   typedef ltr::utility::shared_ptr<NNScorer> Ptr;
   typedef ltr::utility::shared_ptr<ltr::BaseMetric> BaseMetricPtr;
-  NNScorer() {
+  explicit NNScorer() {
   }
 
   explicit NNScorer(BaseMetricPtr metric) : metric_(metric) {
   }
 
-  NNScorer(BaseMetricPtr metric,
+  explicit NNScorer(BaseMetricPtr metric,
            DataSet<Object> data,
            NeighborWeighter::Ptr neighbor_weighter,
            PredictionsAggregator::Ptr predictions_aggregator,
@@ -52,7 +52,7 @@ class NNScorer : public Scorer {
 
  private:
   /** The implementation of scoring function. It scores using the learning data set,
-  * given metric, weighter, aggregator and number of nearest neighbors 
+  * given metric, weighter, aggregator and number of nearest neighbors
   * that must be processed.
   */
   virtual double scoreImpl(const Object& object) const;

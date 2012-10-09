@@ -88,7 +88,7 @@ class CompositionScorer : public Scorer, Parameterized {
    */
   PredictionsAggregator::Ptr predictions_aggregator_;
   virtual string generateCppCodeImpl(const string& function_name) const {
-    return "Composition Scorer";
+    return "Composition Scorer"; // TODO Implement
   }
   virtual void setParametersImpl(
     const ParametersContainer& parameters) {
