@@ -15,13 +15,5 @@ var searchData=
   ['defaultmutationswapstrategy',['DefaultMutationSwapStrategy',['../classltr_1_1gp_1_1_default_mutation_swap_strategy.html#ab0679a801dea7f98f7a6f2fcea34e995',1,'ltr::gp::DefaultMutationSwapStrategy::DefaultMutationSwapStrategy(double mutation_probability=0.05, double distribution_probability=0.5)'],['../classltr_1_1gp_1_1_default_mutation_swap_strategy.html#ac50b2ae1fc7f18163990194a381fc142',1,'ltr::gp::DefaultMutationSwapStrategy::DefaultMutationSwapStrategy(const ParametersContainer &amp;parameters)']]],
   ['defaultselectionstrategy',['DefaultSelectionStrategy',['../classltr_1_1gp_1_1_default_selection_strategy.html#a0b0c1018e5dd69e77f2513302c05e031',1,'ltr::gp::DefaultSelectionStrategy::DefaultSelectionStrategy(int number_of_participants=2)'],['../classltr_1_1gp_1_1_default_selection_strategy.html#a1a4b9d370a42e82079c8dfc9bb807ca1',1,'ltr::gp::DefaultSelectionStrategy::DefaultSelectionStrategy(const ParametersContainer &amp;parameters)']]],
   ['distance',['distance',['../classltr_1_1_euclidean_metric.html#a5295fb451ec4c208d2c3fcdf016222a7',1,'ltr::EuclideanMetric::distance()'],['../classltr_1_1_manhattan_metric.html#a621712e25fb3623d11ab7f64dafc62ae',1,'ltr::ManhattanMetric::distance()'],['../classltr_1_1_base_metric.html#a22bb78f70f0400bb934d4299f1aefbfb',1,'ltr::BaseMetric::distance()']]],
-  ['divide',['Divide',['../classltr_1_1gp_1_1_divide.html#a64b5e999de07bb22e97b1e3f8d03d279',1,'ltr::gp::Divide']]],
-  ['doubleequal',['DoubleEqual',['../namespaceltr_1_1utility.html#a83458360aa307d13a5fbe652dcd29ac5',1,'ltr::utility']]],
-  ['doubleequalwithnan',['DoubleEqualWithNaN',['../namespaceltr.html#aeac2652b445a722ec09a697756a83879',1,'ltr::DoubleEqualWithNaN()'],['../namespaceltr_1_1utility.html#a5ad6c3cd8471a2a08d4d8a30adcdacc5',1,'ltr::utility::DoubleEqualWithNaN()']]],
-  ['doubleless',['DoubleLess',['../namespaceltr_1_1utility.html#a192f6621b133b2349d23c281ebba1069',1,'ltr::utility']]],
-  ['doublelessorequal',['DoubleLessOrEqual',['../namespaceltr_1_1utility.html#a7cfd37da0423a42e4db853765e1e4a16',1,'ltr::utility']]],
-  ['doublemore',['DoubleMore',['../namespaceltr_1_1utility.html#adb0b86104b6aa52e13b0e0c51cc3f778',1,'ltr::utility']]],
-  ['doublemoreorequal',['DoubleMoreOrEqual',['../namespaceltr_1_1utility.html#aa5d0684c5e1d3604647f0b0f97e54ffa',1,'ltr::utility']]],
-  ['doublenotequal',['DoubleNotEqual',['../namespaceltr_1_1utility.html#a77c2f0b998c619a5d613140dda995e83',1,'ltr::utility']]],
-  ['dynamic_5fpointer_5fcast',['dynamic_pointer_cast',['../namespaceltr_1_1utility.html#a40b4cbb40bb3435e4e4cd6251ccdfb64',1,'ltr::utility']]]
+  ['divide',['Divide',['../classltr_1_1gp_1_1_divide.html#a64b5e999de07bb22e97b1e3f8d03d279',1,'ltr::gp::Divide']]]
 ];

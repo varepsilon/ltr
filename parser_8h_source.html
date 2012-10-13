@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -177,10 +176,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00134"></a><a class="code" href="classltr_1_1io__utility_1_1_parser.html#ad86a5c48ad68516e05aa2400e9c8df88">00134</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1io__utility_1_1_parser.html#ad86a5c48ad68516e05aa2400e9c8df88">init</a>(std::istream* in) {}
 <a name="l00135"></a>00135 
 <a name="l00136"></a><a class="code" href="classltr_1_1io__utility_1_1_parser.html#ad8bf4efd2353a92548553ab93105ed4c">00136</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1io__utility_1_1_parser.html#ad8bf4efd2353a92548553ab93105ed4c">hash</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str) {
-<a name="l00137"></a>00137     <span class="keywordflow">return</span> <a class="code" href="namespaceltr_1_1utility.html#a5f5fe0ac648990ef60fcb50f5c3b5588">utility::murmurHash</a>(str.c_str(), str.size(), 19837);
+<a name="l00137"></a>00137     <span class="keywordflow">return</span> utility::murmurHash(str.c_str(), str.size(), 19837);
 <a name="l00138"></a>00138   }
 <a name="l00139"></a>00139 };
-<a name="l00147"></a>00147 <a class="code" href="classltr_1_1io__utility_1_1_parser.html#a367191bad23e46fb8f7e13e7801cd0db">Parser::Ptr</a> <a class="code" href="namespaceltr_1_1io__utility.html#a0a53c92e0a98215f60576ef1baf725bf">getParser</a>(<span class="keyword">const</span> std::string&amp; format);
+<a name="l00147"></a>00147 <a class="code" href="classltr_1_1io__utility_1_1_parser.html#a367191bad23e46fb8f7e13e7801cd0db">Parser::Ptr</a> getParser(<span class="keyword">const</span> std::string&amp; format);
 <a name="l00148"></a>00148 };
 <a name="l00149"></a>00149 };
 <a name="l00150"></a>00150 <span class="preprocessor">#endif  // LTR_DATA_UTILITY_PARSERS_PARSER_H_</span>
@@ -188,7 +187,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

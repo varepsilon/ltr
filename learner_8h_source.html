@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -108,172 +107,174 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00003"></a>00003 <span class="preprocessor">#ifndef LTR_LEARNERS_LEARNER_H_</span>
 <a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define LTR_LEARNERS_LEARNER_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00008"></a>00008 
-<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;logog/logog.h&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="data__preprocessor_8h.html">ltr/data_preprocessors/data_preprocessor.h</a>&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
 <a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="feature__converter__learner_8h.html">ltr/feature_converters/feature_converter_learner.h</a>&quot;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="data__preprocessor_8h.html">ltr/data_preprocessors/data_preprocessor.h</a>&quot;</span>
 <a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="reporter_8h.html">ltr/interfaces/reporter.h</a>&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="aliaser_8h.html">ltr/interfaces/aliaser.h</a>&quot;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="parameterized_8h.html">ltr/interfaces/parameterized.h</a>&quot;</span>
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="feature__converter__learner_8h.html">ltr/feature_converters/feature_converter_learner.h</a>&quot;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="reporter_8h.html">ltr/interfaces/reporter.h</a>&quot;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &quot;<a class="code" href="aliaser_8h.html">ltr/interfaces/aliaser.h</a>&quot;</span>
+<a name="l00019"></a>00019 <span class="preprocessor">#include &quot;<a class="code" href="parameterized_8h.html">ltr/interfaces/parameterized.h</a>&quot;</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="parameters__container_8h.html">ltr/parameters_container/parameters_container.h</a>&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="measure_8h.html">ltr/measures/measure.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;<a class="code" href="scorer_8h.html">ltr/scorers/scorer.h</a>&quot;</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;<a class="code" href="parameters__container_8h.html">ltr/parameters_container/parameters_container.h</a>&quot;</span>
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include &quot;<a class="code" href="printable_8h.html">ltr/interfaces/printable.h</a>&quot;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &quot;<a class="code" href="scorer_8h.html">ltr/scorers/scorer.h</a>&quot;</span>
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;<a class="code" href="printable_8h.html">ltr/interfaces/printable.h</a>&quot;</span>
 <a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="keyword">using</span> std::string;
-<a name="l00030"></a>00030 <span class="keyword">using</span> std::vector;
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>ltr {
-<a name="l00041"></a>00041 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00042"></a><a class="code" href="classltr_1_1_learner.html">00042</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_reporter.html">Reporter</a>,
-<a name="l00043"></a>00043                 <span class="keyword">public</span> <a class="code" href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias.">Aliaser</a>,
-<a name="l00044"></a>00044                 <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a> {
-<a name="l00045"></a>00045  <span class="keyword">public</span>:
-<a name="l00046"></a><a class="code" href="classltr_1_1_learner.html#a5a92bfb8da2c470c4ea075e19fc92d66">00046</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;Learner&gt;</a> <a class="code" href="classltr_1_1_learner.html#a5a92bfb8da2c470c4ea075e19fc92d66">Ptr</a>;
-<a name="l00047"></a><a class="code" href="classltr_1_1_learner.html#a00d24bbd2e3a8f607b273b88a935cab9">00047</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;Learner&gt;</a> <a class="code" href="classltr_1_1_learner.html#a00d24bbd2e3a8f607b273b88a935cab9">BasePtr</a>;
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049   <span class="keyword">typedef</span> vector&lt;typename FeatureConverterLearner&lt;TElement&gt;::Ptr&gt;
-<a name="l00050"></a><a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">00050</a>         <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>;
-<a name="l00051"></a>00051   <span class="keyword">typedef</span> vector&lt;typename DataPreprocessor&lt;TElement&gt;::Ptr&gt;
-<a name="l00052"></a><a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">00052</a>         <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>;
-<a name="l00053"></a>00053 
-<a name="l00059"></a>00059   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#aaa01fe19a1467913c0df36a4fdd213c6" title="Learns input dataset.">learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00060"></a>00060                      <span class="keywordtype">bool</span> check_parameters = <span class="keyword">true</span>) = 0;
-<a name="l00065"></a>00065   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_learner.html#a597e9bfbc0e1bb388eeac58dc160685d">make</a>() <span class="keyword">const</span> = 0;
-<a name="l00066"></a>00066 
-<a name="l00070"></a>00070   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#accf230fbe81f0fe8692fcfe7ca8fa5b0" title="Reset internal state of Learner.">reset</a>() = 0;
-<a name="l00071"></a>00071   <span class="comment">// \TODO Meaning is not clear</span>
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">addFeatureConverterLearner</a>(
-<a name="l00074"></a>00074       <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">FeatureConverterLearner&lt;TElement&gt;::Ptr</a>
-<a name="l00075"></a>00075         feature_converter_learner);
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">addDataPreprocessor</a>(
-<a name="l00078"></a>00078       <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">DataPreprocessor&lt;TElement&gt;::Ptr</a> data_preprocessor);
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <a class="code" href="classltr_1_1_learner.html#a3fabd2d3fa2cc9eaa2fbf4c3e77d4c16">GET</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>&amp;, feature_converter_learners);
-<a name="l00081"></a>00081   <a class="code" href="classltr_1_1_learner.html#a749243fded4faad90afd4f3f201ba24b">SET</a>(<a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>, feature_converter_learners);
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083   <a class="code" href="classltr_1_1_learner.html#a3fabd2d3fa2cc9eaa2fbf4c3e77d4c16">GET</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>&amp;, data_preprocessors);
-<a name="l00084"></a>00084   <a class="code" href="classltr_1_1_learner.html#a749243fded4faad90afd4f3f201ba24b">SET</a>(<a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>, data_preprocessors);
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086  <span class="keyword">protected</span>:
-<a name="l00087"></a><a class="code" href="classltr_1_1_learner.html#a740f4e37b2098b113af6fedf30c01a2d">00087</a>   <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a> <a class="code" href="classltr_1_1_learner.html#a740f4e37b2098b113af6fedf30c01a2d">data_preprocessors_</a>;
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="classltr_1_1_learner.html#a15c0abe6d3586bd1c9833e23de985375">00089</a>   <a class="code" href="namespaceltr.html#a5d7db37e4988b87d88076a261f57626d">FeatureConverterArray</a> <a class="code" href="classltr_1_1_learner.html#a15c0abe6d3586bd1c9833e23de985375">feature_converters_</a>;
-<a name="l00090"></a><a class="code" href="classltr_1_1_learner.html#a90f78e8a888a243d7d57ad9453cdf1e1">00090</a>   <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a> <a class="code" href="classltr_1_1_learner.html#a90f78e8a888a243d7d57ad9453cdf1e1">feature_converter_learners_</a>;
-<a name="l00091"></a>00091 };
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00094"></a><a class="code" href="classltr_1_1_base_learner.html">00094</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_learner.html">BaseLearner</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>&lt;TElement&gt; {
-<a name="l00095"></a>00095  <span class="keyword">public</span>:
-<a name="l00100"></a>00100   <span class="keyword">typename</span> TScorer::Ptr <a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">makeSpecific</a>() <span class="keyword">const</span>;
-<a name="l00101"></a>00101   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">make</a>() <span class="keyword">const</span>;
-<a name="l00102"></a>00102   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00103"></a>00103                      <span class="keywordtype">bool</span> check_parameters = <span class="keyword">true</span>);
-<a name="l00104"></a>00104   <span class="comment">// \TODO ? We don&#39;t need it in base class as not all Learners support it</span>
-<a name="l00105"></a>00105   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">setInitialScorer</a>(<span class="keyword">const</span> TScorer&amp; scorer);
-<a name="l00106"></a>00106   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf" title="Reset internal state of Learner.">reset</a>();
-<a name="l00107"></a>00107  <span class="keyword">private</span>:
-<a name="l00113"></a>00113   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a2f326d82c3f867cbd6a6599dbcc67c1d" title="Learn input dataset and train scorer.">learnImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00114"></a>00114                          TScorer* scorer) = 0;
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::data_preprocessors_</a>;
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">using</span> std::string;
+<a name="l00032"></a>00032 <span class="keyword">using</span> std::vector;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>ltr {
+<a name="l00043"></a>00043 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00044"></a><a class="code" href="classltr_1_1_learner.html">00044</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_reporter.html">Reporter</a>,
+<a name="l00045"></a>00045                 <span class="keyword">public</span> <a class="code" href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias.">Aliaser</a>,
+<a name="l00046"></a>00046                 <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a> {
+<a name="l00047"></a>00047  <span class="keyword">public</span>:
+<a name="l00048"></a><a class="code" href="classltr_1_1_learner.html#a5a92bfb8da2c470c4ea075e19fc92d66">00048</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;Learner&gt;</a> <a class="code" href="classltr_1_1_learner.html#a5a92bfb8da2c470c4ea075e19fc92d66">Ptr</a>;
+<a name="l00049"></a><a class="code" href="classltr_1_1_learner.html#a00d24bbd2e3a8f607b273b88a935cab9">00049</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;Learner&gt;</a> <a class="code" href="classltr_1_1_learner.html#a00d24bbd2e3a8f607b273b88a935cab9">BasePtr</a>;
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <span class="keyword">typedef</span> vector&lt;typename FeatureConverterLearner&lt;TElement&gt;::Ptr&gt;
+<a name="l00052"></a><a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">00052</a>         <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>;
+<a name="l00053"></a>00053   <span class="keyword">typedef</span> vector&lt;typename DataPreprocessor&lt;TElement&gt;::Ptr&gt;
+<a name="l00054"></a><a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">00054</a>         <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>;
+<a name="l00055"></a>00055 
+<a name="l00061"></a>00061   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#aaa01fe19a1467913c0df36a4fdd213c6" title="Learns input dataset.">learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
+<a name="l00062"></a>00062                      <span class="keywordtype">bool</span> check_parameters = <span class="keyword">true</span>) = 0;
+<a name="l00067"></a>00067   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_learner.html#a597e9bfbc0e1bb388eeac58dc160685d">make</a>() <span class="keyword">const</span> = 0;
+<a name="l00068"></a>00068 
+<a name="l00072"></a>00072   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#accf230fbe81f0fe8692fcfe7ca8fa5b0" title="Reset internal state of Learner.">reset</a>() = 0;
+<a name="l00073"></a>00073   <span class="comment">// \TODO Meaning is not clear</span>
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">addFeatureConverterLearner</a>(
+<a name="l00076"></a>00076       <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">FeatureConverterLearner&lt;TElement&gt;::Ptr</a>
+<a name="l00077"></a>00077         feature_converter_learner);
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">addDataPreprocessor</a>(
+<a name="l00080"></a>00080       <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">DataPreprocessor&lt;TElement&gt;::Ptr</a> data_preprocessor);
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082   <a class="code" href="classltr_1_1_learner.html#a3fabd2d3fa2cc9eaa2fbf4c3e77d4c16">GET</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>&amp;, feature_converter_learners);
+<a name="l00083"></a>00083   <a class="code" href="classltr_1_1_learner.html#a749243fded4faad90afd4f3f201ba24b">SET</a>(<a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a>, feature_converter_learners);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   <a class="code" href="classltr_1_1_learner.html#a3fabd2d3fa2cc9eaa2fbf4c3e77d4c16">GET</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>&amp;, data_preprocessors);
+<a name="l00086"></a>00086   <a class="code" href="classltr_1_1_learner.html#a749243fded4faad90afd4f3f201ba24b">SET</a>(<a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a>, data_preprocessors);
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088  <span class="keyword">protected</span>:
+<a name="l00089"></a><a class="code" href="classltr_1_1_learner.html#a740f4e37b2098b113af6fedf30c01a2d">00089</a>   <a class="code" href="classltr_1_1_learner.html#a3991273e3814d2c82558b991bf40c6e6">DataPreprocessorArray</a> <a class="code" href="classltr_1_1_learner.html#a740f4e37b2098b113af6fedf30c01a2d">data_preprocessors_</a>;
+<a name="l00090"></a>00090 
+<a name="l00091"></a><a class="code" href="classltr_1_1_learner.html#a15c0abe6d3586bd1c9833e23de985375">00091</a>   FeatureConverterArray <a class="code" href="classltr_1_1_learner.html#a15c0abe6d3586bd1c9833e23de985375">feature_converters_</a>;
+<a name="l00092"></a><a class="code" href="classltr_1_1_learner.html#a90f78e8a888a243d7d57ad9453cdf1e1">00092</a>   <a class="code" href="classltr_1_1_learner.html#a2e3142c4175334efde39c5d0dbbbbf53">FeatureConverterLearnerArray</a> <a class="code" href="classltr_1_1_learner.html#a90f78e8a888a243d7d57ad9453cdf1e1">feature_converter_learners_</a>;
+<a name="l00093"></a>00093 };
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00096"></a><a class="code" href="classltr_1_1_base_learner.html">00096</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_learner.html">BaseLearner</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>&lt;TElement&gt; {
+<a name="l00097"></a>00097  <span class="keyword">public</span>:
+<a name="l00102"></a>00102   <span class="keyword">typename</span> TScorer::Ptr <a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">makeSpecific</a>() <span class="keyword">const</span>;
+<a name="l00103"></a>00103   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">make</a>() <span class="keyword">const</span>;
+<a name="l00104"></a>00104   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
+<a name="l00105"></a>00105                      <span class="keywordtype">bool</span> check_parameters = <span class="keyword">true</span>);
+<a name="l00106"></a>00106   <span class="comment">// \TODO ? We don&#39;t need it in base class as not all Learners support it</span>
+<a name="l00107"></a>00107   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">setInitialScorer</a>(<span class="keyword">const</span> TScorer&amp; scorer);
+<a name="l00108"></a>00108   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf" title="Reset internal state of Learner.">reset</a>();
+<a name="l00109"></a>00109  <span class="keyword">private</span>:
+<a name="l00115"></a>00115   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a2f326d82c3f867cbd6a6599dbcc67c1d" title="Learn input dataset and train scorer.">learnImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
+<a name="l00116"></a>00116                          TScorer* scorer) = 0;
 <a name="l00117"></a>00117 
-<a name="l00118"></a>00118   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::feature_converters_</a>;
-<a name="l00119"></a>00119   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::feature_converter_learners_</a>;
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121  <span class="keyword">protected</span>:
-<a name="l00122"></a><a class="code" href="classltr_1_1_base_learner.html#a9e56d63388d331e61e7f2045279c39ba">00122</a>   TScorer <a class="code" href="classltr_1_1_base_learner.html#a9e56d63388d331e61e7f2045279c39ba">scorer_</a>;
-<a name="l00123"></a>00123 };
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125 <span class="comment">// template realization</span>
+<a name="l00118"></a>00118   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::data_preprocessors_</a>;
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::feature_converters_</a>;
+<a name="l00121"></a>00121   <span class="keyword">using</span> <a class="code" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner&lt;TElement&gt;::feature_converter_learners_</a>;
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123  <span class="keyword">protected</span>:
+<a name="l00124"></a><a class="code" href="classltr_1_1_base_learner.html#a9e56d63388d331e61e7f2045279c39ba">00124</a>   TScorer <a class="code" href="classltr_1_1_base_learner.html#a9e56d63388d331e61e7f2045279c39ba">scorer_</a>;
+<a name="l00125"></a>00125 };
 <a name="l00126"></a>00126 
-<a name="l00127"></a>00127 <span class="comment">// _________________Learner________________________</span>
+<a name="l00127"></a>00127 <span class="comment">// template realization</span>
 <a name="l00128"></a>00128 
-<a name="l00129"></a>00129 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00130"></a><a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">00130</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">Learner&lt;TElement&gt;::addDataPreprocessor</a>(
-<a name="l00131"></a>00131     <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">DataPreprocessor&lt;TElement&gt;::Ptr</a> data_preprocessor) {
-<a name="l00132"></a>00132   data_preprocessors_.push_back(data_preprocessor);
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00136"></a><a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">00136</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">Learner&lt;TElement&gt;::addFeatureConverterLearner</a>(
-<a name="l00137"></a>00137     <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::FeatureConverterLearner&lt;TElement&gt;::Ptr</a>
-<a name="l00138"></a>00138       feature_converter_learner) {
-<a name="l00139"></a>00139   feature_converter_learners_.push_back(feature_converter_learner);
-<a name="l00140"></a>00140 }
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142 <span class="comment">// _________________BaseLearner_______________________</span>
+<a name="l00129"></a>00129 <span class="comment">// _________________Learner________________________</span>
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00132"></a><a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">00132</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">Learner&lt;TElement&gt;::addDataPreprocessor</a>(
+<a name="l00133"></a>00133     <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">DataPreprocessor&lt;TElement&gt;::Ptr</a> data_preprocessor) {
+<a name="l00134"></a>00134   data_preprocessors_.push_back(data_preprocessor);
+<a name="l00135"></a>00135 }
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<a name="l00138"></a><a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">00138</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">Learner&lt;TElement&gt;::addFeatureConverterLearner</a>(
+<a name="l00139"></a>00139     <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::FeatureConverterLearner&lt;TElement&gt;::Ptr</a>
+<a name="l00140"></a>00140       feature_converter_learner) {
+<a name="l00141"></a>00141   feature_converter_learners_.push_back(feature_converter_learner);
+<a name="l00142"></a>00142 }
 <a name="l00143"></a>00143 
-<a name="l00144"></a>00144 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00145"></a><a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">00145</a> <span class="keyword">typename</span> TScorer::Ptr <a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">BaseLearner&lt;TElement, TScorer&gt;::makeSpecific</a>()<span class="keyword"> const </span>{
-<a name="l00146"></a>00146   <span class="keywordflow">return</span> <span class="keyword">typename</span> TScorer::Ptr(
-<a name="l00147"></a>00147       <span class="keyword">new</span> TScorer(scorer_));
-<a name="l00148"></a>00148 }
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00151"></a><a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">00151</a> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">BaseLearner&lt;TElement, TScorer&gt;::make</a>()<span class="keyword"> const </span>{
-<a name="l00152"></a>00152   <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_scorer.html#aacae784a31ce3e3092c24f0d5de7dba4">Scorer::Ptr</a>(makeSpecific());
-<a name="l00153"></a>00153 }
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00156"></a><a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf">00156</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf" title="Reset internal state of Learner.">BaseLearner&lt;TElement, TScorer&gt;::reset</a>() {
-<a name="l00157"></a>00157   TScorer scorer;
-<a name="l00158"></a>00158   scorer_ = scorer;
-<a name="l00159"></a>00159 }
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00162"></a><a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">00162</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">BaseLearner&lt;TElement, TScorer&gt;::setInitialScorer</a>(<span class="keyword">const</span> TScorer&amp; scorer) {
-<a name="l00163"></a>00163   reset();
-<a name="l00164"></a>00164   scorer_ = scorer;
-<a name="l00165"></a>00165 }
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
-<a name="l00168"></a><a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d">00168</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">BaseLearner&lt;TElement, TScorer&gt;::learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00169"></a>00169                                            <span class="keywordtype">bool</span> check_parameters) {
-<a name="l00170"></a>00170   <span class="keywordflow">if</span> (check_parameters) {
-<a name="l00171"></a>00171     this-&gt;checkParameters();
-<a name="l00172"></a>00172   }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174   <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a> source_data = data_set.<a class="code" href="classltr_1_1_data_set.html#af2868844fcf27979623e388ad9785a3a">deepCopy</a>();
-<a name="l00175"></a>00175   <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a> converted_data;
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = 0; index &lt; (int)data_preprocessors_.size(); ++index) {
-<a name="l00178"></a>00178     data_preprocessors_[index]-&gt;apply(source_data, &amp;converted_data);
-<a name="l00179"></a>00179     source_data = converted_data;
-<a name="l00180"></a>00180   }
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182   feature_converters_.<a class="code" href="classltr_1_1_data_set.html#aac34ecb57f749c0c4659d903a7eeb0cc">clear</a>();
-<a name="l00183"></a>00183   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = 0;
-<a name="l00184"></a>00184        index &lt; (int)feature_converter_learners_.size(); ++index) {
-<a name="l00185"></a>00185     feature_converter_learners_[index]-&gt;learn(source_data);
-<a name="l00186"></a>00186     feature_converters_.push_back(feature_converter_learners_[index]-&gt;make());
-<a name="l00187"></a>00187     feature_converters_[index]-&gt;apply(source_data, &amp;converted_data);
-<a name="l00188"></a>00188     source_data = converted_data;
-<a name="l00189"></a>00189   }
-<a name="l00190"></a>00190 
-<a name="l00191"></a>00191   learnImpl(source_data, &amp;scorer_);
-<a name="l00192"></a>00192   scorer_.set_feature_converters(feature_converters_);
-<a name="l00193"></a>00193 }
-<a name="l00194"></a>00194 };
-<a name="l00195"></a>00195 <span class="preprocessor">#endif  // LTR_LEARNERS_LEARNER_H_</span>
+<a name="l00144"></a>00144 <span class="comment">// _________________BaseLearner_______________________</span>
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00147"></a><a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">00147</a> <span class="keyword">typename</span> TScorer::Ptr <a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">BaseLearner&lt;TElement, TScorer&gt;::makeSpecific</a>()<span class="keyword"> const </span>{
+<a name="l00148"></a>00148   <span class="keywordflow">return</span> <span class="keyword">typename</span> TScorer::Ptr(
+<a name="l00149"></a>00149       <span class="keyword">new</span> TScorer(scorer_));
+<a name="l00150"></a>00150 }
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00153"></a><a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">00153</a> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Scorer::Ptr</a> <a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">BaseLearner&lt;TElement, TScorer&gt;::make</a>()<span class="keyword"> const </span>{
+<a name="l00154"></a>00154   <span class="keywordflow">return</span> <a class="code" href="classltr_1_1_scorer.html#aacae784a31ce3e3092c24f0d5de7dba4">Scorer::Ptr</a>(makeSpecific());
+<a name="l00155"></a>00155 }
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00158"></a><a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf">00158</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf" title="Reset internal state of Learner.">BaseLearner&lt;TElement, TScorer&gt;::reset</a>() {
+<a name="l00159"></a>00159   TScorer scorer;
+<a name="l00160"></a>00160   scorer_ = scorer;
+<a name="l00161"></a>00161 }
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00164"></a><a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">00164</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">BaseLearner&lt;TElement, TScorer&gt;::setInitialScorer</a>(<span class="keyword">const</span> TScorer&amp; scorer) {
+<a name="l00165"></a>00165   reset();
+<a name="l00166"></a>00166   scorer_ = scorer;
+<a name="l00167"></a>00167 }
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement, <span class="keyword">class</span> TScorer&gt;
+<a name="l00170"></a><a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d">00170</a> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">BaseLearner&lt;TElement, TScorer&gt;::learn</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
+<a name="l00171"></a>00171                                            <span class="keywordtype">bool</span> check_parameters) {
+<a name="l00172"></a>00172   <span class="keywordflow">if</span> (check_parameters) {
+<a name="l00173"></a>00173     this-&gt;checkParameters();
+<a name="l00174"></a>00174   }
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a> source_data = data_set.<a class="code" href="classltr_1_1_data_set.html#af2868844fcf27979623e388ad9785a3a">deepCopy</a>();
+<a name="l00177"></a>00177   <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a> converted_data;
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = 0; index &lt; (int)data_preprocessors_.size(); ++index) {
+<a name="l00180"></a>00180     data_preprocessors_[index]-&gt;apply(source_data, &amp;converted_data);
+<a name="l00181"></a>00181     source_data = converted_data;
+<a name="l00182"></a>00182   }
+<a name="l00183"></a>00183 
+<a name="l00184"></a>00184   feature_converters_.<a class="code" href="classltr_1_1_data_set.html#aac34ecb57f749c0c4659d903a7eeb0cc">clear</a>();
+<a name="l00185"></a>00185   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = 0;
+<a name="l00186"></a>00186        index &lt; (int)feature_converter_learners_.size(); ++index) {
+<a name="l00187"></a>00187     feature_converter_learners_[index]-&gt;learn(source_data);
+<a name="l00188"></a>00188     feature_converters_.push_back(feature_converter_learners_[index]-&gt;make());
+<a name="l00189"></a>00189     feature_converters_[index]-&gt;apply(source_data, &amp;converted_data);
+<a name="l00190"></a>00190     source_data = converted_data;
+<a name="l00191"></a>00191   }
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193   learnImpl(source_data, &amp;scorer_);
+<a name="l00194"></a>00194   scorer_.set_feature_converters(feature_converters_);
+<a name="l00195"></a>00195 }
+<a name="l00196"></a>00196 };
+<a name="l00197"></a>00197 <span class="preprocessor">#endif  // LTR_LEARNERS_LEARNER_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

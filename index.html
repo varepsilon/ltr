@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -83,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -101,12 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 About LTR</h2>
 <p><a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href="http://en.wikipedia.org/wiki/Learning_to_rank">ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
  <br/>
-</p>
-<h2><a class="anchor" id="LTR"></a>
-About LTR</h2>
-<p>Learning To Rank (LTR) is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for ranking problems (link to Wiki) but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
- <br/>
- User can write code performing learning and testing by himself (link, see example here) or can use console application with human-readable configuration file (link, see here).<br/>
+ User can write code performing learning and testing by himself <a class="el" href="_how_to_create_new_learner_and_scorer.html">here</a> or can use console application with human-readable configuration file.<br/>
  <br/>
  Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
 <h2><a class="anchor" id="PHILOSOPHY"></a>
@@ -115,11 +109,11 @@ Philosophy of LTR</h2>
  Many of these ideas are similar of even coincident for ranking, classification, regression.<br/>
  Some examples of decomposition: </p>
 <ul>
-<li>TreeNet(link) = Gradient Descent + Boosting + Desicion Tree learning </li>
-<li>SoftRank(link) = Gradient Descent + Neural Net learning + Smoothing Nondifferentiability </li>
-<li>RankPG(link) = Genetic Programming + Listwise ranking measure optimizing </li>
-<li>AdaBoost(link) = Boosting + Exponential loss function approximation + Pointwise measure optimizing </li>
-<li>AdaRank(link) = Boosting + Exponential loss function approximation + Listwise measure optimizing<br/>
+<li><a href="http://www.salford-systems.com/en/products/treenet">TreeNet</a> = Gradient Descent + Boosting + Desicion Tree learning </li>
+<li><a href="http://research.microsoft.com/pubs/63585/softrankwsdm08submitted.pdf">SoftRank</a> = Gradient Descent + Neural Net learning + Smoothing Nondifferentiability </li>
+<li><a href="http://front.cc.nctu.edu.tw/Richfiles/18182-jyyeh-LR4IR07.pdf">RankPG</a> = Genetic Programming + Listwise ranking measure optimizing </li>
+<li><a href="http://www.robots.ox.ac.uk/~az/lectures/cv/adaboost_matas.pdf">AdaBoost</a> = Boosting + Exponential loss function approximation + Pointwise measure optimizing </li>
+<li><a href="http://research.microsoft.com/en-us/people/hangli/xu-sigir07.pdf">AdaRank</a> = Boosting + Exponential loss function approximation + Listwise measure optimizing<br/>
 </li>
 </ul>
 <p>The main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.<br/>
@@ -179,7 +173,7 @@ Documentation</h2>
 Requirements</h2>
 <ul>
 <li>Boost<br/>
- LTR assumes that you already have <a href="http://www.boost.org">Boost</a> sources and some static libraries in your system. <a class="el" href="class_the.html">The</a> detailed inatallation manual is <a class="el" href="_how_to_install.html">here</a>. </li>
+ LTR assumes that you already have <a href="http://www.boost.org">Boost</a> sources and some static libraries in your system. The detailed inatallation manual is <a class="el" href="_how_to_install.html">here</a>. </li>
 <li>CMake<br/>
  LTR uses the <a href="http://www.cmake.org">CMake</a> build system so you should install it.</li>
 </ul>
@@ -194,7 +188,7 @@ Compiler support</h2>
 </ul>
 <h2><a class="anchor" id="LICENSE"></a>
 License</h2>
-<p>LTR is licensed under the BSD license.</p>
+<p>LTR IS LICENSED UNDER THE BSD LICENSE. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <h2><a class="anchor" id="CONTRIBUTORS"></a>
 Contributors</h2>
 <p>You can see the full list of project participants <a class="el" href="_contributors.html">here</a>.</p>
@@ -205,7 +199,7 @@ Get support</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:09:01 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:45 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -120,48 +119,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00015"></a>00015 <span class="keyword">namespace </span>ltr {
 <a name="l00016"></a>00016 <span class="keyword">namespace </span>utility {
 <a name="l00017"></a>00017 <span class="keyword">template</span> &lt;<span class="keyword">class</span> TCont&gt;
-<a name="l00018"></a><a class="code" href="namespaceltr_1_1utility.html#aa24b3fe40a602b41e146abe6c32d51f8">00018</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#aa24b3fe40a602b41e146abe6c32d51f8">Contains</a>(<span class="keyword">const</span> TCont&amp; cont,
+<a name="l00018"></a>00018 <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> Contains(<span class="keyword">const</span> TCont&amp; cont,
 <a name="l00019"></a>00019                             <span class="keyword">const</span> <span class="keyword">typename</span> TCont::key_type&amp; key) {
 <a name="l00020"></a>00020   <span class="keywordflow">return</span> cont.find(key) != cont.end();
 <a name="l00021"></a>00021 }
 <a name="l00022"></a>00022 
 <a name="l00023"></a>00023 <span class="keyword">template</span> &lt;<span class="keyword">class</span> ValueType&gt;
-<a name="l00024"></a><a class="code" href="namespaceltr_1_1utility.html#a4ee46a4f5bf2846d37f7076c3e697f2a">00024</a> <span class="keyword">static</span> <span class="keyword">inline</span> ValueType &amp;<a class="code" href="namespaceltr_1_1utility.html#a4ee46a4f5bf2846d37f7076c3e697f2a">SafeInsert</a>(
+<a name="l00024"></a>00024 <span class="keyword">static</span> <span class="keyword">inline</span> ValueType &amp;SafeInsert(
 <a name="l00025"></a>00025     boost::unordered_map&lt;string, ValueType&gt; &amp;container,
 <a name="l00026"></a>00026     <span class="keyword">const</span> <span class="keywordtype">char</span>* key) {
 <a name="l00027"></a>00027   <span class="keywordflow">if</span> (!key) {
 <a name="l00028"></a>00028     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;empty name!!!!&quot;</span>);
 <a name="l00029"></a>00029   }
-<a name="l00030"></a>00030   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#aa24b3fe40a602b41e146abe6c32d51f8">Contains</a>(container, key)) {
+<a name="l00030"></a>00030   <span class="keywordflow">if</span> (Contains(container, key)) {
 <a name="l00031"></a>00031     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Container already contains &quot;</span> + <span class="keywordtype">string</span>(key) + <span class="stringliteral">&quot;!!!&quot;</span>);
 <a name="l00032"></a>00032   }
 <a name="l00033"></a>00033   <span class="keywordflow">return</span> container[key];
 <a name="l00034"></a>00034 }
 <a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="namespaceltr_1_1utility.html#aa8a4fe653ff8c0da7c3f337d584ecaee">00036</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceltr_1_1utility.html#a4ee46a4f5bf2846d37f7076c3e697f2a">SafeInsert</a>(
+<a name="l00036"></a>00036 <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> SafeInsert(
 <a name="l00037"></a>00037     boost::unordered_set&lt;string&gt;&amp; cont,
 <a name="l00038"></a>00038     <span class="keyword">const</span> <span class="keywordtype">char</span>* key) {
 <a name="l00039"></a>00039   <span class="keywordflow">if</span> (!key) {
 <a name="l00040"></a>00040     <span class="keywordflow">return</span>;
 <a name="l00041"></a>00041   }
-<a name="l00042"></a>00042   <span class="keywordflow">if</span> (<a class="code" href="namespaceltr_1_1utility.html#aa24b3fe40a602b41e146abe6c32d51f8">Contains</a>(cont, key)) {
+<a name="l00042"></a>00042   <span class="keywordflow">if</span> (Contains(cont, key)) {
 <a name="l00043"></a>00043     <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Container already contains &quot;</span> + <span class="keywordtype">string</span>(key) + <span class="stringliteral">&quot;!!!&quot;</span>);
 <a name="l00044"></a>00044   }
 <a name="l00045"></a>00045   cont.insert(key);
 <a name="l00046"></a>00046 }
 <a name="l00047"></a>00047 
 <a name="l00055"></a>00055 <span class="keyword">template</span> &lt;<span class="keyword">class</span> Key, <span class="keyword">class</span> Value&gt;
-<a name="l00056"></a><a class="code" href="namespaceltr_1_1utility.html#a8c9012f68e9852aaa12c0d428b6d8fee">00056</a> <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="namespaceltr_1_1utility.html#a8c9012f68e9852aaa12c0d428b6d8fee">ToString</a>(<span class="keyword">const</span> boost::unordered_map&lt;Key, Value&gt;&amp; cont) {
+<a name="l00056"></a>00056 <span class="keyword">inline</span> <span class="keywordtype">string</span> ToString(<span class="keyword">const</span> boost::unordered_map&lt;Key, Value&gt;&amp; cont) {
 <a name="l00057"></a>00057   <span class="keyword">typedef</span> <span class="keyword">typename</span> boost::unordered_map&lt;Key, Value&gt;::const_iterator TIter;
 <a name="l00058"></a>00058   stringstream out(stringstream::out);
 <a name="l00059"></a>00059   <span class="keywordtype">size_t</span> i = 0;
 <a name="l00060"></a>00060   <span class="keywordflow">for</span> (TIter it = cont.begin(); it != cont.end(); ++it)
-<a name="l00061"></a>00061     out &lt;&lt; ++i &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code" href="namespaceltr_1_1utility.html#a8c9012f68e9852aaa12c0d428b6d8fee">ToString</a>(it-&gt;second) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;
+<a name="l00061"></a>00061     out &lt;&lt; ++i &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; ToString(it-&gt;second) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;
 <a name="l00062"></a>00062   <span class="keywordflow">return</span> out.str();
 <a name="l00063"></a>00063 }
 <a name="l00064"></a>00064 
 <a name="l00071"></a>00071 <span class="keyword">template</span> &lt;<span class="keyword">class</span> Value&gt;
-<a name="l00072"></a><a class="code" href="namespaceltr_1_1utility.html#a5aea2522c6986d94c59cfe0078c41685">00072</a> <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="namespaceltr_1_1utility.html#a8c9012f68e9852aaa12c0d428b6d8fee">ToString</a>(<span class="keyword">const</span> boost::unordered_set&lt;Value&gt;&amp; cont) {
+<a name="l00072"></a>00072 <span class="keyword">inline</span> <span class="keywordtype">string</span> ToString(<span class="keyword">const</span> boost::unordered_set&lt;Value&gt;&amp; cont) {
 <a name="l00073"></a>00073   <span class="keyword">typedef</span> <span class="keyword">typename</span> boost::unordered_set&lt;Value&gt;::const_iterator TIter;
 <a name="l00074"></a>00074   stringstream out(stringstream::out);
 <a name="l00075"></a>00075   out &lt;&lt; <span class="stringliteral">&quot;set(&quot;</span>;
@@ -178,7 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

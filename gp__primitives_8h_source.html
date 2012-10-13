@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -156,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00062"></a><a class="code" href="classltr_1_1gp_1_1_subtract.html#abb7ec7098489b42e3cead34242bbd1a1">00062</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1gp_1_1_subtract.html#abb7ec7098489b42e3cead34242bbd1a1">~Subtract</a>() {}
 <a name="l00065"></a><a class="code" href="classltr_1_1gp_1_1_subtract.html#acba438adfacd916407536f8c516ba7c0">00065</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_subtract.html#acba438adfacd916407536f8c516ba7c0">execute</a>(<span class="keywordtype">void</span>* output,
 <a name="l00066"></a>00066       Puppy::Context&amp; puppy_context) {
-<a name="l00067"></a>00067     INFO(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
+<a name="l00067"></a>00067     DBUG(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
 <a name="l00068"></a>00068     <span class="keywordtype">double</span>&amp; first_argument = *(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span>*<span class="keyword">&gt;</span>(output));
 <a name="l00069"></a>00069     <span class="keywordtype">double</span> second_argument;
 <a name="l00070"></a>00070     getArgument(0, &amp;first_argument, puppy_context);
@@ -176,7 +175,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00090"></a><a class="code" href="classltr_1_1gp_1_1_multiply.html#a5ed1d51154f7ac75bb121438a5b993ee">00090</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1gp_1_1_multiply.html#a5ed1d51154f7ac75bb121438a5b993ee">~Multiply</a>() {}
 <a name="l00093"></a><a class="code" href="classltr_1_1gp_1_1_multiply.html#aa4721d36652a2bed50dcef9a30dc8496">00093</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_multiply.html#aa4721d36652a2bed50dcef9a30dc8496">execute</a>(<span class="keywordtype">void</span>* output,
 <a name="l00094"></a>00094       Puppy::Context&amp; puppy_context) {
-<a name="l00095"></a>00095     INFO(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
+<a name="l00095"></a>00095     DBUG(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
 <a name="l00096"></a>00096     <span class="keywordtype">double</span>&amp; first_argument = *(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span>*<span class="keyword">&gt;</span>(output));
 <a name="l00097"></a>00097     <span class="keywordtype">double</span> second_argument;
 <a name="l00098"></a>00098     getArgument(0, &amp;first_argument, puppy_context);
@@ -197,7 +196,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00119"></a><a class="code" href="classltr_1_1gp_1_1_divide.html#a775fde3b28a18efd379d44b3cfb5073c">00119</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1gp_1_1_divide.html#a775fde3b28a18efd379d44b3cfb5073c">~Divide</a>() {}
 <a name="l00122"></a><a class="code" href="classltr_1_1gp_1_1_divide.html#a43b7e71db5509566ff986135124cef9a">00122</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1gp_1_1_divide.html#a43b7e71db5509566ff986135124cef9a">execute</a>(<span class="keywordtype">void</span>* output,
 <a name="l00123"></a>00123       Puppy::Context&amp; puppy_context) {
-<a name="l00124"></a>00124     INFO(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
+<a name="l00124"></a>00124     DBUG(<span class="stringliteral">&quot;Starting to execute&quot;</span>);
 <a name="l00125"></a>00125     <span class="keywordtype">double</span>&amp; first_argument = *(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span>*<span class="keyword">&gt;</span>(output));
 <a name="l00126"></a>00126     <span class="keywordtype">double</span> second_argument;
 <a name="l00127"></a>00127     getArgument(1, &amp;second_argument, puppy_context);
@@ -209,7 +208,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00133"></a>00133     }
 <a name="l00134"></a>00134   }
 <a name="l00138"></a><a class="code" href="classltr_1_1gp_1_1_divide.html#a05937a287c261200a90a84ea1363bb60">00138</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1gp_1_1_divide.html#a05937a287c261200a90a84ea1363bb60">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00139"></a>00139     INFO(<span class="stringliteral">&quot;Starting to generate CPP code of Divide class&quot;</span>);
+<a name="l00139"></a>00139     INFO(<span class="stringliteral">&quot;Starting to generate CPP code for Divide class&quot;</span>);
 <a name="l00140"></a>00140     <span class="keywordtype">string</span> code;
 <a name="l00141"></a>00141     code.append(<span class="stringliteral">&quot;#include &lt;cmath&gt;\n&quot;</span>);
 <a name="l00142"></a>00142     code.append(<span class="stringliteral">&quot;inline double &quot;</span>);
@@ -244,7 +243,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00176"></a>00176   }
 <a name="l00177"></a>00177 
 <a name="l00178"></a><a class="code" href="classltr_1_1gp_1_1_if_then_func.html#a70243e6794bca418c31b5bd187d062e3">00178</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1gp_1_1_if_then_func.html#a70243e6794bca418c31b5bd187d062e3">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name)<span class="keyword"> const </span>{
-<a name="l00179"></a>00179     INFO(<span class="stringliteral">&quot;Starting to generate CPP code of IfThenFunc&quot;</span>);
+<a name="l00179"></a>00179     INFO(<span class="stringliteral">&quot;Starting to generate CPP code for IfThenFunc&quot;</span>);
 <a name="l00180"></a>00180     <span class="keywordflow">return</span> <span class="stringliteral">&quot;inline double &quot;</span> + function_name +
 <a name="l00181"></a>00181       <span class="stringliteral">&quot;(double lhs, double mhs, double rhs) {\n&quot;</span> +
 <a name="l00182"></a>00182       <span class="stringliteral">&quot;  if (lhs &gt; 0.0) {\n&quot;</span> +
@@ -266,7 +265,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00201"></a>00201       Puppy::Context&amp; puppy_context) {}
 <a name="l00202"></a><a class="code" href="classltr_1_1gp_1_1_ephemeral.html#ac44655975c5bf831b4ebc764c41eabb8">00202</a>   <span class="keyword">virtual</span> Puppy::PrimitiveHandle <a class="code" href="classltr_1_1gp_1_1_ephemeral.html#ac44655975c5bf831b4ebc764c41eabb8">giveReference</a>(
 <a name="l00203"></a>00203       Puppy::Context&amp; puppy_context) {
-<a name="l00204"></a>00204     INFO(<span class="stringliteral">&quot;giving reference of puppy_context&quot;</span>);
+<a name="l00204"></a>00204     DBUG(<span class="stringliteral">&quot;Giving reference for puppy_context&quot;</span>);
 <a name="l00205"></a>00205     <span class="keywordtype">double</span> value = puppy_context.mRandom.rollUniform(-1.0, 1.0);
 <a name="l00206"></a>00206     std::ostringstream name;
 <a name="l00207"></a>00207     name.precision(<a class="code" href="classltr_1_1gp_1_1_ephemeral.html#a96e9dca79a6bb4f910bc7873fa8bde2b">precision</a>);
@@ -281,7 +280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

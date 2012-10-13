@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -90,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -101,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="navelem"><a class="el" href="namespaceltr.html">ltr</a>      </li>
+      <li class="navelem"><b>ltr</b>      </li>
       <li class="navelem"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html">FisherDiscriminantDensityLearner</a>      </li>
     </ul>
   </div>
@@ -135,9 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3bcaea7362c37a75024d1d0a41eb562d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#a3bcaea7362c37a75024d1d0a41eb562d">FisherDiscriminantDensityLearner</a> (const <a class="el" href="classltr_1_1_parameters_container.html">ParametersContainer</a> &amp;parameters)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:ae3f2611741335d7650025b50ad99f96d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#ae3f2611741335d7650025b50ad99f96d">calculateMean</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, <a class="el" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> *result)</td></tr>
-<tr class="memitem:a709bd2594152baa54b27fc0b0efe634a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#a709bd2594152baa54b27fc0b0efe634a">calculateCovarianceMatrix</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, const <a class="el" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> &amp;mean, MatrixXd *result)</td></tr>
-<tr class="memitem:af1bfcc1314ae662268e07b1e3d693d38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#af1bfcc1314ae662268e07b1e3d693d38">findLinearFactorsAndBiases</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, <a class="el" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">LabelToLinearFactor</a> *linear_factors, <a class="el" href="namespaceltr.html#a7d7994208ce470a6d61380e154d3859d">LabelToLinearBias</a> *linear_biases)</td></tr>
+<tr class="memitem:ae3f2611741335d7650025b50ad99f96d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#ae3f2611741335d7650025b50ad99f96d">calculateMean</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, LabelToMean *result)</td></tr>
+<tr class="memitem:a709bd2594152baa54b27fc0b0efe634a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#a709bd2594152baa54b27fc0b0efe634a">calculateCovarianceMatrix</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, const LabelToMean &amp;mean, MatrixXd *result)</td></tr>
+<tr class="memitem:af1bfcc1314ae662268e07b1e3d693d38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#af1bfcc1314ae662268e07b1e3d693d38">findLinearFactorsAndBiases</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, LabelToLinearFactor *linear_factors, LabelToLinearBias *linear_biases)</td></tr>
 <tr class="memitem:a438d2657547489f38c5c629f3ed0a2c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html#a438d2657547489f38c5c629f3ed0a2c3">learnImpl</a> (const <a class="el" href="classltr_1_1_data_set.html">DataSet</a>&lt; TElement &gt; &amp;data_set, <a class="el" href="classltr_1_1_fisher_discriminant.html">FisherDiscriminant</a> *estimator)</td></tr>
 </table>
 <h3>template&lt;class TElement&gt;<br/>
@@ -197,7 +196,7 @@ template&lt;class TElement &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> &amp;&#160;</td>
+          <td class="paramtype">const LabelToMean &amp;&#160;</td>
           <td class="paramname"><em>mean</em>, </td>
         </tr>
         <tr>
@@ -233,7 +232,7 @@ template&lt;class TElement &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> *&#160;</td>
+          <td class="paramtype">LabelToMean *&#160;</td>
           <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
@@ -263,13 +262,13 @@ template&lt;class TElement &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">LabelToLinearFactor</a> *&#160;</td>
+          <td class="paramtype">LabelToLinearFactor *&#160;</td>
           <td class="paramname"><em>linear_factors</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceltr.html#a7d7994208ce470a6d61380e154d3859d">LabelToLinearBias</a> *&#160;</td>
+          <td class="paramtype">LabelToLinearBias *&#160;</td>
           <td class="paramname"><em>linear_biases</em>&#160;</td>
         </tr>
         <tr>
@@ -323,7 +322,7 @@ template&lt;class TElement &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

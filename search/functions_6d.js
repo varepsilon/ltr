@@ -9,6 +9,5 @@ var searchData=
   ['markdataset',['markDataSet',['../classltr_1_1gp_1_1_g_p_scorer.html#aaa403753df80c67d96d2b7a00ad60785',1,'ltr::gp::GPScorer']]],
   ['maxweightpredictionsaggregator',['MaxWeightPredictionsAggregator',['../classltr_1_1_max_weight_predictions_aggregator.html#a64cae7c0c5d89c2e1a05711910b61bab',1,'ltr::MaxWeightPredictionsAggregator::MaxWeightPredictionsAggregator()'],['../classltr_1_1_max_weight_predictions_aggregator.html#a9d30f775fe19aecb1b1df7e601a6a8b2',1,'ltr::MaxWeightPredictionsAggregator::MaxWeightPredictionsAggregator(const ParametersContainer &amp;parameters)']]],
   ['multiply',['Multiply',['../classltr_1_1gp_1_1_multiply.html#a5ef43c1dface2a2255282e2cb8269626',1,'ltr::gp::Multiply']]],
-  ['multitable',['MultiTable',['../classltr_1_1utility_1_1_multi_table.html#a76d1a718be64fb2c71d435990a035412',1,'ltr::utility::MultiTable::MultiTable()'],['../classltr_1_1utility_1_1_multi_table.html#ab45fa32025c90284fdd5dc016bb4ebda',1,'ltr::utility::MultiTable::MultiTable(const vector&lt; size_t &gt; &amp;table_size)']]],
-  ['murmurhash',['murmurHash',['../namespaceltr_1_1utility.html#a5f5fe0ac648990ef60fcb50f5c3b5588',1,'ltr::utility']]]
+  ['multitable',['MultiTable',['../classltr_1_1utility_1_1_multi_table.html#a76d1a718be64fb2c71d435990a035412',1,'ltr::utility::MultiTable::MultiTable()'],['../classltr_1_1utility_1_1_multi_table.html#ab45fa32025c90284fdd5dc016bb4ebda',1,'ltr::utility::MultiTable::MultiTable(const vector&lt; size_t &gt; &amp;table_size)']]]
 ];

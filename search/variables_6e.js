@@ -2,7 +2,6 @@ var searchData=
 [
   ['name',['name',['../structltr_1_1_parameters_container_1_1_name_value.html#a3a88c91d3dcacac92849824d627b01f9',1,'ltr::ParametersContainer::NameValue']]],
   ['name_5fvalue_5fhash_5f',['name_value_hash_',['../classltr_1_1_parameters_container.html#abe5e46b18d41154112ceb25e67030c17',1,'ltr::ParametersContainer']]],
-  ['nan',['NaN',['../namespaceltr_1_1utility.html#a3e42acc23b8c3f03106445947b9e83cc',1,'ltr::utility']]],
   ['neighbor_5fid',['neighbor_id',['../structltr_1_1_distance_to_neighbor.html#a5d3581ace1f31d882bb075849fce12e5',1,'ltr::DistanceToNeighbor']]],
   ['neighbor_5fweighter_5f',['neighbor_weighter_',['../classltr_1_1_n_n_learner.html#ad071772f75c0513386137681faf7fafe',1,'ltr::NNLearner::neighbor_weighter_()'],['../classltr_1_1_n_n_scorer.html#a71b6a1957dbdca6d099a58a1118724a4',1,'ltr::NNScorer::neighbor_weighter_()']]],
   ['neutral_5fobject_5f',['neutral_object_',['../classltr_1_1_nan_to_neutral_converter.html#a9d9ce0f41c3945213c030d2478d9d118',1,'ltr::NanToNeutralConverter']]],

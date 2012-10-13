@@ -2,7 +2,6 @@ var searchData=
 [
   ['childrens_5f',['childrens_',['../classltr_1_1decision__tree_1_1_vertex.html#aa50005c75a5e02f361e11e63f5ceac94',1,'ltr::decision_tree::Vertex']]],
   ['classes_5f',['classes_',['../classltr_1_1io__utility_1_1_a_r_f_f_parser.html#a100864a5decb2e7bddc9dc0683dadc39',1,'ltr::io_utility::ARFFParser']]],
-  ['compare_5feps',['COMPARE_EPS',['../namespaceserialization__test.html#a8a57c2dc4de81230cb04216170f45483',1,'serialization_test']]],
   ['composition_5fscorer_5fweights_5fupdater_5f',['composition_scorer_weights_updater_',['../classltr_1_1composition_1_1_composition_learner.html#a4536acc974099207e1f5712267eab00a',1,'ltr::composition::CompositionLearner']]],
   ['conditions_5f',['conditions_',['../classltr_1_1decision__tree_1_1_vertex.html#a76262f0fe077477f13e92562cc83ba63',1,'ltr::decision_tree::Vertex']]],
   ['context_5f',['context_',['../classltr_1_1gp_1_1_g_p_learner.html#a9560fdb7de56483633e75da676ec67f9',1,'ltr::gp::GPLearner::context_()'],['../classltr_1_1gp_1_1_g_p_scorer.html#a4c67b70bc848ea5acea900e5945073ef',1,'ltr::gp::GPScorer::context_()']]],

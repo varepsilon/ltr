@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['validate',['Validate',['../namespaceltr_1_1cv.html#a0884926302a39d700d8a74527332514d',1,'ltr::cv']]],
   ['validation_5fresult_2ecc',['validation_result.cc',['../validation__result_8cc.html',1,'']]],
   ['validation_5fresult_2eh',['validation_result.h',['../validation__result_8h.html',1,'']]],
   ['validation_5fresult_5funittest_2ecc',['validation_result_unittest.cc',['../validation__result__unittest_8cc.html',1,'']]],

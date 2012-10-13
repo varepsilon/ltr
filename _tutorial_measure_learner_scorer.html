@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -198,11 +197,8 @@ Learners and scorers</h3>
 <tr>
 <td>Output: </td></tr>
 <tr>
-<td><div class="fragment"><pre class="fragment">/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:49: info: Learning started
-/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 0 element.
-/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 1 element.
-/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:52: info: Getting the label of 2 element.
-/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:67: info: Calculating XTW matrix
+<td><div class="fragment"><pre class="fragment">/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:48: Sat Oct 13 18:01:01 2012: info: Learning started
+/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:65: Sat Oct 13 18:01:01 2012: info: Calculating XTW matrix
 train_object1 score = 1
 train_object2 score = 2
 train_object3 score = 0.25
@@ -223,8 +219,8 @@ test_object1 score = 10
 <span class="preprocessor">#include &quot;<a class="code" href="gp__scorer_8h.html">ltr/scorers/gp_scorer.h</a>&quot;</span>
 
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a30640be8338829068b02b93a14769bb2">ltr::io_utility::loadDataSet</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a88a9b672e2c7c15a13a0d20f59866426">ltr::io_utility::saveDataSet</a>;
+<span class="keyword">using</span> ltr::io_utility::loadDataSet;
+<span class="keyword">using</span> ltr::io_utility::saveDataSet;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::Measure&lt;ltr::ObjectList&gt;::Ptr</a> dcg_measure(<span class="keyword">new</span> <a class="code" href="classltr_1_1_base_d_c_g.html">ltr::DCG</a>());
@@ -239,7 +235,7 @@ test_object1 score = 10
 
   gp_learner.make()-&gt;predict(testing_data);
 
-  <a class="code" href="namespaceltr_1_1io__utility.html#a88a9b672e2c7c15a13a0d20f59866426">saveDataSet</a>(testing_data, <span class="stringliteral">&quot;result_data.txt&quot;</span>, <span class="stringliteral">&quot;YANDEX&quot;</span>);
+  saveDataSet(testing_data, <span class="stringliteral">&quot;result_data.txt&quot;</span>, <span class="stringliteral">&quot;YANDEX&quot;</span>);
 }
 </pre></div>  </td></tr>
 </table>
@@ -247,7 +243,7 @@ test_object1 score = 10
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

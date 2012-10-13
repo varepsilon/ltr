@@ -10,6 +10,5 @@ var searchData=
   ['learners_5f',['learners_',['../classltr_1_1cv_1_1_cross_validator.html#a283c41f9d805bdb7c3f651780598ac86',1,'ltr::cv::CrossValidator']]],
   ['left_5ffeature_5fvalue_5fbound_5f',['left_feature_value_bound_',['../classltr_1_1decision__tree_1_1_threshold_condition.html#a60ecd3e221d0231ba56fc756239689bf',1,'ltr::decision_tree::ThresholdCondition']]],
   ['linear_5fbiases_5f',['linear_biases_',['../classltr_1_1_fisher_discriminant.html#ae7429f197eb38b4ddad84ee298804572',1,'ltr::FisherDiscriminant']]],
-  ['linear_5ffactors_5f',['linear_factors_',['../classltr_1_1_fisher_discriminant.html#a9f9c8192ae032c09819b11b45c1f5703',1,'ltr::FisherDiscriminant']]],
-  ['ln_5f2',['ln_2',['../namespaceltr_1_1utility.html#a8de1af47f43a503ee2bbdaea721415e5',1,'ltr::utility']]]
+  ['linear_5ffactors_5f',['linear_factors_',['../classltr_1_1_fisher_discriminant.html#a9f9c8192ae032c09819b11b45c1f5703',1,'ltr::FisherDiscriminant']]]
 ];

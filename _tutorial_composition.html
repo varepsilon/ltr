@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -154,19 +153,59 @@ Examples</h2>
 <h3><a class="anchor" id="TutorialCompositionRSM"></a>
 RSM</h3>
 <p>This is an example of implementing RSM (random subspace method, see <a href="http://en.wikipedia.org/wiki/Random_subspace_method">http://en.wikipedia.org/wiki/Random_subspace_method</a>) with the linear composition learner. Default DataSetWeightsUpdater and CompositionScorerWeightsUpdater do nothing.</p>
-<div class="fragment"><pre class="fragment">CompositionLearner&lt;Object, LinearCompositionScorer&gt; linear_composition_learner;
+<table class="doxtable">
+<tr>
+<th>Example: Random Subspace Method </th><th>Output:</th></tr>
+<tr>
+<td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 
-<a class="code" href="classltr_1_1_measure.html#a6a7879699e2e550f40ecae5cb3f1397d">AbsError::Ptr</a> abs_error(<span class="keyword">new</span> AbsError); <span class="comment">// ::Ptr means a shared pointer wherever in LTR</span>
+<span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="composition__learner_8h.html">ltr/learners/composition_learner/composition_learner.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="composition__scorer_8h.html">ltr/scorers/composition_scorers/composition_scorer.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="abs__error_8h.html">ltr/measures/abs_error.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="feature__random__sampler__learner_8h.html">ltr/feature_converters/feature_random_sampler_learner.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="best__feature__learner_8h.html">ltr/learners/best_feature_learner/best_feature_learner.h</a>&quot;</span>
 
-FeatureRandomSamplerLearner&lt;Object&gt;::Ptr rsm(<span class="keyword">new</span> FeatureRandomSamplerLearner&lt;Object&gt;);
-BestFeatureLearner&lt;Object&gt;::Ptr best_feature_learner(<span class="keyword">new</span> BestFeatureLearner&lt;Object&gt;(abs_error));
-best_feature_learner-&gt;addFeatureConverterLearner(rsm);
+<span class="keyword">using</span> <a class="code" href="classltr_1_1composition_1_1_composition_learner.html">ltr::composition::CompositionLearner</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1composition_1_1_composition_scorer.html">ltr::composition::CompositionScorer</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_abs_error.html">ltr::AbsError</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_random_sampler_learner.html" title="Produces FeatureSampler with random indices.">ltr::FeatureRandomSamplerLearner</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_best_feature_learner.html">ltr::BestFeatureLearner</a>;
 
-linear_composition_learner.set_weak_learner(best_feature_learner);
+<span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
+  ltr::Log LOG; <span class="comment">// is needed for a correct logging in learners</span>
+  logog::GetDefaultFilter().Level(LOGOG_LEVEL_ERROR); <span class="comment">// display only errors</span>
+  srand(14);
 
-linear_composition_learner.learn(data);
-LinearCompositionScorer::Ptr linear_scorer = linear_composition_learner.makeSpecific();
-</pre></div><h3><a class="anchor" id="TutorialCompositionAdaBoost"></a>
+  DataSet&lt;Object&gt; dataset(3); <span class="comment">// dataset with 3 features</span>
+  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 20; ++i) { <span class="comment">// 20 elements</span>
+    Object current;
+    current &lt;&lt; rand() &lt;&lt; rand() &lt;&lt; rand(); <span class="comment">// random features</span>
+    current.set_actual_label(rand()); <span class="comment">// random labels</span>
+    dataset &lt;&lt; current;
+  }
+
+  <span class="comment">// by default composition learner is linear</span>
+  CompositionLearner&lt;Object&gt; linear_composition_learner;
+
+  <a class="code" href="classltr_1_1_measure.html#a6a7879699e2e550f40ecae5cb3f1397d">AbsError::Ptr</a> abs_error(<span class="keyword">new</span> AbsError); <span class="comment">// ::Ptr means a shared pointer wherever in LTR</span>
+
+  FeatureRandomSamplerLearner&lt;Object&gt;::Ptr rsm(<span class="keyword">new</span> FeatureRandomSamplerLearner&lt;Object&gt;);
+  BestFeatureLearner&lt;Object&gt;::Ptr best_feature_learner(<span class="keyword">new</span> BestFeatureLearner&lt;Object&gt;(abs_error));
+  best_feature_learner-&gt;addFeatureConverterLearner(rsm);
+
+  linear_composition_learner.set_weak_learner(best_feature_learner);
+
+  linear_composition_learner.learn(dataset);
+  CompositionScorer::Ptr linear_composition_scorer = linear_composition_learner.makeSpecific();
+
+  std::cout &lt;&lt; *linear_composition_scorer;
+}
+</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</table>
+<h3><a class="anchor" id="TutorialCompositionAdaBoost"></a>
 Classic AdaBoost</h3>
 <p>This example represents a classic AdaBoost composition algorithm (see <a href="http://www.robots.ox.ac.uk/~az/lectures/cv/adaboost_matas.pdf">http://www.robots.ox.ac.uk/~az/lectures/cv/adaboost_matas.pdf</a>) on the best feature learner.</p>
 <div class="fragment"><pre class="fragment">CompositionLearner&lt;Object, LinearCompositionScorer&gt; linear_composition_learner(5); <span class="comment">// 5 is the nunber of iterations</span>
@@ -189,6 +228,8 @@ linear_composition_learner.set_weak_learner(bf_learner);
 
 linear_composition_learner.learn(data);
 LinearCompositionScorer::Ptr linear_composition_scorer = linear_composition_learner.makeSpecific();
+
+std::cout &lt;&lt; *linear_composition_scorer;
 </pre></div><p>Also, the very same thing can be done in a shorter way:</p>
 <div class="fragment"><pre class="fragment">AdaBoostLearner ada_learner(5);
 
@@ -198,11 +239,13 @@ ada_learner.set_weak_learner(bf_learner);
 
 ada_learner.learn(data);
 LinearCompositionScorer::Ptr ada_scorer = ada_learner.makeSpecific();
+
+std::cout &lt;&lt; *ada_scorer;
 </pre></div> </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

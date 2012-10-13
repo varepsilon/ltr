@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -133,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a><a class="code" href="structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05">00032</a>   <span class="keywordtype">size_t</span> <a class="code" href="structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05">size</a>;
 <a name="l00033"></a>00033 };
 <a name="l00034"></a>00034 
-<a name="l00043"></a><a class="code" href="namespaceltr_1_1utility.html#a070adbe99d5cb42ec96872c835f3abeb">00043</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#a070adbe99d5cb42ec96872c835f3abeb">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="structltr_1_1utility_1_1_dimension_size.html">DimensionSize</a>&amp; left, <span class="keyword">const</span> <a class="code" href="structltr_1_1utility_1_1_dimension_size.html">DimensionSize</a>&amp; right) {
+<a name="l00043"></a>00043 <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="multi__vector__print_8h.html#a1ef029a790bcb2dca9cc0f22f1e1b7ec">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="structltr_1_1utility_1_1_dimension_size.html">DimensionSize</a>&amp; left, <span class="keyword">const</span> <a class="code" href="structltr_1_1utility_1_1_dimension_size.html">DimensionSize</a>&amp; right) {
 <a name="l00044"></a>00044   <span class="keywordflow">return</span> left.<a class="code" href="structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05">size</a> &lt; right.<a class="code" href="structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05">size</a>;
 <a name="l00045"></a>00045 }
 <a name="l00046"></a>00046 
@@ -177,8 +176,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00156"></a>00156   T* operator-&gt;();
 <a name="l00161"></a>00161   <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a> operator++();
 <a name="l00165"></a>00165   <span class="keyword">const</span> vector&lt;size_t&gt;&amp; getMultiIndex() <span class="keyword">const</span>;
-<a name="l00169"></a>00169   <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#a819a1546746d601b32590e2a9c410d36">operator==</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right);
-<a name="l00173"></a>00173   <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#aa11b90d48392d2c6c6469d5bbace70f3">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right);
+<a name="l00169"></a>00169   <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right);
+<a name="l00173"></a>00173   <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right);
 <a name="l00174"></a>00174  <span class="keyword">private</span>:
 <a name="l00175"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#aaac639b32059874236118f4125f35849">00175</a>   vector&lt;size_t&gt; <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#aaac639b32059874236118f4125f35849">multi_index_</a>;
 <a name="l00176"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7e2a0c039bc4dd7dcf3a2b2edb511e04">00176</a>   <a class="code" href="classltr_1_1utility_1_1_multi_table.html">MultiTable&lt;T, N&gt;</a>* <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a7e2a0c039bc4dd7dcf3a2b2edb511e04">instance</a>;
@@ -402,12 +401,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00394"></a>00394 }
 <a name="l00395"></a>00395 
 <a name="l00396"></a>00396 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;
-<a name="l00397"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a19b12afeb943131e3c8e8ba05db49b8b">00397</a> <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#a819a1546746d601b32590e2a9c410d36">MultiTable&lt;T, N&gt;::Iterator::operator==</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right) {
+<a name="l00397"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a19b12afeb943131e3c8e8ba05db49b8b">00397</a> <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1utility_1_1_multi_table.html">MultiTable&lt;T, N&gt;::Iterator::operator==</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right) {
 <a name="l00398"></a>00398   <span class="keywordflow">return</span> (this-&gt;multi_index_ == right.<a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#aaac639b32059874236118f4125f35849">multi_index_</a>);
 <a name="l00399"></a>00399 }
 <a name="l00400"></a>00400 
 <a name="l00401"></a>00401 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;
-<a name="l00402"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a4e9d7537511ee32029b072d1e5bec22d">00402</a> <span class="keywordtype">bool</span> <a class="code" href="namespaceltr_1_1utility.html#aa11b90d48392d2c6c6469d5bbace70f3">MultiTable&lt;T, N&gt;::Iterator::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right) {
+<a name="l00402"></a><a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a4e9d7537511ee32029b072d1e5bec22d">00402</a> <span class="keywordtype">bool</span> <a class="code" href="classltr_1_1utility_1_1_multi_table.html">MultiTable&lt;T, N&gt;::Iterator::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1utility_1_1_multi_table_1_1_iterator.html">Iterator</a>&amp; right) {
 <a name="l00403"></a>00403     <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == right);
 <a name="l00404"></a>00404 }
 <a name="l00405"></a>00405 
@@ -423,7 +422,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

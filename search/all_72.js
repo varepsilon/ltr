@@ -3,7 +3,7 @@ var searchData=
   ['rand',['rand',['../classltr_1_1utility_1_1_randomizer.html#a29a7c7497f9aff836a1b12d27f1d9c29',1,'ltr::utility::Randomizer']]],
   ['random_5fnumber_5fgenerator_2ecc',['random_number_generator.cc',['../random__number__generator_8cc.html',1,'']]],
   ['random_5fnumber_5fgenerator_2eh',['random_number_generator.h',['../random__number__generator_8h.html',1,'']]],
-  ['randomizer',['Randomizer',['../classltr_1_1utility_1_1_randomizer.html#a7f447eb72cdcf6b0ded68143cf851f0e',1,'ltr::utility::Randomizer::Randomizer()'],['../namespaceltr_1_1utility.html#ab9b213ea51ee1b18a66a769b1a0a4149',1,'ltr::utility::randomizer()']]],
+  ['randomizer',['Randomizer',['../classltr_1_1utility_1_1_randomizer.html#a7f447eb72cdcf6b0ded68143cf851f0e',1,'ltr::utility::Randomizer']]],
   ['randomizer',['Randomizer',['../classltr_1_1utility_1_1_randomizer.html',1,'ltr::utility']]],
   ['ratio_5f',['ratio_',['../classltr_1_1_order_statistic_predictions_aggregator.html#af6038d0a5033f475f814448a7621b3c4',1,'ltr::OrderStatisticPredictionsAggregator']]],
   ['raw_5fquery_5fid_5fidx_5f',['raw_query_id_idx_',['../classltr_1_1io__utility_1_1_s_v_m_parser.html#a69df1c2e3f279517a32fa73a3a90dab7',1,'ltr::io_utility::SVMParser::raw_query_id_idx_()'],['../classltr_1_1io__utility_1_1_yandex_parser.html#a6338a9e49939e2d5e8ac910ad2348608',1,'ltr::io_utility::YandexParser::raw_query_id_idx_()']]],

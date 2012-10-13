@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -214,8 +213,8 @@ FeatureNormalizerLearner</h3>
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">ltr::FeatureConverter</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_normalizer_learner.html" title="Independently normalize each feature component to the specified range.">ltr::FeatureNormalizerLearner</a>;
 
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">ltr::utility::Indices</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a4cb7797bb8d58a305959b44576873ecd">ltr::utility::IndicesPtr</a>;
+<span class="keyword">using</span> ltr::utility::Indices;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::IndicesPtr</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object object1, object2, object3;
@@ -281,8 +280,8 @@ FeatureSamplerLearner</h3>
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">ltr::FeatureConverter</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_sampler_learner.html" title="Produces FeatureSampler with specified indices.">ltr::FeatureSamplerLearner</a>;
 
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">ltr::utility::Indices</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a4cb7797bb8d58a305959b44576873ecd">ltr::utility::IndicesPtr</a>;
+<span class="keyword">using</span> ltr::utility::Indices;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::IndicesPtr</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object object1, object2, object3;
@@ -291,7 +290,7 @@ FeatureSamplerLearner</h3>
   object2 &lt;&lt; 2.213 &lt;&lt; -1.234 &lt;&lt; 0.323;
   object3 &lt;&lt; -2.123 &lt;&lt; 0.207 &lt;&lt; -6.085;
 
-  <a class="code" href="namespaceltr_1_1utility.html#a4cb7797bb8d58a305959b44576873ecd">IndicesPtr</a> indices(<span class="keyword">new</span> <a class="code" href="namespaceltr_1_1utility.html#a0fd552099e2c2428c9ca99facefab1d4">Indices</a>());
+  IndicesPtr indices(<span class="keyword">new</span> Indices());
   indices-&gt;push_back(0);
   indices-&gt;push_back(2);
 
@@ -347,7 +346,7 @@ RemoveNominalConverterLearner</h3>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

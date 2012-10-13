@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -151,70 +150,72 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00052"></a>00052   }
 <a name="l00053"></a>00053 
 <a name="l00054"></a><a class="code" href="classltr_1_1_normalized_measure.html#a12f8699eae03af9b1ab42df1162af7ef">00054</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_normalized_measure.html#a12f8699eae03af9b1ab42df1162af7ef">checkParameters</a>() {
-<a name="l00055"></a>00055     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> == <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>)
-<a name="l00056"></a>00056       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;Best and worst values must be different&quot;</span>);
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058 
-<a name="l00059"></a><a class="code" href="classltr_1_1_normalized_measure.html#a45a55aa3141b461a6824e0b32e0c8b33">00059</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_normalized_measure.html#a45a55aa3141b461a6824e0b32e0c8b33">setDefaultParameters</a>() {
-<a name="l00060"></a>00060     <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a> = -1.0;
-<a name="l00061"></a>00061     <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> = 1.0;
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="classltr_1_1_normalized_measure.html#abe3e18e0aa70c5f14c95669b3c8d3c0b">00064</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_normalized_measure.html#abe3e18e0aa70c5f14c95669b3c8d3c0b">toString</a>()<span class="keyword"> const </span>{
-<a name="l00065"></a>00065     std::stringstream str;
-<a name="l00066"></a>00066     std::fixed(str);
-<a name="l00067"></a>00067     str.precision(2);
-<a name="l00068"></a>00068     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a> == NULL) {
-<a name="l00069"></a>00069       str &lt;&lt; <span class="stringliteral">&quot;Normalized measure without setted weak measure&quot;</span>;
-<a name="l00070"></a>00070     } <span class="keywordflow">else</span> {
-<a name="l00071"></a>00071       str &lt;&lt; <span class="stringliteral">&quot;Normalized measure over { &quot;</span>;
-<a name="l00072"></a>00072       str &lt;&lt; *<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>;
-<a name="l00073"></a>00073       str &lt;&lt; <span class="stringliteral">&quot; }&quot;</span>;
-<a name="l00074"></a>00074     }
-<a name="l00075"></a>00075     str &lt;&lt; <span class="stringliteral">&quot; with parameters: BEST = &quot;</span>;
-<a name="l00076"></a>00076     str &lt;&lt; <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a>;
-<a name="l00077"></a>00077     str &lt;&lt; <span class="stringliteral">&quot;, WORST = &quot;</span>;
-<a name="l00078"></a>00078     str &lt;&lt; <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>;
-<a name="l00079"></a>00079     <span class="keywordflow">return</span> str.str();
-<a name="l00080"></a>00080   }
-<a name="l00081"></a><a class="code" href="classltr_1_1_normalized_measure.html#a1bea85ee87d51c0d47979281728a7203">00081</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_normalized_measure.html#a1bea85ee87d51c0d47979281728a7203">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;NormalizedMeasure&quot;</span>;}
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083  <span class="keyword">private</span>:
-<a name="l00084"></a><a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">00084</a>   <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>;
-<a name="l00085"></a><a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">00085</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>, <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a>;
-<a name="l00086"></a>00086 
-<a name="l00087"></a><a class="code" href="classltr_1_1_normalized_measure.html#aab69b8a37f13eb95cb20aa08108af1a8">00087</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_normalized_measure.html#aab69b8a37f13eb95cb20aa08108af1a8">setParametersImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
-<a name="l00088"></a>00088     <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>
-<a name="l00089"></a>00089       = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a>&gt;(<span class="stringliteral">&quot;WEAK_MEASURE&quot;</span>);
-<a name="l00090"></a>00090     <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a> = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keywordtype">double</span>&gt;(<span class="stringliteral">&quot;WORST&quot;</span>);
-<a name="l00091"></a>00091     <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keywordtype">double</span>&gt;(<span class="stringliteral">&quot;BEST&quot;</span>);
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093 
-<a name="l00094"></a><a class="code" href="classltr_1_1_normalized_measure.html#a4b190402c23db4602121477e69764570">00094</a>   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_normalized_measure.html#a4b190402c23db4602121477e69764570">get_measure</a>(<span class="keyword">const</span> TElement&amp; element)<span class="keyword"> const </span>{
-<a name="l00095"></a>00095     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a> == NULL)
-<a name="l00096"></a>00096       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;No weak measure&quot;</span>);
-<a name="l00097"></a>00097     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00098"></a>00098         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00099"></a>00099         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst() == <a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a> ||
-<a name="l00100"></a>00100         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst() == -<a class="code" href="namespaceltr_1_1utility.html#a617b3b62bedb98f0e8106de682b204d4">utility::Inf</a>) {
-<a name="l00101"></a>00101       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;can&#39;t normalize infinity measure&quot;</span>);
-<a name="l00102"></a>00102     }
-<a name="l00103"></a>00103 <span class="comment">// using best_ directly?</span>
-<a name="l00104"></a>00104     <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#aeeac4a5ebcd5047e046aa8a980b385d5">best</a> = <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a>;
-<a name="l00105"></a>00105     <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_measure.html#a9395f3dc60d3076df37c166372c852cc">worst</a> = <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>;
-<a name="l00106"></a>00106     <span class="keywordflow">return</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;value(element) - <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst()) *
-<a name="l00107"></a>00107               (best - worst) /
-<a name="l00108"></a>00108                 (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() - <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst())
-<a name="l00109"></a>00109             + worst;
-<a name="l00110"></a>00110   }
-<a name="l00111"></a>00111 };
-<a name="l00112"></a>00112 }
-<a name="l00113"></a>00113 <span class="preprocessor">#endif  // LTR_MEASURES_NORMALIZED_MEASURE_H_</span>
+<a name="l00055"></a>00055     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> == <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>) {
+<a name="l00056"></a>00056       ERR(<span class="stringliteral">&quot;Best and worst values must be different&quot;</span>);
+<a name="l00057"></a>00057       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;Best and worst values must be different&quot;</span>);
+<a name="l00058"></a>00058     }
+<a name="l00059"></a>00059   }
+<a name="l00060"></a>00060 
+<a name="l00061"></a><a class="code" href="classltr_1_1_normalized_measure.html#a45a55aa3141b461a6824e0b32e0c8b33">00061</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_normalized_measure.html#a45a55aa3141b461a6824e0b32e0c8b33">setDefaultParameters</a>() {
+<a name="l00062"></a>00062     <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a> = -1.0;
+<a name="l00063"></a>00063     <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> = 1.0;
+<a name="l00064"></a>00064   }
+<a name="l00065"></a>00065 
+<a name="l00066"></a><a class="code" href="classltr_1_1_normalized_measure.html#abe3e18e0aa70c5f14c95669b3c8d3c0b">00066</a>   <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_normalized_measure.html#abe3e18e0aa70c5f14c95669b3c8d3c0b">toString</a>()<span class="keyword"> const </span>{
+<a name="l00067"></a>00067     std::stringstream str;
+<a name="l00068"></a>00068     std::fixed(str);
+<a name="l00069"></a>00069     str.precision(2);
+<a name="l00070"></a>00070     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a> == NULL) {
+<a name="l00071"></a>00071       str &lt;&lt; <span class="stringliteral">&quot;Normalized measure without setted weak measure&quot;</span>;
+<a name="l00072"></a>00072     } <span class="keywordflow">else</span> {
+<a name="l00073"></a>00073       str &lt;&lt; <span class="stringliteral">&quot;Normalized measure over { &quot;</span>;
+<a name="l00074"></a>00074       str &lt;&lt; *<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>;
+<a name="l00075"></a>00075       str &lt;&lt; <span class="stringliteral">&quot; }&quot;</span>;
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077     str &lt;&lt; <span class="stringliteral">&quot; with parameters: BEST = &quot;</span>;
+<a name="l00078"></a>00078     str &lt;&lt; <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a>;
+<a name="l00079"></a>00079     str &lt;&lt; <span class="stringliteral">&quot;, WORST = &quot;</span>;
+<a name="l00080"></a>00080     str &lt;&lt; <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>;
+<a name="l00081"></a>00081     <span class="keywordflow">return</span> str.str();
+<a name="l00082"></a>00082   }
+<a name="l00083"></a><a class="code" href="classltr_1_1_normalized_measure.html#a1bea85ee87d51c0d47979281728a7203">00083</a>   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_normalized_measure.html#a1bea85ee87d51c0d47979281728a7203">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;NormalizedMeasure&quot;</span>;}
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085  <span class="keyword">private</span>:
+<a name="l00086"></a><a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">00086</a>   <span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a> <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>;
+<a name="l00087"></a><a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">00087</a>   <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>, <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a>;
+<a name="l00088"></a>00088 
+<a name="l00089"></a><a class="code" href="classltr_1_1_normalized_measure.html#aab69b8a37f13eb95cb20aa08108af1a8">00089</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_normalized_measure.html#aab69b8a37f13eb95cb20aa08108af1a8">setParametersImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
+<a name="l00090"></a>00090     <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>
+<a name="l00091"></a>00091       = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keyword">typename</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">Measure&lt;TElement&gt;::Ptr</a>&gt;(<span class="stringliteral">&quot;WEAK_MEASURE&quot;</span>);
+<a name="l00092"></a>00092     <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a> = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keywordtype">double</span>&gt;(<span class="stringliteral">&quot;WORST&quot;</span>);
+<a name="l00093"></a>00093     <a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> = parameters.<a class="code" href="classltr_1_1_parameters_container.html#abfe73d3aee9cf0bbb2e9ea7c7fbb01f7">Get</a>&lt;<span class="keywordtype">double</span>&gt;(<span class="stringliteral">&quot;BEST&quot;</span>);
+<a name="l00094"></a>00094   }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="classltr_1_1_normalized_measure.html#a4b190402c23db4602121477e69764570">00096</a>   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_normalized_measure.html#a4b190402c23db4602121477e69764570">get_measure</a>(<span class="keyword">const</span> TElement&amp; element)<span class="keyword"> const </span>{
+<a name="l00097"></a>00097     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a> == NULL) {
+<a name="l00098"></a>00098       ERR(<span class="stringliteral">&quot;No weak measure&quot;</span>);
+<a name="l00099"></a>00099       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;No weak measure&quot;</span>);
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101     <span class="keywordflow">if</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() == utility::Inf ||
+<a name="l00102"></a>00102         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() == -utility::Inf ||
+<a name="l00103"></a>00103         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst() == utility::Inf ||
+<a name="l00104"></a>00104         <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst() == -utility::Inf) {
+<a name="l00105"></a>00105       ERR(<span class="stringliteral">&quot;Can&#39;t normalize infinity measure&quot;</span>);
+<a name="l00106"></a>00106       <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;Can&#39;t normalize infinity measure&quot;</span>);
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108     <span class="keywordflow">return</span> (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;value(element) - <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst()) *
+<a name="l00109"></a>00109               (<a class="code" href="classltr_1_1_normalized_measure.html#af5100c5f7c4efbe7a232b6e82a2c169f">best_</a> - <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>) /
+<a name="l00110"></a>00110                 (<a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;best() - <a class="code" href="classltr_1_1_normalized_measure.html#aea3df89f2899541e8554de210d764625">weak_measure_</a>-&gt;worst())
+<a name="l00111"></a>00111             + <a class="code" href="classltr_1_1_normalized_measure.html#a8008d2c35345b1b3a26e77228d2e1a3c">worst_</a>;
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113 };
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 <span class="preprocessor">#endif  // LTR_MEASURES_NORMALIZED_MEASURE_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -37,7 +37,6 @@ var searchData=
   ['meta',['META',['../classltr_1_1io__utility_1_1_parser.html#a10138b27d311b6662e87d6faf2bd9dc3a0a2a69f80d915e1956a9fcc8798ac040',1,'ltr::io_utility::Parser']]],
   ['meta_5ffeatures_5f',['meta_features_',['../classltr_1_1io__utility_1_1_a_r_f_f_parser.html#a5e259cc60ab1dc6dd18291af51b9f7b2',1,'ltr::io_utility::ARFFParser']]],
   ['meta_5finfo_5f',['meta_info_',['../classltr_1_1_object.html#a37e9cc1ce6f803bd000c625a9f1e6afb',1,'ltr::Object']]],
-  ['metainfo',['MetaInfo',['../namespaceltr.html#a821f045faa8de67bb75bad18aa686555',1,'ltr']]],
   ['metric_2eh',['metric.h',['../metric_8h.html',1,'']]],
   ['metric_5f',['metric_',['../classltr_1_1_n_n_learner.html#a0b2c5fcbbcaa12d369fad1319a7a88d2',1,'ltr::NNLearner::metric_()'],['../classltr_1_1_n_n_scorer.html#a4c646056bb85e857caee6dcd616f0323',1,'ltr::NNScorer::metric_()']]],
   ['metrics_5funittest_2ecc',['metrics_unittest.cc',['../metrics__unittest_8cc.html',1,'']]],
@@ -55,8 +54,8 @@ var searchData=
   ['multiarraytraits',['MultiArrayTraits',['../structltr_1_1cv_1_1_multi_array_traits.html',1,'ltr::cv']]],
   ['multiarraytraits_3c_20vector_3c_20t_20_3e_20_3e',['MultiArrayTraits< vector< T > >',['../structltr_1_1cv_1_1_multi_array_traits_3_01vector_3_01_t_01_4_01_4.html',1,'ltr::cv']]],
   ['multiarraytraits_3c_20vector_3c_20t_20_3e_20_3e',['MultiArrayTraits< vector< T > >',['../struct_multi_array_traits_3_01vector_3_01_t_01_4_01_4.html',1,'']]],
-  ['multiply',['Multiply',['../classltr_1_1gp_1_1_multiply.html',1,'ltr::gp']]],
   ['multiply',['Multiply',['../classltr_1_1gp_1_1_multiply.html#a5ef43c1dface2a2255282e2cb8269626',1,'ltr::gp::Multiply']]],
+  ['multiply',['Multiply',['../classltr_1_1gp_1_1_multiply.html',1,'ltr::gp']]],
   ['multitable',['MultiTable',['../classltr_1_1utility_1_1_multi_table_1_1_iterator.html#a3167237cbf6360c4f1d4f43922b672d2',1,'ltr::utility::MultiTable::Iterator::MultiTable()'],['../classltr_1_1utility_1_1_multi_table.html#a76d1a718be64fb2c71d435990a035412',1,'ltr::utility::MultiTable::MultiTable()'],['../classltr_1_1utility_1_1_multi_table.html#ab45fa32025c90284fdd5dc016bb4ebda',1,'ltr::utility::MultiTable::MultiTable(const vector&lt; size_t &gt; &amp;table_size)']]],
   ['multitable',['MultiTable',['../classltr_1_1utility_1_1_multi_table.html',1,'ltr::utility']]],
   ['multitable_2eh',['multitable.h',['../multitable_8h.html',1,'']]],
@@ -65,6 +64,5 @@ var searchData=
   ['multitabletest',['MultiTableTest',['../class_multi_table_test.html',1,'']]],
   ['murmur_5fhash_2ecc',['murmur_hash.cc',['../murmur__hash_8cc.html',1,'']]],
   ['murmur_5fhash_2eh',['murmur_hash.h',['../murmur__hash_8h.html',1,'']]],
-  ['murmurhash',['murmurHash',['../namespaceltr_1_1utility.html#a5f5fe0ac648990ef60fcb50f5c3b5588',1,'ltr::utility']]],
   ['mutation_5fprobability_5f',['mutation_probability_',['../classltr_1_1gp_1_1_default_mutation_standart_strategy.html#a90321615cd724d034ec9c56610242bc7',1,'ltr::gp::DefaultMutationStandartStrategy::mutation_probability_()'],['../classltr_1_1gp_1_1_default_mutation_swap_strategy.html#a9be0529c14503ac77894994797cdee1b',1,'ltr::gp::DefaultMutationSwapStrategy::mutation_probability_()']]]
 ];

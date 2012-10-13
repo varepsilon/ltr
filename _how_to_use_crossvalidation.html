@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -225,10 +224,10 @@ Leave One Out cross-validation</h3>
 <span class="keyword">using</span> std::endl;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_list.html">ltr::ObjectList</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a30640be8338829068b02b93a14769bb2">ltr::io_utility::loadDataSet</a>;
+<span class="keyword">using</span> ltr::io_utility::loadDataSet;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_measure.html">ltr::Measure</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr.html#a16be373c47de1119d966eea81630a38d">ltr::DCG</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr.html#a279d129b20c61938a8a543273ccce383">ltr::NDCG</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_base_d_c_g.html">ltr::DCG</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_base_n_d_c_g.html">ltr::NDCG</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_best_feature_learner.html">ltr::BestFeatureLearner</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">ltr::FeatureConverter</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_nan_to_zero_converter_learner.html">ltr::NanToZeroConverterLearner</a>;
@@ -255,8 +254,8 @@ Leave One Out cross-validation</h3>
   remove_nan-&gt;apply(train_data, &amp;train_data);
   remove_nan-&gt;apply(test_data, &amp;test_data);
 
-  Measure&lt;ObjectList&gt;::Ptr measure_one(<span class="keyword">new</span> <a class="code" href="namespaceltr.html#a16be373c47de1119d966eea81630a38d">DCG</a>());
-  Measure&lt;ObjectList&gt;::Ptr measure_two(<span class="keyword">new</span> <a class="code" href="namespaceltr.html#a279d129b20c61938a8a543273ccce383">NDCG</a>());
+  Measure&lt;ObjectList&gt;::Ptr measure_one(<span class="keyword">new</span> DCG());
+  Measure&lt;ObjectList&gt;::Ptr measure_two(<span class="keyword">new</span> NDCG());
   BestFeatureLearner&lt;ObjectList&gt;::Ptr learner_one =
       <span class="keyword">new</span> BestFeatureLearner&lt;ObjectList&gt;(measure_one);
   learner_one-&gt;learn(train_data);
@@ -285,15 +284,15 @@ DataSet:DataSet
 Splitter:LeaveOneOutSplitter
 Table ROW: Measure COLUMN: Learner
         BestFeatureLeaner       GPLeaner        
-<a class="code" href="namespaceltr.html#a16be373c47de1119d966eea81630a38d">DCG</a>     2.319   2.069   
-<a class="code" href="namespaceltr.html#a279d129b20c61938a8a543273ccce383">NDCG</a>    1       0.75    
+DCG     2.319   2.069   
+NDCG    1       0.75    
 </pre></div> </td></tr>
 </table>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

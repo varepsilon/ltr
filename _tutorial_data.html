@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -215,7 +214,7 @@ Meta info</h3>
 <p>Every <a class="el" href="classltr_1_1_object.html">Object</a> can have some meta information. You can manage it, using this functions: </p>
 <ul>
 <li><a class="el" href="">getMetaInfo(string name)   Object::setMetaInfo(string, string) setMetaInfo(string name, string value)</a> </li>
-<li><a class="el" href="">metaInfo()</a> - returns all meta information in <a class="el" href="namespaceltr.html#a821f045faa8de67bb75bad18aa686555">MetaInfo </a> container</li>
+<li><a class="el" href="">metaInfo()</a> - returns all meta information in <a class="el" href="">MetaInfo </a> container</li>
 </ul>
 <table class="doxtable">
 <tr>
@@ -386,7 +385,11 @@ PerObjectAccessor</h2>
   PrintActualLabels(list);
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">actual[0] = 10
+actual[1] = 20
+actual[2] = 30
+actual[3] = 40
+</pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataDataSet"></a>
 DataSet</h2>
@@ -396,9 +399,9 @@ Every elment can also has a double weight, default weight is 1. </p>
 DataSet&lt;ObjectPair&gt; data2;   <span class="comment">// This data set contains pair</span>
 DataSet&lt;ObjectList&gt; data3;   <span class="comment">// This data set contains lists</span>
 </pre></div><p>Ltr defines typedefs for this three types of <a class="el" href="classltr_1_1_data_set.html">DataSet</a>: </p>
-<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> DataSet&lt;Object&gt;     <a class="code" href="namespaceltr.html#ad5b485ce0aaa18b36bf9457afa823e97">PointwiseDataSet</a>;
-<span class="keyword">typedef</span> DataSet&lt;ObjectPair&gt; <a class="code" href="namespaceltr.html#a9309a70aa60ce363adcbc216fe92ebb8">PairwiseDataSet</a>;
-<span class="keyword">typedef</span> DataSet&lt;ObjectList&gt; <a class="code" href="namespaceltr.html#ab8c5ffa671d9d6ad44967d8ffcc67864">ListwiseDataSet</a>;
+<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> DataSet&lt;Object&gt;     PointwiseDataSet;
+<span class="keyword">typedef</span> DataSet&lt;ObjectPair&gt; PairwiseDataSet;
+<span class="keyword">typedef</span> DataSet&lt;ObjectList&gt; ListwiseDataSet;
 </pre></div><h3><a class="anchor" id="TutorialDataDataSetBasicOperations"></a>
 Basic operations</h3>
 <p>Function for basic operations: </p>
@@ -466,7 +469,22 @@ Basic operations</h3>
   cout &lt;&lt; <span class="stringliteral">&quot;data.size() = &quot;</span> &lt;&lt; data.size() &lt;&lt; endl;
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment"></pre></div> </td></tr>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">data = 
+[12.00, 54.11]
+[1.30, 4.15]
+[10.30, 14.30]
+[19.00, 47.50]
+
+data.size() = 4
+data[0] = [12.00, 54.11]
+data.at(1) = [1.30, 4.15]
+data.getWeight(2) = 2.12
+data.getWeight(2) = 0.01
+called data.erase(1)
+data[1] = [10.30, 14.30]
+called data.clear()
+data.size() = 0
+</pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataDataSetFeatureInfo"></a>
 Feature info</h3>
@@ -478,17 +496,17 @@ Loading and saving into files</h3>
 <p>Main think, you can do with <a class="el" href="classltr_1_1_data_set.html">DataSet</a> is to load it from file or save it into file.</p>
 <p>Function for loading <a class="el" href="classltr_1_1_data_set.html">DataSet</a> from file: </p>
 <div class="fragment"><pre class="fragment"><span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a30640be8338829068b02b93a14769bb2">ltr::io_utility::loadDataSet</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; format);
+DataSet&lt;TElement&gt; ltr::io_utility::loadDataSet(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; format);
 </pre></div><ul>
 <li><code>TElement</code> - type of elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. </li>
 <li><code>filename</code> - name of file with data. </li>
 <li><code>format</code> - format of data in the file. It can be "yandex", "svm-lite" or "Arff"</li>
 </ul>
-<p>Be careful: If there are some missed features in file, the features value loaded into <a class="el" href="classltr_1_1_object.html">Object</a> will be <a class="el" href="namespaceltr_1_1utility.html#a3e42acc23b8c3f03106445947b9e83cc">ltr::utility::NaN</a>.</p>
+<p>Be careful: If there are some missed features in file, the features value loaded into <a class="el" href="classltr_1_1_object.html">Object</a> will be ltr::utility::NaN.</p>
 <p>All nominal features will be converted into integer values by hash function. You can find out values and hashes using FeatureInfo::getFeatureValues(size_t idx) const, where <code>idx</code> is id of nominal feature.</p>
 <p>Function for saving <a class="el" href="classltr_1_1_data_set.html">DataSet</a> into file. </p>
 <div class="fragment"><pre class="fragment"><span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<span class="keywordtype">void</span> <a class="code" href="namespaceltr_1_1io__utility.html#a88a9b672e2c7c15a13a0d20f59866426">ltr::io_utility::saveDataSet</a>(<span class="keyword">const</span> DataSet&lt;TElement&gt;&amp; data,
+<span class="keywordtype">void</span> ltr::io_utility::saveDataSet(<span class="keyword">const</span> DataSet&lt;TElement&gt;&amp; data,
                                   <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename,
                                   <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; format);
 </pre></div><ul>
@@ -498,8 +516,8 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 </ul>
 <div class="fragment"><pre class="fragment"><span class="preprocessor">#include &quot;<a class="code" href="io__utility_8h.html">ltr/data/utility/io_utility.h</a>&quot;</span>
 
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a30640be8338829068b02b93a14769bb2">ltr::io_utility::loadDataSet</a>;
-<span class="keyword">using</span> <a class="code" href="namespaceltr_1_1io__utility.html#a88a9b672e2c7c15a13a0d20f59866426">ltr::io_utility::saveDataSet</a>;
+<span class="keyword">using</span> ltr::io_utility::loadDataSet;
+<span class="keyword">using</span> ltr::io_utility::saveDataSet;
 
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 
@@ -511,7 +529,7 @@ DataSet&lt;TElement&gt; <a class="code" href="namespaceltr_1_1io__utility.html#a
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -82,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -98,55 +97,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#Results">Results of learners test</a></li>
+<ul><li class="level1"><a href="#RankingProblem">Results of ranking algorithms</a></li>
+<li class="level1"><a href="#ClassificationProblem">Results of classification algorithms</a></li>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="Results"></a>
-Results of learners test</h2>
+<div class="textblock"><p>All algorithms in LTR are tested on publicly avaliable datasets. One can find tables with algorithm comparisons for different problems below.</p>
+<h2><a class="anchor" id="RankingProblem"></a>
+Results of ranking algorithms</h2>
 <table class="doxtable">
 <tr>
-<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a></td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a></td><td><p class="starttd">Notes</p>
+<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td><a href="http://imat2009.yandex.ru/en/datasets">imat2009</a></td><td><a href="http://research.microsoft.com/en-us/projects/mslr">Letor</a></td><td><p class="starttd">Notes</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.770800</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 20, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.770800</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 20, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.763814</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 100, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a></td><td>3.763814</td><td>-</td><td><p class="starttd">population_size = 100, number_of_generations = 100, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.711743</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: DCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.711743</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: DCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.707123</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: <a class="el" href="classltr_1_1_p_found.html">PFound</a>, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.707123</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: <a class="el" href="classltr_1_1_p_found.html">PFound</a>, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.731683</td><td>-</td><td>-</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: NDCG, works very slow</p>
+<td>GP <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> (old version)</td><td>3.731683</td><td>-</td><td><p class="starttd">population_size = 10, number_of_generations = 3, measure: NDCG, works very slow</p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td>4.178930</td><td>0.695652</td><td>0.857971</td><td>0.773000</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td>4.178930</td><td>-</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td>3.018777</td><td>0.57971</td><td>0.444928</td><td>0.3</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td>3.018777</td><td>-</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+</table>
+<h2><a class="anchor" id="ClassificationProblem"></a>
+Results of classification algorithms</h2>
+<table class="doxtable">
 <tr>
-<td><a class="el" href="classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach.">NNLearner</a></td><td>-</td><td>0.648256</td><td>0.785507</td><td>0.681</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_accuracy.html">Accuracy</a>, Splitter: LOO, 1 neighbor </td></tr>
+<td><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> </td><td><a href="http://archive.ics.uci.edu/ml/datasets/Liver+Disorders">Liver Disorders</a> </td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28Australian+Credit+Approval%29">Australian</a> </td><td><a href="http://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German</a> </td><td><p class="starttd">Notes</p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td>-</td><td>0.553623</td><td>0.804348</td><td>0.723</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a></td><td>0.695652</td><td>0.857971</td><td>0.773000</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td>-</td><td>0.542029</td><td>0.650725</td><td>0.628</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a></td><td>0.57971</td><td>0.444928</td><td>0.3</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td>-</td><td>0.637681</td><td>0.828986</td><td>0.699</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<td><a class="el" href="classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach.">NNLearner</a></td><td>0.648256</td><td>0.785507</td><td>0.681</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_accuracy.html">Accuracy</a>, Splitter: LOO, 1 neighbor </td></tr>
 <tr>
-<td>DecisionTreeLearner with ID3Splitter </td><td>-</td><td>0.666639</td><td>0.86087</td><td>0.74 </td><td><p class="starttd"><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: KFoldSimpleSplitter</p>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_normal_naive_bayes_learner.html">NormalNaiveBayesLearner</a></td><td>0.553623</td><td>0.804348</td><td>0.723</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_fisher_discriminant_learner.html">FisherDiscriminantLearner</a></td><td>0.542029</td><td>0.650725</td><td>0.628</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> with <a class="el" href="classltr_1_1_quadratic_discriminant_learner.html">QuadraticDiscriminantLearner</a></td><td>0.637681</td><td>0.828986</td><td>0.699</td><td><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: LOO </td></tr>
+<tr>
+<td>DecisionTreeLearner with ID3Splitter</td><td>0.666639</td><td>0.86087</td><td>0.74 </td><td><p class="starttd"><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: KFoldSimpleSplitter</p>
 <p>LeafGenerator: MostCommonLabelLeafGenerator</p>
 <p class="endtd">StopSplittingCriteria: SameLabelStopSplittingCriteria, DataSizeStopSplittingCriteria </p>
 </td></tr>
 <tr>
-<td>DecisionTreeLearner with ObliviousTreeSplitter </td><td>-</td><td>0.675378</td><td>0.855072</td><td>0.731 </td><td><p class="starttd"><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: KFoldSimpleSplitter</p>
+<td>DecisionTreeLearner with ObliviousTreeSplitter</td><td>0.675378</td><td>0.855072</td><td>0.731 </td><td><p class="starttd"><a class="el" href="classltr_1_1_measure.html">Measure</a>: <a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, Splitter: KFoldSimpleSplitter</p>
 <p>LeafGenerator: MostCommonLabelLeafGenerator</p>
 <p class="endtd">StopSplittingCriteria: SameLabelStopSplittingCriteria, DataSizeStopSplittingCriteria </p>
 </td></tr>
@@ -155,7 +168,7 @@ Results of learners test</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:56 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

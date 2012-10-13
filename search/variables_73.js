@@ -9,7 +9,6 @@ var searchData=
   ['scorers_5fto_5ftest',['scorers_to_test',['../classserialization__test_1_1_generator.html#a402c465c32cff489b1db41b0d0c04199',1,'serialization_test::Generator']]],
   ['second',['second',['../classltr_1_1_object_pair.html#a16d1f72890a21590044b8a915f5793f0',1,'ltr::ObjectPair::second()'],['../structserialization__test_1_1_report.html#aa31fe571738425542de61d50b0b68854',1,'serialization_test::Report::second()']]],
   ['seed_5f',['seed_',['../classltr_1_1_data_random_sampler.html#a999e7139a35d5b2c80131b3bbe8216f8',1,'ltr::DataRandomSampler::seed_()'],['../classltr_1_1_feature_random_sampler_learner.html#a179a1c8d7dba939f181e1c384f9e9ba5',1,'ltr::FeatureRandomSamplerLearner::seed_()'],['../classltr_1_1gp_1_1_g_p_learner.html#a1f33573d26e6ce1904cb6f753a56281f',1,'ltr::gp::GPLearner::seed_()']]],
-  ['serializable_5fobjects_5fcounter_5f',['serializable_objects_counter_',['../namespaceltr.html#afac5bdfed169c5bb6f08ee4096dd945a',1,'ltr']]],
   ['shifts_5f',['shifts_',['../classltr_1_1_per_feature_linear_converter.html#ae0d9ed09fb64da968bf51271aaa12cac',1,'ltr::PerFeatureLinearConverter']]],
   ['size',['size',['../structltr_1_1utility_1_1_dimension_size.html#a32e6b86df56fc2faad06290191ac0d05',1,'ltr::utility::DimensionSize']]],
   ['sizeval',['sizeVal',['../structltr_1_1cv_1_1_size_over_index.html#a6117c03f465cb0e7c873cdf42b530805',1,'ltr::cv::SizeOverIndex::sizeVal()'],['../struct_size_over_index.html#a397c8cada8056e0e3506c9e6e7ffacf3',1,'SizeOverIndex::sizeVal()']]],

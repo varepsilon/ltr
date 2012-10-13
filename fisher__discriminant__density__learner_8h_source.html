@@ -56,7 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -134,18 +133,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 <a name="l00030"></a>00030 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">using</span> <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">ltr::LabelToMean</a>;
-<a name="l00033"></a>00033 <span class="keyword">using</span> <a class="code" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">ltr::LabelToLinearFactor</a>;
-<a name="l00034"></a>00034 <span class="keyword">using</span> <a class="code" href="namespaceltr.html#a7d7994208ce470a6d61380e154d3859d">ltr::LabelToLinearBias</a>;
+<a name="l00032"></a>00032 <span class="keyword">using</span> ltr::LabelToMean;
+<a name="l00033"></a>00033 <span class="keyword">using</span> ltr::LabelToLinearFactor;
+<a name="l00034"></a>00034 <span class="keyword">using</span> ltr::LabelToLinearBias;
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#ade4164b85d88d558a767e5deecc97f48">ltr::utility::CalculateLabelsCapacity</a>;
-<a name="l00037"></a>00037 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a7ca074345aa33268907864e8ec699edb">ltr::utility::LabelToCapacity</a>;
-<a name="l00038"></a>00038 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a586294ec50766ad899ec692b73242968">ltr::utility::SplitDataSetByActualLabel</a>;
-<a name="l00039"></a>00039 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a0b2478bc8a0e95424bd0691cbc2626e0">ltr::utility::CalculateFeaturesMean</a>;
-<a name="l00040"></a>00040 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a3bb90fc372e4b91124d740f60f34476c">ltr::utility::StdVectorToEigenVector</a>;
-<a name="l00041"></a>00041 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a01b1114b61079971d79d16b762c39c42">ltr::utility::InitEigenMatrix</a>;
-<a name="l00042"></a>00042 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a2f329acbfe2ae294ae92b07191f8ead8">ltr::utility::InitEigenVector</a>;
-<a name="l00043"></a>00043 <span class="keyword">using</span> <a class="code" href="namespaceltr_1_1utility.html#a7ba151e596e104e5802a4c4b6e869c93">ltr::utility::extractAllObjects</a>;
+<a name="l00036"></a>00036 <span class="keyword">using</span> ltr::utility::CalculateLabelsCapacity;
+<a name="l00037"></a>00037 <span class="keyword">using</span> ltr::utility::LabelToCapacity;
+<a name="l00038"></a>00038 <span class="keyword">using</span> ltr::utility::SplitDataSetByActualLabel;
+<a name="l00039"></a>00039 <span class="keyword">using</span> ltr::utility::CalculateFeaturesMean;
+<a name="l00040"></a>00040 <span class="keyword">using</span> ltr::utility::StdVectorToEigenVector;
+<a name="l00041"></a>00041 <span class="keyword">using</span> ltr::utility::InitEigenMatrix;
+<a name="l00042"></a>00042 <span class="keyword">using</span> ltr::utility::InitEigenVector;
+<a name="l00043"></a>00043 <span class="keyword">using</span> ltr::utility::extractAllObjects;
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045 <span class="keyword">namespace </span>ltr {
 <a name="l00051"></a>00051 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
@@ -161,31 +160,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062  <span class="keyword">private</span>:
 <a name="l00067"></a><a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#ae3f2611741335d7650025b50ad99f96d">00067</a>   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#ae3f2611741335d7650025b50ad99f96d">calculateMean</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00068"></a>00068                      <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a>* result) {
+<a name="l00068"></a>00068                      LabelToMean* result) {
 <a name="l00069"></a>00069     vector&lt;DataSet&lt;Object&gt; &gt; splitted_data;
-<a name="l00070"></a>00070     <a class="code" href="namespaceltr_1_1utility.html#a586294ec50766ad899ec692b73242968">SplitDataSetByActualLabel</a>(data_set, &amp;splitted_data);
+<a name="l00070"></a>00070     SplitDataSetByActualLabel(data_set, &amp;splitted_data);
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> subset_index = 0;
 <a name="l00073"></a>00073          subset_index &lt; splitted_data.size();
 <a name="l00074"></a>00074          ++subset_index) {
 <a name="l00075"></a>00075       <span class="keywordtype">double</span> label = splitted_data[subset_index][0].actual_label();
 <a name="l00076"></a>00076       vector&lt;double&gt; mean;
-<a name="l00077"></a>00077       <a class="code" href="namespaceltr_1_1utility.html#a0b2478bc8a0e95424bd0691cbc2626e0">CalculateFeaturesMean</a>(splitted_data[subset_index], &amp;mean);
-<a name="l00078"></a>00078       (*result)[label] = <a class="code" href="namespaceltr_1_1utility.html#a3bb90fc372e4b91124d740f60f34476c">StdVectorToEigenVector</a>(mean);
+<a name="l00077"></a>00077       CalculateFeaturesMean(splitted_data[subset_index], &amp;mean);
+<a name="l00078"></a>00078       (*result)[label] = StdVectorToEigenVector(mean);
 <a name="l00079"></a>00079     }
 <a name="l00080"></a>00080   }
 <a name="l00081"></a>00081 
 <a name="l00086"></a><a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#a709bd2594152baa54b27fc0b0efe634a">00086</a>   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#a709bd2594152baa54b27fc0b0efe634a">calculateCovarianceMatrix</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00087"></a>00087                                  <span class="keyword">const</span> <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a>&amp; mean,
+<a name="l00087"></a>00087                                  <span class="keyword">const</span> LabelToMean&amp; mean,
 <a name="l00088"></a>00088                                  MatrixXd* result) {
 <a name="l00089"></a>00089     <span class="keywordtype">int</span> <a class="code" href="feature__converters__learner__unittest_8cc.html#a4f3057e2cb77f06001fd8855ac7f8f68">features_count</a> = mean.begin()-&gt;second.size();
 <a name="l00090"></a>00090     (*result) = MatrixXd(features_count, features_count);
-<a name="l00091"></a>00091     <a class="code" href="namespaceltr_1_1utility.html#a01b1114b61079971d79d16b762c39c42">InitEigenMatrix</a>(result);
+<a name="l00091"></a>00091     InitEigenMatrix(result);
 <a name="l00092"></a>00092 
-<a name="l00093"></a>00093     <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;Object&gt;</a> data = <a class="code" href="namespaceltr_1_1utility.html#a7ba151e596e104e5802a4c4b6e869c93">extractAllObjects</a>(data_set);
+<a name="l00093"></a>00093     <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;Object&gt;</a> data = extractAllObjects(data_set);
 <a name="l00094"></a>00094     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> object_index = 0; object_index &lt; data.<a class="code" href="classltr_1_1_data_set.html#a41227a53bcb0914f9ff3558987c39bce">size</a>(); ++object_index) {
 <a name="l00095"></a>00095       VectorXd features =
-<a name="l00096"></a>00096         <a class="code" href="namespaceltr_1_1utility.html#a3bb90fc372e4b91124d740f60f34476c">StdVectorToEigenVector</a>(data[object_index].features());
+<a name="l00096"></a>00096         StdVectorToEigenVector(data[object_index].features());
 <a name="l00097"></a>00097       LabelToMean::const_iterator mean_iterator =
 <a name="l00098"></a>00098         mean.find(data[object_index].actual_label());
 <a name="l00099"></a>00099 
@@ -200,9 +199,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00108"></a>00108   }
 <a name="l00109"></a>00109 
 <a name="l00114"></a><a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#af1bfcc1314ae662268e07b1e3d693d38">00114</a>   <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#af1bfcc1314ae662268e07b1e3d693d38">findLinearFactorsAndBiases</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
-<a name="l00115"></a>00115                                   <a class="code" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">LabelToLinearFactor</a>* linear_factors,
-<a name="l00116"></a>00116                                   <a class="code" href="namespaceltr.html#a7d7994208ce470a6d61380e154d3859d">LabelToLinearBias</a>* linear_biases) {
-<a name="l00117"></a>00117     <a class="code" href="namespaceltr.html#ad3316c89721bc3329ed698b82ad3819c">LabelToMean</a> mean;
+<a name="l00115"></a>00115                                   LabelToLinearFactor* linear_factors,
+<a name="l00116"></a>00116                                   LabelToLinearBias* linear_biases) {
+<a name="l00117"></a>00117     LabelToMean mean;
 <a name="l00118"></a>00118     MatrixXd covarianceMatrix;
 <a name="l00119"></a>00119     <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#ae3f2611741335d7650025b50ad99f96d">calculateMean</a>(data_set, &amp;mean);
 <a name="l00120"></a>00120     <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#a709bd2594152baa54b27fc0b0efe634a">calculateCovarianceMatrix</a>(data_set, mean, &amp;covarianceMatrix);
@@ -219,8 +218,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00131"></a>00131 
 <a name="l00135"></a><a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#a438d2657547489f38c5c629f3ed0a2c3">00135</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#a438d2657547489f38c5c629f3ed0a2c3">learnImpl</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_data_set.html">DataSet&lt;TElement&gt;</a>&amp; data_set,
 <a name="l00136"></a>00136                          <a class="code" href="classltr_1_1_fisher_discriminant.html">FisherDiscriminant</a>* estimator) {
-<a name="l00137"></a>00137     <a class="code" href="namespaceltr.html#ae08527c4a22094dcdd1be126c637e0c5">LabelToLinearFactor</a> linear_factors;
-<a name="l00138"></a>00138     <a class="code" href="namespaceltr.html#a7d7994208ce470a6d61380e154d3859d">LabelToLinearBias</a> linear_biases;
+<a name="l00137"></a>00137     LabelToLinearFactor linear_factors;
+<a name="l00138"></a>00138     LabelToLinearBias linear_biases;
 <a name="l00139"></a>00139     <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html#af1bfcc1314ae662268e07b1e3d693d38">findLinearFactorsAndBiases</a>(data_set, &amp;linear_factors, &amp;linear_biases);
 <a name="l00140"></a>00140     *estimator = <a class="code" href="classltr_1_1_fisher_discriminant.html">FisherDiscriminant</a>(linear_factors, linear_biases);
 <a name="l00141"></a>00141   };
@@ -232,7 +231,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 16:08:55 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
