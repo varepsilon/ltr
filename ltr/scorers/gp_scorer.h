@@ -29,7 +29,7 @@ namespace ltr {
 namespace gp {
 typedef vector<Puppy::Tree> Population;
 /**
- * \class The class prepresent Scorer for GPLearner. It contains the last
+ * \brief The class prepresent Scorer for GPLearner. It contains the last
  * population of genetic programming's evolution process.
  */
 class GPScorer : public Scorer {

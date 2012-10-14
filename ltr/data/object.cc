@@ -123,6 +123,7 @@ string Object::toString() const {
     str << features()[feature_index];
   }
   str << ']';
+  str << '{' << actual_label() << "," << predicted_label() << '}';
   return str.str();
 }
 

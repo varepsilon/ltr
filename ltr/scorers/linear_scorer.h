@@ -17,9 +17,12 @@ class LinearScorer : public Scorer {
   typedef ltr::utility::shared_ptr<LinearScorer> Ptr;
 
   LinearScorer() {}
+  explicit LinearScorer(const vector<double>& weights)
+  : weights_(weights) {}
 
-  explicit LinearScorer(const vector<double>& in_weights)
-  : weights(in_weights) {}
+  double weight(int index) const;
+  void set_weight(int index, double weight);
+  int weights_count() const;
 
   string toString() const;
  private:
@@ -27,7 +30,7 @@ class LinearScorer : public Scorer {
   virtual string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "LinearScorer";}
 
-  vector<double> weights;
+  vector<double> weights_;
 };
 };
 

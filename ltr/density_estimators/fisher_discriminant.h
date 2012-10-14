@@ -40,7 +40,7 @@ typedef map<Label, VectorXd> LabelToLinearFactor;
 typedef map<Label, double> LabelToLinearBias;
 
 /**
- * \class probability density estimator that uses
+ * \brief probability density estimator that uses
  * Fisher Linear Discriminant approach
  */
 class FisherDiscriminant : public BaseProbabilityDensityEstimator {

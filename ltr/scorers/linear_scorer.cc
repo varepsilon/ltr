@@ -11,40 +11,55 @@ using std::string;
 using boost::lexical_cast;
 
 namespace ltr {
+
+double LinearScorer::weight(int index) const {
+  return weights_[index];
+}
+
+void LinearScorer::set_weight(int index, double weight) {
+  weights_[index] = weight;
+}
+
+int LinearScorer::weights_count() const {
+  return weights_.size();
+}
+
 string LinearScorer::toString() const {
   std::stringstream str;
   std::fixed(str);
   str.precision(2);
   str << "Linear scorer with coefficients: [";
-  for (size_t i = 0; i < weights.size(); ++i) {
+  for (size_t i = 0; i < weights_.size(); ++i) {
     if (i != 0) {
       str << ", ";
     }
-    str << weights[i];
+    str << weights_[i];
   }
   str << "]";
   return str.str();
 }
 
 double LinearScorer::scoreImpl(const Object& object) const {
-  double output = weights[0];
+  double output = weights_[0];
   for (int i = 0; i < (int)object.features().size(); ++i) {
-    output += object[i] * weights[i + 1];
+    output += object[i] * weights_[i + 1];
   }
   return output;
 }
 
 string LinearScorer::generateCppCodeImpl(const string& function_name) const {
   string code;
-  code.append("double " + function_name +
-      "(const std::vector<double>& features) {\n").
-    append("\tdouble output = " + lexical_cast<string>(weights[0]) + ";\n");
-  for (int i = 1; i < (int)weights.size(); ++i) {
-    code.append("\toutput += " + lexical_cast<string>(weights[i]) +
-      " * features[" + lexical_cast<string>(i - 1) +"];\n");
+  code.append(
+    "double " + function_name + "(const std::vector<double>& features) {\n")
+      .append(
+    "  double output = " + lexical_cast<string>(weights_[0]) + ";\n");
+  for (int i = 1; i < (int)weights_.size(); ++i) {
+    code.append(
+    "  output += " + lexical_cast<string>(weights_[i]) +
+             " * features[" + lexical_cast<string>(i - 1) +"];\n");
   }
-  code.append("\treturn output;\n").
-    append("}\n");
+  code.append("  return output;\n")
+      .append("}\n");
   return code;
 }
 };

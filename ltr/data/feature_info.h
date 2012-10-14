@@ -46,7 +46,7 @@ struct OneFeatureInfo {
 };
 
 bool operator==(const OneFeatureInfo& lhs, const OneFeatureInfo& rhs);
-/** \class Class is storing info about all features
+/** \brief Class is storing info about all features
  */
 class FeatureInfo {
  public:

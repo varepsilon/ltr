@@ -45,7 +45,7 @@ typedef map<Label, VectorXd> LabelToMean;
 typedef map<Label, MatrixXd> LabelToCovarianceMatrix;
 
 /**
- * \class Simple interface of the probability
+ * \brief Simple interface of the probability
  * density estimation learner
  */
 template<class TElement, class TEstimator>

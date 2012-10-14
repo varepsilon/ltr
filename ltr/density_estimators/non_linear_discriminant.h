@@ -28,7 +28,7 @@ using ltr::LabelToCovarianceMatrix;
 namespace ltr {
 
 /**
- * \class probability density estimator that cannot be represented
+ * \brief probability density estimator that cannot be represented
  * as linear separator
  */
 class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {

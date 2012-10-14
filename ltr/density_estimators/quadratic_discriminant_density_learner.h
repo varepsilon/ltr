@@ -24,7 +24,7 @@ using ltr::utility::extractAllObjects;
 
 namespace ltr {
 /**
- * \class Probability density learner that uses Quadratic Discriminant
+ * \brief Probability density learner that uses Quadratic Discriminant
  * approach to generate probability density estimator. To learn more visit
  * http://en.wikipedia.org/wiki/Quadratic_classifier
  */

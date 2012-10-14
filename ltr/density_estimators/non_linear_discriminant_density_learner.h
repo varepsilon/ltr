@@ -29,7 +29,7 @@ using ltr::utility::CalculateActualLabelToFeaturesMean;
 
 namespace ltr {
 /**
- * \class Interface of discriminants that
+ * \brief Interface of discriminants that
  * can not be converted to linear separators
  */
 template<class TElement>

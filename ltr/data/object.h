@@ -31,7 +31,7 @@ typedef ltr::utility::shared_ptr<Features> FeaturesPtr;
  * Just map from info field name to info field value
  */
 typedef map<string, string> MetaInfo;
-/** \class Base class for storing information in a Dataset. An object consist of
+/** \brief Base class for storing information in a Dataset. An object consist of
  * feature vector and meta information;
  */
 class Object : public Printable {

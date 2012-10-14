@@ -26,7 +26,7 @@ using std::vector;
 namespace ltr {
 namespace decision_tree {
 /**
- * \class DecisionTreeLearner
+ * \brief DecisionTreeLearner
  * Builds decision tree for given data.
  */
 class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {

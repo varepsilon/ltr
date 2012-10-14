@@ -35,7 +35,7 @@ using ltr::SumPredictionsAggregator;
 namespace ltr {
 namespace composition {
 /**
- * Learner, wich uses other learner (weak learner), produces with it
+ * \brief Learner, wich uses other learner (weak learner), produces with it
  * different scorers and tie them into a composition scorer.
  * Has some extra parameters:
 

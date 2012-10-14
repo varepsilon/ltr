@@ -22,7 +22,7 @@ using ltr::utility::CalculateFeaturesVariance;
 
 namespace ltr {
 /**
- * \class Probability density learner that uses Normal Naive Bayesian
+ * \brief Probability density learner that uses Normal Naive Bayesian
  * approach to generate probability density estimator.
  */
 template<class TElement>

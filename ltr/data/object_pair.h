@@ -14,7 +14,7 @@
 #include "ltr/utility/shared_ptr.h"
 
 namespace ltr {
-/** \class The class stores a pair of two objects. The container for two
+/** \brief The class stores a pair of two objects. The container for two
  *  objects, can be stored in DataSet. That would represent a pairwise data set.
  */
   class ObjectPair : public Printable {

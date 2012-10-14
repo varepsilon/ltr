@@ -16,7 +16,7 @@
 using std::vector;
 
 namespace ltr {
-/** \class The class stores a number of objects. The container for number of
+/** \class ObjectList The class stores a number of objects. The container for number of
  *  objects, can be stored in DataSet. That would represent a listwise data set.
  */
   class ObjectList : public Printable {

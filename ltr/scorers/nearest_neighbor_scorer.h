@@ -23,7 +23,7 @@ using ltr::Object;
 using ltr::utility::NeighborWeighter;
 
 namespace ltr {
- /** \class The class prepresents Scorer for NNLearner. It contains the learning data set,
+ /** \brief The class prepresents Scorer for NNLearner. It contains the learning data set,
  * pointers to aggregator, metric and neigbor weighter.
  */
 class NNScorer : public Scorer {

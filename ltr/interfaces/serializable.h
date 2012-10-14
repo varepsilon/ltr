@@ -21,7 +21,7 @@ namespace ltr {
  */
 extern size_t serializable_objects_counter_;
 
-/** \class The interface class for objects, that can be serialized. That means
+/** \brief The interface class for objects, that can be serialized. That means
  * that a cpp code for those can be created.
  */
 class Serializable {

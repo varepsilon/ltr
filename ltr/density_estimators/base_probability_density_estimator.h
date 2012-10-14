@@ -17,7 +17,7 @@ using ltr::Serializable;
 namespace ltr {
 
 /**
- * \class Simple interface of the probability density estimator
+ * \brief Simple interface of the probability density estimator
  */
 class BaseProbabilityDensityEstimator
   : public Parameterized, public Serializable {
