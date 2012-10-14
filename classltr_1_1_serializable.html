@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -115,28 +115,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>The interface class for objects, that can be serialized. That means that a cpp code for those can be created.  
+ <a href="classltr_1_1_serializable.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="serializable_8h_source.html">serializable.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ltr::Serializable:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="classltr_1_1_serializable.png" usemap="#ltr::Serializable_map" alt=""/>
-  <map id="ltr::Serializable_map" name="ltr::Serializable_map">
-<area href="classltr_1_1_base_metric.html" alt="ltr::BaseMetric" shape="rect" coords="220,56,430,80"/>
-<area href="classltr_1_1_base_probability_density_estimator.html" alt="ltr::BaseProbabilityDensityEstimator" shape="rect" coords="220,112,430,136"/>
-<area href="classltr_1_1decision__tree_1_1_condition.html" alt="ltr::decision_tree::Condition" shape="rect" coords="220,168,430,192"/>
-<area href="classltr_1_1_feature_converter.html" title="A base class for feature converters." alt="ltr::FeatureConverter" shape="rect" coords="220,224,430,248"/>
-<area href="classltr_1_1gp_1_1_add.html" title="The Puppy::Primitive implements addition functor, it is used to build Puppy::trees from..." alt="ltr::gp::Add" shape="rect" coords="220,280,430,304"/>
-<area href="classltr_1_1gp_1_1_divide.html" title="The Puppy::Primitive implements division functor, it is used to build Puppy::trees from..." alt="ltr::gp::Divide" shape="rect" coords="220,336,430,360"/>
-<area href="classltr_1_1gp_1_1_if_then_func.html" title="The Puppy::Primitive implements if-then-else functor, it is used to build Puppy::trees from..." alt="ltr::gp::IfThenFunc" shape="rect" coords="220,392,430,416"/>
-<area href="classltr_1_1gp_1_1_multiply.html" title="The Puppy::Primitive implements multiplication functor, it is used to build Puppy::trees from..." alt="ltr::gp::Multiply" shape="rect" coords="220,448,430,472"/>
-<area href="classltr_1_1gp_1_1_subtract.html" title="The Puppy::Primitive implements subtraction functor, it is used to build Puppy::trees from..." alt="ltr::gp::Subtract" shape="rect" coords="220,504,430,528"/>
-<area href="classltr_1_1_predictions_aggregator.html" alt="ltr::PredictionsAggregator" shape="rect" coords="220,560,430,584"/>
-<area href="classltr_1_1_serializable_functor.html" alt="ltr::SerializableFunctor&lt; TValue &gt;" shape="rect" coords="220,616,430,640"/>
-<area href="classltr_1_1utility_1_1_neighbor_weighter.html" alt="ltr::utility::NeighborWeighter" shape="rect" coords="220,672,430,696"/>
-<area href="classltr_1_1_serializable_functor.html" alt="ltr::SerializableFunctor&lt; double &gt;" shape="rect" coords="220,728,430,752"/>
-</map>
- </div></div>
+<div class="center"><!-- SVG 0 -->
+</div>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classltr_1_1_serializable-members.html">List of all members.</a></p>
 <table class="memberdecls">
@@ -158,7 +146,9 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a164174c6b7cf3c33989a71274225300f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classltr_1_1_serializable.html#a164174c6b7cf3c33989a71274225300f">id_</a></td></tr>
 </table>
-<hr/><h2>Member Typedef Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>The interface class for objects, that can be serialized. That means that a cpp code for those can be created. </p>
+</div><hr/><h2>Member Typedef Documentation</h2>
 <a class="anchor" id="a6b066bfa0f7837be5cd735f64a527449"></a>
 <div class="memitem">
 <div class="memproto">
@@ -241,7 +231,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p><a class="el" href="class_the.html">The</a> function creates cpp code for serializable object using given name. </p>
+<p>The function creates cpp code for serializable object using given name. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">serrializable_object_name</td><td>name that should be used for naming the object (function or class) within the generated cpp code. </td></tr>
@@ -266,7 +256,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p><a class="el" href="class_the.html">The</a> function creates cpp code for serializable object using default name. </p>
+<p>The function creates cpp code for serializable object using default name. </p>
 
 </div>
 </div>
@@ -283,7 +273,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p><a class="el" href="class_the.html">The</a> function returns a string with default name for the object. </p>
+<p>The function returns a string with default name for the object. </p>
 
 </div>
 </div>
@@ -315,7 +305,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p><a class="el" href="class_the.html">The</a> unique id of the serializable object. </p>
+<p>The unique id of the serializable object. </p>
 
 </div>
 </div>
@@ -326,7 +316,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:42 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

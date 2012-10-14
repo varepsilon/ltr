@@ -20,6 +20,7 @@ var searchData=
   ['set_5fseed',['set_seed',['../classltr_1_1_data_random_sampler.html#a2cdd62a094fee4d5f18a2ce5a30e4455',1,'ltr::DataRandomSampler::set_seed()'],['../classltr_1_1_feature_random_sampler_learner.html#ad4c817a9dff194230f636d1f90c993fb',1,'ltr::FeatureRandomSamplerLearner::set_seed()']]],
   ['set_5fshift',['set_shift',['../classltr_1_1_per_feature_linear_converter.html#a6accf765d42190a8c03bda322c37bca4',1,'ltr::PerFeatureLinearConverter']]],
   ['set_5fvalue',['set_value',['../classltr_1_1decision__tree_1_1_leaf_vertex.html#a4e3666a2c141f60a4759eb4a32c7ec33',1,'ltr::decision_tree::LeafVertex']]],
+  ['set_5fweight',['set_weight',['../classltr_1_1_linear_scorer.html#a12d788f30fc0dd0ece2c7ad56c853640',1,'ltr::LinearScorer']]],
   ['setaggregator',['setAggregator',['../classltr_1_1composition_1_1_composition_scorer.html#a9018932d2caec5ef90ce1515ffe6b3cb',1,'ltr::composition::CompositionScorer']]],
   ['setaxislabel',['setAxisLabel',['../classltr_1_1utility_1_1_multi_table.html#aecc0d2476002f13789926a75e443627d',1,'ltr::utility::MultiTable']]],
   ['setbeginblockcomment',['setBeginBlockComment',['../classserialization__test_1_1_generator.html#aea08283d497bbcfb356d252dffd69176',1,'serialization_test::Generator']]],

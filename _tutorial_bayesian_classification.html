@@ -110,27 +110,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Density Estimation</h2>
 <p>You can estimate probability density of some particular <a class="el" href="classltr_1_1_data_set.html">DataSet</a> with LTR.</p>
 <p>First of all choose the estimation algorithm (Naive Bayes, QDA or Fisher LDA).</p>
-<p>After this, declare required probability density learner (<a class="el" href="classltr_1_1_normal_naive_bayes_density_learner.html">NormalNaiveBayesDensityLearner</a>, <a class="el" href="classltr_1_1_quadratic_discriminant_density_learner.html">QuadraticDiscriminantDensityLearner</a> respectively or <a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html">FisherDiscriminantDensityLearner</a>).</p>
-<p>Then learn declared estimation learner on some dataset using ::learn() method and create a <a class="el" href="classltr_1_1_base_probability_density_estimator.html">BaseProbabilityDensityEstimator</a> object using ::make() method.</p>
-<p>Now you can use generated <a class="el" href="classltr_1_1_base_probability_density_estimator.html">BaseProbabilityDensityEstimator</a> for probability density estimation</p>
+<p>After this, declare required probability density learner (<a class="el" href="classltr_1_1_normal_naive_bayes_density_learner.html" title="Probability density learner that uses Normal Naive Bayesian approach to generate probability density ...">NormalNaiveBayesDensityLearner</a>, <a class="el" href="classltr_1_1_quadratic_discriminant_density_learner.html" title="Probability density learner that uses Quadratic Discriminant approach to generate probability density...">QuadraticDiscriminantDensityLearner</a> respectively or <a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html" title="Probability density learner that uses Fisher discriminant to generate probability density estimator...">FisherDiscriminantDensityLearner</a>).</p>
+<p>Then learn declared estimation learner on some dataset using ::learn() method and create a <a class="el" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">BaseProbabilityDensityEstimator</a> object using ::make() method.</p>
+<p>Now you can use generated <a class="el" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">BaseProbabilityDensityEstimator</a> for probability density estimation</p>
 <h3><a class="anchor" id="DensityEstimatorsList"></a>
 List of all density estimation learners</h3>
 <table class="doxtable">
 <tr>
 <th>Density estimation learner </th><th>Description</th></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_normal_naive_bayes_density_learner.html">NormalNaiveBayesDensityLearner</a> </td><td>Assumes the independence of features </td></tr>
+<td><a class="el" href="classltr_1_1_normal_naive_bayes_density_learner.html" title="Probability density learner that uses Normal Naive Bayesian approach to generate probability density ...">NormalNaiveBayesDensityLearner</a> </td><td>Assumes the independence of features </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_quadratic_discriminant_density_learner.html">QuadraticDiscriminantDensityLearner</a> </td><td>Assumes that the measurements from each class are normally distributed </td></tr>
+<td><a class="el" href="classltr_1_1_quadratic_discriminant_density_learner.html" title="Probability density learner that uses Quadratic Discriminant approach to generate probability density...">QuadraticDiscriminantDensityLearner</a> </td><td>Assumes that the measurements from each class are normally distributed </td></tr>
 <tr>
-<td><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html">FisherDiscriminantDensityLearner</a> </td><td>Assumes that the resulting combination may be used as a linear classifier </td></tr>
+<td><a class="el" href="classltr_1_1_fisher_discriminant_density_learner.html" title="Probability density learner that uses Fisher discriminant to generate probability density estimator...">FisherDiscriminantDensityLearner</a> </td><td>Assumes that the resulting combination may be used as a linear classifier </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialBayesianClassificator"></a>
 Bayesian Classification</h2>
 <p>LTR allows to use different algorithms of unparameterized Bayesian classification such as Naive Bayes, Quadratic Discriminant and Fisher Discriminant.</p>
 <p>To implement Bayesian Classification was used common approach: there is a class <a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> that recieves <a class="el" href="classltr_1_1_data_set.html">DataSet</a> and generates <a class="el" href="classltr_1_1_bayesian_scorer.html">BayesianScorer</a>. <a class="el" href="classltr_1_1_bayesian_scorer.html">BayesianScorer</a> can be used to score new objects.</p>
 <p>Known, that the main idea of Bayesian Classification is the estimation of the probability density and after this choosing the class depending on probabilities for every classifiable object.</p>
-<p><a class="el" href="class_the.html">The</a> main field of <a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> is estimator_. It keeps the pointer to probability density estimator and use it to classify objects.</p>
+<p>The main field of <a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> is estimator_. It keeps the pointer to probability density estimator and use it to classify objects.</p>
 <p>To use Bayesian <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> you need to: </p>
 <ul>
 <li>choose estimation algorithm </li>
@@ -157,14 +157,14 @@ Bayesian Classification</h2>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::endl;
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_bayesian_scorer.html">ltr::BayesianScorer</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_bayesian_learner.html">ltr::BayesianLearner</a>;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_fisher_discriminant.html">ltr::FisherDiscriminant</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_fisher_discriminant.html" title="probability density estimator that uses Fisher Linear Discriminant approach">ltr::FisherDiscriminant</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_fisher_discriminant_learner.html">ltr::FisherDiscriminantLearner</a>;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html">ltr::FisherDiscriminantDensityLearner</a>;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_learner.html">ltr::BaseProbabilityDensityLearner</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_fisher_discriminant_density_learner.html" title="Probability density learner that uses Fisher discriminant to generate probability density estimator...">ltr::FisherDiscriminantDensityLearner</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_learner.html" title="Simple interface of the probability density estimation learner.">ltr::BaseProbabilityDensityLearner</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object object1;
@@ -198,7 +198,7 @@ Bayesian Classification</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

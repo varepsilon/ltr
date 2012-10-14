@@ -1,7 +1,6 @@
 var searchData=
 [
   ['bad_5fline',['bad_line',['../classltr_1_1io__utility_1_1_parser_1_1bad__line.html',1,'ltr::io_utility::Parser']]],
-  ['base',['Base',['../class_base.html',1,'']]],
   ['basedcg',['BaseDCG',['../classltr_1_1_base_d_c_g.html',1,'ltr']]],
   ['basefeatureconverterlearner',['BaseFeatureConverterLearner',['../classltr_1_1_base_feature_converter_learner.html',1,'ltr']]],
   ['basefeatureconverterlearner_3c_20telement_2c_20fakefeatureconverter_20_3e',['BaseFeatureConverterLearner< TElement, FakeFeatureConverter >',['../classltr_1_1_base_feature_converter_learner.html',1,'ltr']]],

@@ -1,0 +1,18 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="ltr::composition::AdaBoostLearner",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ltr::composition::CompositionLearner\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1composition_1_1_composition_learner.html"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ltr::BaseLearner\< Object, CompositionScorer \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_base_learner.html"];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ltr::Learner\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_learner.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ltr::Reporter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_reporter.html"];
+  Node6 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ltr::Aliaser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_aliaser.html",tooltip="Inherit from this class in order to use alias."];
+  Node7 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ltr::Parameterized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_parameterized.html"];
+}

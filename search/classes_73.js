@@ -24,7 +24,6 @@ var searchData=
   ['shared_5fptr_3c_20vector_3c_20objecttype_20_3e_20_3e',['shared_ptr< vector< ObjectType > >',['../classltr_1_1utility_1_1shared__ptr.html',1,'ltr::utility']]],
   ['shared_5fptr_3c_20vector_3c_20telement_20_3e_20_3e',['shared_ptr< vector< TElement > >',['../classltr_1_1utility_1_1shared__ptr.html',1,'ltr::utility']]],
   ['shared_5fptr_3c_20vertex_20_3e',['shared_ptr< Vertex >',['../classltr_1_1utility_1_1shared__ptr.html',1,'ltr::utility']]],
-  ['simple',['Simple',['../class_simple.html',1,'Simple'],['../class_simple.html',1,'Simple']]],
   ['sizeoverindex',['SizeOverIndex',['../struct_size_over_index.html',1,'']]],
   ['sizeoverindex',['SizeOverIndex',['../structltr_1_1cv_1_1_size_over_index.html',1,'ltr::cv']]],
   ['splitteddataset',['SplittedDataSet',['../structltr_1_1cv_1_1_splitted_data_set.html',1,'ltr::cv']]],

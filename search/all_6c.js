@@ -50,7 +50,7 @@ var searchData=
   ['linearlearner',['LinearLearner',['../classltr_1_1_linear_learner.html',1,'ltr']]],
   ['linearlearner',['LinearLearner',['../classltr_1_1_linear_learner.html#a8e7f5ac33a5284b2c032cb3586b6db78',1,'ltr::LinearLearner::LinearLearner(const ParametersContainer &amp;parameters)'],['../classltr_1_1_linear_learner.html#a03d205e82c35a541c5575c367a6b2ed4',1,'ltr::LinearLearner::LinearLearner()']]],
   ['linearscorer',['LinearScorer',['../classltr_1_1_linear_scorer.html',1,'ltr']]],
-  ['linearscorer',['LinearScorer',['../classltr_1_1_linear_scorer.html#a1a4ebe64622188990196ed1741e63824',1,'ltr::LinearScorer::LinearScorer()'],['../classltr_1_1_linear_scorer.html#aa43dddd353800fa2fc4b9d5139d92e2c',1,'ltr::LinearScorer::LinearScorer(const vector&lt; double &gt; &amp;in_weights)']]],
+  ['linearscorer',['LinearScorer',['../classltr_1_1_linear_scorer.html#a1a4ebe64622188990196ed1741e63824',1,'ltr::LinearScorer::LinearScorer()'],['../classltr_1_1_linear_scorer.html#a8d6aa05494811a624157d6b909ceaf36',1,'ltr::LinearScorer::LinearScorer(const vector&lt; double &gt; &amp;weights)']]],
   ['list_5fto_5fall_5fpairs_5fconverter_5funittest_2ecc',['list_to_all_pairs_converter_unittest.cc',['../list__to__all__pairs__converter__unittest_8cc.html',1,'']]],
   ['listtoallpairsconverter',['ListToAllPairsConverter',['../classltr_1_1utility_1_1_list_to_all_pairs_converter.html',1,'ltr::utility']]],
   ['listtopairconvertionstrategy',['ListToPairConvertionStrategy',['../classltr_1_1utility_1_1_list_to_pair_convertion_strategy.html',1,'ltr::utility']]],

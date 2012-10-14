@@ -116,12 +116,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="shared__ptr_8h.html">ltr/utility/shared_ptr.h</a>&quot;</span>
 <a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="parameters__container_8h.html">ltr/parameters_container/parameters_container.h</a>&quot;</span>
 <a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
-<a name="l00016"></a>00016 <span class="keyword">using</span> <a class="code" href="classltr_1_1_serializable.html">ltr::Serializable</a>;
+<a name="l00015"></a>00015 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
+<a name="l00016"></a>00016 <span class="keyword">using</span> <a class="code" href="classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ...">ltr::Serializable</a>;
 <a name="l00017"></a>00017 <span class="keyword">using</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ltr::ParametersContainer</a>;
 <a name="l00018"></a>00018 
 <a name="l00019"></a>00019 <span class="keyword">namespace </span>ltr {
-<a name="l00024"></a><a class="code" href="classltr_1_1_base_metric.html">00024</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_metric.html">BaseMetric</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias.">Aliaser</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_serializable.html">Serializable</a> {
+<a name="l00024"></a><a class="code" href="classltr_1_1_base_metric.html">00024</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_metric.html">BaseMetric</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias.">Aliaser</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ...">Serializable</a> {
 <a name="l00025"></a>00025  <span class="keyword">public</span>:
 <a name="l00026"></a><a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">00026</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;BaseMetric&gt;</a> <a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">Ptr</a>;
 <a name="l00027"></a><a class="code" href="classltr_1_1_base_metric.html#ad7d2bf30026ac5bf9f4a86150cbf4072">00027</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;BaseMetric&gt;</a> <a class="code" href="classltr_1_1_base_metric.html#ad7d2bf30026ac5bf9f4a86150cbf4072">BasePtr</a>;
@@ -132,8 +132,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a><a class="code" href="classltr_1_1_base_metric.html#a06750ca298bf5a9cfb21c589d50a6bf0">00032</a>   <span class="keyword">explicit</span> <a class="code" href="classltr_1_1_base_metric.html#a06750ca298bf5a9cfb21c589d50a6bf0">BaseMetric</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a>&amp; parameters) {
 <a name="l00033"></a>00033   }
 <a name="l00034"></a>00034 
-<a name="l00039"></a>00039   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_base_metric.html#a22bb78f70f0400bb934d4299f1aefbfb">distance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>&amp; lhs,
-<a name="l00040"></a>00040                           <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>&amp; rhs) = 0;
+<a name="l00039"></a>00039   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_base_metric.html#a22bb78f70f0400bb934d4299f1aefbfb">distance</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>&amp; lhs,
+<a name="l00040"></a>00040                           <span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>&amp; rhs) = 0;
 <a name="l00041"></a>00041 };
 <a name="l00042"></a>00042 };
 <a name="l00043"></a>00043 
@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:15 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -137,9 +137,9 @@ Cross-validation</h2>
 <tr>
 <th>Splitter: </th><th>Description:</th></tr>
 <tr>
-<td>K-fold cross-validation </td><td>In k-fold cross-validation, the original sample is randomly partitioned into k subsamples. Of the k subsamples, a single subsample is retained as the validation data for testing the model, and the remaining k - 1 subsamples are used as training data. <a class="el" href="class_the.html">The</a> cross-validation process is then repeated k times (the folds), with each of the k subsamples used exactly once as the validation data. <a class="el" href="class_the.html">The</a> k results from the folds then can be averaged (or otherwise combined) to produce a single estimation. <a class="el" href="class_the.html">The</a> advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once. </td></tr>
+<td>K-fold cross-validation </td><td>In k-fold cross-validation, the original sample is randomly partitioned into k subsamples. Of the k subsamples, a single subsample is retained as the validation data for testing the model, and the remaining k - 1 subsamples are used as training data. The cross-validation process is then repeated k times (the folds), with each of the k subsamples used exactly once as the validation data. The k results from the folds then can be averaged (or otherwise combined) to produce a single estimation. The advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once. </td></tr>
 <tr>
-<td>TK-fold cross-validation </td><td>TK-fold cross-validation is an approach similar to K-fold cross-validation. <a class="el" href="class_the.html">The</a> only difference between K-fold and TK-fold that TK-fold repeats K-fold cross-validation procedure T times with the random subsets. </td></tr>
+<td>TK-fold cross-validation </td><td>TK-fold cross-validation is an approach similar to K-fold cross-validation. The only difference between K-fold and TK-fold that TK-fold repeats K-fold cross-validation procedure T times with the random subsets. </td></tr>
 <tr>
 <td>Leave One Out cross-validation</td><td>As the name suggests, leave-one-out cross-validation involves using a single observation from the original sample as the validation data, and the remaining observations as the training data. This is repeated such that each observation in the sample is used once as the validation data. This is the same as a K-fold cross-validation with K being equal to the number of observations in the original sample. Leave-one-out cross-validation is computationally expensive because it requires many repetitions of training. </td></tr>
 </table>
@@ -175,10 +175,10 @@ Cross-validation</h2>
 </table>
 <h3><a class="anchor" id="CrossvalidationDataTestCrossvalidationKFold"></a>
 K-fold cross-validation</h3>
-<p>In k-fold cross-validation, the original sample is randomly partitioned into k subsamples. Of the k subsamples, a single subsample is retained as the validation data for testing the model, and the remaining k - 1 subsamples are used as training data. <a class="el" href="class_the.html">The</a> cross-validation process is then repeated k times (the folds), with each of the k subsamples used exactly once as the validation data. <a class="el" href="class_the.html">The</a> k results from the folds then can be averaged (or otherwise combined) to produce a single estimation. <a class="el" href="class_the.html">The</a> advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once.</p>
+<p>In k-fold cross-validation, the original sample is randomly partitioned into k subsamples. Of the k subsamples, a single subsample is retained as the validation data for testing the model, and the remaining k - 1 subsamples are used as training data. The cross-validation process is then repeated k times (the folds), with each of the k subsamples used exactly once as the validation data. The k results from the folds then can be averaged (or otherwise combined) to produce a single estimation. The advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once.</p>
 <h3><a class="anchor" id="CrossvalidationDataTestCrossvalidationTKFold"></a>
 TK-fold cross-validation</h3>
-<p>TK-fold cross-validation is an approach similar to K-fold cross-validation. <a class="el" href="class_the.html">The</a> only difference between K-fold and TK-fold that TK-fold repeats K-fold cross-validation procedure T times with the random subsets.</p>
+<p>TK-fold cross-validation is an approach similar to K-fold cross-validation. The only difference between K-fold and TK-fold that TK-fold repeats K-fold cross-validation procedure T times with the random subsets.</p>
 <h3><a class="anchor" id="CrossvalidationDataTestCrossvalidationLeaveOneOut"></a>
 Leave One Out cross-validation</h3>
 <p>As the name suggests, leave-one-out cross-validation involves using a single observation from the original sample as the validation data, and the remaining observations as the training data. This is repeated such that each observation in the sample is used once as the validation data. This is the same as a K-fold cross-validation with K being equal to the number of observations in the original sample. Leave-one-out cross-validation is computationally expensive because it requires many repetitions of training.</p>
@@ -292,7 +292,7 @@ NDCG    1       0.75
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

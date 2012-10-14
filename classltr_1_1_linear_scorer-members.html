@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -123,7 +123,7 @@ This is the complete list of members for <a class="el" href="classltr_1_1_linear
   <tr class="memlist"><td><a class="el" href="classltr_1_1_serializable.html#acb7ccda5e232cd9605c5f0e7d4e53838">getDefaultSerializableObjectName</a>() const </td><td><a class="el" href="classltr_1_1_serializable.html">ltr::Serializable</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_serializable.html#a29d6f52ea16a24699a475580731697b6">getId</a>() const </td><td><a class="el" href="classltr_1_1_serializable.html">ltr::Serializable</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a1a4ebe64622188990196ed1741e63824">LinearScorer</a>()</td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [inline]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#aa43dddd353800fa2fc4b9d5139d92e2c">LinearScorer</a>(const vector&lt; double &gt; &amp;in_weights)</td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [inline, explicit]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a8d6aa05494811a624157d6b909ceaf36">LinearScorer</a>(const vector&lt; double &gt; &amp;weights)</td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [inline, explicit]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_functor.html#a4b3ce2ce024276ad4153ded1b6e645c2">operator()</a>(const Object &amp;obj) const</td><td><a class="el" href="classltr_1_1_functor.html">ltr::Functor&lt; double &gt;</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_scorer.html#ab1377230385c8a4d3ad36ffdb18e278c">predict</a>(const DataSet&lt; TElement &gt; &amp;elements) const </td><td><a class="el" href="classltr_1_1_scorer.html">ltr::Scorer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_scorer.html#af4d65b8f11ef506ebec36207f64d34d5">predict</a>(const TElement &amp;element) const </td><td><a class="el" href="classltr_1_1_scorer.html">ltr::Scorer</a></td><td></td></tr>
@@ -135,9 +135,12 @@ This is the complete list of members for <a class="el" href="classltr_1_1_linear
   <tr class="memlist"><td><a class="el" href="classltr_1_1_serializable.html#aa18e214bf605b5c7fbf64b5fcf0e769e">Serializable</a>(const Serializable &amp;)</td><td><a class="el" href="classltr_1_1_serializable.html">ltr::Serializable</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_aliaser.html#a23b86856eda31414479bc737fd816c02">set_alias</a>(const string &amp;alias)</td><td><a class="el" href="classltr_1_1_aliaser.html">ltr::Aliaser</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_scorer.html#ac48251ec9a62bf4e994a7eae5b6fe31b">set_feature_converters</a>(const FeatureConverterArray &amp;feature_converters)</td><td><a class="el" href="classltr_1_1_scorer.html">ltr::Scorer</a></td><td><code> [inline]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a12d788f30fc0dd0ece2c7ad56c853640">set_weight</a>(int index, double weight)</td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a24a3c712c1240d76f16691116ad2c297">toString</a>() const </td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_scorer.html#ae5e5abf6e74b3c208cdf1632a912adab">value</a>(const Object &amp;object) const </td><td><a class="el" href="classltr_1_1_scorer.html">ltr::Scorer</a></td><td><code> [inline, virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a279e52b67c142c84ba84b423a7ba0710">weights</a></td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [private]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#af562a22ef23847d0cc71b1575b3480a5">weight</a>(int index) const </td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a1df6f6b67a882132ea0e5a00eaa75d38">weights_</a></td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td><code> [private]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classltr_1_1_linear_scorer.html#a7051609b2f2d140dfb07b6a907732450">weights_count</a>() const </td><td><a class="el" href="classltr_1_1_linear_scorer.html">ltr::LinearScorer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_aliaser.html#af04d56c0290b58d35cd60e54dfee63dc">~Aliaser</a>()</td><td><a class="el" href="classltr_1_1_aliaser.html">ltr::Aliaser</a></td><td><code> [inline, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_functor.html#ad31b6ad8473cb140fd2c0bcf57183305">~Functor</a>()</td><td><a class="el" href="classltr_1_1_functor.html">ltr::Functor&lt; double &gt;</a></td><td><code> [inline, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classltr_1_1_printable.html#a3743831cea0da959ffb198c37e1621eb">~Printable</a>()</td><td><a class="el" href="classltr_1_1_printable.html">ltr::Printable</a></td><td><code> [inline, virtual]</code></td></tr>
@@ -148,7 +151,7 @@ This is the complete list of members for <a class="el" href="classltr_1_1_linear
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:43 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

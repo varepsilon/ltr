@@ -103,7 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="textblock"><h2><a class="anchor" id="TutorialDataPreprocessor"></a>
 DataPreprocessor</h2>
-<p>Preprocesses <a class="el" href="classltr_1_1_data_set.html">DataSet</a>, e.g. filter noisy objects, change weights or replicate elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. This can be helpfull for better learning. DataPreprocessors should not change <a class="el" href="classltr_1_1_object.html">Object</a> features and <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>. Use <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> for feature convertions (see <a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a>).</p>
+<p>Preprocesses <a class="el" href="classltr_1_1_data_set.html">DataSet</a>, e.g. filter noisy objects, change weights or replicate elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. This can be helpfull for better learning. DataPreprocessors should not change <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> features and <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>. Use <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> for feature convertions (see <a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a>).</p>
 <p>You can preprocess your data via <a class="el" href="classltr_1_1_data_preprocessor.html#a993ca1979bb2db285b2b561d79078a02">DataPreprocessor::apply</a> method. In the example below <a class="el" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">DataSampler</a> is used to sample object with specified indexes from <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
 <table class="doxtable">
 <tr>
@@ -120,7 +120,7 @@ DataPreprocessor</h2>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::endl;
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_sampler.html" title="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat...">ltr::DataSampler</a>;
 
@@ -153,13 +153,13 @@ DataPreprocessor</h2>
   <span class="keywordflow">return</span> 0;
 }
 </pre></div> </td><td><div class="fragment"><pre class="fragment">Before:
-[5.23, 1.53, -5.38]
-[2.21, -1.23, 0.32]
-[-2.12, 0.21, -6.08]
+[5.23, 1.53, -5.38]{1.00,nan}
+[2.21, -1.23, 0.32]{1.00,nan}
+[-2.12, 0.21, -6.08]{1.00,nan}
 
 After:
-[5.23, 1.53, -5.38]
-[-2.12, 0.21, -6.08]
+[5.23, 1.53, -5.38]{1.00,nan}
+[-2.12, 0.21, -6.08]{1.00,nan}
 
 </pre></div> </td></tr>
 </table>
@@ -189,7 +189,7 @@ List of all DataPrepocessors</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

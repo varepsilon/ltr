@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -118,20 +118,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>, wich uses other learner (weak learner), produces with it different scorers and tie them into a composition scorer. Has some extra parameters:  
+ <a href="classltr_1_1composition_1_1_composition_learner.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="composition__learner_8h_source.html">composition_learner.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ltr::composition::CompositionLearner&lt; TElement &gt;:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="classltr_1_1composition_1_1_composition_learner.png" usemap="#ltr::composition::CompositionLearner&lt; TElement &gt;_map" alt=""/>
-  <map id="ltr::composition::CompositionLearner&lt; TElement &gt;_map" name="ltr::composition::CompositionLearner&lt; TElement &gt;_map">
-<area href="classltr_1_1_base_learner.html" alt="ltr::BaseLearner&lt; TElement, CompositionScorer &gt;" shape="rect" coords="303,112,596,136"/>
-<area href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer." alt="ltr::Learner&lt; TElement &gt;" shape="rect" coords="303,56,596,80"/>
-<area href="classltr_1_1_reporter.html" alt="ltr::Reporter" shape="rect" coords="0,0,293,24"/>
-<area href="classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="ltr::Aliaser" shape="rect" coords="303,0,596,24"/>
-<area href="classltr_1_1_parameterized.html" alt="ltr::Parameterized" shape="rect" coords="606,0,899,24"/>
-</map>
- </div></div>
+<div class="center"><!-- SVG 0 -->
+</div>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classltr_1_1composition_1_1_composition_learner-members.html">List of all members.</a></p>
 <table class="memberdecls">
@@ -171,7 +167,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><h3>template&lt;class TElement&gt;<br/>
 class ltr::composition::CompositionLearner&lt; TElement &gt;</h3>
 
-<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>, wich uses other learner (weak learner), produces with it different scorers and tie them into a composition scorer. Has some extra parameters:</p>
+<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>, wich uses other learner (weak learner), produces with it different scorers and tie them into a composition scorer. Has some extra parameters: </p>
 <p>weak learner - learner to be used in producing scorers - elements for composition scorer. Can hold a feature converter inside it (for example, RSM)</p>
 <p><a class="el" href="classltr_1_1composition_1_1_composition_scorer_weights_updater.html">CompositionScorerWeightsUpdater</a> - a strategy for setting weights to scorers in composition scorer. By default is fake, so every scorer in composition has 1.0 weight</p>
 <p><a class="el" href="classltr_1_1composition_1_1_data_set_weights_updater.html">DataSetWeightsUpdater</a> - a strategy for setting weights for dataset's elements before each weak learner's <a class="el" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">learn()</a> call. Provides the variability of weak scorers. By default is fake, so dataset weights remain constant </p>
@@ -563,7 +559,7 @@ template&lt;class TElement&gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:44 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

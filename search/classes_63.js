@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['class',['Class',['../class_class.html',1,'']]],
   ['compositionlearner',['CompositionLearner',['../classltr_1_1composition_1_1_composition_learner.html',1,'ltr::composition']]],
   ['compositionlearner_3c_20object_20_3e',['CompositionLearner< Object >',['../classltr_1_1composition_1_1_composition_learner.html',1,'ltr::composition']]],
   ['compositionlearnertest',['CompositionLearnerTest',['../class_composition_learner_test.html',1,'']]],

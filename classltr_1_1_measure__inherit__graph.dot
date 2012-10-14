@@ -1,0 +1,39 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ltr::Measure\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ltr::Aliaser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_aliaser.html",tooltip="Inherit from this class in order to use alias."];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ltr::Parameterized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_parameterized.html"];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ltr::Printable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_printable.html"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ltr::AbsError\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_abs_error.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ltr::Accuracy\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_accuracy.html"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ltr::AUC\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_a_u_c.html"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ltr::AveragePrecision\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_average_precision.html"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ltr::BaseDCG\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_base_d_c_g.html"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ltr::BaseNDCG\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_base_n_d_c_g.html"];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ltr::BinaryClassificationAccuracy\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_binary_classification_accuracy.html"];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ltr::BinaryClassificationMargin\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_binary_classification_margin.html"];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="ltr::GMRR\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_g_m_r_r.html"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="ltr::NormalizedMeasure\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_normalized_measure.html"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="ltr::PFound\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_p_found.html"];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="ltr::ReciprocalRank\< ObjectList \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_reciprocal_rank.html"];
+  Node1 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="ltr::TruePoint\< Object \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_true_point.html"];
+}

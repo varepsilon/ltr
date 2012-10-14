@@ -97,54 +97,109 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#TutorialMLS">Measures, Learners, Scorers</a><ul><li class="level2"><a href="#TutorialMLSMeasures">Measures</a><ul><li class="level3"><a href="#TutorialMLSMeasuresClassify">Classification problem</a></li>
-<li class="level3"><a href="#TutorialMLSMeasuresRegression">Regression problem</a></li>
-<li class="level3"><a href="#TutorialMLSMeasureRanking">Ranking problem</a></li>
-</ul>
-</li>
-<li class="level2"><a href="#TutorialLearnerScorer">Learners and scorers</a></li>
-</ul>
-</li>
+<ul><li class="level1"><a href="#Introduction">Introduction</a></li>
+<li class="level1"><a href="#Learner">Learner</a></li>
+<li class="level1"><a href="#Scorer">Scorer</a></li>
+<li class="level1"><a href="#Measure">Measure</a></li>
+<li class="level1"><a href="#Example">Example</a></li>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="TutorialMLS"></a>
-Measures, Learners, Scorers</h2>
-<p>Suppose you are given set of objects and set of possible replies for this objects. You have to find function between objects and replies. Also you are given a set of (object, answer), where object is from object's set and answer is from set of replies. Set of such pairs called training data. You may assume that there is another set of objects called testing data. <a class="el" href="class_the.html">The</a> machine learning problem is to predict answers for objects from testing data, using training data.</p>
-<p>There are three basic parts which we have to know to continue our tutorial.</p>
-<ul>
-<li><a class="el" href="classltr_1_1_measure.html">Measure</a>. <a class="el" href="classltr_1_1_measure.html">Measure</a> is something like quality indicator. </li>
-<li><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>. <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> is the main part and it process the data. </li>
-<li><a class="el" href="classltr_1_1_scorer.html">Scorer</a>. You may assume that scorer is a function (object -&gt; real value).</li>
-</ul>
-<h3><a class="anchor" id="TutorialMLSMeasures"></a>
-Measures</h3>
-<p>Let's try to explain what is the measure. <a class="el" href="classltr_1_1_measure.html">Measure</a> is function which helps us to estimate quality of our predictions for testing data.</p>
-<p>All available measures in LTR can be divided into three groups. Measures for classification problems, measures for regression problems and measures for ranking problems. Look below to see examples of measures for different problems' types.</p>
-<h4><a class="anchor" id="TutorialMLSMeasuresClassify"></a>
-Classification problem</h4>
-<p>Consider the situation when we have set {0, 1} as a set of possible replies. We know classes for objects from some dataset. Suppose we develop algorithm which predict classes for object from this dataset. And our algorithm sometimes mismatch with real answers. Then the rate of mismatches can be a function which estimate quality of our algorithm. In this case the rate of mismatches is the measure. If rate equals to 0, then our algorithm is perfect.</p>
-<h4><a class="anchor" id="TutorialMLSMeasuresRegression"></a>
-Regression problem</h4>
-<p>Consider the situation when we have set of all real numbers as a set of possible replies. Then we obtain regression problem. Our algorithm have to predict real value for every object from testing data. How we can estimate quality of algorithm in such case? One of well known ways is using squared error. Let real results for objects are x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>, and results of our algorithm are y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>n</sub>. Then quality of algorithm can be evaluated using following formula: </p>
-<p class="formulaDsp">
-\[quality = \sum\limits_{i=1}^n\left(\left(x_i-y_i\right)^2\right)\]
-</p>
-<p> <a class="el" href="class_the.html">The</a> smaller this sum is the better.</p>
-<h4><a class="anchor" id="TutorialMLSMeasureRanking"></a>
-Ranking problem</h4>
-<p>This case is much more complicated than two previous. Usually we use DCG, normalized DCG measures and others here.</p>
-<h3><a class="anchor" id="TutorialLearnerScorer"></a>
-Learners and scorers</h3>
-<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> is a program which process the training data. If it is necessary learner gets measure as the input parameter. Usually learner trying to optimize measure according to the given problem. After learning learner outputs a scorer. <a class="el" href="classltr_1_1_scorer.html">Scorer</a> is a function which associates real value with object. Then we get real values as a parameter of every object. This parameters are very useful. Let's describe some problems which can be solved using this information.</p>
-<ul>
-<li>Classification problem. </li>
-<li>Regression problem. </li>
-<li>Ranking problem. We need to sort available objects by score and we will get an order.</li>
-</ul>
-<p>How it works you can see at the example below.</p>
-<table  class="example">
+<div class="textblock"><h2><a class="anchor" id="Introduction"></a>
+Introduction</h2>
+<p>The key concept of LTR is <a class="el" href="classltr_1_1_scorer.html">Scorer</a>. <a class="el" href="classltr_1_1_scorer.html">Scorer</a> is a functor which computes score of an object:</p>
+<div align="center">
+</div>
+<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> learn a train data to make the <a class="el" href="classltr_1_1_scorer.html">Scorer</a> which aproximates the actual labels of the objects in the train data:</p>
+<div align="center">
+</div>
+<p>One should use a <a class="el" href="classltr_1_1_measure.html">Measure</a> to check the quality of aproximation.</p>
+<p>LTR was originally designed to solve learning to rank problem. But actualy it can be used to solve a various problems of machine learning. The difference is in the type of train data, usage of the result scorer and the target metric:</p>
+<table class="doxtable">
 <tr>
-<td>Example: operating with learners and scorers. Regression problem. </td></tr>
+<th>Problem </th><th>Dataset </th><th>Scorer usage </th><th>Measure</th></tr>
+<tr>
+<td>Binary classification </td><td>{Point, Pair}wise </td><td>\( score &lt; \text{or} &gt; 0 \) </td><td><a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a>, <a class="el" href="classltr_1_1_average_precision.html">AveragePrecision</a> </td></tr>
+<tr>
+<td>Multiclass classification </td><td>Pointwise </td><td>\( score \in \{c_1,c_2, \cdots, c_n\} \) </td><td><a class="el" href="classltr_1_1_accuracy.html">Accuracy</a> </td></tr>
+<tr>
+<td>Regression </td><td>Pointwise </td><td>\( score \in \mathbb{R} \) </td><td><a class="el" href="classltr_1_1_abs_error.html">AbsError</a>, <a class="el" href="classltr_1_1_squared_error.html">SquaredError</a>, <a class="el" href="classltr_1_1_true_point.html">TruePoint</a> </td></tr>
+<tr>
+<td>Ranking </td><td>{Point, Pair, List}wise </td><td>sort by \( score \) </td><td><a class="el" href="">DCG </a>, <a class="el" href="">NDCG </a>, <a class="el" href="classltr_1_1_g_m_r_r.html">GMRR </a>, <a class="el" href="classltr_1_1_p_found.html">PFound</a>, <a class="el" href="classltr_1_1_reciprocal_rank.html">ReciprocalRank</a> </td></tr>
+</table>
+<h2><a class="anchor" id="Learner"></a>
+Learner</h2>
+<p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> public fuctions:</p>
+<ul>
+<li><a class="el" href="classltr_1_1_learner.html#aaa01fe19a1467913c0df36a4fdd213c6">learn </a> - learn the train data</li>
+<li><a class="el" href="classltr_1_1_learner.html#a597e9bfbc0e1bb388eeac58dc160685d">make </a>, <a class="el" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">makeSpecific </a> - return the pointer to a new scorer, see the example below to understand the difference</li>
+<li><a class="el" href="classltr_1_1_base_learner.html#a1163855bba1ad4ddcb9c7dbe4cd55708">setInitialScorer </a> - set the initial approximation of a scorer</li>
+<li><a class="el" href="classltr_1_1_base_learner.html#a33d3d382583186aae6497ba9ad818abf">reset </a> - reset a current state of the learner</li>
+<li><a class="el" href="classltr_1_1_learner.html#a8cf0efc622783ac8fb66b67f97d59b33">addDataPreprocessor </a> - add data preprocessor, see <a class="el" href="_tutorial_data_preprocessors.html">Tutorial page 3 - Data preprocessors</a></li>
+<li><a class="el" href="classltr_1_1_learner.html#ada687edfa5a3369eb7a425cca82277ed">addFeatureConverterLearner </a> - add feature converter learner, see <a class="el" href="_tutorial_feature_converters.html">Tutorial page 4 - Feature converters</a></li>
+</ul>
+<h2><a class="anchor" id="Scorer"></a>
+Scorer</h2>
+<p><a class="el" href="classltr_1_1_scorer.html">Scorer</a> public fuctions:</p>
+<ul>
+<li><a class="el" href="classltr_1_1_scorer.html#ae5e5abf6e74b3c208cdf1632a912adab">value </a> - compute the score of an object</li>
+<li><a class="el" href="classltr_1_1_scorer.html#ab1377230385c8a4d3ad36ffdb18e278c">predict </a> - set predicted labels for all objects in a data set</li>
+<li><a class="el" href="classltr_1_1_scorer.html#afb5985591e1c30774cb4487ba4288965">generateCppCode </a> - serialize scorer to c++ code</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Leaner Name: </th><th>Description: </th><th>Trained scorer:</th></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_best_feature_learner.html">BestFeatureLearner</a> </td><td>one feature used as score </td><td><a class="el" href="classltr_1_1_one_feature_scorer.html">OneFeatureScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_linear_learner.html">LinearLearner</a> </td><td><a href="http://en.wikipedia.org/wiki/Ordinary_least_squares">http://en.wikipedia.org/wiki/Ordinary_least_squares</a> </td><td><a class="el" href="classltr_1_1_linear_scorer.html">LinearScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach.">NNLearner</a> </td><td><a href="http://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm">http://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm</a> </td><td><a class="el" href="classltr_1_1_n_n_scorer.html" title="The class prepresents Scorer for NNLearner. It contains the learning data set, pointers to aggregator...">NNScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1gp_1_1_g_p_learner.html" title="GPLearner Implements genetic programming approach applied to learning to rank.">gp::GPLearner</a> </td><td><a href="http://en.wikipedia.org/wiki/Genetic_programming">http://en.wikipedia.org/wiki/Genetic_programming</a> </td><td><a class="el" href="classltr_1_1gp_1_1_g_p_scorer.html" title="The class prepresent Scorer for GPLearner. It contains the last population of genetic programming&#39;s e...">gp::GPScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1composition_1_1_composition_learner.html" title="Learner, wich uses other learner (weak learner), produces with it different scorers and tie them into...">composition::CompositionLearner</a> </td><td><a class="el" href="_tutorial_composition.html">Tutorial page 7 - Composition of algorithms</a> </td><td><a class="el" href="classltr_1_1composition_1_1_composition_scorer.html">composition::CompositionScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_bayesian_learner.html">BayesianLearner</a> </td><td><a class="el" href="_tutorial_bayesian_classification.html">Tutorial page 6 - Bayesian Classification</a> </td><td><a class="el" href="classltr_1_1_bayesian_scorer.html">BayesianScorer</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_decision_tree_learner.html" title="DecisionTreeLearner Builds decision tree for given data.">decision_tree::DecisionTreeLearner</a> </td><td><a class="el" href="_tutorial_decision_tree.html">Tutorial page 8 - Decision Trees</a> </td><td><a class="el" href="classltr_1_1decision__tree_1_1_decision_tree_scorer.html">decision_tree::DecisionTreeScorer</a> </td></tr>
+</table>
+<h2><a class="anchor" id="Measure"></a>
+Measure</h2>
+<p><a class="el" href="classltr_1_1_measure.html">Measure</a> public fuctions:</p>
+<ul>
+<li><a class="el" href="">operator() </a> - compute how well predicted labels aproximates actual</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Measure Name: </th><th>Description:</th></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_abs_error.html">AbsError</a> </td><td><a href="http://en.wikipedia.org/wiki/Mean_absolute_error">http://en.wikipedia.org/wiki/Mean_absolute_error</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_accuracy.html">Accuracy</a> </td><td><a href="http://en.wikipedia.org/wiki/Accuracy_and_precision">http://en.wikipedia.org/wiki/Accuracy_and_precision</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_average_precision.html">AveragePrecision</a> </td><td><a href="http://en.wikipedia.org/wiki/Accuracy_and_precision">http://en.wikipedia.org/wiki/Accuracy_and_precision</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_binary_classification_accuracy.html">BinaryClassificationAccuracy</a> </td><td><a href="http://en.wikipedia.org/wiki/Accuracy_and_precision">http://en.wikipedia.org/wiki/Accuracy_and_precision</a> </td></tr>
+<tr>
+<td><a class="el" href="">DCG </a> </td><td><a href="http://en.wikipedia.org/wiki/Discounted_Cumulative_Gain">http://en.wikipedia.org/wiki/Discounted_Cumulative_Gain</a> </td></tr>
+<tr>
+<td><a class="el" href="">NDCG </a> </td><td><a href="http://en.wikipedia.org/wiki/NDCG">http://en.wikipedia.org/wiki/NDCG</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_g_m_r_r.html">GMRR </a> </td><td>Desc </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_p_found.html">PFound</a> </td><td><a href="http://romip.ru/romip2009/15_yandex.pdf">http://romip.ru/romip2009/15_yandex.pdf</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_reciprocal_rank.html">ReciprocalRank</a> </td><td><a href="http://en.wikipedia.org/wiki/Mean_reciprocal_rank">http://en.wikipedia.org/wiki/Mean_reciprocal_rank</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_squared_error.html">SquaredError</a> </td><td><a href="http://en.wikipedia.org/wiki/Squared_error_loss">http://en.wikipedia.org/wiki/Squared_error_loss</a> </td></tr>
+<tr>
+<td><a class="el" href="classltr_1_1_true_point.html">TruePoint</a> </td><td>Desc </td></tr>
+</table>
+<h2><a class="anchor" id="Example"></a>
+Example</h2>
+<table class="doxtable">
+<tr>
+<th>Example: Operating with learners and scorers </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 <span class="preprocessor">#include &lt;vector&gt;</span>
@@ -152,98 +207,86 @@ Learners and scorers</h3>
 <span class="preprocessor">#include &quot;<a class="code" href="data__set_8h.html">ltr/data/data_set.h</a>&quot;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="linear__learner_8h.html">ltr/learners/linear_learner/linear_learner.h</a>&quot;</span>
+<span class="preprocessor">#include &quot;<a class="code" href="abs__error_8h.html">ltr/measures/abs_error.h</a>&quot;</span>
 <span class="preprocessor">#include &quot;<a class="code" href="linear__scorer_8h.html">ltr/scorers/linear_scorer.h</a>&quot;</span>
 
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
-
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-  ltr::Log log;
+  ltr::Log log(<span class="stringliteral">&quot;log.txt&quot;</span>);
 
-  DataSet&lt;Object&gt; data;
-  Object train_object1, train_object2, train_object3;
+  <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a> object1, object2, object3;
+  object1 &lt;&lt; 1 &lt;&lt; 2;
+  object1.<a class="code" href="classltr_1_1_object.html#a746a0201fab8e68d80721ce1ca9d3148">set_actual_label</a>(10 + (1 + 2));
+  object2 &lt;&lt; 20 &lt;&lt; 30;
+  object2.<a class="code" href="classltr_1_1_object.html#a746a0201fab8e68d80721ce1ca9d3148">set_actual_label</a>(10 + (20 + 30));
+  object3 &lt;&lt; 300 &lt;&lt; 400;
+  object3.<a class="code" href="classltr_1_1_object.html#a746a0201fab8e68d80721ce1ca9d3148">set_actual_label</a>(10 + (300 + 400));
 
-  train_object1 &lt;&lt; 1.2 &lt;&lt; 12.9;                                                 <span class="comment">// create new object from training data</span>
-  train_object1.set_actual_label(1);                                            <span class="comment">// set new actual label</span>
-  train_object2 &lt;&lt; 2.4 &lt;&lt; 25.8;
-  train_object2.set_actual_label(2);
-  train_object3 &lt;&lt; 0.3 &lt;&lt; 3.225;
-  train_object3.set_actual_label(0.25);
-  data.add(train_object1);                                                      <span class="comment">// add objects to training DataSet</span>
-  data.add(train_object2);
-  data.add(train_object3);
+  <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet&lt;Object&gt;</a> data;
+  data.<a class="code" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">add</a>(object1);
+  data.<a class="code" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">add</a>(object2);
+  data.<a class="code" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">add</a>(object3);
+  cout &lt;&lt; <span class="stringliteral">&quot;Train data:\n&quot;</span> &lt;&lt; data &lt;&lt; endl;
 
-  <a class="code" href="classltr_1_1_linear_learner.html">ltr::LinearLearner&lt;Object&gt;</a> learner;                                           <span class="comment">// create linear learner</span>
-  learner.<a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">learn</a>(data);                                                          <span class="comment">// learning process</span>
+  <a class="code" href="classltr_1_1_linear_learner.html">ltr::LinearLearner&lt;Object&gt;</a> learner;    <span class="comment">// learn linear regression</span>
+  learner.<a class="code" href="classltr_1_1_base_learner.html#aded87586e62aff293f7365f59fda237d" title="Learns input dataset.">learn</a>(data);
 
-  <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::LinearScorer::Ptr</a> scorer = learner.<a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">makeSpecific</a>();                       <span class="comment">// scorer based on the learner</span>
+  <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::Scorer::Ptr</a> scorer = learner.<a class="code" href="classltr_1_1_base_learner.html#ac3d0c4dcc5cab22301dc63dca1c12a7a">make</a>();           <span class="comment">// make scorer</span>
+  cout &lt;&lt; scorer-&gt;<a class="code" href="classltr_1_1_printable.html#a53fe32bcbdadde7a743c5b4e3eb70adf">toString</a>() &lt;&lt; endl;                 <span class="comment">// human-readable representation of scorer</span>
+  cout &lt;&lt; endl;
+  cout &lt;&lt; scorer-&gt;<a class="code" href="classltr_1_1_scorer.html#afb5985591e1c30774cb4487ba4288965">generateCppCode</a>(<span class="stringliteral">&quot;score&quot;</span>) &lt;&lt; endl;   <span class="comment">// serialize scorer to cpp code</span>
 
-  cout &lt;&lt; <span class="stringliteral">&quot;train_object1 score = &quot;</span> &lt;&lt; scorer-&gt;score(train_object1) &lt;&lt; endl;     <span class="comment">// output scores for objects from training data</span>
-  cout &lt;&lt; <span class="stringliteral">&quot;train_object2 score = &quot;</span> &lt;&lt; scorer-&gt;score(train_object2) &lt;&lt; endl;
-  cout &lt;&lt; <span class="stringliteral">&quot;train_object3 score = &quot;</span> &lt;&lt; scorer-&gt;score(train_object3) &lt;&lt; endl;
+  cout &lt;&lt; <span class="stringliteral">&quot;score of object1 = &quot;</span> &lt;&lt; scorer-&gt;<a class="code" href="classltr_1_1_scorer.html#ae5e5abf6e74b3c208cdf1632a912adab">value</a>(object1)
+       &lt;&lt; endl;
+  scorer-&gt;<a class="code" href="classltr_1_1_scorer.html#ab1377230385c8a4d3ad36ffdb18e278c">predict</a>(data);                                  <span class="comment">// compute predicted labels</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;\nPredicted train data:\n&quot;</span> &lt;&lt; data;
 
-  Object test_object1;
-  test_object1 &lt;&lt; 12 &lt;&lt; 129;                                                    <span class="comment">// create object from testing data</span>
+  <a class="code" href="classltr_1_1_abs_error.html">ltr::AbsError</a> abs_error;                                <span class="comment">// test quality</span>
+  cout &lt;&lt; <span class="stringliteral">&quot;\nAbsError(data) = &quot;</span> &lt;&lt; abs_error(data)
+       &lt;&lt; endl;
 
-  cout &lt;&lt; <span class="stringliteral">&quot;test_object1 score = &quot;</span> &lt;&lt; scorer-&gt;score(test_object1) &lt;&lt; endl;       <span class="comment">// output score for object from testing data</span>
+  <span class="comment">// use makeSpecific if you want to analyze result scorer in details</span>
+  <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::LinearScorer::Ptr</a> linear_scorer = learner.<a class="code" href="classltr_1_1_base_learner.html#a59d97bb35c49fc80bf97afe317bd7a44">makeSpecific</a>();
+  cout &lt;&lt; <span class="stringliteral">&quot;f(x, y) = &quot;</span> &lt;&lt; linear_scorer-&gt;weight(0)
+       &lt;&lt; <span class="stringliteral">&quot; + &quot;</span>  &lt;&lt; linear_scorer-&gt;weight(1) &lt;&lt; <span class="stringliteral">&quot; * x&quot;</span>
+       &lt;&lt; <span class="stringliteral">&quot; + &quot;</span>  &lt;&lt; linear_scorer-&gt;weight(2) &lt;&lt; <span class="stringliteral">&quot; * y&quot;</span>
+       &lt;&lt; endl;
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div>  </td></tr>
-<tr>
-<td>Output: </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment">/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:48: Sat Oct 13 18:01:01 2012: info: Learning started
-/home/jenkins/workspace/ltr1-doc/ltr1/doc/../ltr/learners/linear_learner/linear_learner.h:65: Sat Oct 13 18:01:01 2012: info: Calculating XTW matrix
-train_object1 score = 1
-train_object2 score = 2
-train_object3 score = 0.25
-test_object1 score = 10
-</pre></div>  </td></tr>
-</table>
-<p>LTR supports different types of learners. Some of this types are linear learner, linear composition learner, decision tree learner. Each learner from LTR has its own scorer.</p>
-<p>Let's look at another example. Here we download data from file.</p>
-<table  class="example">
-<tr>
-<td>Example: operating with learners and scorers. </td></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
+</pre></div> </td><td><div class="fragment"><pre class="fragment">Train data:
+[1.00, 2.00]{13.00,nan}
+[20.00, 30.00]{60.00,nan}
+[300.00, 400.00]{710.00,nan}
 
-<span class="preprocessor">#include &quot;<a class="code" href="io__utility_8h.html">ltr/data/utility/io_utility.h</a>&quot;</span>
-<span class="preprocessor">#include &quot;<a class="code" href="gp__learner_8h.html">ltr/learners/gp_learner/gp_learner.h</a>&quot;</span>
-<span class="preprocessor">#include &quot;<a class="code" href="dcg_8h.html">ltr/measures/dcg.h</a>&quot;</span>
-<span class="preprocessor">#include &quot;<a class="code" href="gp__scorer_8h.html">ltr/scorers/gp_scorer.h</a>&quot;</span>
+Linear scorer with coefficients: [10.00, 1.00, 1.00]
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<span class="keyword">using</span> ltr::io_utility::loadDataSet;
-<span class="keyword">using</span> ltr::io_utility::saveDataSet;
-
-<span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-  <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::Measure&lt;ltr::ObjectList&gt;::Ptr</a> dcg_measure(<span class="keyword">new</span> <a class="code" href="classltr_1_1_base_d_c_g.html">ltr::DCG</a>());
-  <a class="code" href="classltr_1_1gp_1_1_g_p_learner.html" title="GPLearner Implements genetic programming approach applied to learning to rank.">ltr::gp::GPLearner&lt;ltr::ObjectList&gt;</a> gp_learner(dcg_measure);
-
-  DataSet&lt;ltr::ObjectList&gt; training_data =
-    loadDataSet&lt;ltr::ObjectList&gt;(<span class="stringliteral">&quot;training_data.txt&quot;</span>, <span class="stringliteral">&quot;YANDEX&quot;</span>);
-  DataSet&lt;ltr::ObjectList&gt; testing_data =
-    loadDataSet&lt;ltr::ObjectList&gt;(<span class="stringliteral">&quot;testing_data.txt&quot;</span>, <span class="stringliteral">&quot;YANDEX&quot;</span>);
-  
-  gp_learner.learn(training_data);
-
-  gp_learner.make()-&gt;predict(testing_data);
-
-  saveDataSet(testing_data, <span class="stringliteral">&quot;result_data.txt&quot;</span>, <span class="stringliteral">&quot;YANDEX&quot;</span>);
+<span class="keywordtype">double</span> score(<span class="keyword">const</span> std::vector&lt;double&gt;&amp; features) {
+  <span class="keywordtype">double</span> output = 9.9999999999925002;
+  output += 0.99999999999503242 * features[0];
+  output += 1.0000000000037434 * features[1];
+  <span class="keywordflow">return</span> output;
 }
-</pre></div>  </td></tr>
+
+score of object1 = 13
+
+Predicted train data:
+[1.00, 2.00]{13.00,13.00}
+[20.00, 30.00]{60.00,60.00}
+[300.00, 400.00]{710.00,710.00}
+
+AbsError(data) = 3.63028e-12
+f(x, y) = 10 + 1 * x + 1 * y
+</pre></div> </td></tr>
 </table>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

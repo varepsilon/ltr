@@ -113,18 +113,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="serializable_8h.html">ltr/interfaces/serializable.h</a>&quot;</span>
 <a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="parameters__container_8h.html">ltr/parameters_container/parameters_container.h</a>&quot;</span>
 <a name="l00011"></a>00011 
-<a name="l00012"></a>00012 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<a name="l00012"></a>00012 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <a name="l00013"></a>00013 <span class="keyword">using</span> <a class="code" href="classltr_1_1_parameterized.html">ltr::Parameterized</a>;
 <a name="l00014"></a>00014 <span class="keyword">using</span> <a class="code" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ltr::ParametersContainer</a>;
-<a name="l00015"></a>00015 <span class="keyword">using</span> <a class="code" href="classltr_1_1_serializable.html">ltr::Serializable</a>;
+<a name="l00015"></a>00015 <span class="keyword">using</span> <a class="code" href="classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ...">ltr::Serializable</a>;
 <a name="l00016"></a>00016 
 <a name="l00017"></a>00017 <span class="keyword">namespace </span>ltr {
 <a name="l00018"></a>00018 
-<a name="l00022"></a><a class="code" href="classltr_1_1_base_probability_density_estimator.html">00022</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_probability_density_estimator.html">BaseProbabilityDensityEstimator</a>
-<a name="l00023"></a>00023   : <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_serializable.html">Serializable</a> {
+<a name="l00022"></a><a class="code" href="classltr_1_1_base_probability_density_estimator.html">00022</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">BaseProbabilityDensityEstimator</a>
+<a name="l00023"></a>00023   : <span class="keyword">public</span> <a class="code" href="classltr_1_1_parameterized.html">Parameterized</a>, <span class="keyword">public</span> <a class="code" href="classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ...">Serializable</a> {
 <a name="l00024"></a>00024  <span class="keyword">public</span>:
 <a name="l00025"></a><a class="code" href="classltr_1_1_base_probability_density_estimator.html#a9e9ec6fd2e86873f29d07afbad7ad37a">00025</a>   <span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;BaseProbabilityDensityEstimator&gt;</a> <a class="code" href="classltr_1_1_base_probability_density_estimator.html#a9e9ec6fd2e86873f29d07afbad7ad37a">Ptr</a>;
-<a name="l00026"></a>00026   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html#a588b43f1256de92a771782ff78c77452">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label) = 0;
+<a name="l00026"></a>00026   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html#a588b43f1256de92a771782ff78c77452">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label) = 0;
 <a name="l00027"></a><a class="code" href="classltr_1_1_base_probability_density_estimator.html#a340e3350fcee3d4014f8ecb285d3748d">00027</a>   <span class="keyword">virtual</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html#a340e3350fcee3d4014f8ecb285d3748d">~BaseProbabilityDensityEstimator</a>() {
 <a name="l00028"></a>00028   }
 <a name="l00029"></a>00029 };
@@ -135,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

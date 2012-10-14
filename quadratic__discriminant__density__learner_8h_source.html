@@ -117,10 +117,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="data__set__converters_8h.html">ltr/data/utility/data_set_converters.h</a>&quot;</span>
 <a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="statistics__calculation_8h.html">ltr/utility/statistics_calculation.h</a>&quot;</span>
 <a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html">ltr::BaseProbabilityDensityEstimator</a>;
-<a name="l00017"></a>00017 <span class="keyword">using</span> <a class="code" href="classltr_1_1_non_linear_discriminant_density_learner.html">ltr::NonLinearDiscriminantDensityLearner</a>;
+<a name="l00016"></a>00016 <span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">ltr::BaseProbabilityDensityEstimator</a>;
+<a name="l00017"></a>00017 <span class="keyword">using</span> <a class="code" href="classltr_1_1_non_linear_discriminant_density_learner.html" title="Interface of discriminants that can not be converted to linear separators.">ltr::NonLinearDiscriminantDensityLearner</a>;
 <a name="l00018"></a>00018 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
-<a name="l00019"></a>00019 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<a name="l00019"></a>00019 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <a name="l00020"></a>00020 <span class="keyword">using</span> ltr::LabelToCovarianceMatrix;
 <a name="l00021"></a>00021 <span class="keyword">using</span> ltr::LabelToMean;
 <a name="l00022"></a>00022 <span class="keyword">using</span> ltr::utility::LabelToCapacity;
@@ -128,8 +128,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025 <span class="keyword">namespace </span>ltr {
 <a name="l00031"></a>00031 <span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
-<a name="l00032"></a><a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html">00032</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html">QuadraticDiscriminantDensityLearner</a>
-<a name="l00033"></a>00033   : <span class="keyword">public</span> <a class="code" href="classltr_1_1_non_linear_discriminant_density_learner.html">NonLinearDiscriminantDensityLearner</a>&lt;TElement&gt; {
+<a name="l00032"></a><a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html">00032</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html" title="Probability density learner that uses Quadratic Discriminant approach to generate probability density...">QuadraticDiscriminantDensityLearner</a>
+<a name="l00033"></a>00033   : <span class="keyword">public</span> <a class="code" href="classltr_1_1_non_linear_discriminant_density_learner.html" title="Interface of discriminants that can not be converted to linear separators.">NonLinearDiscriminantDensityLearner</a>&lt;TElement&gt; {
 <a name="l00034"></a>00034  <span class="keyword">public</span>:
 <a name="l00035"></a><a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html#a3f04d519e76c7b87767429b6d016b691">00035</a>   <a class="code" href="classltr_1_1_quadratic_discriminant_density_learner.html#a3f04d519e76c7b87767429b6d016b691">QuadraticDiscriminantDensityLearner</a>() {
 <a name="l00036"></a>00036   }
@@ -177,7 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

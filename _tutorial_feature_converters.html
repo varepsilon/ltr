@@ -121,15 +121,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><h2><a class="anchor" id="TutorialFeatureConverter"></a>
 FeatureConverter</h2>
 <p>A base class for feature converters.</p>
-<p>Preprocesses <a class="el" href="classltr_1_1_object.html">Object</a>, e.g. sample or linear transform features. Can be applied to each <a class="el" href="classltr_1_1_object.html">Object</a> in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. But before doing this <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> should be trained by some <a class="el" href="classltr_1_1_feature_converter_learner.html" title="Learns input dataset and produces a FeatureConverter.">FeatureConverterLearner</a>. This can be usefull for better training of <a class="el" href="classltr_1_1_scorer.html">Scorer</a>.</p>
-<p>Feature converters which were used during training of <a class="el" href="classltr_1_1_scorer.html">Scorer</a> will be added in the result <a class="el" href="classltr_1_1_scorer.html">Scorer</a> and consequently must be <a class="el" href="classltr_1_1_serializable.html">Serializable</a>.</p>
+<p>Preprocesses <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>, e.g. sample or linear transform features. Can be applied to each <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. But before doing this <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> should be trained by some <a class="el" href="classltr_1_1_feature_converter_learner.html" title="Learns input dataset and produces a FeatureConverter.">FeatureConverterLearner</a>. This can be usefull for better training of <a class="el" href="classltr_1_1_scorer.html">Scorer</a>.</p>
+<p>Feature converters which were used during training of <a class="el" href="classltr_1_1_scorer.html">Scorer</a> will be added in the result <a class="el" href="classltr_1_1_scorer.html">Scorer</a> and consequently must be <a class="el" href="classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ...">Serializable</a>.</p>
 <dl class="section note"><dt>Note:</dt><dd>In most cases you don't need to create <a class="el" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">FeatureConverter</a> directly, normally it is the result of some <a class="el" href="classltr_1_1_feature_converter_learner.html" title="Learns input dataset and produces a FeatureConverter.">FeatureConverterLearner</a> work.</dd></dl>
 <p>You can convert your data features in this way:</p>
 <ul>
 <li>FeatureConverter::apply(const Object&amp; input, Object* output) <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">input</td><td><a class="el" href="classltr_1_1_object.html">Object</a> to be converted </td></tr>
-    <tr><td class="paramname">output</td><td>converted <a class="el" href="classltr_1_1_object.html">Object</a></td></tr>
+    <tr><td class="paramname">input</td><td><a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> to be converted </td></tr>
+    <tr><td class="paramname">output</td><td>converted <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -208,7 +208,7 @@ FeatureNormalizerLearner</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::endl;
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">ltr::FeatureConverter</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_normalizer_learner.html" title="Independently normalize each feature component to the specified range.">ltr::FeatureNormalizerLearner</a>;
@@ -246,14 +246,14 @@ FeatureNormalizerLearner</h3>
 <td>Output: </td></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment">Before:
-[5.23, 1.53, -5.38]
-[2.21, -1.23, 0.32]
-[-2.12, 0.21, -6.08]
+[5.23, 1.53, -5.38]{1.00,nan}
+[2.21, -1.23, 0.32]{1.00,nan}
+[-2.12, 0.21, -6.08]{1.00,nan}
 
 After:
-[1.00, 1.00, -0.78]
-[0.18, -1.00, 1.00]
-[-1.00, 0.04, -1.00]
+[1.00, 1.00, -0.78]{1.00,nan}
+[0.18, -1.00, 1.00]{1.00,nan}
+[-1.00, 0.04, -1.00]{1.00,nan}
 
 </pre></div>  </td></tr>
 </table>
@@ -275,7 +275,7 @@ FeatureSamplerLearner</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::endl;
 
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_converter.html" title="A base class for feature converters.">ltr::FeatureConverter</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_feature_sampler_learner.html" title="Produces FeatureSampler with specified indices.">ltr::FeatureSamplerLearner</a>;
@@ -316,14 +316,14 @@ FeatureSamplerLearner</h3>
 <td>Output: </td></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment">Before:
-[5.23, 1.53, -5.38]
-[2.21, -1.23, 0.32]
-[-2.12, 0.21, -6.08]
+[5.23, 1.53, -5.38]{1.00,nan}
+[2.21, -1.23, 0.32]{1.00,nan}
+[-2.12, 0.21, -6.08]{1.00,nan}
 
 After:
-[5.23, -5.38]
-[2.21, 0.32]
-[-2.12, -6.08]
+[5.23, -5.38]{1.00,nan}
+[2.21, 0.32]{1.00,nan}
+[-2.12, -6.08]{1.00,nan}
 
 </pre></div>  </td></tr>
 </table>
@@ -346,7 +346,7 @@ RemoveNominalConverterLearner</h3>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

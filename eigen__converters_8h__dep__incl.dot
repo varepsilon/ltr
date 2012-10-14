@@ -1,0 +1,44 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="ltr/utility/eigen_converters.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ltr/density_estimators/base_probability_density_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$base__probability__density__learner_8h.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ltr/density_estimators/fisher_discriminant_density_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fisher__discriminant__density__learner_8h.html"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ltr/density_estimators/density_estimators_learners_unittests.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$density__estimators__learners__unittests_8cc.html"];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ltr/learners/bayesian_learner/bayesian_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$bayesian__learner_8h.html"];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ltr/learners/bayesian_learner/bayesian_learner_unittest.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$bayesian__learner__unittest_8cc.html"];
+  Node5 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ltr/serialization_test/generator/generator.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$generator_8cc.html"];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ltr/density_estimators/non_linear_discriminant_density_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$non__linear__discriminant__density__learner_8h.html"];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ltr/density_estimators/quadratic_discriminant_density_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$quadratic__discriminant__density__learner_8h.html"];
+  Node9 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ltr/density_estimators/normal_naive_bayes_density_learner.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$normal__naive__bayes__density__learner_8h.html"];
+  Node10 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ltr/density_estimators/non_linear_discriminant.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$non__linear__discriminant_8h.html"];
+  Node11 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ltr/density_estimators/density_estimators_scorers_unittests.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$density__estimators__scorers__unittests_8cc.html"];
+  Node11 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="ltr/density_estimators/non_linear_discriminant.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$non__linear__discriminant_8cc.html"];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="ltr/density_estimators/fisher_discriminant.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fisher__discriminant_8cc.html"];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="ltr/utility/eigen_converters.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eigen__converters_8cc.html"];
+}

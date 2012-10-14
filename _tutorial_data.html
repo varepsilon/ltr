@@ -115,10 +115,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="textblock"><h2><a class="anchor" id="TutorialDataObject"></a>
 Object</h2>
-<p><a class="el" href="classltr_1_1_object.html">Object</a> is the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
+<p><a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> is the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
 <h3><a class="anchor" id="TutorialDataObjectFeatures"></a>
 Features</h3>
-<p>Every <a class="el" href="classltr_1_1_object.html">Object</a> has several features with indexes 0, 1, 2... Every feature is a double value.</p>
+<p>Every <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> has several features with indexes 0, 1, 2... Every feature is a double value.</p>
 <p>You can operate with features using this functions: </p>
 <ul>
 <li><a class="el" href="">featureCount() </a> - returns number of features </li>
@@ -136,7 +136,7 @@ Features</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
@@ -165,12 +165,12 @@ Features</h3>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 23.00, 100000000.00]
+</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 23.00, 100000000.00]{1.00,nan}
 obj.feature_count() = 4
 feature was added
 obj.feature_count() = 5
 obj[0] = 1.1, obj.at(1) = 45.3
-obj = [1.00, 5.00, 2.00]
+obj = [1.00, 5.00, 2.00]{1.00,nan}
 </pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectLabels"></a>
@@ -193,7 +193,7 @@ Actual and predicted labels</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
@@ -211,7 +211,7 @@ Actual and predicted labels</h3>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectMetaInfo"></a>
 Meta info</h3>
-<p>Every <a class="el" href="classltr_1_1_object.html">Object</a> can have some meta information. You can manage it, using this functions: </p>
+<p>Every <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> can have some meta information. You can manage it, using this functions: </p>
 <ul>
 <li><a class="el" href="">getMetaInfo(string name)   Object::setMetaInfo(string, string) setMetaInfo(string name, string value)</a> </li>
 <li><a class="el" href="">metaInfo()</a> - returns all meta information in <a class="el" href="">MetaInfo </a> container</li>
@@ -228,7 +228,7 @@ Meta info</h3>
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
 <span class="keyword">using</span> std::logic_error;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
@@ -270,7 +270,7 @@ Copying objects</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj1, obj2;
@@ -315,8 +315,8 @@ ObjectPair</h2>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object_pair.html">ltr::ObjectPair</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object_pair.html" title="The class stores a pair of two objects. The container for two objects, can be stored in DataSet...">ltr::ObjectPair</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   ObjectPair pair;
@@ -330,7 +330,7 @@ ObjectPair</h2>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00], [4.00, 6.00, 7.00, 8.00])
+</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00]{1.00,nan}, [4.00, 6.00, 7.00, 8.00]{1.00,nan})
 </pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectList"></a>
@@ -346,7 +346,7 @@ ObjectList</h2>
  To find out, how many elements are there in the list, call the <a class="el" href="classltr_1_1_object_list.html#a4b1fcfadfe5de276876a03ac7e569dbe">size()</a> method.</p>
 <h2><a class="anchor" id="TutorialDataPerObjectAccessor"></a>
 PerObjectAccessor</h2>
-<p><a class="el" href="classltr_1_1_object.html">Object</a>, <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> and <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> are currently main data types used in LTR. If you want to write a code handling all of them <a class="el" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a> is what you need. It allows you to access an individual <a class="el" href="classltr_1_1_object.html">Object</a> in all this containers by index. In the example below function for printing actual labels is implemented.</p>
+<p><a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>, <a class="el" href="classltr_1_1_object_pair.html" title="The class stores a pair of two objects. The container for two objects, can be stored in DataSet...">ObjectPair</a> and <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> are currently main data types used in LTR. If you want to write a code handling all of them <a class="el" href="classltr_1_1_per_object_accessor.html">PerObjectAccessor</a> is what you need. It allows you to access an individual <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> in all this containers by index. In the example below function for printing actual labels is implemented.</p>
 <table class="doxtable">
 <tr>
 <th>Example: Working with PerObjectAccessor </th><th>Output:</th></tr>
@@ -359,7 +359,7 @@ PerObjectAccessor</h2>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object_list.html">ltr::ObjectList</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_per_object_accessor.html">ltr::PerObjectAccessor</a>;
 
@@ -393,7 +393,7 @@ actual[3] = 40
 </table>
 <h2><a class="anchor" id="TutorialDataDataSet"></a>
 DataSet</h2>
-<p><a class="el" href="classltr_1_1_data_set.html">DataSet</a> is a class to operate with sets of data. It can contain <a class="el" href="classltr_1_1_object.html">Object</a>, <a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> or <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> as elements.<br/>
+<p><a class="el" href="classltr_1_1_data_set.html">DataSet</a> is a class to operate with sets of data. It can contain <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>, <a class="el" href="classltr_1_1_object_pair.html" title="The class stores a pair of two objects. The container for two objects, can be stored in DataSet...">ObjectPair</a> or <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> as elements.<br/>
 Every elment can also has a double weight, default weight is 1. </p>
 <div class="fragment"><pre class="fragment">DataSet&lt;Object&gt;     data1;   <span class="comment">// This data set containt objects</span>
 DataSet&lt;ObjectPair&gt; data2;   <span class="comment">// This data set contains pair</span>
@@ -434,7 +434,7 @@ Basic operations</h3>
 <span class="keyword">using</span> std::cout;
 <span class="keyword">using</span> std::vector;
 <span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
@@ -470,27 +470,27 @@ Basic operations</h3>
   <span class="keywordflow">return</span> 0;
 }
 </pre></div> </td><td><div class="fragment"><pre class="fragment">data = 
-[12.00, 54.11]
-[1.30, 4.15]
-[10.30, 14.30]
-[19.00, 47.50]
+[12.00, 54.11]{1.00,nan}
+[1.30, 4.15]{1.00,nan}
+[10.30, 14.30]{1.00,nan}
+[19.00, 47.50]{1.00,nan}
 
 data.size() = 4
-data[0] = [12.00, 54.11]
-data.at(1) = [1.30, 4.15]
+data[0] = [12.00, 54.11]{1.00,nan}
+data.at(1) = [1.30, 4.15]{1.00,nan}
 data.getWeight(2) = 2.12
 data.getWeight(2) = 0.01
 called data.erase(1)
-data[1] = [10.30, 14.30]
+data[1] = [10.30, 14.30]{1.00,nan}
 called data.clear()
 data.size() = 0
 </pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataDataSetFeatureInfo"></a>
 Feature info</h3>
-<p>There is one more important thing in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>: every data set has a <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>, which containes information about types and possible values of objects features in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
+<p>There is one more important thing in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>: every data set has a <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>, which containes information about types and possible values of objects features in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
 <p>It is important to set right feature info, or many things wont work right.<br/>
- There is only one function in <a class="el" href="classltr_1_1_data_set.html">DataSet</a> for working with <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>: DataSet::featureInfo() const. It returns a constant reference to the <a class="el" href="classltr_1_1_feature_info.html">FeatureInfo</a>.</p>
+ There is only one function in <a class="el" href="classltr_1_1_data_set.html">DataSet</a> for working with <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>: DataSet::featureInfo() const. It returns a constant reference to the <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>.</p>
 <h3><a class="anchor" id="TutorialDataDataSetSavingAndLoading"></a>
 Loading and saving into files</h3>
 <p>Main think, you can do with <a class="el" href="classltr_1_1_data_set.html">DataSet</a> is to load it from file or save it into file.</p>
@@ -502,7 +502,7 @@ DataSet&lt;TElement&gt; ltr::io_utility::loadDataSet(<span class="keyword">const
 <li><code>filename</code> - name of file with data. </li>
 <li><code>format</code> - format of data in the file. It can be "yandex", "svm-lite" or "Arff"</li>
 </ul>
-<p>Be careful: If there are some missed features in file, the features value loaded into <a class="el" href="classltr_1_1_object.html">Object</a> will be ltr::utility::NaN.</p>
+<p>Be careful: If there are some missed features in file, the features value loaded into <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> will be ltr::utility::NaN.</p>
 <p>All nominal features will be converted into integer values by hash function. You can find out values and hashes using FeatureInfo::getFeatureValues(size_t idx) const, where <code>idx</code> is id of nominal feature.</p>
 <p>Function for saving <a class="el" href="classltr_1_1_data_set.html">DataSet</a> into file. </p>
 <div class="fragment"><pre class="fragment"><span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
@@ -529,7 +529,7 @@ DataSet&lt;TElement&gt; ltr::io_utility::loadDataSet(<span class="keyword">const
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

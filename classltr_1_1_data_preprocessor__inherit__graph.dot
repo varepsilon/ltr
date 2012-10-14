@@ -1,0 +1,19 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ltr::DataPreprocessor\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ltr::Parameterized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_parameterized.html"];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ltr::Printable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_printable.html"];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ltr::Aliaser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_aliaser.html",tooltip="Inherit from this class in order to use alias."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ltr::DataRandomSampler\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_data_random_sampler.html",tooltip="Acts as DataSampler with random indices each new applying (duplication may be allowed)."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ltr::DataSampler\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_data_sampler.html",tooltip="Samples elements with specififed indices from input DataSet. Duplication of indices leads to duplicat..."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ltr::FakePreprocessor\< TElement \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classltr_1_1_fake_preprocessor.html",tooltip="Does nothing with input DataSet."];
+}

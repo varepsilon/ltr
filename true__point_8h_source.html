@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00011"></a>00011 
 <a name="l00012"></a>00012 <span class="keyword">using</span> std::fabs;
 <a name="l00013"></a>00013 <span class="keyword">using</span> std::string;
-<a name="l00014"></a>00014 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
+<a name="l00014"></a>00014 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
 <a name="l00015"></a>00015 
 <a name="l00016"></a>00016 
 <a name="l00017"></a>00017 <span class="keyword">namespace </span>ltr {
@@ -137,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00036"></a>00036       <span class="keywordflow">return</span> <span class="stringliteral">&quot;True point measure&quot;</span>;
 <a name="l00037"></a>00037     }
 <a name="l00038"></a>00038   <span class="keyword">private</span>:
-<a name="l00039"></a><a class="code" href="classltr_1_1_true_point.html#a8d6b73526ca2c7d9642bbbdaeb08b826">00039</a>     <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_true_point.html#a8d6b73526ca2c7d9642bbbdaeb08b826">get_measure</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>)<span class="keyword"> const </span>{
+<a name="l00039"></a><a class="code" href="classltr_1_1_true_point.html#a8d6b73526ca2c7d9642bbbdaeb08b826">00039</a>     <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_true_point.html#a8d6b73526ca2c7d9642bbbdaeb08b826">get_measure</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>&amp; <span class="keywordtype">object</span>)<span class="keyword"> const </span>{
 <a name="l00040"></a>00040       <span class="keywordflow">return</span> 1.0/(fabs(<span class="keywordtype">object</span>.actual_label() - <span class="keywordtype">object</span>.predicted_label()) + 1.0);
 <a name="l00041"></a>00041     }
 <a name="l00042"></a><a class="code" href="classltr_1_1_true_point.html#a09979394f01b6b115295e07d7decd99b">00042</a>     <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_true_point.html#a09979394f01b6b115295e07d7decd99b">getDefaultAlias</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;TruePoint&quot;</span>;}
@@ -149,7 +149,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:15 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -124,14 +124,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00020"></a>00020 <span class="keyword">using</span> Eigen::MatrixXd;
 <a name="l00021"></a>00021 <span class="keyword">using</span> Eigen::VectorXd;
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html">ltr::Object</a>;
-<a name="l00024"></a>00024 <span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html">ltr::BaseProbabilityDensityEstimator</a>;
+<a name="l00023"></a>00023 <span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
+<a name="l00024"></a>00024 <span class="keyword">using</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">ltr::BaseProbabilityDensityEstimator</a>;
 <a name="l00025"></a>00025 <span class="keyword">using</span> ltr::LabelToMean;
 <a name="l00026"></a>00026 <span class="keyword">using</span> ltr::LabelToCovarianceMatrix;
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="keyword">namespace </span>ltr {
 <a name="l00029"></a>00029 
-<a name="l00034"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html">00034</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_non_linear_discriminant.html">NonLinearDiscriminant</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html">BaseProbabilityDensityEstimator</a> {
+<a name="l00034"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html">00034</a> <span class="keyword">class </span><a class="code" href="classltr_1_1_non_linear_discriminant.html" title="probability density estimator that cannot be represented as linear separator">NonLinearDiscriminant</a> : <span class="keyword">public</span> <a class="code" href="classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator.">BaseProbabilityDensityEstimator</a> {
 <a name="l00035"></a>00035  <span class="keyword">public</span>:
 <a name="l00036"></a><a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">00036</a>   <a class="code" href="classltr_1_1_non_linear_discriminant.html#af330f9ddebef63347475de851f44024a">NonLinearDiscriminant</a>() {
 <a name="l00037"></a>00037   }
@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00045"></a>00045     <a class="code" href="classltr_1_1_non_linear_discriminant.html#a9a5c1f923f3fad8c134922a96c7f0f9b">mean_</a>(mean) {
 <a name="l00046"></a>00046   }
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a744cd9b47a57113063d638d947e5587c">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label);
+<a name="l00048"></a>00048   <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classltr_1_1_non_linear_discriminant.html#a744cd9b47a57113063d638d947e5587c">estimate</a>(<span class="keyword">const</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">double</span> label);
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="classltr_1_1_serializable.html#a3cad891b5a7669724e1e7b69c1268dab">generateCppCode</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
 <a name="l00051"></a>00051 
@@ -161,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:39 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:14 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -121,9 +121,9 @@ How to register new class</h2>
 <tr>
 <td>REGISTER </td><td>Registers class that has no TElement template parameter </td></tr>
 <tr>
-<td>REGISTER_POINTWISE </td><td>Registers class with pointwise approach (<a class="el" href="classltr_1_1_object.html">Object</a> elements) </td></tr>
+<td>REGISTER_POINTWISE </td><td>Registers class with pointwise approach (<a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> elements) </td></tr>
 <tr>
-<td>REGISTER_PAIRWISE </td><td>Registers class with pairwise approach (<a class="el" href="classltr_1_1_object_pair.html">ObjectPair</a> elements) </td></tr>
+<td>REGISTER_PAIRWISE </td><td>Registers class with pairwise approach (<a class="el" href="classltr_1_1_object_pair.html" title="The class stores a pair of two objects. The container for two objects, can be stored in DataSet...">ObjectPair</a> elements) </td></tr>
 <tr>
 <td>REGISTER_LISTWISE </td><td>Registers class with listwise approach (<a class="el" href="classltr_1_1_object_list.html">ObjectList</a> elements) </td></tr>
 <tr>
@@ -135,19 +135,19 @@ REGISTER_EVERY_WISE(Splitter, KFoldSimpleSplitter);
 REGISTER_POINTWISE(Learner, LinearLearner);
 </pre></div><h2><a class="anchor" id="HowItWorks"></a>
 How LTR Client works</h2>
-<p><a class="el" href="class_the.html">The</a> main class of client is LtrClient.</p>
+<p>The main class of client is LtrClient.</p>
 <p>It parses config with the help of ConfigParser.</p>
 <p>If LtrClient doesn't find any errors in the config, it creates all objects that were requested in config and starts to process the experiment.</p>
 <h3><a class="anchor" id="Factory"></a>
 Factory</h3>
 <p>First of all there is a Factory object. In the beggining of work it registers all classes according to register.h file.</p>
-<p>Registration of new class creates a pointer to the Creator with recieved template parameters (<a class="el" href="class_base.html">Base</a> class and derived class) and adds this pointer to the hashtable.</p>
+<p>Registration of new class creates a pointer to the Creator with recieved template parameters (Base class and derived class) and adds this pointer to the hashtable.</p>
 <p>Creator is simple class that has only one method - Creator::create.</p>
 <p>When LtrClient needs to create some object declared in the config, it calls Creator::create method.</p>
 <p>This method returns requested object casted to boost::any.</p>
 <h3><a class="anchor" id="ConfigParser"></a>
 Config Parser</h3>
-<p>LtrClient contains ConfigParser object. This object parses recieved XML config file. <a class="el" href="class_the.html">The</a> parsing occurs with the help of TinyXML library.</p>
+<p>LtrClient contains ConfigParser object. This object parses recieved XML config file. The parsing occurs with the help of TinyXML library.</p>
 <p>During the config processing, ConfigParser calls different parsers depending on detected tags.</p>
 <table class="doxtable">
 <tr>
@@ -179,7 +179,7 @@ Config Parser</h3>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 18:01:40 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
