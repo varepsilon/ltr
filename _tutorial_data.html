@@ -97,9 +97,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#TutorialDataObject">Object</a><ul><li class="level2"><a href="#TutorialDataObjectFeatures">Features</a></li>
+<ul><li class="level1"><a href="#TutorialIntroduction">Introduction</a></li>
+<li class="level1"><a href="#TutorialDataObject">Object</a><ul><li class="level2"><a href="#TutorialDataObjectFeatures">Features</a></li>
 <li class="level2"><a href="#TutorialDataObjectLabels">Actual and predicted labels</a></li>
-<li class="level2"><a href="#TutorialDataObjectMetaInfo">Meta info</a></li>
 <li class="level2"><a href="#TutorialDataObjectCopying">Copying objects</a></li>
 </ul>
 </li>
@@ -107,15 +107,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li class="level1"><a href="#TutorialDataObjectList">ObjectList</a></li>
 <li class="level1"><a href="#TutorialDataPerObjectAccessor">PerObjectAccessor</a></li>
 <li class="level1"><a href="#TutorialDataDataSet">DataSet</a><ul><li class="level2"><a href="#TutorialDataDataSetBasicOperations">Basic operations</a></li>
-<li class="level2"><a href="#TutorialDataDataSetFeatureInfo">Feature info</a></li>
 <li class="level2"><a href="#TutorialDataDataSetSavingAndLoading">Loading and saving into files</a></li>
+<li class="level2"><a href="#TutorialDataDataSetFeatureInfo">Feature info</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="TutorialDataObject"></a>
+<div class="textblock"><h2><a class="anchor" id="TutorialIntroduction"></a>
+Introduction</h2>
+<p>There are <a href="http://en.wikipedia.org/wiki/Learning_to_rank#Approaches">three approaches</a> to learning to rank:</p>
+<ul>
+<li>Pointwise approach</li>
+<li>Pairwise approach</li>
+<li>Listwise approach</li>
+</ul>
+<p>The difference is in the type of used train data. In order to provide all approaches <a class="el" href="classltr_1_1_data_set.html">DataSet</a> in LTR has a template paramter <code>TElement</code>, which can be <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a>, <a class="el" href="classltr_1_1_object_pair.html" title="The class stores a pair of two objects. The container for two objects, can be stored in DataSet...">ObjectPair</a> and <a class="el" href="classltr_1_1_object_list.html">ObjectList</a> for pointwise, pairwise and listwise approaches correspondingly.</p>
+<h2><a class="anchor" id="TutorialDataObject"></a>
 Object</h2>
-<p><a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> is the main class to operate with data. Any object can contain several features and some meta information. Every feature has index and double value. Every Meta data has name (string) and value(string). Also any object has an actual and a predicted label.</p>
+<p><a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> is the main class to operate with data. Any object contains features, actual and predicted labels. Every feature has index and double value.</p>
 <h3><a class="anchor" id="TutorialDataObjectFeatures"></a>
 Features</h3>
 <p>Every <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> has several features with indexes 0, 1, 2... Every feature is a double value.</p>
@@ -140,7 +149,7 @@ Features</h3>
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
-  obj &lt;&lt; 1.1 &lt;&lt; 45.3 &lt;&lt; 23 &lt;&lt; 1e8;        <span class="comment">// Object contains now 4 features</span>
+  obj &lt;&lt; 1.1 &lt;&lt; 45.3 &lt;&lt; 1e6;              <span class="comment">// Object contains now 3 features</span>
   cout &lt;&lt; <span class="stringliteral">&quot;obj = &quot;</span> &lt;&lt; obj &lt;&lt; endl;        <span class="comment">// You can print an object</span>
 
   cout &lt;&lt; <span class="stringliteral">&quot;obj.feature_count() = &quot;</span> 
@@ -165,12 +174,12 @@ Features</h3>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 23.00, 100000000.00]{1.00,nan}
-obj.feature_count() = 4
+</pre></div> </td><td><div class="fragment"><pre class="fragment">obj = [1.10, 45.30, 1000000.00]{0.00, 0.00}
+obj.feature_count() = 3
 feature was added
-obj.feature_count() = 5
+obj.feature_count() = 4
 obj[0] = 1.1, obj.at(1) = 45.3
-obj = [1.00, 5.00, 2.00]{1.00,nan}
+obj = [1.00, 5.00, 2.00]{0.00, 0.00}
 </pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectLabels"></a>
@@ -197,58 +206,17 @@ Actual and predicted labels</h3>
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
   Object obj;
-
   obj.set_actual_label(23.65);
-  cout &lt;&lt; obj.actual_label() &lt;&lt; endl;
-
   obj.set_predicted_label(21.12);
-  cout &lt;&lt; obj.predicted_label();
+
+  cout &lt;&lt; obj.actual_label() &lt;&lt; endl;
+  cout &lt;&lt; obj.predicted_label() &lt;&lt; endl;
+  cout &lt;&lt; obj;
   <span class="keywordflow">return</span> 0;
 }
 </pre></div> </td><td><div class="fragment"><pre class="fragment">23.65
 21.12
-</pre></div> </td></tr>
-</table>
-<h3><a class="anchor" id="TutorialDataObjectMetaInfo"></a>
-Meta info</h3>
-<p>Every <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> can have some meta information. You can manage it, using this functions: </p>
-<ul>
-<li><a class="el" href="">getMetaInfo(string name)   Object::setMetaInfo(string, string) setMetaInfo(string name, string value)</a> </li>
-<li><a class="el" href="">metaInfo()</a> - returns all meta information in <a class="el" href="">MetaInfo </a> container</li>
-</ul>
-<table class="doxtable">
-<tr>
-<th>Example: Operating with meta info </th><th>Output:</th></tr>
-<tr>
-<td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
-<span class="preprocessor">#include &lt;stdexcept&gt;</span>
-<span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">ltr/data/object.h</a>&quot;</span>
-
-<span class="keyword">using</span> std::cout;
-<span class="keyword">using</span> std::vector;
-<span class="keyword">using</span> std::endl;
-<span class="keyword">using</span> std::logic_error;
-<span class="keyword">using</span> <a class="code" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">ltr::Object</a>;
-
-<span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-  Object obj;
-
-  obj.setMetaInfo(<span class="stringliteral">&quot;info1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>);
-  cout &lt;&lt; obj.getMetaInfo(<span class="stringliteral">&quot;info1&quot;</span>) &lt;&lt; endl;
-
-  <span class="keywordflow">try</span> {                               <span class="comment">//</span>
-    obj.getMetaInfo(<span class="stringliteral">&quot;info2&quot;</span>);         <span class="comment">// Exception, because Object doesn&#39;t have meta info named &quot;info2&quot;.</span>
-  } <span class="keywordflow">catch</span>(logic_error err) {          <span class="comment">//</span>
-    cout &lt;&lt; err.what() &lt;&lt; endl;       <span class="comment">//</span>
-  }                                   <span class="comment">//</span>
-
-  obj.setMetaInfo(<span class="stringliteral">&quot;info2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>);
-  cout &lt;&lt; obj.getMetaInfo(<span class="stringliteral">&quot;info2&quot;</span>) &lt;&lt; endl;
-  <span class="keywordflow">return</span> 0;
-}
-</pre></div> </td><td><div class="fragment"><pre class="fragment">value1
-unknown meta info info2
-value2
+[]{23.65, 21.12}
 </pre></div> </td></tr>
 </table>
 <h3><a class="anchor" id="TutorialDataObjectCopying"></a>
@@ -330,7 +298,7 @@ ObjectPair</h2>
 
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00]{1.00,nan}, [4.00, 6.00, 7.00, 8.00]{1.00,nan})
+</pre></div> </td><td><div class="fragment"><pre class="fragment">pair = ([1.00, 2.00, 3.00, 4.00]{0.00, 0.00}, [4.00, 6.00, 7.00, 8.00]{0.00, 0.00})
 </pre></div> </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDataObjectList"></a>
@@ -413,13 +381,13 @@ Basic operations</h3>
 <li><a class="el" href="classltr_1_1_data_set.html#addb95d8ff26575686ddc3d0f845b6d32">DataSet::add(const TElement&amp;)</a> - adds element to <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </li>
 <li><a class="el" href="classltr_1_1_data_set.html#a21d150613486a6473d4444add71f3255">DataSet::operator&lt;&lt;(const TElement&amp;)</a> - adds element to <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </li>
 <li><a class="el" href="classltr_1_1_data_set.html#a01a3fe8f84d88f1d8c7cc36f38a93479">DataSet::add(const TElement&amp;, double weight)</a> - adds element with weight to <a class="el" href="classltr_1_1_data_set.html">DataSet</a> </li>
-<li><a class="el" href="">Dataset::setWeight(size_t element_idx, double weight) </a> - sets weight of element with index idx</li>
+<li><a class="el" href="classltr_1_1_data_set.html#ac64be8f8531671d838570ed2786d6e86">Dataset::setWeight(size_t element_idx, double weight) </a> - sets weight of element with index idx</li>
 </ul>
 <ul>
-<li>DataSet::at(size_t idx) - returns element with index idx </li>
-<li>DataSet::operator[](size_t idx) - returns element with index idx </li>
-<li><a class="el" href="">DataSet::getWeight(size_t idx) </a> - returns the weight of element with index idx </li>
-<li>DataSet::erase(size_t i) - removes the element from the <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</li>
+<li><a class="el" href="classltr_1_1_data_set.html#a1cf3b56490859e13a53cecb03d2ef616">DataSet::at(size_t idx) </a> - returns element with index idx </li>
+<li><a class="el" href="classltr_1_1_data_set.html#ac1b9e1fdd411603be60803c94c9e8a5a">DataSet::operator[](size_t idx) </a> - returns element with index idx </li>
+<li><a class="el" href="classltr_1_1_data_set.html#a7f96bba4c1b97fa93f8447282e94bfd2">DataSet::getWeight(size_t idx) </a> - returns the weight of element with index idx </li>
+<li><a class="el" href="classltr_1_1_data_set.html#a80decf67497c4a953ba9c32400a6a734">DataSet::erase(size_t i) </a> - removes the element from the <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</li>
 </ul>
 <ul>
 <li><a class="el" href="classltr_1_1_data_set.html#af2868844fcf27979623e388ad9785a3a">DataSet::deepCopy()</a> - creates a full copy of <a class="el" href="classltr_1_1_data_set.html">DataSet</a></li>
@@ -470,40 +438,50 @@ Basic operations</h3>
   <span class="keywordflow">return</span> 0;
 }
 </pre></div> </td><td><div class="fragment"><pre class="fragment">data = 
-[12.00, 54.11]{1.00,nan}
-[1.30, 4.15]{1.00,nan}
-[10.30, 14.30]{1.00,nan}
-[19.00, 47.50]{1.00,nan}
+[12.00, 54.11]{0.00, 0.00}
+[1.30, 4.15]{0.00, 0.00}
+[10.30, 14.30]{0.00, 0.00}
+[19.00, 47.50]{0.00, 0.00}
 
 data.size() = 4
-data[0] = [12.00, 54.11]{1.00,nan}
-data.at(1) = [1.30, 4.15]{1.00,nan}
+data[0] = [12.00, 54.11]{0.00, 0.00}
+data.at(1) = [1.30, 4.15]{0.00, 0.00}
 data.getWeight(2) = 2.12
 data.getWeight(2) = 0.01
 called data.erase(1)
-data[1] = [10.30, 14.30]{1.00,nan}
+data[1] = [10.30, 14.30]{0.00, 0.00}
 called data.clear()
 data.size() = 0
 </pre></div> </td></tr>
 </table>
-<h3><a class="anchor" id="TutorialDataDataSetFeatureInfo"></a>
-Feature info</h3>
-<p>There is one more important thing in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>: every data set has a <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>, which containes information about types and possible values of objects features in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>.</p>
-<p>It is important to set right feature info, or many things wont work right.<br/>
- There is only one function in <a class="el" href="classltr_1_1_data_set.html">DataSet</a> for working with <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>: DataSet::featureInfo() const. It returns a constant reference to the <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a>.</p>
 <h3><a class="anchor" id="TutorialDataDataSetSavingAndLoading"></a>
 Loading and saving into files</h3>
-<p>Main think, you can do with <a class="el" href="classltr_1_1_data_set.html">DataSet</a> is to load it from file or save it into file.</p>
+<p>Main thing, you can do with <a class="el" href="classltr_1_1_data_set.html">DataSet</a>, is to load it from file or save it into file.</p>
+<p>List of supported formats:</p>
+<table class="doxtable">
+<tr>
+<th>Format: </th><th>Load </th><th>Save </th><th>Description:</th></tr>
+<tr>
+<td>svmlight </td><td>+ </td><td>+ </td><td><a href="http://svmlight.joachims.org/">http://svmlight.joachims.org/</a> </td></tr>
+<tr>
+<td>yandex </td><td>+ </td><td>+ </td><td><a href="http://imat2009.yandex.ru/en/datasets">http://imat2009.yandex.ru/en/datasets</a> </td></tr>
+<tr>
+<td>arff </td><td>+ </td><td>- </td><td><a href="http://weka.wikispaces.com/ARFF+%28book+version%29">http://weka.wikispaces.com/ARFF+%28book+version%29</a> </td></tr>
+</table>
 <p>Function for loading <a class="el" href="classltr_1_1_data_set.html">DataSet</a> from file: </p>
 <div class="fragment"><pre class="fragment"><span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
 DataSet&lt;TElement&gt; ltr::io_utility::loadDataSet(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; format);
 </pre></div><ul>
 <li><code>TElement</code> - type of elements in <a class="el" href="classltr_1_1_data_set.html">DataSet</a>. </li>
 <li><code>filename</code> - name of file with data. </li>
-<li><code>format</code> - format of data in the file. It can be "yandex", "svm-lite" or "Arff"</li>
+<li><code>format</code> - format of data in the file. It can be "yandex", "svmlight" or "Arff"</li>
 </ul>
-<p>Be careful: If there are some missed features in file, the features value loaded into <a class="el" href="classltr_1_1_object.html" title="Base class for storing information in a Dataset. An object consist of feature vector and meta informa...">Object</a> will be ltr::utility::NaN.</p>
-<p>All nominal features will be converted into integer values by hash function. You can find out values and hashes using FeatureInfo::getFeatureValues(size_t idx) const, where <code>idx</code> is id of nominal feature.</p>
+<dl class="section note"><dt>Note:</dt><dd><ul>
+<li>Missed features will be changed by ltr::utility::NaN</li>
+<li>String (nominal) features will be changed by hash of the string value</li>
+<li>Use <a class="el" href="classltr_1_1_feature_info.html#a566d68f92e542ffa489c2fa0b7aeb151">FeatureInfo::getFeatureValues</a> (see the next section) to restore the string value of a nominal feature</li>
+</ul>
+</dd></dl>
 <p>Function for saving <a class="el" href="classltr_1_1_data_set.html">DataSet</a> into file. </p>
 <div class="fragment"><pre class="fragment"><span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
 <span class="keywordtype">void</span> ltr::io_utility::saveDataSet(<span class="keyword">const</span> DataSet&lt;TElement&gt;&amp; data,
@@ -522,14 +500,26 @@ DataSet&lt;TElement&gt; ltr::io_utility::loadDataSet(<span class="keyword">const
 <span class="keyword">using</span> <a class="code" href="classltr_1_1_data_set.html">ltr::DataSet</a>;
 
 <span class="keywordtype">int</span> <a class="code" href="generator_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>() {
-  DataSet&lt;Object&gt; = loadDataSet&lt;Object&gt;(<span class="stringliteral">&quot;test_file&quot;</span>, <span class="stringliteral">&quot;svm-lite&quot;</span>);
+  DataSet&lt;Object&gt; = loadDataSet&lt;Object&gt;(<span class="stringliteral">&quot;test_file&quot;</span>, <span class="stringliteral">&quot;svmlight&quot;</span>);
   <span class="keywordflow">return</span> 0;
 }
-</pre></div> </div></div><!-- contents -->
+</pre></div><h3><a class="anchor" id="TutorialDataDataSetFeatureInfo"></a>
+Feature info</h3>
+<p><a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a> initially appeared to support arff format and containes information about types (e.g. <code>NOMINAL</code>, <code>NUMERIC</code>, <code>BOOLEAN</code>) and possible values of features.</p>
+<p>One can access <a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a> of <a class="el" href="classltr_1_1_data_set.html">DataSet</a> using <a class="el" href="classltr_1_1_data_set.html#a6b173f125c05565128da0ab8486b2e5c">DataSet::feature_info()</a>.</p>
+<p><a class="el" href="classltr_1_1_feature_info.html" title="Class is storing info about all features.">FeatureInfo</a> public functions:</p>
+<ul>
+<li><a class="el" href="classltr_1_1_feature_info.html#ac401b4c48ca120c5c2ebba7007602a37">FeatureInfo::feature_count()</a> - return count of features</li>
+<li><a class="el" href="classltr_1_1_feature_info.html#ada9d073392d626e6ae45663dd0f5c4f6">FeatureInfo::resize</a> - change number of features</li>
+<li><a class="el" href="classltr_1_1_feature_info.html#ab1983d9f60172d03f4152d2aa129e1c8">FeatureInfo::addFeature</a> - add info about one feature</li>
+<li><a class="el" href="classltr_1_1_feature_info.html#a57d3eeea58cb56cd73b41b500ca7e50e">FeatureInfo::getFeatureType</a> - return feature type: <code>NOMINAL</code>, <code>NUMERIC</code> or <code>BOOLEAN</code> </li>
+<li><a class="el" href="classltr_1_1_feature_info.html#a566d68f92e542ffa489c2fa0b7aeb151">FeatureInfo::getFeatureValues</a> - return map from numeric to string values for <code>NOMINAL</code> features </li>
+</ul>
+</div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 14 2012 20:32:16 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 15 2012 19:21:49 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
