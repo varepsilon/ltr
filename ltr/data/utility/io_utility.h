@@ -27,9 +27,9 @@ namespace io_utility {
 /**
  * Function to load data set from file.
  * @param filename - path to file
- * @param format - data format (svmlite, yandex, arff)
+ * @param format - data format (SVMLIGHT, yandex, arff)
  * @code
- * DataSet<Object> = loadDataSet<Object>("dataset.txt", "svmlite");
+ * DataSet<Object> = loadDataSet<Object>("dataset.txt", "SVMLIGHT");
  * @endcode
  */
 template<class TElement>
@@ -39,9 +39,9 @@ DataSet<TElement> loadDataSet(const string& filename,
  * Function to save data set into file.
  * @param data - data set to save
  * @param filename - path to file
- * @param format - data format (svmlite, yandex, arff) 
+ * @param format - data format (SVMLIGHT, yandex, arff) 
  * @code
- * saveDataSet(data, "dataset.txt", "svmlite");
+ * saveDataSet(data, "dataset.txt", "SVMLIGHT");
  * @endcode
  */
 template<class TElement>

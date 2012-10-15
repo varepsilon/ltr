@@ -17,8 +17,8 @@ namespace ltr {
 Object::Object()
   : features_(new Features()),
     meta_info_(new MetaInfo()),
-    actual_label_(1.0),
-    predicted_label_(utility::NaN) {}
+    actual_label_(0),
+    predicted_label_(0) {}
 
 Object::Object(const Object& object)
   : features_(object.features_),
@@ -123,7 +123,7 @@ string Object::toString() const {
     str << features()[feature_index];
   }
   str << ']';
-  str << '{' << actual_label() << "," << predicted_label() << '}';
+  str << '{' << actual_label() << ", " << predicted_label() << '}';
   return str.str();
 }
 

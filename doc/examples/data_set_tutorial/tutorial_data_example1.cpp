@@ -8,7 +8,7 @@ using ltr::Object;
 
 int main() {
   Object obj;
-  obj << 1.1 << 45.3 << 23 << 1e8;        // Object contains now 4 features
+  obj << 1.1 << 45.3 << 1e6;              // Object contains now 3 features
   cout << "obj = " << obj << endl;        // You can print an object
 
   cout << "obj.feature_count() = " 

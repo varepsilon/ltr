@@ -34,7 +34,9 @@ class ManualSerializationTest : public ::testing::Test {
 TEST_F(ManualSerializationTest, SerializingObject) {
   Object obj;
   obj << 1 << 2.2444444 << 3.5555;
-  EXPECT_EQ(obj.toString(), "[1.00, 2.24, 3.56]");
+  obj.set_actual_label(1.0);
+  obj.set_predicted_label(2.0);
+  EXPECT_EQ(obj.toString(), "[1.00, 2.24, 3.56]{1.00, 2.00}");
 }
 
 TEST_F(ManualSerializationTest, SerializingObjectPair) {
@@ -44,7 +46,7 @@ TEST_F(ManualSerializationTest, SerializingObjectPair) {
   obj2 << 3.5555 << 2.2444444 << 1;
 
   ObjectPair pair(obj1, obj2);
-  EXPECT_EQ(pair.toString(), "([1.00, 2.24, 3.56], [3.56, 2.24, 1.00])");
+  EXPECT_EQ(pair.toString(), "([1.00, 2.24, 3.56]{0.00, 0.00}, [3.56, 2.24, 1.00]{0.00, 0.00})");
 }
 
 TEST_F(ManualSerializationTest, SerializingObjectList) {
@@ -55,7 +57,7 @@ TEST_F(ManualSerializationTest, SerializingObjectList) {
 
   ObjectList lst;
   lst << obj1 << obj2;
-  EXPECT_EQ(lst.toString(), "{[1.00, 2.24, 3.56], [3.56, 2.24, 1.00]}");
+  EXPECT_EQ(lst.toString(), "{[1.00, 2.24, 3.56]{0.00, 0.00}, [3.56, 2.24, 1.00]{0.00, 0.00}}");
 }
 
 TEST_F(ManualSerializationTest, SerializingDataSet) {
@@ -66,5 +68,5 @@ TEST_F(ManualSerializationTest, SerializingDataSet) {
 
   DataSet<Object> data;
   data << obj1 << obj2;
-  EXPECT_EQ(data.toString(), "[1.00, 2.24, 3.56]\n[3.56, 2.24, 1.00]\n");
+  EXPECT_EQ(data.toString(), "[1.00, 2.24, 3.56]{0.00, 0.00}\n[3.56, 2.24, 1.00]{0.00, 0.00}\n");
 }

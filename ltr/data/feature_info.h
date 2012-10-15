@@ -68,7 +68,7 @@ class FeatureInfo {
   void resize(int feature_count, FeatureType type = NUMERIC) {
       feature_info_.resize(feature_count, OneFeatureInfo(type));
   }
-  /** Ands info about one feature
+  /** Adds info about one feature
    */
   void addFeature(OneFeatureInfo info) {
     feature_info_.push_back(info);

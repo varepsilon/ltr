@@ -53,7 +53,7 @@ namespace serialization_test {
       append("\tvector<double> test_labels;\n\n").
       append("\tvirtual void SetUp() {\n").
       append("\t\ttest_data = loadDataSet<Object>").
-      append("(TestDataPath(), \"SVMLITE\");\n").
+      append("(TestDataPath(), \"SVMLIGHT\");\n").
       append("\t}\n").
       append("};\n\n");
       return output;
@@ -97,8 +97,8 @@ namespace serialization_test {
   }
 
   Generator::Generator():
-      train_data(loadDataSet<Object>(TrainDataPath(), "SVMLITE")),
-      test_data(loadDataSet<Object>(TestDataPath(), "SVMLITE")),
+      train_data(loadDataSet<Object>(TrainDataPath(), "SVMLIGHT")),
+      test_data(loadDataSet<Object>(TestDataPath(), "SVMLIGHT")),
       tester_code(setIncludes()),
       scorers_to_test(0) {
     tester_code.append(setFixture());

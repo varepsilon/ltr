@@ -33,6 +33,7 @@ TEST(CrossvalidationTest, SimpleCrossvalidationTest) {
   for (int object_index = 0; object_index < data_length; ++object_index) {
     Object object;
     object << 1;
+    object.set_actual_label(1);
     data.add(object);
   }
   FakeScorer::Ptr fake_scorer(new FakeScorer());

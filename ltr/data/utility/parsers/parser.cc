@@ -15,7 +15,7 @@ namespace io_utility {
 Parser::Ptr getParser(const std::string& format) {
   std::string format_ = format;
   boost::to_upper(format_);
-  if (format_ == "SVMLITE")
+  if (format_ == "SVMLIGHT")
     return Parser::Ptr(new SVMParser());
   else if (format_ == "YANDEX")
     return Parser::Ptr(new YandexParser());

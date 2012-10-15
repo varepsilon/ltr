@@ -4,17 +4,26 @@ namespace ltr {
 
 \tableofcontents
 
+\section TutorialIntroduction Introduction
+
+There are <a href=http://en.wikipedia.org/wiki/Learning_to_rank#Approaches>three approaches</a> to learning to rank:
+ - Pointwise approach
+ - Pairwise approach
+ - Listwise approach
+
+The difference is in the type of used train data.
+In order to provide all approaches DataSet in LTR has a template
+paramter \c TElement, which can be Object, ObjectPair and ObjectList
+for pointwise, pairwise and listwise approaches correspondingly.
+ 
 \section TutorialDataObject Object
 
 Object is the main class to operate with data.
-Any object can contain several features and some meta information.
+Any object contains features, actual and predicted labels.
 Every feature has index and double value.
-Every Meta data has name (string) and value(string).
-Also any object has an actual and a predicted label.
 
 \subsection TutorialDataObjectFeatures Features
 Every Object has several features with indexes 0, 1, 2... Every feature is a double value.
-
 
 You can operate with features using this functions:
 \li \link Object::featureCount() featureCount() \endlink - returns number of features
@@ -42,18 +51,6 @@ You can manage them, using this functions:
 Example: Operating with actual and predicted labels  | Output:
 -----------------------------------------------------|------------------
 \include tutorial_data_example2.cpp                  | \include tutorial_data_example2.out
-
-\subsection TutorialDataObjectMetaInfo Meta info
-
-Every Object can have some meta information. 
-You can manage it, using this functions:
-\li \link Object::getMetaInfo(string) const getMetaInfo(string name)\endlinks
-\li \link Object::setMetaInfo(string, string) setMetaInfo(string name, string value)\endlink
-\li \link Object::metaInfo() metaInfo()\endlink - returns all meta information in \link ltr::MetaInfo MetaInfo \endlink container
-
-Example: Operating with meta info                | Output:
--------------------------------------------------|------------------
-\include tutorial_data_example3.cpp              | \include tutorial_data_example3.out
 
 \subsection TutorialDataObjectCopying Copying objects
 
@@ -128,12 +125,12 @@ Function for basic operations:
 \li DataSet::add(const TElement&) - adds element to DataSet
 \li DataSet::operator<<(const TElement&) - adds element to DataSet
 \li DataSet::add(const TElement&, double weight) - adds element with weight to DataSet
-\li \link DataSet::setWeight(size_t, double) const Dataset::setWeight(size_t element_idx, double weight) \endlink - sets weight of element with index idx
+\li \link DataSet::setWeight Dataset::setWeight(size_t element_idx, double weight) \endlink - sets weight of element with index idx
 
-\li DataSet::at(size_t idx) - returns element with index idx
-\li DataSet::operator[](size_t idx) - returns element with index idx
-\li \link DataSet::getWeight(size_t idx) const DataSet::getWeight(size_t idx) \endlink - returns the weight of element with index idx
-\li DataSet::erase(size_t i) - removes the element from the DataSet.
+\li \link DataSet::at DataSet::at(size_t idx) \endlink - returns element with index idx
+\li \link DataSet::operator[] DataSet::operator[](size_t idx) \endlink - returns element with index idx
+\li \link DataSet::getWeight DataSet::getWeight(size_t idx) \endlink - returns the weight of element with index idx
+\li \link DataSet::erase DataSet::erase(size_t i) \endlink - removes the element from the DataSet.
 
 \li \link DataSet::deepCopy() const DataSet::deepCopy()\endlink - creates a full copy of DataSet
 
@@ -141,18 +138,17 @@ Example: Basic %DataSet operations               | Output:
 -------------------------------------------------|------------------
 \include tutorial_data_example7.cpp              | \include tutorial_data_example7.out
 
-
-\subsection TutorialDataDataSetFeatureInfo Feature info
-
-There is one more important thing in DataSet: every data set has a FeatureInfo,
- which containes information about types and possible values of objects features in DataSet.
- 
-It is important to set right feature info, or many things wont work right.<br>
-There is only one function in DataSet for working with FeatureInfo: DataSet::featureInfo() const. It returns a constant reference to the FeatureInfo.
-
 \subsection TutorialDataDataSetSavingAndLoading Loading and saving into files
 
-Main think, you can do with DataSet is to load it from file or save it into file.
+Main thing, you can do with DataSet, is to load it from file or save it into file.
+
+List of supported formats:
+
+Format:      |  Load | Save | Description:
+-------------|-------|------|-----------
+svmlight     | + | + | http://svmlight.joachims.org/
+yandex       | + | + | http://imat2009.yandex.ru/en/datasets
+arff         | + | - | http://weka.wikispaces.com/ARFF+%28book+version%29
 
 Function for loading DataSet from file:
 \code
@@ -162,12 +158,12 @@ DataSet<TElement> ltr::io_utility::loadDataSet(const string& filename, const str
 
 \li \c TElement - type of elements in DataSet.
 \li \c filename - name of file with data.
-\li \c format - format of data in the file. It can be "yandex", "svm-lite" or "Arff"
+\li \c format - format of data in the file. It can be "yandex", "svmlight" or "Arff"
 
-Be careful: If there are some missed features in file, the features value loaded into Object will be ltr::utility::NaN.
-
-All nominal features will be converted into integer values by hash function. You can find out values and hashes using FeatureInfo::getFeatureValues(size_t idx) const, where \c idx is id of nominal feature.
-
+\note
+- Missed features will be changed by ltr::utility::NaN
+- String (nominal) features will be changed by hash of the string value
+- Use FeatureInfo::getFeatureValues (see the next section) to restore the string value of a nominal feature
 
 Function for saving DataSet into file.
 \code
@@ -190,10 +186,25 @@ using ltr::io_utility::saveDataSet;
 using ltr::DataSet;
 
 int main() {
-  DataSet<Object> = loadDataSet<Object>("test_file", "svm-lite");
+  DataSet<Object> = loadDataSet<Object>("test_file", "svmlight");
   return 0;
 }
 ~~~~~~~~
+
+\subsection TutorialDataDataSetFeatureInfo Feature info
+
+FeatureInfo initially appeared to support arff format and 
+containes information about types (e.g. \c NOMINAL, \c NUMERIC, \c BOOLEAN)
+and possible values of features.
+
+One can access FeatureInfo of DataSet using DataSet::feature_info().
+
+FeatureInfo public functions:
+ - FeatureInfo::feature_count() - return count of features
+ - FeatureInfo::resize - change number of features
+ - FeatureInfo::addFeature - add info about one feature
+ - FeatureInfo::getFeatureType - return feature type: \c NOMINAL, \c NUMERIC or \c BOOLEAN
+ - FeatureInfo::getFeatureValues - return map from numeric to string values for \c NOMINAL features
 
 **/
 }

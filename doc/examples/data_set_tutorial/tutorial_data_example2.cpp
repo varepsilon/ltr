@@ -8,11 +8,11 @@ using ltr::Object;
 
 int main() {
   Object obj;
-
   obj.set_actual_label(23.65);
-  cout << obj.actual_label() << endl;
-
   obj.set_predicted_label(21.12);
-  cout << obj.predicted_label();
+
+  cout << obj.actual_label() << endl;
+  cout << obj.predicted_label() << endl;
+  cout << obj;
   return 0;
 }

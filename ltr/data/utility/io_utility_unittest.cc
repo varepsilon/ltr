@@ -55,8 +55,8 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
     data << obj;
   }
 
-  saveDataSet(data, tmp_file_name, "svmlite");
-  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "svmlite");
+  saveDataSet(data, tmp_file_name, "SVMLIGHT");
+  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "SVMLIGHT");
   EXPECT_EQ(data2, data);
 
   const int max_list_size = 15;
@@ -76,8 +76,8 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
     list_data << lst;
   }
 
-  saveDataSet(list_data, tmp_file_name, "svmlite");
-  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "svmlite"), list_data);
+  saveDataSet(list_data, tmp_file_name, "SVMLIGHT");
+  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "SVMLIGHT"), list_data);
 }
 
 TEST_F(IOUtilityTest, TestingYandexPArser) {
@@ -120,7 +120,7 @@ TEST_F(IOUtilityTest, TestingARFFPArser) {
       loadDataSet<ltr::Object>(arff_arff_test_file_name, "arff");
 
   DataSet<Object> svm_data =
-      loadDataSet<ltr::Object>(svm_arff_test_file_name, "svmlite");
+      loadDataSet<ltr::Object>(svm_arff_test_file_name, "SVMLIGHT");
 
   EXPECT_EQ(svm_data, arff_data);
 }
