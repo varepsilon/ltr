@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer." alt="" coords="76,80,239,107"/>
+<area shape="rect" href="$classltr_1_1_reporter.html" title="ltr::Reporter" alt="" coords="5,5,93,32"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="117,5,197,32"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="221,5,344,32"/>
+</map>

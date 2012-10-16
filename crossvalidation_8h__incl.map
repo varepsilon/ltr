@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" href="$learner_8h.html" title="ltr/learners/learner.h" alt="" coords="2521,80,2657,107"/>
+<area shape="rect" href="$validation__result_8h.html" title="ltr/crossvalidation/validation_result.h" alt="" coords="121,80,348,107"/>
+<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="2192,229,2365,256"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1575,155,1700,181"/>
+<area shape="rect" href="$data__preprocessor_8h.html" title="ltr/data_preprocessors/data_preprocessor.h" alt="" coords="2491,229,2763,256"/>
+<area shape="rect" href="$feature__converter__learner_8h.html" title="ltr/feature_converters/feature_converter_learner.h" alt="" coords="2440,155,2739,181"/>
+<area shape="rect" href="$reporter_8h.html" title="ltr/interfaces/reporter.h" alt="" coords="593,155,743,181"/>
+<area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="4320,229,4477,256"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="3165,155,3293,181"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="795,229,907,256"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1440,229,1576,256"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1600,229,1739,256"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="981,229,1123,256"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="3557,229,3752,256"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="627,229,771,256"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1864,229,2117,256"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="3928,304,4067,331"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="3267,229,3483,256"/>
+</map>

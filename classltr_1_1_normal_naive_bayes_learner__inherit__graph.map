@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, NormalNaiveBayesDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="5,229,504,256"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; TElement, BayesianScorer \&gt;" alt="" coords="109,155,400,181"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer." alt="" coords="173,80,336,107"/>
+<area shape="rect" href="$classltr_1_1_reporter.html" title="ltr::Reporter" alt="" coords="103,5,191,32"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="215,5,295,32"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="319,5,441,32"/>
+</map>

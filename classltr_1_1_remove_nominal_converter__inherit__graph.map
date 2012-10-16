@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_feature_converter.html" title="A base class for feature converters." alt="" coords="48,80,187,107"/>
+<area shape="rect" href="$classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ..." alt="" coords="5,5,112,32"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="136,5,216,32"/>
+</map>

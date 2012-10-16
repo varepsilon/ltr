@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_base_metric.html" title="ltr::BaseMetric" alt="" coords="117,80,224,107"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="5,5,85,32"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="109,5,232,32"/>
+<area shape="rect" href="$classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ..." alt="" coords="256,5,363,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$oblivious__tree__splitter_8h.html" title="ltr/learners/decision_tree/oblivious_tree_splitter.h" alt="" coords="259,80,560,107"/>
+<area shape="rect" href="$id3__splitter_8h.html" title="ltr/learners/decision_tree/id3_splitter.h" alt="" coords="907,80,1147,107"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h" alt="" coords="1640,80,2109,107"/>
+<area shape="rect" href="$same__label__stop__criteria_8h.html" title="ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h" alt="" coords="1171,80,1565,107"/>
+</map>

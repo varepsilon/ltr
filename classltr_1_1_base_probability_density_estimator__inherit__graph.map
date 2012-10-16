@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_fisher_discriminant.html" title="probability density estimator that uses Fisher Linear Discriminant approach" alt="" coords="5,155,152,181"/>
+<area shape="rect" href="$classltr_1_1_non_linear_discriminant.html" title="probability density estimator that cannot be represented as linear separator" alt="" coords="176,155,347,181"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="39,5,161,32"/>
+<area shape="rect" href="$classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ..." alt="" coords="185,5,292,32"/>
+</map>

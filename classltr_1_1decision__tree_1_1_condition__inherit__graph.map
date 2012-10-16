@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1decision__tree_1_1_fake_condition.html" title="ltr::decision_tree::FakeCondition" alt="" coords="5,155,213,181"/>
+<area shape="rect" href="$classltr_1_1decision__tree_1_1_threshold_condition.html" title="ltr::decision_tree::ThresholdCondition" alt="" coords="237,155,472,181"/>
+<area shape="rect" href="$classltr_1_1_serializable.html" title="The interface class for objects, that can be serialized. That means that a cpp code for those can be ..." alt="" coords="179,5,285,32"/>
+</map>

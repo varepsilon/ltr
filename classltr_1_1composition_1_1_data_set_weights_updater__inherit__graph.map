@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1composition_1_1_ada_boost_data_set_weights_updater.html" title="ltr::composition::AdaBoostDataSetWeightsUpdater\&lt; TElement \&gt;" alt="" coords="565,5,960,32"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_ada_rank_data_set_weights_updater.html" title="ltr::composition::AdaRankDataSetWeightsUpdater\&lt; TElement \&gt;" alt="" coords="568,56,957,83"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_fake_data_set_weights_updater.html" title="ltr::composition::FakeDataSetWeightsUpdater\&lt; TElement \&gt;" alt="" coords="580,107,945,133"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="28,31,108,57"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="7,81,129,108"/>
+</map>

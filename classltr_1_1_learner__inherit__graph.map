@@ -1,0 +1,24 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, BayesianScorer \&gt;" alt="" coords="400,107,672,133"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, CompositionScorer \&gt;" alt="" coords="391,208,681,235"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, GPScorer \&gt;" alt="" coords="417,259,655,285"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, LinearScorer \&gt;" alt="" coords="409,309,663,336"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, NNScorer \&gt;" alt="" coords="417,360,655,387"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, OneFeatureScorer \&gt;" alt="" coords="392,411,680,437"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; TElement \&gt;" alt="" coords="440,461,632,488"/>
+<area shape="rect" href="$classltr_1_1_reporter.html" title="ltr::Reporter" alt="" coords="24,259,112,285"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="28,309,108,336"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="7,360,129,387"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, FisherDiscriminantDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="741,5,1240,32"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, NormalNaiveBayesDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="741,56,1240,83"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, QuadraticDiscriminantDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="732,107,1249,133"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, TDensityLearner \&gt;" alt="" coords="832,157,1149,184"/>
+<area shape="rect" href="$classltr_1_1_fisher_discriminant_learner.html" title="ltr::FisherDiscriminantLearner\&lt; TElement \&gt;" alt="" coords="1309,5,1579,32"/>
+<area shape="rect" href="$classltr_1_1_normal_naive_bayes_learner.html" title="ltr::NormalNaiveBayesLearner\&lt; TElement \&gt;" alt="" coords="1308,56,1580,83"/>
+<area shape="rect" href="$classltr_1_1_quadratic_discriminant_learner.html" title="ltr::QuadraticDiscriminantLearner\&lt; TElement \&gt;" alt="" coords="1299,107,1589,133"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_composition_learner.html" title="Learner, wich uses other learner (weak learner), produces with it different scorers and tie them into..." alt="" coords="835,208,1147,235"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_g_p_learner.html" title="GPLearner Implements genetic programming approach applied to learning to rank." alt="" coords="889,259,1092,285"/>
+<area shape="rect" href="$classltr_1_1_linear_learner.html" title="ltr::LinearLearner\&lt; TElement \&gt;" alt="" coords="892,309,1089,336"/>
+<area shape="rect" href="$classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach." alt="" coords="901,360,1080,387"/>
+<area shape="rect" href="$classltr_1_1_best_feature_learner.html" title="ltr::BestFeatureLearner\&lt; TElement \&gt;" alt="" coords="875,411,1107,437"/>
+</map>

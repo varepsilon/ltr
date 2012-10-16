@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1gp_1_1_add.html" title="The Puppy::Primitive implements addition functor, it is used to build Puppy::trees from..." alt="" coords="241,5,327,32"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_divide.html" title="The Puppy::Primitive implements division functor, it is used to build Puppy::trees from..." alt="" coords="236,56,332,83"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_ephemeral.html" title="The Puppy::Primitive implements the functor, that gives random constants to build Puppy::Tree..." alt="" coords="223,107,345,133"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_if_then_func.html" title="The Puppy::Primitive implements if&#45;then&#45;else functor, it is used to build Puppy::trees from..." alt="" coords="221,157,347,184"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_multiply.html" title="The Puppy::Primitive implements multiplication functor, it is used to build Puppy::trees from..." alt="" coords="231,208,337,235"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_subtract.html" title="The Puppy::Primitive implements subtraction functor, it is used to build Puppy::trees from..." alt="" coords="228,259,340,285"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, DecisionTreeScorer \&gt;" alt="" coords="9,155,305,181"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; Object \&gt;" alt="" coords="85,80,229,107"/>
+<area shape="rect" href="$classltr_1_1_reporter.html" title="ltr::Reporter" alt="" coords="5,5,93,32"/>
+<area shape="rect" href="$classltr_1_1_aliaser.html" title="Inherit from this class in order to use alias." alt="" coords="117,5,197,32"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="221,5,344,32"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" href="$ada__boost__learner_8h.html" title="ltr/learners/composition_learner/ada_boost_learner.h" alt="" coords="2927,80,3249,107"/>
+<area shape="rect" href="$ada__rank__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h" alt="" coords="1323,155,1749,181"/>
+<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="4949,155,5429,181"/>
+<area shape="rect" href="$binary__classification__accuracy_8h.html" title="ltr/measures/binary_classification_accuracy.h" alt="" coords="24,229,307,256"/>
+<area shape="rect" href="$binary__classification__margin_8h.html" title="ltr/measures/binary_classification_margin.h" alt="" coords="976,155,1248,181"/>
+<area shape="rect" href="$ada__boost__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h" alt="" coords="1824,155,2259,181"/>
+<area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="2640,155,3131,181"/>
+<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="600,155,952,181"/>
+<area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="2835,229,3203,256"/>
+<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="2381,229,2811,256"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$average__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/average_predictions_aggregator.h" alt="" coords="224,80,595,107"/>
+<area shape="rect" href="$vote__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.h" alt="" coords="619,80,968,107"/>
+<area shape="rect" href="$euclidean__metric_8h.html" title="ltr/metrics/euclidean_metric.h" alt="" coords="992,80,1184,107"/>
+</map>

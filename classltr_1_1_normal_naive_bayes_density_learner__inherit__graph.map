@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_non_linear_discriminant_density_learner.html" title="Interface of discriminants that can not be converted to linear separators." alt="" coords="55,155,391,181"/>
+<area shape="rect" href="$classltr_1_1_base_probability_density_learner.html" title="ltr::BaseProbabilityDensityLearner\&lt; TElement, NonLinearDiscriminant \&gt;" alt="" coords="5,80,440,107"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="161,5,284,32"/>
+</map>

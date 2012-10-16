@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_normal_naive_bayes_density_learner.html" title="Probability density learner that uses Normal Naive Bayesian approach to generate probability density ..." alt="" coords="1059,5,1373,32"/>
+<area shape="rect" href="$classltr_1_1_quadratic_discriminant_density_learner.html" title="Probability density learner that uses Quadratic Discriminant approach to generate probability density..." alt="" coords="1049,56,1383,83"/>
+<area shape="rect" href="$classltr_1_1_base_probability_density_learner.html" title="ltr::BaseProbabilityDensityLearner\&lt; TElement, NonLinearDiscriminant \&gt;" alt="" coords="180,31,615,57"/>
+<area shape="rect" href="$classltr_1_1_parameterized.html" title="ltr::Parameterized" alt="" coords="7,31,129,57"/>
+</map>

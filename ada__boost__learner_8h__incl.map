@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" href="$binary__classification__accuracy_8h.html" title="ltr/measures/binary_classification_accuracy.h" alt="" coords="24,155,307,181"/>
+<area shape="rect" href="$binary__classification__margin_8h.html" title="ltr/measures/binary_classification_margin.h" alt="" coords="200,80,472,107"/>
+<area shape="rect" href="$ada__boost__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h" alt="" coords="1464,80,1899,107"/>
+<area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="2052,80,2543,107"/>
+<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="2567,80,2919,107"/>
+<area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="1595,155,1963,181"/>
+<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="1987,155,2416,181"/>
+</map>

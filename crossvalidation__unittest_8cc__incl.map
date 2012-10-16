@@ -1,0 +1,23 @@
+<map id="G" name="G">
+<area shape="rect" href="$crossvalidation_8h.html" title="ltr/crossvalidation/crossvalidation.h" alt="" coords="3151,80,3372,107"/>
+<area shape="rect" href="$best__feature__learner_8h.html" title="ltr/learners/best_feature_learner/best_feature_learner.h" alt="" coords="4548,229,4881,256"/>
+<area shape="rect" href="$abs__error_8h.html" title="ltr/measures/abs_error.h" alt="" coords="4095,229,4255,256"/>
+<area shape="rect" href="$leave__one__out__splitter_8h.html" title="ltr/crossvalidation/leave_one_out_splitter.h" alt="" coords="275,304,539,331"/>
+<area shape="rect" href="$fake__scorer_8h.html" title="ltr/scorers/fake_scorer.h" alt="" coords="5344,304,5504,331"/>
+<area shape="rect" href="$learner_8h.html" title="ltr/learners/learner.h" alt="" coords="2893,155,3029,181"/>
+<area shape="rect" href="$validation__result_8h.html" title="ltr/crossvalidation/validation_result.h" alt="" coords="3992,304,4219,331"/>
+<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="2219,304,2392,331"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1572,229,1697,256"/>
+<area shape="rect" href="$data__preprocessor_8h.html" title="ltr/data_preprocessors/data_preprocessor.h" alt="" coords="2789,304,3061,331"/>
+<area shape="rect" href="$feature__converter__learner_8h.html" title="ltr/feature_converters/feature_converter_learner.h" alt="" coords="2467,304,2765,331"/>
+<area shape="rect" href="$reporter_8h.html" title="ltr/interfaces/reporter.h" alt="" coords="3769,229,3919,256"/>
+<area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="3085,304,3243,331"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="3317,304,3445,331"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1032,304,1144,331"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1259,304,1395,331"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1469,304,1608,331"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1851,304,1992,331"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1632,304,1827,331"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="3672,304,3816,331"/>
+<area shape="rect" href="$one__feature__scorer_8h.html" title="ltr/scorers/one_feature_scorer.h" alt="" coords="4816,304,5019,331"/>
+</map>

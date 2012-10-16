@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" href="$fake__feature__converter__learner_8h.html" title="ltr/feature_converters/fake_feature_converter_learner.h" alt="" coords="4061,80,4392,107"/>
+<area shape="rect" href="$feature__sampler__learner_8h.html" title="ltr/feature_converters/feature_sampler_learner.h" alt="" coords="731,80,1024,107"/>
+<area shape="rect" href="$feature__random__sampler__learner_8h.html" title="ltr/feature_converters/feature_random_sampler_learner.h" alt="" coords="1593,80,1937,107"/>
+<area shape="rect" href="$feature__normalizer__learner_8h.html" title="ltr/feature_converters/feature_normalizer_learner.h" alt="" coords="2205,80,2512,107"/>
+<area shape="rect" href="$nan__to__zero__learner_8h.html" title="ltr/feature_converters/nan_to_zero_learner.h" alt="" coords="3765,80,4037,107"/>
+<area shape="rect" href="$nan__to__average__learner_8h.html" title="ltr/feature_converters/nan_to_average_learner.h" alt="" coords="3291,80,3581,107"/>
+<area shape="rect" href="$nominal__to__bool__learner_8h.html" title="ltr/feature_converters/nominal_to_bool_learner.h" alt="" coords="5495,80,5791,107"/>
+<area shape="rect" href="$remove__nominal__learner_8h.html" title="ltr/feature_converters/remove_nominal_learner.h" alt="" coords="4885,80,5179,107"/>
+<area shape="rect" href="$feature__sampler_8h.html" title="ltr/feature_converters/feature_sampler.h" alt="" coords="376,155,624,181"/>
+<area shape="rect" href="$per__feature__linear__converter_8h.html" title="ltr/feature_converters/per_feature_linear_converter.h" alt="" coords="2299,155,2613,181"/>
+<area shape="rect" href="$nan__to__neutral__converter_8h.html" title="ltr/feature_converters/nan_to_neutral_converter.h" alt="" coords="4195,155,4493,181"/>
+<area shape="rect" href="$nominal__to__bool__converter_8h.html" title="ltr/feature_converters/nominal_to_bool_converter.h" alt="" coords="6341,155,6648,181"/>
+<area shape="rect" href="$remove__nominal__converter_8h.html" title="ltr/feature_converters/remove_nominal_converter.h" alt="" coords="5680,155,5987,181"/>
+</map>

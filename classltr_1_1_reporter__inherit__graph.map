@@ -1,0 +1,29 @@
+<map id="G" name="G">
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; Object \&gt;" alt="" coords="159,56,303,83"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="145,208,316,235"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer." alt="" coords="149,385,312,412"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, CompositionScorer \&gt;" alt="" coords="367,5,660,32"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, DecisionTreeScorer \&gt;" alt="" coords="365,56,661,83"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_composition_learner.html" title="ltr::composition::CompositionLearner\&lt; Object \&gt;" alt="" coords="821,5,1117,32"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_ada_boost_learner.html" title="ltr::composition::AdaBoostLearner" alt="" coords="1313,5,1532,32"/>
+<area shape="rect" href="$classltr_1_1decision__tree_1_1_decision_tree_learner.html" title="DecisionTreeLearner Builds decision tree for given data." alt="" coords="848,56,1091,83"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, BayesianScorer \&gt;" alt="" coords="377,208,649,235"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, CompositionScorer \&gt;" alt="" coords="368,309,659,336"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, GPScorer \&gt;" alt="" coords="395,360,632,387"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, LinearScorer \&gt;" alt="" coords="387,411,640,437"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, NNScorer \&gt;" alt="" coords="395,461,632,488"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="BaseLearner\&lt; TElement, OneFeatureScorer \&gt;" alt="" coords="369,512,657,539"/>
+<area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; TElement \&gt;" alt="" coords="417,563,609,589"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, FisherDiscriminantDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="720,107,1219,133"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, NormalNaiveBayesDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="720,157,1219,184"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, QuadraticDiscriminantDensityLearner\&lt; TElement \&gt; \&gt;" alt="" coords="711,208,1228,235"/>
+<area shape="rect" href="$classltr_1_1_bayesian_learner.html" title="ltr::BayesianLearner\&lt; TElement, TDensityLearner \&gt;" alt="" coords="811,259,1128,285"/>
+<area shape="rect" href="$classltr_1_1_fisher_discriminant_learner.html" title="ltr::FisherDiscriminantLearner\&lt; TElement \&gt;" alt="" coords="1288,107,1557,133"/>
+<area shape="rect" href="$classltr_1_1_normal_naive_bayes_learner.html" title="ltr::NormalNaiveBayesLearner\&lt; TElement \&gt;" alt="" coords="1287,157,1559,184"/>
+<area shape="rect" href="$classltr_1_1_quadratic_discriminant_learner.html" title="ltr::QuadraticDiscriminantLearner\&lt; TElement \&gt;" alt="" coords="1277,208,1568,235"/>
+<area shape="rect" href="$classltr_1_1composition_1_1_composition_learner.html" title="Learner, wich uses other learner (weak learner), produces with it different scorers and tie them into..." alt="" coords="813,309,1125,336"/>
+<area shape="rect" href="$classltr_1_1gp_1_1_g_p_learner.html" title="GPLearner Implements genetic programming approach applied to learning to rank." alt="" coords="868,360,1071,387"/>
+<area shape="rect" href="$classltr_1_1_linear_learner.html" title="ltr::LinearLearner\&lt; TElement \&gt;" alt="" coords="871,411,1068,437"/>
+<area shape="rect" href="$classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach." alt="" coords="880,461,1059,488"/>
+<area shape="rect" href="$classltr_1_1_best_feature_learner.html" title="ltr::BestFeatureLearner\&lt; TElement \&gt;" alt="" coords="853,512,1085,539"/>
+</map>
