@@ -522,7 +522,7 @@
 </g>
 <!-- Node44 -->
 <g id="node87" class="node"><title>Node44</title>
-<a xlink:href="classltr_1_1gp_1_1_g_p_scorer.html" target="_top" xlink:title="The class prepresent Scorer for GPLearner. It contains the last population of genetic programming&amp;#39...">
+<a xlink:href="classltr_1_1gp_1_1_g_p_scorer.html" target="_top" xlink:title="The class prepresent Scorer for GPLearner. It contains the last population of genetic programming&#39;s e...">
 <polygon style="fill:white;stroke:black;" points="595,-114 595,-134 685,-134 685,-114 595,-114"/>
 <text text-anchor="middle" x="640" y="-121" style="font-family:Arial;font-size:10.00;">ltr::gp::GPScorer</text>
 </a>

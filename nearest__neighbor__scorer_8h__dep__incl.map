@@ -1,4 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="9,80,399,107"/>
-<area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="5,155,403,181"/>
+<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="481,80,871,107"/>
+<area shape="rect" href="$nearest__neighbor__learner__unittest_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc" alt="" coords="5,155,453,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="899,155,1165,181"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8cc.html" title="ltr/scorers/nearest_neighbor_scorer.cc" alt="" coords="945,80,1188,107"/>
+<area shape="rect" href="$nearest__neighbor__scorer__unittest_8cc.html" title="ltr/scorers/nearest_neighbor_scorer_unittest.cc" alt="" coords="1212,80,1505,107"/>
+<area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="477,155,875,181"/>
 </map>

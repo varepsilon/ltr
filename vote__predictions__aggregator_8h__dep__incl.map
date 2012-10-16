@@ -1,3 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" href="$nearest__neighbor__learner__unittest_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc" alt="" coords="5,80,453,107"/>
+<area shape="rect" href="$predictions__aggregators__unittest_8cc.html" title="ltr/predictions_aggregators/predictions_aggregators_unittest.cc" alt="" coords="477,80,861,107"/>
+<area shape="rect" href="$vote__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.cc" alt="" coords="885,80,1240,107"/>
+<area shape="rect" href="$nearest__neighbor__scorer__unittest_8cc.html" title="ltr/scorers/nearest_neighbor_scorer_unittest.cc" alt="" coords="1264,80,1557,107"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1581,80,1848,107"/>
 </map>

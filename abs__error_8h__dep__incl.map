@@ -1,3 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" href="$crossvalidation__unittest_8cc.html" title="ltr/crossvalidation/crossvalidation_unittest.cc" alt="" coords="5,80,283,107"/>
+<area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="307,80,696,107"/>
+<area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="720,80,1101,107"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="1125,80,1325,107"/>
+<area shape="rect" href="$measure__unittest_8cc.html" title="ltr/measures/measure_unittest.cc" alt="" coords="1349,80,1565,107"/>
+<area shape="rect" href="$pointwise__measures__unittest_8cc.html" title="ltr/measures/pointwise_measures_unittest.cc" alt="" coords="1589,80,1872,107"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1896,80,2163,107"/>
 </map>

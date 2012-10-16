@@ -1,9 +1,29 @@
 <map id="G" name="G">
-<area shape="rect" href="$binary__classification__accuracy_8h.html" title="ltr/measures/binary_classification_accuracy.h" alt="" coords="24,155,307,181"/>
-<area shape="rect" href="$binary__classification__margin_8h.html" title="ltr/measures/binary_classification_margin.h" alt="" coords="200,80,472,107"/>
-<area shape="rect" href="$ada__boost__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h" alt="" coords="1464,80,1899,107"/>
-<area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="2052,80,2543,107"/>
-<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="2567,80,2919,107"/>
-<area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="1595,155,1963,181"/>
-<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="1987,155,2416,181"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="3628,752,3769,779"/>
+<area shape="rect" href="$binary__classification__accuracy_8h.html" title="ltr/measures/binary_classification_accuracy.h" alt="" coords="3989,304,4272,331"/>
+<area shape="rect" href="$binary__classification__margin_8h.html" title="ltr/measures/binary_classification_margin.h" alt="" coords="4296,304,4568,331"/>
+<area shape="rect" href="$composition__scorer_8h.html" title="ltr/scorers/composition_scorers/composition_scorer.h" alt="" coords="741,229,1072,256"/>
+<area shape="rect" href="$ada__boost__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h" alt="" coords="1868,80,2303,107"/>
+<area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="3605,80,4096,107"/>
+<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="600,453,952,480"/>
+<area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="3240,379,3397,405"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="2309,677,2421,704"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="3381,752,3536,779"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="2624,603,2760,629"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="2411,603,2549,629"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="2352,453,2477,480"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="397,603,587,629"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="475,677,773,704"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1235,677,1379,704"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="4445,453,4584,480"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1704,528,1845,555"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="2325,528,2520,555"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="2173,304,2301,331"/>
+<area shape="rect" href="$predictions__aggregator_8h.html" title="ltr/predictions_aggregators/predictions_aggregator.h" alt="" coords="752,528,1072,555"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1623,379,1876,405"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="2787,528,3003,555"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="1507,603,1677,629"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2944,603,3088,629"/>
+<area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="1680,155,2048,181"/>
+<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="3269,155,3699,181"/>
 </map>

@@ -1,4 +1,14 @@
 <map id="G" name="G">
-<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="9,80,399,107"/>
-<area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="5,155,403,181"/>
+<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="165,155,555,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="427,229,693,256"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8h.html" title="ltr/scorers/nearest_neighbor_scorer.h" alt="" coords="712,80,947,107"/>
+<area shape="rect" href="$euclidean__metric_8h.html" title="ltr/metrics/euclidean_metric.h" alt="" coords="1216,80,1408,107"/>
+<area shape="rect" href="$metrics__unittest_8cc.html" title="ltr/metrics/metrics_unittest.cc" alt="" coords="1589,155,1784,181"/>
+<area shape="rect" href="$manhattan__metric_8h.html" title="ltr/metrics/manhattan_metric.h" alt="" coords="1588,80,1785,107"/>
+<area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="5,229,403,256"/>
+<area shape="rect" href="$nearest__neighbor__learner__unittest_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc" alt="" coords="717,229,1165,256"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8cc.html" title="ltr/scorers/nearest_neighbor_scorer.cc" alt="" coords="629,155,872,181"/>
+<area shape="rect" href="$nearest__neighbor__scorer__unittest_8cc.html" title="ltr/scorers/nearest_neighbor_scorer_unittest.cc" alt="" coords="947,155,1240,181"/>
+<area shape="rect" href="$euclidean__metric_8cc.html" title="ltr/metrics/euclidean_metric.cc" alt="" coords="1315,155,1515,181"/>
+<area shape="rect" href="$manhattan__metric_8cc.html" title="ltr/metrics/manhattan_metric.cc" alt="" coords="1808,155,2013,181"/>
 </map>

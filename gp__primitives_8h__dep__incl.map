@@ -1,4 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" href="$gp__scorer_8h.html" title="ltr/scorers/gp_scorer.h" alt="" coords="48,80,197,107"/>
-<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="35,155,211,181"/>
+<area shape="rect" href="$gp__scorer_8h.html" title="ltr/scorers/gp_scorer.h" alt="" coords="495,80,644,107"/>
+<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="144,155,363,181"/>
+<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="711,229,988,256"/>
+<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="387,155,563,181"/>
+<area shape="rect" href="$gp__scorer_8cc.html" title="ltr/scorers/gp_scorer.cc" alt="" coords="587,155,744,181"/>
+<area shape="rect" href="$gp__scorer__unittest_8cc.html" title="ltr/scorers/gp_scorer_unittest.cc" alt="" coords="768,155,976,181"/>
+<area shape="rect" href="$gp__learner_8cc.html" title="ltr/learners/gp_learner/gp_learner.cc" alt="" coords="5,229,232,256"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="256,229,523,256"/>
 </map>

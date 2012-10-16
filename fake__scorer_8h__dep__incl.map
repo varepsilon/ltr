@@ -1,3 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" href="$crossvalidation__unittest_8cc.html" title="ltr/crossvalidation/crossvalidation_unittest.cc" alt="" coords="5,80,283,107"/>
+<area shape="rect" href="$validation__result__unittest_8cc.html" title="ltr/crossvalidation/validation_result_unittest.cc" alt="" coords="307,80,592,107"/>
+<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="616,80,792,107"/>
+<area shape="rect" href="$io__utility__unittest_8cc.html" title="ltr/data/utility/io_utility_unittest.cc" alt="" coords="816,80,1032,107"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="1056,80,1256,107"/>
+<area shape="rect" href="$fake__scorer_8cc.html" title="ltr/scorers/fake_scorer.cc" alt="" coords="1280,80,1448,107"/>
+<area shape="rect" href="$fake__scorer__unittest_8cc.html" title="ltr/scorers/fake_scorer_unittest.cc" alt="" coords="1472,80,1691,107"/>
 </map>

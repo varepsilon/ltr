@@ -1,4 +1,9 @@
 <map id="G" name="G">
-<area shape="rect" href="$fisher__discriminant__density__learner_8h.html" title="ltr/density_estimators/fisher_discriminant_density_learner.h" alt="" coords="17,80,380,107"/>
-<area shape="rect" href="$density__estimators__learners__unittests_8cc.html" title="ltr/density_estimators/density_estimators_learners_unittests.cc" alt="" coords="5,155,392,181"/>
+<area shape="rect" href="$fisher__discriminant__density__learner_8h.html" title="ltr/density_estimators/fisher_discriminant_density_learner.h" alt="" coords="255,80,617,107"/>
+<area shape="rect" href="$density__estimators__learners__unittests_8cc.html" title="ltr/density_estimators/density_estimators_learners_unittests.cc" alt="" coords="24,155,411,181"/>
+<area shape="rect" href="$bayesian__learner__unittest_8cc.html" title="ltr/learners/bayesian_learner/bayesian_learner_unittest.cc" alt="" coords="196,229,551,256"/>
+<area shape="rect" href="$density__estimators__scorers__unittests_8cc.html" title="ltr/density_estimators/density_estimators_scorers_unittests.cc" alt="" coords="641,80,1025,107"/>
+<area shape="rect" href="$fisher__discriminant_8cc.html" title="ltr/density_estimators/fisher_discriminant.cc" alt="" coords="1049,80,1324,107"/>
+<area shape="rect" href="$bayesian__learner_8h.html" title="ltr/learners/bayesian_learner/bayesian_learner.h" alt="" coords="485,155,781,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="575,229,841,256"/>
 </map>

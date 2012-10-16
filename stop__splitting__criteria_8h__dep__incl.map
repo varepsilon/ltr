@@ -1,4 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="44,80,343,107"/>
-<area shape="rect" href="$decision__tree__learner_8cc.html" title="ltr/learners/decision_tree/decision_tree_learner.cc" alt="" coords="40,155,347,181"/>
+<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="345,80,644,107"/>
+<area shape="rect" href="$same__label__stop__criteria_8h.html" title="ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h" alt="" coords="673,80,1068,107"/>
+<area shape="rect" href="$data__size__stop__criteria_8h.html" title="ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.h" alt="" coords="1092,80,1479,107"/>
+<area shape="rect" href="$decision__tree__learner_8cc.html" title="ltr/learners/decision_tree/decision_tree_learner.cc" alt="" coords="5,155,312,181"/>
+<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="336,155,648,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1099,155,1365,181"/>
+<area shape="rect" href="$same__label__stop__criteria_8cc.html" title="ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.cc" alt="" coords="672,155,1075,181"/>
+<area shape="rect" href="$data__size__stop__criteria_8cc.html" title="ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.cc" alt="" coords="1389,155,1781,181"/>
 </map>

@@ -1,3 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="5,80,283,107"/>
+<area shape="rect" href="$ndcg_8h.html" title="ltr/measures/ndcg.h" alt="" coords="357,80,493,107"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="195,155,395,181"/>
+<area shape="rect" href="$listwise__measures__unittest_8cc.html" title="ltr/measures/listwise_measures_unittest.cc" alt="" coords="419,155,691,181"/>
+<area shape="rect" href="$dcg_8cc.html" title="ltr/measures/dcg.cc" alt="" coords="568,80,704,107"/>
 </map>

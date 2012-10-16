@@ -1,3 +1,17 @@
 <map id="G" name="G">
-<area shape="rect" href="$remove__nominal__converter_8h.html" title="ltr/feature_converters/remove_nominal_converter.h" alt="" coords="63,80,369,107"/>
+<area shape="rect" href="$remove__nominal__converter_8h.html" title="ltr/feature_converters/remove_nominal_converter.h" alt="" coords="537,80,844,107"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="791,453,1089,480"/>
+<area shape="rect" href="$feature__converter__learner_8h.html" title="ltr/feature_converters/feature_converter_learner.h" alt="" coords="1224,80,1523,107"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1139,155,1392,181"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1561,229,1687,256"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1975,453,2087,480"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1443,528,1584,555"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1303,304,1444,331"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="900,379,1089,405"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1569,304,1764,331"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="467,528,611,555"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="343,453,513,480"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1671,379,1807,405"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1831,379,1969,405"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1892,528,2047,555"/>
 </map>

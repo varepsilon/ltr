@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="84,80,396,107"/>
+<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="5,80,317,107"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8cc.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.cc" alt="" coords="341,80,819,107"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="843,80,1109,107"/>
 </map>

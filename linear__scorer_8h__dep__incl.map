@@ -1,3 +1,11 @@
 <map id="G" name="G">
 <area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="5,80,181,107"/>
+<area shape="rect" href="$linear__learner_8h.html" title="ltr/learners/linear_learner/linear_learner.h" alt="" coords="256,80,509,107"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="28,155,228,181"/>
+<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="533,80,835,107"/>
+<area shape="rect" href="$linear__scorer_8cc.html" title="ltr/scorers/linear_scorer.cc" alt="" coords="859,80,1032,107"/>
+<area shape="rect" href="$linear__scorer__unittest_8cc.html" title="ltr/scorers/linear_scorer_unittest.cc" alt="" coords="1056,80,1280,107"/>
+<area shape="rect" href="$linear__learner_8cc.html" title="ltr/learners/linear_learner/linear_learner.cc" alt="" coords="252,155,513,181"/>
+<area shape="rect" href="$linear__learner__unittest_8cc.html" title="ltr/learners/linear_learner/linear_learner_unittest.cc" alt="" coords="537,155,849,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="873,155,1140,181"/>
 </map>

@@ -1,2 +1,7 @@
 <map id="G" name="G">
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="377,80,513,107"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="875,80,1013,107"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="483,155,595,181"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="636,229,791,256"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="249,229,391,256"/>
 </map>

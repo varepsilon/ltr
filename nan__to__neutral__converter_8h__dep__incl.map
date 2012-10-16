@@ -1,4 +1,9 @@
 <map id="G" name="G">
-<area shape="rect" href="$nan__to__zero__learner_8h.html" title="ltr/feature_converters/nan_to_zero_learner.h" alt="" coords="51,80,323,107"/>
+<area shape="rect" href="$nan__to__zero__learner_8h.html" title="ltr/feature_converters/nan_to_zero_learner.h" alt="" coords="356,80,628,107"/>
+<area shape="rect" href="$nan__to__average__learner_8h.html" title="ltr/feature_converters/nan_to_average_learner.h" alt="" coords="41,80,332,107"/>
+<area shape="rect" href="$feature__converters__unittest_8cc.html" title="ltr/feature_converters/feature_converters_unittest.cc" alt="" coords="652,80,969,107"/>
+<area shape="rect" href="$nan__to__neutral__converter_8cc.html" title="ltr/feature_converters/nan_to_neutral_converter.cc" alt="" coords="993,80,1300,107"/>
+<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="1324,80,1601,107"/>
 <area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="5,155,368,181"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="392,155,592,181"/>
 </map>

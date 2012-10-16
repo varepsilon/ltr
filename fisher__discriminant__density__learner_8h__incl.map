@@ -1,7 +1,25 @@
 <map id="G" name="G">
-<area shape="rect" href="$fisher__discriminant_8h.html" title="ltr/density_estimators/fisher_discriminant.h" alt="" coords="257,80,527,107"/>
-<area shape="rect" href="$base__probability__density__learner_8h.html" title="ltr/density_estimators/base_probability_density_learner.h" alt="" coords="923,80,1272,107"/>
-<area shape="rect" href="$statistics__calculation_8h.html" title="ltr/utility/statistics_calculation.h" alt="" coords="1347,80,1549,107"/>
-<area shape="rect" href="$eigen__converters_8h.html" title="ltr/utility/eigen_converters.h" alt="" coords="721,155,900,181"/>
-<area shape="rect" href="$base__probability__density__estimator_8h.html" title="ltr/density_estimators/base_probability_density_estimator.h" alt="" coords="1481,155,1844,181"/>
+<area shape="rect" href="$base__probability__density__estimator_8h.html" title="ltr/density_estimators/base_probability_density_estimator.h" alt="" coords="1664,155,2027,181"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="803,603,915,629"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="2388,379,2513,405"/>
+<area shape="rect" href="$fisher__discriminant_8h.html" title="ltr/density_estimators/fisher_discriminant.h" alt="" coords="1624,80,1893,107"/>
+<area shape="rect" href="$base__probability__density__learner_8h.html" title="ltr/density_estimators/base_probability_density_learner.h" alt="" coords="460,80,809,107"/>
+<area shape="rect" href="$data__set__converters_8h.html" title="ltr/data/utility/data_set_converters.h" alt="" coords="1968,304,2195,331"/>
+<area shape="rect" href="$statistics__calculation_8h.html" title="ltr/utility/statistics_calculation.h" alt="" coords="2349,304,2552,331"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="695,677,836,704"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="1343,229,1471,256"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="2497,528,2687,555"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1987,603,2285,629"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="1528,528,1699,555"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="961,677,1116,704"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1616,603,1760,629"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1680,304,1933,331"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="1128,453,1344,480"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="2195,453,2336,480"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1925,453,2120,480"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="2073,528,2209,555"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="2284,528,2423,555"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="1259,528,1403,555"/>
+<area shape="rect" href="$eigen__converters_8h.html" title="ltr/utility/eigen_converters.h" alt="" coords="483,155,661,181"/>
+<area shape="rect" href="$indices_8h.html" title="ltr/utility/indices.h" alt="" coords="3120,603,3243,629"/>
 </map>

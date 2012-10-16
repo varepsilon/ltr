@@ -1,3 +1,16 @@
 <map id="G" name="G">
-<area shape="rect" href="$fake__feature__converter_8h.html" title="ltr/feature_converters/fake_feature_converter.h" alt="" coords="271,80,553,107"/>
+<area shape="rect" href="$fake__feature__converter_8h.html" title="ltr/feature_converters/fake_feature_converter.h" alt="" coords="1357,80,1640,107"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1608,453,1720,480"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1940,528,2081,555"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1851,304,1992,331"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1404,229,1529,256"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1208,155,1461,181"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1357,528,1512,555"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="819,379,1008,405"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="627,453,925,480"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1184,379,1320,405"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1344,379,1483,405"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1237,304,1432,331"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="499,304,643,331"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="376,229,547,256"/>
 </map>

@@ -1,4 +1,22 @@
 <map id="G" name="G">
-<area shape="rect" href="$squared__error_8h.html" title="ltr/measures/squared_error.h" alt="" coords="541,80,728,107"/>
-<area shape="rect" href="$normalized__measure_8h.html" title="ltr/measures/normalized_measure.h" alt="" coords="803,80,1029,107"/>
+<area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="1201,155,1359,181"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1965,453,2077,480"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1773,379,1909,405"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1485,229,1611,256"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="2061,229,2200,256"/>
+<area shape="rect" href="$abs__error_8h.html" title="ltr/measures/abs_error.h" alt="" coords="1797,80,1957,107"/>
+<area shape="rect" href="$accuracy_8h.html" title="ltr/measures/accuracy.h" alt="" coords="933,80,1093,107"/>
+<area shape="rect" href="$squared__error_8h.html" title="ltr/measures/squared_error.h" alt="" coords="2061,80,2248,107"/>
+<area shape="rect" href="$average__precision_8h.html" title="ltr/measures/average_precision.h" alt="" coords="1117,80,1328,107"/>
+<area shape="rect" href="$normalized__measure_8h.html" title="ltr/measures/normalized_measure.h" alt="" coords="1352,80,1579,107"/>
+<area shape="rect" href="$auc_8h.html" title="ltr/measures/auc.h" alt="" coords="2272,80,2400,107"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1813,528,1968,555"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1404,528,1545,555"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1459,379,1597,405"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="992,379,1181,405"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="477,453,776,480"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="336,304,480,331"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1245,304,1387,331"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1512,304,1707,331"/>
+<area shape="rect" href="$measure__utility_8h.html" title="ltr/measures/utils/measure_utility.h" alt="" coords="2219,155,2443,181"/>
 </map>

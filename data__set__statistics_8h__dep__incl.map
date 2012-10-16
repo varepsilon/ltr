@@ -1,3 +1,17 @@
 <map id="G" name="G">
-<area shape="rect" href="$data__set__statistics_8cc.html" title="ltr/data/utility/data_set_statistics.cc" alt="" coords="5,80,232,107"/>
+<area shape="rect" href="$data__set__statistics_8cc.html" title="ltr/data/utility/data_set_statistics.cc" alt="" coords="252,80,479,107"/>
+<area shape="rect" href="$feature__normalizer__learner_8h.html" title="ltr/feature_converters/feature_normalizer_learner.h" alt="" coords="503,80,809,107"/>
+<area shape="rect" href="$base__splitter_8h.html" title="ltr/learners/decision_tree/base_splitter.h" alt="" coords="833,80,1084,107"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h" alt="" coords="1587,155,2056,181"/>
+<area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="5,155,368,181"/>
+<area shape="rect" href="$base__splitter_8cc.html" title="ltr/learners/decision_tree/base_splitter.cc" alt="" coords="981,155,1240,181"/>
+<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="1264,155,1563,181"/>
+<area shape="rect" href="$oblivious__tree__splitter_8h.html" title="ltr/learners/decision_tree/oblivious_tree_splitter.h" alt="" coords="656,155,957,181"/>
+<area shape="rect" href="$id3__splitter_8h.html" title="ltr/learners/decision_tree/id3_splitter.h" alt="" coords="392,155,632,181"/>
+<area shape="rect" href="$decision__tree__learner_8cc.html" title="ltr/learners/decision_tree/decision_tree_learner.cc" alt="" coords="1447,229,1753,256"/>
+<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="1111,229,1423,256"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="820,229,1087,256"/>
+<area shape="rect" href="$oblivious__tree__splitter_8cc.html" title="ltr/learners/decision_tree/oblivious_tree_splitter.cc" alt="" coords="489,229,796,256"/>
+<area shape="rect" href="$id3__splitter_8cc.html" title="ltr/learners/decision_tree/id3_splitter.cc" alt="" coords="217,229,465,256"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8cc.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.cc" alt="" coords="1777,229,2255,256"/>
 </map>

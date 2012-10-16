@@ -1,4 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" href="$feature__normalizer__learner_8h.html" title="ltr/feature_converters/feature_normalizer_learner.h" alt="" coords="33,80,340,107"/>
+<area shape="rect" href="$feature__converters__unittest_8cc.html" title="ltr/feature_converters/feature_converters_unittest.cc" alt="" coords="364,80,681,107"/>
+<area shape="rect" href="$per__feature__linear__converter_8cc.html" title="ltr/feature_converters/per_feature_linear_converter.cc" alt="" coords="705,80,1028,107"/>
 <area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="5,155,368,181"/>
 </map>

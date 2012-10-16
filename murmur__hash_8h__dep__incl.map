@@ -1,5 +1,20 @@
 <map id="G" name="G">
-<area shape="rect" href="$parser_8h.html" title="ltr/data/utility/parsers/parser.h" alt="" coords="45,80,237,107"/>
-<area shape="rect" href="$io__utility_8h.html" title="ltr/data/utility/io_utility.h" alt="" coords="63,155,220,181"/>
-<area shape="rect" href="$crossvalidator__unittest_8cc.html" title="ltr/crossvalidation/crossvalidator_unittest.cc" alt="" coords="5,229,277,256"/>
+<area shape="rect" href="$parser_8h.html" title="ltr/data/utility/parsers/parser.h" alt="" coords="2367,80,2559,107"/>
+<area shape="rect" href="$murmur__hash_8cc.html" title="ltr/utility/murmur_hash.cc" alt="" coords="2583,80,2751,107"/>
+<area shape="rect" href="$io__utility_8h.html" title="ltr/data/utility/io_utility.h" alt="" coords="1408,155,1565,181"/>
+<area shape="rect" href="$parse__arff_8h.html" title="ltr/data/utility/parsers/parse_arff.h" alt="" coords="2657,155,2871,181"/>
+<area shape="rect" href="$parser_8cc.html" title="ltr/data/utility/parsers/parser.cc" alt="" coords="2565,229,2765,256"/>
+<area shape="rect" href="$parse__svm_8h.html" title="ltr/data/utility/parsers/parse_svm.h" alt="" coords="2100,155,2319,181"/>
+<area shape="rect" href="$parse__yandex_8h.html" title="ltr/data/utility/parsers/parse_yandex.h" alt="" coords="2343,155,2583,181"/>
+<area shape="rect" href="$crossvalidator__unittest_8cc.html" title="ltr/crossvalidation/crossvalidator_unittest.cc" alt="" coords="1099,229,1371,256"/>
+<area shape="rect" href="$data__set__unittest_8cc.html" title="ltr/data/data_set_unittest.cc" alt="" coords="1395,229,1579,256"/>
+<area shape="rect" href="$save__predictions__unittest_8cc.html" title="ltr/data/save_predictions_unittest.cc" alt="" coords="1603,229,1832,256"/>
+<area shape="rect" href="$io__utility_8cc.html" title="ltr/data/utility/io_utility.cc" alt="" coords="1856,229,2021,256"/>
+<area shape="rect" href="$io__utility__unittest_8cc.html" title="ltr/data/utility/io_utility_unittest.cc" alt="" coords="5,229,221,256"/>
+<area shape="rect" href="$parse__svm_8cc.html" title="ltr/data/utility/parsers/parse_svm.cc" alt="" coords="2045,229,2272,256"/>
+<area shape="rect" href="$parse__yandex_8cc.html" title="ltr/data/utility/parsers/parse_yandex.cc" alt="" coords="2296,229,2541,256"/>
+<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="245,229,523,256"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="547,229,747,256"/>
+<area shape="rect" href="$generator__utility_8cc.html" title="ltr/serialization_test/generator/generator_utility.cc" alt="" coords="771,229,1075,256"/>
+<area shape="rect" href="$parse__arff_8cc.html" title="ltr/data/utility/parsers/parse_arff.cc" alt="" coords="2789,229,3011,256"/>
 </map>

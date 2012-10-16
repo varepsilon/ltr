@@ -1,2 +1,21 @@
 <map id="G" name="G">
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="1775,229,1913,256"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1661,453,1773,480"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="405,453,704,480"/>
+<area shape="rect" href="$abs__error_8h.html" title="ltr/measures/abs_error.h" alt="" coords="1972,80,2132,107"/>
+<area shape="rect" href="$accuracy_8h.html" title="ltr/measures/accuracy.h" alt="" coords="721,80,881,107"/>
+<area shape="rect" href="$squared__error_8h.html" title="ltr/measures/squared_error.h" alt="" coords="905,80,1092,107"/>
+<area shape="rect" href="$true__point_8h.html" title="ltr/measures/true_point.h" alt="" coords="1783,80,1948,107"/>
+<area shape="rect" href="$binary__classification__margin_8h.html" title="ltr/measures/binary_classification_margin.h" alt="" coords="1436,80,1708,107"/>
+<area shape="rect" href="$binary__classification__accuracy_8h.html" title="ltr/measures/binary_classification_accuracy.h" alt="" coords="415,80,697,107"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1629,528,1784,555"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1211,528,1352,555"/>
+<area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="841,155,999,181"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1416,379,1552,405"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1677,379,1816,405"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1099,229,1224,256"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="949,379,1139,405"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="629,304,773,331"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1091,304,1232,331"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1307,304,1501,331"/>
 </map>

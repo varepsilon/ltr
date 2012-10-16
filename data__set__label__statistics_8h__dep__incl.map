@@ -1,3 +1,19 @@
 <map id="G" name="G">
-<area shape="rect" href="$data__set__label__statistics_8cc.html" title="ltr/data/utility/data_set_label_statistics.cc" alt="" coords="5,80,267,107"/>
+<area shape="rect" href="$data__set__label__statistics_8cc.html" title="ltr/data/utility/data_set_label_statistics.cc" alt="" coords="411,80,672,107"/>
+<area shape="rect" href="$data__set__statistics_8h.html" title="ltr/data/utility/data_set_statistics.h" alt="" coords="696,80,917,107"/>
+<area shape="rect" href="$data__set__statistics_8cc.html" title="ltr/data/utility/data_set_statistics.cc" alt="" coords="252,155,479,181"/>
+<area shape="rect" href="$feature__normalizer__learner_8h.html" title="ltr/feature_converters/feature_normalizer_learner.h" alt="" coords="503,155,809,181"/>
+<area shape="rect" href="$base__splitter_8h.html" title="ltr/learners/decision_tree/base_splitter.h" alt="" coords="833,155,1084,181"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h" alt="" coords="1587,229,2056,256"/>
+<area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="5,229,368,256"/>
+<area shape="rect" href="$base__splitter_8cc.html" title="ltr/learners/decision_tree/base_splitter.cc" alt="" coords="981,229,1240,256"/>
+<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="1264,229,1563,256"/>
+<area shape="rect" href="$oblivious__tree__splitter_8h.html" title="ltr/learners/decision_tree/oblivious_tree_splitter.h" alt="" coords="656,229,957,256"/>
+<area shape="rect" href="$id3__splitter_8h.html" title="ltr/learners/decision_tree/id3_splitter.h" alt="" coords="392,229,632,256"/>
+<area shape="rect" href="$decision__tree__learner_8cc.html" title="ltr/learners/decision_tree/decision_tree_learner.cc" alt="" coords="1447,304,1753,331"/>
+<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="1111,304,1423,331"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="820,304,1087,331"/>
+<area shape="rect" href="$oblivious__tree__splitter_8cc.html" title="ltr/learners/decision_tree/oblivious_tree_splitter.cc" alt="" coords="489,304,796,331"/>
+<area shape="rect" href="$id3__splitter_8cc.html" title="ltr/learners/decision_tree/id3_splitter.cc" alt="" coords="217,304,465,331"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8cc.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.cc" alt="" coords="1777,304,2255,331"/>
 </map>

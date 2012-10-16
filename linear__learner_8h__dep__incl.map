@@ -1,3 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="32,80,232,107"/>
+<area shape="rect" href="$learners__unittest_8cc.html" title="ltr/learners/learners_unittest.cc" alt="" coords="5,80,205,107"/>
+<area shape="rect" href="$linear__learner_8cc.html" title="ltr/learners/linear_learner/linear_learner.cc" alt="" coords="229,80,491,107"/>
+<area shape="rect" href="$linear__learner__unittest_8cc.html" title="ltr/learners/linear_learner/linear_learner_unittest.cc" alt="" coords="515,80,827,107"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="851,80,1117,107"/>
 </map>

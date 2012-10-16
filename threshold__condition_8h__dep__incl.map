@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" href="$base__splitter_8cc.html" title="ltr/learners/decision_tree/base_splitter.cc" alt="" coords="49,80,308,107"/>
+<area shape="rect" href="$base__splitter_8cc.html" title="ltr/learners/decision_tree/base_splitter.cc" alt="" coords="5,80,264,107"/>
+<area shape="rect" href="$threshold__condition_8cc.html" title="ltr/learners/decision_tree/condition/threshold_condition.cc" alt="" coords="288,80,640,107"/>
 </map>

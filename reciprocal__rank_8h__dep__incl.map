@@ -1,4 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="9,80,228,107"/>
+<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="285,80,504,107"/>
+<area shape="rect" href="$listwise__measures__unittest_8cc.html" title="ltr/measures/listwise_measures_unittest.cc" alt="" coords="528,80,800,107"/>
+<area shape="rect" href="$reciprocal__rank_8cc.html" title="ltr/measures/reciprocal_rank.cc" alt="" coords="824,80,1027,107"/>
 <area shape="rect" href="$gp__learner_8cc.html" title="ltr/learners/gp_learner/gp_learner.cc" alt="" coords="5,155,232,181"/>
+<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="256,155,533,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="557,155,824,181"/>
 </map>

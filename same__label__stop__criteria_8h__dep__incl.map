@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="47,80,359,107"/>
+<area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="5,80,317,107"/>
+<area shape="rect" href="$same__label__stop__criteria_8cc.html" title="ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.cc" alt="" coords="341,80,744,107"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="768,80,1035,107"/>
 </map>

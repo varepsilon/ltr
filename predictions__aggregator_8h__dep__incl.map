@@ -1,4 +1,35 @@
 <map id="G" name="G">
-<area shape="rect" href="$composition__scorer_8h.html" title="ltr/scorers/composition_scorers/composition_scorer.h" alt="" coords="5,80,336,107"/>
-<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="83,155,259,181"/>
+<area shape="rect" href="$composition__scorer_8h.html" title="ltr/scorers/composition_scorers/composition_scorer.h" alt="" coords="1860,80,2191,107"/>
+<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="2136,229,2467,256"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="4811,304,5077,331"/>
+<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="2863,155,3215,181"/>
+<area shape="rect" href="$predictions__aggregators__unittest_8cc.html" title="ltr/predictions_aggregators/predictions_aggregators_unittest.cc" alt="" coords="6405,229,6789,256"/>
+<area shape="rect" href="$max__weight__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/max_weight_predictions_aggregator.h" alt="" coords="4219,155,4613,181"/>
+<area shape="rect" href="$order__statistic__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/order_statistic_predictions_aggregator.h" alt="" coords="3671,155,4079,181"/>
+<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="5035,155,5424,181"/>
+<area shape="rect" href="$nearest__neighbor__learner__unittest_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc" alt="" coords="5504,229,5952,256"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8h.html" title="ltr/scorers/nearest_neighbor_scorer.h" alt="" coords="5359,80,5593,107"/>
+<area shape="rect" href="$nearest__neighbor__scorer__unittest_8cc.html" title="ltr/scorers/nearest_neighbor_scorer_unittest.cc" alt="" coords="7213,229,7507,256"/>
+<area shape="rect" href="$average__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/average_predictions_aggregator.h" alt="" coords="6412,155,6783,181"/>
+<area shape="rect" href="$vote__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.h" alt="" coords="5901,155,6251,181"/>
+<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="1103,155,1279,181"/>
+<area shape="rect" href="$ada__boost__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h" alt="" coords="456,229,891,256"/>
+<area shape="rect" href="$ada__boost__learner_8h.html" title="ltr/learners/composition_learner/ada_boost_learner.h" alt="" coords="1216,304,1539,331"/>
+<area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="1451,379,1832,405"/>
+<area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="711,155,1079,181"/>
+<area shape="rect" href="$ada__rank__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h" alt="" coords="5,229,432,256"/>
+<area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="965,229,1456,256"/>
+<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="1404,155,1833,181"/>
+<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="1581,229,2061,256"/>
+<area shape="rect" href="$composition__scorer_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer.cc" alt="" coords="1857,155,2193,181"/>
+<area shape="rect" href="$composition__scorer__unittest_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer_unittest.cc" alt="" coords="3349,229,3736,256"/>
+<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="2491,229,2792,256"/>
+<area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="3183,304,3572,331"/>
+<area shape="rect" href="$sum__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.cc" alt="" coords="2968,229,3325,256"/>
+<area shape="rect" href="$max__weight__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/max_weight_predictions_aggregator.cc" alt="" coords="4453,229,4856,256"/>
+<area shape="rect" href="$order__statistic__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/order_statistic_predictions_aggregator.cc" alt="" coords="3912,229,4328,256"/>
+<area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="5032,229,5429,256"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8cc.html" title="ltr/scorers/nearest_neighbor_scorer.cc" alt="" coords="5448,155,5691,181"/>
+<area shape="rect" href="$average__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/average_predictions_aggregator.cc" alt="" coords="6813,229,7189,256"/>
+<area shape="rect" href="$vote__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.cc" alt="" coords="6027,229,6381,256"/>
 </map>

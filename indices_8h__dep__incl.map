@@ -1,3 +1,24 @@
 <map id="G" name="G">
-<area shape="rect" href="$indices__unittest_8cc.html" title="ltr/data/indices_unittest.cc" alt="" coords="5,80,179,107"/>
+<area shape="rect" href="$indices__unittest_8cc.html" title="ltr/data/indices_unittest.cc" alt="" coords="196,80,369,107"/>
+<area shape="rect" href="$data__random__sampler_8h.html" title="ltr/data_preprocessors/data_random_sampler.h" alt="" coords="724,80,1015,107"/>
+<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="191,155,367,181"/>
+<area shape="rect" href="$data__preprocessors__unittest_8cc.html" title="ltr/data_preprocessors/data_preprocessors_unittest.cc" alt="" coords="391,155,727,181"/>
+<area shape="rect" href="$data__sampler_8h.html" title="ltr/data_preprocessors/data_sampler.h" alt="" coords="444,80,687,107"/>
+<area shape="rect" href="$statistics__calculation_8h.html" title="ltr/utility/statistics_calculation.h" alt="" coords="1167,80,1369,107"/>
+<area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="1753,229,2116,256"/>
+<area shape="rect" href="$feature__sampler_8h.html" title="ltr/feature_converters/feature_sampler.h" alt="" coords="1811,80,2059,107"/>
+<area shape="rect" href="$feature__sampler__learner_8h.html" title="ltr/feature_converters/feature_sampler_learner.h" alt="" coords="1788,155,2081,181"/>
+<area shape="rect" href="$feature__random__sampler__learner_8h.html" title="ltr/feature_converters/feature_random_sampler_learner.h" alt="" coords="1420,155,1764,181"/>
+<area shape="rect" href="$feature__converters__unittest_8cc.html" title="ltr/feature_converters/feature_converters_unittest.cc" alt="" coords="2383,155,2700,181"/>
+<area shape="rect" href="$indices_8cc.html" title="ltr/utility/indices.cc" alt="" coords="2775,80,2905,107"/>
+<area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="1195,229,1576,256"/>
+<area shape="rect" href="$fisher__discriminant__density__learner_8h.html" title="ltr/density_estimators/fisher_discriminant_density_learner.h" alt="" coords="5,229,368,256"/>
+<area shape="rect" href="$bayesian__learner_8h.html" title="ltr/learners/bayesian_learner/bayesian_learner.h" alt="" coords="812,304,1108,331"/>
+<area shape="rect" href="$non__linear__discriminant__density__learner_8h.html" title="ltr/density_estimators/non_linear_discriminant_density_learner.h" alt="" coords="852,155,1244,181"/>
+<area shape="rect" href="$quadratic__discriminant__density__learner_8h.html" title="ltr/density_estimators/quadratic_discriminant_density_learner.h" alt="" coords="787,229,1171,256"/>
+<area shape="rect" href="$normal__naive__bayes__density__learner_8h.html" title="ltr/density_estimators/normal_naive_bayes_density_learner.h" alt="" coords="392,229,763,256"/>
+<area shape="rect" href="$density__estimators__learners__unittests_8cc.html" title="ltr/density_estimators/density_estimators_learners_unittests.cc" alt="" coords="384,304,771,331"/>
+<area shape="rect" href="$bayesian__learner__unittest_8cc.html" title="ltr/learners/bayesian_learner/bayesian_learner_unittest.cc" alt="" coords="525,379,880,405"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1083,379,1349,405"/>
+<area shape="rect" href="$feature__sampler_8cc.html" title="ltr/feature_converters/feature_sampler.cc" alt="" coords="2105,155,2359,181"/>
 </map>

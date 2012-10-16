@@ -1,3 +1,5 @@
 <map id="G" name="G">
 <area shape="rect" href="$average__precision_8cc.html" title="ltr/measures/average_precision.cc" alt="" coords="5,80,224,107"/>
+<area shape="rect" href="$listwise__measures__unittest_8cc.html" title="ltr/measures/listwise_measures_unittest.cc" alt="" coords="248,80,520,107"/>
+<area shape="rect" href="$measure__unittest_8cc.html" title="ltr/measures/measure_unittest.cc" alt="" coords="544,80,760,107"/>
 </map>

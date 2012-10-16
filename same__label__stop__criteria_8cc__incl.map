@@ -1,2 +1,16 @@
 <map id="G" name="G">
+<area shape="rect" href="$same__label__stop__criteria_8h.html" title="ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h" alt="" coords="287,80,681,107"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="705,80,844,107"/>
+<area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="715,229,840,256"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="227,528,368,555"/>
+<area shape="rect" href="$stop__splitting__criteria_8h.html" title="ltr/learners/decision_tree/split_criteria/stop_splitting_criteria.h" alt="" coords="296,155,672,181"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="595,453,707,480"/>
+<area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="431,379,567,405"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="720,379,859,405"/>
+<area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1007,304,1148,331"/>
+<area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="520,304,715,331"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1803,453,1947,480"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="639,528,793,555"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1136,379,1325,405"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1288,453,1587,480"/>
 </map>
