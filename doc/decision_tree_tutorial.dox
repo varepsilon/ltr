@@ -1,4 +1,5 @@
 namespace ltr {
+namespace decision_tree {
 /** \page TutorialDecisionTree Tutorial page 8 -  Decision Trees
     \ingroup Tutorial
 
@@ -6,16 +7,23 @@ namespace ltr {
 
 A decision tree is a learner that uses a tree-like graph or model of decisions and their possible consequences.
 
-To learn more visit http://en.wikipedia.org/wiki/Decision_tree
+To learn more visit http://en.wikipedia.org/wiki/Decision_tree_learning
 
-If you want to use DecisionTree algorithm you should choose some parameters which are used to build tree:
-\li BaseSplitter
-\li StopSplittingCriteria
-\li LeafGenerator
+If you want to use DecisionTree algorithm you should choose some parameters:
+ - BaseSplitter
+ - StopSplittingCriteria
+ - LeafGenerator
+
+You can add StopSplittingCriteria using DesicionTreeLearner::addStopSplittingCriteria method (you can add more than one criteria if needed).
+
+~~~~~~~~~~~~~~~{.cpp}
+DecisionTreeLearner decision_tree_learner(new ID3Splitter, new MostCommonLabelLeafGenerator);
+decision_tree_learner.addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+~~~~~~~~~~~~~~~
 
 \section TutorialSplitter Splitters
 
-Splitter is used to generate next layer of vertices in tree by given current layer.
+\link BaseSplitter Splitter \endlink is used to generate next layer of vertices in tree by given current layer.
 
 \subsection SplittersList List of available splitters
 
@@ -37,7 +45,7 @@ DataSizeStopSplittingCriteria   | It decides to generate leaf when data size les
 
 \section TutorialLeafGenerator Leaf generators
 
-StopSplittingCriteria checks the given data and desides should we generate leaf now or not.
+LeafGenerators generate list based on the given data.
 
 \subsection LeafGeneratorsList List of available leaf generators
 
@@ -47,16 +55,10 @@ MostCommonLabelLeafGenerator  | Generate the leaf with value equals to the most 
 
 \section TutorialDecisionTreeLearner Decision tree learner
 
-To use LTR DecisionTreeLearner you need to:
-\li Decide what parameters of DecisionTree are good for you and declare this parameters
-\li Create DecisionTreeLearner with selected Splitter and LeafGenerator
-\li Add selected StopSplittingCriteria using addStopSplittingCriteria() method (you can add more than one criteria if needed)
-\li Learn DecisionTreeLearner on your DaraSet using learn() method
-\li Make Scorer using make() method
-
 Example: usage of LTR DecisionTreeLearner    | Output:
 ---------------------------------------------|------------------
 \include decision_tree_tutorial_example1.cpp | \include decision_tree_tutorial_example1.out
 
 **/
+}
 }
