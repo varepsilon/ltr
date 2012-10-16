@@ -1,7 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="581,155,693,181"/>
-<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="693,80,832,107"/>
-<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="944,80,1083,107"/>
-<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="575,229,729,256"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="239,229,380,256"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="584,155,696,181"/>
+<area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="696,80,835,107"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="947,80,1085,107"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="577,229,732,256"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="239,229,383,256"/>
 </map>

@@ -1,11 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" href="$euclidean__metric_8h.html" title="ltr/metrics/euclidean_metric.h" alt="" coords="1260,80,1452,107"/>
+<area shape="rect" href="$euclidean__metric_8h.html" title="ltr/metrics/euclidean_metric.h" alt="" coords="1263,80,1455,107"/>
 <area shape="rect" href="$metric_8h.html" title="ltr/metrics/metric.h" alt="" coords="941,155,1072,181"/>
-<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1441,304,1553,331"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1152,379,1293,405"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1444,304,1556,331"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1152,379,1296,405"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="5,379,149,405"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="985,229,1175,256"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="779,304,1077,331"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="776,304,1077,331"/>
 <area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="301,304,472,331"/>
-<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1469,379,1624,405"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1472,379,1627,405"/>
 </map>

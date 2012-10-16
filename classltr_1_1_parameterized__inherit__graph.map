@@ -4,7 +4,7 @@
 <area shape="rect" href="$classltr_1_1composition_1_1_composition_scorer_weights_updater.html" title="ltr::composition::CompositionScorerWeightsUpdater\&lt; Object \&gt;" alt="" coords="205,120,589,147"/>
 <area shape="rect" href="$classltr_1_1composition_1_1_data_set_weights_updater.html" title="ltr::composition::DataSetWeightsUpdater\&lt; Object \&gt;" alt="" coords="237,171,557,197"/>
 <area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; Object \&gt;" alt="" coords="325,221,469,248"/>
-<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="312,272,483,299"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="311,272,484,299"/>
 <area shape="rect" href="$classltr_1_1_base_metric.html" title="ltr::BaseMetric" alt="" coords="344,323,451,349"/>
 <area shape="rect" href="$classltr_1_1_base_probability_density_estimator.html" title="Simple interface of the probability density estimator." alt="" coords="281,373,513,400"/>
 <area shape="rect" href="$classltr_1_1_base_probability_density_learner.html" title="Simple interface of the probability density estimation learner." alt="" coords="213,436,581,463"/>
@@ -21,7 +21,7 @@
 <area shape="rect" href="$classltr_1_1utility_1_1_neighbor_weighter.html" title="ltr::utility::NeighborWeighter" alt="" coords="307,1044,488,1071"/>
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; Object \&gt;" alt="" coords="321,1095,473,1121"/>
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; ObjectType \&gt;" alt="" coords="308,1145,487,1172"/>
-<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="303,1196,492,1223"/>
+<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="301,1196,493,1223"/>
 <area shape="rect" href="$classltr_1_1_fisher_discriminant_density_learner.html" title="Probability density learner that uses Fisher discriminant to generate probability density estimator..." alt="" coords="731,5,1045,32"/>
 <area shape="rect" href="$classltr_1_1_non_linear_discriminant_density_learner.html" title="Interface of discriminants that can not be converted to linear separators." alt="" coords="720,56,1056,83"/>
 <area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, CompositionScorer \&gt;" alt="" coords="741,107,1035,133"/>

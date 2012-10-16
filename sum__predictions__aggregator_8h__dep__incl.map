@@ -1,11 +1,11 @@
 <map id="G" name="G">
 <area shape="rect" href="$ada__boost__learner_8h.html" title="ltr/learners/composition_learner/ada_boost_learner.h" alt="" coords="35,80,357,107"/>
 <area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="5,155,387,181"/>
-<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="483,80,813,107"/>
+<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="483,80,816,107"/>
 <area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="411,155,800,181"/>
 <area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="824,155,1091,181"/>
-<area shape="rect" href="$predictions__aggregators__unittest_8cc.html" title="ltr/predictions_aggregators/predictions_aggregators_unittest.cc" alt="" coords="888,80,1272,107"/>
-<area shape="rect" href="$sum__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.cc" alt="" coords="1296,80,1653,107"/>
-<area shape="rect" href="$composition__scorer__unittest_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer_unittest.cc" alt="" coords="1677,80,2064,107"/>
-<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="2088,80,2389,107"/>
+<area shape="rect" href="$predictions__aggregators__unittest_8cc.html" title="ltr/predictions_aggregators/predictions_aggregators_unittest.cc" alt="" coords="891,80,1275,107"/>
+<area shape="rect" href="$sum__predictions__aggregator_8cc.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.cc" alt="" coords="1299,80,1659,107"/>
+<area shape="rect" href="$composition__scorer__unittest_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer_unittest.cc" alt="" coords="1683,80,2069,107"/>
+<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="2093,80,2395,107"/>
 </map>

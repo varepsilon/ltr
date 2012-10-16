@@ -1,6 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; Object \&gt;" alt="" coords="159,56,303,83"/>
-<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="145,208,316,235"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="144,208,317,235"/>
 <area shape="rect" href="$classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer." alt="" coords="149,385,312,412"/>
 <area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, CompositionScorer \&gt;" alt="" coords="367,5,660,32"/>
 <area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, DecisionTreeScorer \&gt;" alt="" coords="365,56,661,83"/>

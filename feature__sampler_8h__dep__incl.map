@@ -2,7 +2,7 @@
 <area shape="rect" href="$feature__sampler__learner_8h.html" title="ltr/feature_converters/feature_sampler_learner.h" alt="" coords="53,80,347,107"/>
 <area shape="rect" href="$feature__random__sampler__learner_8h.html" title="ltr/feature_converters/feature_random_sampler_learner.h" alt="" coords="397,80,741,107"/>
 <area shape="rect" href="$feature__converters__unittest_8cc.html" title="ltr/feature_converters/feature_converters_unittest.cc" alt="" coords="765,80,1083,107"/>
-<area shape="rect" href="$feature__sampler_8cc.html" title="ltr/feature_converters/feature_sampler.cc" alt="" coords="1107,80,1360,107"/>
+<area shape="rect" href="$feature__sampler_8cc.html" title="ltr/feature_converters/feature_sampler.cc" alt="" coords="1107,80,1363,107"/>
 <area shape="rect" href="$feature__converters__learner__unittest_8cc.html" title="ltr/feature_converters/feature_converters_learner_unittest.cc" alt="" coords="5,155,368,181"/>
 <area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="392,155,773,181"/>
 <area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="797,155,1064,181"/>

@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="1119,155,1292,181"/>
+<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="1117,155,1293,181"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="704,229,829,256"/>
 <area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="352,453,464,480"/>
 <area shape="rect" href="$splitter__unittest_8h.html" title="ltr/crossvalidation/splitter_unittest.h" alt="" coords="323,155,547,181"/>
-<area shape="rect" href="$k__fold__simple__splitter_8h.html" title="ltr/crossvalidation/k_fold_simple_splitter.h" alt="" coords="1519,80,1777,107"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1701,528,1843,555"/>
+<area shape="rect" href="$k__fold__simple__splitter_8h.html" title="ltr/crossvalidation/k_fold_simple_splitter.h" alt="" coords="1520,80,1781,107"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1701,528,1845,555"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="417,528,572,555"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="877,379,1067,405"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1243,304,1387,331"/>
@@ -12,5 +12,5 @@
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="715,379,853,405"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="403,304,544,331"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="669,304,864,331"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1197,453,1496,480"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1197,453,1499,480"/>
 </map>

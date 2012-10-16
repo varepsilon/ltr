@@ -1,20 +1,20 @@
 <map id="G" name="G">
 <area shape="rect" href="$learner_8h.html" title="ltr/learners/learner.h" alt="" coords="2865,80,3001,107"/>
-<area shape="rect" href="$data__random__sampler_8h.html" title="ltr/data_preprocessors/data_random_sampler.h" alt="" coords="4289,80,4580,107"/>
-<area shape="rect" href="$data__preprocessors__unittest_8cc.html" title="ltr/data_preprocessors/data_preprocessors_unittest.cc" alt="" coords="4849,155,5185,181"/>
-<area shape="rect" href="$data__sampler_8h.html" title="ltr/data_preprocessors/data_sampler.h" alt="" coords="4604,80,4847,107"/>
-<area shape="rect" href="$fake__data__preprocessor_8h.html" title="ltr/data_preprocessors/fake_data_preprocessor.h" alt="" coords="4871,80,5172,107"/>
-<area shape="rect" href="$crossvalidation_8h.html" title="ltr/crossvalidation/crossvalidation.h" alt="" coords="3932,155,4153,181"/>
-<area shape="rect" href="$crossvalidation__result_8h.html" title="ltr/crossvalidation/crossvalidation_result.h" alt="" coords="3649,155,3908,181"/>
-<area shape="rect" href="$best__feature__learner_8h.html" title="ltr/learners/best_feature_learner/best_feature_learner.h" alt="" coords="3292,155,3625,181"/>
-<area shape="rect" href="$crossvalidator_8h.html" title="ltr/crossvalidation/crossvalidator.h" alt="" coords="675,155,888,181"/>
-<area shape="rect" href="$bayesian__learner_8h.html" title="ltr/learners/bayesian_learner/bayesian_learner.h" alt="" coords="1452,155,1748,181"/>
-<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="2937,155,3268,181"/>
-<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="1772,155,2071,181"/>
-<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="2095,155,2313,181"/>
-<area shape="rect" href="$linear__learner_8h.html" title="ltr/learners/linear_learner/linear_learner.h" alt="" coords="2337,155,2591,181"/>
-<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="4228,155,4617,181"/>
-<area shape="rect" href="$generator__utility_8h.html" title="ltr/serialization_test/generator/generator_utility.h" alt="" coords="2615,155,2913,181"/>
+<area shape="rect" href="$data__random__sampler_8h.html" title="ltr/data_preprocessors/data_random_sampler.h" alt="" coords="4292,80,4585,107"/>
+<area shape="rect" href="$data__preprocessors__unittest_8cc.html" title="ltr/data_preprocessors/data_preprocessors_unittest.cc" alt="" coords="4856,155,5192,181"/>
+<area shape="rect" href="$data__sampler_8h.html" title="ltr/data_preprocessors/data_sampler.h" alt="" coords="4609,80,4852,107"/>
+<area shape="rect" href="$fake__data__preprocessor_8h.html" title="ltr/data_preprocessors/fake_data_preprocessor.h" alt="" coords="4876,80,5180,107"/>
+<area shape="rect" href="$crossvalidation_8h.html" title="ltr/crossvalidation/crossvalidation.h" alt="" coords="3936,155,4157,181"/>
+<area shape="rect" href="$crossvalidation__result_8h.html" title="ltr/crossvalidation/crossvalidation_result.h" alt="" coords="3653,155,3912,181"/>
+<area shape="rect" href="$best__feature__learner_8h.html" title="ltr/learners/best_feature_learner/best_feature_learner.h" alt="" coords="3293,155,3629,181"/>
+<area shape="rect" href="$crossvalidator_8h.html" title="ltr/crossvalidation/crossvalidator.h" alt="" coords="667,155,883,181"/>
+<area shape="rect" href="$bayesian__learner_8h.html" title="ltr/learners/bayesian_learner/bayesian_learner.h" alt="" coords="1443,155,1739,181"/>
+<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="2936,155,3269,181"/>
+<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="1763,155,2064,181"/>
+<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="2088,155,2309,181"/>
+<area shape="rect" href="$linear__learner_8h.html" title="ltr/learners/linear_learner/linear_learner.h" alt="" coords="2333,155,2589,181"/>
+<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="4232,155,4624,181"/>
+<area shape="rect" href="$generator__utility_8h.html" title="ltr/serialization_test/generator/generator_utility.h" alt="" coords="2613,155,2912,181"/>
 <area shape="rect" href="$crossvalidation__unittest_8cc.html" title="ltr/crossvalidation/crossvalidation_unittest.cc" alt="" coords="4181,229,4459,256"/>
 <area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="3363,229,3752,256"/>
 <area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="3776,229,4157,256"/>
@@ -31,5 +31,5 @@
 <area shape="rect" href="$nearest__neighbor__learner_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.cc" alt="" coords="4483,229,4880,256"/>
 <area shape="rect" href="$nearest__neighbor__learner__unittest_8cc.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc" alt="" coords="4904,229,5352,256"/>
 <area shape="rect" href="$generator__utility_8cc.html" title="ltr/serialization_test/generator/generator_utility.cc" alt="" coords="2811,229,3115,256"/>
-<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="4641,155,4817,181"/>
+<area shape="rect" href="$tostring__unittest_8cc.html" title="ltr/data/tostring_unittest.cc" alt="" coords="4648,155,4824,181"/>
 </map>

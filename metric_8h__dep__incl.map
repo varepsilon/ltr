@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="165,155,555,181"/>
+<area shape="rect" href="$nearest__neighbor__learner_8h.html" title="ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h" alt="" coords="163,155,555,181"/>
 <area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="427,229,693,256"/>
 <area shape="rect" href="$nearest__neighbor__scorer_8h.html" title="ltr/scorers/nearest_neighbor_scorer.h" alt="" coords="712,80,947,107"/>
 <area shape="rect" href="$euclidean__metric_8h.html" title="ltr/metrics/euclidean_metric.h" alt="" coords="1216,80,1408,107"/>

@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="3047,229,3220,256"/>
+<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="3045,229,3221,256"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="2848,304,2973,331"/>
-<area shape="rect" href="$learner_8h.html" title="ltr/learners/learner.h" alt="" coords="1668,80,1804,107"/>
+<area shape="rect" href="$learner_8h.html" title="ltr/learners/learner.h" alt="" coords="1663,80,1799,107"/>
 <area shape="rect" href="$measure_8h.html" title="ltr/measures/measure.h" alt="" coords="2597,229,2755,256"/>
 <area shape="rect" href="$multitable_8h.html" title="ltr/utility/multitable.h" alt="" coords="4208,528,4347,555"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="813,603,955,629"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="811,603,955,629"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="3769,603,3924,629"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1757,453,1947,480"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1688,379,1832,405"/>
@@ -13,14 +13,14 @@
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="2880,453,3019,480"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="2059,379,2200,405"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="2376,379,2571,405"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1587,528,1885,555"/>
-<area shape="rect" href="$data__preprocessor_8h.html" title="ltr/data_preprocessors/data_preprocessor.h" alt="" coords="1648,229,1920,256"/>
-<area shape="rect" href="$feature__converter__learner_8h.html" title="ltr/feature_converters/feature_converter_learner.h" alt="" coords="1773,155,2072,181"/>
-<area shape="rect" href="$reporter_8h.html" title="ltr/interfaces/reporter.h" alt="" coords="296,155,445,181"/>
-<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="1503,155,1631,181"/>
-<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1371,229,1624,256"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1587,528,1888,555"/>
+<area shape="rect" href="$data__preprocessor_8h.html" title="ltr/data_preprocessors/data_preprocessor.h" alt="" coords="1643,229,1915,256"/>
+<area shape="rect" href="$feature__converter__learner_8h.html" title="ltr/feature_converters/feature_converter_learner.h" alt="" coords="1768,155,2067,181"/>
+<area shape="rect" href="$reporter_8h.html" title="ltr/interfaces/reporter.h" alt="" coords="296,155,448,181"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="1495,155,1625,181"/>
+<area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1365,229,1619,256"/>
 <area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="1037,304,1208,331"/>
 <area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="3184,304,3323,331"/>
-<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="880,229,1096,256"/>
-<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="819,304,963,331"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="885,229,1104,256"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="816,304,963,331"/>
 </map>

@@ -1,16 +1,16 @@
 <map id="G" name="G">
-<area shape="rect" href="$base__probability__density__learner_8h.html" title="ltr/density_estimators/base_probability_density_learner.h" alt="" coords="800,80,1149,107"/>
-<area shape="rect" href="$non__linear__discriminant_8cc.html" title="ltr/density_estimators/non_linear_discriminant.cc" alt="" coords="1337,229,1641,256"/>
-<area shape="rect" href="$fisher__discriminant_8cc.html" title="ltr/density_estimators/fisher_discriminant.cc" alt="" coords="1457,80,1732,107"/>
-<area shape="rect" href="$eigen__converters_8cc.html" title="ltr/utility/eigen_converters.cc" alt="" coords="1756,80,1943,107"/>
+<area shape="rect" href="$base__probability__density__learner_8h.html" title="ltr/density_estimators/base_probability_density_learner.h" alt="" coords="804,80,1153,107"/>
+<area shape="rect" href="$non__linear__discriminant_8cc.html" title="ltr/density_estimators/non_linear_discriminant.cc" alt="" coords="1341,229,1645,256"/>
+<area shape="rect" href="$fisher__discriminant_8cc.html" title="ltr/density_estimators/fisher_discriminant.cc" alt="" coords="1461,80,1736,107"/>
+<area shape="rect" href="$eigen__converters_8cc.html" title="ltr/utility/eigen_converters.cc" alt="" coords="1760,80,1947,107"/>
 <area shape="rect" href="$fisher__discriminant__density__learner_8h.html" title="ltr/density_estimators/fisher_discriminant_density_learner.h" alt="" coords="43,304,405,331"/>
 <area shape="rect" href="$bayesian__learner_8h.html" title="ltr/learners/bayesian_learner/bayesian_learner.h" alt="" coords="665,379,961,405"/>
 <area shape="rect" href="$bayesian__learner__unittest_8cc.html" title="ltr/learners/bayesian_learner/bayesian_learner_unittest.cc" alt="" coords="40,453,395,480"/>
-<area shape="rect" href="$non__linear__discriminant__density__learner_8h.html" title="ltr/density_estimators/non_linear_discriminant_density_learner.h" alt="" coords="871,229,1263,256"/>
-<area shape="rect" href="$non__linear__discriminant_8h.html" title="ltr/density_estimators/non_linear_discriminant.h" alt="" coords="733,155,1029,181"/>
+<area shape="rect" href="$non__linear__discriminant__density__learner_8h.html" title="ltr/density_estimators/non_linear_discriminant_density_learner.h" alt="" coords="875,229,1267,256"/>
+<area shape="rect" href="$non__linear__discriminant_8h.html" title="ltr/density_estimators/non_linear_discriminant.h" alt="" coords="737,155,1033,181"/>
 <area shape="rect" href="$density__estimators__learners__unittests_8cc.html" title="ltr/density_estimators/density_estimators_learners_unittests.cc" alt="" coords="255,379,641,405"/>
 <area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="680,453,947,480"/>
-<area shape="rect" href="$quadratic__discriminant__density__learner_8h.html" title="ltr/density_estimators/quadratic_discriminant_density_learner.h" alt="" coords="875,304,1259,331"/>
-<area shape="rect" href="$normal__naive__bayes__density__learner_8h.html" title="ltr/density_estimators/normal_naive_bayes_density_learner.h" alt="" coords="480,304,851,331"/>
-<area shape="rect" href="$density__estimators__scorers__unittests_8cc.html" title="ltr/density_estimators/density_estimators_scorers_unittests.cc" alt="" coords="463,229,847,256"/>
+<area shape="rect" href="$quadratic__discriminant__density__learner_8h.html" title="ltr/density_estimators/quadratic_discriminant_density_learner.h" alt="" coords="877,304,1264,331"/>
+<area shape="rect" href="$normal__naive__bayes__density__learner_8h.html" title="ltr/density_estimators/normal_naive_bayes_density_learner.h" alt="" coords="480,304,853,331"/>
+<area shape="rect" href="$density__estimators__scorers__unittests_8cc.html" title="ltr/density_estimators/density_estimators_scorers_unittests.cc" alt="" coords="467,229,851,256"/>
 </map>

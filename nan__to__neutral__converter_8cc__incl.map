@@ -5,7 +5,7 @@
 <area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="2076,155,2215,181"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1231,229,1356,256"/>
 <area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="1281,453,1393,480"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1461,528,1603,555"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1460,528,1604,555"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="953,304,1095,331"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1524,304,1719,331"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="735,304,879,331"/>
@@ -13,5 +13,5 @@
 <area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1495,379,1631,405"/>
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1281,379,1420,405"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1281,528,1436,555"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="351,453,649,480"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="348,453,649,480"/>
 </map>

@@ -1,9 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="5,80,496,107"/>
 <area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="343,229,724,256"/>
-<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="571,80,1051,107"/>
-<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="1075,80,1405,107"/>
+<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="571,80,1053,107"/>
+<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="1077,80,1411,107"/>
 <area shape="rect" href="$ada__boost__learner_8h.html" title="ltr/learners/composition_learner/ada_boost_learner.h" alt="" coords="99,155,421,181"/>
-<area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="869,155,1259,181"/>
-<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1283,155,1549,181"/>
+<area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="873,155,1263,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="1287,155,1553,181"/>
 </map>

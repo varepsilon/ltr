@@ -1,22 +1,22 @@
 <map id="G" name="G">
-<area shape="rect" href="$nearest__neighbor__scorer_8h.html" title="ltr/scorers/nearest_neighbor_scorer.h" alt="" coords="1557,80,1792,107"/>
-<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="648,528,760,555"/>
+<area shape="rect" href="$nearest__neighbor__scorer_8h.html" title="ltr/scorers/nearest_neighbor_scorer.h" alt="" coords="1581,80,1816,107"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="647,528,759,555"/>
 <area shape="rect" href="$predictions__aggregator_8h.html" title="ltr/predictions_aggregators/predictions_aggregator.h" alt="" coords="1891,379,2211,405"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="2555,603,2696,629"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="2555,603,2699,629"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="845,304,971,331"/>
-<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="1572,155,1700,181"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="1556,155,1687,181"/>
 <area shape="rect" href="$metric_8h.html" title="ltr/metrics/metric.h" alt="" coords="1736,379,1867,405"/>
-<area shape="rect" href="$neighbor__weighter_8h.html" title="ltr/utility/neighbor_weighter.h" alt="" coords="2235,379,2419,405"/>
-<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="2304,453,2475,480"/>
+<area shape="rect" href="$neighbor__weighter_8h.html" title="ltr/utility/neighbor_weighter.h" alt="" coords="2235,379,2421,405"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="2303,453,2473,480"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1683,453,1872,480"/>
-<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1341,528,1485,555"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1813,528,2112,555"/>
-<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="637,603,792,629"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1340,528,1484,555"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1812,528,2113,555"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="636,603,791,629"/>
 <area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="915,453,1051,480"/>
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="549,453,688,480"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1227,379,1368,405"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="907,379,1101,405"/>
 <area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1225,229,1479,256"/>
-<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="2532,379,2748,405"/>
-<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2499,453,2643,480"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="2536,379,2755,405"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2497,453,2644,480"/>
 </map>

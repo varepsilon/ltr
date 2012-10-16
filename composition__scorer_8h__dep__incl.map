@@ -5,13 +5,13 @@
 <area shape="rect" href="$linear__composition__unittest_8cc.html" title="ltr/learners/composition_learner/linear_composition_unittest.cc" alt="" coords="1071,304,1452,331"/>
 <area shape="rect" href="$data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/data_set_weights_updater.h" alt="" coords="591,80,959,107"/>
 <area shape="rect" href="$ada__rank__data__set__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h" alt="" coords="5,155,432,181"/>
-<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="1581,155,1912,181"/>
-<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="2167,229,2433,256"/>
+<area shape="rect" href="$composition__learner_8h.html" title="ltr/learners/composition_learner/composition_learner.h" alt="" coords="1581,155,1915,181"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="2171,229,2437,256"/>
 <area shape="rect" href="$ada__rank__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h" alt="" coords="1016,155,1507,181"/>
-<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="1329,80,1759,107"/>
-<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="1936,155,2416,181"/>
-<area shape="rect" href="$composition__scorer_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer.cc" alt="" coords="2541,80,2877,107"/>
-<area shape="rect" href="$composition__scorer__unittest_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer_unittest.cc" alt="" coords="2901,80,3288,107"/>
-<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="3312,80,3613,107"/>
+<area shape="rect" href="$composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/composition_scorer_weights_updater.h" alt="" coords="1328,80,1760,107"/>
+<area shape="rect" href="$average__composition__scorer__weights__updater_8h.html" title="ltr/learners/composition_learner/average_composition_scorer_weights_updater.h" alt="" coords="1939,155,2421,181"/>
+<area shape="rect" href="$composition__scorer_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer.cc" alt="" coords="2547,80,2885,107"/>
+<area shape="rect" href="$composition__scorer__unittest_8cc.html" title="ltr/scorers/composition_scorers/composition_scorer_unittest.cc" alt="" coords="2909,80,3296,107"/>
+<area shape="rect" href="$linear__composition__scorer__unittest_8cc.html" title="ltr/scorers/linear_composition_scorer_unittest.cc" alt="" coords="3320,80,3621,107"/>
 <area shape="rect" href="$composition__learner__unittest_8cc.html" title="ltr/learners/composition_learner/composition_learner_unittest.cc" alt="" coords="1567,229,1956,256"/>
 </map>

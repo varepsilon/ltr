@@ -5,7 +5,7 @@
 <area shape="rect" href="$classltr_1_1_data_set.html" title="ltr::DataSet\&lt; ObjectType \&gt;" alt="" coords="245,183,421,209"/>
 <area shape="rect" href="$classltr_1_1composition_1_1_data_set_weights_updater.html" title="ltr::composition::DataSetWeightsUpdater\&lt; Object \&gt;" alt="" coords="173,233,493,260"/>
 <area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; Object \&gt;" alt="" coords="261,284,405,311"/>
-<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="248,335,419,361"/>
+<area shape="rect" href="$classltr_1_1_learner.html" title="ltr::Learner\&lt; ObjectType \&gt;" alt="" coords="247,335,420,361"/>
 <area shape="rect" href="$classltr_1_1_base_metric.html" title="ltr::BaseMetric" alt="" coords="280,385,387,412"/>
 <area shape="rect" href="$classltr_1_1composition_1_1_composition_scorer_weights_updater.html" title="ltr::composition::CompositionScorerWeightsUpdater\&lt; TElement \&gt;" alt="" coords="133,436,533,463"/>
 <area shape="rect" href="$classltr_1_1composition_1_1_data_set_weights_updater.html" title="ltr::composition::DataSetWeightsUpdater\&lt; TElement \&gt;" alt="" coords="165,487,501,513"/>
@@ -19,7 +19,7 @@
 <area shape="rect" href="$classltr_1_1_scorer.html" title="ltr::Scorer" alt="" coords="295,1069,372,1096"/>
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; Object \&gt;" alt="" coords="257,1120,409,1147"/>
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; ObjectType \&gt;" alt="" coords="244,1171,423,1197"/>
-<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="239,1221,428,1248"/>
+<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="237,1221,429,1248"/>
 <area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, CompositionScorer \&gt;" alt="" coords="659,5,952,32"/>
 <area shape="rect" href="$classltr_1_1_base_learner.html" title="ltr::BaseLearner\&lt; Object, DecisionTreeScorer \&gt;" alt="" coords="657,56,953,83"/>
 <area shape="rect" href="$classltr_1_1_euclidean_metric.html" title="ltr::EuclideanMetric" alt="" coords="739,107,872,133"/>

@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="1097,155,1271,181"/>
+<area shape="rect" href="$splitter_8h.html" title="ltr/crossvalidation/splitter.h" alt="" coords="1096,155,1272,181"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="692,229,817,256"/>
 <area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="513,453,625,480"/>
 <area shape="rect" href="$splitter__unittest_8h.html" title="ltr/crossvalidation/splitter_unittest.h" alt="" coords="177,155,401,181"/>
-<area shape="rect" href="$tk__fold__simple__splitter_8h.html" title="ltr/crossvalidation/tk_fold_simple_splitter.h" alt="" coords="1580,80,1844,107"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1725,528,1867,555"/>
+<area shape="rect" href="$tk__fold__simple__splitter_8h.html" title="ltr/crossvalidation/tk_fold_simple_splitter.h" alt="" coords="1583,80,1847,107"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="1727,528,1871,555"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="673,528,828,555"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1124,379,1313,405"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1112,304,1256,331"/>
@@ -12,6 +12,6 @@
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="751,379,889,405"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="129,304,271,331"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="843,304,1037,331"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1004,453,1303,480"/>
-<area shape="rect" href="$random__number__generator_8h.html" title="ltr/utility/random_number_generator.h" alt="" coords="1967,155,2201,181"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1004,453,1305,480"/>
+<area shape="rect" href="$random__number__generator_8h.html" title="ltr/utility/random_number_generator.h" alt="" coords="1971,155,2205,181"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" href="$neighbor__weighter_8h.html" title="ltr/utility/neighbor_weighter.h" alt="" coords="505,80,689,107"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="580,229,879,256"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="831,304,972,331"/>
+<area shape="rect" href="$neighbor__weighter_8h.html" title="ltr/utility/neighbor_weighter.h" alt="" coords="504,80,691,107"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="579,229,880,256"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="831,304,975,331"/>
 <area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="333,229,504,256"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="635,155,824,181"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="652,304,807,331"/>

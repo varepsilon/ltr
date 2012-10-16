@@ -108,10 +108,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Introduction</h2>
 <p>The key concept of LTR is <a class="el" href="classltr_1_1_scorer.html">Scorer</a>. <a class="el" href="classltr_1_1_scorer.html">Scorer</a> is a functor which computes score of an object:</p>
 <div align="center">
-<iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_1.svg" width="476" height="98"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<img src="dot_inline_dotgraph_1.png" alt="dot_inline_dotgraph_1.png" border="0" usemap="#dot_inline_dotgraph_1.map"/>
+<map name="dot_inline_dotgraph_1.map" id="dot_inline_dotgraph_1.map"><area shape="poly" href="classltr_1_1_object.html" title="Object" alt="" coords="136,49 133,41 126,34 113,29 98,26 81,25 63,26 48,29 36,34 28,41 25,49 28,56 36,63 48,68 63,71 81,73 98,71 113,68 126,63 133,56"/><area shape="rect" href="classltr_1_1_scorer.html" title="Scorer" alt="" coords="249,25,329,73"/></map>
+</div>
 <p><a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> learn a train data to make the <a class="el" href="classltr_1_1_scorer.html">Scorer</a> which aproximates the actual labels of the objects in the train data:</p>
 <div align="center">
-<iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_2.svg" width="543" height="98"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<img src="dot_inline_dotgraph_2.png" alt="dot_inline_dotgraph_2.png" border="0" usemap="#dot_inline_dotgraph_2.map"/>
+<map name="dot_inline_dotgraph_2.map" id="dot_inline_dotgraph_2.map"><area shape="rect" href="classltr_1_1_data_set.html" title="DataSet" alt="" coords="26,25,122,73"/><area shape="rect" href="classltr_1_1_learner.html" title="Learner" alt="" coords="233,25,326,73"/><area shape="rect" href="classltr_1_1_scorer.html" title="Scorer" alt="" coords="438,25,518,73"/></map>
+</div>
 <p>One should use a <a class="el" href="classltr_1_1_measure.html">Measure</a> to check the quality of aproximation.</p>
 <p>LTR was originally designed to solve learning to rank problem. But actualy it can be used to solve a various problems of machine learning. The difference is in the type of train data, usage of the result scorer and the target metric:</p>
 <table class="doxtable">
@@ -286,7 +290,7 @@ f(x, y) = 10 + 1 * x + 1 * y
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Oct 16 2012 12:30:03 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 16 2012 12:45:33 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -1,18 +1,18 @@
 <map id="G" name="G">
-<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="915,155,1133,181"/>
-<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="1444,229,1721,256"/>
+<area shape="rect" href="$gp__learner_8h.html" title="ltr/learners/gp_learner/gp_learner.h" alt="" coords="915,155,1136,181"/>
+<area shape="rect" href="$gp__learner__unittest_8cc.html" title="ltr/learners/gp_learner/gp_learner_unittest.cc" alt="" coords="1447,229,1724,256"/>
 <area shape="rect" href="$default__selection__strategy_8h.html" title="ltr/learners/gp_learner/strategies/default_selection_strategy.h" alt="" coords="265,80,636,107"/>
 <area shape="rect" href="$default__crossover__strategy_8h.html" title="ltr/learners/gp_learner/strategies/default_crossover_strategy.h" alt="" coords="689,80,1065,107"/>
 <area shape="rect" href="$default__mutation__standart__strategy_8h.html" title="ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h" alt="" coords="1140,80,1564,107"/>
 <area shape="rect" href="$default__mutation__swap__strategy_8h.html" title="ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h" alt="" coords="1639,80,2047,107"/>
 <area shape="rect" href="$select__top__trees__strategy_8h.html" title="ltr/learners/gp_learner/strategies/select_top_trees_strategy.h" alt="" coords="2071,80,2441,107"/>
 <area shape="rect" href="$crossover__adjacent__trees__strategy_8h.html" title="ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h" alt="" coords="2465,80,2887,107"/>
-<area shape="rect" href="$gp__learner_8cc.html" title="ltr/learners/gp_learner/gp_learner.cc" alt="" coords="1005,229,1232,256"/>
-<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="715,229,981,256"/>
+<area shape="rect" href="$gp__learner_8cc.html" title="ltr/learners/gp_learner/gp_learner.cc" alt="" coords="1007,229,1233,256"/>
+<area shape="rect" href="$generator_8cc.html" title="ltr/serialization_test/generator/generator.cc" alt="" coords="716,229,983,256"/>
 <area shape="rect" href="$default__selection__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_selection_strategy.cc" alt="" coords="5,155,384,181"/>
 <area shape="rect" href="$default__crossover__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_crossover_strategy.cc" alt="" coords="459,155,840,181"/>
-<area shape="rect" href="$default__mutation__standart__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.cc" alt="" coords="1208,155,1640,181"/>
-<area shape="rect" href="$default__mutation__swap__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.cc" alt="" coords="1765,155,2179,181"/>
-<area shape="rect" href="$select__top__trees__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/select_top_trees_strategy.cc" alt="" coords="2253,155,2632,181"/>
-<area shape="rect" href="$crossover__adjacent__trees__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.cc" alt="" coords="2707,155,3136,181"/>
+<area shape="rect" href="$default__mutation__standart__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.cc" alt="" coords="1211,155,1643,181"/>
+<area shape="rect" href="$default__mutation__swap__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.cc" alt="" coords="1768,155,2181,181"/>
+<area shape="rect" href="$select__top__trees__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/select_top_trees_strategy.cc" alt="" coords="2256,155,2635,181"/>
+<area shape="rect" href="$crossover__adjacent__trees__strategy_8cc.html" title="ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.cc" alt="" coords="2709,155,3139,181"/>
 </map>

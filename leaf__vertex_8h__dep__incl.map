@@ -1,7 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" href="$leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/leaf_generator.h" alt="" coords="476,80,820,107"/>
-<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="295,155,593,181"/>
-<area shape="rect" href="$most__common__label__leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h" alt="" coords="617,155,1087,181"/>
+<area shape="rect" href="$decision__tree__learner_8h.html" title="ltr/learners/decision_tree/decision_tree_learner.h" alt="" coords="292,155,593,181"/>
+<area shape="rect" href="$most__common__label__leaf__generator_8h.html" title="ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h" alt="" coords="617,155,1089,181"/>
 <area shape="rect" href="$leaf__vertex_8cc.html" title="ltr/learners/decision_tree/vertex/leaf_vertex.cc" alt="" coords="895,80,1177,107"/>
 <area shape="rect" href="$decision__tree__learner_8cc.html" title="ltr/learners/decision_tree/decision_tree_learner.cc" alt="" coords="5,229,312,256"/>
 <area shape="rect" href="$decision__tree__unittest_8cc.html" title="ltr/learners/decision_tree/decision_tree_unittest.cc" alt="" coords="336,229,648,256"/>

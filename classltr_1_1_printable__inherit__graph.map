@@ -15,7 +15,7 @@
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; Object \&gt;" alt="" coords="201,1297,353,1324"/>
 <area shape="rect" href="$classltr_1_1_measure.html" title="ltr::Measure\&lt; ObjectType \&gt;" alt="" coords="188,1348,367,1375"/>
 <area shape="rect" href="$classltr_1_1utility_1_1_multi_table.html" title="ltr::utility::MultiTable\&lt; double, 4 \&gt;" alt="" coords="171,1399,384,1425"/>
-<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="183,1449,372,1476"/>
+<area shape="rect" href="$classltr_1_1cv_1_1_splitter.html" title="ltr::cv::Splitter\&lt; ObjectType \&gt;" alt="" coords="181,1449,373,1476"/>
 <area shape="rect" href="$classltr_1_1cv_1_1_k_fold_simple_splitter.html" title="ltr::cv::KFoldSimpleSplitter\&lt; TElement \&gt;" alt="" coords="545,5,799,32"/>
 <area shape="rect" href="$classltr_1_1cv_1_1_leave_one_out_splitter.html" title="ltr::cv::LeaveOneOutSplitter\&lt; TElement \&gt;" alt="" coords="543,56,801,83"/>
 <area shape="rect" href="$classltr_1_1cv_1_1_t_k_fold_simple_splitter.html" title="ltr::cv::TKFoldSimpleSplitter\&lt; TElement \&gt;" alt="" coords="541,107,803,133"/>

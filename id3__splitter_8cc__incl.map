@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" href="$id3__splitter_8h.html" title="ltr/learners/decision_tree/id3_splitter.h" alt="" coords="1920,80,2160,107"/>
-<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="2516,379,2655,405"/>
+<area shape="rect" href="$id3__splitter_8h.html" title="ltr/learners/decision_tree/id3_splitter.h" alt="" coords="1923,80,2163,107"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="2519,379,2657,405"/>
 <area shape="rect" href="$base__splitter_8h.html" title="ltr/learners/decision_tree/base_splitter.h" alt="" coords="663,155,913,181"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="2419,677,2560,704"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="2420,677,2564,704"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="725,379,851,405"/>
 <area shape="rect" href="$data__set__statistics_8h.html" title="ltr/data/utility/data_set_statistics.h" alt="" coords="496,229,717,256"/>
 <area shape="rect" href="$vertex__with__data_8h.html" title="ltr/learners/decision_tree/vertex/vertex_with_data.h" alt="" coords="825,304,1137,331"/>
@@ -11,14 +11,14 @@
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="689,528,828,555"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1048,453,1189,480"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="691,453,885,480"/>
-<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1827,677,1971,704"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="1828,677,1972,704"/>
 <area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="573,677,728,704"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1061,528,1251,555"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1192,603,1491,629"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1192,603,1493,629"/>
 <area shape="rect" href="$data__set__label__statistics_8h.html" title="ltr/data/utility/data_set_label_statistics.h" alt="" coords="444,304,700,331"/>
-<area shape="rect" href="$vertex_8h.html" title="ltr/learners/decision_tree/vertex/vertex.h" alt="" coords="1552,379,1803,405"/>
-<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="2108,453,2324,480"/>
-<area shape="rect" href="$condition_8h.html" title="ltr/learners/decision_tree/condition/condition.h" alt="" coords="1869,528,2155,555"/>
-<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2229,528,2373,555"/>
-<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="1927,603,2097,629"/>
+<area shape="rect" href="$vertex_8h.html" title="ltr/learners/decision_tree/vertex/vertex.h" alt="" coords="1555,379,1805,405"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="2108,453,2327,480"/>
+<area shape="rect" href="$condition_8h.html" title="ltr/learners/decision_tree/condition/condition.h" alt="" coords="1872,528,2157,555"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2232,528,2379,555"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="1929,603,2100,629"/>
 </map>

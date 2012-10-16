@@ -1,25 +1,25 @@
 <map id="G" name="G">
-<area shape="rect" href="$base__probability__density__estimator_8h.html" title="ltr/density_estimators/base_probability_density_estimator.h" alt="" coords="2301,229,2664,256"/>
-<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="885,677,997,704"/>
+<area shape="rect" href="$base__probability__density__estimator_8h.html" title="ltr/density_estimators/base_probability_density_estimator.h" alt="" coords="2300,229,2665,256"/>
+<area shape="rect" href="$object_8h.html" title="ltr/data/object.h" alt="" coords="883,677,995,704"/>
 <area shape="rect" href="$data__set_8h.html" title="ltr/data/data_set.h" alt="" coords="1251,453,1376,480"/>
 <area shape="rect" href="$base__probability__density__learner_8h.html" title="ltr/density_estimators/base_probability_density_learner.h" alt="" coords="1351,155,1700,181"/>
 <area shape="rect" href="$non__linear__discriminant_8h.html" title="ltr/density_estimators/non_linear_discriminant.h" alt="" coords="980,80,1276,107"/>
 <area shape="rect" href="$data__set__converters_8h.html" title="ltr/data/utility/data_set_converters.h" alt="" coords="400,379,627,405"/>
 <area shape="rect" href="$statistics__calculation_8h.html" title="ltr/utility/statistics_calculation.h" alt="" coords="752,379,955,405"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="3013,752,3155,779"/>
-<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="2503,304,2631,331"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="3013,752,3157,779"/>
+<area shape="rect" href="$scorer_8h.html" title="ltr/scorers/scorer.h" alt="" coords="2501,304,2632,331"/>
 <area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1885,603,2075,629"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1827,677,2125,704"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1824,677,2125,704"/>
 <area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="3029,603,3200,629"/>
-<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1059,752,1213,779"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1056,752,1211,779"/>
 <area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="2605,677,2749,704"/>
 <area shape="rect" href="$feature__converter_8h.html" title="ltr/feature_converters/feature_converter.h" alt="" coords="1841,379,2095,405"/>
-<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="3047,528,3263,555"/>
+<area shape="rect" href="$serializable__functor_8h.html" title="ltr/interfaces/serializable_functor.h" alt="" coords="3045,528,3264,555"/>
 <area shape="rect" href="$feature__info_8h.html" title="ltr/data/feature_info.h" alt="" coords="1872,528,2013,555"/>
 <area shape="rect" href="$per__object__accessor_8h.html" title="ltr/data/per_object_accessor.h" alt="" coords="1603,528,1797,555"/>
 <area shape="rect" href="$object__list_8h.html" title="ltr/data/object_list.h" alt="" coords="1523,603,1659,629"/>
 <area shape="rect" href="$object__pair_8h.html" title="ltr/data/object_pair.h" alt="" coords="1360,603,1499,629"/>
-<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2765,603,2909,629"/>
+<area shape="rect" href="$functor_8h.html" title="ltr/interfaces/functor.h" alt="" coords="2764,603,2911,629"/>
 <area shape="rect" href="$eigen__converters_8h.html" title="ltr/utility/eigen_converters.h" alt="" coords="811,229,989,256"/>
-<area shape="rect" href="$indices_8h.html" title="ltr/utility/indices.h" alt="" coords="1224,677,1347,704"/>
+<area shape="rect" href="$indices_8h.html" title="ltr/utility/indices.h" alt="" coords="1221,677,1344,704"/>
 </map>
