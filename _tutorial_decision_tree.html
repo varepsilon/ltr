@@ -110,63 +110,58 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 </div>
 <div class="textblock"><p>A decision tree is a learner that uses a tree-like graph or model of decisions and their possible consequences.</p>
-<p>To learn more visit <a href="http://en.wikipedia.org/wiki/Decision_tree">http://en.wikipedia.org/wiki/Decision_tree</a></p>
-<p>If you want to use DecisionTree algorithm you should choose some parameters which are used to build tree: </p>
+<p>To learn more visit <a href="http://en.wikipedia.org/wiki/Decision_tree_learning">http://en.wikipedia.org/wiki/Decision_tree_learning</a></p>
+<p>If you want to use <a class="el" href="classltr_1_1decision__tree_1_1_decision_tree.html">DecisionTree</a> algorithm you should choose some parameters:</p>
 <ul>
-<li>BaseSplitter </li>
-<li>StopSplittingCriteria </li>
-<li>LeafGenerator</li>
+<li><a class="el" href="classltr_1_1decision__tree_1_1_base_splitter.html">BaseSplitter</a></li>
+<li><a class="el" href="classltr_1_1decision__tree_1_1_stop_splitting_criteria.html">StopSplittingCriteria</a></li>
+<li><a class="el" href="classltr_1_1decision__tree_1_1_leaf_generator.html">LeafGenerator</a></li>
 </ul>
-<h2><a class="anchor" id="TutorialSplitter"></a>
+<p>You can add <a class="el" href="classltr_1_1decision__tree_1_1_stop_splitting_criteria.html">StopSplittingCriteria</a> using DesicionTreeLearner::addStopSplittingCriteria method (you can add more than one criteria if needed).</p>
+<div class="fragment"><pre class="fragment">DecisionTreeLearner decision_tree_learner(<span class="keyword">new</span> ID3Splitter, <span class="keyword">new</span> MostCommonLabelLeafGenerator);
+decision_tree_learner.addStopSplittingCriteria(<span class="keyword">new</span> SameLabelStopSplittingCriteria);
+</pre></div><h2><a class="anchor" id="TutorialSplitter"></a>
 Splitters</h2>
-<p>Splitter is used to generate next layer of vertices in tree by given current layer.</p>
+<p><a class="el" href="classltr_1_1decision__tree_1_1_base_splitter.html">Splitter </a> is used to generate next layer of vertices in tree by given current layer.</p>
 <h3><a class="anchor" id="SplittersList"></a>
 List of available splitters</h3>
 <table class="doxtable">
 <tr>
 <th>Splitter </th><th>Description</th></tr>
 <tr>
-<td>ID3Splitter </td><td>Implements ID3 splitting aplorithm (<a href="http://en.wikipedia.org/wiki/ID3_algorithm">http://en.wikipedia.org/wiki/ID3_algorithm</a>) </td></tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_i_d3_splitter.html">ID3Splitter</a> </td><td>Implements ID3 splitting aplorithm (<a href="http://en.wikipedia.org/wiki/ID3_algorithm">http://en.wikipedia.org/wiki/ID3_algorithm</a>) </td></tr>
 <tr>
-<td>ObliviousTreeSplitter </td><td>Implements ObliviousTree splitting aplorithm (<a href="http://ijcai.org/Past%20Proceedings/IJCAI-95-VOL2/PDF/008.pdf">Oblivious decision trees graphs and top down pruning </a>) </td></tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_oblivious_tree_splitter.html">ObliviousTreeSplitter</a> </td><td>Implements ObliviousTree splitting aplorithm (<a href="http://ijcai.org/Past%20Proceedings/IJCAI-95-VOL2/PDF/008.pdf">Oblivious decision trees graphs and top down pruning </a>) </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialStopSplittingCriteria"></a>
 Stop splitting criterias</h2>
-<p>StopSplittingCriteria checks the given data and desides should we generate leaf now or not.</p>
+<p><a class="el" href="classltr_1_1decision__tree_1_1_stop_splitting_criteria.html">StopSplittingCriteria</a> checks the given data and desides should we generate leaf now or not.</p>
 <h3><a class="anchor" id="StopSplittingCriteriasList"></a>
 List of available stop splitting criterias</h3>
 <table class="doxtable">
 <tr>
 <th>StopSplittingCriteria </th><th>Description</th></tr>
 <tr>
-<td>SameLabelStopSplittingCriteria </td><td>It decides to generate leaf when all actual labels in data are equal or almost equal </td></tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_same_label_stop_splitting_criteria.html">SameLabelStopSplittingCriteria</a> </td><td>It decides to generate leaf when all actual labels in data are equal or almost equal </td></tr>
 <tr>
-<td>DataSizeStopSplittingCriteria </td><td>It decides to generate leaf when data size less then min_vertex_size (parameter) </td></tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_data_size_stop_splitting_criteria.html">DataSizeStopSplittingCriteria</a> </td><td>It decides to generate leaf when data size less then min_vertex_size (parameter) </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialLeafGenerator"></a>
 Leaf generators</h2>
-<p>StopSplittingCriteria checks the given data and desides should we generate leaf now or not.</p>
+<p>LeafGenerators generate list based on the given data.</p>
 <h3><a class="anchor" id="LeafGeneratorsList"></a>
 List of available leaf generators</h3>
 <table class="doxtable">
 <tr>
 <th>LeafGenerator </th><th>Description</th></tr>
 <tr>
-<td>MostCommonLabelLeafGenerator </td><td>Generate the leaf with value equals to the most common actual label in given data </td></tr>
+<td><a class="el" href="classltr_1_1decision__tree_1_1_most_common_label_leaf_generator.html">MostCommonLabelLeafGenerator</a> </td><td>Generate the leaf with value equals to the most common actual label in given data </td></tr>
 </table>
 <h2><a class="anchor" id="TutorialDecisionTreeLearner"></a>
 Decision tree learner</h2>
-<p>To use LTR DecisionTreeLearner you need to: </p>
-<ul>
-<li>Decide what parameters of DecisionTree are good for you and declare this parameters </li>
-<li>Create DecisionTreeLearner with selected Splitter and LeafGenerator </li>
-<li>Add selected StopSplittingCriteria using addStopSplittingCriteria() method (you can add more than one criteria if needed) </li>
-<li>Learn DecisionTreeLearner on your DaraSet using learn() method </li>
-<li>Make <a class="el" href="classltr_1_1_scorer.html">Scorer</a> using make() method</li>
-</ul>
 <table class="doxtable">
 <tr>
-<th>Example: usage of LTR DecisionTreeLearner </th><th>Output:</th></tr>
+<th>Example: usage of LTR <a class="el" href="classltr_1_1decision__tree_1_1_decision_tree_learner.html" title="DecisionTreeLearner Builds decision tree for given data.">DecisionTreeLearner</a> </th><th>Output:</th></tr>
 <tr>
 <td><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;iostream&gt;</span>
 
@@ -244,7 +239,7 @@ Second test point label = 2
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Oct 16 2012 14:36:50 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 23 2012 11:03:01 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
