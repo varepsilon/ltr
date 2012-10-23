@@ -4,51 +4,208 @@ namespace ltr {
 
 \tableofcontents
 
+In order to create new algorithm, You have to create both classes of the algorithm, including learner class and scorer class.
+Let us implement KNN.
+
 \section CreatingNewScorer Creating new scorer
 
-It is necessary to create a scorer before creating a learner. \n
-First of all you should create a scorer class inherited from Scorer abstract class. Let's call this class "NewScorer" \n
-It's recommended to create a typedef for the shared pointer:
+<b>NOTE</b>: all the learners and scorers must be located in the ltr namespace.
+
+First of all, the NNScorer class must be publicly inherited from the class Scorer. Thus, I write in header file (nearest_neighbour_scorer.h):
+
 \code
-typedef ltr::utility::shared_ptr<NewScorer> Ptr;
+#include "ltr/scorers/scorer.h"
+
+namespace ltr {
+class NNScorer : public Scorer {
+
+};
 \endcode
 
-Then you should decide which field your scorer will content and create them. \n
-After this create constructors.\n
-Now you should create method scoreImpl, that has signature, written in the code below:
+Now I need to define some inner pointer Ptr to my class. 
+
 \code
-virtual double scoreImpl(const Object& object) const
+typedef ltr::utility::shared_ptr<NNScorer> Ptr;
 \endcode
 
-scoreImpl is the most important method of the class. It implements scoring of the recieved object.
+Obviously, the nearest neighbor scorer will need the measure to calculate the distance between two objects.
+In order to not to write the long type of pointer to some measure, I write typedef:
 
-Also NewScorer should contain method generateCppCodeImpl with such signature:
 \code
-virtual string generateCppCodeImpl(const string& object_name) const;
+typedef ltr::utility::shared_ptr<ltr::BaseMetric> BaseMetricPtr;
 \endcode
-This function will serialize object of NewClass into valid C++ code.
 
+These typedefs may be needed outside of the class. Thus I define those as a public typedefs.\n\n
+
+
+Now I need to think about the structures that I will need to score objects. I think that I will use following in a scoring process:
+
+\code
+
+BaseMetricPtr metric_;
+DataSet<Object> data_;
+NeighborWeighter::Ptr neighbor_weighter_;
+PredictionsAggregator::Ptr predictions_aggregator_;
+int number_of_neighbors_to_process_;
+
+\endcode
+
+These are inner scorer fields, so I define them as private.\n\n
+
+Now we need to define all the constructors:
+
+\code
+  explicit NNScorer() {
+  }
+
+  explicit NNScorer(BaseMetricPtr metric) : metric_(metric) {
+  }
+
+  explicit NNScorer(BaseMetricPtr metric,
+           DataSet<Object> data,
+           NeighborWeighter::Ptr neighbor_weighter,
+           PredictionsAggregator::Ptr predictions_aggregator,
+           int number_of_neighbors_to_process) :
+    metric_(metric),
+    data_(data),
+    neighbor_weighter_(neighbor_weighter),
+    predictions_aggregator_(predictions_aggregator),
+    number_of_neighbors_to_process_(number_of_neighbors_to_process) {
+  }
+\endcode
+
+This is a public section.\n\n
+
+And, finally, do not forget about the functions that are common for all the scorers:
+
+\code
+
+virtual double scoreImpl(const Object& object) const;
+virtual string generateCppCodeImpl(const string& function_name) const;
+virtual string getDefaultAlias() const {return "NNscorer";}
+
+\endcode
+
+These functions are not needed outside the class in the hand and the class Scorer, so it is a private section.\n
+\n
+
+And
+
+\code
+string toString() const;
+\endcode
+
+This code must be in public section.
+
+<b>NOTE</b>: Do not forget about the include section and the using section.
+
+Now we're done with the routine. You can proceed with implementing the algorithm in the body of the scoreImpl.
+Do not forget to implement the toString(), generateCppCodeImpl methods. They are important!
+
+<b>NOTE</b>: If your class is a template class, it is highly probable that in order to have no problems with a linker, You have to implement methods in the header file instead of cc file.
 
 
 \section CreatingNewLearner Creating new learner
-Now if you have created a NewScorer class, you can start to create an own learner. Let's call this class "NewLearner" \n
-This class must be inharited from BaseLearner.
-First of all you should create a typedef for the shared pointer:
+
+After You're done with scorer, You can proceed with the creation of your Learner.\n\n
+
+First of all, let us be definite with terms: Learner class is an ancestor class for all the Learners in the LTR. It has only one template argument (the element type). The only inheritor of this class BaseLearner that has two template arguments: the element type and the type of the specific scorer to return with make function.\n\n
+
+Now let us proceed with the NNLearner:
+
+As we know, the Learner must create the NNScorer with the make function. Thus we write in nearest_neighbor_learner.h:
+
 \code
-typedef ltr::utility::shared_ptr<NewLearner> Ptr;
+#include "ltr/learners/learner.h"
+
+template<class TElement>
+class NNLearner : public BaseLearner<TElement, NNScorer> {
+
+};
 \endcode
 
-Then create fields that are necessary for the NewLearner.
-You should create at least two constructors. \n
-First container will recieve ParametersContainer and the second will recieve explicit parameters that will initialize field of the NewClass.
+After that we have to define the pointer to our class.
 
-After creating all this stuff, you can start to create the most important method of the learner - learnImpl:
 \code
-void learnImpl(const DataSet<TElement>& data, NewScorer* scorer)
+typedef ltr::utility::shared_ptr<NNLearner> Ptr;
 \endcode
-As you see, this function recieves learning data set and pointer to NewScorer. \n
-After the learning process this method must generate a NewScorer. \n
-Then you can use generated scorer to predict the labels of objects. \n
+
+It must be a public section.\n\n
+
+Now we must think about the fields that we will use in learning process. I think, I will use in a learning process following:
+
+\code
+BaseMetric::Ptr metric_;
+NeighborWeighter::Ptr neighbor_weighter_;
+PredictionsAggregator::Ptr predictions_aggregator_;
+int number_of_neighbors_to_process_;
+\endcode
+
+This must be a private section.\n\n
+
+Now we must provide a collection of all necessary constructors.
+
+\code
+explicit NNLearner() {
+  // DO NOTHING
+}
+
+explicit NNLearner(const ParametersContainer& parameters) {
+  metric_ = parameters.Get<BaseMetric::Ptr>("metric");
+  neighbor_weighter_ =
+    parameters.Get<NeighborWeighter::Ptr>("neighbor_weighter");
+  predictions_aggregator_
+    = parameters.Get<PredictionsAggregator::Ptr>("predictions_aggregator");
+  number_of_neighbors_to_process_ =
+    parameters.Get<int>("number_of_neighbors_to_process");
+}
+
+explicit NNLearner(BaseMetric::Ptr metric,
+          NeighborWeighter::Ptr neighbor_weighter,
+          PredictionsAggregator::Ptr predictions_aggregator,
+          int number_of_neighbors_to_process) :
+  metric_(metric),
+  neighbor_weighter_(neighbor_weighter),
+  predictions_aggregator_(predictions_aggregator),
+  number_of_neighbors_to_process_(number_of_neighbors_to_process) {
+}
+\endcode
+
+And all the setters and getters collection. You can do it manually, while we are using a macros. It does nothing but generation of the collection of simple setters and getters:
+
+\code
+GET_SET(typename BaseMetric::Ptr, metric);
+GET_SET(NeighborWeighter::Ptr, neighbor_weighter);
+GET_SET(PredictionsAggregator::Ptr, predictions_aggregator);
+GET_SET(int, number_of_neighbors_to_process);
+\endcode
+
+This must be a public section.\n\n
+
+And after that we must provide all the learner's stuff:
+
+\code
+  void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
+  virtual string getDefaultAlias() const {return "NearestNeightborLearner";}
+\endcode
+
+This must be a private section.\n\n
+
+Now we can implement the learning process.
+
+That's all!
+
+
+
+
+
+
+
 
 **/
+
+
+
+
+
 }

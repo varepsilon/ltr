@@ -32,7 +32,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
  public:
   typedef ltr::utility::shared_ptr<NNLearner> Ptr;
 
-  NNLearner() {
+  explicit NNLearner() {
     // DO NOTHING
   }
 
@@ -46,7 +46,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
       parameters.Get<int>("number_of_neighbors_to_process");
   }
 
-  NNLearner(BaseMetric::Ptr metric,
+  explicit NNLearner(BaseMetric::Ptr metric,
             NeighborWeighter::Ptr neighbor_weighter,
             PredictionsAggregator::Ptr predictions_aggregator,
             int number_of_neighbors_to_process) :
