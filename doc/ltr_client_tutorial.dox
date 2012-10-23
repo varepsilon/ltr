@@ -1,0 +1,224 @@
+namespace ltr {
+/** \page LTRClientTutorial LTR Client Tutorial for non-programmers
+	
+\tableofcontents
+
+LTR client is an easy way to make predictions and test algorithms.
+
+To use LTR client you've got to have XML-like ltr config config.cfg file.
+
+Suppose I need to make some predictions for a dataset that is named test.txt basing on the marks in learn.txt dataset.
+
+So we start writing the code. To indicate that this is an LTR-client source, we write:
+
+~~~~~~~~~~~~~~{.xml}
+<LTR_experiment>
+  ***LTR-client code***
+</LTR_experiment>
+~~~~~~~~~~~~~~
+
+We can configurate the LTR-client in the config section inside the LTR_experiment tags:
+
+~~~~~~~~~~~~~{.xml}
+  <config>
+    <root_directory>directory_with_files</root_directory>
+  </config>
+~~~~~~~~~~~~~
+
+To load the datasets:
+
+~~~~~~~~~~~~~{.xml}
+	<data name="learn" approach="listwise" format=Yandex>learn.txt</data>
+	<data name="test" approach="listwise" format=Yandex>test.txt</data>
+~~~~~~~~~~~~~
+
+You can choose one of the following approaches: \n
+-listwise \n
+-pairwise \n
+-objectwise \n
+
+You can choose one of the following formats: \n
+-Yandex \n
+-SVMLIGHT \n
+-ARFF \n
+
+\n
+
+Now we have to create the learner:
+
+~~~~~~~~~~~~~{.xml}
+  <learner name="YourName" type="TYPE_OF_LEARNER" approach="listwise">
+    <PARAMETER1>Value1</PARAMETER1>
+    <PARAMETER2>Value2</PARAMETER2>
+  </learner>
+~~~~~~~~~~~~~
+
+For example:
+
+~~~~~~~~~~~~~{.xml}
+  <learner name="NN2" type="NNLearner" approach="listwise">
+    <metric>MANHATTAN_METRIC</metric>
+    <neighbor_weighter>INVERSE_POWER_DISTANCE</neighbor_weighter>
+    <aggregator>SUM_AGGREGATOR</aggregator>
+    <number_of_neighbors_to_process>2</number_of_neighbors_to_process>
+  </learner>
+~~~~~~~~~~~~~
+
+Where the approach is one of the approaches listed above. <b>NOTE</b> that the approach of the learner must be identical to the approach in the learn and test datasets. To set the parameters please consult the documentation for every particular learner.\n
+
+List of learners is available on the page:
+\ref TutorialMeasureLearnerScorer
+
+Now we need to create measure to minimize. It is very alike the creation of the learner:
+
+~~~~~~~~~~~~~{.xml}
+  <measure name="Name" type="MEASURE_TYPE">
+    <PARAMETER1>Value1</PARAMETER1>
+    <PARAMETER2>Value2</PARAMETER2>
+  </measure>
+~~~~~~~~~~~~~
+
+For example:
+
+~~~~~~~~~~~~~{.xml}
+  <measure name="ndcg" type="NDCG">
+    <NUMBER_OF_OBJECTS_TO_CONSIDER>2</NUMBER_OF_OBJECTS_TO_CONSIDER>
+  </measure>
+~~~~~~~~~~~~~
+
+List of measures is available on the page:
+\ref TutorialMeasureLearnerScorer
+
+Now we can launch the process. To mark the dataset you need to introduce the launch section with train section inside:
+
+~~~~~~~~~~~~~{.xml}
+  <launch>
+    <train name="TrainAndMark" data="learn" learner="NN2">
+      <predict>test</predict>
+      <cpp/>
+    </train>
+  </launch>
+~~~~~~~~~~~~~
+
+Here "TrainAndMark" is a name of the train section. Learn is a name of the training dataset. LearnerName is a name of the learner that You want to use to mark the dataset. Test is the name of the dataset that You want to mark. Include <cpp/> tag if you want to create the c++ code for your experiment.
+
+\n\n
+
+To use crossvalidation and to test the algorithms, please use the crossvalidation tag inside of the launch section. Before launch tag you've got to introduce the splitter that You will use.
+
+~~~~~~~~~~~~~{.xml}
+  <splitter name="SplitterName" type="SplitterType" approach="listwise">
+      <PARAMETER1>Value1</PARAMETER1>
+      <PARAMETER2>Value2</PARAMETER2>
+  </splitter>
+~~~~~~~~~~~~~
+
+For example:
+
+~~~~~~~~~~~~~{.xml}
+  <splitter name="K_FOLD1" type="KFoldSimpleSplitter" approach="listwise">
+      <K>2</K>
+  </splitter>
+~~~~~~~~~~~~~
+
+Here the SplitterName is the name of the splitter that You will use further, SplitterType is a type of the splitter that you will use and the approach is the one of listed above.
+
+At the moment the following splitters are available:
+
+-KFoldSimpleSplitter <br>
+-TKFoldSimpleSplitter <br>
+-LeaveOneOutSimpleSplitter <br>
+
+Now the crossvalidation section:
+
+~~~~~~~~~~~~~{.xml}
+  <launch>
+    <crossvalidation fold="K_FOLD1">
+      <learner>NN1</learner>
+      <learner>NN2</learner>
+
+      <measure>ndcg</measure>
+
+      <data>learn</data>
+
+    </crossvalidation>
+  </launch>
+~~~~~~~~~~~~~
+
+Inside please enumerate the learners, measures and datasets that you would like to test.
+
+For example for the config like:
+
+~~~~~~~~~~~~~{.xml}
+<LTR_experiment>
+  <config>
+    <root_directory>/Users/stellar/Work/LTR_Project/qtcreator-build/tmp/</root_directory>
+  </config>
+
+  <data name="learn" approach="listwise" format="Yandex">/Users/stellar/Work/LTR_Project/ltr1/data/imat2009/imat2009_learning.txt</data>
+  <data name="test" approach="listwise" format="Yandex">/Users/stellar/Work/LTR_Project/ltr1/data/imat2009/imat2009_test.txt</data>
+
+  <measure name="dcg" type="DCG">
+    <NUMBER_OF_OBJECTS_TO_CONSIDER>10</NUMBER_OF_OBJECTS_TO_CONSIDER>
+  </measure>
+  <measure name="dcg2" type="DCG"></measure>
+  <measure name="dcg3" type="DCG"></measure>
+  <measure name="ndcg" type="NDCG">
+    <NUMBER_OF_OBJECTS_TO_CONSIDER>10</NUMBER_OF_OBJECTS_TO_CONSIDER>
+  </measure>
+
+  <learner name="BF1" type="BEST_FEATURE" approach="listwise">
+    <measure>dcg</measure>
+  </learner>
+  <learner name="BF2" type="BEST_FEATURE" approach="listwise">
+    <measure>ndcg</measure>
+  </learner>
+  <learner name="GP" type="GP" approach="listwise">
+    <measure>ndcg</measure>
+  </learner>
+
+  <splitter name="K_FOLD1" type="K_FOLD" approach="listwise">
+      <K>2</K>
+  </splitter>
+
+
+  <launch>
+    <train name="test1" data="learn" learner="BF2">
+      <predict>test</predict>
+      <cpp/>
+    </train>
+    <crossvalidation fold="K_FOLD1">
+      <learner>BF1</learner>
+      <learner>BF2</learner>
+
+      <measure>dcg</measure>
+      <measure>dcg2</measure>
+      <measure>dcg3</measure>
+      <measure>ndcg</measure>
+
+      <data>learn</data>
+
+    </crossvalidation>
+  </launch>
+
+</LTR_experiment>
+~~~~~~~~~~~~~
+
+We have an output:
+
+\code
+<Very-very-very long logger output>
+Oct 23 01:59:50 2012: info: 
+DataSet:/Users/stellar/Work/LTR_Project_last/ltr1/data/imat2009/imat2009_learning_small.txt
+Splitter:KFoldSimpleSplitter
+Table ROW: Learner COLUMN: Measure
+	NDCG	DCG	DCG	DCG	
+BestFeatureLeaner	1	2.319	2.319	1.56546	
+BestFeatureLeaner	1	2.319	2.319	1.56546
+\endcode
+
+
+
+**/
+
+}

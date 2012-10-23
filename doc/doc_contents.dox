@@ -13,6 +13,7 @@ namespace ltr {
     - \ref TutorialComposition
     - \ref TutorialDecisionTree
     - \ref TutorialBayesianClassification
+    - \ref LTRClientTutorial
 
   - \b Advanced \b topics
     - \ref HowToCreateNewLearnerAndScorer

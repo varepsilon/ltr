@@ -360,14 +360,14 @@ void LtrClient::launch() {
 
 // ===========================================================================
 
-int main() {
+int main(int argc, char *argv[]) {
   Log LOG;
   Factory factory;
   RegisterAllTypes(&factory);
 
   LtrClient client;
+  string filename = argv[1];
 
-  string filename = "C:\\NewRepository\\ltr1\\ltr_client\\config.cfg";
   try {
       client.initFrom(filename);
       client.launch();
