@@ -5,6 +5,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include "ltr/parameters_container/parameters_container.h"
 
@@ -18,10 +19,10 @@ namespace ltr {
 #define GET_SET(type, name) \
   void set_##name(const type& name) { \
     name##_ = name; \
-  }; \
+  } \
   type name() const { \
     return name##_; \
-  };
+  }
 
 /**
 * Simple setter
@@ -29,7 +30,7 @@ namespace ltr {
 #define SET(type, name) \
   void set_##name(const type& name) { \
     name##_ = name; \
-  };
+  }
 
 /**
 * Simple getter
@@ -37,6 +38,29 @@ namespace ltr {
 #define GET(type, name) \
   type name() const { \
     return name##_; \
+  }
+
+/**
+* Simple getter and setter for vectors
+*/
+#define GET_SET_VECTOR(type, name) \
+  void set_##name(const std::vector<type>& name) { \
+    name##_ = name; \
+  }; \
+  std::vector<type> name() const { \
+    return name##_; \
+  }; \
+  void add_##name(const type& value) { \
+    name##_.push_back(value); \
+  }; \
+  std::size_t name##_size() { \
+    return name##_.size(); \
+  }; \
+  const type& name(std::size_t index) const { \
+    return name##_.at(index); \
+  }; \
+  type& name(std::size_t index) { \
+    return name##_.at(index); \
   };
 
 /**
