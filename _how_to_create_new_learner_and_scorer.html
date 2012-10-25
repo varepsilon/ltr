@@ -101,38 +101,141 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li class="level1"><a href="#CreatingNewLearner">Creating new learner</a></li>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="CreatingNewScorer"></a>
+<div class="textblock"><p>In order to create new algorithm, You have to create both classes of the algorithm, including learner class and scorer class. Let us implement KNN.</p>
+<h2><a class="anchor" id="CreatingNewScorer"></a>
 Creating new scorer</h2>
-<p>It is necessary to create a scorer before creating a learner. <br/>
- First of all you should create a scorer class inherited from <a class="el" href="classltr_1_1_scorer.html">Scorer</a> abstract class. Let's call this class "NewScorer" <br/>
- It's recommended to create a typedef for the shared pointer: </p>
-<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;NewScorer&gt;</a> Ptr;
-</pre></div><p>Then you should decide which field your scorer will content and create them. <br/>
- After this create constructors.<br/>
- Now you should create method scoreImpl, that has signature, written in the code below: </p>
-<div class="fragment"><pre class="fragment"><span class="keyword">virtual</span> <span class="keywordtype">double</span> scoreImpl(<span class="keyword">const</span> Object&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>
-</pre></div><p>scoreImpl is the most important method of the class. It implements scoring of the recieved object.</p>
-<p>Also NewScorer should contain method generateCppCodeImpl with such signature: </p>
-<div class="fragment"><pre class="fragment"><span class="keyword">virtual</span> <span class="keywordtype">string</span> generateCppCodeImpl(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; object_name) <span class="keyword">const</span>;
-</pre></div><p> This function will serialize object of NewClass into valid C++ code.</p>
+<p><b>NOTE</b>: all the learners and scorers must be located in the ltr namespace.</p>
+<p>First of all, the <a class="el" href="classltr_1_1_n_n_scorer.html" title="The class prepresents Scorer for NNLearner. It contains the learning data set, pointers to aggregator...">NNScorer</a> class must be publicly inherited from the class <a class="el" href="classltr_1_1_scorer.html">Scorer</a>. Thus, I write in header file (nearest_neighbour_scorer.h):</p>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &quot;<a class="code" href="scorer_8h.html">ltr/scorers/scorer.h</a>&quot;</span>
+
+<span class="keyword">namespace </span>ltr {
+<span class="keyword">class </span>NNScorer : <span class="keyword">public</span> Scorer {
+
+};
+</pre></div><p>Now I need to define some inner pointer Ptr to my class.</p>
+<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;NNScorer&gt;</a> Ptr;
+</pre></div><p>Obviously, the nearest neighbor scorer will need the measure to calculate the distance between two objects. In order to not to write the long type of pointer to some measure, I write typedef:</p>
+<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;ltr::BaseMetric&gt;</a> BaseMetricPtr;
+</pre></div><p>These typedefs may be needed outside of the class. Thus I define those as a public typedefs.<br/>
+<br/>
+</p>
+<p>Now I need to think about the structures that I will need to score objects. I think that I will use following in a scoring process:</p>
+<div class="fragment"><pre class="fragment">BaseMetricPtr metric_;
+DataSet&lt;Object&gt; data_;
+NeighborWeighter::Ptr neighbor_weighter_;
+<a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a> predictions_aggregator_;
+<span class="keywordtype">int</span> number_of_neighbors_to_process_;
+</pre></div><p>These are inner scorer fields, so I define them as private.<br/>
+<br/>
+</p>
+<p>Now we need to define all the constructors:</p>
+<div class="fragment"><pre class="fragment">  <span class="keyword">explicit</span> NNScorer() {
+  }
+
+  <span class="keyword">explicit</span> NNScorer(BaseMetricPtr metric) : metric_(metric) {
+  }
+
+  <span class="keyword">explicit</span> NNScorer(BaseMetricPtr metric,
+           DataSet&lt;Object&gt; data,
+           NeighborWeighter::Ptr neighbor_weighter,
+           <a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a> predictions_aggregator,
+           <span class="keywordtype">int</span> number_of_neighbors_to_process) :
+    metric_(metric),
+    data_(data),
+    neighbor_weighter_(neighbor_weighter),
+    predictions_aggregator_(predictions_aggregator),
+    number_of_neighbors_to_process_(number_of_neighbors_to_process) {
+  }
+</pre></div><p>This is a public section.<br/>
+<br/>
+</p>
+<p>And, finally, do not forget about the functions that are common for all the scorers:</p>
+<div class="fragment"><pre class="fragment"><span class="keyword">virtual</span> <span class="keywordtype">double</span> scoreImpl(<span class="keyword">const</span> Object&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;
+<span class="keyword">virtual</span> <span class="keywordtype">string</span> generateCppCodeImpl(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; function_name) <span class="keyword">const</span>;
+<span class="keyword">virtual</span> <span class="keywordtype">string</span> getDefaultAlias()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;NNscorer&quot;</span>;}
+</pre></div><p>These functions are not needed outside the class in the hand and the class <a class="el" href="classltr_1_1_scorer.html">Scorer</a>, so it is a private section.<br/>
+ <br/>
+</p>
+<p>And</p>
+<div class="fragment"><pre class="fragment"><span class="keywordtype">string</span> toString() <span class="keyword">const</span>;
+</pre></div><p>This code must be in public section.</p>
+<p><b>NOTE</b>: Do not forget about the include section and the using section.</p>
+<p>Now we're done with the routine. You can proceed with implementing the algorithm in the body of the scoreImpl. Do not forget to implement the toString(), generateCppCodeImpl methods. They are important!</p>
+<p><b>NOTE</b>: If your class is a template class, it is highly probable that in order to have no problems with a linker, You have to implement methods in the header file instead of cc file.</p>
 <h2><a class="anchor" id="CreatingNewLearner"></a>
 Creating new learner</h2>
-<p>Now if you have created a NewScorer class, you can start to create an own learner. Let's call this class "NewLearner" <br/>
- This class must be inharited from <a class="el" href="classltr_1_1_base_learner.html">BaseLearner</a>. First of all you should create a typedef for the shared pointer: </p>
-<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;NewLearner&gt;</a> Ptr;
-</pre></div><p>Then create fields that are necessary for the NewLearner. You should create at least two constructors. <br/>
- First container will recieve <a class="el" href="classltr_1_1_parameters_container.html" title="This class is a storage for parameters of different types. Is able to store POD-type parameters and u...">ParametersContainer</a> and the second will recieve explicit parameters that will initialize field of the NewClass.</p>
-<p>After creating all this stuff, you can start to create the most important method of the learner - learnImpl: </p>
-<div class="fragment"><pre class="fragment"><span class="keywordtype">void</span> learnImpl(<span class="keyword">const</span> DataSet&lt;TElement&gt;&amp; data, NewScorer* scorer)
-</pre></div><p> As you see, this function recieves learning data set and pointer to NewScorer. <br/>
- After the learning process this method must generate a NewScorer. <br/>
- Then you can use generated scorer to predict the labels of objects. <br/>
- </p>
+<p>After You're done with scorer, You can proceed with the creation of your <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a>.<br/>
+<br/>
+</p>
+<p>First of all, let us be definite with terms: <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> class is an ancestor class for all the Learners in the LTR. It has only one template argument (the element type). The only inheritor of this class <a class="el" href="classltr_1_1_base_learner.html">BaseLearner</a> that has two template arguments: the element type and the type of the specific scorer to return with make function.<br/>
+<br/>
+</p>
+<p>Now let us proceed with the <a class="el" href="classltr_1_1_n_n_learner.html" title="NNLearner Implements nearest neighbor approach.">NNLearner</a>:</p>
+<p>As we know, the <a class="el" href="classltr_1_1_learner.html" title="Learns input dataset and produces a Scorer.">Learner</a> must create the <a class="el" href="classltr_1_1_n_n_scorer.html" title="The class prepresents Scorer for NNLearner. It contains the learning data set, pointers to aggregator...">NNScorer</a> with the make function. Thus we write in <a class="el" href="nearest__neighbor__learner_8h.html">nearest_neighbor_learner.h</a>:</p>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &quot;<a class="code" href="learner_8h.html">ltr/learners/learner.h</a>&quot;</span>
+
+<span class="keyword">template</span>&lt;<span class="keyword">class</span> TElement&gt;
+<span class="keyword">class </span>NNLearner : <span class="keyword">public</span> BaseLearner&lt;TElement, NNScorer&gt; {
+
+};
+</pre></div><p>After that we have to define the pointer to our class.</p>
+<div class="fragment"><pre class="fragment"><span class="keyword">typedef</span> <a class="code" href="classltr_1_1utility_1_1shared__ptr.html">ltr::utility::shared_ptr&lt;NNLearner&gt;</a> Ptr;
+</pre></div><p>It must be a public section.<br/>
+<br/>
+</p>
+<p>Now we must think about the fields that we will use in learning process. I think, I will use in a learning process following:</p>
+<div class="fragment"><pre class="fragment"><a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">BaseMetric::Ptr</a> metric_;
+NeighborWeighter::Ptr neighbor_weighter_;
+<a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a> predictions_aggregator_;
+<span class="keywordtype">int</span> number_of_neighbors_to_process_;
+</pre></div><p>This must be a private section.<br/>
+<br/>
+</p>
+<p>Now we must provide a collection of all necessary constructors.</p>
+<div class="fragment"><pre class="fragment"><span class="keyword">explicit</span> NNLearner() {
+  <span class="comment">// DO NOTHING</span>
+}
+
+<span class="keyword">explicit</span> NNLearner(<span class="keyword">const</span> ParametersContainer&amp; parameters) {
+  metric_ = parameters.Get&lt;<a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">BaseMetric::Ptr</a>&gt;(<span class="stringliteral">&quot;metric&quot;</span>);
+  neighbor_weighter_ =
+    parameters.Get&lt;NeighborWeighter::Ptr&gt;(<span class="stringliteral">&quot;neighbor_weighter&quot;</span>);
+  predictions_aggregator_
+    = parameters.Get&lt;<a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a>&gt;(<span class="stringliteral">&quot;predictions_aggregator&quot;</span>);
+  number_of_neighbors_to_process_ =
+    parameters.Get&lt;<span class="keywordtype">int</span>&gt;(<span class="stringliteral">&quot;number_of_neighbors_to_process&quot;</span>);
+}
+
+<span class="keyword">explicit</span> NNLearner(<a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">BaseMetric::Ptr</a> metric,
+          NeighborWeighter::Ptr neighbor_weighter,
+          <a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a> predictions_aggregator,
+          <span class="keywordtype">int</span> number_of_neighbors_to_process) :
+  metric_(metric),
+  neighbor_weighter_(neighbor_weighter),
+  predictions_aggregator_(predictions_aggregator),
+  number_of_neighbors_to_process_(number_of_neighbors_to_process) {
+}
+</pre></div><p>And all the setters and getters collection. You can do it manually, while we are using a macros. It does nothing but generation of the collection of simple setters and getters:</p>
+<div class="fragment"><pre class="fragment"><a class="code" href="parameterized_8h.html#a3280142b05be1e8b1e8e816fcbfebb3f">GET_SET</a>(<span class="keyword">typename</span> <a class="code" href="classltr_1_1_base_metric.html#a7751f645bf03ede5679c0b7c15d3f2aa">BaseMetric::Ptr</a>, metric);
+<a class="code" href="parameterized_8h.html#a3280142b05be1e8b1e8e816fcbfebb3f">GET_SET</a>(NeighborWeighter::Ptr, neighbor_weighter);
+<a class="code" href="parameterized_8h.html#a3280142b05be1e8b1e8e816fcbfebb3f">GET_SET</a>(<a class="code" href="classltr_1_1_predictions_aggregator.html#af8d97497d4797ed3608314a21dce0bf0">PredictionsAggregator::Ptr</a>, predictions_aggregator);
+<a class="code" href="parameterized_8h.html#a3280142b05be1e8b1e8e816fcbfebb3f">GET_SET</a>(<span class="keywordtype">int</span>, number_of_neighbors_to_process);
+</pre></div><p>This must be a public section.<br/>
+<br/>
+</p>
+<p>And after that we must provide all the learner's stuff:</p>
+<div class="fragment"><pre class="fragment">  <span class="keywordtype">void</span> learnImpl(<span class="keyword">const</span> DataSet&lt;TElement&gt;&amp; data, NNScorer* scorer);
+  <span class="keyword">virtual</span> <span class="keywordtype">string</span> getDefaultAlias()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <span class="stringliteral">&quot;NearestNeightborLearner&quot;</span>;}
+</pre></div><p>This must be a private section.<br/>
+<br/>
+</p>
+<p>Now we can implement the learning process.</p>
+<p>That's all! </p>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Oct 23 2012 14:50:04 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 25 2012 18:16:08 for Learning To Rank Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
