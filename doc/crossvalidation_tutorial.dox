@@ -1,6 +1,6 @@
 namespace ltr {
 namespace cv {
-/** \page HowToUseCrossvalidation Tutorial page 2 - Crossvalidation
+/** \page HowToUseCrossvalidation Crossvalidation
     \ingroup Tutorial
 
 \tableofcontents
