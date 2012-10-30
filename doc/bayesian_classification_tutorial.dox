@@ -4,24 +4,13 @@ namespace ltr {
 
 \tableofcontents
 
-Bayesian classifiers are simple classification algorithms, that use the idea of probability density.
+Bayesian classifiers are simple classification algorithms, that assign the label of max posteriori probability. To 
+learn more visit http://en.wikipedia.org/wiki/Bayesian_inference.
 
-Such algorithms try to find a probability of every class using training dataset. And then choose the class with the highest probability for classifiable object.
+%The main formula of Bayesian classification is \f$ a(x) = agrmax_yP_yp_y(x) \f$, where \f$P_y\f$ denotes prior of class \f$y\f$ and
+\f$p_y(x)\f$ denotes probability density of class \f$y\f$.
 
-To learn more visit http://en.wikipedia.org/wiki/Bayesian_inference
-
-\section TutorialDensityEstimation Density Estimation
-You can estimate probability density of some particular DataSet with LTR.
-
-First of all choose the estimation algorithm (Naive Bayes, QDA or Fisher LDA).
-
-After this, declare required probability density learner
-(NormalNaiveBayesDensityLearner, QuadraticDiscriminantDensityLearner respectively or FisherDiscriminantDensityLearner).
-
-Then learn declared estimation learner on some dataset using ::learn() method and create a BaseProbabilityDensityEstimator object
-using ::make() method.
-
-Now you can use generated BaseProbabilityDensityEstimator for probability density estimation
+Bayesian classification algorithm is determined by the method of estimation of \f$P_y\f$ and \f$p_y(x)\f$. Priors are usually estimated by relative frequencies and there is a lot of ways to estimate density. One can see different algorithms for density estimation below. 
 
 \subsection DensityEstimatorsList List of all density estimation learners
 
@@ -33,13 +22,6 @@ FisherDiscriminantDensityLearner     | Assumes that the resulting combination ma
 
 \section TutorialBayesianClassificator Bayesian Classification
 LTR allows to use different algorithms of unparameterized Bayesian classification such as Naive Bayes, Quadratic Discriminant and Fisher Discriminant.
-
-To implement Bayesian Classification was used common approach: there is a class BayesianLearner that recieves DataSet and generates BayesianScorer. BayesianScorer
-can be used to score new objects.
-
-Known, that the main idea of Bayesian Classification is the estimation of the probability density and after this choosing the class depending on probabilities for every classifiable object.
-
-The main field of BayesianLearner is estimator_. It keeps the pointer to probability density estimator and use it to classify objects.
 
 To use Bayesian Learner you need to:
 \li choose estimation algorithm
