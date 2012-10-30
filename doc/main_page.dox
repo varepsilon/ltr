@@ -50,13 +50,13 @@ Quality on some public datasets is presented \ref QualityTable "here".
   - \b Tutorials
     - \ref HowToInstall
     - \ref TutorialData
-    - \ref HowToUseCrossvalidation
-    - \ref TutorialDataPreprocessors
-    - \ref TutorialFeatureConverters
     - \ref TutorialMeasureLearnerScorer
-    - \ref TutorialBayesianClassification
+    - \ref HowToUseCrossvalidation
+    - \ref TutorialFeatureConverters
+    - \ref TutorialDataPreprocessors
     - \ref TutorialComposition
     - \ref TutorialDecisionTree
+    - \ref TutorialBayesianClassification
 
   - \b Advanced \b topics
     - \ref HowToCreateNewLearnerAndScorer
