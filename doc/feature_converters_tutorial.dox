@@ -6,100 +6,56 @@ namespace ltr {
 
 \section TutorialFeatureConverter FeatureConverter
 
-A base class for feature converters.
+This is a base class for all possible kinds of features preprocessing (normalization, PCA, missing values handling, etc.).
+Converter applies object-wisely, it gets original object and produces converted object.
 
-Preprocesses Object, e.g. sample or linear transform features.
-Can be applied to each Object in DataSet.
-But before doing this FeatureConverter should be trained by some FeatureConverterLearner.
-This can be usefull for better training of Scorer.
+\dot
+digraph {
+rankdir=LR
+margin=0.2
+a [ shape="oval" label="Object" URL="\ref ltr::Object"];
+b [ shape="box"  label="FeatureConverter" URL="\ref ltr::FeatureConverter"];
+c [ shape="oval" label="ConvertedObject" URL="\ref ltr::Object"];
+a -> b [label="apply()"];
+b -> c;
+}
+\enddot
 
-Feature converters which were used during training of Scorer
-will be added in the result Scorer and consequently must be Serializable.
+In general, algorithm of features preprocessing should learn on train data, so every FeatureConverter has its own FeatureConverterLearner.
+In most cases you don't need to create FeatureConverter directly, it is just the result of FeatureConverterLearner work.
 
-\note In most cases you don't need to create FeatureConverter directly,
-normally it is the result of some FeatureConverterLearner work.
+\dot
+digraph {
+rankdir=LR
+margin=0.2
+a [ shape="note" label="DataSet" URL="\ref ltr::DataSet"];
+b [ shape="box"  label="Learner" URL="\ref ltr::FeatureConverterLearner"];
+c [ shape="box"  label="FeatureConverter" URL="\ref ltr::FeatureConverter"];
+a -> b [label="learn()"];
+b -> c [label="make()"];
+}
+\enddot
 
-You can convert your data features in this way:
+One can use FeatureConverters via \link FeatureConverter::apply() apply() \endlink method:
 
-\li FeatureConverter::apply(const Object& input, Object* output)
-\param input Object to be converted
-\param output converted Object
+\li \link FeatureConverter::apply() apply(const Object &input, Object *output) \endlink - convert one object
+\li \link FeatureConverter::apply() apply(const DataSet<TElement> &input, DataSet<TElement> *output) \endlink - convert whole dataset
 
-\li FeatureConverter::apply(const DataSet<TElement>& input, DataSet<TElement>* output)
-\param input DataSet to be converted
-\param output converted DataSet
+If you want to add a kind of features preprocessing in training of your Scorer you should add corresponding FeatureConverterLearner via
+via \link Learner::addFeatureConverterLearner() addFeatureConverterLearner() \endlink method of Learner.
 
-\subsection TutorialFakeFeatureConverter FakeFeatureConverter
+\section FeatureConverterList List of all FeatureConverters
 
-Does nothing with input object
+%FeatureConverter         | Description                                                
+--------------------------|------------------------------------------------------------
+FakeFeatureConverter      | Does nothing with input object  
+FeatureSampler            | Samples features with specified indices
+PerFeatureLinearConverter | Performs linear transformation of each feature
+NanToZeroConverter        | Converts NaN features to zero values
+NanToAverageConverter     |  Converts NaN features to average values of all non NaN features from other Objects
+NominalToBoolConverter    |   Converts nominal features to boolean, and move they to the end of features list
+RemoveNominalConverter    | Removes all nominal features
 
-\subsection TutorialFeatureSampler FeatureSampler
-
-Samples features with specified indices.
-
-\subsection TutorialPerFeatureLinearConverter PerFeatureLinearConverter
-
-Perform linear transformation of each feature.
-\code
-features[i] -> factors[i] * features[i] + shifts[i]
-\endcode
-
-\subsection TutorialNanToZeroConverter NanToZeroConverter
-
-Converts NaN features to zero values.
-
-\subsection TutorialNanToAverageConverter NanToAverageConverter
-
-Converts NaN features to average values of all non NaN features from other Objects. If some feature is
-NaN in all Objects this feature will be removed.
-
-\subsection TutorialNominalToBoolConverter NominalToBoolConverter
-
-Converts nominal features to boolean, and move they to the end of features list.
-
-Nominal feature with k values will be converted to k boolean features.
-
-\subsection TutorialRemoveNominalConverter RemoveNominalConverter
-
-Remove all nominal features.
-
-\section TutorialFeatureConverterLearner FeatureConverterLearner
-
-A base class for feature converter learners.
-
-Learns input dataset and produces a FeatureConverter.
-Sometimes before training a Scorer it's usefull to make some preprocessing
-of object features, e.g. normalize, filter out non significant features, etc.
-In order to do this one need to add FeatureConverterLearner into the BaseLearner.
-
-If you want to make your own FeatureConverterLearner it's more convinient
-to inherit from BaseFeatureConverterLearner.
-
-You can get your FeatureConverter in this way:
-
-\li FeatureConverterLearner::learn(const DataSet<TElement>& data_set, bool check_parameters = true)
-\param data_set dataset to study
-\param check_parameters whether perform Parameterized::checkParameters() before launch
-
-\li FeatureConverterLearner::make()
-
-To add your own FeatureConverterLearner you should:
-
-<b>1)</b> Add your feature converter class inherited from FeatureConverter. Your class must have
-FeatureConverter::convertFeatureInfo() and FeatureConverter::applyImpl() methods;\n
-<b>2)</b> Add your feature converter learner class inherited from FeatureConverterLearner with type of elements and
-your feature converter class as parameters. Your class must have
-FeatureConverterLearner::learnImpl() private method;
-
-See NanToAverageConverterLearner as example.
-
-\subsection TutorialFakeFeatureConverterLearner FakeFeatureConverterLearner
-
-Produces FakeFeatureConverter.
-
-\subsection TutorialFeatureNormalizerLearner FeatureNormalizerLearner
-
-Independently normalize each feature component to the specified range.
 
 <table class="example">
 <tr><td>Example: learn converter and convert features.</td></tr>
@@ -127,24 +83,5 @@ Produces FeatureSampler with specified indices.
 </td></tr>
 </table>
 
-\subsection TutorialFeatureRandomSamplerLearner FeatureRandomSamplerLearner
-
-Produces FeatureSampler with random indices
-
-\subsection TutorialNanToZeroConverterLearner NanToZeroConverterLearner
-
-Produces NanToZeroConverter.
-
-\subsection TutorialNanToAverageConverterLearner NanToAverageConverterLearner
-
-Produces NanToAverageConverter.
-
-\subsection TutorialNominalToBoolConverterLearner NominalToBoolConverterLearner
-
-Produces NominalToBoolConverter.
-
-\subsection TutorialRemoveNominalConverterLearner RemoveNominalConverterLearner
-
-Produces RemoveNominalConverter.
 **/
 }
