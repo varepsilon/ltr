@@ -1,6 +1,6 @@
 namespace ltr {
 namespace decision_tree {
-/** \page TutorialDecisionTree Tutorial page 8 -  Decision Trees
+/** \page TutorialDecisionTree Decision Trees
     \ingroup Tutorial
 
 \tableofcontents
