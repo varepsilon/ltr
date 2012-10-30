@@ -1,10 +1,12 @@
 // Copyright 2011 Yandex
 
 #include <logog/logog.h>
+#include <sstream>
 
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
 
 using std::string;
+using std::ostringstream;
 
 namespace ltr {
 namespace composition {
@@ -55,6 +57,28 @@ namespace composition {
       labels[index] = at(index).scorer->score(object);
     }
     return predictions_aggregator_->aggregate(labels, weights);
+  }
+
+  string CompositionScorer::generateCppCodeImpl(
+      const string& function_name) const {
+    INFO("Starting to generate CPP code for CompositionScorer");
+    ostringstream hpp_code;
+    for (int index = 0; index < size(); ++index) {
+      ostringstream scorer_name;
+      scorer_name <<  function_name << "_weakscorer_" << index;
+      hpp_code << at(index).scorer->generateCppCode(scorer_name.str());
+    }
+    hpp_code << predictions_aggregator_->generateCppCode(function_name + "_aggregator");
+    hpp_code << "inline double " << function_name << "(const std::vector<double>& features) {\n";
+    hpp_code << "  vector<double> weights(" << size() << "), labels(" << size() << ");\n";
+    for (int index = 0; index < size(); ++index) {
+      ostringstream scorer_name;
+      scorer_name <<  function_name << "_weakscorer_" << index;
+      hpp_code << "  weights[" << index << "] = " << at(index).weight << ";\n";
+      hpp_code << "  labels[" << index << "] = " << scorer_name.str() << "(features);\n";
+    }
+    hpp_code << "  return " << function_name << "_aggregator(labels, weights);\n}\n";
+    return hpp_code.str();
   }
 };
 };

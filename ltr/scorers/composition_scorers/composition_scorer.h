@@ -87,9 +87,7 @@ class CompositionScorer : public Scorer, Parameterized {
    * this method. See MaxWeightCompositionScorer as example.
    */
   PredictionsAggregator::Ptr predictions_aggregator_;
-  virtual string generateCppCodeImpl(const string& function_name) const {
-    return "Composition Scorer"; // TODO Implement
-  }
+  virtual string generateCppCodeImpl(const string& function_name) const;
   virtual void setParametersImpl(
     const ParametersContainer& parameters) {
     predictions_aggregator_ =

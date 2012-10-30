@@ -92,8 +92,7 @@ int main(int argc, char* argv[]) {
     rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverterLearner(rsm);
   rsm_lc_learner->set_weak_learner(bf_learner);
-  // TODO: Restore
-  // generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
+  generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 
   NNLearner<Object>::Ptr
     nn_learner(new NNLearner<Object>(new ltr::EuclideanMetric,
