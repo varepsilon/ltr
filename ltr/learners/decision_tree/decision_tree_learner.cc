@@ -12,15 +12,10 @@ string DecisionTreeLearner::toString() const {
 }
 
 void DecisionTreeLearner::
-  addStopSplittingCriteria(StopSplittingCriteria::Ptr new_criteria) {
-    stop_splitting_criterias_.push_back(new_criteria);
-}
-
-void DecisionTreeLearner::
   setParametersImpl(const ParametersContainer& parameters) {
     splitter_ = parameters.Get<BaseSplitter::Ptr>("SPLITTER");
     leaf_generator_ = parameters.Get<LeafGenerator::Ptr>("LEAF_GENERATOR");
-    stop_splitting_criterias_ =
+    stop_splitting_criteria_ =
       parameters.Get<vector<StopSplittingCriteria::Ptr> >(
         "STOP_SPLITTING_CRITERIAS");
 }
@@ -58,9 +53,9 @@ Vertex::Ptr DecisionTreeLearner::buildTree(const DataSet<Object>& data) {
 bool DecisionTreeLearner::
   needToStopSplitting(const DataSet<Object>& data) const {
     for (int criteria_index = 0;
-         criteria_index < (int)stop_splitting_criterias_.size();
+         criteria_index < (int)stop_splitting_criteria_.size();
          ++criteria_index) {
-      if (stop_splitting_criterias_[criteria_index]->
+      if (stop_splitting_criteria_[criteria_index]->
           needToStopSplitting(data)) {
         return true;
       }

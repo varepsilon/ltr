@@ -72,24 +72,16 @@ class Learner : public Reporter,
   virtual void reset() = 0;
   // \TODO Meaning is not clear
 
-  void addFeatureConverterLearner(
-      typename FeatureConverterLearner<TElement>::Ptr
-        feature_converter_learner);
-
-  void addDataPreprocessor(
-      typename DataPreprocessor<TElement>::Ptr data_preprocessor);
-
-  GET(const FeatureConverterLearnerArray&, feature_converter_learners);
-  SET(FeatureConverterLearnerArray, feature_converter_learners);
-
-  GET(const DataPreprocessorArray&, data_preprocessors);
-  SET(DataPreprocessorArray, data_preprocessors);
+  GET_SET_VECTOR_OF_PTR(DataPreprocessor<TElement>, data_preprocessor);
+  GET_SET_VECTOR_OF_PTR(FeatureConverter, feature_converter);
+  GET_SET_VECTOR_OF_PTR(FeatureConverterLearner<TElement>,
+      feature_converter_learner);
 
  protected:
-  DataPreprocessorArray data_preprocessors_;
+  DataPreprocessorArray data_preprocessor_;
 
-  FeatureConverterArray feature_converters_;
-  FeatureConverterLearnerArray feature_converter_learners_;
+  FeatureConverterArray feature_converter_;
+  FeatureConverterLearnerArray feature_converter_learner_;
 };
 
 template<class TElement, class TScorer>
@@ -116,31 +108,16 @@ class BaseLearner : public Learner<TElement> {
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          TScorer* scorer) = 0;
 
-  using Learner<TElement>::data_preprocessors_;
+  using Learner<TElement>::data_preprocessor_;
 
-  using Learner<TElement>::feature_converters_;
-  using Learner<TElement>::feature_converter_learners_;
+  using Learner<TElement>::feature_converter_;
+  using Learner<TElement>::feature_converter_learner_;
 
  protected:
   TScorer scorer_;
 };
 
 // template realization
-
-// _________________Learner________________________
-
-template<class TElement>
-void Learner<TElement>::addDataPreprocessor(
-    typename DataPreprocessor<TElement>::Ptr data_preprocessor) {
-  data_preprocessors_.push_back(data_preprocessor);
-}
-
-template<class TElement>
-void Learner<TElement>::addFeatureConverterLearner(
-    typename ltr::FeatureConverterLearner<TElement>::Ptr
-      feature_converter_learner) {
-  feature_converter_learners_.push_back(feature_converter_learner);
-}
 
 // _________________BaseLearner_______________________
 
@@ -183,22 +160,22 @@ void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
   DataSet<TElement> source_data = data_set.deepCopy();
   DataSet<TElement> converted_data;
 
-  for (int index = 0; index < (int)data_preprocessors_.size(); ++index) {
-    data_preprocessors_[index]->apply(source_data, &converted_data);
+  for (int index = 0; index < (int)data_preprocessor_.size(); ++index) {
+    data_preprocessor_[index]->apply(source_data, &converted_data);
     source_data = converted_data;
   }
 
-  feature_converters_.clear();
+  feature_converter_.clear();
   for (int index = 0;
-       index < (int)feature_converter_learners_.size(); ++index) {
-    feature_converter_learners_[index]->learn(source_data);
-    feature_converters_.push_back(feature_converter_learners_[index]->make());
-    feature_converters_[index]->apply(source_data, &converted_data);
+       index < (int)feature_converter_learner_.size(); ++index) {
+    feature_converter_learner_[index]->learn(source_data);
+    feature_converter_.push_back(feature_converter_learner_[index]->make());
+    feature_converter_[index]->apply(source_data, &converted_data);
     source_data = converted_data;
   }
 
   learnImpl(source_data, &scorer_);
-  scorer_.set_feature_converters(feature_converters_);
+  scorer_.set_feature_converter(feature_converter_);
 }
 };
 #endif  // LTR_LEARNERS_LEARNER_H_

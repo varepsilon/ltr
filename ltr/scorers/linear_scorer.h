@@ -18,11 +18,9 @@ class LinearScorer : public Scorer {
 
   LinearScorer() {}
   explicit LinearScorer(const vector<double>& weights)
-  : weights_(weights) {}
+  : weight_(weights) {}
 
-  double weight(int index) const;
-  void set_weight(int index, double weight);
-  int weights_count() const;
+  GET_SET_VECTOR(double, weight);
 
  private:
   virtual double scoreImpl(const Object& obj) const;
@@ -31,7 +29,7 @@ class LinearScorer : public Scorer {
 
   string toStringImpl() const;
 
-  vector<double> weights_;
+  vector<double> weight_;
 };
 };
 

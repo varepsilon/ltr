@@ -269,7 +269,7 @@ void LtrClient::launchCrossvalidation(
         Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
       boost::any learner = Factory::instance()->Create(
         learner_info.get_type() + learner_info.get_approach(), parameters);
-      cross_validator.addLearner(
+      cross_validator.add_learner(
         boost::any_cast<typename Learner<TElement>::Ptr>(learner));
     }
 
@@ -281,7 +281,7 @@ void LtrClient::launchCrossvalidation(
         Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
       boost::any measure = Factory::instance()->
         Create(measure_info.get_type() + measure_info.get_approach(), parameters); // NOLINT
-      cross_validator.addMeasure(boost::any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
+      cross_validator.add_measure(boost::any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
     }
 
     const ParametrizedInfo& splitter_info =
@@ -290,14 +290,14 @@ void LtrClient::launchCrossvalidation(
       Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
     boost::any splitter = Factory::instance()->
       Create(splitter_info.get_type() + splitter_info.get_approach(), parameters); // NOLINT
-    cross_validator.addSplitter(boost::any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
+    cross_validator.add_splitter(boost::any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
 
     for (; datas_alias != crossvalidation_info.datas.end();
          ++datas_alias) {
       const DataInfo& data_info = configurator_.findData(*datas_alias);
       DataSet<TElement> data_set = DataSet<TElement>();
       data_set = loadDataSet<TElement>(data_info.file, data_info.format);
-      cross_validator.addDataSet(data_set);
+      cross_validator.add_data_set(data_set);
     }
 
     cross_validator.launch();

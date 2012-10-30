@@ -46,7 +46,7 @@ class FeatureSampler : public FeatureConverter {
 
   virtual string generateCppCode(const string& function_name) const;
 
-  GET(Indices, indices);
+  GET_VECTOR(int, indices);
 
   void set_indices(const Indices& indices);
 

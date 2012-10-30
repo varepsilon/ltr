@@ -122,7 +122,7 @@ TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
   DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
-  best_feature_learner->addDataPreprocessor(bagging);
+  best_feature_learner->add_data_preprocessor(bagging);
   linear_composition_learner.set_weak_learner(best_feature_learner);
 
   linear_composition_learner.learn(data);
@@ -163,7 +163,7 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  best_feature_learner->addFeatureConverterLearner(rsm);
+  best_feature_learner->add_feature_converter_learner(rsm);
   linear_composition_learner.set_weak_learner(best_feature_learner);
 
   linear_composition_learner.learn(data);
@@ -256,11 +256,11 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
 
   FeatureRandomSamplerLearner<Object>::Ptr
     random_sampler_learner(new FeatureRandomSamplerLearner<Object>);
-  best_feature_learner->addFeatureConverterLearner(
+  best_feature_learner->add_feature_converter_learner(
     random_sampler_learner);
 
   DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
-  best_feature_learner->addDataPreprocessor(bagging);
+  best_feature_learner->add_data_preprocessor(bagging);
 
   ada_learner.learn(data);
   CompositionScorer::Ptr linear_scorer = ada_learner.makeSpecific();

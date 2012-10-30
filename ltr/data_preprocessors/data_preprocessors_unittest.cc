@@ -68,10 +68,10 @@ TEST_F(DataPreprocessorsTest, FakePreprocessorTest) {
 }
 
 TEST_F(DataPreprocessorsTest, DataSamplerTest) {
-  IndicesPtr indices(new Indices());
-  indices->push_back(3);
-  indices->push_back(7);
-  indices->push_back(4);
+  Indices indices;
+  indices.push_back(3);
+  indices.push_back(7);
+  indices.push_back(4);
 
   DataSampler<Object> data_sampler;
   data_sampler.set_indices(indices);
@@ -84,7 +84,7 @@ TEST_F(DataPreprocessorsTest, DataSamplerTest) {
   EXPECT_EQ(data[7], preprocessed_data[1]);
   EXPECT_EQ(data[4], preprocessed_data[2]);
 
-  indices->push_back(1);
+  indices.push_back(1);
   data_sampler.set_indices(indices);
   data_sampler.apply(data, &preprocessed_data);
 
@@ -94,7 +94,7 @@ TEST_F(DataPreprocessorsTest, DataSamplerTest) {
   EXPECT_EQ(data[4], preprocessed_data[2]);
   EXPECT_EQ(data[1], preprocessed_data[3]);
 
-  indices->push_back(103);
+  indices.push_back(103);
   data_sampler.set_indices(indices);
   EXPECT_ANY_THROW(data_sampler.apply(data, &preprocessed_data));
 

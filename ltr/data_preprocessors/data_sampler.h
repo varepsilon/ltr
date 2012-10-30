@@ -40,7 +40,7 @@ class DataSampler : public DataPreprocessor<TElement> {
   * \param indices indices of elements to sample,
   * duplication of indices leads to duplication of elements in the result sample
   */
-  explicit DataSampler(IndicesPtr indices = IndicesPtr(new Indices));
+  explicit DataSampler(Indices indices = Indices());
   explicit DataSampler(const ParametersContainer& parameters);
 
   virtual void setDefaultParameters();
@@ -48,19 +48,19 @@ class DataSampler : public DataPreprocessor<TElement> {
 
   virtual string toString() const;
 
-  GET_SET(IndicesPtr, indices);
+  GET_SET_VECTOR(int, indices);
  private:
   virtual void applyImpl(const DataSet<TElement>& input,
                                DataSet<TElement>* output) const;
   virtual void setParametersImpl(const ParametersContainer& parameters);
   virtual string getDefaultAlias() const {return "DataSampler";}
-  IndicesPtr indices_;
+  Indices indices_;
 };
 
 // template realizations
 
 template <typename TElement>
-DataSampler<TElement>::DataSampler(IndicesPtr indices) {
+DataSampler<TElement>::DataSampler(Indices indices) {
   set_indices(indices);
 }
 template <typename TElement>
@@ -70,27 +70,27 @@ DataSampler<TElement>::DataSampler(const ParametersContainer& parameters) {
 
 template <typename TElement>
 void DataSampler<TElement>::setDefaultParameters() {
-  indices_ = IndicesPtr(new Indices);
+  indices_ = Indices();
 }
 
 template <typename TElement>
 void DataSampler<TElement>::checkParameters() const {
-  // DON'T NEED
+  // \TODO(freopen) Check indices to be in [0, data_set.size()-1] range
 }
 
 template <typename TElement>
 void DataSampler<TElement>::setParametersImpl(
     const ParametersContainer& parameters) {
   // \TODO(sameg) Create indices from string representation like [1:3], 5, 6
-  indices_ = parameters.Get<IndicesPtr>("INDICES");
+  indices_ = parameters.Get<Indices>("INDICES");
 }
 
 template <class TElement>
 void DataSampler<TElement>::applyImpl(const DataSet<TElement>& input,
     DataSet<TElement>* output) const {
   // \TODO(sameg) Is it logic?
-  if (indices_->size() != 0) {
-    *output = input.lightSubset(*indices_);
+  if (indices_.size() != 0) {
+    *output = input.lightSubset(indices_);
   } else {
     *output = input;
   }
@@ -100,11 +100,11 @@ template <typename TElement>
 string DataSampler<TElement>::toString() const {
   std::stringstream str;
   str << "DataSampler: indices = [";
-  for (int index = 0; index < (int)indices_->size(); ++index) {
+  for (int index = 0; index < (int)indices_.size(); ++index) {
     if (index != 0) {
       str << ", ";
     }
-    str << indices_->at(index);
+    str << indices_.at(index);
   }
   str << "]";
   return str.str();

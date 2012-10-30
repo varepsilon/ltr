@@ -29,8 +29,8 @@ class Scorer : public SerializableFunctor<double>,
   typedef ltr::utility::shared_ptr<Scorer> BasePtr;
 
   Scorer(const FeatureConverterArray&
-            feature_converters = FeatureConverterArray()):
-        feature_converters_(feature_converters) {}
+            feature_converter = FeatureConverterArray()):
+        feature_converter_(feature_converter) {}
 
   double value(const Object& object) const {
     return score(object);
@@ -38,23 +38,12 @@ class Scorer : public SerializableFunctor<double>,
 
   double score(const Object& object) const;
 
-  const FeatureConverterArray& feature_converters() const {
-    return feature_converters_;
-  }
-
-  void set_feature_converters(const FeatureConverterArray& feature_converters) {
-    this->feature_converters_ = feature_converters;
-  }
-
-  void addFeatureConverter(
-    FeatureConverter::Ptr p_feature_converter) {
-    this->feature_converters_.push_back(p_feature_converter);
-  }
+  GET_SET_VECTOR_OF_PTR(FeatureConverter, feature_converter);
 
   using SerializableFunctor<double>::generateCppCode;
 
   string generateCppCode(const string& function_name) const {
-    if (feature_converters_.size() == 0)
+    if (feature_converter_.size() == 0)
       return generateCppCodeImpl(function_name);
     string code;
     string implFunctionName(function_name);
@@ -62,9 +51,9 @@ class Scorer : public SerializableFunctor<double>,
     code.append(generateCppCodeImpl(implFunctionName));
 
     for (size_t featureConverterIdx = 0;
-        featureConverterIdx < feature_converters_.size();
+        featureConverterIdx < feature_converter_.size();
         ++featureConverterIdx) {
-      code.append(feature_converters_.at(
+      code.append(feature_converter_.at(
           featureConverterIdx)->generateCppCode());
     }
 
@@ -75,11 +64,11 @@ class Scorer : public SerializableFunctor<double>,
     string prevVectorName("feature");
 
     for (size_t featureConverterIdx = 0;
-        featureConverterIdx < feature_converters_.size();
+        featureConverterIdx < feature_converter_.size();
         ++featureConverterIdx) {
       string curVectorName = "feature" +
           boost::lexical_cast<string>(featureConverterIdx);
-      string featureConverterFunctionName(feature_converters_.at(
+      string featureConverterFunctionName(feature_converter_.at(
           featureConverterIdx)->getDefaultSerializableObjectName());
       code.append("  std::vector<double> ");
       code.append(curVectorName);
@@ -118,7 +107,7 @@ class Scorer : public SerializableFunctor<double>,
 
   virtual string generateCppCodeImpl(const string& function_name) const = 0;
 
-  FeatureConverterArray feature_converters_;
+  FeatureConverterArray feature_converter_;
 
   virtual string toStringImpl() const;
 };

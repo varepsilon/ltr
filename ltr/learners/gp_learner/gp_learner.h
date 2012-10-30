@@ -127,8 +127,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   GET_SET(int, max_init_depth);
   GET_SET(double, init_grow_probability);
   GET_SET(int, seed);
-  GET_SET(std::vector<BasePopulationHandler::Ptr>, population_handlers);
-  GET_SET(std::vector<BaseGPOperation::Ptr>, gp_operations);
+  GET_SET_VECTOR_OF_PTR(BasePopulationHandler, population_handler);
+  GET_SET_VECTOR_OF_PTR(BaseGPOperation, gp_operation);
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters);
@@ -191,8 +191,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   Puppy::Tree best_tree_;
 
-  std::vector<BasePopulationHandler::Ptr> population_handlers_;
-  std::vector<BaseGPOperation::Ptr> gp_operations_;
+  std::vector<BasePopulationHandler::Ptr> population_handler_;
+  std::vector<BaseGPOperation::Ptr> gp_operation_;
 };
 
 // template realizations
@@ -247,13 +247,13 @@ void GPLearner<TElement>::setInitialScorer(const GPScorer& scorer) {
 template <typename TElement>
 void GPLearner<TElement>::addPopulationHandler(
   BasePopulationHandler::Ptr new_population_handler) {
-    population_handlers_.push_back(new_population_handler);
+    population_handler_.push_back(new_population_handler);
 }
 
 template <typename TElement>
 void GPLearner<TElement>::addGPOperation(
   BaseGPOperation::Ptr new_gp_operation) {
-    gp_operations_.push_back(new_gp_operation);
+    gp_operation_.push_back(new_gp_operation);
 }
 
 template <typename TElement>
@@ -274,13 +274,13 @@ void GPLearner<TElement>::initContext() {
 
   context_.mRandom.seed(seed_);
 
-  for (int gp_operations_index = 0;
-       gp_operations_index < (int)gp_operations_.size();
-       ++gp_operations_index) {
-    context_.insert(gp_operations_[gp_operations_index].get());
+  for (int gp_operation_index = 0;
+       gp_operation_index < (int)gp_operation_.size();
+       ++gp_operation_index) {
+    context_.insert(gp_operation_[gp_operation_index].get());
   }
 
-  if (gp_operations_.empty()) {
+  if (gp_operation_.empty()) {
     context_.insert(new Add);
     context_.insert(new Subtract);
     context_.insert(new Multiply);
@@ -308,17 +308,17 @@ void GPLearner<TElement>::initPopulation() {
 
 template <typename TElement>
 void GPLearner<TElement>::evaluationStepImpl() {
-  if (population_handlers_.empty()) {
-    population_handlers_.push_back(new DefaultSelectionStrategy);
-    population_handlers_.push_back(new DefaultCrossoverStrategy);
-    population_handlers_.push_back(new DefaultMutationStandartStrategy);
-    population_handlers_.push_back(new DefaultMutationSwapStrategy);
+  if (population_handler_.empty()) {
+    population_handler_.push_back(new DefaultSelectionStrategy);
+    population_handler_.push_back(new DefaultCrossoverStrategy);
+    population_handler_.push_back(new DefaultMutationStandartStrategy);
+    population_handler_.push_back(new DefaultMutationSwapStrategy);
   }
 
   for (int population_handler_index = 0;
-       population_handler_index < (int) population_handlers_.size();
+       population_handler_index < (int) population_handler_.size();
        ++population_handler_index) {
-    population_handlers_[population_handler_index]->
+    population_handler_[population_handler_index]->
       handlePopulation(population_, context_);
   }
 }

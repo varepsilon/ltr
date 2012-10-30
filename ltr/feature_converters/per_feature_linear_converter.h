@@ -40,22 +40,9 @@ class PerFeatureLinearConverter : public FeatureConverter {
    * factors and shifts vectors
    */
   void resize(const FeatureInfo& input_feature_info);
-  /**
-   * get component of factors vector
-   */
-  double factor(int feature_index) const;
-  /**
-   * set component of factors vector
-   */
-  void set_factor(int feature_index, double coefficient);
-  /**
-   * get component of shifts vector
-   */
-  double shift(int feature_index) const;
-  /**
-   * set component of shifts vector
-   */
-  void set_shift(int feature_index, double shift);
+
+  GET_SET_VECTOR(double, factor);
+  GET_SET_VECTOR(double, shift);
 
   virtual string generateCppCode(const string& function_name) const;
 
@@ -65,8 +52,8 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   virtual string getDefaultAlias() const;
 
-  vector<double> factors_;
-  vector<double> shifts_;
+  vector<double> factor_;
+  vector<double> shift_;
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_PER_FEATURE_LINEAR_CONVERTER_H_

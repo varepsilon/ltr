@@ -48,12 +48,12 @@ TEST(ToStringTest, TestToStringOperation) {
   ltr::DataRandomSampler<ltr::Object> random_sampler;
   rInfo(random_sampler.toString().c_str());
 
-  IndicesPtr indices_ptr(new Indices);
+  Indices indices;
   for (int index = 1; index <= 10; ++index) {
-    indices_ptr->push_back(index);
+    indices.push_back(index);
   }
 
-  ltr::DataSampler<ltr::Object> sampler(indices_ptr);
+  ltr::DataSampler<ltr::Object> sampler(indices);
   rInfo(sampler.toString().c_str());
 
   ltr::ParametersContainer container;

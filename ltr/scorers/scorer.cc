@@ -8,9 +8,9 @@ double Scorer::score(const ltr::Object& object) const {
   Object sourceObject = object.deepCopy();
   Object convertedObject;
   for (size_t featureConverterIdx = 0;
-      featureConverterIdx < feature_converters_.size();
+      featureConverterIdx < feature_converter_.size();
       ++featureConverterIdx) {
-    (*feature_converters_[featureConverterIdx]).apply(sourceObject,
+    (*feature_converter_[featureConverterIdx]).apply(sourceObject,
         &convertedObject);
     sourceObject = convertedObject;
   }
@@ -53,16 +53,16 @@ string Scorer::generateLocalClassName(size_t index) const {
 string Scorer::toString() const {
   std::stringstream str;
   str << toStringImpl();
-  if (feature_converters_.empty()) {
+  if (feature_converter_.empty()) {
     str << ", has no feature converters";
   } else {
-    str << ", initially applies " << feature_converters_.size()
+    str << ", initially applies " << feature_converter_.size()
       << " feature converters:\n";
-    for (size_t i = 0; i < feature_converters_.size(); ++i) {
+    for (size_t i = 0; i < feature_converter_.size(); ++i) {
       if (i != 0) {
         str << "\n";
       }
-      str << "[" << i << "] " << feature_converters_[i]->toString();
+      str << "[" << i << "] " << feature_converter_[i]->toString();
     }
   }
   return str.str();

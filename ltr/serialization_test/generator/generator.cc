@@ -69,14 +69,14 @@ int main(int argc, char* argv[]) {
 
   DecisionTreeLearner::Ptr ID3 = new DecisionTreeLearner(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
-  ID3->addStopSplittingCriteria(new DataSizeStopSplittingCriteria(1));
-  ID3->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+  ID3->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
+  ID3->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
   generator.setScorerTest(ID3, "ID3");
 
   DecisionTreeLearner::Ptr ODT = new DecisionTreeLearner(
     new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
-  ODT->addStopSplittingCriteria(new DataSizeStopSplittingCriteria(1));
-  ODT->addStopSplittingCriteria(new SameLabelStopSplittingCriteria);
+  ODT->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
+  ODT->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
   generator.setScorerTest(ODT, "ObliviousTree");
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   rsm_lc_learner->setInitialScorer(scorer);
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
-  bf_learner->addFeatureConverterLearner(rsm);
+  bf_learner->add_feature_converter_learner(rsm);
   rsm_lc_learner->set_weak_learner(bf_learner);
 
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");

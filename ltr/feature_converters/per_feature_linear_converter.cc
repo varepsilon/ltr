@@ -13,25 +13,8 @@ FeatureInfo PerFeatureLinearConverter::convertFeatureInfo() const {
 }
 
 void PerFeatureLinearConverter::resize(const FeatureInfo& input_feature_info) {
-  factors_.resize(input_feature_info.feature_count(), 1.);
-  shifts_.resize(input_feature_info.feature_count(), 0.);
-}
-
-double PerFeatureLinearConverter::factor(int feature_index) const {
-  return factors_[feature_index];
-}
-
-void PerFeatureLinearConverter::set_factor(int feature_index,
-                                           double coefficient) {
-  factors_[feature_index] = coefficient;
-}
-
-double PerFeatureLinearConverter::shift(int feature_index) const {
-  return shifts_[feature_index];
-}
-
-void PerFeatureLinearConverter::set_shift(int feature_index, double shift) {
-  shifts_[feature_index] = shift;
+  factor_.resize(input_feature_info.feature_count(), 1.);
+  shift_.resize(input_feature_info.feature_count(), 0.);
 }
 
 string PerFeatureLinearConverter::generateCppCode(
@@ -43,14 +26,14 @@ string PerFeatureLinearConverter::generateCppCode(
     append("(const std::vector<double>& features, ").
     append("std::vector<double>* result) {\n").
     append("  result->clear();\n");
-    for (int i = 0; i < (int)factors_.size(); ++i) {
+    for (int i = 0; i < (int)factor_.size(); ++i) {
       code.
         append("  result->push_back(features[").
         append(boost::lexical_cast<string>(i)).
         append("] * ").
-        append(boost::lexical_cast<string>(factors_[i])).
+        append(boost::lexical_cast<string>(factor_[i])).
         append(" + ").
-        append(boost::lexical_cast<string>(shifts_[i])).
+        append(boost::lexical_cast<string>(shift_[i])).
         append(");\n");
     }
   code.append("}\n");
@@ -62,8 +45,8 @@ void PerFeatureLinearConverter::applyImpl(const Object& input,
   Object converted_object = input.deepCopy();
   for (int feature_index = 0;
        feature_index < (int)input.features().size(); ++feature_index) {
-    converted_object[feature_index] *= factors_[feature_index];
-    converted_object[feature_index] += shifts_[feature_index];
+    converted_object[feature_index] *= factor_[feature_index];
+    converted_object[feature_index] += shift_[feature_index];
   }
   *output = converted_object;
 }
@@ -75,9 +58,9 @@ string PerFeatureLinearConverter::getDefaultAlias() const {
 string PerFeatureLinearConverter::toString() const {
   stringstream str;
   str << "Linear feature converter with factors: ";
-  str << vectorToString(factors_);
+  str << vectorToString(factor_);
   str << " and shifts ";
-  str << vectorToString(shifts_);
+  str << vectorToString(shift_);
   return str.str();
 }
 };

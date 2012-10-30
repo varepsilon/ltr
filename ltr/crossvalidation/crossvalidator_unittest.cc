@@ -58,23 +58,23 @@ TEST(CrossValidatorTest, SimpleTest) {
 
   train_dataset.add(obj_list_instance);
 
-  cv_instance.addDataSet(train_dataset);
+  cv_instance.add_data_set(train_dataset);
 
   KFoldSimpleSplitter<ObjectList>::Ptr splitter_ptr =
       KFoldSimpleSplitter<ObjectList>::Ptr(
         new KFoldSimpleSplitter<ObjectList>(2));
 
-  cv_instance.addSplitter(splitter_ptr);
+  cv_instance.add_splitter(splitter_ptr);
 
   Measure<ObjectList>::Ptr measure_ptr(new DCG());
 
-  cv_instance.addMeasure(measure_ptr);
+  cv_instance.add_measure(measure_ptr);
 
   BestFeatureLearner<ObjectList>::Ptr learner_ptr =
       BestFeatureLearner<ObjectList>::Ptr(
         new BestFeatureLearner<ObjectList>(measure_ptr));
 
-  cv_instance.addLearner(learner_ptr);
+  cv_instance.add_learner(learner_ptr);
 
   cv_instance.launch();
   string testString = cv_instance.toString();

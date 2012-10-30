@@ -44,11 +44,10 @@ class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
 
   string toString() const;
 
-  void addStopSplittingCriteria(StopSplittingCriteria::Ptr new_criteria);
 
   GET_SET(BaseSplitter::Ptr, splitter);
   GET_SET(LeafGenerator::Ptr, leaf_generator);
-  GET_SET(vector<StopSplittingCriteria::Ptr>, stop_splitting_criterias);
+  GET_SET_VECTOR_OF_PTR(StopSplittingCriteria, stop_splitting_criteria);
 
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters);
@@ -68,7 +67,7 @@ class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
 
   BaseSplitter::Ptr splitter_;
   LeafGenerator::Ptr leaf_generator_;
-  vector<StopSplittingCriteria::Ptr> stop_splitting_criterias_;
+  vector<StopSplittingCriteria::Ptr> stop_splitting_criteria_;
 };
 };
 };
