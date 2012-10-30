@@ -1,0 +1,24 @@
+namespace ltr {
+/** \page DocContents Documentation
+
+\tableofcontents
+
+  - \b Tutorials
+    - \ref HowToInstall
+    - \ref TutorialData
+    - \ref TutorialMeasureLearnerScorer
+    - \ref HowToUseCrossvalidation
+    - \ref TutorialFeatureConverters
+    - \ref TutorialDataPreprocessors
+    - \ref TutorialComposition
+    - \ref TutorialDecisionTree
+    - \ref TutorialBayesianClassification
+
+  - \b Advanced \b topics
+    - \ref HowToCreateNewLearnerAndScorer
+    - \ref HowToWriteUnittests
+    - \ref HowToCheckSerialization
+    - \ref TutorialLTRClientForDeveloper
+
+**/
+}

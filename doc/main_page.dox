@@ -43,29 +43,10 @@ Fisher LDA           |                     |              |              |
 
 LTR is an actively growing project so this list will be expanded significantly.
 
-Quality on some public datasets is presented \ref QualityTable "here".
-
-\section DOCUMENTATION Documentation
-
-  - \b Tutorials
-    - \ref HowToInstall
-    - \ref TutorialData
-    - \ref TutorialMeasureLearnerScorer
-    - \ref HowToUseCrossvalidation
-    - \ref TutorialFeatureConverters
-    - \ref TutorialDataPreprocessors
-    - \ref TutorialComposition
-    - \ref TutorialDecisionTree
-    - \ref TutorialBayesianClassification
-
-  - \b Advanced \b topics
-    - \ref HowToCreateNewLearnerAndScorer
-    - \ref HowToWriteUnittests
-    - \ref HowToCheckSerialization
-    - \ref TutorialLTRClientForDeveloper
+\section QUALITY Quality
     
-  - \b Other \b information
-    - \ref QualityTable
+%The quality of algorithms in LTR is tested on some publicly avaliable datasets.
+One can see the results \ref QualityTable "here".
 
 \section REQUIREMENTS Requirements
 \li Boost\n

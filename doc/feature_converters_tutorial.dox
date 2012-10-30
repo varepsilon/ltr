@@ -44,6 +44,9 @@ One can use FeatureConverters via \link FeatureConverter::apply() apply() \endli
 If you want to add a kind of features preprocessing in training of your Scorer you should add corresponding FeatureConverterLearner via
 via \link Learner::addFeatureConverterLearner() addFeatureConverterLearner() \endlink method of Learner.
 
+After learning on converted data Scorer can be applied only to objects which features are preprocessed the same way. For this reason FeatureConverters used in Scorer should be also serialized in C++ code during Scorer serialization.
+
+
 \section FeatureConverterList List of all FeatureConverters
 
 %FeatureConverter         | Description                                                
