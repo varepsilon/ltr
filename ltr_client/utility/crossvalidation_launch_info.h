@@ -34,4 +34,5 @@ struct CrossvalidationLaunchInfo {
  */
 string ToString(const CrossvalidationLaunchInfo& Info);
 
-#endif LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
+#endif //LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
+

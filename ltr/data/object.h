@@ -17,6 +17,8 @@ using std::map;
 using std::string;
 using std::vector;
 
+using ltr::utility::shared_ptr;
+
 namespace ltr {
 /** \typedef
  * Type for feature vector.

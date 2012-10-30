@@ -22,4 +22,5 @@ static inline void DeleteAllFromUnorderedMap(
   }
 }
 
-#endif LTR_CLIENT_UTILITY_COMMON_UTILITY_H_
+#endif //LTR_CLIENT_UTILITY_COMMON_UTILITY_H_
+

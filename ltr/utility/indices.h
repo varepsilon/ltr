@@ -6,10 +6,14 @@
 #include <string>
 #include <vector>
 
+#include <boost/algorithm/string/classification.hpp>
+
 #include "ltr/utility/shared_ptr.h"
 
 using std::vector;
 using std::string;
+
+using boost::is_any_of;
 
 namespace ltr {
 namespace utility {

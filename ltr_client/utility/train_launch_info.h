@@ -34,4 +34,4 @@ struct TrainLaunchInfo {
  */
 string ToString(const TrainLaunchInfo& Info);
 
-#endif LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_
+#endif //LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_

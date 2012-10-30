@@ -14,6 +14,8 @@
 
 using ltr::utility::isNaN;
 
+using boost::lexical_cast;
+
 namespace ltr {
 /**
  * Converts NaN features to average values of all

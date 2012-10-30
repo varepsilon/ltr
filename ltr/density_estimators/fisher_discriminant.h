@@ -2,11 +2,11 @@
 #ifndef LTR_DENSITY_ESTIMATORS_FISHER_DISCRIMINANT_H_
 #define LTR_DENSITY_ESTIMATORS_FISHER_DISCRIMINANT_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <string>
 #include <vector>
+
+#include <Eigen/Dense>
 
 #include "ltr/data/object.h"
 #include "ltr/density_estimators/base_probability_density_estimator.h"
@@ -14,6 +14,8 @@
 using std::vector;
 using std::map;
 using std::string;
+
+using boost::lexical_cast;
 
 using Eigen::VectorXd;
 

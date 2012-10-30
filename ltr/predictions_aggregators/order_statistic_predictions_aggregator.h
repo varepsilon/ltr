@@ -19,6 +19,8 @@ using std::make_pair;
 using std::sort;
 using std::vector;
 
+using boost::lexical_cast;
+
 using ltr::utility::DoubleEqual;
 using ltr::utility::DoubleLess;
 using ltr::utility::NonNegative;

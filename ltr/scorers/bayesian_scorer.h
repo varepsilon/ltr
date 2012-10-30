@@ -14,6 +14,8 @@
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::Object;
 
+using boost::lexical_cast;
+
 namespace ltr {
 
 class BayesianScorer : public Scorer {

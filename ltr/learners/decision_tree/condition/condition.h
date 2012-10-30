@@ -11,6 +11,8 @@
 
 #include "ltr/utility/shared_ptr.h"
 
+using boost::lexical_cast;
+
 namespace ltr {
 namespace decision_tree {
 /**

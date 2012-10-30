@@ -116,4 +116,5 @@ class ParametrizedInfo {
  */
 string ToString(const ParametrizedInfo& Info);
 
-#endif  // LTR_CLIENT_UTILITY_PARAMETERIZED_INFO_H_
+#endif //LTR_CLIENT_UTILITY_PARAMETERIZED_INFO_H_
+

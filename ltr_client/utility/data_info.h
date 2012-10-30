@@ -43,4 +43,5 @@ struct DataInfo {
  */
 string ToString(const DataInfo& Info);
 
-#endif LTR_CLIENT_DATA_UTILITY_INFO_H_
+#endif //LTR_CLIENT_UTILITY_DATA_INFO_H_
+

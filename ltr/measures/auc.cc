@@ -31,6 +31,9 @@ using ltr::utility::PredictedDecreasingActualIncreasing;
 using ltr::utility::ExtractLabels;
 using ltr::utility::DoubleEqual;
 
+using boost::tuples::make_tuple;
+using boost::tuples::tuple;
+
 
 namespace ltr {
   string AUC::toString() const {

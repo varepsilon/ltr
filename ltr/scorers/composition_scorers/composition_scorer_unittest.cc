@@ -9,7 +9,7 @@
 #include "ltr/scorers/one_feature_scorer.h"
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
 #include "ltr/predictions_aggregators/sum_predictions_aggregator.h"
-#include "ltr/predictions_aggregators/max_weight_predictions_aggregator.h";
+#include "ltr/predictions_aggregators/max_weight_predictions_aggregator.h"
 #include "ltr/predictions_aggregators/order_statistic_predictions_aggregator.h"
 
 using ltr::Object;

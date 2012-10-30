@@ -7,7 +7,8 @@
 
 #include <boost/shared_ptr.hpp> // NOLINT
 
-using namespace boost; // NOLINT
+using boost::memory_order;
+using boost::weak_ptr;
 
 namespace ltr {
 namespace utility {
