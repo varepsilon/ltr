@@ -1,13 +1,13 @@
 <map id="G" name="G">
-<area shape="rect" href="$predictions__aggregator_8h.html" title="ltr/predictions_aggregators/predictions_aggregator.h" alt="" coords="673,155,993,181"/>
-<area shape="rect" href="$average__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/average_predictions_aggregator.h" alt="" coords="647,80,1017,107"/>
-<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="1041,80,1393,107"/>
-<area shape="rect" href="$vote__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.h" alt="" coords="1417,80,1767,107"/>
-<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="1791,80,1929,107"/>
-<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="104,379,248,405"/>
-<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="449,304,620,331"/>
-<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="805,229,995,256"/>
-<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="595,379,739,405"/>
-<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="987,304,1288,331"/>
-<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1520,379,1675,405"/>
+<area shape="rect" href="$predictions__aggregator_8h.html" title="ltr/predictions_aggregators/predictions_aggregator.h" alt="" coords="727,155,1047,181"/>
+<area shape="rect" href="$average__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/average_predictions_aggregator.h" alt="" coords="509,80,880,107"/>
+<area shape="rect" href="$sum__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/sum_predictions_aggregator.h" alt="" coords="955,80,1307,107"/>
+<area shape="rect" href="$vote__predictions__aggregator_8h.html" title="ltr/predictions_aggregators/vote_predictions_aggregator.h" alt="" coords="1331,80,1680,107"/>
+<area shape="rect" href="$numerical_8h.html" title="ltr/utility/numerical.h" alt="" coords="1704,80,1843,107"/>
+<area shape="rect" href="$shared__ptr_8h.html" title="ltr/utility/shared_ptr.h" alt="" coords="248,379,392,405"/>
+<area shape="rect" href="$serializable_8h.html" title="ltr/interfaces/serializable.h" alt="" coords="553,304,724,331"/>
+<area shape="rect" href="$parameterized_8h.html" title="ltr/interfaces/parameterized.h" alt="" coords="1000,229,1189,256"/>
+<area shape="rect" href="$aliaser_8h.html" title="ltr/interfaces/aliaser.h" alt="" coords="739,379,883,405"/>
+<area shape="rect" href="$parameters__container_8h.html" title="ltr/parameters_container/parameters_container.h" alt="" coords="1131,304,1432,331"/>
+<area shape="rect" href="$printable_8h.html" title="ltr/interfaces/printable.h" alt="" coords="1715,379,1869,405"/>
 </map>

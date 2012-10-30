@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" href="$classltr_1_1decision__tree_1_1_leaf_generator.html" title="ltr::decision_tree::LeafGenerator" alt="" coords="7,5,212,32"/>
-<area shape="rect" href="$classltr_1_1decision__tree_1_1_most_common_label_leaf_generator.html" title="ltr::decision_tree::MostCommonLabelLeafGenerator" alt="" coords="263,5,580,32"/>
+<area shape="rect" href="$structltr_1_1decision__tree_1_1_feature_with_label_and_weight.html" title="ltr::decision_tree::FeatureWithLabelAndWeight" alt="" coords="7,5,297,32"/>
 </map>

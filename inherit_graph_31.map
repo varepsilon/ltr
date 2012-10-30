@@ -1,3 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" href="$classltr_1_1io__utility_1_1_parser_1_1bad__line.html" title="ltr::io_utility::Parser::bad_line" alt="" coords="7,5,196,32"/>
+<area shape="rect" href="$classltr_1_1io__utility_1_1_parser.html" title="ltr::io_utility::Parser" alt="" coords="7,56,140,83"/>
+<area shape="rect" href="$classltr_1_1io__utility_1_1_a_r_f_f_parser.html" title="ltr::io_utility::ARFFParser" alt="" coords="195,5,363,32"/>
+<area shape="rect" href="$classltr_1_1io__utility_1_1_s_v_m_parser.html" title="ltr::io_utility::SVMParser" alt="" coords="197,56,360,83"/>
+<area shape="rect" href="$classltr_1_1io__utility_1_1_yandex_parser.html" title="ltr::io_utility::YandexParser" alt="" coords="191,107,367,133"/>
 </map>
