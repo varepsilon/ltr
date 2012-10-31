@@ -48,8 +48,6 @@ class NNScorer : public Scorer {
     number_of_neighbors_to_process_(number_of_neighbors_to_process) {
   }
 
-  string toString() const;
-
  private:
   /** The implementation of scoring function. It scores using the learning data set,
   * given metric, weighter, aggregator and number of nearest neighbors
@@ -61,6 +59,8 @@ class NNScorer : public Scorer {
    */
   virtual string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "NNscorer";}
+
+  string toStringImpl() const;
 
   BaseMetricPtr metric_;
   DataSet<Object> data_;

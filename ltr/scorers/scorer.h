@@ -112,12 +112,15 @@ class Scorer : public SerializableFunctor<double>,
 
   virtual ~Scorer() {}
 
+  virtual string toString() const;
  private:
   virtual double scoreImpl(const Object& obj) const = 0;
 
   virtual string generateCppCodeImpl(const string& function_name) const = 0;
 
   FeatureConverterArray feature_converters_;
+
+  virtual string toStringImpl() const;
 };
 }
 #endif  // LTR_SCORERS_SCORER_H_

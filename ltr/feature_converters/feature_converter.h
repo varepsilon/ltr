@@ -41,7 +41,8 @@ namespace ltr {
  * \see FeatureConverterLearner, BaseFeatureConverterLearner, BaseLearner, Scorer
  */
 class FeatureConverter : public Serializable,
-                         public Aliaser {
+                         public Aliaser,
+                         public Printable {
  public:
   typedef ltr::utility::shared_ptr<FeatureConverter> Ptr;
   typedef ltr::utility::shared_ptr<const FeatureConverter> ConstPtr;

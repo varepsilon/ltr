@@ -50,6 +50,7 @@ class FeatureSampler : public FeatureConverter {
 
   void set_indices(const Indices& indices);
 
+  virtual string toString() const;
  private:
   void applyImpl(const Object& input, Object* output) const;
 

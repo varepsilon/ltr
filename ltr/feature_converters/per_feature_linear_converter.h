@@ -59,6 +59,7 @@ class PerFeatureLinearConverter : public FeatureConverter {
 
   virtual string generateCppCode(const string& function_name) const;
 
+  virtual string toString() const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
 

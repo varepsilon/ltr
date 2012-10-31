@@ -24,7 +24,7 @@ using ltr::NNScorer;
 using ltr::Object;
 
 namespace ltr {
-string NNScorer::toString() const {
+string NNScorer::toStringImpl() const {
   string result = "Nearest neigbor scorer, that processes ";
   result += lexical_cast<string>(number_of_neighbors_to_process_);
   result += " nearest neighbors";

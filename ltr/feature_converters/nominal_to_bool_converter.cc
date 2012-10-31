@@ -123,4 +123,8 @@ void NominalToBoolConverter::applyImpl(
 string NominalToBoolConverter::getDefaultAlias() const {
   return "NominalToBoolConverter";
 }
+
+string NominalToBoolConverter::toString() const {
+  return "Nominal-to-bool converter";
+}
 };

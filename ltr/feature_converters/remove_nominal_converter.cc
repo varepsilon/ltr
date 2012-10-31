@@ -68,4 +68,8 @@ void RemoveNominalConverter::applyImpl(const Object& input,
 string RemoveNominalConverter::getDefaultAlias() const {
   return "RemoveNominalConverter";
 }
+
+string RemoveNominalConverter::toString() const {
+  return "Remove-nominal converter";
+}
 };

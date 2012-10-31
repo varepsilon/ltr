@@ -5,6 +5,7 @@
 #include "ltr/feature_converters/per_feature_linear_converter.h"
 
 using std::logic_error;
+using std::stringstream;
 
 namespace ltr {
 FeatureInfo PerFeatureLinearConverter::convertFeatureInfo() const {
@@ -69,5 +70,14 @@ void PerFeatureLinearConverter::applyImpl(const Object& input,
 
 string PerFeatureLinearConverter::getDefaultAlias() const {
   return "PerFeatureLinearConverter";
+}
+
+string PerFeatureLinearConverter::toString() const {
+  stringstream str;
+  str << "Linear feature converter with factors: ";
+  str << vectorToString(factors_);
+  str << " and shifts ";
+  str << vectorToString(shifts_);
+  return str.str();
 }
 };

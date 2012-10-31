@@ -11,7 +11,7 @@ using std::string;
 
 namespace ltr {
 
-  string OneFeatureScorer::toString() const {
+  string OneFeatureScorer::toStringImpl() const {
     std::stringstream str;
     str << "Scorer, which takes feature no. " << index_;
     return str.str();

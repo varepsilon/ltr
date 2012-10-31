@@ -28,6 +28,7 @@ class RemoveNominalConverter : public FeatureConverter {
 
   virtual FeatureInfo convertFeatureInfo() const;
 
+  virtual string toString() const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
 

@@ -47,4 +47,25 @@ string Scorer::generateLocalClassName(size_t index) const {
   return "Local" + boost::lexical_cast<std::string>(index) +
       "_" + this->alias();
 }
+
+string Scorer::toString() const {
+  std::stringstream str;
+  str << toStringImpl();
+  if (feature_converters_.empty()) {
+    str << ", has no feature converters";
+  } else {
+    str << ", initially applies " << feature_converters_.size() << " feature converters:\n";
+    for (size_t i = 0; i < feature_converters_.size(); ++i) {
+      if (i != 0) {
+        str << "\n";
+      }
+      str << "[" << i << "] " << feature_converters_[i]->toString();
+    }
+  }
+  return str.str();
+}
+
+string Scorer::toStringImpl() const {
+  return "Scorer";
+}
 }

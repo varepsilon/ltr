@@ -9,6 +9,7 @@
 
 using std::string;
 using boost::lexical_cast;
+using std::stringstream;
 
 namespace ltr {
 
@@ -24,18 +25,10 @@ int LinearScorer::weights_count() const {
   return weights_.size();
 }
 
-string LinearScorer::toString() const {
-  std::stringstream str;
-  std::fixed(str);
-  str.precision(2);
-  str << "Linear scorer with coefficients: [";
-  for (size_t i = 0; i < weights_.size(); ++i) {
-    if (i != 0) {
-      str << ", ";
-    }
-    str << weights_[i];
-  }
-  str << "]";
+string LinearScorer::toStringImpl() const {
+  stringstream str;
+  str << "Linear scorer with coefficients: ";
+  str << vectorToString(weights_);
   return str.str();
 }
 

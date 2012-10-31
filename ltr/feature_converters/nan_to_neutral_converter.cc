@@ -75,4 +75,8 @@ void NanToNeutralConverter::applyImpl(const Object& input,
 string NanToNeutralConverter::getDefaultAlias() const {
   return "NanToNeutralConverter";
 }
+
+string NanToNeutralConverter::toString() const {
+  return "NaN-to-neutral converter with object: (" + neutral_object_.toString() + ")";
+}
 };

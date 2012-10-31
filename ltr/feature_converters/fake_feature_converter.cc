@@ -33,4 +33,8 @@ void FakeFeatureConverter::applyImpl(
 string FakeFeatureConverter::getDefaultAlias() const {
   return "FakeFeatureConverter";
 }
+
+string FakeFeatureConverter::toString() const {
+ return "Fake feature converter";
+}
 };

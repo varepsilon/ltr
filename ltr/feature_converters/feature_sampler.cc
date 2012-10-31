@@ -9,6 +9,7 @@
 
 using std::logic_error;
 using std::string;
+using std::stringstream;
 
 namespace ltr {
 FeatureInfo FeatureSampler::convertFeatureInfo() const {
@@ -66,5 +67,12 @@ void FeatureSampler::applyImpl(const Object& input, Object* output) const {
 
 string FeatureSampler::getDefaultAlias() const {
   return "FeatureSampler";
+}
+
+string FeatureSampler::toString() const {
+  stringstream str;
+  str << "Feature sampler with indices: ";
+  str << vectorToString(indices_);
+  return str.str();
 }
 };

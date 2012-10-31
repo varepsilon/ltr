@@ -27,6 +27,7 @@ class NominalToBoolConverter : public FeatureConverter {
 
   string generateCppCode(const std::string& function_name) const;
 
+  virtual string toString() const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
 

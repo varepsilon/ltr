@@ -25,8 +25,6 @@ class DecisionTreeScorer : public Scorer {
 
   void setTree(DecisionTree::Ptr tree);
 
-  string toString() const;
-
  private:
   double scoreImpl(const Object& obj) const;
 
@@ -35,6 +33,8 @@ class DecisionTreeScorer : public Scorer {
   virtual string getDefaultAlias() const;
 
   DecisionTree::Ptr tree_;
+
+  string toStringImpl() const;
 };
 };
 };

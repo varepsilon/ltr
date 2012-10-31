@@ -59,7 +59,6 @@ class GPScorer : public Scorer {
   context_(context),
   feature_count_(feature_count) {}
 
-  string toString() const {return "Genetic programming scorer";}
   /**
    * The function sets predicted labels in the dataset to the values calculated
    * using the Puppy::Tree(formula, individ).
@@ -114,6 +113,10 @@ class GPScorer : public Scorer {
    * The number of features for those the context was created.
    */
   int feature_count_;
+
+  string toStringImpl() const {return "Genetic programming scorer";}
+
+
   /**
    * GPlearner can access the class private data to set up the scorer as the
    * starting point of GP evolution process.

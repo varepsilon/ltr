@@ -38,6 +38,7 @@ class NanToNeutralConverter : public FeatureConverter {
 
   GET_SET(Object, neutral_object);
 
+  virtual string toString() const;
  private:
   virtual void applyImpl(const Object& input, Object* output) const;
 

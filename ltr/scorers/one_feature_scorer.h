@@ -31,12 +31,12 @@ class OneFeatureScorer : public Scorer {
     index_ = new_index;
   }
 
-  virtual string toString() const;
-
  private:
   double scoreImpl(const Object& obj) const {
     return obj.features().at(index_);
   }
+
+  virtual string toStringImpl() const;
 
   string generateCppCodeImpl(const string& function_name) const;
   virtual string getDefaultAlias() const {return "OneFeatureScorer";}

@@ -22,11 +22,6 @@ class FakeScorer : public Scorer {
       const FeatureConverterArray& feature_converters = FeatureConverterArray())
   : Scorer(feature_converters), score_value_(scoreValue) {}
 
-  string toString() const {
-    return "All scores are constant (" +
-    boost::lexical_cast<std::string>(score_value_) + ")";
-  }
-
   private:
   double scoreImpl(const Object& obj) const {
     return score_value_;
@@ -43,6 +38,11 @@ class FakeScorer : public Scorer {
     return code;
   }
   virtual string getDefaultAlias() const {return "FakeScorer";}
+
+  string toStringImpl() const {
+    return "All scores are constant (" +
+    boost::lexical_cast<std::string>(score_value_) + ")";
+  }
 
   double score_value_;
 };

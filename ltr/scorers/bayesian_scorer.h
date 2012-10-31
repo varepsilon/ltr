@@ -23,10 +23,6 @@ class BayesianScorer : public Scorer {
   typedef map<double, double> LabelToPriorProbability;
   typedef ltr::utility::shared_ptr<BayesianScorer> Ptr;
 
-  string toString() const {
-    return "Bayesian Scorer";
-  };
-
   BayesianScorer() {
   }
 
@@ -43,6 +39,10 @@ class BayesianScorer : public Scorer {
 
   LabelToPriorProbability prior_probability_;
   BaseProbabilityDensityEstimator::Ptr estimator_;
+
+  string toStringImpl() const {
+    return "Bayesian Scorer";
+  };
 };
 };
 #endif  // LTR_SCORERS_BAYESIAN_SCORER_H_

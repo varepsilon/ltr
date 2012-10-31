@@ -8,7 +8,7 @@ void DecisionTreeScorer::setTree(DecisionTree::Ptr tree) {
   tree_ = tree;
 }
 
-string DecisionTreeScorer::toString() const {
+string DecisionTreeScorer::toStringImpl() const {
   return "Decision of the tree";
 }
 
