@@ -18,7 +18,7 @@ int main() {
   cout << "feature was added" << endl;
 
   cout << "obj.feature_count() = " 
-	   << obj.feature_count() << endl;     // Returns 5
+	   << obj.feature_count() << endl;     // Returns 4
 
   cout << "obj[0] = "  << obj[0] << ", "          // Two ways to get the feature value.
        << "obj.at(1) = "  << obj.at(1) << endl;   //

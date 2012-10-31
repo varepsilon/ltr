@@ -48,7 +48,7 @@ may require from CompositionScorer type to have a gradient method.
 Composition learner works as follows:
   - sets equal weights to the dataset
   - repeats (as many times as is setted in parameters)
-    - learns the weak learner on the dataset with current weights, and uppends the resulted weak scorer to the composition one (with 1.0 weight)
+    - learns the weak learner on the dataset with current weights, and appends the resulted weak scorer to the composition one (with 1.0 weight)
     - updates the weights of the composition scorer
     - updates the weights of the dataset
 

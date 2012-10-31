@@ -104,7 +104,7 @@ Example: Working with %PerObjectAccessor         | Output:
 DataSet is a class to operate with sets of data.
 It can contain Object, ObjectPair or ObjectList as elements.<br>Every elment can also has a double weight, default weight is 1.
 \code
-DataSet<Object>     data1;   // This data set containt objects
+DataSet<Object>     data1;   // This data set contains objects
 DataSet<ObjectPair> data2;   // This data set contains pair
 DataSet<ObjectList> data3;   // This data set contains lists
 \endcode
