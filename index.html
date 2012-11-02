@@ -98,15 +98,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><h2><a class="anchor" id="LTR"></a>
 About LTR</h2>
-<p><a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems. Basically LTR can be used for <a href="http://en.wikipedia.org/wiki/Learning_to_rank">ranking problem</a> but one can use it also for classification and regression problems. To best of our knowledge there is no analogous open-source C++ library for learning to rank.<br/>
+<p><a href="https://github.com/yaschool/ltr/">Learning to Rank (LTR)</a> is an open-source C++ library of algorithms for machine learning problems.
+LTR was initially designed for the problem of <a href="http://en.wikipedia.org/wiki/Learning_to_rank">learning to rank</a> but one can also use it for classification and regression problems.
+To the best of our knowledge there is no analogous open-source C++ libraries for learning to rank.<br/>
  <br/>
- User can write code performing learning and testing by himself <a class="el" href="_how_to_create_new_learner_and_scorer.html">here</a> or can use console application with human-readable configuration file.<br/>
+ User can write code performing learning and testing by himself (see <a class="el" href="_how_to_create_new_learner_and_scorer.html">documentation</a>) or can use a command-line application with human-readable configuration file.<br/>
  <br/>
  Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
 <h2><a class="anchor" id="PHILOSOPHY"></a>
 Philosophy of LTR</h2>
-<p>From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.<br/>
- Many of these ideas are similar of even coincident for ranking, classification, regression.<br/>
+<p>From theoretical point of view every algorithm of machine learning can be decomposed to a few simple ideas.<br/>
+ Many of these ideas are similar or even the same for ranking, classification, regression.<br/>
  Some examples of decomposition: </p>
 <ul>
 <li><a href="http://www.salford-systems.com/en/products/treenet">TreeNet</a> = Gradient Descent + Boosting + Desicion Tree learning </li>
@@ -116,9 +118,10 @@ Philosophy of LTR</h2>
 <li><a href="http://research.microsoft.com/en-us/people/hangli/xu-sigir07.pdf">AdaRank</a> = Boosting + Exponential loss function approximation + Listwise measure optimizing<br/>
 </li>
 </ul>
-<p>The main ideas of LTR are easy extensibility and generalizability of source code. This is achieved by wide using of C++ templates and polymorphism.<br/>
- One can easily add any heuristic to a standard learning algorithm because all of heuristics are functors in LTR. So user can easily change any step of algorithm just defining new heuristic object and insert them into the code of origin algorithm.</p>
-<p>User can write code performing learning and testing by himself or can use console application with human-readable configuration file.<br/>
+<p>The main idea of LTR is to assist extensibility and generalizability of a source code. This is achieved by wide using of C++ templates and polymorphism.<br/>
+ One can easily add any heuristic to a standard learning algorithm because all of heuristics are functors in LTR.
+ So user can easily change any step of algorithm by just defining new heuristic object and insert it into the code of the original algorithm.</p>
+<p>User can write code that perform learning and testing by himself or can use CLI application with human-readable configuration file.<br/>
  <br/>
  Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.</p>
 <h2><a class="anchor" id="CONTENT"></a>
@@ -179,7 +182,7 @@ Requirements</h2>
 </ul>
 <h2><a class="anchor" id="COMPILER"></a>
 Compiler support</h2>
-<p>LTR is standard C++98 and should be compatible with any common C++ compiler. LTR is being successfully built with the following compilers: </p>
+<p>LTR is written following C++98 standard and it should be compatible with any common C++ compiler. LTR is being successfully built with the following compilers: </p>
 <ul>
 <li>MSVS (Visual Studio) 2008 and newer<br/>
  </li>
