@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include "ltr_client/configurator.h"
+#include <rlog/rlog.h>
 
 #include <stdexcept>
 #include <memory>
@@ -9,7 +9,7 @@
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string/predicate.hpp"
 
-#include "logog/logog.h"
+#include "ltr_client/configurator.h"
 
 #include "ltr/utility/container_utility.h"
 
@@ -71,18 +71,19 @@ parseConfig(const string& file_name) {
 
   root_path_ = root_dir->GetText();
 
-  INFO(" LTR Client. Copyright 2011 Yandex");
-  INFO(" Experiment started ");
+  rInfo(" LTR Client. Copyright 2011 Yandex");
+  rInfo(" Experiment started ");
 
   GenericParse(tag_handlers_,
                root_->FirstChildElement(),
                general_xml_token_);
 
-  INFO("\n\nEnd of loadConfig. Collected data:\n");
-  INFO("data_infos_\n%s\n", ToString(dataInfos()).c_str());
-  INFO("xml_token_specs\n%s\n", ToString(xmlTokenSpecs()).c_str());
-  INFO("train_infos\n%s\n", ToString(trainInfos()).c_str());
-  INFO("crossvalidation_infos\n%s\n", ToString(crossvalidationInfos()).c_str());
+  rInfo("\n\nEnd of loadConfig. Collected data:\n");
+  rInfo("data_infos_\n%s\n", ToString(dataInfos()).c_str());
+  rInfo("xml_token_specs\n%s\n", ToString(xmlTokenSpecs()).c_str());
+  rInfo("train_infos\n%s\n", ToString(trainInfos()).c_str());
+  rInfo("crossvalidation_infos\n%s\n",
+    ToString(crossvalidationInfos()).c_str());
 
   for (ParameterizedInfos::iterator it = xmlTokenSpecs().begin();
       it != xmlTokenSpecs().end();

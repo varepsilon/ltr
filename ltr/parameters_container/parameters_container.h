@@ -5,7 +5,7 @@
 
 #pragma warning(disable: 4290)
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <list>
 #include <stdexcept>
@@ -118,7 +118,7 @@ class ParametersContainer: public Printable {
     try {
       return boost::any_cast<T>(iterator->second);
     } catch(const boost::bad_any_cast &exc) {
-      ERR("boost::bad_any_cast");
+      rError("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
@@ -143,7 +143,7 @@ class ParametersContainer: public Printable {
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
     } catch(const boost::bad_any_cast &exc) {
-      ERR("boost::bad_any_cast");
+      rError("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " +
@@ -170,7 +170,7 @@ class ParametersContainer: public Printable {
       return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
-      ERR("boost::bad_any_cast");
+      rError("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());
@@ -191,7 +191,7 @@ class ParametersContainer: public Printable {
       return *boost::any_cast<T>(&iterator->second);
     }
     catch(const boost::bad_any_cast &exc) {
-      ERR("boost::bad_any_cast");
+      rError("boost::bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());

@@ -57,7 +57,6 @@ using serialization_test::Generator;
 // Otherwise name conflicts while feature converter's serialization may occur
 
 int main(int argc, char* argv[]) {
-  ltr::Log LOG("generator.log");
   Generator generator;
 
   Measure<Object>::Ptr abs_error(new AbsError());
@@ -92,6 +91,7 @@ int main(int argc, char* argv[]) {
     rsm(new FeatureRandomSamplerLearner<Object>);
   bf_learner->addFeatureConverterLearner(rsm);
   rsm_lc_learner->set_weak_learner(bf_learner);
+
   generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
 
   NNLearner<Object>::Ptr

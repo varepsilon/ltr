@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
 #define LTR_LEARNERS_DECISION_TREE_ID3_SPLITTER_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <vector>
 #include <string>

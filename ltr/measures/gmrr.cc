@@ -40,12 +40,12 @@ namespace ltr {
          labels_index < number_of_objects_to_consider;
          ++labels_index, ++pos) {
       if (labels[labels_index].actual < 0) {
-        WARN("Some actual object label < 0");
+        rWarning("Some actual object label < 0");
         labels[labels_index].actual = 0;
       }
       if (labels[labels_index].actual
           > max_label_) {
-        WARN("Some actual object label > MAX_LABEL");
+        rWarning("Some actual object label > MAX_LABEL");
         labels[labels_index].actual = max_label_;
       }
       p_relevance = GMRRFormula(labels[labels_index].actual);

@@ -5,7 +5,7 @@
 namespace ltr {
 namespace decision_tree {
 void Vertex::addChild(Vertex::Ptr child, Condition::Ptr condition) {
-  INFO("Add a child to vertex.");
+  rInfo("Add a child to vertex.");
   childrens_.push_back(child);
   conditions_.push_back(condition);
 }

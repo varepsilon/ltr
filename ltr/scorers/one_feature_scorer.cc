@@ -1,6 +1,6 @@
 // Copyright 2011 Yandex
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <string>
 #include <sstream>
@@ -19,7 +19,7 @@ namespace ltr {
 
   string OneFeatureScorer::generateCppCodeImpl(
       const string& function_name) const {
-    INFO("Starting to generate CPP code for OneFeatureScorer");
+    rInfo("Starting to generate CPP code for OneFeatureScorer");
     string hpp_code;
 
     hpp_code.

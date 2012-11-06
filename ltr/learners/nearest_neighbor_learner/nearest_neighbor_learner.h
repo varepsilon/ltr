@@ -77,7 +77,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 template<class TElement>
 void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                     NNScorer* scorer) {
-  INFO("Learning started");
+  rInfo("Learning started");
   DataSet<Object> object_data;
 
   for (int element_index = 0;

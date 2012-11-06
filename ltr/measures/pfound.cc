@@ -33,11 +33,11 @@ namespace ltr {
          labels_index < number_of_objects_to_consider;
          ++labels_index) {
       if (labels[labels_index].actual < 0) {
-        WARN("Some actual object label < 0");
+        rWarning("Some actual object label < 0");
         labels[labels_index].actual = 0;
       }
       if (labels[labels_index].actual > max_label) {
-        WARN("Some actual object label > MAX_LABEL");
+        rWarning("Some actual object label > MAX_LABEL");
         labels[labels_index].actual = max_label;
       }
       p_relevance = labels[labels_index].actual / max_label;

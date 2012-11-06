@@ -4,7 +4,7 @@
 #define LTR_INTERFACES_SERIALIZABLE_H_
 
 #include <boost/lexical_cast.hpp>
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <string>
 #include <iostream>

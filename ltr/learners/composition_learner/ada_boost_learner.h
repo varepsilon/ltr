@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_ADA_BOOST_LEARNER_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <string>
 #include <functional>

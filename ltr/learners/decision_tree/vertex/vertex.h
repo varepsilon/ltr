@@ -3,12 +3,12 @@
 #ifndef LTR_LEARNERS_DECISION_TREE_VERTEX_VERTEX_H_
 #define LTR_LEARNERS_DECISION_TREE_VERTEX_VERTEX_H_
 
+#include <rlog/rlog.h>
+
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
-
-#include "logog/logog.h"
 
 #include "ltr/interfaces/serializable_functor.h"
 

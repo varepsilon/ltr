@@ -43,30 +43,45 @@ TEST_F(ManualSerializationTest, SerializingObjectPair) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;
+  obj1.set_actual_label(0);
+  obj1.set_predicted_label(1);
   obj2 << 3.5555 << 2.2444444 << 1;
+  obj2.set_actual_label(1);
+  obj2.set_predicted_label(0);
 
   ObjectPair pair(obj1, obj2);
-  EXPECT_EQ(pair.toString(), "([1.00, 2.24, 3.56]{0.00, 0.00}, [3.56, 2.24, 1.00]{0.00, 0.00})");
+  EXPECT_EQ(pair.toString(),
+    "([1.00, 2.24, 3.56]{0.00, 1.00}, [3.56, 2.24, 1.00]{1.00, 0.00})");
 }
 
 TEST_F(ManualSerializationTest, SerializingObjectList) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;
+  obj1.set_actual_label(0);
+  obj1.set_predicted_label(1);
   obj2 << 3.5555 << 2.2444444 << 1;
+  obj2.set_actual_label(1);
+  obj2.set_predicted_label(0);
 
   ObjectList lst;
   lst << obj1 << obj2;
-  EXPECT_EQ(lst.toString(), "{[1.00, 2.24, 3.56]{0.00, 0.00}, [3.56, 2.24, 1.00]{0.00, 0.00}}");
+  EXPECT_EQ(lst.toString(),
+    "{[1.00, 2.24, 3.56]{0.00, 1.00}, [3.56, 2.24, 1.00]{1.00, 0.00}}");
 }
 
 TEST_F(ManualSerializationTest, SerializingDataSet) {
   Object obj1;
   Object obj2;
   obj1 << 1 << 2.2444444 << 3.5555;
+  obj1.set_actual_label(0);
+  obj1.set_predicted_label(1);
   obj2 << 3.5555 << 2.2444444 << 1;
+  obj2.set_actual_label(1);
+  obj2.set_predicted_label(0);
 
   DataSet<Object> data;
   data << obj1 << obj2;
-  EXPECT_EQ(data.toString(), "[1.00, 2.24, 3.56]{0.00, 0.00}\n[3.56, 2.24, 1.00]{0.00, 0.00}\n");
+  EXPECT_EQ(data.toString(),
+    "[1.00, 2.24, 3.56]{0.00, 1.00}\n[3.56, 2.24, 1.00]{1.00, 0.00}\n");
 }

@@ -1,7 +1,8 @@
 // Copyright 2011 Yandex
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 #include <sstream>
+
 
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
 
@@ -20,28 +21,28 @@ namespace composition {
 
   const CompositionScorer::ScorerAndWeight&
       CompositionScorer::at(size_t scorer_index) const {
-    DBUG("Getting scorer at %d index", scorer_index);
+    rDebug("Getting scorer at %d index", scorer_index);
     return weighted_scorers_.at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
       CompositionScorer::at(size_t scorer_index) {
-    DBUG("Getting scorer at %d index", scorer_index);
+    rDebug("Getting scorer at %d index", scorer_index);
     return weighted_scorers_.at(scorer_index);
   }
   const CompositionScorer::ScorerAndWeight&
       CompositionScorer::operator[](size_t scorer_index) const {
-    DBUG("Setting scorer at %d index", scorer_index);
+    rDebug("Setting scorer at %d index", scorer_index);
     return at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
       CompositionScorer::operator[](size_t scorer_index) {
-    DBUG("Setting scorer at %d index", scorer_index);
+    rDebug("Setting scorer at %d index", scorer_index);
     return at(scorer_index);
   }
 
   void CompositionScorer::add
       (const ScorerAndWeight& weighted_scorer) {
-    DBUG("Adding a scorer and weight equal to %lf", weighted_scorer.weight);
+    rDebug("Adding a scorer and weight equal to %lf", weighted_scorer.weight);
     weighted_scorers_.push_back(weighted_scorer);
   }
 
@@ -61,23 +62,29 @@ namespace composition {
 
   string CompositionScorer::generateCppCodeImpl(
       const string& function_name) const {
-    INFO("Starting to generate CPP code for CompositionScorer");
+    rInfo("Starting to generate CPP code for CompositionScorer");
     ostringstream hpp_code;
     for (int index = 0; index < size(); ++index) {
       ostringstream scorer_name;
       scorer_name <<  function_name << "_weakscorer_" << index;
       hpp_code << at(index).scorer->generateCppCode(scorer_name.str());
     }
-    hpp_code << predictions_aggregator_->generateCppCode(function_name + "_aggregator");
-    hpp_code << "inline double " << function_name << "(const std::vector<double>& features) {\n";
-    hpp_code << "  vector<double> weights(" << size() << "), labels(" << size() << ");\n";
+    hpp_code << predictions_aggregator_->generateCppCode(function_name
+      + "_aggregator");
+    hpp_code << "inline double " << function_name
+      << "(const std::vector<double>& features) {\n";
+    hpp_code << "  vector<double> weights(" << size()
+      << "), labels(" << size() << ");\n";
     for (int index = 0; index < size(); ++index) {
       ostringstream scorer_name;
       scorer_name <<  function_name << "_weakscorer_" << index;
-      hpp_code << "  weights[" << index << "] = " << at(index).weight << ";\n";
-      hpp_code << "  labels[" << index << "] = " << scorer_name.str() << "(features);\n";
+      hpp_code << "  weights[" << index << "] = "
+        << at(index).weight << ";\n";
+      hpp_code << "  labels[" << index << "] = "
+        << scorer_name.str() << "(features);\n";
     }
-    hpp_code << "  return " << function_name << "_aggregator(labels, weights);\n}\n";
+    hpp_code << "  return " << function_name
+      << "_aggregator(labels, weights);\n}\n";
     return hpp_code.str();
   }
 };

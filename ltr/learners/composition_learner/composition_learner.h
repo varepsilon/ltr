@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_COMPOSITION_LEARNER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_COMPOSITION_LEARNER_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <string>
 #include <functional>
@@ -143,7 +143,7 @@ class CompositionLearner
 template <class TElement>
 void CompositionLearner<TElement>::learnImpl(
     const DataSet<TElement>& data, CompositionScorer* scorer) {
-  INFO("Learning has been started");
+  rInfo("Learning has been started");
 
   for (int element_index = 0; element_index < data.size(); ++element_index) {
     data.setWeight(element_index, 1.0 / data.size());
@@ -152,19 +152,19 @@ void CompositionLearner<TElement>::learnImpl(
   for (int iteration = 0;
       iteration < number_of_iterations_;
       ++iteration) {
-    INFO("Iteration #%d has been started", iteration);
+    rInfo("Iteration #%d has been started", iteration);
     this->weak_learner_->reset();
     this->weak_learner_->learn(data);
-    DBUG("Weak learner have been learned");
+    rDebug("Weak learner have been learned");
     Scorer::Ptr weak_scorer = this->weak_learner_->make();
     scorer->add(weak_scorer, 1.0);
     composition_scorer_weights_updater_->updateWeights(data, scorer);
-    DBUG("Composition scorer's weights have been updated");
+    rDebug("Composition scorer's weights have been updated");
     data_set_weights_updater_->updateWeights(&data, *scorer);
-    DBUG("Dataset's weights have been updated");
+    rDebug("Dataset's weights have been updated");
   }
 
-  INFO("Learning has been ended");
+  rInfo("Learning has been ended");
 }
 };
 };

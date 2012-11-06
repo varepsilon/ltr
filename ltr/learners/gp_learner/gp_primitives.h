@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_
 #define LTR_LEARNERS_GP_LEARNER_GP_PRIMITIVES_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <cmath>
 #include <string>
@@ -64,7 +64,7 @@ class Subtract : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
-    DBUG("Starting to execute");
+    rDebug("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(0, &first_argument, puppy_context);
@@ -92,7 +92,7 @@ class Multiply : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
-    DBUG("Starting to execute");
+    rDebug("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(0, &first_argument, puppy_context);
@@ -121,7 +121,7 @@ class Divide : public BaseGPOperation, public Serializable {
    */
   virtual void execute(void* output,
       Puppy::Context& puppy_context) {
-    DBUG("Starting to execute");
+    rDebug("Starting to execute");
     double& first_argument = *(static_cast<double*>(output));
     double second_argument;
     getArgument(1, &second_argument, puppy_context);
@@ -136,7 +136,7 @@ class Divide : public BaseGPOperation, public Serializable {
    * for serialization GPScorer to cpp code.
    */
   string generateCppCode(const string& function_name) const {
-    INFO("Starting to generate CPP code for Divide class");
+    rInfo("Starting to generate CPP code for Divide class");
     string code;
     code.append("#include <cmath>\n");
     code.append("inline double ");
@@ -176,7 +176,7 @@ class IfThenFunc : public BaseGPOperation, public Serializable {
   }
 
   string generateCppCode(const string& function_name) const {
-    INFO("Starting to generate CPP code for IfThenFunc");
+    rInfo("Starting to generate CPP code for IfThenFunc");
     return "inline double " + function_name +
       "(double lhs, double mhs, double rhs) {\n" +
       "  if (lhs > 0.0) {\n" +
@@ -201,7 +201,7 @@ class Ephemeral : public BaseGPOperation {
       Puppy::Context& puppy_context) {}
   virtual Puppy::PrimitiveHandle giveReference(
       Puppy::Context& puppy_context) {
-    DBUG("Giving reference for puppy_context");
+    rDebug("Giving reference for puppy_context");
     double value = puppy_context.mRandom.rollUniform(-1.0, 1.0);
     std::ostringstream name;
     name.precision(precision);

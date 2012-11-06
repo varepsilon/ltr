@@ -8,7 +8,7 @@ namespace ltr {
 double ManhattanMetric::distance(const ltr::Object& lhs,
                                  const ltr::Object& rhs) {
   if (lhs.feature_count() != rhs.feature_count()) {
-    ERR("Number of features must be equal");
+    rError("Number of features must be equal");
     throw std::logic_error("Number of features must be equal");
   }
 

@@ -3,7 +3,7 @@
 #include "ltr/scorers/nearest_neighbor_scorer.h"
 
 #include <boost/lexical_cast.hpp>
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <algorithm>
 #include <string>
@@ -41,9 +41,9 @@ struct DistanceToNeighbor {
 };
 
 double NNScorer::scoreImpl(const Object& object) const {
-  DBUG("Starting to score an object with the NNScorer");
+  rDebug("Starting to score an object with the NNScorer");
 
-  DBUG("Starting to find distances to neighbors");
+  rDebug("Starting to find distances to neighbors");
   vector<DistanceToNeighbor> distances_to_neighbors(data_.size());
   for (int neighbor_index = 0;
        neighbor_index < data_.size();

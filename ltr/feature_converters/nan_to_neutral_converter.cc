@@ -77,6 +77,7 @@ string NanToNeutralConverter::getDefaultAlias() const {
 }
 
 string NanToNeutralConverter::toString() const {
-  return "NaN-to-neutral converter with object: (" + neutral_object_.toString() + ")";
+  return "NaN-to-neutral converter with object: ("
+    + neutral_object_.toString() + ")";
 }
 };

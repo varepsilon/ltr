@@ -137,7 +137,7 @@ void BaseNDCG<TDCGFormula>::setDefaultParameters() {
 template<class TDCGFormula>
 void BaseNDCG<TDCGFormula>::checkParameters() const {
   if (this->number_of_objects_to_consider_ < 0) {
-    ERR("NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
+    rError("NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
     throw logic_error(alias() + " NUMBER_OF_OBJECTS_TO_CONSIDER < 0");
   }
 }

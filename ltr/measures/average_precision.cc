@@ -35,7 +35,7 @@ namespace ltr {
     }
     double metric;
     if (relevant_amount == 0) {
-      WARN("No relevants found");
+      rWarning("No relevants found");
       metric = 0;  // the worst
     } else {
       metric = ans / relevant_amount;

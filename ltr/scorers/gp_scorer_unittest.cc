@@ -53,10 +53,10 @@ TEST(GPScorer, GPScorerTest) {
   Object object1;
   object1 << 1.3 << 1.7 << 9.2;
 
-  INFO("%f", gp_scorer(object1));
+  rInfo("%f", gp_scorer(object1));
 
   Object object2;
   object2 << 1.9 << 15.8 << 0.7;
 
-  INFO("%f", gp_scorer(object2));
+  rInfo("%f", gp_scorer(object2));
 }

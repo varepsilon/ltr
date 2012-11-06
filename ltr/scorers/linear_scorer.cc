@@ -3,7 +3,7 @@
 #include "ltr/scorers/linear_scorer.h"
 
 #include <boost/lexical_cast.hpp>
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 #include <string>
 #include <sstream>
 

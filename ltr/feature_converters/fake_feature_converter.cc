@@ -35,6 +35,6 @@ string FakeFeatureConverter::getDefaultAlias() const {
 }
 
 string FakeFeatureConverter::toString() const {
- return "Fake feature converter";
+  return "Fake feature converter";
 }
 };

@@ -25,8 +25,10 @@ void Scorer::predict(const DataSet<TElement>& elements) const {
 }
 
 template void Scorer::predict<Object>(const DataSet<Object>& elements) const;
-template void Scorer::predict<ObjectPair>(const DataSet<ObjectPair>& elements) const;
-template void Scorer::predict<ObjectList>(const DataSet<ObjectList>& elements) const;
+template void Scorer::predict<ObjectPair>
+  (const DataSet<ObjectPair>& elements) const;
+template void Scorer::predict<ObjectList>
+  (const DataSet<ObjectList>& elements) const;
 
 template <class TElement>
 void Scorer::predict(const TElement& element) const {
@@ -54,7 +56,8 @@ string Scorer::toString() const {
   if (feature_converters_.empty()) {
     str << ", has no feature converters";
   } else {
-    str << ", initially applies " << feature_converters_.size() << " feature converters:\n";
+    str << ", initially applies " << feature_converters_.size()
+      << " feature converters:\n";
     for (size_t i = 0; i < feature_converters_.size(); ++i) {
       if (i != 0) {
         str << "\n";

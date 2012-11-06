@@ -40,7 +40,7 @@ namespace ltr {
     }
 
     if (!relevant_found) {
-      WARN("No relevant found");
+      rWarning("No relevant found");
     }
     return result;
   }

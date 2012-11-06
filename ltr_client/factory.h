@@ -3,6 +3,8 @@
 #ifndef LTR_CLIENT_FACTORY_H_
 #define LTR_CLIENT_FACTORY_H_
 
+#include <rlog/rlog.h>
+
 #include <string>
 #include <iostream>
 #include <cassert>
@@ -14,8 +16,6 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr/utility/shared_ptr.h"
-
-#include "logog/logog.h"
 
 using std::cout;
 using std::endl;
@@ -46,7 +46,7 @@ class Factory {
 
   boost::any Create(const string& name,
                     const ParametersContainer& parameters) const {
-    INFO("Factory::Create: Requested creating of %s\n", name.c_str());
+    rInfo("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
     assert(it != name_creators_.end());
     const AbstractCreator::Ptr creator = it->second;

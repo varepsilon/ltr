@@ -45,7 +45,8 @@ class LinearLearner : public BaseLearner<TElement, LinearScorer> {
 template<class TElement>
 void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                         LinearScorer* scorer) {
-  INFO("Learning started");
+  rInfo("Learning started");
+
   DataSet<Object> object_data;
 
   for (int element_index = 0;
@@ -61,12 +62,15 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   }
 
   VectorXd Y(object_data.size());
+
   for (int i = 0; i < Y.size(); ++i) {
     Y(i) = object_data[i].actual_label();
   }
 
   MatrixXd X(object_data.size(), object_data.feature_count() + 1);
-  for (int object_index = 0; object_index < object_data.size(); ++object_index) {
+  for (int object_index = 0;
+      object_index < object_data.size();
+      ++object_index) {
     X(object_index, 0) = 1.0;
     for (int feature_index = 0;
         feature_index < object_data.feature_count(); ++feature_index) {
@@ -76,7 +80,7 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   }
 
   // XTW = X^T W
-  INFO("Calculating XTW matrix");
+  rInfo("Calculating XTW matrix");
   MatrixXd XTW = X.transpose();
   for (int i = 0; i < object_data.size(); ++i) {
     XTW.col(i) *= object_data.getWeight(i);

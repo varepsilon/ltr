@@ -27,7 +27,7 @@ void DecisionTreeLearner::
 
 Vertex::Ptr DecisionTreeLearner::buildTree(const DataSet<Object>& data) {
   if (data.size() == 0) {
-    ERR("Data is empty.");
+    rError("Data is empty.");
     throw std::logic_error("no objects given to decision tree learner");
   }
 
@@ -75,7 +75,7 @@ LeafVertex::Ptr DecisionTreeLearner::
 
 void DecisionTreeLearner::
   learnImpl(const DataSet<Object>& data, DecisionTreeScorer* scorer) {
-    INFO("Learn started. Data set size: %d" , data.size());
+    rInfo("Learn started. Data set size: %d" , data.size());
     DecisionTree::Ptr decision_tree = new DecisionTree(buildTree(data));
     scorer->setTree(decision_tree);
 }

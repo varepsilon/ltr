@@ -52,9 +52,9 @@ ENDIF(UNIX)
 INCLUDE(${Source_Path}/cmake/boost.cmake)
 
 ########################################################################################
-# lets SETup logog
-INCLUDE(${Source_Path}/cmake/logog.cmake)
-ADD_LIBRARY(logog STATIC ${LOGOG_SOURCES})
+# lets SETup rlog
+INCLUDE(${Source_Path}/cmake/rlog.cmake)
+ADD_LIBRARY(rlog STATIC ${RLOG_HEADERS} ${RLOG_SOURCES})
 
 ##########################################################################################
 # lets SETup Puppy library
@@ -70,10 +70,10 @@ ADD_LIBRARY(tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE(${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY(ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES(ltr puppy logog ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(ltr puppy rlog ${Boost_LIBRARIES})
 
 # installing
-INSTALL(TARGETS ltr puppy logog ARCHIVE DESTINATION ${Install_Path})
+INSTALL(TARGETS ltr puppy rlog ARCHIVE DESTINATION ${Install_Path})
 
 ##########################################################################################
 # lets SETup LTR_client
@@ -85,7 +85,7 @@ TARGET_LINK_LIBRARIES(ltr_client ltr tinyxml)
 # lets SETup generator project, which learns scorers and serialize them
 INCLUDE(${Source_Path}/cmake/serialization.cmake)
 ADD_EXECUTABLE(serialization_generator ${Serialization_generator_SOURCES})
-TARGET_LINK_LIBRARIES(serialization_generator ltr puppy logog ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(serialization_generator ltr puppy rlog ${Boost_LIBRARIES})
 CreateEmptyTesterFile()
 
 ##########################################################################################

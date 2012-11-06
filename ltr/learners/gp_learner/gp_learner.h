@@ -330,19 +330,19 @@ void GPLearner<TElement>::
       reset();
     }
 
-    DBUG("Evaluating data for the first time");
+    rDebug("Evaluating data for the first time");
     this->evaluatePopulation(data);
 
-    DBUG("Evolution begins.\n");
+    rDebug("Evolution begins.\n");
     for (int generationIdx = 0;
          generationIdx < number_of_generations_;
          ++generationIdx) {
-      DBUG("Generation %d", generationIdx);
+      rDebug("Generation %d", generationIdx);
 
-      DBUG("Calling strategy");
+      rDebug("Calling strategy");
       this->evaluationStepImpl();
 
-      DBUG("Evaluation");
+      rDebug("Evaluation");
       this->evaluatePopulation(data);
 
       int best_tree_index = 0;
@@ -354,13 +354,13 @@ void GPLearner<TElement>::
         }
       }
 
-      DBUG("The best one is number %d", best_tree_index);
+      rDebug("The best one is number %d", best_tree_index);
       using ::operator <<;
       stringstream log_out;
       best_tree_ = population_[best_tree_index];
       log_out << best_tree_ << " | ";
       log_out << "with fitness " << best_tree_.mFitness;
-      DBUG(log_out.str().c_str());
+      rDebug(log_out.str().c_str());
     }
     // \TODO ? rewrite with setters and getters
     *scorer = GPScorer(best_tree_, context_, feature_count_);

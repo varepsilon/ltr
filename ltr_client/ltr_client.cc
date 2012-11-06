@@ -1,13 +1,13 @@
 // Copyright 2012 Yandex
 
+#include <rlog/rlog.h>
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 #include "boost/algorithm/string.hpp"
-
-#include "logog/logog.h"
 
 #include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/predictions_aggregators/average_predictions_aggregator.h"
@@ -57,7 +57,6 @@ using ltr::DataSet;
 using ltr::Scorer;
 using ltr::ObjectList;
 using ltr::ObjectPair;
-using ltr::Log;
 using ltr::BestFeatureLearner;
 using ltr::LinearLearner;
 using ltr::EuclideanMetric;
@@ -214,10 +213,10 @@ void LtrClient::launchTrain(boost::any parameterized,
   const DataSet<TElement>& data_set =
     loadDataSet<TElement>(data_info.file, data_info.format);
 
-  INFO("\n\n\nvoid doLaunch\n");
+  rInfo("\n\n\nvoid doLaunch\n");
   learner->learn(data_set);
 
-  INFO("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
+  rInfo("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
        learner->report().c_str());
 
   for (boost::unordered_set<string>::const_iterator predict_it =
@@ -227,7 +226,7 @@ void LtrClient::launchTrain(boost::any parameterized,
     const string& predict = *predict_it;
     if (configurator_.dataInfos().find(predict) ==
         configurator_.dataInfos().end()) {
-      INFO("Can't predict. Unknown data %s\n", predict.c_str());
+      rInfo("Can't predict. Unknown data %s\n", predict.c_str());
       return;
     }
     const string& predict_file_path = configurator_.rootPath() +
@@ -237,7 +236,7 @@ void LtrClient::launchTrain(boost::any parameterized,
 
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
 
-    INFO("\nsaved predictions for '%s' into %s\n", predict.c_str(),
+    rInfo("\nsaved predictions for '%s' into %s\n", predict.c_str(),
          predict_file_path.c_str());
 
     if (train_info.gen_cpp) {
@@ -246,7 +245,7 @@ void LtrClient::launchTrain(boost::any parameterized,
         ofstream fout(cpp_file_path.c_str());
         fout << scorer->generateCppCode(learner_info.get_name());
         fout.close();
-        INFO("cpp code saved into %s\n", cpp_file_path.c_str());
+        rInfo("cpp code saved into %s\n", cpp_file_path.c_str());
     }
   }
 }
@@ -302,7 +301,7 @@ void LtrClient::launchCrossvalidation(
     }
 
     cross_validator.launch();
-    INFO(cross_validator.toString().c_str());
+    rInfo(cross_validator.toString().c_str());
 }
 
 void LtrClient::launch() {
@@ -317,7 +316,7 @@ void LtrClient::launch() {
     const ParametersContainer& parameters =
       Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
 
-    INFO("\nvoid LtrClient::launch()\nparameters=%s\n",
+    rInfo("\nvoid LtrClient::launch()\nparameters=%s\n",
          parameters.toString().c_str());
 
     boost::any parameterized = Factory::instance()->
@@ -356,12 +355,9 @@ void LtrClient::launch() {
 }
 
 
-// #define LOGOG_GROUP NULL
-
 // ===========================================================================
 
 int main(int argc, char *argv[]) {
-  Log LOG;
   Factory factory;
   RegisterAllTypes(&factory);
 
@@ -372,9 +368,9 @@ int main(int argc, char *argv[]) {
       client.initFrom(filename);
       client.launch();
   } catch(const logic_error& err) {
-      ERR("Failed: %s", err.what());
+      rError("Failed: %s", err.what());
   } catch(...) {
-      ERR("Caught exception");
+      rError("Caught exception");
   }
   return 0;
 }

@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_COMPOSITION_SCORER_WEIGHTS_UPDATER_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <string>
 #include <stdexcept>
@@ -73,14 +73,14 @@ void AdaRankScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
     CompositionScorer* composition_scorer) const {
   if (composition_scorer->size() == 0) {
-    ERR("Zero-length scorer as an input");
+    rError("Zero-length scorer as an input");
     throw logic_error("Zero-length scorer for " + this->getDefaultAlias());
   }
   if (this->measure_->best() == utility::Inf ||
       this->measure_->best() == -utility::Inf ||
       this->measure_->worst() == utility::Inf ||
       this->measure_->worst() == -utility::Inf) {
-    ERR("Can't work with an infinity measure");
+    rError("Can't work with an infinity measure");
     throw
       std::logic_error(this->getDefaultAlias() + " has an infinity measure");
   }
@@ -109,13 +109,13 @@ void AdaRankScorerWeightsUpdater<TElement>::updateWeights(
       (*composition_scorer)[last_scorer_index].scorer;
     composition_scorer->clear();
     composition_scorer->add(best_scorer, 1.0);
-    WARN("Ideal weak scorer has been found");
+    rWarning("Ideal weak scorer has been found");
     return;
   }
 
   double result_weight = 0.5 * log(numerator/denominator);
   if (result_weight < 0) {
-    WARN("Negative weight in composition");
+    rWarning("Negative weight in composition");
   }
 
   (*composition_scorer)[last_scorer_index].weight = result_weight;

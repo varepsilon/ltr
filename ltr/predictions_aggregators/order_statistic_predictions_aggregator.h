@@ -3,12 +3,12 @@
 #ifndef LTR_PREDICTIONS_AGGREGATORS_ORDER_STATISTIC_PREDICTIONS_AGGREGATOR_H_
 #define LTR_PREDICTIONS_AGGREGATORS_ORDER_STATISTIC_PREDICTIONS_AGGREGATOR_H_
 
+#include <rlog/rlog.h>
+
 #include <vector>
 #include <string>
 #include <utility>
 #include <algorithm>
-
-#include "logog/logog.h"
 
 #include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/parameters_container/parameters_container.h"
@@ -55,7 +55,7 @@ class OrderStatisticPredictionsAggregator : public PredictionsAggregator {
     }
 
     if (DoubleEqual(sum_weight, 0.0)) {
-      ERR("Can't score with no positive-weighted weak labels");
+      rError("Can't score with no positive-weighted weak labels");
       throw std::logic_error
         ("No positive weights in OrderStatisticPredictionsAggregator");
     }
@@ -92,7 +92,7 @@ class OrderStatisticPredictionsAggregator : public PredictionsAggregator {
     result += "  }\n";
     result += "  if (DoubleEqual(sum_weight, 0.0)) {\n";
     result +=
-      "    ERR(\"Can't score with no positive-weighted weak labels\");\n";
+      "    rError(\"Can't score with no positive-weighted weak labels\");\n";
     result += "    throw std::logic_error\n";
     result += "      (\"No positive weights";
     result += "in OrderStatisticPredictionsAggregator\");\n";

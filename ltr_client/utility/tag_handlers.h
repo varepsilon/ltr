@@ -107,7 +107,7 @@ class OnConfigParser: public TagHandler {
  public:
   explicit OnConfigParser(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnConfigExecutor");
+    rInfo("TOnConfigExecutor");
   }  // We already read it
 };
 
@@ -124,7 +124,7 @@ class TOnDataTag: public TagHandler {
    */
   explicit TOnDataTag(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnDataExecutor");
+    rInfo("TOnDataExecutor");
 
     assert(element);
     const char* name = element->Attribute(NAME_ATTR);
@@ -143,9 +143,10 @@ class TOnDataTag: public TagHandler {
                             string(name) + "' has no file path");
     }
     if (!approach) {
-        WARN("No approach defined for data '%s'. It will be used as listwise.",
-             name);
-        approach = "listwise";
+      rWarning(
+        "No approach defined for data '%s'. It will be used as listwise.",
+        name);
+      approach = "listwise";
     }
 
     if (d->dataInfos().find(name) != d->dataInfos().end()) {
@@ -189,7 +190,7 @@ class TOnParameterTag: public TagHandler {
    * @returns bool value
    */
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnParametersExecutor");
+    rInfo("TOnParametersExecutor");
 
     assert(container);
 
@@ -202,11 +203,11 @@ class TOnParameterTag: public TagHandler {
     }
 
     if (val.empty()) {
-        WARN("parameter %s has no value", name.c_str());
+        rWarning("parameter %s has no value", name.c_str());
         return;
     }
     const string* type = element->Attribute(string(TYPE_ATTR));
-    INFO("TOnParametersExecutor: name:%s val:%s type:%d\n", name.c_str(),
+    rInfo("TOnParametersExecutor: name:%s val:%s type:%d\n", name.c_str(),
          val.c_str(), type);
     addParameter(name, type ? *type : guessType(val), val);
   }
@@ -267,19 +268,19 @@ class TOnParameterTag: public TagHandler {
                     const string& value) {
     if (type == "bool") {
       container->AddNew(name, toBool(value));
-      INFO("TOnParametersExecutor: Added bool %s %b\n",
+      rInfo("TOnParametersExecutor: Added bool %s %b\n",
            name.c_str(), toBool(value));
     } else if (type == "double") {
       container->AddNew(name, toDouble(value));
-      INFO("TOnParametersExecutor: Added double %s %lf\n",
+      rInfo("TOnParametersExecutor: Added double %s %lf\n",
            name.c_str(), toDouble(value));
     } else if (type == "int") {
       container->AddNew(name, toInt(value));
-      INFO("TOnParametersExecutor: Added int %s %d\n",
+      rInfo("TOnParametersExecutor: Added int %s %d\n",
            name.c_str(), toInt(value));
     } else if (type == XML_TOKEN_DEPENDENCY_TYPE) {
       container->AddNew(name, ParameterizedDependency(value));
-      INFO("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
+      rInfo("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
            name.c_str(), value.c_str());
     } else {
       assert(false && ("Adding " + type +
@@ -295,7 +296,7 @@ class TOnParameterTag: public TagHandler {
    */
   static string guessType(const string& value) {
     const string::size_type pos_of_space = value.find(' ');
-    INFO("TOnParametersExecutor: guessing type of %s %d\n",
+    rInfo("TOnParametersExecutor: guessing type of %s %d\n",
          value.c_str(), pos_of_space);
 
     if (pos_of_space != string::npos) {  // some kind of list
@@ -367,7 +368,7 @@ class OnGeneralParameterized: public TagHandler {
    * @param element - TiXmlElement pointer to parse.
    */
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnGeneralXmlToken\n");
+    rInfo("TOnGeneralXmlToken\n");
 
     const char* name = element->Attribute(NAME_ATTR);
     ParametrizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
@@ -379,7 +380,7 @@ class OnGeneralParameterized: public TagHandler {
 
     const char* approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
-      WARN("No approach defined '%s'. Try to define automatically.", name);
+      rWarning("No approach defined '%s'. Try to define automatically.", name);
       approach = "";
     }
     const char* tag_name = element->Value();
@@ -432,7 +433,7 @@ class OnCVLearnerTag: public TagHandler {
    * leaner.
    */
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnCVLearnerExecutor\n");
+    rInfo("TOnCVLearnerExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->learners, element->GetText());
   }
@@ -469,7 +470,7 @@ class OnCVMeasureTag: public TagHandler {
    * Must contain the measure.
    */
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnCVMeasureExecutor");
+    rInfo("TOnCVMeasureExecutor");
     assert(info);
     ltr::utility::SafeInsert(info->measures, element->GetText());
   }
@@ -506,7 +507,7 @@ class OnCVDataTag: public TagHandler {
    * Must contain the dataset.
    */
   virtual void operator() (TiXmlElement* element) {
-    INFO("TOnCVDataExecutor\n");
+    rInfo("TOnCVDataExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->datas, element->GetText());
   }
@@ -545,11 +546,11 @@ class OnCrossvalidationTag: public TagHandler {
    * Must contain the dataset.
    */
   virtual void operator()(TiXmlElement* element) {
-    INFO("TOnCrossvalidationExecutor\n");
+    rInfo("TOnCrossvalidationExecutor\n");
 
     const char* fold = element->Attribute(FOLD_ATTR);
     if (!fold) {
-        ERR("Failed: <crossvalidation> with no fold");
+        rError("Failed: <crossvalidation> with no fold");
         return;
     }
 
@@ -595,7 +596,7 @@ class OnPredictTag: public TagHandler {
    * Must contain predict tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    INFO("TOnPredictExecutor\n");
+    rInfo("TOnPredictExecutor\n");
     assert(info);
     ltr::utility::SafeInsert(info->predicts, element->GetText());
   }
@@ -669,25 +670,25 @@ class OnTrainTag: public TagHandler {
    * Must contain the train tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    INFO("TOnTrainExecutor\n");
+    rInfo("TOnTrainExecutor\n");
     const char* name = element->Attribute("name");
     const char* data = element->Attribute("data");
     const char* learner = element->Attribute("learner");
 
     if (!name) {
-        ERR("Failed: <train> without name attribute");
+        rError("Failed: <train> without name attribute");
         return;
     }
     if (!data) {
-        ERR("Failed: <train> without data attribute");
+        rError("Failed: <train> without data attribute");
         return;
     }
     if (!learner) {
-        ERR("Failed: <train> without learner attribute");
+        rError("Failed: <train> without learner attribute");
         return;
     }
     if (d->trainInfos().find(name) != d->trainInfos().end()) {
-        ERR("Failed: dublicate train name ");
+        rError("Failed: dublicate train name ");
         return;
     }
 
@@ -730,7 +731,7 @@ class OnLaunchTag: public TagHandler {
    * @param element - TiXmlElement pointer to the XML tag.
    */
   virtual void operator() (TiXmlElement* element) {
-    INFO("TOnLaunchExecutor\n");
+    rInfo("TOnLaunchExecutor\n");
     GenericParse(handlers_, element->FirstChildElement());
   }
 

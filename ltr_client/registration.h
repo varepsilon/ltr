@@ -100,7 +100,6 @@ using ltr::Scorer;
 using ltr::ObjectList;
 using ltr::ObjectPair;
 using ltr::Object;
-using ltr::Log;
 using ltr::LinearLearner;
 using ltr::EuclideanMetric;
 using ltr::ManhattanMetric;

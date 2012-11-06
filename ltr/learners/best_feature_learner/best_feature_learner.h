@@ -56,13 +56,13 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                              OneFeatureScorer* scorer) {
-  INFO("Starting learning");
+  rInfo("Starting learning");
   if (measure_.get() == 0) {
-    ERR("Measure is not setted");
+    rError("Measure is not setted");
     throw std::logic_error("Set measure first.");
   }
   if (data.feature_count() == 0) {
-    ERR("Data is empty");
+    rError("Data is empty");
     throw std::logic_error("There are no features for BF learner.");
   }
 

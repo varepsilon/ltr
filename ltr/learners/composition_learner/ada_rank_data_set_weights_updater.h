@@ -3,22 +3,19 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_ADA_RANK_DATA_SET_WEIGHTS_UPDATER_H_
 
+#include <rlog/rlog.h>
+
 #include <cmath>
 #include <string>
 #include <vector>
 #include <stdexcept>
 
-#include <logog/logog.h>
 #include "ltr/utility/shared_ptr.h"
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
 #include "ltr/learners/composition_learner/data_set_weights_updater.h"
-
-#include "ltr/utility/shared_ptr.h"
-
-#include "ltr/measures/measure.h"
 
 using std::string;
 using std::vector;
@@ -50,7 +47,8 @@ class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   /**
    * @param measure Measure to be used for weights updating
    */
-  explicit AdaRankDataSetWeightsUpdater(typename Measure<TElement>::Ptr measure) {
+  explicit AdaRankDataSetWeightsUpdater
+      (typename Measure<TElement>::Ptr measure) {
     this->set_measure(measure);
   }
 
@@ -68,22 +66,25 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>* data,
     const CompositionScorer& composition_scorer) const {
   if (composition_scorer.size() == 0) {
-    ERR("Zero-length scorer as an input");
+    rError("Zero-length scorer as an input");
     throw logic_error("Zero-length scorer for " + this->getDefaultAlias());
   }
   if (this->measure_->best() == utility::Inf ||
       this->measure_->best() == -utility::Inf ||
       this->measure_->worst() == utility::Inf ||
       this->measure_->worst() == -utility::Inf) {
-    ERR("Can't work with an infinity measure");
-    throw std::logic_error(this->getDefaultAlias() + " has an infinity measure");
+    rError("Can't work with an infinity measure");
+    throw std::logic_error(this->getDefaultAlias()
+      + " has an infinity measure");
   }
   composition_scorer.predict(*data);
 
   vector<double> measure_exps(data->size());
   double sum_of_exps = 0.0;
 
-  for (size_t element_index = 0; element_index < data->size(); ++element_index) {
+  for (size_t element_index = 0;
+      element_index < data->size();
+      ++element_index) {
     double measure_value = this->measure_->value(data->at(element_index));
     double normalized_measure_value =
       (measure_value - this->measure_->worst()) /
@@ -94,7 +95,9 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     sum_of_exps += measure_exps[element_index];
   }
 
-  for (size_t element_index = 0; element_index < data->size(); ++element_index) {
+  for (size_t element_index = 0;
+      element_index < data->size();
+      ++element_index) {
     data->setWeight(element_index, measure_exps[element_index] / sum_of_exps);
   }
 }

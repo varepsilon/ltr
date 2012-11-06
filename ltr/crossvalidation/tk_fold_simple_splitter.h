@@ -3,7 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 #define LTR_CROSSVALIDATION_TK_FOLD_SIMPLE_SPLITTER_H_
 
-#include <logog/logog.h>
+#include <rlog/rlog.h>
 
 #include <algorithm>
 #include <vector>
@@ -47,7 +47,7 @@ class TKFoldSimpleSplitter : public Splitter<TElement> {
   explicit TKFoldSimpleSplitter
       (const int K = 10,
        const int T = 10) {
-    DBUG("Setting K equal to %d and T equal to %d", K, T);
+    rDebug("Setting K equal to %d and T equal to %d", K, T);
     K_ = K;
     T_ = T;
   }
@@ -100,14 +100,14 @@ string TKFoldSimpleSplitter<TElement>::toString() const {
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::setDefaultParameters() {
-  DBUG("Setting K equal to 10 and T eequal to 10");
+  rDebug("Setting K equal to 10 and T eequal to 10");
   K_ = 10;
   T_ = 10;
 }
 
 template<class TElement>
 void TKFoldSimpleSplitter<TElement>::checkParameters() const {
-  DBUG("Checking if K is greater than 1 and T is greater than 0");
+  rDebug("Checking if K is greater than 1 and T is greater than 0");
   CHECK(K_ > 1); // NOLINT
   CHECK(T_ > 0); // NOLINT
 }
@@ -122,7 +122,7 @@ void TKFoldSimpleSplitter<TElement>::setParametersImpl(
 template<class TElement>
 int TKFoldSimpleSplitter<TElement>::splitCount(
     const DataSet<TElement>& base_set) const {
-  DBUG("umber of splits is equal to %d", K_ * T_);
+  rDebug("umber of splits is equal to %d", K_ * T_);
   return K_ * T_;
 }
 
@@ -132,16 +132,16 @@ void TKFoldSimpleSplitter<TElement>::splitImpl(
     const DataSet<TElement>& base_set,
     vector<int>* train_set_indexes,
     vector<int>* test_set_indexes) const {
-  DBUG("Starting TKFold splitting");
+  rDebug("Starting TKFold splitting");
   if (K_ > base_set.size()) {
-    ERR("Split fold is larger than dataset");
+    rError("Split fold is larger than dataset");
     throw logic_error(
           string("In KFoldSimpleSplitter: Split fold is larger than") +
           string("a dataset size. ERROR"));
   }
-  INFO("Starting TKFold splitting");
+  rInfo("Starting TKFold splitting");
   if (split_index < 0 || split_index >= splitCount(base_set)) {
-    ERR("Index should be in range [0..T*k-1]");
+    rError("Index should be in range [0..T*k-1]");
     throw logic_error(this-> alias() +
       " index should be in range [0..T*k-1]");
   }
