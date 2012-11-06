@@ -122,6 +122,11 @@ Lets start from a rather simple test project, that uses LTR. Here is an example 
 PROJECT(LTRTestProject CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+IF(NOT CMAKE_BUILD_TYPE)
+    MESSAGE(STATUS "No build type selected, default is Debug")
+    SET(CMAKE_BUILD_TYPE "Debug")
+ENDIF()
+
 # Test_Source_Path variable - the path to the sources of the test project. Usually it equals to the
 # CMAKE_CURRENT_SOURCE_DIR variable, i.e., the path to the current CMakeLists.txt file.
 SET(Test_Source_Path ${CMAKE_CURRENT_SOURCE_DIR})
