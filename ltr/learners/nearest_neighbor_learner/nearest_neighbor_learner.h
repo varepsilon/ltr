@@ -63,7 +63,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 
  private:
   void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
-  virtual string getDefaultAlias() const {return "NearestNeightborLearner";}
+  virtual string getDefaultAlias() const {return "NearestNeighborLearner";}
 
   BaseMetric::Ptr metric_;
   NeighborWeighter::Ptr neighbor_weighter_;

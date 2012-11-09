@@ -78,8 +78,9 @@ class CompositionScorer : public Scorer, Parameterized {
 
   virtual double scoreImpl(const Object& object) const;
 
-  string toString() const { return "";}
  private:
+  string toStringImpl() const { return "CompositionScorer";}
+
   virtual string getDefaultAlias() const {return "CompositionScorer";}
   /**
    * An implementation for add function. Is virtual for possibility of
