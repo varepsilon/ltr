@@ -141,7 +141,7 @@ TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
   linear_composition_learner.learn(data);
   linear_scorer = linear_composition_learner.makeSpecific();
 
-  EXPECT_EQ(25, linear_scorer->size());
+  EXPECT_EQ(15, linear_scorer->size());
   for (int i = 0; i < linear_scorer->size(); ++i) {
     linear_scorer->at(i).scorer->predict(data);
     EXPECT_TRUE(DoubleEqual(0.0, abs_error->average(data)))

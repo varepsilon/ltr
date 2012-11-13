@@ -105,6 +105,7 @@ class BaseLearner : public Learner<TElement> {
                      bool check_parameters = true);
   // \TODO ? We don't need it in base class as not all Learners support it
   virtual void setInitialScorer(const TScorer& scorer);
+  virtual void setDefaultScorer();
   virtual void reset();
  private:
   /**
@@ -156,13 +157,18 @@ Scorer::Ptr BaseLearner<TElement, TScorer>::make() const {
 
 template<class TElement, class TScorer>
 void BaseLearner<TElement, TScorer>::reset() {
+  setDefaultScorer();
+}
+
+
+template<class TElement, class TScorer>
+void BaseLearner<TElement, TScorer>::setDefaultScorer() {
   TScorer scorer;
   scorer_ = scorer;
 }
 
 template<class TElement, class TScorer>
 void BaseLearner<TElement, TScorer>::setInitialScorer(const TScorer& scorer) {
-  reset();
   scorer_ = scorer;
 }
 
@@ -172,6 +178,7 @@ void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
   if (check_parameters) {
     this->checkParameters();
   }
+  setDefaultScorer();
 
   DataSet<TElement> source_data = data_set.deepCopy();
   DataSet<TElement> converted_data;

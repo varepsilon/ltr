@@ -87,11 +87,12 @@ class CompositionLearner
   /**
    * Set default scorer
    */
-  void setDefaultScorer() {
+  virtual void setDefaultScorer() {
     SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
     CompositionScorer scorer(aggregator);
     this->setInitialScorer(scorer);
   }
+
   /**
    * Clears parameters and sets NUMBER_OF_ITERATIONS = 10
    */
