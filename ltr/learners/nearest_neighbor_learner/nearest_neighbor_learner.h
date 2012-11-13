@@ -12,13 +12,18 @@
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/scorers/nearest_neighbor_scorer.h"
 #include "ltr/utility/shared_ptr.h"
+#include "ltr/metrics/euclidean_metric.h"
 #include "ltr/utility/neighbor_weighter.h"
+#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 
 using ltr::PredictionsAggregator;
 using ltr::BaseMetric;
 using ltr::NNScorer;
 using ltr::ParametersContainer;
 using ltr::utility::NeighborWeighter;
+using ltr::EuclideanMetric;
+using ltr::utility::InverseLinearDistance;
+using ltr::VotePredictionsAggregator;
 
 namespace ltr {
 /**
@@ -32,10 +37,6 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
  public:
   typedef ltr::utility::shared_ptr<NNLearner> Ptr;
 
-  explicit NNLearner() {
-    // DO NOTHING
-  }
-
   explicit NNLearner(const ParametersContainer& parameters) {
     metric_ = parameters.Get<BaseMetric::Ptr>("metric");
     neighbor_weighter_ =
@@ -46,10 +47,10 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
       parameters.Get<int>("number_of_neighbors_to_process");
   }
 
-  explicit NNLearner(BaseMetric::Ptr metric,
-            NeighborWeighter::Ptr neighbor_weighter,
-            PredictionsAggregator::Ptr predictions_aggregator,
-            int number_of_neighbors_to_process) :
+  explicit NNLearner(BaseMetric::Ptr metric = new EuclideanMetric(),
+            NeighborWeighter::Ptr neighbor_weighter = new InverseLinearDistance(),
+            PredictionsAggregator::Ptr predictions_aggregator = new VotePredictionsAggregator(),
+            int number_of_neighbors_to_process = 3) :
     metric_(metric),
     neighbor_weighter_(neighbor_weighter),
     predictions_aggregator_(predictions_aggregator),
