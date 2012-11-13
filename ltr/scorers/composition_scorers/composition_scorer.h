@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "ltr/scorers/scorer.h"
 #include "ltr/interfaces/parameterized.h"
@@ -12,6 +13,7 @@
 
 using std::string;
 using std::vector;
+using std::stringstream;
 
 namespace ltr {
 namespace composition {
@@ -79,7 +81,14 @@ class CompositionScorer : public Scorer, Parameterized {
   virtual double scoreImpl(const Object& object) const;
 
  private:
-  string toStringImpl() const { return "CompositionScorer";}
+  string toStringImpl() const {
+    stringstream str;
+    str << "CompositionScorer, including:\n";
+    for (int i = 0; i < this->size(); ++i) {
+      str << "  " << *((*this)[i].scorer) << " [" << (*this)[i].weight << "]\n";
+    }
+    return str.str();
+  }
 
   virtual string getDefaultAlias() const {return "CompositionScorer";}
   /**
