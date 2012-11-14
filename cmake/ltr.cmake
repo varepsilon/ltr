@@ -214,9 +214,6 @@ SET(LTR_DATA_PREPROCESSORS ${Source_Path}/ltr/data_preprocessors/data_preprocess
 
 SET(LTR_CROSSVALIDATION ${Source_Path}/ltr/crossvalidation/splitter.h
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter.h
-                        ${Source_Path}/ltr/crossvalidation/validation_result.h
-                        ${Source_Path}/ltr/crossvalidation/validation_result.cc
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation.h
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter.h
                         ${Source_Path}/ltr/crossvalidation/crossvalidator.h)

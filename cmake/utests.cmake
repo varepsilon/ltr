@@ -69,8 +69,6 @@ SET(LTR_CROSSVALIDATION_TEST ${Source_Path}/ltr/crossvalidation/splitter_unittes
                         ${Source_Path}/ltr/crossvalidation/k_fold_simple_splitter_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/leave_one_out_splitter_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter_unittest.cc
-                        ${Source_Path}/ltr/crossvalidation/validation_result_unittest.cc
-                        ${Source_Path}/ltr/crossvalidation/crossvalidation_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/crossvalidator_unittest.cc)
 
 SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc)
