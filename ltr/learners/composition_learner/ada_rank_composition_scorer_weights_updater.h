@@ -99,7 +99,7 @@ void AdaRankScorerWeightsUpdater<TElement>::updateWeights(
       (this->measure_->best() - this->measure_->worst());
 
     numerator += data.getWeight(element_index) *
-      normalized_measure_value;
+      (1 + normalized_measure_value);
     denominator += data.getWeight(element_index) *
       (1 - normalized_measure_value);
   }
