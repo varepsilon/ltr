@@ -35,11 +35,7 @@ MESSAGE(STATUS "CMAKE_DEBUG_POSTFIX   : ${CMAKE_DEBUG_POSTFIX}")
 
 ##########################################################################################
 # lets SETup OpenMP flags
-FIND_PACKAGE(OpenMP)
-IF(OPENMP_FOUND)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-ENDIF(OPENMP_FOUND)
+INCLUDE(${Source_Path}/cmake/include_openmp.cmake)
 
 # let use pthread on unix
 IF(UNIX)
