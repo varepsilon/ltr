@@ -1,0 +1,36 @@
+namespace ltr {
+/** \page HowToUseLogging How to use logging
+	\ingroup Advanced
+
+\tableofcontents
+
+\section RLog RLog
+
+In LTR we use rlog logging library from http://www.arg0.net/rlog. This document is a short introduction
+to logging with rlog, for more information download rlog from official website
+(in contrib there is a revised version of rlog without documentation).
+
+\section LoggingMacros Logging macros
+
+RLog provides macros which are similar to simple printf() statements. Here is a short example of usage (note including rlog/rlog.h):
+
+\include logging.cc
+
+\section LoggingSettings Logging settings
+
+To use the logging in a project, linked to ltr, one has to include the rlog/rlog_default.h.
+Without this include ltr will work silently without any message-outputting.
+
+The default behaviour of logging is to log every message to the ltr.log file, and all errors to the stderr.
+
+Here is an example, which describes the logging behaviour and how the user can affect it.
+See ltr::Log documentation for a wider information.
+
+\include logging_settings.cc
+
+\section ExampleOutput Example output
+
+\include example_output.txt
+
+**/
+}

@@ -43,7 +43,6 @@ using ltr::FeatureConverter;
 using ltr::NanToZeroConverterLearner;
 using ltr::cv::LeaveOneOutSplitter;
 using ltr::cv::CrossValidator;
-using ltr::Log;
 using ltr::LinearLearner;
 using ltr::NNLearner;
 using ltr::gp::GPLearner;
@@ -51,7 +50,6 @@ using ltr::gp::GPLearner;
 using std::fstream;
 
 int main() {
-  Log log("log.txt");
   DataSet<ObjectList> test_data = loadDataSet<ObjectList>(
           "data/imat2009/imat2009_test_small.txt", "Yandex");
   DataSet<ObjectList> train_data = loadDataSet<ObjectList>(

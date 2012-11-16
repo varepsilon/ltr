@@ -19,6 +19,7 @@ namespace ltr {
     - \ref HowToCreateNewLearnerAndScorer
     - \ref HowToWriteUnittests
     - \ref HowToCheckSerialization
+    - \ref HowToUseLogging
     - \ref TutorialLTRClientForDeveloper
 
 **/

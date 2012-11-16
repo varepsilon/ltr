@@ -12,8 +12,6 @@ using std::vector;
 using std::endl;
 
 int main() {
-  ltr::Log log("log.txt");
-
   ltr::Object object1, object2, object3;
   object1 << 1 << 2;
   object1.set_actual_label(10 + (1 + 2));

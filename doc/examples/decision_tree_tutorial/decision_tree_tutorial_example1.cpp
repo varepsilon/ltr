@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include "logog/logog.h"
-
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 
@@ -23,8 +21,6 @@ using ltr::decision_tree::MostCommonLabelLeafGenerator;
 using ltr::decision_tree::SameLabelStopSplittingCriteria;
 
 int main() {
-  ltr::Log log("decision_tree_log.txt");
-
   DataSet<Object> data;
 
   Object point1, point2;

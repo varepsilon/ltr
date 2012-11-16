@@ -47,4 +47,3 @@ int main() {
   object4 << 1 << 0;
   cout << scorer->score(object4) << endl;
 }
-

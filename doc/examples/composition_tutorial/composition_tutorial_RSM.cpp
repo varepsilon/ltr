@@ -16,8 +16,6 @@ using ltr::FeatureRandomSamplerLearner;
 using ltr::BestFeatureLearner;
 
 int main() {
-  ltr::Log LOG; // is needed for a correct logging in learners
-  logog::GetDefaultFilter().Level(LOGOG_LEVEL_ERROR); // display only errors
   srand(14);
 
   DataSet<Object> dataset(3); // dataset with 3 features
