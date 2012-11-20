@@ -8,7 +8,7 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 using std::vector;

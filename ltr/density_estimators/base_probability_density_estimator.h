@@ -4,7 +4,7 @@
 
 #include "ltr/data/object.h"
 #include "ltr/scorers/scorer.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/interfaces/parameterized.h"
 #include "ltr/interfaces/serializable.h"
 #include "ltr/parameters_container/parameters_container.h"

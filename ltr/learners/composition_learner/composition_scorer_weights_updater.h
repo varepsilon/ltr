@@ -6,7 +6,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"

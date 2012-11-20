@@ -9,12 +9,13 @@
 #include <string>
 #include <vector>
 
-#include "boost/filesystem/path.hpp"
+#include "ltr/utility/boost/path.h"
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/parsers/parser.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::ifstream;
 using std::map;

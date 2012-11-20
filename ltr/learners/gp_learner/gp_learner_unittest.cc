@@ -2,12 +2,11 @@
 
 #include <gtest/gtest.h>
 
-#include <boost/filesystem.hpp>
-
 #include <string>
 
 #include "ltr/data/object.h"
 #include "ltr/data/utility/io_utility.h"
+#include "ltr/utility/boost/path.h"
 
 #include "ltr/measures/dcg.h"
 #include "ltr/measures/true_point.h"
@@ -25,7 +24,7 @@
 #include "ltr/learners/gp_learner/strategies/select_top_trees_strategy.h"
 #include "ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h"
 
-using boost::filesystem::path;
+using ltr::utility::FixPathSeparators;
 
 using std::string;
 using std::cout;
@@ -52,8 +51,7 @@ using ltr::gp::CrossoverAdjacentTreesStrategy;
 class GPLearnerTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    string learn_data_file_name =
-      path("data/imat2009/imat2009_learning_small.txt").string();
+    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
     learn_data = loadDataSet<Object>(learn_data_file_name, "YANDEX");
 
     NanToNeutralConverter::Ptr nan_to_zero_converter
@@ -71,8 +69,7 @@ TEST_F(GPLearnerTest, GPLearnerTest) {
   Measure<ObjectList>::Ptr pMeasure(new DCG());
   GPLearner<ObjectList> gp_learner(pMeasure);
 
-  string learn_data_file_name =
-    path("data/imat2009/imat2009_learning_small.txt").string();
+  string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
 
   DataSet<ObjectList> learn_data_listwise =
     loadDataSet<ObjectList>(learn_data_file_name, "YANDEX");

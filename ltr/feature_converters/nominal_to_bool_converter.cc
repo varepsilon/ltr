@@ -49,7 +49,7 @@ string NominalToBoolConverter::generateCppCode(
     append("};\n").
     append("  vector<int> feature_outputs[").
     append(
-      boost::lexical_cast<string>(input_feature_info_.feature_count())).
+      ltr::utility::lexical_cast<string>(input_feature_info_.feature_count())).
     append("];\n");
 
   for (int input_feature_index = 0;
@@ -62,9 +62,9 @@ string NominalToBoolConverter::generateCppCode(
            iterator != vals.end(); ++iterator) {
         code.
           append("  feature_outputs[").
-          append(boost::lexical_cast<string>(input_feature_index)).
+          append(ltr::utility::lexical_cast<string>(input_feature_index)).
           append("].push_back(").
-          append(boost::lexical_cast<string>(iterator->first)).
+          append(ltr::utility::lexical_cast<string>(iterator->first)).
           append(");\n");
       }
     }

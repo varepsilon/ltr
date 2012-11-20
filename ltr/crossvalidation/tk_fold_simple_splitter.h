@@ -15,7 +15,7 @@
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/utility/random_number_generator.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::logic_error;
 using std::random_shuffle;

@@ -1,7 +1,6 @@
 // Copyright 2011 Yandex
 
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include "ltr/data/utility/parsers/parser.h"
 #include "ltr/data/utility/parsers/parse_svm.h"
@@ -98,18 +97,18 @@ Object Parser::makeObject(const RawObject& raw_object) {
       case NOMINAL: result[feature_index] = hash(iterator->second); break;
       case BOOLEAN: break;
       case NUMERIC:
-        result[feature_index] = boost::lexical_cast<double>(iterator->second);
+        result[feature_index] = ltr::utility::lexical_cast<double>(iterator->second);
         break;
       case META:
         result.setMetaInfo(raw_feature_info_[raw_idx].feature_name,
                            iterator->second);
         break;
       case CLASS:
-        result.set_actual_label(boost::lexical_cast<double>(iterator->second));
+        result.set_actual_label(ltr::utility::lexical_cast<double>(iterator->second));
         break;
       default: throw std::logic_error("Unknown raw feature type");
       }
-    } catch(boost::bad_lexical_cast err) {
+    } catch(ltr::utility::bad_lexical_cast err) {
       throw std::logic_error("can't parse " + iterator->second + " as double");
     }
   }

@@ -11,7 +11,7 @@
 
 #include "ltr/learners/decision_tree/leaf_generator/leaf_generator.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
 namespace decision_tree {

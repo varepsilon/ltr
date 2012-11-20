@@ -29,11 +29,11 @@ string PerFeatureLinearConverter::generateCppCode(
     for (int i = 0; i < (int)factor_.size(); ++i) {
       code.
         append("  result->push_back(features[").
-        append(boost::lexical_cast<string>(i)).
+        append(ltr::utility::lexical_cast<string>(i)).
         append("] * ").
-        append(boost::lexical_cast<string>(factor_[i])).
+        append(ltr::utility::lexical_cast<string>(factor_[i])).
         append(" + ").
-        append(boost::lexical_cast<string>(shift_[i])).
+        append(ltr::utility::lexical_cast<string>(shift_[i])).
         append(");\n");
     }
   code.append("}\n");

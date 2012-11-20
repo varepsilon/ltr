@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h" //NOLINT
+#include "ltr/utility/boost/shared_ptr.h" //NOLINT
 
 #include "ltr/data/data_set.h"
 

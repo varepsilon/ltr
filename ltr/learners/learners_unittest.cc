@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include <boost/filesystem.hpp>
-
 #include <vector>
 #include <limits>
 #include <string>
@@ -19,8 +17,9 @@
 #include "ltr/feature_converters/nan_to_zero_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
 #include "ltr/scorers/linear_scorer.h"
+#include "ltr/utility/boost/path.h"
 
-using boost::filesystem::path;
+using ltr::utility::FixPathSeparators;
 
 using std::string;
 
@@ -34,12 +33,10 @@ using ltr::DataSet;
 class LearnersTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    string learn_data_file_name =
-        path("data/imat2009/imat2009_learning_small.txt").string();
+    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
     learn_data = loadDataSet<Object>(learn_data_file_name, "YANDEX");
 
-    string test_data_file_name =
-        path("data/imat2009/imat2009_test_small.txt").string();
+    string test_data_file_name = FixPathSeparators("data/imat2009/imat2009_test_small.txt");
     test_data = loadDataSet<Object>(test_data_file_name, "YANDEX");
   }
 

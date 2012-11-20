@@ -13,7 +13,7 @@
 #include "ltr/feature_converters/feature_sampler.h"
 
 #include "ltr/utility/indices.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 using std::set;

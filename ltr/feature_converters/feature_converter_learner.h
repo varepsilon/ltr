@@ -14,7 +14,7 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
 

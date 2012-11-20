@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/linear_scorer.h"
 

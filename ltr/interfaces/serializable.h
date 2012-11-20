@@ -3,7 +3,7 @@
 #ifndef LTR_INTERFACES_SERIALIZABLE_H_
 #define LTR_INTERFACES_SERIALIZABLE_H_
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <rlog/rlog.h>
 
 #include <string>
@@ -11,8 +11,9 @@
 
 
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/interfaces/aliaser.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::string;
 
@@ -58,7 +59,7 @@ class Serializable {
   /** The function returns a string with default name for the object.
    */
   string getDefaultSerializableObjectName() const {
-    return "serializable_object_" + boost::lexical_cast<string>(this->getId());
+    return "serializable_object_" + ltr::utility::lexical_cast<string>(this->getId());
   }
 
   virtual ~Serializable() {}

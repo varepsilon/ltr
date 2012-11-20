@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_DATA_SET_WEIGHTS_UPDATER_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include <string>
 
@@ -44,7 +44,7 @@ class DataSetWeightsUpdater : public Aliaser, public Parameterized {
       const CompositionScorer& composition_scorer) const = 0;
   /**
    * Sets measure, used in DataSetWeightsUpdater. Note that some
-   * DataSetWeightsUpdaters don't use measures, so they ignore 
+   * DataSetWeightsUpdaters don't use measures, so they ignore
    * the mesure setted
    */
   SET(typename Measure<TElement>::Ptr, measure);

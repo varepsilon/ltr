@@ -11,7 +11,7 @@
 
 #include "ltr/learners/decision_tree/vertex/vertex_with_data.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
 

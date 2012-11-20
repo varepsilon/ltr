@@ -9,8 +9,9 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include <stdexcept>
 #include <iostream>
-#include "boost/multi_array.hpp"
+#include "ltr/utility/boost/multi_array.h"
 #include "ltr/interfaces/printable.h"
 
 using std::sort;
@@ -20,6 +21,7 @@ using std::stringstream;
 using std::vector;
 using std::cout;
 using ltr::Printable;
+using ltr::utility::MultiArray;
 
 namespace ltr {
 namespace utility {
@@ -29,7 +31,7 @@ namespace utility {
  */
 struct DimensionSize {
   int index;
-  size_t size;
+  int size;
 };
 
 /**
@@ -47,7 +49,7 @@ inline bool operator<(const DimensionSize& left, const DimensionSize& right) {
 /**
  * Class intended to store the multidimensional tables.
  */
-template <typename T, size_t N>
+template <typename T, int N>
 class MultiTable : public Printable {
  public:
   /**
@@ -61,45 +63,45 @@ class MultiTable : public Printable {
   /**
    * Constructor with specified table_size
    * (by default it is zero-vector)
-   * @param table_size - vector<size_t> multisize specification
+   * @param table_size - vector<int> multisize specification
    */
-  explicit MultiTable(const vector<size_t>& table_size);
+  explicit MultiTable(const vector<int>& table_size);
   /**
    * Operator [] to get the access to the element
    * by multiindex as by ordinary index.
-   * @param multiIndex - vector<size_t> specifies the position
+   * @param multiIndex - vector<int> specifies the position
    * of the element
    * @returns T& - the constant datum reference of the stored type.
    */
-  const T& operator[] (const vector<size_t>& multiIndex) const;
+  const T& operator[] (const vector<int>& multiIndex) const;
   /**
    * Non-constant implementation of the operator [].
-   * @param multiIndex - vector<size_t> specifies the position
+   * @param multiIndex - vector<int> specifies the position
    * of the element
    * @returns T - the datum reference of the stored type.
    */
-  T& operator[] (const vector<size_t>& multiIndex);
+  T& operator[] (const vector<int>& multiIndex);
   /**
    * Sets axis label.
-   * @param axis_index - size_t number of the axis to set label.
+   * @param axis_index - int number of the axis to set label.
    * @param label - string label to set
    */
-  void setAxisLabel(const size_t axis_index, const string& label);
+  void setAxisLabel(const int axis_index, const string& label);
   /**
    * Sets tick label.
-   * @param axis_index - size_t index of the axis to modify
-   * @param tick_index - size_t index of the tick to set
+   * @param axis_index - int index of the axis to modify
+   * @param tick_index - int index of the tick to set
    * @param label - string label to set
    */
-  void setTickLabel(const size_t axis_index,
-                    const size_t tick_index,
+  void setTickLabel(const int axis_index,
+                    const int tick_index,
                     const string& label);
   virtual string toString() const;
   /**
    * Resizes the multitable.
    * @param multi_size - new size of the multitable
    */
-  void resize(const vector<size_t>& multi_size);
+  void resize(const vector<int>& multi_size);
   /**
    * Clears multitable
    */
@@ -114,22 +116,22 @@ class MultiTable : public Printable {
   Iterator end();
  private:
   struct DimensionMetaInfo;
-  boost::multi_array<T, N>* table_contents_;
+  MultiArray<T, N>* table_contents_;
   vector<DimensionMetaInfo> table_meta_info_;
   void printMultiTableInner(const vector<DimensionSize>& multi_size,
-                            vector<size_t>* multi_index,
+                            vector<int>* multi_index,
                             const int depth,
                             stringstream* const outstream) const;
-  void print2DTable(const size_t first_axis_index,
-                    const size_t second_axis_index,
-                    vector<size_t>* const multi_index,
+  void print2DTable(const int first_axis_index,
+                    const int second_axis_index,
+                    vector<int>* const multi_index,
                     stringstream* const out_stream) const;
 };
 
 /**
- * Iteartor for a MultiTable class.
+ * Iterator for a MultiTable class.
  */
-template<typename T, size_t N>
+template<typename T, int N>
 class MultiTable<T, N>::Iterator {
  public:
   /**
@@ -162,7 +164,7 @@ class MultiTable<T, N>::Iterator {
   /**
    * @returns a multiindex from Iterator instance
    */
-  const vector<size_t>& getMultiIndex() const;
+  const vector<int>& getMultiIndex() const;
   /**
    * @returns true if the iterators are at the same position
    */
@@ -172,51 +174,51 @@ class MultiTable<T, N>::Iterator {
    */
   bool operator!=(const Iterator& right);
  private:
-  vector<size_t> multi_index_;
+  vector<int> multi_index_;
   MultiTable<T, N>* instance;
 
   friend class MultiTable;
 };
 
-template <typename T, size_t N>
+template <typename T, int N>
 struct MultiTable<T, N>::DimensionMetaInfo {
   string axis_label;
   vector<string> axis_ticks_labels;
 };
 
 
-template <typename T, size_t N>
-void MultiTable<T, N>::resize(const vector<size_t>& multi_size) {
+template <typename T, int N>
+void MultiTable<T, N>::resize(const vector<int>& multi_size) {
   delete table_contents_;
-  table_contents_ = new boost::multi_array<T, N>(multi_size);
+  table_contents_ = new MultiArray<T, N>(multi_size);
   table_meta_info_.resize(multi_size.size());
-  for (size_t index = 0; index < multi_size.size(); ++index) {
+  for (int index = 0; index < multi_size.size(); ++index) {
     table_meta_info_[index].axis_ticks_labels.resize(multi_size[index]);
   }
 }
 
-template <typename T, size_t N>
+template <typename T, int N>
 void MultiTable<T, N>::clear() {
-  vector<size_t> empty;
-  for (size_t i = 0; i < N; ++i) {
+  vector<int> empty;
+  for (int i = 0; i < N; ++i) {
     empty.push_back(0);
   }
   this->resize(empty);
 }
 
-template<typename T, size_t N>
-void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
-                                    const size_t second_axis_index,
-                                    vector<size_t>* const multi_index,
+template<typename T, int N>
+void MultiTable<T, N>::print2DTable(const int first_axis_index,
+                                    const int second_axis_index,
+                                    vector<int>* const multi_index,
                                     stringstream* const out_stream) const {
-  size_t first_size = table_contents_->shape()[first_axis_index];
-  size_t second_size = table_contents_->shape()[second_axis_index];
+  int first_size = table_contents_->shape()[first_axis_index];
+  int second_size = table_contents_->shape()[second_axis_index];
 
   *out_stream << "\n";
   for (int axis_index = 0;
        axis_index < (int)multi_index->size();
        ++axis_index) {
-    size_t tick_index = (*multi_index)[axis_index];
+    int tick_index = (*multi_index)[axis_index];
     if (axis_index != first_axis_index && axis_index != second_axis_index) {
       *out_stream << table_meta_info_[axis_index].axis_label << ":"
                   << table_meta_info_[axis_index].
@@ -237,12 +239,12 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
          << "\t";
   }
   *out_stream << "\n";
-  for (size_t first_index = 0; first_index < first_size; ++first_index) {
+  for (int first_index = 0; first_index < first_size; ++first_index) {
     (*multi_index)[first_axis_index] = first_index;
     *out_stream << table_meta_info_
                    [first_axis_index].axis_ticks_labels[first_index]
                 << "\t";
-    for (size_t second_index = 0; second_index < second_size; ++second_index) {
+    for (int second_index = 0; second_index < second_size; ++second_index) {
       (*multi_index)[second_axis_index] = second_index;
       *out_stream << table_contents_->operator()(*multi_index) << "\t";
     }
@@ -250,10 +252,10 @@ void MultiTable<T, N>::print2DTable(const size_t first_axis_index,
   }
 }
 
-template <typename T, size_t N>
+template <typename T, int N>
 void MultiTable<T, N>::printMultiTableInner(
     const vector<DimensionSize>& axis_print_order,
-    vector<size_t>* multi_index,
+    vector<int>* multi_index,
     const int depth,
     stringstream* const out_stream) const {
   if (depth + 2 == axis_print_order.size()) {
@@ -272,112 +274,112 @@ void MultiTable<T, N>::printMultiTableInner(
   }
 }
 
-template<typename T, size_t N>
-MultiTable<T, N>::MultiTable(const vector<size_t>& table_size)
-  : table_contents_(new boost::multi_array<T, N>())
+template<typename T, int N>
+MultiTable<T, N>::MultiTable(const vector<int>& table_size)
+  : table_contents_(new MultiArray<T, N>())
   , table_meta_info_() {
   if (table_size.size() != N) {
     throw logic_error("Bad number of input sizes in multitable constructor\n");
   }
   delete table_contents_;
-  table_contents_ = new boost::multi_array<T, N>(table_size);
+  table_contents_ = new MultiArray<T, N>(table_size);
   table_meta_info_.resize(table_size.size());
-  for (size_t index = 0; index < table_size.size(); ++index) {
+  for (int index = 0; index < table_size.size(); ++index) {
     table_meta_info_[index].axis_ticks_labels.resize(table_size[index]);
   }
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 MultiTable<T, N>::MultiTable()
-  : table_contents_(new boost::multi_array<T, N>())
+  : table_contents_(new MultiArray<T, N>())
   , table_meta_info_() {}
 
-template<typename T, size_t N>
+template<typename T, int N>
 const T& MultiTable<T, N>::operator[] (
-  const vector<size_t>& multi_index) const {
+  const vector<int>& multi_index) const {
   if (multi_index.size() != N) {
     throw logic_error("Bad number of input sizes in multitable [] operator\n");
   }
   return (*table_contents_)(multi_index);
 }
 
-template<typename T, size_t N>
-T& MultiTable<T, N>::operator[] (const vector<size_t>& multi_index) {
+template<typename T, int N>
+T& MultiTable<T, N>::operator[] (const vector<int>& multi_index) {
   if (multi_index.size() != N) {
     throw logic_error("Bad number of input sizes in multitable [] operator\n");
   }
   return (*table_contents_)(multi_index);
 }
 
-template<typename T, size_t N>
-void MultiTable<T, N>::setAxisLabel(const size_t dim_index,
+template<typename T, int N>
+void MultiTable<T, N>::setAxisLabel(const int dim_index,
                                     const string& label) {
   table_meta_info_[dim_index].axis_label = label;
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 void MultiTable<T, N>::setTickLabel(
-    const size_t dim_index, const size_t axis_index, const string& label) {
+    const int dim_index, const int axis_index, const string& label) {
   table_meta_info_[dim_index].axis_ticks_labels[axis_index] = label;
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 string MultiTable<T, N>::toString() const {
-  const int dimension_count = table_contents_->num_dimensions();
+  const int dimensions_count = table_contents_->dimensions_count();
   vector<DimensionSize> multi_size;
-  const size_t* dims_size = table_contents_->shape();
-  for (int i = 0; i < dimension_count; ++i) {
+  vector<int> dims_size = table_contents_->shape();
+  for (int i = 0; i < dimensions_count; ++i) {
     DimensionSize to_push = {i, dims_size[i]};
     multi_size.push_back(to_push);
   }
   sort(multi_size.begin(), multi_size.end());
-  vector<size_t> multi_index(multi_size.size(), 0);
+  vector<int> multi_index(multi_size.size(), 0);
   stringstream out_stream;
   printMultiTableInner(multi_size, &multi_index, 0, &out_stream);
   return out_stream.str();
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 typename MultiTable<T, N>::Iterator MultiTable<T, N>::begin() {
   return Iterator(this);
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 typename MultiTable<T, N>::Iterator MultiTable<T, N>::end() {
   Iterator end_iter(this);
-  for (size_t i = 0; i < N; ++i) {
+  for (int i = 0; i < N; ++i) {
     end_iter.multi_index_[i] = table_contents_->shape()[i];
   }
   return end_iter;
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 MultiTable<T, N>::Iterator::Iterator(MultiTable<T, N>* _instance)
-  : multi_index_(vector<size_t>(N))
+  : multi_index_(vector<int>(N))
   , instance(_instance) {}
 
-template<typename T, size_t N>
+template<typename T, int N>
 const T& MultiTable<T, N>::Iterator::operator*() const {
   return instance->table_contents_->operator()(multi_index_);
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 T& MultiTable<T, N>::Iterator::operator*() {
   return instance->table_contents_->operator()(multi_index_);
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 T* MultiTable<T, N>::Iterator::operator->() {
   return &(instance->*table_contents_(multi_index_));
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 typename MultiTable<T, N>::Iterator MultiTable<T, N>::Iterator::operator++() {
-  vector<size_t> multi_size(N);
+  vector<int> multi_size(N);
   for (int i = 0; i < N; ++i) {
     multi_size[i] = instance->table_contents_->shape()[i];
   }
-  size_t index_number = 0;
+  int index_number = 0;
   do {
     ++multi_index_[index_number];
     if (multi_index_[index_number] != multi_size[index_number]) {
@@ -393,18 +395,18 @@ typename MultiTable<T, N>::Iterator MultiTable<T, N>::Iterator::operator++() {
   return *this;
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 bool MultiTable<T, N>::Iterator::operator==(const Iterator& right) {
   return (this->multi_index_ == right.multi_index_);
 }
 
-template<typename T, size_t N>
+template<typename T, int N>
 bool MultiTable<T, N>::Iterator::operator!=(const Iterator& right) {
     return !(*this == right);
 }
 
-template<typename T, size_t N>
-const vector<size_t>& MultiTable<T, N>::Iterator::getMultiIndex() const {
+template<typename T, int N>
+const vector<int>& MultiTable<T, N>::Iterator::getMultiIndex() const {
   return this->multi_index_;
 }
 };

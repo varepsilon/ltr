@@ -3,7 +3,7 @@
 #ifndef LTR_SCORERS_FAKE_SCORER_H_
 #define LTR_SCORERS_FAKE_SCORER_H_
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include <string>
 #include "ltr/scorers/scorer.h"
@@ -33,7 +33,7 @@ class FakeScorer : public Scorer {
       append("inline double ").
       append(function_name).
       append("(const std::vector<double>& features) { return ").
-      append(boost::lexical_cast<string>(score_value_)).
+      append(ltr::utility::lexical_cast<string>(score_value_)).
       append("; }\n");
     return code;
   }
@@ -41,7 +41,7 @@ class FakeScorer : public Scorer {
 
   string toStringImpl() const {
     return "All scores are constant (" +
-    boost::lexical_cast<std::string>(score_value_) + ")";
+    ltr::utility::lexical_cast<std::string>(score_value_) + ")";
   }
 
   double score_value_;

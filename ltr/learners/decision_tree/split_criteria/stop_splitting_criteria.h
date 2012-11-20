@@ -5,7 +5,7 @@
 
 #include "ltr/data/data_set.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
 namespace decision_tree {

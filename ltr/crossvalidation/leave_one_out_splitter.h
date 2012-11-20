@@ -10,7 +10,7 @@
 #include <string>
 
 #include "ltr/crossvalidation/splitter.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 using std::vector;

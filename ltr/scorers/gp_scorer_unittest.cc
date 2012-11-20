@@ -28,7 +28,7 @@ TEST(GPScorer, GPScorerTest) {
         feature_index < features_count;
         ++feature_index) {
     std::string feature_name = "feature[";
-    feature_name += boost::lexical_cast<string>(feature_index);
+    feature_name += ltr::utility::lexical_cast<string>(feature_index);
     feature_name += "]";
     context.insert(new Puppy::TokenT<double>(feature_name));
   }

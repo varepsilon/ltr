@@ -2,13 +2,13 @@
 
 #include "ltr/scorers/linear_scorer.h"
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <rlog/rlog.h>
 #include <string>
 #include <sstream>
 
 using std::string;
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 using std::stringstream;
 
 namespace ltr {

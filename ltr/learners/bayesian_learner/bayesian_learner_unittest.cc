@@ -12,7 +12,7 @@
 #include "ltr/scorers/bayesian_scorer.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/utility/numerical.h"
 
 using std::map;

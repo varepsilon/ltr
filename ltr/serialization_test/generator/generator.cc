@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include "ltr/serialization_test/generator/generator_utility.h"
 

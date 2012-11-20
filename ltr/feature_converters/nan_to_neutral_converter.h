@@ -14,7 +14,7 @@
 
 using ltr::utility::isNaN;
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 /**

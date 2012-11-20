@@ -14,6 +14,7 @@
 using std::string;
 
 using ltr::Parameterized;
+using ltr::utility::Any;
 
 class LtrClient {
  public:
@@ -27,7 +28,7 @@ class LtrClient {
 
  private:
   template <class TElement>
-  void launchTrain(boost::any parameterized,
+  void launchTrain(Any parameterized,
                    const TrainLaunchInfo& train_info);
 
   template <class TElement>

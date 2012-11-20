@@ -8,7 +8,7 @@
 #include <string>
 #include <functional>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/measures/binary_classification_accuracy.h"
 #include "ltr/measures/binary_classification_margin.h"

@@ -14,7 +14,7 @@
 #include "ltr/density_estimators/fisher_discriminant_density_learner.h"
 #include "ltr/density_estimators/normal_naive_bayes_density_learner.h"
 #include "ltr/density_estimators/quadratic_discriminant_density_learner.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/utility/statistics_calculation.h"
 
 using std::map;

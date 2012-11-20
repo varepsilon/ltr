@@ -3,7 +3,7 @@
 #ifndef LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
 #define LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include <string>
 #include <sstream>
@@ -291,7 +291,7 @@ void GPLearner<TElement>::initContext() {
        feature_index < feature_count_;
        ++feature_index) {
     std::string feature_name = "feature[";
-    feature_name += boost::lexical_cast<string>(feature_index);
+    feature_name += ltr::utility::lexical_cast<string>(feature_index);
     feature_name += "]";
     context_.insert(new Puppy::TokenT<double>(feature_name));
   }

@@ -35,7 +35,7 @@ void ParametersContainer::Copy(const ParametersContainer& parameters) {
        iterator != parameters.name_value_hash_.end();
        ++iterator) {
     const string& name = iterator->first;
-    const boost::any& value = iterator->second;
+    const Any& value = iterator->second;
 
     if (!Contains(name))  {
       string error_string = "Wrong parameter name " + name + "\n";
@@ -73,7 +73,7 @@ string ParametersContainer::toString() const {
        iterator != name_value_hash_.end();
        ++iterator) {
     const string& name = iterator->first;
-    const boost::any& value = iterator->second;
+    const Any& value = iterator->second;
     out << "\n ";
     out << parameter_index++ << ") name=" << name
         << ", type=" << value.type().name();

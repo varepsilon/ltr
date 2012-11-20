@@ -1,7 +1,5 @@
 // Copyright 2011 Yandex
 
-#include <boost/lexical_cast.hpp>
-#include <boost/filesystem/path.hpp>
 #include <cstdlib>
 
 #include "gtest/gtest.h"
@@ -10,6 +8,8 @@
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/scorers/fake_scorer.h"
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/path.h"
 
 using ltr::DataSet;
 using ltr::io_utility::loadDataSet;
@@ -18,6 +18,7 @@ using ltr::Object;
 using ltr::ObjectList;
 using ltr::ObjectPair;
 using ltr::utility::randomizer;
+using ltr::utility::FixPathSeparators;
 
 int last_random = 2981984;
 
@@ -27,11 +28,9 @@ class IOUtilityTest : public ::testing::Test {
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
     // before each test).
-    svm_arff_test_file_name = boost::filesystem::path(
-        "data/tests/svm/arff_test.txt").string();
-    arff_arff_test_file_name = boost::filesystem::path(
-        "data/tests/arff/arff_test.txt").string();
-    tmp_file_name = boost::filesystem::path("tmp_file").string();
+    svm_arff_test_file_name = FixPathSeparators("data/tests/svm/arff_test.txt");
+    arff_arff_test_file_name = FixPathSeparators("data/tests/arff/arff_test.txt");
+    tmp_file_name = FixPathSeparators("tmp_file");
   }
 
   virtual void TearDown() {
@@ -68,7 +67,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
-      obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
+      obj.setMetaInfo("queryId", ltr::utility::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
         obj << static_cast<double>(randomizer.rand()) / 15332;
       lst << obj;
@@ -102,7 +101,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
     ObjectList lst;
     for (int j = 0; j < cn; j++) {
       Object obj;
-      obj.setMetaInfo("queryId", boost::lexical_cast<std::string>(i));
+      obj.setMetaInfo("queryId", ltr::utility::lexical_cast<std::string>(i));
       for (int j = 0; j < featureN; j++)
         obj << static_cast<double>(randomizer.rand()) / 15332;
       lst << obj;

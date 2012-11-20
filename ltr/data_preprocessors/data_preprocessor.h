@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h"  //NOLINT
+#include "ltr/utility/boost/shared_ptr.h"  //NOLINT
 
 #include "ltr/data/data_set.h"
 #include "ltr/interfaces/aliaser.h"
@@ -23,9 +23,9 @@ namespace ltr {
 *
 * Preprocesses DataSet, e.g. delete or replicate elements in DataSet.
 * This can be usefull for better learning (see Learner<TElement>::addDataPreprocessor ).
-* Should not change Object features and FeatureInfo as it won't be saved in Scorer. 
+* Should not change Object features and FeatureInfo as it won't be saved in Scorer.
 * Use FeatureConverter for feature convertions.
-* 
+*
 * \sa FeatureConverter, BaseLearner
 */
 template <class TElement>

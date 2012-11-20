@@ -7,7 +7,7 @@
 #include <string>
 #include <limits>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/learners/learner.h"
 #include "ltr/scorers/one_feature_scorer.h"
 #include "ltr/measures/measure.h"

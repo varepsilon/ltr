@@ -3,7 +3,7 @@
 #ifndef LTR_INTERFACES_SERIALIZABLE_FUNCTOR_H_
 #define LTR_INTERFACES_SERIALIZABLE_FUNCTOR_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/interfaces/functor.h"
 #include "ltr/interfaces/serializable.h"

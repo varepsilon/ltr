@@ -16,7 +16,7 @@
 
 #include "ltr/utility/indices.h"
 #include "ltr/utility/random_number_generator.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 using std::vector;

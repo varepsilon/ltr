@@ -1,7 +1,5 @@
 // Copyright 2012 Yandex
 
-#include <boost/lexical_cast.hpp>
-
 #include <string>
 
 #include "ltr/feature_converters/fake_feature_converter.h"

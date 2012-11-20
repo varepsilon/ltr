@@ -3,7 +3,6 @@
 #include <boost/spirit/include/classic_push_back_actor.hpp>
 #include <boost/spirit/include/classic_insert_at_actor.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
@@ -13,6 +12,7 @@
 #include "ltr/data/utility/parsers/parse_arff.h"
 
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using boost::algorithm::trim_copy;
 using boost::spirit::classic::parse;
@@ -31,7 +31,7 @@ using boost::spirit::classic::lexeme_d;
 using boost::spirit::classic::anychar_p;
 using boost::spirit::classic::push_back_a;
 using boost::spirit::classic::rule;
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using std::string;
 using std::stringstream;
@@ -169,7 +169,7 @@ namespace io_utility {
     }
     if (type == CLASS) {
       parser_->features_[parser_->current_id_++] =
-        boost::lexical_cast<string>(parser_->classes_[feature]);
+        ltr::utility::lexical_cast<string>(parser_->classes_[feature]);
       return;
     }
     parser_->features_[parser_->current_id_++] = feature;

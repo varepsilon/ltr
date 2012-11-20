@@ -7,14 +7,14 @@
 #include <string>
 
 #include "ltr/density_estimators/base_probability_density_estimator.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/data/object.h"
 #include "ltr/scorers/scorer.h"
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::Object;
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 

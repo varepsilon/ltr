@@ -11,7 +11,7 @@
 #include "ltr/metrics/metric.h"
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/scorers/nearest_neighbor_scorer.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/metrics/euclidean_metric.h"
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/predictions_aggregators/vote_predictions_aggregator.h"

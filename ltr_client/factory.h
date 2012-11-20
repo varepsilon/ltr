@@ -15,7 +15,7 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::cout;
 using std::endl;
@@ -23,6 +23,7 @@ using std::string;
 
 using ltr::Parameterized;
 using ltr::ParametersContainer;
+using ltr::utility::Any;
 
 class Factory {
  public:
@@ -44,7 +45,7 @@ class Factory {
     name_creators_[name] = AbstractCreator::Ptr(new Creator<Base, Derived>);
   }
 
-  boost::any Create(const string& name,
+  Any Create(const string& name,
                     const ParametersContainer& parameters) const {
     rInfo("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
@@ -59,14 +60,14 @@ class Factory {
     typedef ltr::utility::shared_ptr<AbstractCreator> Ptr;
     virtual ~AbstractCreator() {}
 
-    virtual boost::any create(
+    virtual Any create(
       const ParametersContainer& parameters) const = 0;
   };
 
   template <class Base, class Derived>
   class Creator: public AbstractCreator {
    public:
-    virtual boost::any create(const ParametersContainer& parameters) const {
+    virtual Any create(const ParametersContainer& parameters) const {
       if (!parameters.empty()) {
         return ltr::utility::shared_ptr<Base>(new Derived(parameters));  // NOLINT
       } else {

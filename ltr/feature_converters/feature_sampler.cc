@@ -1,7 +1,5 @@
 // Copyright 2012 Yandex
 
-#include <boost/lexical_cast.hpp>
-
 #include <string>
 #include <stdexcept>
 
@@ -35,12 +33,12 @@ string FeatureSampler::generateCppCode(const string& function_name) const {
     for (int i = 0; i < (int)indices_.size(); ++i) {
       if (i != 0)
         code.append(",");
-      code.append(boost::lexical_cast<string>(indices_[i]));
+      code.append(ltr::utility::lexical_cast<string>(indices_[i]));
     }
     code.
       append("};\n").
       append("  for (int i = 0; i < ").
-      append(boost::lexical_cast<string>(indices_.size())).
+      append(ltr::utility::lexical_cast<string>(indices_.size())).
       append("; ++i) {\n").
       append("    result->push_back(features[indices[i]]);\n").
       append("  }\n").

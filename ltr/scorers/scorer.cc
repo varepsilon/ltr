@@ -46,7 +46,7 @@ template void Scorer::predict<ObjectPair>(const ObjectPair& element) const;
 template void Scorer::predict<ObjectList>(const ObjectList& element) const;
 
 string Scorer::generateLocalClassName(size_t index) const {
-  return "Local" + boost::lexical_cast<std::string>(index) +
+  return "Local" + ltr::utility::lexical_cast<std::string>(index) +
       "_" + this->alias();
 }
 

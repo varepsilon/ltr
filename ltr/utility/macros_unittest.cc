@@ -6,10 +6,11 @@
 #include <stdexcept>
 
 #include "ltr/utility/macros.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
 using ltr::utility::shared_ptr;
+
 
 class GetSetVectorTestClass {
   private:

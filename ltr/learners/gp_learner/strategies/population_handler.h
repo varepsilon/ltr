@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/interfaces/parameterized.h"
 

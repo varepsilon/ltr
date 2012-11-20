@@ -15,7 +15,7 @@
 #include "ltr/feature_converters/per_feature_linear_converter.h"
 
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
 using std::string;

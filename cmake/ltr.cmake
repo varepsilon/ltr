@@ -80,8 +80,6 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/two_class_actual_label_converter.h
               ${Source_Path}/ltr/utility/multitable.h
               ${Source_Path}/ltr/utility/multi_vector_print.h
-              ${Source_Path}/ltr/utility/shared_ptr.h
-              ${Source_Path}/ltr/utility/shared_ptr.cc
               ${Source_Path}/ltr/utility/random_number_generator.h
               ${Source_Path}/ltr/utility/random_number_generator.cc
               ${Source_Path}/ltr/utility/numerical.h
@@ -97,6 +95,13 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/eigen_converters.h
               ${Source_Path}/ltr/utility/eigen_converters.cc
               ${Source_Path}/ltr/utility/statistics_calculation.h)
+
+SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
+              ${Source_Path}/ltr/utility/boost/path.h
+              ${Source_Path}/ltr/utility/boost/path.cc
+              ${Source_Path}/ltr/utility/boost/lexical_cast.h
+              ${Source_Path}/ltr/utility/boost/multi_array.h
+              ${Source_Path}/ltr/utility/boost/shared_ptr.h)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
@@ -276,6 +281,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
-            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS})
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST})
 
 INCLUDE_DIRECTORIES(${Source_Path})

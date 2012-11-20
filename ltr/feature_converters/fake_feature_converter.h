@@ -11,7 +11,8 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::string;
 

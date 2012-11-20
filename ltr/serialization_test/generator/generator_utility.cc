@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include <string>
 #include <iostream>
@@ -70,7 +70,7 @@ namespace serialization_test {
     output.append("\tvector<double> test_labels;\n");
     for (int i = 0; i < (int)labels.size(); ++i) {
       output.append("\ttest_labels.push_back(" +
-        boost::lexical_cast<string>(labels[i]) + ");\n");
+        ltr::utility::lexical_cast<string>(labels[i]) + ");\n");
     }
     output.append("\treturn test_labels;\n}\n\n");
 
@@ -83,7 +83,7 @@ namespace serialization_test {
     output.append("TEST_F(SerializationTest, " + test_name +
       ") {\n");
 
-    string function_number = boost::lexical_cast<string>(index);
+    string function_number = ltr::utility::lexical_cast<string>(index);
     output.append("\tserializated_labels = ").
       append("ApplySerializatedScorerToDataSet(test_data, &SavedScorer" +
       function_number + ");\n");
@@ -134,7 +134,7 @@ namespace serialization_test {
     Scorer::Ptr tested_scorer = learner->make();
     tested_scorer->predict(test_data);
 
-    string function_number = boost::lexical_cast<string>(scorers_to_test);
+    string function_number = ltr::utility::lexical_cast<string>(scorers_to_test);
 
     tester_code.append(setBeginBlockComment(test_name));
     tester_code.append(setTestLabelsFunction("SetupTestLabels"

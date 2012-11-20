@@ -14,6 +14,7 @@
 #include "ltr/data_preprocessors/fake_data_preprocessor.h"
 
 #include "ltr/utility/indices.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::vector;
 using std::set;

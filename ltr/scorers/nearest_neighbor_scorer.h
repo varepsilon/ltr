@@ -11,7 +11,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/metrics/metric.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/utility/neighbor_weighter.h"
 
 using std::string;

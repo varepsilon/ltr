@@ -1,6 +1,6 @@
 // Copyright 2011 Yandex
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <string>
 #include <sstream>
 #include <algorithm>

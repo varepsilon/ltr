@@ -2,7 +2,7 @@
 
 #include "ltr/scorers/nearest_neighbor_scorer.h"
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <rlog/rlog.h>
 
 #include <algorithm>
@@ -18,7 +18,7 @@ using std::min;
 using std::nth_element;
 using std::sort;
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using ltr::NNScorer;
 using ltr::Object;

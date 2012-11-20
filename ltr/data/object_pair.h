@@ -11,7 +11,7 @@
 
 #include "ltr/interfaces/printable.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
 /** \brief The class stores a pair of two objects. The container for two
@@ -34,7 +34,7 @@ namespace ltr {
    * of the objects in the pair.
    */
   ObjectPair deepCopy() const;
-  /** 
+  /**
    * Function for serialization pair into string.
    */
   string toString() const;

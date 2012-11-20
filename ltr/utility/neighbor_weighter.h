@@ -6,7 +6,7 @@
 #include <string>
 
 #include "ltr/parameters_container/parameters_container.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/interfaces/serializable.h"
 #include "ltr/interfaces/parameterized.h"
 
@@ -52,7 +52,7 @@ class InverseLinearDistance : public NeighborWeighter {
     string result;
     result += "double " + function_name + "(double dist, double order) {\n";
     result += "  double min_distance = " +
-      boost::lexical_cast<string, double>(min_distance_) + ";\n";
+      ltr::utility::lexical_cast<string, double>(min_distance_) + ";\n";
     result += "  if (dist < min_distance) {\n";
     result += "    return min_distance;\n";
     result += "  }\n";
@@ -90,9 +90,9 @@ class InversePowerDistance: public NeighborWeighter {
     string result;
     result += "double " + function_name + "(double dist, double order) {\n";
     result += "  double power = " +
-      boost::lexical_cast<string, double>(power_) + ";\n";
+      ltr::utility::lexical_cast<string, double>(power_) + ";\n";
     result += "  double min_distance = " +
-      boost::lexical_cast<string, double>(min_distance_) + ";\n";
+      ltr::utility::lexical_cast<string, double>(min_distance_) + ";\n";
     result += "  if (dist < min_distance) {\n";
     result += "    return 1. / pow(min_distance, power);\n";
     result += "  }\n";

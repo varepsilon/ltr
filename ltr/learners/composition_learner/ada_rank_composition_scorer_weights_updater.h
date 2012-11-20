@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <limits>
 
-#include "ltr/utility/shared_ptr.h"  // NOLINT
+#include "ltr/utility/boost/shared_ptr.h"  // NOLINT
 
 #include "ltr/utility/numerical.h"
 #include "ltr/measures/measure.h"

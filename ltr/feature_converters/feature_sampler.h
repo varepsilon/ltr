@@ -12,7 +12,8 @@
 #include "ltr/data/data_set.h"
 
 #include "ltr/utility/indices.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include "ltr/feature_converters/feature_converter.h"
 

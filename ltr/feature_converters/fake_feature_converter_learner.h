@@ -8,7 +8,7 @@
 #include "ltr/feature_converters/feature_converter_learner.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 

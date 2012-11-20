@@ -9,9 +9,9 @@
 
 #include "ltr/interfaces/serializable.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 namespace decision_tree {

@@ -10,7 +10,7 @@ using ltr::utility::MultiTable;
 class MultiTableTest : public ::testing::Test {};
 
 TEST(MultiTableTest, MultiTableTest) {
-  vector<size_t> dims;
+  vector<int> dims;
   dims.push_back(6);
   dims.push_back(2);
   dims.push_back(4);
@@ -44,7 +44,7 @@ TEST(MultiTableTest, MultiTableTest) {
     *it = 100;
     EXPECT_EQ(*it, 100);
   }
-  vector<size_t> multi_index;
+  vector<int> multi_index;
   multi_index.push_back(0);
   multi_index.push_back(0);
   multi_index.push_back(0);

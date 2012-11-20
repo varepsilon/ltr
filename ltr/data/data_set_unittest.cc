@@ -1,7 +1,5 @@
 // Copyright 2012 Yandex
 
-#include <boost/filesystem/path.hpp>
-
 #include <stdlib.h>
 #include <string>
 
@@ -14,6 +12,7 @@
 #include "ltr/data/utility/data_set_converters.h"
 
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using ltr::utility::convertDataSet;
 using ltr::utility::randomizer;
@@ -49,7 +48,7 @@ TEST(DataSetTest, DataSetConvertersTest) {
   ltr::ObjectList list;
   for (int object_index = 0; object_index < number_of_objects; object_index++) {
     ltr::Object object;
-    object.setMetaInfo("queryId", boost::lexical_cast<std::string>(0));
+    object.setMetaInfo("queryId", ltr::utility::lexical_cast<std::string>(0));
     for (int feature_index = 0;
          feature_index < number_of_features; feature_index++) {
       object << (double)randomizer.rand() / rand_normalizer;

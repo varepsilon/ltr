@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "boost/multi_array.hpp"
-#include "boost/range.hpp"
 #include "boost/tuple/tuple.hpp"
 
 #include "ltr/crossvalidation/splitter.h"
@@ -150,7 +148,7 @@ void CrossValidator<ObjectType>::
 template <typename ObjectType>
 void CrossValidator<ObjectType>::launch() {
   rDebug("Launching crossvalidator");
-  vector<size_t> multi_size;
+  vector<int> multi_size;
   multi_size.push_back(measure_.size());
   multi_size.push_back(data_set_.size());
   multi_size.push_back(learner_.size());
@@ -161,11 +159,11 @@ void CrossValidator<ObjectType>::launch() {
   for (MultiTable<double, 4>::Iterator it = cross_validation_results_.begin();
        it != cross_validation_results_.end();
        ++it) {
-    size_t measure_index = it.getMultiIndex()[0];
-    size_t dataset_index = it.getMultiIndex()[1];
-    size_t learner_index = it.getMultiIndex()[2];
-    size_t splitter_index = it.getMultiIndex()[3];
-    for (size_t split_index = 0;
+    int measure_index = it.getMultiIndex()[0];
+    int dataset_index = it.getMultiIndex()[1];
+    int learner_index = it.getMultiIndex()[2];
+    int splitter_index = it.getMultiIndex()[3];
+    for (int split_index = 0;
          split_index < (*splitter_[splitter_index]).
          splitCount(data_set_[dataset_index]);
          ++split_index) {

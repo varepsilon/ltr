@@ -15,6 +15,7 @@ using std::vector;
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/utility/murmur_hash.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 namespace ltr {
 namespace io_utility {
@@ -60,7 +61,7 @@ class Parser {
 
   typedef ltr::utility::shared_ptr<Parser> Ptr;
   /**
-   * Function sets stream to parse objects from and initialize parser. 
+   * Function sets stream to parse objects from and initialize parser.
    */
   void startParsing(std::istream* in);
   /**

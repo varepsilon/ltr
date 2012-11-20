@@ -9,25 +9,25 @@
 
 #include "ltr/utility/macros.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::map;
 using std::string;
 using std::vector;
 
 namespace ltr {
-/** 
+/**
  * Types of features. Can be:
  * 1. Numeric - 42, 0.666, -3
  * 2. Nominal - "red", "green", "blue"
  * 3. Boolean - true(1), false(0)
  */
 enum FeatureType {NUMERIC, NOMINAL, BOOLEAN};
-/** 
+/**
  * \typedef Map from numeric to string values for nominal features.
  */
 typedef map<int, string> NominalFeatureValues;
-/** 
+/**
  * Structure represents info about one feature.
  */
 struct OneFeatureInfo {
@@ -35,11 +35,11 @@ struct OneFeatureInfo {
                  NominalFeatureValues values = NominalFeatureValues())
   : type_(type),
     values_(values) {}
-  /** 
+  /**
    * Feature type
    */
   FeatureType type_;
-  /** 
+  /**
    * Possible feature values. Matters only for nominal features.
    */
   NominalFeatureValues values_;

@@ -17,7 +17,7 @@ using std::map;
 using std::string;
 using std::vector;
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;

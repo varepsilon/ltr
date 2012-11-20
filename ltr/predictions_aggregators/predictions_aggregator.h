@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/interfaces/serializable.h"
 #include "ltr/interfaces/parameterized.h"
 
@@ -16,7 +16,7 @@ using ltr::Parameterized;
 
 namespace ltr {
 /**
-  * Performs aggregation of objects weights and labels  
+  * Performs aggregation of objects weights and labels
   */
 class PredictionsAggregator : public Serializable, public Parameterized {
  public:

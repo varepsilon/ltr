@@ -18,7 +18,7 @@
 #include "ltr/interfaces/serializable.h"
 #include "ltr/interfaces/aliaser.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::logic_error;
 

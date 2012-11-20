@@ -3,7 +3,7 @@
 #ifndef LTR_CROSSVALIDATION_SPLITTER_H_
 #define LTR_CROSSVALIDATION_SPLITTER_H_
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include <vector>
 #include <string>

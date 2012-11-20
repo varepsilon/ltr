@@ -7,7 +7,7 @@
 
 #include "ltr/learners/decision_tree/split_criteria/stop_splitting_criteria.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
 namespace decision_tree {

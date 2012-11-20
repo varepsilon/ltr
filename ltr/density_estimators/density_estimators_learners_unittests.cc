@@ -14,7 +14,7 @@
 #include "ltr/density_estimators/fisher_discriminant.h"
 #include "ltr/density_estimators/non_linear_discriminant.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/data/data_set.h"
 
 using std::map;

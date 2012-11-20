@@ -30,7 +30,7 @@ using boost::spirit::classic::str_p;
 using boost::spirit::classic::lexeme_d;
 using boost::spirit::classic::alnum_p;
 using boost::spirit::classic::digit_p;
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using std::string;
 using std::stringstream;

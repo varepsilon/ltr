@@ -17,7 +17,7 @@
 #include "ltr/interfaces/serializable.h"
 #include "ltr/interfaces/parameterized.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/scorers/scorer.h"
 

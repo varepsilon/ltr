@@ -3,7 +3,7 @@
 #include "ltr/utility/indices.h"
 
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 
 #include <algorithm>
 
@@ -68,10 +68,10 @@ Indices getIndicesFromString(const string& string_to_parse) {
       throw logic_error("Invalid string format");
     }
     if (numbers.size() == 1) {
-      result.push_back(boost::lexical_cast<int>(numbers[0]));
+      result.push_back(ltr::utility::lexical_cast<int>(numbers[0]));
     } else {
-      int left_border = boost::lexical_cast<int>(numbers[0]);
-      int right_border = boost::lexical_cast<int>(numbers[1]);
+      int left_border = ltr::utility::lexical_cast<int>(numbers[0]);
+      int right_border = ltr::utility::lexical_cast<int>(numbers[1]);
       if (left_border > right_border) {
         throw logic_error("Invalid string format");
       }

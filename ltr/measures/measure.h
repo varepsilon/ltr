@@ -5,7 +5,7 @@
 
 #include <rlog/rlog.h>
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <algorithm>
 #include <stdexcept>
 #include <string>
@@ -22,7 +22,8 @@
 #include "ltr/parameters_container/parameters_container.h"
 
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::string;
 using std::logic_error;
@@ -114,10 +115,10 @@ void Measure<TElement>::checkResult(double result) const {
     throw logic_error(alias() + " NaN calculated");
   } else if (DoubleMore(result, max(best(), worst()))) {
     throw logic_error(alias() + " calculated > " +
-      boost::lexical_cast<string>(max(best(), worst())));
+      ltr::utility::lexical_cast<string>(max(best(), worst())));
   } else if (DoubleLess(result, min(best(), worst()))) {
     throw logic_error(alias() + " calculated < " +
-      boost::lexical_cast<string>(min(best(), worst())));
+      ltr::utility::lexical_cast<string>(min(best(), worst())));
   }
 }
 

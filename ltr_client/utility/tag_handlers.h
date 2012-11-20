@@ -2,6 +2,7 @@
 #ifndef LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
 #define LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
 
+#include "ltr/utility/boost/lexical_cast.h"
 #include <iostream>
 #include <string>
 
@@ -89,7 +90,7 @@ static inline void GenericParse(const TagHandlers& parsers,
       } else {
         throw logic_error(string("Unknown token Value: ") +
                           xmlNode->Value() + ", Type: " +
-                          boost::lexical_cast<string>(xmlNode->Type()) +
+                          ltr::utility::lexical_cast<string>(xmlNode->Type()) +
                           "\n");
       }
     } else {
@@ -236,8 +237,8 @@ class TOnParameterTag: public TagHandler {
    */
   static int toInt(const string& value) {
     try {
-      return boost::lexical_cast<int>(value);
-    } catch(boost::bad_lexical_cast&) {
+      return ltr::utility::lexical_cast<int>(value);
+    } catch(ltr::utility::bad_lexical_cast&) {
       throw logic_error("Can not convert " + value + " to int!");
     }
   }
@@ -250,8 +251,8 @@ class TOnParameterTag: public TagHandler {
    */
   static double toDouble(const string& value) {
     try {
-      return boost::lexical_cast<double>(value);
-    } catch(boost::bad_lexical_cast&) {
+      return ltr::utility::lexical_cast<double>(value);
+    } catch(ltr::utility::bad_lexical_cast&) {
       throw logic_error("Can not convert " + value + " to double!");
     }
   }
@@ -322,16 +323,16 @@ class TOnParameterTag: public TagHandler {
     const string::size_type pos_of_decimal_point = value.find('.');
     if (pos_of_decimal_point != string::npos) {
       try {
-        boost::lexical_cast<double>(value);
-      } catch(boost::bad_lexical_cast&) {
+        ltr::utility::lexical_cast<double>(value);
+      } catch(ltr::utility::bad_lexical_cast&) {
         return XML_TOKEN_DEPENDENCY_TYPE;
       }
       return "double";
     }
 
     try {
-      boost::lexical_cast<int>(value);
-    } catch(boost::bad_lexical_cast&) {
+      ltr::utility::lexical_cast<int>(value);
+    } catch(ltr::utility::bad_lexical_cast&) {
       return XML_TOKEN_DEPENDENCY_TYPE;
     }
     return "int";

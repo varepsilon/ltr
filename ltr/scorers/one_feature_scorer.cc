@@ -27,7 +27,7 @@ namespace ltr {
       append(function_name).
       append("(const std::vector<double>& features) { return ").
       append("features[").
-      append(boost::lexical_cast<string>(index_)).
+      append(ltr::utility::lexical_cast<string>(index_)).
       append("]; }\n");
 
     return hpp_code;

@@ -8,7 +8,7 @@
 
 #include "ltr/utility/numerical.h"
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using ltr::utility::Inf;
 

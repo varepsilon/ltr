@@ -3,7 +3,7 @@
 #ifndef LTR_SCORERS_SCORER_H_
 #define LTR_SCORERS_SCORER_H_
 
-#include <boost/lexical_cast.hpp>
+#include "ltr/utility/boost/lexical_cast.h"
 #include <vector>
 #include <string>
 
@@ -12,7 +12,7 @@
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/interfaces/serializable_functor.h"
 #include "ltr/interfaces/printable.h"
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
 
@@ -67,7 +67,7 @@ class Scorer : public SerializableFunctor<double>,
         featureConverterIdx < feature_converter_.size();
         ++featureConverterIdx) {
       string curVectorName = "feature" +
-          boost::lexical_cast<string>(featureConverterIdx);
+          ltr::utility::lexical_cast<string>(featureConverterIdx);
       string featureConverterFunctionName(feature_converter_.at(
           featureConverterIdx)->getDefaultSerializableObjectName());
       code.append("  std::vector<double> ");

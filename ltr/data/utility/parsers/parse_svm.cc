@@ -4,7 +4,6 @@
 #include <boost/spirit/include/classic_insert_at_actor.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include <stdexcept>
 #include <sstream>
@@ -12,6 +11,7 @@
 #include "ltr/data/utility/parsers/parse_svm.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using boost::algorithm::trim_copy;
 using boost::spirit::classic::parse;
@@ -27,7 +27,7 @@ using boost::spirit::classic::assign_a;
 using boost::spirit::classic::insert_at_a;
 using boost::spirit::classic::str_p;
 using boost::spirit::classic::lexeme_d;
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 using std::string;
 using std::stringstream;

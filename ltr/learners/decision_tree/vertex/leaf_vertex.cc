@@ -4,7 +4,7 @@
 
 #include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
 
-using boost::lexical_cast;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 namespace decision_tree {

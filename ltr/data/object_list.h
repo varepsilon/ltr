@@ -11,7 +11,7 @@
 
 #include "ltr/interfaces/printable.h"
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
 
@@ -62,7 +62,7 @@ namespace ltr {
   /** Operator, checks whether two objects are equal.
    */
   friend bool operator==(const ObjectList& lhs, const ObjectList& rhs);
-  /** 
+  /**
    * Function for serialization list into string.
    */
   string toString() const;

@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include "ltr/utility/shared_ptr.h"  //NOLINT
+#include "ltr/utility/boost/shared_ptr.h"  //NOLINT
 
 #include "ltr/data/data_set.h"
 #include "ltr/data_preprocessors/data_preprocessor.h"

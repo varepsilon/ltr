@@ -87,7 +87,7 @@ void GPScorer::setContextToObject(const Object& object) const {
        ++feature_index) {
     double feature_value = object.features().at(feature_index);
     string feature_name =
-      "feature[" + boost::lexical_cast<string>(feature_index);
+      "feature[" + ltr::utility::lexical_cast<string>(feature_index);
     feature_name += "]";
     context_.mPrimitiveMap[feature_name]->setValue(&feature_value);
   }

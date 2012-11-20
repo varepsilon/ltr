@@ -140,7 +140,7 @@ static ParametersContainer Create(
   const ParametersContainer& src_parameters,
   const ConfigParser::ParameterizedInfos& all_specs);
 
-static boost::any Create(const string& name,
+static Any Create(const string& name,
   const ConfigParser::ParameterizedInfos& all_specs) {
     ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
     assert(it != all_specs.end());
@@ -158,11 +158,11 @@ static ParametersContainer Create(
          src_parameters.begin();
          it != src_parameters.end();
          ++it) {
-      boost::any& parameter = const_cast<boost::any&>(it->second);
+      Any& parameter = const_cast<Any&>(it->second);
       const string& name = it->first;
 
       if (const ParameterizedDependency* dependency =
-          boost::any_cast<ParameterizedDependency>(&parameter)) {
+          any_cast<ParameterizedDependency>(&parameter)) {
         typedef vector<string> TStringVector;
         TStringVector strings;
         boost::split(strings, *dependency,
@@ -171,7 +171,7 @@ static ParametersContainer Create(
         if (strings.size() == 1) {
           result.AddNew(name, Create(strings[0], all_specs));
         } else {
-          vector<boost::any> list;
+          vector<Any> list;
           for (TStringVector::const_iterator str_it = strings.begin();
                str_it != strings.end();
                ++str_it) {
@@ -180,7 +180,7 @@ static ParametersContainer Create(
           result.AddNew(name, list);
         }
       } else if (const ParametersContainer::Ptr cont =
-                 boost::any_cast<ParametersContainer>(&parameter)) {
+                 any_cast<ParametersContainer>(&parameter)) {
         result.AddNew(name, Create(*cont, all_specs));
       } else {
         result.AddNew(name, parameter);
@@ -195,10 +195,10 @@ void LtrClient::initFrom(const string& file_name) {
 }
 
 template <class TElement>
-void LtrClient::launchTrain(boost::any parameterized,
+void LtrClient::launchTrain(Any parameterized,
                             const TrainLaunchInfo& train_info) {
   typename Learner<TElement>::Ptr learner =
-    boost::any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
+    any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
   assert(learner);
 
   const ParametrizedInfo& learner_info =
@@ -267,10 +267,10 @@ void LtrClient::launchCrossvalidation(
         configurator_.findParametrized(*learners_alias);
       const ParametersContainer& parameters =
         Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
-      boost::any learner = Factory::instance()->Create(
+      Any learner = Factory::instance()->Create(
         learner_info.get_type() + learner_info.get_approach(), parameters);
       cross_validator.add_learner(
-        boost::any_cast<typename Learner<TElement>::Ptr>(learner));
+        any_cast<typename Learner<TElement>::Ptr>(learner));
     }
 
     for (; measures_alias != crossvalidation_info.measures.end();
@@ -279,18 +279,18 @@ void LtrClient::launchCrossvalidation(
         configurator_.findParametrized(*measures_alias);
       const ParametersContainer& parameters =
         Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
-      boost::any measure = Factory::instance()->
+      Any measure = Factory::instance()->
         Create(measure_info.get_type() + measure_info.get_approach(), parameters); // NOLINT
-      cross_validator.add_measure(boost::any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
+      cross_validator.add_measure(any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
     }
 
     const ParametrizedInfo& splitter_info =
       configurator_.findParametrized(crossvalidation_info.splitter);
     const ParametersContainer& parameters =
       Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
-    boost::any splitter = Factory::instance()->
+    Any splitter = Factory::instance()->
       Create(splitter_info.get_type() + splitter_info.get_approach(), parameters); // NOLINT
-    cross_validator.add_splitter(boost::any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
+    cross_validator.add_splitter(any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
 
     for (; datas_alias != crossvalidation_info.datas.end();
          ++datas_alias) {
@@ -319,7 +319,7 @@ void LtrClient::launch() {
     rInfo("\nvoid LtrClient::launch()\nparameters=%s\n",
          parameters.toString().c_str());
 
-    boost::any parameterized = Factory::instance()->
+    Any parameterized = Factory::instance()->
       Create(learner_info.get_type() + learner_info.get_approach(), parameters);
 
     if (learner_info.get_approach() == "listwise") {

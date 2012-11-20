@@ -11,16 +11,20 @@
 #include <stdexcept>
 #include <string>
 
-#include <boost/any.hpp> //NOLINT
+#include "ltr/utility/boost/any.h"
 #include <boost/unordered_map.hpp> //NOLINT
 
-#include "ltr/utility/shared_ptr.h"
+#include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/interfaces/printable.h"
 
 
 using std::list;
 using std::string;
+
+using ltr::utility::Any;
+using ltr::utility::any_cast;
+using ltr::utility::bad_any_cast;
 
 namespace ltr {
 /**
@@ -32,7 +36,7 @@ namespace ltr {
 */
 class ParametersContainer: public Printable {
  public:
-  typedef boost::unordered_map<string, boost::any> StringAnyHash;
+  typedef boost::unordered_map<string, Any> StringAnyHash;
   typedef ltr::utility::shared_ptr<ParametersContainer> Ptr;
 
   ParametersContainer();
@@ -79,7 +83,7 @@ class ParametersContainer: public Printable {
     for (StringAnyHash::const_iterator iterator = name_value_hash_.begin();
          iterator != name_value_hash_.end();
          ++iterator) {
-      T* value = boost::any_cast<T>(&iterator->second);
+      T* value = any_cast<T>(&iterator->second);
       if (!value) {
         continue;
       }
@@ -116,9 +120,9 @@ class ParametersContainer: public Printable {
       throw std::logic_error("No such parameter name: " + name);
     }
     try {
-      return boost::any_cast<T>(iterator->second);
-    } catch(const boost::bad_any_cast &exc) {
-      rError("boost::bad_any_cast");
+      return any_cast<T>(iterator->second);
+    } catch(const bad_any_cast &exc) {
+      rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
@@ -139,11 +143,11 @@ class ParametersContainer: public Printable {
     }
 
     try {
-      const StoredType &value = boost::any_cast<StoredType>(iterator->second);
+      const StoredType &value = any_cast<StoredType>(iterator->second);
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
-    } catch(const boost::bad_any_cast &exc) {
-      rError("boost::bad_any_cast");
+    } catch(const bad_any_cast &exc) {
+      rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " +
@@ -167,10 +171,10 @@ class ParametersContainer: public Printable {
     }
 
     try {
-      return *boost::any_cast<T>(&iterator->second);
+      return *any_cast<T>(&iterator->second);
     }
-    catch(const boost::bad_any_cast &exc) {
-      rError("boost::bad_any_cast");
+    catch(const bad_any_cast &exc) {
+      rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());
@@ -188,10 +192,10 @@ class ParametersContainer: public Printable {
     }
 
     try {
-      return *boost::any_cast<T>(&iterator->second);
+      return *any_cast<T>(&iterator->second);
     }
-    catch(const boost::bad_any_cast &exc) {
-      rError("boost::bad_any_cast");
+    catch(const bad_any_cast &exc) {
+      rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name());
