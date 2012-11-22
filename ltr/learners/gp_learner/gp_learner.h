@@ -40,6 +40,7 @@ namespace gp {
 template <typename TElement>
 class GPLearner : public BaseLearner<TElement, GPScorer> {
  public:
+  typedef ltr::utility::shared_ptr<GPLearner> Ptr;
   /**
    * Constructor creates a GPLearner.
    * \param measure shared pointer to the measure that would be maximized on
