@@ -61,7 +61,8 @@ SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
                         ${Source_Path}/ltr/interfaces/aliaser_unittest.cc
-                        ${Source_Path}/ltr/interfaces/parameterized_unittest.cc)
+                        ${Source_Path}/ltr/interfaces/parameterized_unittest.cc
+                        ${Source_Path}/ltr/interfaces/vectorized_unittest.cc)
 
 SET(LTR_PARAMETERS_CONTAINER_TEST ${Source_Path}/ltr/parameters_container/parameters_container_unittest.cc)
 
@@ -71,7 +72,8 @@ SET(LTR_CROSSVALIDATION_TEST ${Source_Path}/ltr/crossvalidation/splitter_unittes
                         ${Source_Path}/ltr/crossvalidation/tk_fold_simple_splitter_unittest.cc
                         ${Source_Path}/ltr/crossvalidation/crossvalidator_unittest.cc)
 
-SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc)
+SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc
+                     ${Source_Path}/ltr/utility/macros_unittest.cc)
 
 SET(LTR_COMPOSITION_TEST ${Source_Path}/ltr/learners/composition_learner/linear_composition_unittest.cc
 						 ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)

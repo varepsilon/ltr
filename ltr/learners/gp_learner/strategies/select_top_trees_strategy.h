@@ -10,6 +10,7 @@
 #include "contrib/puppy/Puppy.hpp"
 
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
+#include "ltr/utility/macros.h"
 
 using std::vector;
 

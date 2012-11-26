@@ -7,7 +7,7 @@
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
 
-#include "ltr/interfaces/parameterized.h"
+#include "ltr/utility/macros.h"
 
 #include "ltr/utility/shared_ptr.h"
 

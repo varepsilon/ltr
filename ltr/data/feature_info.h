@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "ltr/interfaces/parameterized.h"
+#include "ltr/utility/macros.h"
 
 #include "ltr/utility/shared_ptr.h"
 
