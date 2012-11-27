@@ -1,0 +1,5 @@
+#define OPENMP_FOUND @OPENMP_FOUND@
+
+#if OPENMP_FOUND
+  #include <omp.h>
+#endif

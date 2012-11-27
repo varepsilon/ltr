@@ -5,3 +5,4 @@ doc/build
 lib
 ltr/serialization_test/tester/tester.cc
 ltr/serialization_test/tester/tester.cc.rule
+ltr/utility/include_openmp.h
