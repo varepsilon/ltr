@@ -10,3 +10,14 @@ else
   make -j$JOBS
 fi
 ./ltr_test
+
+if [ "$OS" != "Windows_NT" ]; then
+  # build examples
+  make install
+  cd ../
+  [ -d doc/build ] || mkdir doc/build
+  cd doc/build
+  cmake ../
+  make -j$JOBS
+fi
+
