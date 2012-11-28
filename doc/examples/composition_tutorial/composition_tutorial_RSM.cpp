@@ -33,7 +33,7 @@ int main() {
 
   FeatureRandomSamplerLearner<Object>::Ptr rsm(new FeatureRandomSamplerLearner<Object>);
   BestFeatureLearner<Object>::Ptr best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  best_feature_learner->addFeatureConverterLearner(rsm);
+  best_feature_learner->add_feature_converter_learner(rsm);
 
   linear_composition_learner.set_weak_learner(best_feature_learner);
 

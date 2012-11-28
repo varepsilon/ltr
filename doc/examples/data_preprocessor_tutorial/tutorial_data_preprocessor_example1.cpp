@@ -23,9 +23,9 @@ int main() {
   object2 << 2.213 << -1.234 << 0.323;
   object3 << -2.123 << 0.207 << -6.085;
 
-  IndicesPtr indices(new Indices());
-  indices->push_back(0);
-  indices->push_back(2);
+  Indices indices;
+  indices.push_back(0);
+  indices.push_back(2);
 
   DataSet<Object> data, preprocessed_data;
   data.add(object1);

@@ -43,7 +43,7 @@ int main() {
 
   DecisionTreeLearner decision_tree_learner(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
-  decision_tree_learner.addStopSplittingCriteria(
+  decision_tree_learner.add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);
 
   decision_tree_learner.learn(data);
