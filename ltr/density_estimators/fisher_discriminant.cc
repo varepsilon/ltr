@@ -9,7 +9,7 @@ using ltr::utility::InitEigenVector;
 
 namespace ltr {
   double FisherDiscriminant::estimate(const Object& object,
-                                      const double label) {
+                                      const double label) const {
     VectorXd features(object.feature_count());
     InitEigenVector(&features);
 
@@ -19,7 +19,7 @@ namespace ltr {
       features(feature_index) = object[feature_index];
     }
 
-    return features.dot(linear_factors_[label]) + linear_biases_[label];
+    return features.dot(linear_factors_.find(label)->second) + linear_biases_.find(label)->second;
   }
 
   string FisherDiscriminant::generateCppCode(

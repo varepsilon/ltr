@@ -47,7 +47,7 @@ class NonLinearDiscriminant : public BaseProbabilityDensityEstimator {
     mean_(mean) {
   }
 
-  virtual double estimate(const Object& object, const double label);
+  virtual double estimate(const Object& object, const double label) const;
 
   virtual string generateCppCode(const string& function_name) const;
 

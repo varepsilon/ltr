@@ -24,7 +24,7 @@ namespace utility {
 class NeighborWeighter : public Serializable, public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<NeighborWeighter> Ptr;
-  virtual double getWeight(double neighbor_distance, int neighbor_order) = 0;
+  virtual double getWeight(double neighbor_distance, int neighbor_order) const = 0;
   virtual ~NeighborWeighter() {}
 };
 
@@ -41,7 +41,7 @@ class InverseLinearDistance : public NeighborWeighter {
   explicit InverseLinearDistance(const ParametersContainer& parameters) {
   }
 
-  virtual double getWeight(double neighbor_distance, int neighbor_order) {
+  virtual double getWeight(double neighbor_distance, int neighbor_order) const {
     if (neighbor_distance < min_distance_) {
       return min_distance_;
     }
@@ -79,7 +79,7 @@ class InversePowerDistance: public NeighborWeighter {
   explicit InversePowerDistance(const ParametersContainer& parameters) {
   }
 
-  virtual double getWeight(double neighbor_distance, int neighbor_order) {
+  virtual double getWeight(double neighbor_distance, int neighbor_order) const {
     if (neighbor_distance < min_distance_) {
       return 1. / pow(min_distance_, power_);
     }
@@ -114,7 +114,7 @@ class InverseOrder : public NeighborWeighter {
   explicit InverseOrder(const ParametersContainer& parameters) {
   }
 
-  virtual double getWeight(double neighbor_distance, int neighbor_order) {
+  virtual double getWeight(double neighbor_distance, int neighbor_order) const {
     return 1.0 / (neighbor_order + 1.0);
   }
 

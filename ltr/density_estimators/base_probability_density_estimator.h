@@ -23,7 +23,7 @@ class BaseProbabilityDensityEstimator
   : public Parameterized, public Serializable {
  public:
   typedef ltr::utility::shared_ptr<BaseProbabilityDensityEstimator> Ptr;
-  virtual double estimate(const Object& object, const double label) = 0;
+  virtual double estimate(const Object& object, const double label) const = 0;
   virtual ~BaseProbabilityDensityEstimator() {
   }
 };

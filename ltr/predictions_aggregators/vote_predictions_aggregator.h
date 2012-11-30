@@ -28,7 +28,7 @@ class VotePredictionsAggregator : public PredictionsAggregator {
   }
 
   double aggregate(const vector<double>& labels,
-                   const vector<double>& weights) {
+                   const vector<double>& weights) const {
     map<double, double> voting;
     for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
       voting[labels[label_index]] += weights[label_index];

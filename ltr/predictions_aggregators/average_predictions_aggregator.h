@@ -28,7 +28,7 @@ class AveragePredictionsAggregator : public PredictionsAggregator {
   }
 
   double aggregate(const vector<double>& labels,
-                   const vector<double>& weights) {
+                   const vector<double>& weights) const {
     double result = 0;
     double weights_sum = 0;
     for (int label_index = 0;

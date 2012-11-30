@@ -59,7 +59,7 @@ class FisherDiscriminant : public BaseProbabilityDensityEstimator {
     linear_biases_(linear_biases) {
   }
 
-  virtual double estimate(const Object& object, const double label);
+  virtual double estimate(const Object& object, const double label) const;
 
   virtual string generateCppCode(const string& function_name) const;
 

@@ -17,7 +17,7 @@ public:
   MultiArray(const vector<int>& dimensions = vector<int>(DimensionsCount, 0)):
     data_(*dimensions.begin(),
           MultiArray<T, DimensionsCount - 1>(dimensions.begin() + 1, dimensions.end())),
-    dimensions_(dimensions.begin(), dimensions.end()) {
+          dimensions_(dimensions.begin(), dimensions.end()) {
   }
 
   MultiArray(vector<int>::const_iterator dimensions_begin,
@@ -36,12 +36,12 @@ public:
   }
 
   T& get_element(vector<int>::const_iterator indices_begin,
-                  vector<int>::const_iterator indices_end) {
+                 vector<int>::const_iterator indices_end) {
     return data_[*indices_begin].get_element(indices_begin + 1, indices_end);
   }
 
   const T& get_element(vector<int>::const_iterator indices_begin,
-                  vector<int>::const_iterator indices_end)  const {
+                       vector<int>::const_iterator indices_end)  const {
     return data_[*indices_begin].get_element(indices_begin + 1, indices_end);
   }
 
@@ -58,7 +58,7 @@ public:
   }
 
   void resize(vector<int>::const_iterator dimensions_begin,
-                  vector<int>::const_iterator dimensions_end) {
+              vector<int>::const_iterator dimensions_end) {
     dimensions_ = vector<int>(dimensions_begin, dimensions_end);
     data_.resize(*dimensions_begin);
     for (int i = 0; i < *dimensions_begin; ++i) {
@@ -88,7 +88,7 @@ public:
   }
 
   MultiArray(vector<int>::const_iterator dimensions_begin,
-                  vector<int>::const_iterator dimensions_end):
+             vector<int>::const_iterator dimensions_end):
     data_(1, *dimensions_begin) {
   }
 
@@ -101,12 +101,12 @@ public:
   }
 
   T& get_element(vector<int>::const_iterator indices_begin,
-                  vector<int>::const_iterator indices_end) {
+                 vector<int>::const_iterator indices_end) {
     return data_[*indices_begin];
   }
 
   const T& get_element(vector<int>::const_iterator indices_begin,
-                  vector<int>::const_iterator indices_end)  const {
+                       vector<int>::const_iterator indices_end)  const {
     return data_[*indices_begin];
   }
 
@@ -115,7 +115,7 @@ public:
   }
 
   void resize(vector<int>::const_iterator dimensions_begin,
-                  vector<int>::const_iterator dimensions_end) {
+              vector<int>::const_iterator dimensions_end) {
     data_.resize(*dimensions_begin);
   }
 

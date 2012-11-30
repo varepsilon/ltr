@@ -24,7 +24,7 @@ class ManhattanMetric : public BaseMetric {
   explicit ManhattanMetric(const ParametersContainer& parameters) {
   }
 
-  virtual double distance(const ltr::Object& lhs, const ltr::Object& rhs);
+  virtual double distance(const ltr::Object& lhs, const ltr::Object& rhs) const;
 
   /** the function generates code for the metric as cpp code function
   * \param class_name the name for the class that would be created.

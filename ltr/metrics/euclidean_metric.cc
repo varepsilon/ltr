@@ -6,7 +6,7 @@ using ltr::EuclideanMetric;
 
 namespace ltr {
 double EuclideanMetric::distance(const ltr::Object& lhs,
-                                 const ltr::Object& rhs) {
+                                 const ltr::Object& rhs) const {
   if (lhs.feature_count() != rhs.feature_count()) {
     rError("Number of features must be equal");
     throw std::logic_error("Number of features must be equal");

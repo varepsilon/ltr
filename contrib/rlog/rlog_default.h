@@ -6,7 +6,7 @@
 #include <rlog/RLogNode.h>
 #include <rlog/StdioNode.h>
 
-#include <boost/shared_ptr.hpp>
+#include "ltr/utility/boost/shared_ptr.h"
 #include <map>
 #include <string>
 #include <stdexcept>
@@ -20,6 +20,7 @@ using std::map;
 using std::string;
 using std::logic_error;
 using std::pair;
+using ltr::utility::shared_ptr;
 
 #ifndef STDOUT_FILENO
 #define STDOUT_FILENO 1
@@ -41,7 +42,7 @@ public:
    * to different channels (for example a channel could include all
    * error-leveled messages)
    */
-  typedef boost::shared_ptr<rlog::StdioNode> Destination;
+  typedef shared_ptr<rlog::StdioNode> Destination;
   /**
    * By default ltr::Log subscribes the stderr to error messages and
    * the ltr.log file to all messages
@@ -74,7 +75,7 @@ private:
   class LogFile {
     int file_descriptor;
   public:
-    typedef boost::shared_ptr<LogFile> Ptr;
+    typedef shared_ptr<LogFile> Ptr;
     LogFile(const string& filename);
     ~LogFile();
     Destination file_log;

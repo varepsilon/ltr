@@ -26,7 +26,7 @@ class SumPredictionsAggregator : public PredictionsAggregator {
   }
 
   double aggregate(const vector<double>& labels,
-                   const vector<double>& weights) {
+                   const vector<double>& weights) const {
     double result = 0;
     for (int label_index = 0; label_index < (int)labels.size(); ++label_index) {
       result += labels[label_index] * weights[label_index];

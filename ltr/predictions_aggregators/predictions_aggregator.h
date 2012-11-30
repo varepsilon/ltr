@@ -22,7 +22,7 @@ class PredictionsAggregator : public Serializable, public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<PredictionsAggregator> Ptr;
   virtual double aggregate(const vector<double>& labels,
-                           const vector<double>& weights) = 0;
+                           const vector<double>& weights) const = 0;
   virtual ~PredictionsAggregator() {}
 };
 };

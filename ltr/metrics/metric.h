@@ -37,7 +37,7 @@ class BaseMetric : public Aliaser, public Parameterized, public Serializable {
   * @param lhs and rhs - elements to calculate measure on
   */
   virtual double distance(const ltr::Object& lhs,
-                          const ltr::Object& rhs) = 0;
+                          const ltr::Object& rhs) const = 0 ;
 };
 };
 

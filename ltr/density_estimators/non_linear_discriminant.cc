@@ -10,7 +10,7 @@ using ltr::utility::InitEigenVector;
 
 namespace ltr {
   double NonLinearDiscriminant::estimate(const Object& object,
-                                         const double label) {
+                                         const double label) const {
     VectorXd features(object.feature_count());
     InitEigenVector(&features);
     for (int feature_index = 0;
@@ -21,10 +21,10 @@ namespace ltr {
 
     int feature_count = object.feature_count();
     double result = log(pow(M_PI, - feature_count / 2.0) *
-                        pow(covariance_matrix_[label].determinant(), -0.5));
-    result -= 0.5 * (features - mean_[label]).transpose() *
-                     covariance_matrix_[label].inverse() *
-                     (features - mean_[label]);
+                        pow(covariance_matrix_.find(label)->second.determinant(), -0.5));
+    result -= 0.5 * (features - mean_.find(label)->second).transpose() *
+                     covariance_matrix_.find(label)->second.inverse() *
+                     (features - mean_.find(label)->second);
     return result;
   }
 

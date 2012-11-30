@@ -44,7 +44,7 @@ class OrderStatisticPredictionsAggregator : public PredictionsAggregator {
   }
 
   double aggregate(const vector<double>& labels,
-                   const vector<double>& weights) {
+                   const vector<double>& weights) const {
     // if weights[i] < 0 then take it 0
     double sum_weight = 0.0;
     vector<pair<double, double> > weighted_labels(labels.size());

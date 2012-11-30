@@ -27,7 +27,7 @@ class MaxWeightPredictionsAggregator : public PredictionsAggregator {
   }
 
   double aggregate(const vector<double>& labels,
-                   const vector<double>& weights) {
+                   const vector<double>& weights) const {
     if (labels.size() == 0) {
       rError("There are no labels");
       throw std::logic_error
