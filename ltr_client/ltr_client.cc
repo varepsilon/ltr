@@ -1,6 +1,6 @@
 // Copyright 2012 Yandex
 
-#include <rlog/rlog.h>
+#include "rlog/rlog_default.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -38,6 +38,7 @@
 #include "ltr_client/registration.h"
 
 #include "ltr/utility/neighbor_weighter.h"
+#include "ltr/utility/boost/path.h"
 
 
 using std::cout;
@@ -69,6 +70,7 @@ using ltr::cv::Splitter;
 using ltr::cv::KFoldSimpleSplitter;
 using ltr::io_utility::loadDataSet;
 using ltr::utility::InverseLinearDistance;
+using ltr::utility::AppendTrailingPathSeparator;
 
 typedef  string ParameterizedDependency;
 
@@ -229,7 +231,8 @@ void LtrClient::launchTrain(Any parameterized,
       rInfo("Can't predict. Unknown data %s\n", predict.c_str());
       return;
     }
-    const string& predict_file_path = configurator_.rootPath() +
+    const string& predict_file_path =
+      AppendTrailingPathSeparator(configurator_.rootPath()) +
       learner_info.get_name() + "." + predict + ".predicts";
 
     Scorer::Ptr scorer = learner->make();
@@ -240,12 +243,13 @@ void LtrClient::launchTrain(Any parameterized,
          predict_file_path.c_str());
 
     if (train_info.gen_cpp) {
-      string cpp_file_path = configurator_.rootPath() +
+      string cpp_file_path =
+        AppendTrailingPathSeparator(configurator_.rootPath()) +
         learner_info.get_name() + ".cpp";
-        ofstream fout(cpp_file_path.c_str());
-        fout << scorer->generateCppCode(learner_info.get_name());
-        fout.close();
-        rInfo("cpp code saved into %s\n", cpp_file_path.c_str());
+      ofstream fout(cpp_file_path.c_str());
+      fout << scorer->generateCppCode(learner_info.get_name());
+      fout.close();
+      rInfo("cpp code saved into %s\n", cpp_file_path.c_str());
     }
   }
 }
@@ -257,7 +261,6 @@ void LtrClient::launchCrossvalidation(
       learners_alias = crossvalidation_info.learners.begin(),
       measures_alias = crossvalidation_info.measures.begin(),
       datas_alias = crossvalidation_info.datas.begin();
-
 
     ltr::cv::CrossValidator<TElement> cross_validator;
 
@@ -358,11 +361,18 @@ void LtrClient::launch() {
 // ===========================================================================
 
 int main(int argc, char *argv[]) {
+  ltr::LOG.subscribeFile("info.log", "info");
+
+  if (argc < 2) {
+    rError("Specify an argument - configuration file name");
+    return 0;
+  }
+  string filename = argv[1];
+
   Factory factory;
   RegisterAllTypes(&factory);
 
   LtrClient client;
-  string filename = argv[1];
 
   try {
       client.initFrom(filename);

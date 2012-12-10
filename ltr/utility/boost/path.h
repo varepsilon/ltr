@@ -12,6 +12,8 @@ namespace utility {
 
 string FixPathSeparators(const string& path);
 
+string AppendTrailingPathSeparator(const string& path);
+
 }
 }
 

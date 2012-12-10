@@ -205,6 +205,7 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER_EVERY_WISE(Learner, NNLearner);
   REGISTER_EVERY_WISE(Learner, GPLearner);
   REGISTER_POINTWISE(Learner, LinearLearner);
+  REGISTER_LISTWISE(Learner, LinearLearner);
 
   REGISTER(ListwiseMeasure, NDCG);
   REGISTER(ListwiseMeasure, DCG);
