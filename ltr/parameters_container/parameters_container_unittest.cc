@@ -77,3 +77,11 @@ TEST(ParametersContainerTest, NonScalarParametersTest) {
   EXPECT_NO_THROW(parameters_container1.Clear());
   EXPECT_NO_THROW(parameters_container2.Clear());
 }
+
+TEST(ParametersContainerTest, DefaultParameterValuesTest) {
+  ParametersContainer parameters_container;
+
+  EXPECT_EQ(10.3, parameters_container.Get<double>("double1", 10.3));
+  EXPECT_EQ(vector<int>(3, 3),
+            parameters_container.Get<vector<int> >("vector1", vector<int>(3, 3)));
+}

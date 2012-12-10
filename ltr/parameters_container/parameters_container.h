@@ -113,21 +113,24 @@ class ParametersContainer: public Printable {
    * the same throws
    */
   template<class T>
-  T Get(const string& name) const
+  T Get(const string& name, const Any& default_value = Any()) const
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
-    if (iterator == name_value_hash_.end()) {
+    if (iterator == name_value_hash_.end() && default_value.empty()) {
       throw std::logic_error("No such parameter name: " + name);
     }
+    const Any& found_value = (iterator != name_value_hash_.end() ?
+                              iterator->second : default_value);
+
     try {
-      return any_cast<T>(iterator->second);
+      return any_cast<T>(found_value);
     } catch(const bad_any_cast &exc) {
       rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name +
                              "\nRequested type: " + typeid(T).name() +
                              "\nActual type: " +
-                             iterator->second.type().name());
+                             found_value.type().name());
     }
   }
   /**
@@ -135,15 +138,17 @@ class ParametersContainer: public Printable {
    * and casts it to DesiredType.
    */
   template<class StoredType, class DesiredType>
-  DesiredType Get(const string& name) const
+  DesiredType Get(const string& name, const Any& default_value = Any()) const
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
-    if (iterator == name_value_hash_.end()) {
+    if (iterator == name_value_hash_.end() && default_value.empty()) {
       throw std::logic_error("No such parameter name: " + name);
     }
+    const Any& found_value = (iterator != name_value_hash_.end() ?
+                              iterator->second : default_value);
 
     try {
-      const StoredType &value = any_cast<StoredType>(iterator->second);
+      const StoredType &value = any_cast<StoredType>(found_value);
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
     } catch(const bad_any_cast &exc) {
@@ -153,7 +158,7 @@ class ParametersContainer: public Printable {
                              "\nRequested type: " +
                              typeid(StoredType).name() +
                              "\nactual type: " +
-                             iterator->second.type().name());
+                             found_value.type().name());
     } catch(const std::bad_cast &exc) {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
