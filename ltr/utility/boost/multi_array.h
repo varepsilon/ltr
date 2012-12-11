@@ -84,12 +84,12 @@ template<typename T>
 class MultiArray<T, 1> {
 public:
   MultiArray(vector<int> dimensions = vector<int>(1, 0)):
-    data_(1, *dimensions.begin()) {
+    data_(*dimensions.begin(), 0) {
   }
 
   MultiArray(vector<int>::const_iterator dimensions_begin,
              vector<int>::const_iterator dimensions_end):
-    data_(1, *dimensions_begin) {
+    data_(*dimensions_begin, 0) {
   }
 
   T& operator [] (int index) {
