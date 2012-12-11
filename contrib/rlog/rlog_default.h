@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #ifdef _WIN32
   #include <io.h>
 #endif
