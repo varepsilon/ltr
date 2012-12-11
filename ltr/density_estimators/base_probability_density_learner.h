@@ -17,6 +17,8 @@
 using std::map;
 
 using Eigen::VectorXd;
+using Eigen::MatrixXd;
+using Eigen::aligned_allocator;
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::DataSet;
@@ -36,13 +38,15 @@ typedef double Label;
  * \typedef map representing the mean of the class with
  * some certain label
  */
-typedef map<Label, VectorXd> LabelToMean;
+typedef map<Label, VectorXd, std::less<Label>,
+            aligned_allocator<std::pair<Label, VectorXd> > > LabelToMean;
 
 /**
  * \typedef map representing the covariance matrix
  *  of the class with some certain label
  */
-typedef map<Label, MatrixXd> LabelToCovarianceMatrix;
+typedef map<Label, MatrixXd, std::less<Label>,
+            aligned_allocator<std::pair<Label, MatrixXd> > > LabelToCovarianceMatrix;
 
 /**
  * \brief Simple interface of the probability

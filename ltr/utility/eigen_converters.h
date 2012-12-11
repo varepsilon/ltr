@@ -9,12 +9,21 @@
 #include "ltr/data/object.h"
 
 using std::vector;
+using std::map;
 
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
+using Eigen::aligned_allocator;
 
 namespace ltr {
 namespace utility {
+
+typedef map<double, VectorXd, std::less<double>,
+            aligned_allocator<std::pair<double, VectorXd> > > doubleVectorXdMap;
+
+typedef map<double, MatrixXd, std::less<double>,
+            aligned_allocator<std::pair<double, MatrixXd> > > doubleMatrixXdMap;
+
 /**
  * Function converts std::vector to Eigen::VectorXd
  */

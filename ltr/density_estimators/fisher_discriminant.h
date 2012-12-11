@@ -18,6 +18,7 @@ using std::string;
 using ltr::utility::lexical_cast;
 
 using Eigen::VectorXd;
+using Eigen::aligned_allocator;
 
 using ltr::Object;
 using ltr::BaseProbabilityDensityEstimator;
@@ -33,7 +34,8 @@ typedef double Label;
  * \typedef map representing the linear factor
  * of the class with some certain label
  */
-typedef map<Label, VectorXd> LabelToLinearFactor;
+typedef map<Label, VectorXd, std::less<Label>,
+            aligned_allocator<std::pair<Label, VectorXd> > > LabelToLinearFactor;
 
 /**
  * \typedef map representing the linear bias
@@ -53,8 +55,8 @@ class FisherDiscriminant : public BaseProbabilityDensityEstimator {
   explicit FisherDiscriminant(const ParametersContainer& parameters) {
   }
 
-  FisherDiscriminant(const map<Label, VectorXd>& linear_factors,
-                     const map<Label, double>& linear_biases) :
+  FisherDiscriminant(const LabelToLinearFactor& linear_factors,
+                     const LabelToLinearBias& linear_biases) :
     linear_factors_(linear_factors),
     linear_biases_(linear_biases) {
   }

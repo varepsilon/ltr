@@ -16,11 +16,14 @@ using std::map;
 
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
+using Eigen::aligned_allocator;
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::FisherDiscriminant;
 using ltr::NonLinearDiscriminant;
 using ltr::utility::DoubleEqual;
+using ltr::utility::doubleVectorXdMap;
+using ltr::utility::doubleMatrixXdMap;
 
 TEST(DensityEstimatorsScorersTests, TestFisherDiscriminant) {
   VectorXd factor1(3);
@@ -29,7 +32,7 @@ TEST(DensityEstimatorsScorersTests, TestFisherDiscriminant) {
   VectorXd factor2(3);
   factor2 << 3.0, -1.0, 1.0;
 
-  map<double, VectorXd> factors;
+  doubleVectorXdMap factors;
   factors[1.0] = factor1;
   factors[2.0] = factor2;
 
@@ -50,12 +53,12 @@ TEST(DensityEstimatorsScorersTests, TestNonLinearDiscriminant) {
   matrix1 << 1, 0, 0,
              0, 2, 0,
              0, 0, 3;
-  map<double, MatrixXd> covariance;
+  doubleMatrixXdMap covariance;
   covariance[1.0] = matrix1;
 
   VectorXd vector1(3);
   vector1 << 5, 1, 2;
-  map<double, VectorXd> mean;
+  doubleVectorXdMap mean;
   mean[1.0] = vector1;
 
   NonLinearDiscriminant discriminant(covariance, mean);

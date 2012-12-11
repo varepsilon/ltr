@@ -6,6 +6,7 @@
 
 using ltr::FisherDiscriminant;
 using ltr::utility::InitEigenVector;
+using ltr::utility::doubleVectorXdMap;
 
 namespace ltr {
   double FisherDiscriminant::estimate(const Object& object,
@@ -29,6 +30,7 @@ namespace ltr {
     result += "#include <map>\n";
 
     result += "using Eigen::VectorXd;\n";
+    result += "using Eigen::aligned_allocator;\n";
     result += "using std::map;\n";
 
     result += "double " + function_name +
@@ -41,10 +43,12 @@ namespace ltr {
     result += "  features(element_index) = object[element_index];\n";
     result += " }\n";
 
-    result += " map<double, VectorXd> factors;\n";
+    result += " map<double, VectorXd, std::less<double>,";
+    result += "     aligned_allocator<std::pair<double, VectorXd> > > factors;\n";
     result += "int sz;\n";
     result += "double lab;\n";
-    for (map<double, VectorXd>::const_iterator it = linear_factors_.begin();
+    for (doubleVectorXdMap::const_iterator it =
+             linear_factors_.begin();
          it != linear_factors_.end();
          ++it) {
       result += "lab = " + lexical_cast<string>(it->first) + ";\n";

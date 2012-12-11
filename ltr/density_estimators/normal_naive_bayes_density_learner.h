@@ -19,6 +19,7 @@ using ltr::DataSet;
 using ltr::Object;
 using ltr::LabelToCovarianceMatrix;
 using ltr::utility::CalculateFeaturesVariance;
+using ltr::utility::doubleVectorXdMap;
 
 namespace ltr {
 /**
@@ -41,7 +42,7 @@ class NormalNaiveBayesDensityLearner
    * Function calculates the variance of every class from the training data set
    */
   void calculateVariance(const DataSet<TElement>& data_set,
-                         map<double, VectorXd>* result) {
+                         doubleVectorXdMap* result) {
     vector<DataSet<Object> > splitted_data;
     SplitDataSetByActualLabel(data_set, &splitted_data);
     for (int subset_index = 0;
@@ -57,11 +58,11 @@ class NormalNaiveBayesDensityLearner
   virtual void calculateCovarianceMatrix(const DataSet<TElement>& data_set,
                                          LabelToCovarianceMatrix* result) {
     LabelToMean mean;
-    map<double, VectorXd> variance;
+    doubleVectorXdMap variance;
     this->calculateMean(data_set, &mean);
     calculateVariance(data_set, &variance);
 
-    for (map<double, VectorXd>::iterator variance_iterator = variance.begin();
+    for (doubleVectorXdMap::iterator variance_iterator = variance.begin();
          variance_iterator != variance.end();
          ++variance_iterator) {
       double label = variance_iterator->first;

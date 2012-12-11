@@ -7,6 +7,8 @@
 using ltr::NonLinearDiscriminant;
 using ltr::utility::InitEigenMatrix;
 using ltr::utility::InitEigenVector;
+using ltr::utility::doubleVectorXdMap;
+using ltr::utility::doubleMatrixXdMap;
 
 namespace ltr {
   double NonLinearDiscriminant::estimate(const Object& object,
@@ -37,10 +39,11 @@ namespace ltr {
 
     result += "using Eigen::VectorXd;\n";
     result += "using Eigen::MatrixXd;\n";
+    result += "using Eigen::aligned_allocator;\n";
     result += "using std::map;\n";
 
     result += "double " + function_name +
-    "(const Object& object, const double label) {\n";
+        "(const Object& object, const double label) {\n";
     result += " VectorXd features(object.feature_count());\n";
 
     result += " for (int element_index = 0;\n";
@@ -50,12 +53,14 @@ namespace ltr {
     result += " }\n";
 
     result += "int n = object.feature_count();\n";
-    result += "map<double, MatrixXd> cov;\n";
+    result += "map<double, MatrixXd, std::less<double>,";
+    result += "    aligned_allocator<std::pair<double, MatrixXd> > > cov;\n";
     result += "double lab;\n";
 
     int n = mean_.begin()->second.size();
 
-    for (map<double, MatrixXd>::const_iterator it = covariance_matrix_.begin();
+    for (doubleMatrixXdMap::const_iterator it =
+             covariance_matrix_.begin();
          it != covariance_matrix_.end();
          ++it) {
       result += "lab = " + lexical_cast<string>(it->first) + ";\n";
@@ -73,8 +78,9 @@ namespace ltr {
       }
     }
 
-    result += "map<double, VectorXd> mean;\n";
-    for (map<double, VectorXd>::const_iterator it = mean_.begin();
+    result += "map<double, VectorXd, std::less<double>,";
+    result += "    aligned_allocator<std::pair<double, VectorXd> > > mean;\n";
+    for (doubleVectorXdMap::const_iterator it = mean_.begin();
          it != mean_.end();
          ++it) {
       result += "lab = " + lexical_cast<string>(it->first) + ";\n";
