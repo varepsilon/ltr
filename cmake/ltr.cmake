@@ -244,6 +244,29 @@ SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predi
                     ${Source_Path}/ltr/predictions_aggregators/order_statistic_predictions_aggregator.h
                     ${Source_Path}/ltr/predictions_aggregators/order_statistic_predictions_aggregator.cc)
 
+SET(OPTIMIZATION_FUNCTIONS ${Source_Path}/ltr/optimization/functions/differentiable_function.h
+                    ${Source_Path}/ltr/optimization/functions/twice_differentiable_function.h
+                    ${Source_Path}/ltr/optimization/functions/function.h
+                    ${Source_Path}/ltr/optimization/functions/function.cc)
+
+SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
+                    ${Source_Path}/ltr/optimization/sets/set.cc
+                    ${Source_Path}/ltr/optimization/sets/ball_set.h
+                    ${Source_Path}/ltr/optimization/sets/ball_set.cc
+                    ${Source_Path}/ltr/optimization/sets/sphere_set.h
+                    ${Source_Path}/ltr/optimization/sets/sphere_set.cc
+                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.h
+                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc)
+
+SET(OPTIMIZATION_SOLVERS ${Source_Path}/ltr/optimization/solvers/solver.h
+                    ${Source_Path}/ltr/optimization/solvers/solution.h
+                    ${Source_Path}/ltr/optimization/solvers/iteration_solver.h
+                    ${Source_Path}/ltr/optimization/solvers/simulated_annealing_solver.h
+                    ${Source_Path}/ltr/optimization/solvers/simulated_annealing_solver.cc
+                    ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.h
+                    ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.cc)
+
+
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})
 SOURCE_GROUP(density_estimators\\learners FILES ${LTR_DENSITY_ESTIMATORS_LEARNERS})
@@ -273,6 +296,10 @@ SOURCE_GROUP(measures FILES ${LTR_MEASURES})
 SOURCE_GROUP(measures\\utils FILES ${LTR_MEASURES_UTILS})
 SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
+SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
+SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
+SOURCE_GROUP(optimization\\solvers FILES ${OPTIMIZATION_SOLVERS})
+
 
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES} ${LTR_IO_UTILS} ${LTR_SCORERS}
@@ -281,6 +308,7 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
-            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST})
+            ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVERS}
+			${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST})
 
 INCLUDE_DIRECTORIES(${Source_Path})
