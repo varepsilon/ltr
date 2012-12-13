@@ -40,8 +40,10 @@
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/utility/boost/path.h"
 
+#include "contrib/getopt_pp/getopt_pp.h"
 
 using std::cout;
+using std::cerr;
 using std::find;
 using std::logic_error;
 using std::string;
@@ -71,6 +73,14 @@ using ltr::cv::KFoldSimpleSplitter;
 using ltr::io_utility::loadDataSet;
 using ltr::utility::InverseLinearDistance;
 using ltr::utility::AppendTrailingPathSeparator;
+
+using GetOpt::GetOpt_pp;
+using GetOpt::Option;
+using GetOpt::OptionPresent;
+using GetOpt::GetOptEx;
+using GetOpt::TooManyOptionsEx;
+
+using ltr::LOG;
 
 typedef  string ParameterizedDependency;
 
@@ -360,27 +370,54 @@ void LtrClient::launch() {
 
 // ===========================================================================
 
+void show_usage() {
+  cout << "Usage: ltr_client -f <configfilename> [-v | -h]" << endl;
+  cout << "Executes commands defined in xml config file." << endl << endl;
+  cout << "Options:" << endl;
+  cout << "  -f,  filename\t\tconfig file name" << endl;
+  cout << "  -h,  help    \t\tdisplay this help and exit" << endl;
+  cout << "  -v,  verbose \t\tproduce additional output to console" << endl;
+}
+
 int main(int argc, char *argv[]) {
-  ltr::LOG.subscribeFile("info.log", "info");
-
-  if (argc < 2) {
-    rError("Specify an argument - configuration file name");
-    return 0;
-  }
-  string filename = argv[1];
-
-  Factory factory;
-  RegisterAllTypes(&factory);
-
-  LtrClient client;
+  GetOpt_pp args(argc, argv);
+  args.exceptions_all();
 
   try {
-      client.initFrom(filename);
-      client.launch();
+    if (args >> OptionPresent('h', "help")) {
+      show_usage();
+      return 0;
+    }
+    if (args >> OptionPresent('v', "verbose")) {
+      LOG.subscribeCout("info");
+      LOG.subscribeCout("warning");
+    }
+    LOG.subscribeFile("log.txt", "info");
+    LOG.subscribeFile("log.txt", "warning");
+
+    string filename;
+    args >> Option('f', "configfile", filename, "");
+    if (filename.empty()) {
+      cerr << "Configuration file name not specified. Type 'ltr_client -h' for usage." << endl;
+      return 0;
+    }
+    args.end_of_options();
+
+    Factory factory;
+    RegisterAllTypes(&factory);
+
+    LtrClient client;
+    client.initFrom(filename);
+    client.launch();
+
+  } catch(TooManyOptionsEx) {
+    cerr << "Unrecognized options specified. Type 'ltr_client -h' for usage." << endl;
+  } catch(const GetOptEx& err) {
+    cerr << "Invalid parameters. Type 'ltr_client -h' for usage." << endl;
   } catch(const logic_error& err) {
-      rError("Failed: %s", err.what());
+    cerr << "Failed: " << err.what() << endl;
   } catch(...) {
-      rError("Caught exception");
+    cerr << "Caught exception" << endl;
   }
   return 0;
 }
