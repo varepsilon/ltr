@@ -7,8 +7,8 @@ using std::logic_error;
 
 typedef string ParameterizedDependency;
 
-void ParametrizedInfo::fill_dependency_list(
-    const ParametrizedInfos& token_specs) {
+void ParameterizedInfo::fill_dependency_list(
+    const ParameterizedInfos& token_specs) {
   dependency_specs_.clear();
 
   typedef ltr::ParametersContainer::NameValue<const ParameterizedDependency>
@@ -21,9 +21,9 @@ void ParametrizedInfo::fill_dependency_list(
       my_dependency_it != my_dependencies.end();
       ++my_dependency_it) {
     const TNameValue& dependency = *my_dependency_it;
-    const ParametrizedInfo* found = NULL;
+    const ParameterizedInfo* found = NULL;
 
-    ParametrizedInfos::const_iterator it = token_specs.find(
+    ParameterizedInfos::const_iterator it = token_specs.find(
           dependency.value);
     found = &it->second;
 
@@ -36,7 +36,7 @@ void ParametrizedInfo::fill_dependency_list(
   }
 }
 
-ParametrizedInfo::ParametrizedInfo()
+ParameterizedInfo::ParameterizedInfo()
   : tag_name_()
   , object_name_()
   , object_type_()
@@ -44,7 +44,7 @@ ParametrizedInfo::ParametrizedInfo()
   , parameters_()
   , dependency_specs_() {}
 
-ParametrizedInfo::ParametrizedInfo(const string& tag_name,
+ParameterizedInfo::ParameterizedInfo(const string& tag_name,
                  const string& object_name,
                  const string& object_type,
                  const string& approach,
@@ -55,11 +55,11 @@ ParametrizedInfo::ParametrizedInfo(const string& tag_name,
   , approach_(approach)
   , parameters_(parameters) {}
 
-ParametrizedInfo::ParametrizedInfo(const ParametrizedInfo& other) {
+ParameterizedInfo::ParameterizedInfo(const ParameterizedInfo& other) {
   *this = other;
 }
 
-ParametrizedInfo& ParametrizedInfo::operator= (const ParametrizedInfo& other) {
+ParameterizedInfo& ParameterizedInfo::operator= (const ParameterizedInfo& other) {
   if (this == &other) {
     return *this;
   }
@@ -72,36 +72,36 @@ ParametrizedInfo& ParametrizedInfo::operator= (const ParametrizedInfo& other) {
 }
 
 
-ParametrizedInfo::~ParametrizedInfo() {
+ParameterizedInfo::~ParameterizedInfo() {
 }
 
-const string& ParametrizedInfo::get_tag_name() const {
+const string& ParameterizedInfo::get_tag_name() const {
   return tag_name_;
 }
-const string& ParametrizedInfo::get_name() const {
+const string& ParameterizedInfo::get_name() const {
   return object_name_;
 }
-const string& ParametrizedInfo::get_type() const {
+const string& ParameterizedInfo::get_type() const {
   return object_type_;
 }
-const string& ParametrizedInfo::get_approach() const {
+const string& ParameterizedInfo::get_approach() const {
   return approach_;
 }
-const ltr::ParametersContainer& ParametrizedInfo::get_parameters() const {
+const ltr::ParametersContainer& ParameterizedInfo::get_parameters() const {
   return parameters_;
 }
-const ParametrizedInfosList& ParametrizedInfo::dependency_specs() const {
+const ParameterizedInfosList& ParameterizedInfo::dependency_specs() const {
   return dependency_specs_;
 }
 
-string ToString(const ParametrizedInfo& info) {
+string ToString(const ParameterizedInfo& info) {
   stringstream out(stringstream::out);
   out << "TXmlTokenSpec(name=" << info.get_name()
       << ", type=" << info.get_type()
       << ", approach=" << info.get_approach()
       << ", parameters=" << info.get_parameters().toString()
          << ", my dependencies=(";
-  for (ParametrizedInfosList::const_iterator it =
+  for (ParameterizedInfosList::const_iterator it =
          info.dependency_specs().begin();
        it != info.dependency_specs().end();
        ++it) {

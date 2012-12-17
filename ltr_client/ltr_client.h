@@ -35,7 +35,7 @@ class LtrClient {
   void launchCrossvalidation(
     const CrossvalidationLaunchInfo& crossvalidation_info);
 
-  ParametrizedInfosList getLoadQueue() const;
+  ParameterizedInfosList getLoadQueue() const;
 
   ConfigParser configurator_;
 };

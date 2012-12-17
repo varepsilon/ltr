@@ -31,7 +31,7 @@ typedef boost::unordered_map<string, TagHandler*> TagHandlers;
 class ConfigParser {
  public:
   typedef boost::unordered_map<string, DataInfo> DataInfos;
-  typedef boost::unordered_map<string, ParametrizedInfo> ParameterizedInfos;
+  typedef boost::unordered_map<string, ParameterizedInfo> ParameterizedInfos;
   typedef boost::unordered_map<string, TrainLaunchInfo> TrainInfos;
   typedef boost::unordered_map<string, CrossvalidationLaunchInfo>
     CrossvalidationInfos;
@@ -90,12 +90,12 @@ class ConfigParser {
    */
   CrossvalidationInfos& crossvalidationInfos();
   /**
-   * Performs a search in the xml tokens for the Parametrized
+   * Performs a search in the xml tokens for the Parameterized
    * object with given name
    * @param name - string with the name of the learner
-   * @returns ParametrizedInfo constant link
+   * @returns ParameterizedInfo constant link
    */
-  const ParametrizedInfo& findParametrized(const string& name) const;
+  const ParameterizedInfo& findParameterized(const string& name) const;
   /**
    * Performs a search in the xml tokens for the dataset
    * with given name
@@ -122,6 +122,6 @@ class ConfigParser {
   ConfigParser::CrossvalidationInfos crossvalidation_infos;
 };
 
-class ParametrizedInfo;
+class ParameterizedInfo;
 
 #endif  // LTR_CLIENT_CONFIGURATOR_H_

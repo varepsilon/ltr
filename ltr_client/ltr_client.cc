@@ -84,30 +84,30 @@ using ltr::LOG;
 
 typedef  string ParameterizedDependency;
 
-static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
-    ParametrizedInfosList* queue,
-    ParametrizedInfosList* circularity_check_queue) {
+static bool BuildObjectCreationChain(const ParameterizedInfo* spec,
+    ParameterizedInfosList* queue,
+    ParameterizedInfosList* circularity_check_queue) {
   if (find(queue->begin(), queue->end(), spec) != queue->end()) {
     return true;
   }
 
   // check for circular dependencies
-  ParametrizedInfosList::const_iterator begin_it = find(
+  ParameterizedInfosList::const_iterator begin_it = find(
     circularity_check_queue->begin(), circularity_check_queue->end(), spec);
 
   if (begin_it != circularity_check_queue->end()) {
-    throw logic_error("Circular dependency detected!");
+    throw logic_error("circular dependency detected");
   }
   circularity_check_queue->push_back(spec);
 
   // add dependencies
-  for (ParametrizedInfosList::const_iterator it =
+  for (ParameterizedInfosList::const_iterator it =
         spec->dependency_specs().begin();
         it != spec->dependency_specs().end();
         ++it) {
-    const ParametrizedInfo* dep_spec = *it;
+    const ParameterizedInfo* dep_spec = *it;
     if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
-      throw logic_error("Can not resolve dependencies!");
+      throw logic_error("can not resolve dependencies");
     }
   }
 
@@ -116,28 +116,28 @@ static bool BuildObjectCreationChain(const ParametrizedInfo* spec,
   return true;
 }
 
-static ParametrizedInfosList values(
+static ParameterizedInfosList values(
     const ConfigParser::ParameterizedInfos& cont) {
-  ParametrizedInfosList values;
+  ParameterizedInfosList values;
   for (ConfigParser::ParameterizedInfos::const_iterator it = cont.begin();
        it != cont.end();
        ++it) {
-    const ParametrizedInfo& spec = it->second;
+    const ParameterizedInfo& spec = it->second;
     values.push_back(&spec);
   }
   return values;
 }
 
-ParametrizedInfosList LtrClient::getLoadQueue() const {
-  const ParametrizedInfosList& all_specs =
+ParameterizedInfosList LtrClient::getLoadQueue() const {
+  const ParameterizedInfosList& all_specs =
     values(configurator_.xmlTokenSpecs());
 
-  ParametrizedInfosList result;
-  for (ParametrizedInfosList::const_iterator it = all_specs.begin();
+  ParameterizedInfosList result;
+  for (ParameterizedInfosList::const_iterator it = all_specs.begin();
        it != all_specs.end();
        ++it) {
-    const ParametrizedInfo* spec = *it;
-    ParametrizedInfosList circularity_check_queue;
+    const ParameterizedInfo* spec = *it;
+    ParameterizedInfosList circularity_check_queue;
     BuildObjectCreationChain(spec, &result, &circularity_check_queue);
   }
   return result;
@@ -156,7 +156,7 @@ static Any Create(const string& name,
   const ConfigParser::ParameterizedInfos& all_specs) {
     ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
     assert(it != all_specs.end());
-    const ParametrizedInfo* spec = &it->second;
+    const ParameterizedInfo* spec = &it->second;
     const ParametersContainer& parameters =
       Create(spec->get_parameters(), all_specs);
     return Factory::instance()->Create(spec->get_type(), parameters);
@@ -213,24 +213,25 @@ void LtrClient::launchTrain(Any parameterized,
     any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
   assert(learner);
 
-  const ParametrizedInfo& learner_info =
-    configurator_.findParametrized(train_info.learner);
+  const ParameterizedInfo& learner_info =
+    configurator_.findParameterized(train_info.learner);
 
   const DataInfo& data_info = configurator_.findData(train_info.data);
 
   if (learner_info.get_approach() != data_info.approach) {
-    throw logic_error("Approach of learner and data does not coincide!");
+    throw logic_error("approaches of learner and data do not coincide");
   }
 
   const DataSet<TElement>& data_set =
     loadDataSet<TElement>(data_info.file, data_info.format);
 
-  rInfo("\n\n\nvoid doLaunch\n");
+  rInfo("\n\nvoid doLaunch\n");
   learner->learn(data_set);
 
   rInfo("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
        learner->report().c_str());
 
+  rInfo("\n\nStarted predicting\n");
   for (boost::unordered_set<string>::const_iterator predict_it =
        train_info.predicts.begin();
        predict_it != train_info.predicts.end();
@@ -276,8 +277,8 @@ void LtrClient::launchCrossvalidation(
 
     for (; learners_alias != crossvalidation_info.learners.end();
          ++learners_alias) {
-      const ParametrizedInfo& learner_info =
-        configurator_.findParametrized(*learners_alias);
+      const ParameterizedInfo& learner_info =
+        configurator_.findParameterized(*learners_alias);
       const ParametersContainer& parameters =
         Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
       Any learner = Factory::instance()->Create(
@@ -288,8 +289,8 @@ void LtrClient::launchCrossvalidation(
 
     for (; measures_alias != crossvalidation_info.measures.end();
             ++measures_alias) {
-      const ParametrizedInfo& measure_info =
-        configurator_.findParametrized(*measures_alias);
+      const ParameterizedInfo& measure_info =
+        configurator_.findParameterized(*measures_alias);
       const ParametersContainer& parameters =
         Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
       Any measure = Factory::instance()->
@@ -297,8 +298,8 @@ void LtrClient::launchCrossvalidation(
       cross_validator.add_measure(any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
     }
 
-    const ParametrizedInfo& splitter_info =
-      configurator_.findParametrized(crossvalidation_info.splitter);
+    const ParameterizedInfo& splitter_info =
+      configurator_.findParameterized(crossvalidation_info.splitter);
     const ParametersContainer& parameters =
       Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
     Any splitter = Factory::instance()->
@@ -323,8 +324,8 @@ void LtrClient::launch() {
        it != configurator_.trainInfos().end();
        ++it) {
     const TrainLaunchInfo& train_info = it->second;
-    const ParametrizedInfo& learner_info =
-      configurator_.findParametrized(train_info.learner);
+    const ParameterizedInfo& learner_info =
+      configurator_.findParameterized(train_info.learner);
 
     const ParametersContainer& parameters =
       Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
@@ -350,8 +351,8 @@ void LtrClient::launch() {
        ++iterator) {
     const CrossvalidationLaunchInfo& crossvalidation_info =
       iterator->second;
-    const ParametrizedInfo& learner_info =
-      configurator_.findParametrized(*crossvalidation_info.learners.begin());
+    const ParameterizedInfo& learner_info =
+      configurator_.findParameterized(*crossvalidation_info.learners.begin());
 
     if (learner_info.get_approach() == "listwise") {
       launchCrossvalidation<ObjectList>(crossvalidation_info);
