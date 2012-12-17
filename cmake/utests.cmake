@@ -42,7 +42,7 @@ SET(LTR_DATA_PREPROCESSORS_TEST ${Source_Path}/ltr/data_preprocessors/data_prepr
 SET(LTR_LEARNERS_TEST ${Source_Path}/ltr/learners/learners_unittest.cc
                       ${Source_Path}/ltr/learners/linear_learner/linear_learner_unittest.cc
                       ${Source_Path}/ltr/learners/gp_learner/gp_learner_unittest.cc
-					  ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc
+                      ${Source_Path}/ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner_unittest.cc
                       ${Source_Path}/ltr/learners/bayesian_learner/bayesian_learner_unittest.cc)
 
 SET(LTR_MEASURES_TEST ${Source_Path}/ltr/measures/measure_unittest.cc
@@ -54,9 +54,9 @@ SET(LTR_SCORERS_TEST ${Source_Path}/ltr/scorers/fake_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/one_feature_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/linear_composition_scorer_unittest.cc
-					 ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer_unittest.cc
+                     ${Source_Path}/ltr/scorers/composition_scorers/composition_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/gp_scorer_unittest.cc
-					 ${Source_Path}/ltr/scorers/nearest_neighbor_scorer_unittest.cc
+                     ${Source_Path}/ltr/scorers/nearest_neighbor_scorer_unittest.cc
                      ${Source_Path}/ltr/scorers/bayesian_scorer_unittest.cc)
 
 SET(LTR_INTERFACES_TEST ${Source_Path}/ltr/interfaces/reporter_unittest.cc
@@ -78,13 +78,15 @@ SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc
                      ${Source_Path}/ltr/utility/boost/lexical_cast_unittest.cc
                      ${Source_Path}/ltr/utility/boost/multi_array_unittest.cc
                      ${Source_Path}/ltr/utility/boost/shared_ptr_unittest.cc)
-
 SET(LTR_COMPOSITION_TEST ${Source_Path}/ltr/learners/composition_learner/linear_composition_unittest.cc
-						 ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)
-
+                     ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)
 SET(LTR_METRICS_TEST ${Source_Path}/ltr/metrics/metrics_unittest.cc)
 
-SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc)
+SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc
+                          ${Source_Path}/ltr/optimization/stop_criteria/and_criterion_unittest.cc
+                          ${Source_Path}/ltr/optimization/stop_criteria/or_criterion_unittest.cc
+                          ${Source_Path}/ltr/optimization/functions/linear_function_unittest.cc
+                          ${Source_Path}/ltr/optimization/functions/quadratic_function_unittest.cc)
 
 SOURCE_GROUP(density_estimators FILES ${DENSITY_ESTIMATORS_TEST})
 SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS_TEST})

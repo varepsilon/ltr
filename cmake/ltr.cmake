@@ -247,7 +247,11 @@ SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predi
 SET(OPTIMIZATION_FUNCTIONS ${Source_Path}/ltr/optimization/functions/differentiable_function.h
                     ${Source_Path}/ltr/optimization/functions/twice_differentiable_function.h
                     ${Source_Path}/ltr/optimization/functions/function.h
-                    ${Source_Path}/ltr/optimization/functions/function.cc)
+                    ${Source_Path}/ltr/optimization/functions/function.cc
+                    ${Source_Path}/ltr/optimization/functions/linear_function.h
+                    ${Source_Path}/ltr/optimization/functions/linear_function.cc
+                    ${Source_Path}/ltr/optimization/functions/quadratic_function.h
+                    ${Source_Path}/ltr/optimization/functions/quadratic_function.cc)
 
 SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/set.cc
@@ -265,6 +269,21 @@ SET(OPTIMIZATION_SOLVERS ${Source_Path}/ltr/optimization/solvers/solver.h
                     ${Source_Path}/ltr/optimization/solvers/simulated_annealing_solver.cc
                     ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.h
                     ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.cc)
+
+SET(OPTIMIZATION_STOPCRITERIA ${Source_Path}/ltr/optimization/stop_criteria/and_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/and_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/delta_argument_stop_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/delta_argument_stop_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/delta_function_stop_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/delta_function_stop_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/gradient_stop_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/gradient_stop_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/iteration_stop_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/iteration_stop_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/or_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/or_criterion.cc
+                    ${Source_Path}/ltr/optimization/stop_criteria/stop_criterion.h
+                    ${Source_Path}/ltr/optimization/stop_criteria/state.h)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
@@ -302,7 +321,7 @@ SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
 SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
 SOURCE_GROUP(optimization\\solvers FILES ${OPTIMIZATION_SOLVERS})
 SOURCE_GROUP(contrib\\getoptpp FILES ${GETOPTPP})
-
+SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOPCRITERIA})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} 
@@ -312,6 +331,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVERS}
-			      ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP})
+			      ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${OPTIMIZATION_STOPCRITERIA})
 
 INCLUDE_DIRECTORIES(${Source_Path})

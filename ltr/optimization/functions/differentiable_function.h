@@ -9,7 +9,6 @@ namespace optimization {
 
 class DifferentiableFunction : public Function {
  public:
-  typedef ltr::utility::shared_ptr<DifferentiableFunction> Ptr;
 
   explicit DifferentiableFunction(int dimension)
     : Function(dimension) { }

@@ -9,7 +9,6 @@ namespace optimization {
 
 class TwiceDifferentiableFunction : public DifferentiableFunction {
  public:
-  typedef ltr::utility::shared_ptr<TwiceDifferentiableFunction> Ptr;
 
   explicit TwiceDifferentiableFunction(int dimension)
     : DifferentiableFunction(dimension) { }
