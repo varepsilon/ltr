@@ -103,7 +103,7 @@ class ParametersContainer: public Printable {
   bool TypeCoincides(const string& name) const {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
     return iterator->second.type() == typeid(T);
   }
@@ -117,7 +117,7 @@ class ParametersContainer: public Printable {
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end() && default_value.empty()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
     const Any& found_value = (iterator != name_value_hash_.end() ?
                               iterator->second : default_value);
@@ -142,7 +142,7 @@ class ParametersContainer: public Printable {
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end() && default_value.empty()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
     const Any& found_value = (iterator != name_value_hash_.end() ?
                               iterator->second : default_value);
@@ -172,7 +172,7 @@ class ParametersContainer: public Printable {
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
 
     try {
@@ -193,7 +193,7 @@ class ParametersContainer: public Printable {
       throw(std::logic_error, std::bad_cast) {
     const StringAnyHash::iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
 
     try {
@@ -229,7 +229,7 @@ class ParametersContainer: public Printable {
   void SetExisting(const string& name, const T& value) {
     const StringAnyHash::iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("No such parameter name: " + name);
+      throw std::logic_error("Parameter '" + name +  "' not defined");
     }
     iterator->second = value;
   }

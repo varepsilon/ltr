@@ -43,7 +43,7 @@ class QuadraticDiscriminantDensityLearner
   virtual void calculateCovarianceMatrix(const DataSet<TElement>& data_set,
                                          LabelToCovarianceMatrix* result) {
     LabelToMean mean;
-    calculateMean(data_set, &mean);
+    this->calculateMean(data_set, &mean);
     LabelToCapacity object_counter = CalculateLabelsCapacity(data_set);
 
     for (LabelToMean::iterator mean_iterator = mean.begin();

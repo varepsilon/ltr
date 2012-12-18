@@ -12,9 +12,13 @@
 #include <stdexcept>
 #include <fcntl.h>
 #include <sys/stat.h>
+
 #ifdef _WIN32
   #include <io.h>
+#else
+  #include <unistd.h>
 #endif
+
 
 using std::map;
 using std::string;
