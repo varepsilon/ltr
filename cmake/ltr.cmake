@@ -25,7 +25,7 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
 
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
-                      
+
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.h
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.cc
 
@@ -37,7 +37,7 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
 
 SET(LTR_DECISION_TREE_CONDITION ${Source_Path}/ltr/learners/decision_tree/condition/condition.h
                                 ${Source_Path}/ltr/learners/decision_tree/condition/threshold_condition.h
-                                ${Source_Path}/ltr/learners/decision_tree/condition/threshold_condition.cc)                      
+                                ${Source_Path}/ltr/learners/decision_tree/condition/threshold_condition.cc)
 
 SET(LTR_DECISION_TREE_LEAF_GENERATOR ${Source_Path}/ltr/learners/decision_tree/leaf_generator/leaf_generator.h
                                      ${Source_Path}/ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h
@@ -48,7 +48,7 @@ SET(LTR_DECISION_TREE_SPLIT_CRITERIA ${Source_Path}/ltr/learners/decision_tree/s
                                      ${Source_Path}/ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.cc
                                      ${Source_Path}/ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.h
                                      ${Source_Path}/ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.cc)
-                                
+
 SET(LTR_DECISION_TREE_VERTEX ${Source_Path}/ltr/learners/decision_tree/vertex/vertex.h
                              ${Source_Path}/ltr/learners/decision_tree/vertex/vertex.cc
                              ${Source_Path}/ltr/learners/decision_tree/vertex/vertex_with_data.h
@@ -183,8 +183,8 @@ SET(LTR_GP_LEARNER_STRATEGIES ${Source_Path}/ltr/learners/gp_learner/strategies/
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_crossover_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.cc
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h
-                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.cc
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standard_strategy.h
+                              ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_standard_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h
                               ${Source_Path}/ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.cc
                               ${Source_Path}/ltr/learners/gp_learner/strategies/population_handler.h)
@@ -324,8 +324,8 @@ SOURCE_GROUP(contrib\\getoptpp FILES ${GETOPTPP})
 SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOPCRITERIA})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES}
-            ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS} 
-            ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES} ${LTR_FEATURE_CONVERTERS} 
+            ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
+            ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES} ${LTR_FEATURE_CONVERTERS}
             ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION}
             ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}

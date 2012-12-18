@@ -23,7 +23,21 @@
 #include "ltr/learners/linear_learner/linear_learner.h"
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
+
 #include "ltr/learners/decision_tree/decision_tree_learner.h"
+#include "ltr/learners/decision_tree/id3_splitter.h"
+#include "ltr/learners/decision_tree/oblivious_tree_splitter.h"
+#include "ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h"
+#include "ltr/learners/decision_tree/split_criteria/data_size_stop_criteria.h"
+#include "ltr/learners/decision_tree/split_criteria/same_label_stop_criteria.h"
+
+#include "ltr/learners/gp_learner/strategies/population_handler.h"
+#include "ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_standard_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
+#include "ltr/learners/gp_learner/strategies/select_top_trees_strategy.h"
 
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
@@ -108,7 +122,24 @@ using ltr::Measure;
 using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
+
 using ltr::decision_tree::DecisionTreeLearner;
+using ltr::decision_tree::BaseSplitter;
+using ltr::decision_tree::ID3Splitter;
+using ltr::decision_tree::ObliviousTreeSplitter;
+using ltr::decision_tree::LeafGenerator;
+using ltr::decision_tree::MostCommonLabelLeafGenerator;
+using ltr::decision_tree::StopSplittingCriteria;
+using ltr::decision_tree::SameLabelStopSplittingCriteria;
+using ltr::decision_tree::DataSizeStopSplittingCriteria;
+
+using ltr::gp::BasePopulationHandler;
+using ltr::gp::CrossoverAdjacentTreesStrategy;
+using ltr::gp::DefaultCrossoverStrategy;
+using ltr::gp::DefaultMutationStandardStrategy;
+using ltr::gp::DefaultMutationSwapStrategy;
+using ltr::gp::DefaultSelectionStrategy;
+using ltr::gp::SelectTopTreesStrategy;
 
 using ltr::PredictionsAggregator;
 using ltr::AveragePredictionsAggregator;
@@ -208,6 +239,23 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER_EVERY_WISE(Learner, GPLearner);
   REGISTER_POINTWISE(Learner, LinearLearner);
   REGISTER_LISTWISE(Learner, LinearLearner);
+
+//  REGISTER(Learner<Object>, DecisionTreeLearner);
+  factory->registerType<Learner<Object>,
+      DecisionTreeLearner>("DecisionTreeLearnerpointwise");
+
+  REGISTER(BaseSplitter, ID3Splitter);
+  REGISTER(BaseSplitter, ObliviousTreeSplitter);
+  REGISTER(LeafGenerator, MostCommonLabelLeafGenerator);
+  REGISTER(StopSplittingCriteria, SameLabelStopSplittingCriteria);
+  REGISTER(StopSplittingCriteria, DataSizeStopSplittingCriteria);
+
+  REGISTER(BasePopulationHandler, CrossoverAdjacentTreesStrategy);
+  REGISTER(BasePopulationHandler, DefaultCrossoverStrategy);
+  REGISTER(BasePopulationHandler, DefaultMutationStandardStrategy);
+  REGISTER(BasePopulationHandler, DefaultMutationSwapStrategy);
+  REGISTER(BasePopulationHandler, DefaultSelectionStrategy);
+  REGISTER(BasePopulationHandler, SelectTopTreesStrategy);
 
   REGISTER(ListwiseMeasure, NDCG);
   REGISTER(ListwiseMeasure, DCG);

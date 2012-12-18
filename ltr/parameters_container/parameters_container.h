@@ -127,10 +127,7 @@ class ParametersContainer: public Printable {
     } catch(const bad_any_cast &exc) {
       rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
-                             "\nParameter name: " + name +
-                             "\nRequested type: " + typeid(T).name() +
-                             "\nActual type: " +
-                             found_value.type().name());
+                             "\nParameter name: " + name);
     }
   }
   /**
@@ -154,11 +151,7 @@ class ParametersContainer: public Printable {
     } catch(const bad_any_cast &exc) {
       rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
-                             "\nParameter name: " + name +
-                             "\nRequested type: " +
-                             typeid(StoredType).name() +
-                             "\nactual type: " +
-                             found_value.type().name());
+                             "\nParameter name: " + name);
     } catch(const std::bad_cast &exc) {
       throw std::logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
@@ -181,8 +174,7 @@ class ParametersContainer: public Printable {
     catch(const bad_any_cast &exc) {
       rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
-                             "\nParameter name: " + name +
-                             "\nRequested type: " + typeid(T).name());
+                             "\nParameter name: " + name);
     }
   }
   /**
@@ -202,8 +194,7 @@ class ParametersContainer: public Printable {
     catch(const bad_any_cast &exc) {
       rError("bad_any_cast");
       throw std::logic_error(string(exc.what()) +
-                             "\nParameter name: " + name +
-                             "\nRequested type: " + typeid(T).name());
+                             "\nParameter name: " + name);
     }
   }
 

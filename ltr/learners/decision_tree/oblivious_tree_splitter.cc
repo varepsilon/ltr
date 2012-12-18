@@ -8,6 +8,11 @@ using ltr::utility::Inf;
 
 namespace ltr {
 namespace decision_tree {
+ObliviousTreeSplitter::
+  ObliviousTreeSplitter(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+}
+
 string ObliviousTreeSplitter::toString() const {
   return "Oblivious tree splitter";
 }

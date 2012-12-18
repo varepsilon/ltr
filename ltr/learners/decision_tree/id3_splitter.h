@@ -29,6 +29,8 @@ class ID3Splitter : public BaseSplitter {
 
   ID3Splitter() {}
 
+  ID3Splitter(const ParametersContainer& parameters);
+
   string toString() const;
 
   virtual void generateNextLayer(const vector<VertexWithData>& layer,

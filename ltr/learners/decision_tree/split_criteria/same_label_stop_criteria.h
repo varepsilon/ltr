@@ -22,6 +22,8 @@ class SameLabelStopSplittingCriteria : public StopSplittingCriteria {
   explicit SameLabelStopSplittingCriteria(double label_eps = 0.001)
   : label_eps_(label_eps) {}
 
+  SameLabelStopSplittingCriteria(const ParametersContainer& parameters);
+
   bool needToStopSplitting(const DataSet<Object>& data) const;
 
  private:

@@ -196,7 +196,7 @@ class TOnParameterTag: public TagHandler {
     assert(container);
 
     const string name = element->Value();
-    const string val = element->GetText();
+    const string val = element->GetText() != NULL ? element->GetText() : "";
 
     if (element->FirstChildElement()) {
       assert(false && "parameters in parameters is not implemented yet...");
@@ -283,9 +283,14 @@ class TOnParameterTag: public TagHandler {
       container->AddNew(name, ParameterizedDependency(value));
       rInfo("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
            name.c_str(), value.c_str());
+    } else if (type.substr(0, 6) == "vector") {   //TODO: rewrite using split
+      int space_pos = type.find_last_of("\t ,");
+      string subtype = type.substr(space_pos + 1);
+      rInfo("Parsing vector of %s", subtype.c_str());
+      container->AddNew(name, value);
     } else {
-      assert(false && ("Adding " + type +
-                          " is not implemented yet...").c_str());
+      throw logic_error("Adding '" + type +
+                          "' is not implemented yet...");
     }
   }
 
@@ -296,14 +301,14 @@ class TOnParameterTag: public TagHandler {
    * Yet is under construction.
    */
   static string guessType(const string& value) {
-    const string::size_type pos_of_space = value.find(' ');
+    const string::size_type pos_of_space = value.find_first_of("\t ,");
     rInfo("TOnParametersExecutor: guessing type of %s %d\n",
          value.c_str(), pos_of_space);
 
-    if (pos_of_space != string::npos) {  // some kind of list
+    if (pos_of_space != string::npos) {  // some kind of vector
       const string first_element = value.substr(0, pos_of_space);
       // TODO(dimanne) check type of other elements and promote it if needed
-      return "list of " + guessTypeOfOneElement(first_element);
+      return "vector of " + guessTypeOfOneElement(first_element);
     }
     return guessTypeOfOneElement(value);
   }

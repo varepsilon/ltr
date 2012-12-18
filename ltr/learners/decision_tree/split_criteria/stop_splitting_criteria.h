@@ -5,6 +5,8 @@
 
 #include "ltr/data/data_set.h"
 
+#include "ltr/interfaces/parameterized.h"
+
 #include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
@@ -13,7 +15,7 @@ namespace decision_tree {
  * StopSplittingCriteria is a base class for stop splitting criterias.
  * It checks the given data and desides should we generate leaf now or not.
  */
-class StopSplittingCriteria {
+class StopSplittingCriteria : public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<StopSplittingCriteria> Ptr;
 

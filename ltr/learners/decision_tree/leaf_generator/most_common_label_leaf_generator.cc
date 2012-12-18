@@ -6,6 +6,14 @@ using ltr::utility::LabelStatisticComputer;
 
 namespace ltr {
 namespace decision_tree {
+MostCommonLabelLeafGenerator::MostCommonLabelLeafGenerator() {
+}
+
+MostCommonLabelLeafGenerator::
+  MostCommonLabelLeafGenerator(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+}
+
 LeafVertex::Ptr MostCommonLabelLeafGenerator::
   operator()(const DataSet<Object>& data) const {
     LabelStatisticComputer label_stat_computer(data);

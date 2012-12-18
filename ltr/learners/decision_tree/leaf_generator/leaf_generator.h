@@ -7,6 +7,8 @@
 
 #include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
 
+#include "ltr/interfaces/parameterized.h"
+
 #include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
@@ -14,7 +16,7 @@ namespace decision_tree {
 /**
  * LeafGenerator is a base class for leaf generators.
  */
-class LeafGenerator {
+class LeafGenerator : public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<LeafGenerator> Ptr;
 

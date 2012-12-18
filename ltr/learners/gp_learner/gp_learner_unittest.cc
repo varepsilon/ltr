@@ -19,7 +19,7 @@
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 #include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
-#include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_standard_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
 #include "ltr/learners/gp_learner/strategies/select_top_trees_strategy.h"
 #include "ltr/learners/gp_learner/strategies/crossover_adjacent_trees_strategy.h"
@@ -43,7 +43,7 @@ using ltr::gp::GPLearner;
 using ltr::gp::GPScorer;
 using ltr::gp::DefaultSelectionStrategy;
 using ltr::gp::DefaultCrossoverStrategy;
-using ltr::gp::DefaultMutationStandartStrategy;
+using ltr::gp::DefaultMutationStandardStrategy;
 using ltr::gp::DefaultMutationSwapStrategy;
 using ltr::gp::SelectTopTreesStrategy;
 using ltr::gp::CrossoverAdjacentTreesStrategy;
@@ -98,7 +98,7 @@ TEST_F(GPLearnerTest, DefaultCrossoverStrategyTest) {
 TEST_F(GPLearnerTest, DefaultMutationStandartStrategyTest) {
   GPLearner<Object> gp_learner(new ltr::TruePoint);
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new DefaultMutationStandartStrategy));
+    gp_learner.addPopulationHandler(new DefaultMutationStandardStrategy));
 
   ASSERT_NO_THROW(gp_learner.learn(learn_data));
 }

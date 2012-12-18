@@ -5,10 +5,18 @@
 
 #include <algorithm>
 #include <typeinfo>
+#include <vector>
+#include <string>
+
+using std::vector;
+using std::string;
 
 namespace ltr {
 namespace utility {
 
+/**
+* Class for storing variant data
+*/
 class Any {
 public:
   Any(): content(0) {
@@ -82,47 +90,125 @@ private:
     Holder & operator=(const Holder &);
   };
 
-  template<typename ValueType>
-  friend ValueType * any_cast(Any *);
-
-  template<typename ValueType>
-  friend ValueType * unsafe_any_cast(Any *);
+  template<typename ResultType, typename SourceType>
+  friend class AnyCaster;
 
   PlaceHolder* content;
 };
 
 
+/**
+* Exception thrown when any_cast fails
+*/
 class bad_any_cast: public std::bad_cast {
 public:
+  bad_any_cast(const string& from, const string& to): from_(from), to_(to) {}
+
   virtual const char* what() const throw() {
-    return "ltr::utility::bad_any_cast: failed conversion using ltr::utility::any_cast";
+    string description = "ltr::utility::bad_any_cast: failed conversion from stored " +
+        from_ + " to " + to_;
+    return description.c_str();
+  }
+
+  virtual ~bad_any_cast() throw() {};
+private:
+  string from_;
+  string to_;
+};
+
+
+template <typename ResultType, typename SourceType>
+class AnyCaster {
+public:
+  static ResultType* toPointer(SourceType* operand) {
+    return operand && operand->type() == typeid(ResultType) ?
+      &static_cast<Any::Holder<ResultType>*>(operand->content)->held : 0;
+  }
+
+  static const ResultType* toPointer(const SourceType* operand) {
+    return toPointer(const_cast<SourceType*>(operand));
+  }
+
+  static ResultType toValue(SourceType& operand) {
+    // Warning: ResultType must not be reference! But it usually does not.
+    ResultType* result = toPointer(&operand);
+    if (!result) {
+      throw(bad_any_cast(operand.type().name(), typeid(ResultType).name()));
+    }
+    return *result;
+  }
+
+  static ResultType toValue(const SourceType& operand) {
+    return AnyCaster<const ResultType, SourceType>().toValue(const_cast<SourceType&>(operand));
   }
 };
 
-template<typename ValueType>
-ValueType* any_cast(Any* operand) {
-  return operand && operand->type() == typeid(ValueType) ?
-      &static_cast<Any::Holder<ValueType>*>(operand->content)->held : 0;
-}
 
-template<typename ValueType>
-inline const ValueType* any_cast(const Any* operand) {
-  return any_cast<ValueType>(const_cast<Any*>(operand));
-}
-
-template<typename ValueType>
-ValueType any_cast(Any& operand) {
-  // Warning: ValueType must not be reference! But it usually does not.
-  ValueType* result = any_cast<ValueType>(&operand);
-  if (!result) {
-    throw(bad_any_cast());
+template <typename ResultType, typename SourceType>
+class AnyCaster<vector<ResultType>, vector<SourceType> > {
+public:
+  static vector<ResultType> toValue (const vector<SourceType>& operand) {
+    vector<ResultType> result(operand.size());
+    for (int i = 0; i < result.size(); ++i) {
+      result[i] = AnyCaster<ResultType, SourceType>().toValue(operand[i]);
+    }
+    return result;
   }
-  return *result;
+};
+
+
+template <typename ResultType>
+class AnyCaster<vector<ResultType>, Any> {
+public:
+  static vector<ResultType> toValue (const Any& operand) {
+    if (operand.type() == typeid(vector<Any>)) {
+      const vector<Any>* intermediate = AnyCaster<vector<Any>, Any>().toPointer(&operand);
+      if (!intermediate) {
+        throw(bad_any_cast(operand.type().name(), typeid(vector<ResultType>).name()));
+      }
+      return AnyCaster<vector<ResultType>, vector<Any> >().toValue(*intermediate);
+    } else {
+      const vector<ResultType>* result =
+          AnyCaster<vector<ResultType>, Any>().toPointer(&operand);
+      if (!result) {
+        throw(bad_any_cast(operand.type().name(), typeid(vector<ResultType>).name()));
+      }
+      return *result;
+    }
+  }
+
+  static vector<ResultType>* toPointer(Any* operand) {
+    return operand && operand->type() == typeid(vector<ResultType>) ?
+      &static_cast<Any::Holder<vector<ResultType> >*>(operand->content)->held : 0;
+  }
+
+  static const vector<ResultType>* toPointer(const Any* operand) {
+    return toPointer(const_cast<Any*>(operand));
+  }
+};
+
+
+/**
+* Casts Any to the given type
+*/
+template<typename ResultType, typename SourceType>
+ResultType* any_cast(SourceType* operand) {
+  return AnyCaster<ResultType, SourceType>::toPointer(operand);
 }
 
-template<typename ValueType>
-inline ValueType any_cast(const Any& operand) {
-  return any_cast<const ValueType>(const_cast<Any&>(operand));
+template<typename ResultType, typename SourceType>
+inline const ResultType* any_cast(const SourceType* operand) {
+  return AnyCaster<ResultType, SourceType>::toPointer(operand);
+}
+
+template<typename ResultType, typename SourceType>
+ResultType any_cast(SourceType& operand) {
+  return AnyCaster<ResultType, SourceType>::toValue(operand);
+}
+
+template<typename ResultType, typename SourceType>
+inline ResultType any_cast(const SourceType& operand) {
+  return AnyCaster<ResultType, SourceType>::toValue(operand);
 }
 
 }

@@ -21,16 +21,16 @@ namespace gp {
  * Mutate all trees in population with
  * Puppy applyMutationStandard function.
  */
-class DefaultMutationStandartStrategy : public BasePopulationHandler {
+class DefaultMutationStandardStrategy : public BasePopulationHandler {
  public:
-  explicit DefaultMutationStandartStrategy(double mutation_probability = 0.05,
+  explicit DefaultMutationStandardStrategy(double mutation_probability = 0.05,
                                            int max_regeneration_depth = 5,
                                            int max_depth = 35)
   : mutation_probability_(mutation_probability),
     max_regeneration_depth_(max_regeneration_depth),
     max_depth_(max_depth) {}
 
-  explicit DefaultMutationStandartStrategy(
+  explicit DefaultMutationStandardStrategy(
     const ParametersContainer& parameters) {
       this->setParameters(parameters);
   }

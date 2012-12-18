@@ -8,6 +8,10 @@ using ltr::utility::Inf;
 
 namespace ltr {
 namespace decision_tree {
+ID3Splitter::ID3Splitter(const ParametersContainer& parameters) {
+  this->setParameters(parameters);
+}
+
 string ID3Splitter::toString() const {
   return "ID3 tree splitter";
 }

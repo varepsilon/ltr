@@ -11,7 +11,9 @@
 #include "ltr/learners/learner.h"
 
 #include "ltr/learners/decision_tree/base_splitter.h"
+#include "ltr/learners/decision_tree/id3_splitter.h"
 #include "ltr/learners/decision_tree/leaf_generator/leaf_generator.h"
+#include "ltr/learners/decision_tree/leaf_generator/most_common_label_leaf_generator.h"
 #include "ltr/learners/decision_tree/split_criteria/stop_splitting_criteria.h"
 #include "ltr/learners/decision_tree/vertex/decision_vertex.h"
 #include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
@@ -37,8 +39,9 @@ class DecisionTreeLearner : public BaseLearner<Object, DecisionTreeScorer> {
     this->setParameters(parameters);
   }
 
-  DecisionTreeLearner(BaseSplitter::Ptr splitter,
-                      LeafGenerator::Ptr leaf_generator)
+  DecisionTreeLearner(BaseSplitter::Ptr splitter = new ID3Splitter(),
+                      LeafGenerator::Ptr leaf_generator =
+                          new MostCommonLabelLeafGenerator())
   : splitter_(splitter),
     leaf_generator_(leaf_generator) {}
 

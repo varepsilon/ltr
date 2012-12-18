@@ -11,6 +11,8 @@
 
 #include "ltr/learners/decision_tree/vertex/vertex_with_data.h"
 
+#include "ltr/interfaces/parameterized.h"
+
 #include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;
@@ -35,7 +37,7 @@ struct Threshold {
  * For given decision tree layer(vector of VertexWithData)
  * generates next layer by performing split in each Vertex.
  */
-class BaseSplitter {
+class BaseSplitter : public Parameterized {
  public:
   typedef ltr::utility::shared_ptr<BaseSplitter> Ptr;
 

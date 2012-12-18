@@ -8,6 +8,11 @@ using ltr::utility::Inf;
 
 namespace ltr {
 namespace decision_tree {
+SameLabelStopSplittingCriteria::
+  SameLabelStopSplittingCriteria(const ParametersContainer& parameters) {
+    this->setParameters(parameters);
+}
+
 bool SameLabelStopSplittingCriteria::
   needToStopSplitting(const DataSet<Object>& data) const {
     double min_label = Inf;

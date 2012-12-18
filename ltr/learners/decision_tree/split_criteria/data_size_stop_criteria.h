@@ -22,6 +22,8 @@ class DataSizeStopSplittingCriteria : public StopSplittingCriteria {
   explicit DataSizeStopSplittingCriteria(int min_vertex_size = 5)
   : min_vertex_size_(min_vertex_size) {}
 
+  DataSizeStopSplittingCriteria(const ParametersContainer& parameters);
+
   bool needToStopSplitting(const DataSet<Object>& data) const;
 
  private:

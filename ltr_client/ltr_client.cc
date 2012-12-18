@@ -46,6 +46,7 @@ using std::cout;
 using std::cerr;
 using std::find;
 using std::logic_error;
+using std::exception;
 using std::string;
 using std::vector;
 using std::endl;
@@ -178,16 +179,19 @@ static ParametersContainer Create(
         typedef vector<string> TStringVector;
         TStringVector strings;
         boost::split(strings, *dependency,
-                     boost::is_any_of("\t "));
+                     boost::is_any_of("\t ,"));
+
         assert(strings.size());
-        if (strings.size() == 1) {
+        if (strings.size() == 1 && dependency->find_first_of(',') == string::npos) {
           result.AddNew(name, Create(strings[0], all_specs));
         } else {
           vector<Any> list;
           for (TStringVector::const_iterator str_it = strings.begin();
                str_it != strings.end();
                ++str_it) {
-            list.push_back(Create(*str_it, all_specs));
+            if (!str_it->empty()){  // TODO: remove if after getting rid of boost::split
+              list.push_back(Create(*str_it, all_specs));
+            }
           }
           result.AddNew(name, list);
         }
@@ -342,6 +346,8 @@ void LtrClient::launch() {
       launchTrain<ObjectPair>(parameterized, train_info);
     } else if (learner_info.get_approach() == "pointwise") {
       launchTrain<Object>(parameterized, train_info);
+    } else {
+      throw logic_error("unknown learner's approach");
     }
   }
 
@@ -417,8 +423,8 @@ int main(int argc, char *argv[]) {
     cerr << "Invalid parameters. Type 'ltr_client -h' for usage." << endl;
   } catch(const logic_error& err) {
     cerr << "Failed: " << err.what() << endl;
-  } catch(...) {
-    cerr << "Caught exception" << endl;
+  } catch(const std::exception err) {
+    cerr << "Caught exception: " << err.what() << endl;
   }
   return 0;
 }

@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 #include "ltr_client/utility/parameterized_info.h"
+#include "boost/algorithm/string.hpp"
 
 using std::logic_error;
 
@@ -21,18 +22,29 @@ void ParameterizedInfo::fill_dependency_list(
       my_dependency_it != my_dependencies.end();
       ++my_dependency_it) {
     const TNameValue& dependency = *my_dependency_it;
-    const ParameterizedInfo* found = NULL;
+    vector<string> dependency_parts;
+    boost::split(dependency_parts, dependency.value,
+        boost::is_any_of("\t ,"));
+    for (int i = 0; i < dependency_parts.size(); ++i) {
+      const ParameterizedInfo* found = NULL;
 
-    ParameterizedInfos::const_iterator it = token_specs.find(
-          dependency.value);
-    found = &it->second;
+      if (dependency_parts[i].empty()) continue;  // TODO: remove
+      // this after getting rid of boost::split
 
-    if (!found) {
-      throw logic_error("TXmlTokenSpec::fillDependency List: "
-                        "Could not resolve dependency " +
-                        dependency.value);
+      assert(!dependency_parts[i].empty());
+
+      ParameterizedInfos::const_iterator it = token_specs.find(
+            dependency_parts[i]);
+      assert(it != token_specs.end());
+      found = &it->second;
+
+      if (!found) {
+        throw logic_error("TXmlTokenSpec::fillDependency List: "
+                          "Could not resolve dependency " +
+                          dependency_parts[i]);
+      }
+      dependency_specs_.push_back(found);
     }
-    dependency_specs_.push_back(found);
   }
 }
 

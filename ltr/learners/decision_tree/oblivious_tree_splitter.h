@@ -27,6 +27,8 @@ class ObliviousTreeSplitter : public BaseSplitter {
 
   ObliviousTreeSplitter() {}
 
+  ObliviousTreeSplitter(const ParametersContainer& parameters);
+
   string toString() const;
 
   virtual void generateNextLayer(const vector<VertexWithData>& layer,

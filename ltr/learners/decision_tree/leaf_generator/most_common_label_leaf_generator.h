@@ -23,6 +23,10 @@ class MostCommonLabelLeafGenerator : public LeafGenerator {
  public:
   typedef ltr::utility::shared_ptr<MostCommonLabelLeafGenerator> Ptr;
 
+  MostCommonLabelLeafGenerator();
+
+  MostCommonLabelLeafGenerator(const ParametersContainer& parameters);
+
   LeafVertex::Ptr operator()(const DataSet<Object>& data) const;
 };
 };

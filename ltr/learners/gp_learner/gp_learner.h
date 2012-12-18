@@ -19,7 +19,7 @@
 #include "ltr/learners/gp_learner/strategies/population_handler.h"
 #include "ltr/learners/gp_learner/strategies/default_selection_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_crossover_strategy.h"
-#include "ltr/learners/gp_learner/strategies/default_mutation_standart_strategy.h"
+#include "ltr/learners/gp_learner/strategies/default_mutation_standard_strategy.h"
 #include "ltr/learners/gp_learner/strategies/default_mutation_swap_strategy.h"
 
 #include "ltr/scorers/gp_scorer.h"
@@ -28,6 +28,13 @@
 #include "ltr/measures/reciprocal_rank.h"
 
 #include "ltr/parameters_container/parameters_container.h"
+
+using std::vector;
+using std::string;
+using std::stringstream;
+using std::fixed;
+using ltr::utility::shared_ptr;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 namespace gp {
@@ -40,7 +47,7 @@ namespace gp {
 template <typename TElement>
 class GPLearner : public BaseLearner<TElement, GPScorer> {
  public:
-  typedef ltr::utility::shared_ptr<GPLearner> Ptr;
+  typedef shared_ptr<GPLearner> Ptr;
   /**
    * Constructor creates a GPLearner.
    * \param measure shared pointer to the measure that would be maximized on
@@ -191,8 +198,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   Puppy::Tree best_tree_;
 
-  std::vector<BasePopulationHandler::Ptr> population_handler_;
-  std::vector<BaseGPOperation::Ptr> gp_operation_;
+  vector<BasePopulationHandler::Ptr> population_handler_;
+  vector<BaseGPOperation::Ptr> gp_operation_;
 };
 
 // template realizations
@@ -224,8 +231,8 @@ void GPLearner<TElement>::reset() {
 
 template <typename TElement>
 string GPLearner<TElement>::toString() const {
-  std::stringstream str;
-  std::fixed(str);
+  stringstream str;
+  fixed(str);
   str.precision(2);
   str << "Genetic programming learner with parameters: ";
   str << "population_size = " << population_size_ << ", ";
@@ -259,12 +266,16 @@ void GPLearner<TElement>::addGPOperation(
 template <typename TElement>
 void GPLearner<TElement>::
   setParametersImpl(const ParametersContainer& parameters) {
-    population_size_ = parameters.Get<int>("POPULATION_SIZE");
-    number_of_generations_ = parameters.Get<int>("NUMBER_OF_GENERATIONS");
-    min_init_depth_ = parameters.Get<int>("MIN_INIT_DEPTH");
-    max_init_depth_ = parameters.Get<int>("MAX_INIT_DEPTH");
-    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY");
-    seed_ = parameters.Get<int>("SEED");
+    measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
+    population_size_ = parameters.Get<int>("POPULATION_SIZE", 10);
+    number_of_generations_ = parameters.Get<int>("NUMBER_OF_GENERATIONS", 3);
+    min_init_depth_ = parameters.Get<int>("MIN_INIT_DEPTH", 2);
+    max_init_depth_ = parameters.Get<int>("MAX_INIT_DEPTH", 5);
+    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY", 0.5);
+    seed_ = parameters.Get<int>("SEED", 1);
+    population_handler_ =
+        parameters.Get<vector<BasePopulationHandler::Ptr> >("STRATEGIES",
+            vector<BasePopulationHandler::Ptr>(0));
 }
 
 template <typename TElement>
@@ -290,8 +301,8 @@ void GPLearner<TElement>::initContext() {
   for (int feature_index = 0;
        feature_index < feature_count_;
        ++feature_index) {
-    std::string feature_name = "feature[";
-    feature_name += ltr::utility::lexical_cast<string>(feature_index);
+    string feature_name = "feature[";
+    feature_name += lexical_cast<string>(feature_index);
     feature_name += "]";
     context_.insert(new Puppy::TokenT<double>(feature_name));
   }
@@ -311,7 +322,7 @@ void GPLearner<TElement>::evaluationStepImpl() {
   if (population_handler_.empty()) {
     population_handler_.push_back(new DefaultSelectionStrategy);
     population_handler_.push_back(new DefaultCrossoverStrategy);
-    population_handler_.push_back(new DefaultMutationStandartStrategy);
+    population_handler_.push_back(new DefaultMutationStandardStrategy);
     population_handler_.push_back(new DefaultMutationSwapStrategy);
   }
 
