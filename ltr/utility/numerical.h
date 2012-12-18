@@ -6,6 +6,9 @@
 #include <cmath>
 #include <limits>
 
+#undef max
+#undef min
+
 using std::numeric_limits;
 
 namespace ltr {
