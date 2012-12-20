@@ -10,10 +10,12 @@ LinearInequalitySet::LinearInequalitySet(Vector normal,
   initial_point_(point) { }
 
 bool LinearInequalitySet::isInside(const Point& point) const {
-  return positive_normal().dot(point - initial_point()) > 0;
+  assert(point.size() == dimension());
+  return !(positive_normal().dot(point - initial_point()) < 0);
 }
 
 Point LinearInequalitySet::project(const Point& point) const {
+  assert(point.size() == dimension());
   if (!isInside(point)) {
     Vector projecting_vector = point - initial_point();
     Vector projected_vector;
