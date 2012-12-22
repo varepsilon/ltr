@@ -79,7 +79,8 @@ SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc
                      ${Source_Path}/ltr/utility/boost/multi_array_unittest.cc
                      ${Source_Path}/ltr/utility/boost/shared_ptr_unittest.cc
                      ${Source_Path}/ltr/utility/boost/any_unittest.cc
-                     ${Source_Path}/ltr/utility/boost/string_utils_unittest.cc)
+                     ${Source_Path}/ltr/utility/boost/string_utils_unittest.cc
+                     ${Source_Path}/ltr/utility/boost/triple_unittest.cc)
 
 SET(LTR_COMPOSITION_TEST ${Source_Path}/ltr/learners/composition_learner/linear_composition_unittest.cc
                      ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)
