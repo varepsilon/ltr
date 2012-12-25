@@ -80,7 +80,7 @@ static inline void GenericParse(const TagHandlers& parsers,
 
     TiXmlElement* element = xmlNode->ToElement();
     if (!element) {
-      throw logic_error("Cannot convert node to element");
+      throw logic_error("can not convert node to element");
     }
 
     const TagHandlers::const_iterator it = parsers.find(xmlNode->Value());
@@ -151,7 +151,7 @@ class TOnDataTag: public TagHandler {
     }
 
     if (d->dataInfos().find(name) != d->dataInfos().end()) {
-        throw logic_error("dublicate data name " + string(name));
+        throw logic_error("duplicate data name " + string(name));
     }
 
     d->dataInfos()[name] = DataInfo(name, approach, format, file_name);
@@ -225,7 +225,7 @@ class TOnParameterTag: public TagHandler {
     } else if (boost::iequals(value, string("false"))) {
       return false;
     } else {
-      throw logic_error("Can not convert " + value + " to bool!");
+      throw logic_error("can not convert " + value + " to bool");
     }
   }
 
@@ -239,7 +239,7 @@ class TOnParameterTag: public TagHandler {
     try {
       return ltr::utility::lexical_cast<int>(value);
     } catch(ltr::utility::bad_lexical_cast&) {
-      throw logic_error("Can not convert " + value + " to int!");
+      throw logic_error("can not convert " + value + " to int");
     }
   }
 
@@ -253,7 +253,7 @@ class TOnParameterTag: public TagHandler {
     try {
       return ltr::utility::lexical_cast<double>(value);
     } catch(ltr::utility::bad_lexical_cast&) {
-      throw logic_error("Can not convert " + value + " to double!");
+      throw logic_error("can not convert " + value + " to double");
     }
   }
   static const char* XML_TOKEN_DEPENDENCY_TYPE;
@@ -372,7 +372,7 @@ class OnGeneralParameterized: public TagHandler {
     rInfo("TOnGeneralXmlToken\n");
 
     const char* name = element->Attribute(NAME_ATTR);
-    ParametrizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
+    ParameterizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
                                                       name);
     const char* type = element->Attribute(TYPE_ATTR);
     if (!type) {
@@ -381,7 +381,7 @@ class OnGeneralParameterized: public TagHandler {
 
     const char* approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
-      rWarning("No approach defined '%s'. Try to define automatically.", name);
+      rWarning("No approach defined for '%s'. Trying to define automatically.", name);
       approach = "";
     }
     const char* tag_name = element->Value();

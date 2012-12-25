@@ -23,6 +23,7 @@
 #include "ltr/learners/linear_learner/linear_learner.h"
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
+#include "ltr/learners/decision_tree/decision_tree_learner.h"
 
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter_learner.h"
@@ -107,6 +108,7 @@ using ltr::Measure;
 using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
+using ltr::decision_tree::DecisionTreeLearner;
 
 using ltr::PredictionsAggregator;
 using ltr::AveragePredictionsAggregator;

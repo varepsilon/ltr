@@ -88,7 +88,7 @@ parseConfig(const string& file_name) {
   for (ParameterizedInfos::iterator it = xmlTokenSpecs().begin();
       it != xmlTokenSpecs().end();
       ++it) {
-    ParametrizedInfo& spec = it->second;
+    ParameterizedInfo& spec = it->second;
     spec.fill_dependency_list(xmlTokenSpecs());
   }
 }
@@ -125,17 +125,17 @@ ConfigParser::CrossvalidationInfos& ConfigParser::crossvalidationInfos() {
   return crossvalidation_infos;
 }
 
-const ParametrizedInfo& ConfigParser::findParametrized(
+const ParameterizedInfo& ConfigParser::findParameterized(
     const string& name) const {
   for (ParameterizedInfos::const_iterator it = xml_token_specs.begin();
        it != xml_token_specs.end();
        ++it) {
-    const ParametrizedInfo& spec = it->second;
+    const ParameterizedInfo& spec = it->second;
     if (spec.get_name() == name) {
       return spec;
     }
   }
-  throw logic_error("Can not find parametrized object!");
+  throw logic_error("Can not find parameterized object " + name);
 }
 
 const DataInfo& ConfigParser::findData(const string& name) const {
@@ -147,7 +147,7 @@ const DataInfo& ConfigParser::findData(const string& name) const {
       return data_info;
     }
   }
-  throw logic_error("Can not find data!");
+  throw logic_error("Can not find data " + name);
 }
 
 

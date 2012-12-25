@@ -20,10 +20,12 @@
 using std::cout;
 using std::endl;
 using std::string;
+using std::logic_error;
 
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::utility::Any;
+using ltr::utility::shared_ptr;
 
 class Factory {
  public:
@@ -49,7 +51,9 @@ class Factory {
                     const ParametersContainer& parameters) const {
     rInfo("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
-    assert(it != name_creators_.end());
+    if (it == name_creators_.end()) {
+      throw logic_error("unable to create " + name + ": name unknown");
+    }
     const AbstractCreator::Ptr creator = it->second;
     return creator->create(parameters);
   }
@@ -57,7 +61,7 @@ class Factory {
  private:
   class AbstractCreator {
    public:
-    typedef ltr::utility::shared_ptr<AbstractCreator> Ptr;
+    typedef shared_ptr<AbstractCreator> Ptr;
     virtual ~AbstractCreator() {}
 
     virtual Any create(
@@ -69,9 +73,9 @@ class Factory {
    public:
     virtual Any create(const ParametersContainer& parameters) const {
       if (!parameters.empty()) {
-        return ltr::utility::shared_ptr<Base>(new Derived(parameters));  // NOLINT
+        return shared_ptr<Base>(new Derived(parameters));  // NOLINT
       } else {
-        return ltr::utility::shared_ptr<Base>(new Derived());
+        return shared_ptr<Base>(new Derived());
       }
     }
   };

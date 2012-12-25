@@ -13,7 +13,7 @@ string ToString(const TrainLaunchInfo& info) {
   stringstream out(stringstream::out);
   out << "TTrainInfo(name=" << info.name
       << ", data=" << info.data
-      << ", leatner=" << info.learner
+      << ", learner=" << info.learner
       << ", predicts=" << ToString(info.predicts)
       << ", gen_cpp=" << info.gen_cpp
       << ")";
