@@ -1,3 +1,5 @@
+set -x
+
 [ -z $JOBS ] && JOBS=2
 ! [ -d build ] && mkdir build
 rm -rf build/*
