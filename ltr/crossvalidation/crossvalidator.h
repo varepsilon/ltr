@@ -73,7 +73,8 @@ class CrossValidator {
    * Converts a crossvalidation results to string.
    * @returns string with crossvalidation results.
    */
-  string toString();
+  string toString() const;
+  string toHTML() const;
  private:
   /**
    * Sets the labels of the multitable instance according to the
@@ -196,8 +197,13 @@ void CrossValidator<ObjectType>::reset() {
 }
 
 template <typename ObjectType>
-string CrossValidator<ObjectType>::toString() {
+string CrossValidator<ObjectType>::toString() const {
   return cross_validation_results_.toString();
+}
+
+template <typename ObjectType>
+string CrossValidator<ObjectType>::toHTML() const {
+  return cross_validation_results_.toHTML();
 }
 }
 }

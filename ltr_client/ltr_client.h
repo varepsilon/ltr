@@ -26,6 +26,10 @@ class LtrClient {
 
   void launch();
 
+  void addToReport(const string& text);
+
+  void saveReport(const string& file_name);
+
  private:
   template <class TElement>
   void launchTrain(Any parameterized,
@@ -38,6 +42,8 @@ class LtrClient {
   ParameterizedInfosList getLoadQueue() const;
 
   ConfigParser configurator_;
+
+  string report_body;
 };
 
 #endif  // LTR_CLIENT_LTR_CLIENT_H_

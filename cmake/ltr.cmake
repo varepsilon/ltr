@@ -78,6 +78,8 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/two_class_actual_label_converter.h
+              ${Source_Path}/ltr/utility/html.h
+              ${Source_Path}/ltr/utility/html.cc
               ${Source_Path}/ltr/utility/multitable.h
               ${Source_Path}/ltr/utility/multi_vector_print.h
               ${Source_Path}/ltr/utility/random_number_generator.h
