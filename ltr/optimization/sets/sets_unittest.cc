@@ -25,7 +25,7 @@ TEST(SetTest, BallSetInsideTest) {
   EXPECT_TRUE(set.isInside(point));
 
   point[0] = 0;
-  point[1] = -10.0;
+  point[1] = -9.99;
   EXPECT_TRUE(set.isInside(point));
 
   point[0] = 7.6;
