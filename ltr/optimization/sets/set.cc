@@ -13,10 +13,10 @@ int Set::dimension() const {
 }
 
 Point Set::getRandomPoint() const {
-  Point bottom;
-  Point top;
+  Point bottom(dimension());
+  Point top(dimension());
   getBoundaries(&top, &bottom);
-  Point random_point;
+  Point random_point(dimension());
   for (int i = 0; i < dimension(); ++i) {
     random_point[i] = ltr::utility::randomizer.doubleRand(bottom[i], top[i]);
   }

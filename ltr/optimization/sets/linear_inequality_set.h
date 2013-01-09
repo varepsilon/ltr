@@ -16,6 +16,8 @@ class LinearInequalitySet : public Set {
   virtual Point project(const Point& point) const;
   virtual void getBoundaries(Point* top, Point* bottom) const;
 
+  virtual Point getRandomPointInSet() const;
+
   Vector positive_normal() const;
   Point initial_point() const;
  private:

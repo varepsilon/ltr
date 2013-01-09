@@ -24,16 +24,16 @@ TEST(SetTest, BallSetInsideTest) {
   point[1] = 3;
   EXPECT_TRUE(set.isInside(point));
 
-  Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
-
   point[0] = 0;
   point[1] = -10.0;
   EXPECT_TRUE(set.isInside(point));
 
-  point[0] = 3.6;
-  point[1] = 3.7;
+  point[0] = 7.6;
+  point[1] = 7.7;
   EXPECT_FALSE(set.isInside(point));
+
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
 
 TEST(SetTest, BallSetProjectTest) {
@@ -59,14 +59,14 @@ TEST(SetTest, BallSetBoundariesTest) {
 
   EXPECT_TRUE(DoubleEqual(top[0] + bottom[1], 0));
 
-  Point wrong_dimension_point;
-  EXPECT_ANY_THROW(set.getBoundaries(&top, &bottom));
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
 
 TEST(SetTest, BallSetRandomPointTest) {
   BallSet set(5.0, 10);
 
-  Point random_point;
+  Point random_point(10);
   EXPECT_NO_THROW(random_point = set.getRandomPointInSet());
   EXPECT_TRUE(set.isInside(random_point));
 }
@@ -88,12 +88,12 @@ TEST(SetTest, LinearInequalitySetInsideTest) {
   point[2] = -10;
   EXPECT_TRUE(set.isInside(point));
 
-  Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
-
   point[0] = 0;
   point[1] = -10.0;
   EXPECT_FALSE(set.isInside(point));
+
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
 
 TEST(SetTest, LinearInequalitySetProjectTest) {
@@ -129,13 +129,13 @@ TEST(SetTest, LinearInequalitySetBoundariesTest) {
 
   LinearInequalitySet set(normal, zero_point, 3);
 
-  Point top(4);
-  Point bottom(4);
+  Point top(3);
+  Point bottom(3);
 
   EXPECT_NO_THROW(set.getBoundaries(&top, &bottom));
 
-  Point wrong_dimension_point;
-  EXPECT_ANY_THROW(set.getBoundaries(&top, &bottom));
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
 
 TEST(SetTest, LinearInequalitySetRandomPointTest) {
@@ -149,12 +149,10 @@ TEST(SetTest, LinearInequalitySetRandomPointTest) {
 
   LinearInequalitySet set(normal, zero_point, 3);
 
-  Point random_point;
+  Point random_point(3);
   EXPECT_NO_THROW(random_point = set.getRandomPointInSet());
   EXPECT_TRUE(set.isInside(random_point));
 }
-
-
 
 TEST(SetTest, SphereSetInsideTest) {
   SphereSet set(10.0, 0.02, 2);
@@ -164,9 +162,6 @@ TEST(SetTest, SphereSetInsideTest) {
   point[1] = 3;
   EXPECT_FALSE(set.isInside(point));
 
-  Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
-
   point[0] = 0;
   point[1] = -10.0;
   EXPECT_TRUE(set.isInside(point));
@@ -174,6 +169,9 @@ TEST(SetTest, SphereSetInsideTest) {
   point[0] = 6.1;
   point[1] = 8.1;
   EXPECT_FALSE(set.isInside(point));
+
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
 
 TEST(SetTest, SphereSetProjectTest) {
@@ -199,8 +197,8 @@ TEST(SetTest, SphereSetBoundariesTest) {
 
   EXPECT_TRUE(DoubleEqual(top[0] + bottom[1], 0));
 
-  Point wrong_dimension_point;
-  EXPECT_ANY_THROW(set.getBoundaries(&top, &bottom));
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
 
 TEST(SetTest, SphereSetRandomPointTest) {

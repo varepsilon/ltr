@@ -1,24 +1,26 @@
 // Copyright 2012 Yandex
 
-#include "ltr/optimization/sets/sphere_set.h"
 #include <cmath>
+
+#include "ltr/optimization/sets/sphere_set.h"
+#include "ltr/utility/macros.h"
 
 namespace optimization {
 bool SphereSet::isInside(const Point& point) const {
-  assert(point.size() == dimension());
+  CHECK(point.size() == dimension());
   return abs(point.norm() - radius()) < precision();
 }
 
 Point SphereSet::project(const Point& point) const {
-  assert(point.size() == dimension());
+  CHECK(point.size() == dimension());
   if (isInside(point))
     return point;
   return point.normalized() * radius();
 }
 
 void SphereSet::getBoundaries(Point* top, Point* bottom) const {
-  assert(top->size() == dimension());
-  assert(bottom->size() == dimension());
+  CHECK(top->size() == dimension());
+  CHECK(bottom->size() == dimension());
 
   for (int i = 0; i < dimension(); ++i) {
     (*top)[i] = radius();
