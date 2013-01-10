@@ -163,7 +163,13 @@ static Any Create(const string& name,
     const ParameterizedInfo* spec = &it->second;
     const ParametersContainer& parameters =
       Create(spec->get_parameters(), all_specs);
-    return Factory::instance()->Create(spec->get_type(), parameters);
+    try {
+      return Factory::instance()->Create(spec->get_type(), parameters);
+    } catch (const logic_error& err) {
+      rDebug("Exception '%s' was successfully processed", err.what());
+      return Factory::instance()->Create(spec->get_type() +
+                                         spec->get_approach(), parameters);
+    }
 }
 
 static ParametersContainer Create(
@@ -431,7 +437,7 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
-    LOG.reset();
+//    LOG.reset();
     LOG.subscribeCout("error");
     if (!(args >> OptionPresent('s', "silent"))) {
       if (args >> OptionPresent('v', "verbose")) {

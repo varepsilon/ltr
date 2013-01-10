@@ -50,6 +50,7 @@ class AdaRankScorerWeightsUpdater
   explicit AdaRankScorerWeightsUpdater(
       const ParametersContainer& parameters = ParametersContainer()) {
     this->setDefaultParameters();
+    this->set_measure(parameters.Get<typename Measure<TElement>::Ptr>("measure"));
   }
   /**
    * @param measure Measure to be used for weights updating

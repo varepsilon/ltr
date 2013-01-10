@@ -127,6 +127,13 @@ class CompositionLearner
  private:
   virtual void setParametersImpl(const ParametersContainer& parameters) {
     number_of_iterations_ = parameters.Get<int>("NUMBER_OF_ITERATIONS");
+    composition_scorer_weights_updater_ =
+        parameters.Get<typename CompositionScorerWeightsUpdater<TElement>::Ptr>(
+            "COMPOSITION_SCORER_WEIGHTS_UPDATER");
+    data_set_weights_updater_ =
+        parameters.Get<typename DataSetWeightsUpdater<TElement>::Ptr>(
+            "DATA_SET_WEIGHTS_UPDATER");
+    weak_learner_ = parameters.Get<typename Learner<TElement>::Ptr>("WEAK_LEARNER");
   }
 
   typename CompositionScorerWeightsUpdater<TElement>::Ptr

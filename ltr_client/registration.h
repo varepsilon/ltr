@@ -24,6 +24,14 @@
 #include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
 #include "ltr/learners/gp_learner/gp_learner.h"
 
+#include "ltr/learners/composition_learner/composition_learner.h"
+#include "ltr/learners/composition_learner/composition_scorer_weights_updater.h"
+#include "ltr/learners/composition_learner/average_composition_scorer_weights_updater.h"
+#include "ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h"
+#include "ltr/learners/composition_learner/data_set_weights_updater.h"
+#include "ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h"
+#include "ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h"
+
 #include "ltr/learners/decision_tree/decision_tree_learner.h"
 #include "ltr/learners/decision_tree/id3_splitter.h"
 #include "ltr/learners/decision_tree/oblivious_tree_splitter.h"
@@ -122,6 +130,14 @@ using ltr::Measure;
 using ltr::NNLearner;
 using ltr::NDCG;
 using ltr::DCG;
+
+using ltr::composition::CompositionLearner;
+using ltr::composition::DataSetWeightsUpdater;
+using ltr::composition::AdaRankDataSetWeightsUpdater;
+using ltr::composition::AdaBoostDataSetWeightsUpdater;
+using ltr::composition::CompositionScorerWeightsUpdater;
+using ltr::composition::AverageCompositionScorerWeightsUpdater;
+using ltr::composition::AdaRankScorerWeightsUpdater;
 
 using ltr::decision_tree::DecisionTreeLearner;
 using ltr::decision_tree::BaseSplitter;
@@ -230,6 +246,13 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER(PredictionsAggregator, OrderStatisticPredictionsAggregator);
   REGISTER(PredictionsAggregator, MaxWeightPredictionsAggregator);
 
+  REGISTER_EVERY_WISE(DataSetWeightsUpdater, AdaRankDataSetWeightsUpdater);
+  REGISTER_EVERY_WISE(DataSetWeightsUpdater, AdaBoostDataSetWeightsUpdater);
+  REGISTER_EVERY_WISE(CompositionScorerWeightsUpdater,
+                      AverageCompositionScorerWeightsUpdater);
+  REGISTER_EVERY_WISE(CompositionScorerWeightsUpdater,
+                      AdaRankScorerWeightsUpdater);
+
   REGISTER_EVERY_WISE(Splitter, KFoldSimpleSplitter);
   REGISTER_EVERY_WISE(Splitter, TKFoldSimpleSplitter);
   REGISTER_EVERY_WISE(Splitter, LeaveOneOutSplitter);
@@ -239,6 +262,7 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER_EVERY_WISE(Learner, GPLearner);
   REGISTER_POINTWISE(Learner, LinearLearner);
   REGISTER_LISTWISE(Learner, LinearLearner);
+  REGISTER_EVERY_WISE(Learner, CompositionLearner);
 
 //  REGISTER(Learner<Object>, DecisionTreeLearner);
   factory->registerType<Learner<Object>,
