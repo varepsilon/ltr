@@ -8,8 +8,6 @@
 #include <string>
 #include <iostream>
 
-#include "boost/spirit/include/classic_core.hpp"
-
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"

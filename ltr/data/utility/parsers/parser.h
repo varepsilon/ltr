@@ -3,8 +3,6 @@
 #ifndef LTR_DATA_UTILITY_PARSERS_PARSER_H_
 #define LTR_DATA_UTILITY_PARSERS_PARSER_H_
 
-#include <boost/spirit/include/classic_core.hpp>
-
 #include <map>
 #include <vector>
 #include <string>

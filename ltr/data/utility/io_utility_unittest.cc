@@ -43,7 +43,7 @@ class IOUtilityTest : public ::testing::Test {
   std::string tmp_file_name;
 };
 
-TEST_F(IOUtilityTest, TestingSVMPArser) {
+TEST_F(IOUtilityTest, TestingSVMParser) {
   DataSet<Object> data;
   const int N = 145;
   const int featureN = 3;
@@ -79,7 +79,7 @@ TEST_F(IOUtilityTest, TestingSVMPArser) {
   EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "SVMLIGHT"), list_data);
 }
 
-TEST_F(IOUtilityTest, TestingYandexPArser) {
+TEST_F(IOUtilityTest, TestingYandexParser) {
   DataSet<Object> data;
   const int N = 145;
   const int featureN = 3;
@@ -114,7 +114,7 @@ TEST_F(IOUtilityTest, TestingYandexPArser) {
       list_data);
 }
 
-TEST_F(IOUtilityTest, TestingARFFPArser) {
+TEST_F(IOUtilityTest, TestingARFFParser) {
   DataSet<Object> arff_data =
       loadDataSet<ltr::Object>(arff_arff_test_file_name, "arff");
 

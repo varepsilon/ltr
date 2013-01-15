@@ -3,34 +3,16 @@
 #include <stdexcept>
 #include <sstream>
 
-#include "boost/spirit/include/classic_core.hpp"
-#include "boost/spirit/include/classic_push_back_actor.hpp"
-#include "boost/spirit/include/classic_insert_at_actor.hpp"
-#include "boost/spirit/include/classic_assign_actor.hpp"
-#include "boost/lexical_cast.hpp"
-#include "boost/algorithm/string/trim.hpp"
-
 #include "ltr/data/utility/parsers/parse_yandex.h"
 #include "ltr/data/utility/io_utility.h"
 
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/string_utils.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
-using boost::algorithm::trim_copy;
-using boost::spirit::classic::parse;
-using boost::spirit::classic::rule;
-using boost::spirit::classic::parse_info;
-using boost::spirit::classic::real_p;
-using boost::spirit::classic::ch_p;
-using boost::spirit::classic::uint_p;
-using boost::spirit::classic::space_p;
-using boost::spirit::classic::anychar_p;
-using boost::spirit::classic::assign_a;
-using boost::spirit::classic::insert_at_a;
-using boost::spirit::classic::str_p;
-using boost::spirit::classic::lexeme_d;
-using boost::spirit::classic::alnum_p;
-using boost::spirit::classic::digit_p;
 using ltr::utility::lexical_cast;
+using ltr::utility::split;
+using ltr::utility::trim_copy;
 
 using std::string;
 using std::stringstream;
@@ -51,25 +33,46 @@ void YandexParser::init(std::istream* in) {
 
 void YandexParser::parseRawObject(string line_, RawObject* result) {
   Object obj;
-  int qid = -1;
+  string qid;
   RawObject& features = *result;
   int key;
-  double relevance;
-  rule<> number = *digit_p >> !('.' >> +digit_p);
-  string line = trim_copy(line_);
-  parse_info<> info = boost::spirit::classic::parse(line_.c_str(),
-    (real_p[assign_a(relevance)] >>
-    +(uint_p[assign_a(key)] >> ':' >>
-    number[insert_at_a(features, key)]) >>
-    !(ch_p('#') >> uint_p[assign_a(qid)]) >>
-    *anychar_p),
-    space_p);
-  if (!info.hit) {
-    throw std::logic_error("failed parse line " + line + " as Yandex");
+  string relevance;
+  try {
+    string line = trim_copy(line_);
+    vector<string> parse_data;
+    split(line, "#", &parse_data);
+    if (parse_data.size() > 2)
+      throw std::logic_error("too much #");
+    if (parse_data.size() == 0)
+      throw std::logic_error("no data");
+
+    if (parse_data.size() == 2) {
+      qid = trim_copy(parse_data[1]);
+      lexical_cast<int>(qid);
+      parse_data.pop_back();
+    }
+
+    line = trim_copy(parse_data[0]);
+    split(line, &parse_data);
+
+    relevance = parse_data.front();
+    lexical_cast<double>(relevance);
+
+    for (int i = 1; i < parse_data.size(); ++i) {
+      vector<string> feature;
+      split(parse_data[i], ":", &feature);
+      if (feature.size() != 2)
+        throw logic_error("can't parse feature " + parse_data[i]);
+      features[lexical_cast<int>(trim_copy(feature[0]))] =
+          trim_copy(feature[1]);
+    }
+    features[raw_relevance_idx_] = relevance;
+    if (!qid.empty())
+      features[raw_query_id_idx_] = qid;
+  } catch(std::exception e) {
+    throw std::logic_error(
+        "failed parse line " + line_ + " as Yandex (" + e.what() + ")");
   }
-  features[raw_relevance_idx_] = lexical_cast<string>(relevance);
-  if (qid > -1)
-    features[raw_query_id_idx_] = lexical_cast<string>(qid);
 }
 
 void YandexParser::makeString(const Object& object, string* result) {
@@ -121,4 +124,3 @@ PairwiseDataSet YandexParser::buildPairwiseDataSet(
 }
 };
 };
-
