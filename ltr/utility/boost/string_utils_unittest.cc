@@ -2,17 +2,20 @@
 
 #include "gtest/gtest.h"
 #include <string>
+#include <vector>
 
 #include "ltr/utility/boost/string_utils.h"
 
 using ltr::utility::trim_copy;
+using ltr::utility::trim;
 using ltr::utility::split;
 using ltr::utility::to_upper;
 using ltr::utility::to_lower;
 using ltr::utility::erase_all;
 using std::string;
+using std::vector;
 
-TEST(StringUtilsTest, TestingTrimCopy) {
+TEST(StringUtilsTest, TestingTrim) {
   EXPECT_EQ(trim_copy(""), string(""));
   EXPECT_EQ(trim_copy("        "), string(""));
   EXPECT_EQ(trim_copy("\t"), string(""));
@@ -21,6 +24,48 @@ TEST(StringUtilsTest, TestingTrimCopy) {
   EXPECT_EQ(trim_copy("\taba\t"), string("aba"));
   EXPECT_EQ(trim_copy("yabracadabra", "ay"), string("bracadabr"));
   EXPECT_EQ(trim_copy("aaaaaaaaaaaaa", "a"), string(""));
+
+  string test = "";
+  trim(&test);
+  EXPECT_EQ(test, string(""));
+  test = "        ";
+  trim(&test);
+  EXPECT_EQ(test, string(""));
+  test = "\t";
+  trim(&test);
+  EXPECT_EQ(test, string(""));
+  test = " aba c aba\n ";
+  trim(&test);
+  EXPECT_EQ(test, string("aba c aba"));
+  test = "1";
+  trim(&test);
+  EXPECT_EQ(test, string("1"));
+  test = "yabracadabra";
+  trim(&test, "ay");
+  EXPECT_EQ(test, string("bracadabr"));
+  test = "aaaaaaaaaaaaa";
+  trim(&test, "a");
+  EXPECT_EQ(test, string(""));
+  
+  vector<string> expected_result;
+  vector<string> input;
+  vector<string> result;
+  EXPECT_EQ(trim_copy(input), expected_result);
+  trim_copy(input, &result);
+  EXPECT_EQ(result, expected_result);
+  trim(&input);
+  EXPECT_EQ(input, expected_result);
+  input.push_back(" aaa  ");
+  input.push_back("   ");
+  input.push_back("aaa  aaa");
+  expected_result.push_back("aaa");
+  expected_result.push_back("");
+  expected_result.push_back("aaa  aaa");
+  EXPECT_EQ(trim_copy(input), expected_result);
+  trim_copy(input, &result);
+  EXPECT_EQ(result, expected_result);
+  trim(&input);
+  EXPECT_EQ(input, expected_result);
 }
 
 TEST(StringUtilsTest, TestingSplit) {

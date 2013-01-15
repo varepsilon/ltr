@@ -6,13 +6,46 @@
 
 namespace ltr {
 namespace utility {
-string trim_copy(const string& str, const char *sep) {
-  int first_not_of = str.find_first_not_of(sep);
+string trim_copy(const string& input, const string& separator) {
+  int first_not_of = input.find_first_not_of(separator);
   if (first_not_of == string::npos)
     return "";
   else
-    return str.substr(first_not_of,
-        str.find_last_not_of(sep) - first_not_of + 1);
+    return input.substr(first_not_of,
+                        input.find_last_not_of(separator) - first_not_of + 1);
+}
+
+void trim(string* input, const string& separator) {
+  int first_not_of = input->find_first_not_of(separator);
+  int last_not_of = input->find_last_not_of(separator);
+  if (first_not_of == string::npos || last_not_of == string::npos) {
+    input->resize(0);
+    return;
+  }
+  int new_length = last_not_of - first_not_of + 1;
+  for (int i = 0; i < new_length; ++i)
+    (*input)[i] = (*input)[i + first_not_of];
+  input->resize(new_length);
+}
+
+void trim_copy(const vector<string>& input,
+               vector<string>* result,
+               const string& separator) {
+  result->clear();
+  result->resize(input.size());
+  for (int i = 0; i < input.size(); ++i)
+    (*result)[i] = trim_copy(input[i], separator);
+}
+
+void trim(vector<string>* input, const string& separator) {
+  for (int i = 0; i < input->size(); ++i)
+    trim(&((*input)[i]), separator);
+}
+
+vector<string> trim_copy(const vector<string>& input, const string& separator) {
+  vector<string> result;
+  trim_copy(input, &result, separator);
+  return result;
 }
 
 int find_first_space(const string& input, int start_pos, const locale& locale) {
