@@ -12,6 +12,7 @@ using ltr::utility::split;
 using ltr::utility::to_upper;
 using ltr::utility::to_lower;
 using ltr::utility::erase_all;
+using ltr::utility::iequals;
 using std::string;
 using std::vector;
 
@@ -188,4 +189,12 @@ TEST(StringUtilsTest, TestingEraseAll) {
   str = "aba caba";
   erase_all(&str, "aba caba");
   EXPECT_EQ(str, "");
+}
+
+TEST(StringUtilsTest, TestingIequals) {
+  EXPECT_EQ(iequals("",""),true);
+  EXPECT_EQ(iequals("","a"),false);
+  EXPECT_EQ(iequals("aa","aaa"),false);
+  EXPECT_EQ(iequals("aba","aba"),true);
+  EXPECT_EQ(iequals("AbaCaBa","abAcABa"),true);
 }

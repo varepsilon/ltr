@@ -5,9 +5,8 @@
 
 #include <string>
 #include <list>
-
-#include <boost/unordered_map.hpp> // NOLINT
-#include <boost/unordered_set.hpp> // NOLINT
+#include <map>
+#include <memory>
 
 #include "tinyxml/tinyxml.h"
 
@@ -20,20 +19,21 @@
 
 using std::string;
 using std::auto_ptr;
+using std::map;
 
 class TagHandler;
 
-typedef boost::unordered_map<string, TagHandler*> TagHandlers;
+typedef map<string, TagHandler*> TagHandlers;
 
 /**
  * Performs parsing of the XML config file
  */
 class ConfigParser {
  public:
-  typedef boost::unordered_map<string, DataInfo> DataInfos;
-  typedef boost::unordered_map<string, ParameterizedInfo> ParameterizedInfos;
-  typedef boost::unordered_map<string, TrainLaunchInfo> TrainInfos;
-  typedef boost::unordered_map<string, CrossvalidationLaunchInfo>
+  typedef map<string, DataInfo> DataInfos;
+  typedef map<string, ParameterizedInfo> ParameterizedInfos;
+  typedef map<string, TrainLaunchInfo> TrainInfos;
+  typedef map<string, CrossvalidationLaunchInfo>
     CrossvalidationInfos;
   /**
    * Basic constructor for ConfigParser

@@ -2,9 +2,11 @@
 #include <stdexcept>
 
 #include "ltr_client/utility/parameterized_info.h"
-#include "boost/algorithm/string.hpp"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::logic_error;
+
+using ltr::utility::split;
 
 typedef string ParameterizedDependency;
 
@@ -23,8 +25,9 @@ void ParameterizedInfo::fill_dependency_list(
       ++my_dependency_it) {
     const TNameValue& dependency = *my_dependency_it;
     vector<string> dependency_parts;
-    boost::split(dependency_parts, dependency.value,
-        boost::is_any_of("\t ,"));
+    split(dependency.value, "\t", &dependency_parts);
+    split(&dependency_parts, " ");
+    split(&dependency_parts, ",");
     for (int i = 0; i < dependency_parts.size(); ++i) {
       const ParameterizedInfo* found = NULL;
 

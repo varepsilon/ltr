@@ -10,9 +10,9 @@
 #include <list>
 #include <stdexcept>
 #include <string>
+#include <map>
 
 #include "ltr/utility/boost/any.h"
-#include <boost/unordered_map.hpp> //NOLINT
 
 #include "ltr/utility/boost/shared_ptr.h"
 
@@ -36,7 +36,7 @@ namespace ltr {
 */
 class ParametersContainer: public Printable {
  public:
-  typedef boost::unordered_map<string, Any> StringAnyHash;
+  typedef std::map<string, Any> StringAnyHash;
   typedef ltr::utility::shared_ptr<ParametersContainer> Ptr;
 
   ParametersContainer();

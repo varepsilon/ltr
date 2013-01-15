@@ -3,8 +3,7 @@
 #define LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_
 
 #include <string>
-
-#include "boost/unordered_set.hpp"
+#include <set>
 
 using std::string;
 /**
@@ -24,7 +23,7 @@ struct TrainLaunchInfo {
   string name;
   string data;
   string learner;
-  boost::unordered_set<string> predicts;
+  std::set<string> predicts;
   bool gen_cpp;
 };
 /**

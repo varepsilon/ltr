@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2013 Yandex
 
 #ifndef LTR_UTILITY_BOOST_STRING_UTILS_H_
 #define LTR_UTILITY_BOOST_STRING_UTILS_H_
@@ -103,6 +103,12 @@ void to_lower(string* input, const locale& loc = std::locale());
  * Сonsequentially erases all occurences of string search
  */
 void erase_all(string* input, const string& search);
+/**
+ * Case insesitive checks string equality
+ */
+bool iequals(const string& input,
+             const string& test,
+             const locale& loc = std::locale());
 };
 };
 #endif  // LTR_UTILITY_BOOST_STRING_UTILS_H_

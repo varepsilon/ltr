@@ -2,19 +2,18 @@
 
 #include "ltr/utility/indices.h"
 
-#include <boost/algorithm/string.hpp>
-#include "ltr/utility/boost/lexical_cast.h"
-
 #include <algorithm>
 
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::logic_error;
 using std::random_shuffle;
 
-using boost::erase_all;
-
 using ltr::utility::randomizer;
+using ltr::utility::erase_all;
+using ltr::utility::split;
 
 namespace ltr {
 namespace utility {
@@ -40,14 +39,14 @@ void getRandomIndices(Indices *indices, int max_index, int count) {
 
 Indices getIndicesFromString(const string& string_to_parse) {
   string given_string = string_to_parse;
-  erase_all(given_string, " ");
+  erase_all(&given_string, " ");
 
   if (given_string.empty()) {
     throw logic_error("String is empty");
   }
 
   vector<string> lexemes;
-  boost::split(lexemes, given_string, is_any_of(","));
+  split(given_string, ",", &lexemes);
   vector<int> result;
   for (int lexeme_index = 0;
        lexeme_index < (int)lexemes.size();
@@ -62,7 +61,7 @@ Indices getIndicesFromString(const string& string_to_parse) {
     }
 
     vector<string> numbers;
-    boost::split(numbers, lexeme, is_any_of("-"));
+    split(lexeme, "-", &numbers);
 
     if (numbers.size() == 0 || numbers.size() > 2) {
       throw logic_error("Invalid string format");

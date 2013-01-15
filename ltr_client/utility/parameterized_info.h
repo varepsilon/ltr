@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include <sstream>
+#include <map>
 
 #include "ltr/parameters_container/parameters_container.h"
 
@@ -26,7 +27,7 @@ class ParameterizedInfo {
    * Dictionary with string keys and the
    * ParameterizedInfo stored type
    */
-  typedef boost::unordered_map<string, ParameterizedInfo> ParameterizedInfos;
+  typedef std::map<string, ParameterizedInfo> ParameterizedInfos;
   /**
    * Basic constructor.
    * @returns ParameterizedInfo constructed object.

@@ -2,12 +2,17 @@
 #ifndef LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
 #define LTR_CLIENT_UTILITY_TAG_HANDLERS_H_
 
-#include "ltr/utility/boost/lexical_cast.h"
 #include <iostream>
 #include <string>
+#include <map>
+
+#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::cout;
 using std::endl;
+
+using ltr::utility::iequals;
 
 typedef string ParameterizedDependency;
 
@@ -60,7 +65,7 @@ class TagHandler {
   ConfigParser* d;
 };
 
-typedef boost::unordered_map<string, TagHandler*> TagHandlers;
+typedef std::map<string, TagHandler*> TagHandlers;
 
 /**
  * Parses the XML file representation on the first level.
@@ -220,9 +225,9 @@ class TOnParameterTag: public TagHandler {
    * @param value - string to convert
    */
   static bool toBool(const string& value) {
-    if (boost::iequals(value, string("true"))) {
+    if (iequals(value, "true")) {
       return true;
-    } else if (boost::iequals(value, string("false"))) {
+    } else if (iequals(value, "false")) {
       return false;
     } else {
       throw logic_error("can not convert " + value + " to bool");
@@ -320,8 +325,7 @@ class TOnParameterTag: public TagHandler {
    * @returns string with a type specification.
    */
   static string guessTypeOfOneElement(const string& value) {
-    if (boost::iequals(value, string("true")) ||
-       boost::iequals(value, string("false"))) {
+    if (iequals(value, "true") || iequals(value, "false")) {
       return "bool";
     }
 
@@ -544,7 +548,7 @@ class OnCrossvalidationTag: public TagHandler {
    * Basic OnCVDataTag destructor.
    */
   ~OnCrossvalidationTag() {
-    DeleteAllFromUnorderedMap(&handlers_);
+    DeleteAllFromMap(&handlers_);
   }
   /**
    * () operator inserts dataset into the crossvalidator.
@@ -667,7 +671,7 @@ class OnTrainTag: public TagHandler {
    * Basic OnTrainTag destructor
    */
   ~OnTrainTag() {
-    DeleteAllFromUnorderedMap(&handlers_);
+    DeleteAllFromMap(&handlers_);
   }
 
   /**
@@ -730,7 +734,7 @@ class OnLaunchTag: public TagHandler {
   /**
    * Basic OnTrainTag destructor
    */
-  ~OnLaunchTag() { DeleteAllFromUnorderedMap(&handlers_); }
+  ~OnLaunchTag() { DeleteAllFromMap(&handlers_); }
 
   /**
    * () operator. Performs GenericParse from the first element.

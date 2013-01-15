@@ -8,8 +8,7 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-
-#include <boost/unordered_map.hpp>  //NOLINT
+#include <map>
 
 #include "ltr/interfaces/parameterized.h"
 
@@ -80,7 +79,7 @@ class Factory {
     }
   };
 
-  typedef boost::unordered_map<string, AbstractCreator::Ptr> NameCreatorHash;
+  typedef std::map<string, AbstractCreator::Ptr> NameCreatorHash;
 
   Factory(const Factory&);
 

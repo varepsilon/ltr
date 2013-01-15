@@ -6,9 +6,6 @@
 #include <memory>
 #include <sstream>
 
-#include "boost/lexical_cast.hpp"
-#include "boost/algorithm/string/predicate.hpp"
-
 #include "ltr_client/configurator.h"
 
 #include "ltr/utility/container_utility.h"
@@ -43,7 +40,7 @@ ConfigParser::ConfigParser() {
   tag_handlers_[LAUNCH] = new OnLaunchTag(this);
 }
 ConfigParser::~ConfigParser() {
-  DeleteAllFromUnorderedMap(&tag_handlers_);
+  DeleteAllFromMap(&tag_handlers_);
   delete general_xml_token_;
 }
 
