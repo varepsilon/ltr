@@ -44,11 +44,15 @@ class AdaRankScorerWeightsUpdater
  public:
   typedef ltr::utility::shared_ptr<AdaRankScorerWeightsUpdater> Ptr;
 
+  AdaRankScorerWeightsUpdater() {
+    this->setDefaultParameters();
+  }
+
   /**
-   * @param parameters Standart LTR parameter container with no parameters
+   * @param parameters Standart LTR parameter container
    */
   explicit AdaRankScorerWeightsUpdater(
-      const ParametersContainer& parameters = ParametersContainer()) {
+      const ParametersContainer& parameters) {
     this->setDefaultParameters();
     this->set_measure(parameters.Get<typename Measure<TElement>::Ptr>("measure"));
   }
