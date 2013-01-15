@@ -83,8 +83,8 @@ TEST(CrossValidatorTest, SimpleTest) {
   testString = string(testString.begin(), newEnd);
 
   stringstream result;
-  result << "Measure:DCGDataSet:DataSetTableROW:LearnerCOLUMN:" <<
-            "SplitterKFoldSimpleSplitterBestFeatureLeaner" <<
+  result << "Measure:DCGDataSet:DataSetTable(row:Learner,column:" <<
+            "Splitter)KFoldSimpleSplitterBestFeatureLearner" <<
             5.83307e+29;
   if (result.str() != testString) {
     cout << result.str() << "\n\n" << testString << "\n\n";

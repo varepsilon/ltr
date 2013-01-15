@@ -14,6 +14,9 @@ string FixPathSeparators(const string& path);
 
 string AppendTrailingPathSeparator(const string& path);
 
+string GetFileName(const string& path);
+
+bool IsAbsoluteFileName(const string& text);
 }
 }
 

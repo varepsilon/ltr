@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <ctime>
 
 #include "boost/algorithm/string.hpp"
 
@@ -39,6 +40,7 @@
 
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/utility/boost/path.h"
+#include "ltr/utility/html.h"
 
 #include "contrib/getopt_pp/getopt_pp.h"
 
@@ -74,6 +76,7 @@ using ltr::cv::KFoldSimpleSplitter;
 using ltr::io_utility::loadDataSet;
 using ltr::utility::InverseLinearDistance;
 using ltr::utility::AppendTrailingPathSeparator;
+using ltr::utility::FileLink;
 
 using GetOpt::GetOpt_pp;
 using GetOpt::Option;
@@ -206,8 +209,27 @@ static ParametersContainer Create(
 }
 
 void LtrClient::initFrom(const string& file_name) {
+  addToReport("<h3>Experiment with LTR Client</h3>");
+  time_t current_time(time(NULL));
+  addToReport("<p>Started on " +
+              static_cast<string>(ctime(&current_time)) + ".</p>");
   configurator_.parseConfig(file_name);
   getLoadQueue();  // check absence of circularity dependencies
+}
+
+void LtrClient::addToReport(const string& text) {
+  report_body += "\n" + text;
+}
+
+void LtrClient::saveReport(const string& file_name) {
+  ofstream file_out(file_name.c_str());
+  file_out << "<!DOCTYPE html>\n<html>\n<head>\n<title>"
+           << "Experiment with LTR Client"
+           << "</title>\n</head>\n<body>"
+           << report_body
+           << "</body>\n</html>";
+  file_out.close();
+  rInfo("Report saved into %s\n", file_name.c_str());
 }
 
 template <class TElement>
@@ -235,6 +257,8 @@ void LtrClient::launchTrain(Any parameterized,
   rInfo("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
        learner->report().c_str());
 
+  Scorer::Ptr scorer = learner->make();
+
   rInfo("\n\nStarted predicting\n");
   for (boost::unordered_set<string>::const_iterator predict_it =
        train_info.predicts.begin();
@@ -250,22 +274,23 @@ void LtrClient::launchTrain(Any parameterized,
       AppendTrailingPathSeparator(configurator_.rootPath()) +
       learner_info.get_name() + "." + predict + ".predicts";
 
-    Scorer::Ptr scorer = learner->make();
-
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
 
-    rInfo("\nsaved predictions for '%s' into %s\n", predict.c_str(),
+    rInfo("\nPredictions for '%s' saved into %s\n", predict.c_str(),
          predict_file_path.c_str());
-
-    if (train_info.gen_cpp) {
-      string cpp_file_path =
-        AppendTrailingPathSeparator(configurator_.rootPath()) +
-        learner_info.get_name() + ".cpp";
-      ofstream fout(cpp_file_path.c_str());
-      fout << scorer->generateCppCode(learner_info.get_name());
-      fout.close();
-      rInfo("cpp code saved into %s\n", cpp_file_path.c_str());
-    }
+    addToReport("<p>\n\tPredictions for <i>" + predict +
+                  "</i> saved to " + FileLink(predict_file_path) + ".\n</p>");
+  }
+  if (train_info.gen_cpp) {
+    string cpp_file_path =
+      AppendTrailingPathSeparator(configurator_.rootPath()) +
+      learner_info.get_name() + ".cpp";
+    ofstream fout(cpp_file_path.c_str());
+    fout << scorer->generateCppCode(learner_info.get_name());
+    fout.close();
+    rInfo("Cpp code saved into %s\n", cpp_file_path.c_str());
+    addToReport("<p>\n\tCpp code for <i>" + learner_info.get_name() +
+                "</i> saved to " + FileLink(cpp_file_path) + ".\n</p>");
   }
 }
 
@@ -320,6 +345,7 @@ void LtrClient::launchCrossvalidation(
 
     cross_validator.launch();
     rInfo(cross_validator.toString().c_str());
+    addToReport("<p><b>Crossvalidation results:</b></p>\n" + cross_validator.toHTML());
 }
 
 void LtrClient::launch() {
@@ -372,6 +398,14 @@ void LtrClient::launch() {
       launchCrossvalidation<Object>(crossvalidation_info);
     }
   }
+
+  time_t current_time(time(NULL));
+  addToReport("<p>Finished on " +
+              static_cast<string>(ctime(&current_time)) + ".</p>");
+  addToReport("<hr/>&copy; Yandex, 2011");
+  string report_path = AppendTrailingPathSeparator(configurator_.rootPath()) +
+      "report.html";
+  saveReport(report_path);
 }
 
 
@@ -383,6 +417,7 @@ void show_usage() {
   cout << "Options:" << endl;
   cout << "  -f,  filename\t\tconfig file name" << endl;
   cout << "  -h,  help    \t\tdisplay this help and exit" << endl;
+  cout << "  -s,  silent  \t\tproduce no output to console (overrides 'verbose')" << endl;
   cout << "  -v,  verbose \t\tproduce additional output to console" << endl;
 }
 
@@ -395,12 +430,18 @@ int main(int argc, char *argv[]) {
       show_usage();
       return 0;
     }
-    if (args >> OptionPresent('v', "verbose")) {
-      LOG.subscribeCout("info");
+
+    LOG.reset();
+    LOG.subscribeCout("error");
+    if (!(args >> OptionPresent('s', "silent"))) {
+      if (args >> OptionPresent('v', "verbose")) {
+        LOG.subscribeCout("info");
+      }
       LOG.subscribeCout("warning");
     }
     LOG.subscribeFile("log.txt", "info");
     LOG.subscribeFile("log.txt", "warning");
+    LOG.subscribeFile("log.txt", "error");
 
     string filename;
     args >> Option('f', "configfile", filename, "");

@@ -48,7 +48,7 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
   }
   virtual void learnImpl(const DataSet<TElement>& data,
                          OneFeatureScorer* scorer);
-  virtual string getDefaultAlias() const {return "BestFeatureLeaner";}
+  virtual string getDefaultAlias() const {return "BestFeatureLearner";}
 
   typename Measure<TElement>::Ptr measure_;
 };
