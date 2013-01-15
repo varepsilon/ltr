@@ -8,7 +8,7 @@
 namespace optimization {
 bool SphereSet::isInside(const Point& point) const {
   CHECK(point.size() == dimension());
-  return abs(point.norm() - radius()) < precision();
+  return fabs(point.norm() - radius()) < precision();
 }
 
 Point SphereSet::project(const Point& point) const {
