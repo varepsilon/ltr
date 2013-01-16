@@ -1,4 +1,4 @@
-set -x
+set -e
 
 [ -z $JOBS ] && JOBS=2
 ! [ -d build ] && mkdir build
