@@ -1,13 +1,13 @@
 namespace ltr {
 /** \page LTRClientTutorial LTR Client Tutorial for non-programmers
-	
+  
 \tableofcontents
 
 LTR client is an easy way to make predictions and test algorithms.
 
-To use LTR client you've got to have XML-like ltr config config.cfg file.
+To use LTR client you've got to have XML-like ltr config <i>config.cfg</i> file.
 
-Suppose I need to make some predictions for a dataset that is named test.txt basing on the marks in learn.txt dataset.
+Suppose I need to make some predictions for a dataset that is named <i>test.txt</i> basing on the marks in <i>learn.txt</i> dataset.
 
 So we start writing the code. To indicate that this is an LTR-client source, we write:
 
@@ -28,8 +28,8 @@ We can configurate the LTR-client in the config section inside the LTR_experimen
 To load the datasets:
 
 ~~~~~~~~~~~~~{.xml}
-	<data name="learn" approach="listwise" format=Yandex>learn.txt</data>
-	<data name="test" approach="listwise" format=Yandex>test.txt</data>
+  <data name="learn" approach="listwise" format=Yandex>learn.txt</data>
+  <data name="test" approach="listwise" format=Yandex>test.txt</data>
 ~~~~~~~~~~~~~
 
 You can choose one of the following approaches: \n
@@ -60,7 +60,7 @@ For example:
     <metric>MANHATTAN_METRIC</metric>
     <neighbor_weighter>INVERSE_POWER_DISTANCE</neighbor_weighter>
     <aggregator>SUM_AGGREGATOR</aggregator>
-    <number_of_neighbors_to_process>2</number_of_neighbors_to_process>
+    <number_of_neighbors_to_process>3</number_of_neighbors_to_process>
   </learner>
 ~~~~~~~~~~~~~
 
@@ -68,6 +68,17 @@ Where the approach is one of the approaches listed above. <b>NOTE</b> that the a
 
 List of learners is available on the page:
 \ref TutorialMeasureLearnerScorer
+
+If the parameter is a vector, than its elements should be separated by commas. Trailing comma is allowed (and is required for vector of length 1). For example:
+
+~~~~~~~~~~~~~{.xml}
+  <learner name="DT" type="DecisionTreeLearner" approach="pointwise">
+    <measure>ABS</measure>
+    <SPLITTER>ID3</SPLITTER>
+    <LEAF_GENERATOR>MCL</LEAF_GENERATOR>
+    <STOP_SPLITTING_CRITERIAS>SL,DS,</STOP_SPLITTING_CRITERIAS>
+  </learner>
+~~~~~~~~~~~~~
 
 Now we need to create measure to minimize. It is very alike the creation of the learner:
 
@@ -100,11 +111,11 @@ Now we can launch the process. To mark the dataset you need to introduce the lau
   </launch>
 ~~~~~~~~~~~~~
 
-Here "TrainAndMark" is a name of the train section. Learn is a name of the training dataset. LearnerName is a name of the learner that You want to use to mark the dataset. Test is the name of the dataset that You want to mark. Include <cpp/> tag if you want to create the c++ code for your experiment.
+Here "TrainAndMark" is a name of the train section. Learn is a name of the training dataset. LearnerName is a name of the learner that you want to use to mark the dataset. Test is the name of the dataset that you want to mark. Include <cpp/> tag if you want to create the c++ code for your experiment.
 
 \n\n
 
-To use crossvalidation and to test the algorithms, please use the crossvalidation tag inside of the launch section. Before launch tag you've got to introduce the splitter that You will use.
+To use crossvalidation and to test the algorithms, please use the crossvalidation tag inside of the launch section. Before launch tag you've got to introduce the splitter that you will use.
 
 ~~~~~~~~~~~~~{.xml}
   <splitter name="SplitterName" type="SplitterType" approach="listwise">
@@ -121,7 +132,7 @@ For example:
   </splitter>
 ~~~~~~~~~~~~~
 
-Here the SplitterName is the name of the splitter that You will use further, SplitterType is a type of the splitter that you will use and the approach is the one of listed above.
+Here the SplitterName is the name of the splitter that you will use further, SplitterType is a type of the splitter that you will use and the approach is the one of listed above.
 
 At the moment the following splitters are available:
 
@@ -147,7 +158,7 @@ Now the crossvalidation section:
 
 Inside please enumerate the learners, measures and datasets that you would like to test.
 
-For example for the config like:
+For example, you have the config like:
 
 ~~~~~~~~~~~~~{.xml}
 <LTR_experiment>
@@ -167,17 +178,17 @@ For example for the config like:
     <NUMBER_OF_OBJECTS_TO_CONSIDER>10</NUMBER_OF_OBJECTS_TO_CONSIDER>
   </measure>
 
-  <learner name="BF1" type="BEST_FEATURE" approach="listwise">
+  <learner name="BF1" type="BestFeatureLearner" approach="listwise">
     <measure>dcg</measure>
   </learner>
-  <learner name="BF2" type="BEST_FEATURE" approach="listwise">
+  <learner name="BF2" type="BestFeatureLearner" approach="listwise">
     <measure>ndcg</measure>
   </learner>
-  <learner name="GP" type="GP" approach="listwise">
+  <learner name="GP" type="GPLearner" approach="listwise">
     <measure>ndcg</measure>
   </learner>
 
-  <splitter name="K_FOLD1" type="K_FOLD" approach="listwise">
+  <splitter name="K_FOLD1" type="KFoldSimpleSplitter" approach="listwise">
       <K>2</K>
   </splitter>
 
@@ -204,20 +215,15 @@ For example for the config like:
 </LTR_experiment>
 ~~~~~~~~~~~~~
 
-We have an output:
+\n
 
-\code
-<Very-very-very long logger output>
-Oct 23 01:59:50 2012: info: 
-DataSet:/Users/stellar/Work/LTR_Project_last/ltr1/data/imat2009/imat2009_learning_small.txt
-Splitter:KFoldSimpleSplitter
-Table ROW: Learner COLUMN: Measure
-	NDCG	DCG	DCG	DCG	
-BestFeatureLeaner	1	2.319	2.319	1.56546	
-BestFeatureLeaner	1	2.319	2.319	1.56546
-\endcode
+Then you should launch <i>ltr_client -f <config_file_name></i>. You will receive a file <i>report.html</i> looking like this:
 
+\image html report.png
 
+\n
+
+To get the full list of ltr_client's parameters, please launch <i>ltr_client -h</i>
 
 **/
 
