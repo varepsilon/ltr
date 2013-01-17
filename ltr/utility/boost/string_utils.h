@@ -15,11 +15,22 @@ using std::locale;
 namespace ltr {
 namespace utility {
 /**
- * Return a copy of the string with the leading and trailing characters
- * removed. The chars argument is a string specifying the set of characters to
- * be removed.
+ * trim_copy returns a copy of the string with the leading and trailing
+ * separators removed.
+ * trim removes leading and trailing separators from given input string.
+ * trim(vector<string>) removes leading and trailing separators from each
+ * string. Empty strings remain.
+ * separator is a string specifying the set of characters to be removed.
  */
-string trim_copy(const string& str, const char *sep = " \r\n\t");
+string trim_copy(const string& input, const string& separator = " \r\n\t");
+void trim_copy(const vector<string>& input,
+               vector<string>* result,
+               const string& separator = " \r\n\t");
+vector<string> trim_copy(const vector<string>& input,
+                         const string& separator = " \r\n\t");
+
+void trim(string* input, const string& separator = " \r\n\t");
+void trim(vector<string>* input, const string& separator = " \r\n\t");
 /**
  * Return a vector of the words in the string, using separator as the delimiter
  * string. Input - input string or vector<string> to be splitted. 
@@ -92,7 +103,6 @@ void to_lower(string* input, const locale& loc = std::locale());
  * Сonsequentially erases all occurences of string search
  */
 void erase_all(string* input, const string& search);
-
 };
 };
 #endif  // LTR_UTILITY_BOOST_STRING_UTILS_H_
