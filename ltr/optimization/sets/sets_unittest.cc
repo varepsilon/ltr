@@ -67,7 +67,7 @@ TEST(SetTest, BallSetRandomPointTest) {
   BallSet set(5.0, 10);
 
   Point random_point(10);
-  EXPECT_NO_THROW(random_point = set.getRandomPointInSet());
+  EXPECT_NO_THROW(random_point = set.sampleRandomPointInside());
   EXPECT_TRUE(set.isInside(random_point));
 }
 
@@ -150,7 +150,7 @@ TEST(SetTest, LinearInequalitySetRandomPointTest) {
   LinearInequalitySet set(normal, zero_point, 3);
 
   Point random_point(3);
-  EXPECT_NO_THROW(random_point = set.getRandomPointInSet());
+  EXPECT_NO_THROW(random_point = set.sampleRandomPointInside());
   EXPECT_TRUE(set.isInside(random_point));
 }
 
@@ -205,6 +205,6 @@ TEST(SetTest, SphereSetRandomPointTest) {
   SphereSet set(5.0, 0.7, 10);
 
   Point random_point;
-  EXPECT_NO_THROW(random_point = set.getRandomPointInSet());
+  EXPECT_NO_THROW(random_point = set.sampleRandomPointInside());
   EXPECT_TRUE(set.isInside(random_point));
 }

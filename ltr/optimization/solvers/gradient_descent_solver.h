@@ -7,25 +7,23 @@
 #include "ltr/optimization/functions/differentiable_function.h"
 #include "ltr/utility/macros.h"
 
+
 namespace optimization {
+/** \class\brief GradientDescentSolver
+ * Implements gradient descent algorithm with constant
+ * speed of descent.
+ */
 class GradientDescentSolver : public IterationSolver<DifferentiableFunction> {
  public:
+  /** speed of descent
+   */
   GET_SET(double, speed);
-  GET_SET(int, max_iterations);
-  GET_SET(double, gradient_error);
  private:
   double speed_;
-  int max_iterations_;
-  double gradient_error_;
 
-  virtual Point selectNextPoint(const DifferentiableFunction& function,
+  virtual State selectNextPoint(const DifferentiableFunction& function,
                                 const Set& set,
-                                const Point& current_point,
-                                int iteration);
-  virtual bool stop(const DifferentiableFunction& function,
-                    const Set& set,
-                    const Point& current_point,
-                    int iteration);
+                                const State& state);
 };
 }
 

@@ -15,6 +15,8 @@ class DifferentiableFunction : public Function {
   virtual ~DifferentiableFunction() { }
 
   virtual double value(const Point& point) const = 0;
+  /* get first derivative of this function in a given point
+   */
   virtual Vector gradient(const Point& point) const = 0;
 };
 }

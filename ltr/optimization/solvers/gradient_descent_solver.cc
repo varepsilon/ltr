@@ -3,23 +3,12 @@
 #include "ltr/optimization/solvers/gradient_descent_solver.h"
 
 namespace optimization {
-Point GradientDescentSolver::selectNextPoint(
+State GradientDescentSolver::selectNextPoint(
   const DifferentiableFunction& function,
   const Set& set,
-  const Point& current_point,
-  int iteration) {
-    Vector gradient = function.gradient(current_point);
-    return current_point + (gradient * speed());
-}
-
-bool GradientDescentSolver::stop(
-  const DifferentiableFunction& function,
-  const Set& set,
-  const Point& current_point,
-  int iteration) {
-    // TODO(wd28): think about calculating gradient only once
-    Vector gradient = function.gradient(current_point);
-    return gradient.norm() < gradient_error() ||
-      iteration > max_iterations();
+  const State& state) {
+    Point next_point = set.project(state.point() + state.gradient() * speed());
+    return State(next_point, state.iteration() + 1, function.value(next_point),
+                 function.gradient(next_point));
 }
 }

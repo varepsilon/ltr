@@ -52,14 +52,9 @@ Point LinearInequalitySet::initial_point() const {
   return initial_point_;
 }
 
-Point LinearInequalitySet::getRandomPointInSet() const {
+Point LinearInequalitySet::sampleRandomPointInside() const {
   Vector random_vector(dimension());
-  double max_rand = std::numeric_limits<double>::max();
-  double min_rand = std::numeric_limits<double>::min();
-
-  for (int i = 0; i < dimension(); i++) {
-    random_vector[i] = ltr::utility::randomizer.doubleRand(min_rand, max_rand);
-  }
+  random_vector.setRandom();
   if (random_vector.dot(positive_normal()) < 0)
     random_vector = -random_vector;
   return initial_point() + random_vector;

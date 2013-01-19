@@ -1,4 +1,4 @@
-// Copyright 2012 Yandexs
+// Copyright 2012 Yandex
 
 #ifndef LTR_OPTIMIZATION_FUNCTIONS_TWICE_DIFFERENTIABLE_FUNCTION_H_
 #define LTR_OPTIMIZATION_FUNCTIONS_TWICE_DIFFERENTIABLE_FUNCTION_H_
@@ -16,6 +16,9 @@ class TwiceDifferentiableFunction : public DifferentiableFunction {
 
   virtual double value(const Point& point) const = 0;
   virtual Point gradient(const Point& point) const = 0;
+
+  /** get second derivative in given point
+   */
   virtual Matrix hessian(const Point& point) const = 0;
 };
 }

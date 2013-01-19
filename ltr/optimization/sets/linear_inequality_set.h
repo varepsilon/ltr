@@ -8,6 +8,8 @@
 #include "ltr/interfaces/parameterized.h"
 
 namespace optimization {
+/**\class\brief implements semi-space
+ */
 class LinearInequalitySet : public Set {
  public:
   LinearInequalitySet(Vector normal, Point point, int dimension);
@@ -16,9 +18,12 @@ class LinearInequalitySet : public Set {
   virtual Point project(const Point& point) const;
   virtual void getBoundaries(Point* top, Point* bottom) const;
 
-  virtual Point getRandomPointInSet() const;
-
+  virtual Point sampleRandomPointInside() const;
+  /** vector, defining border hyperplane and positive direction
+   */
   Vector positive_normal() const;
+  /** some point on border
+   */
   Point initial_point() const;
  private:
   Vector positive_normal_;
