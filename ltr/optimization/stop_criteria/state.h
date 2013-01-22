@@ -21,6 +21,7 @@ class State {
                  : point_(point),
                    iteration_(iteration),
                    gradient_(gradient),
+                   value_(value),
                    hessian_(hessian) { }
   ~State() { }
 
