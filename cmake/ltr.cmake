@@ -105,7 +105,8 @@ SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/multi_array.h
               ${Source_Path}/ltr/utility/boost/shared_ptr.h
               ${Source_Path}/ltr/utility/boost/string_utils.h
-              ${Source_Path}/ltr/utility/boost/string_utils.cc)
+              ${Source_Path}/ltr/utility/boost/string_utils.cc
+              ${Source_Path}/ltr/utility/boost/triple.h)
 
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
