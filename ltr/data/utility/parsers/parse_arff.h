@@ -3,6 +3,7 @@
 #ifndef LTR_DATA_UTILITY_PARSERS_PARSE_ARFF_H_
 #define LTR_DATA_UTILITY_PARSERS_PARSE_ARFF_H_
 
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_parser.hpp>
 
 #include <vector>
