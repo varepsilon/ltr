@@ -48,7 +48,7 @@ void ConfigParser::
 parseConfig(const string& file_name) {
   document_ = auto_ptr<TiXmlDocument>(new TiXmlDocument(file_name));
   if (!document_->LoadFile()) {
-    throw logic_error("not valid config in " + file_name);
+    throw logic_error("not valid config in " + file_name + " or file not found");
   }
 
   root_ = document_->FirstChildElement(ROOT);
@@ -76,17 +76,17 @@ parseConfig(const string& file_name) {
                general_xml_token_);
 
   rInfo("\n\nEnd of loadConfig. Collected data:\n");
-  rInfo("data_infos_\n%s\n", ToString(dataInfos()).c_str());
-  rInfo("xml_token_specs\n%s\n", ToString(xmlTokenSpecs()).c_str());
+  rInfo("data_infos\n%s\n", ToString(dataInfos()).c_str());
+  rInfo("object_infos\n%s\n", ToString(objectInfos()).c_str());
   rInfo("train_infos\n%s\n", ToString(trainInfos()).c_str());
   rInfo("crossvalidation_infos\n%s\n",
     ToString(crossvalidationInfos()).c_str());
 
-  for (ParameterizedInfos::iterator it = xmlTokenSpecs().begin();
-      it != xmlTokenSpecs().end();
+  for (ObjectInfos::iterator it = objectInfos().begin();
+      it != objectInfos().end();
       ++it) {
-    ParameterizedInfo& spec = it->second;
-    spec.fill_dependency_list(xmlTokenSpecs());
+    ObjectInfo& info = it->second;
+    info.fill_dependency_list(objectInfos());
   }
 }
 
@@ -97,39 +97,39 @@ ConfigParser::DataInfos& ConfigParser::dataInfos() {
   return data_infos_;
 }
 
-const ConfigParser::ParameterizedInfos& ConfigParser::xmlTokenSpecs() const {
-  return xml_token_specs;
+const ConfigParser::ObjectInfos& ConfigParser::objectInfos() const {
+  return object_infos_;
 }
 
-ConfigParser::ParameterizedInfos& ConfigParser::xmlTokenSpecs() {
-  return xml_token_specs;
+ConfigParser::ObjectInfos& ConfigParser::objectInfos() {
+  return object_infos_;
 }
 
 const ConfigParser::TrainInfos& ConfigParser::trainInfos() const {
-  return train_infos;
+  return train_infos_;
 }
 
 ConfigParser::TrainInfos& ConfigParser::trainInfos() {
-  return train_infos;
+  return train_infos_;
 }
 
 const ConfigParser::CrossvalidationInfos&
                                   ConfigParser::crossvalidationInfos() const {
-  return crossvalidation_infos;
+  return crossvalidation_infos_;
 }
 
 ConfigParser::CrossvalidationInfos& ConfigParser::crossvalidationInfos() {
-  return crossvalidation_infos;
+  return crossvalidation_infos_;
 }
 
-const ParameterizedInfo& ConfigParser::findParameterized(
+const ObjectInfo& ConfigParser::findObject(
     const string& name) const {
-  for (ParameterizedInfos::const_iterator it = xml_token_specs.begin();
-       it != xml_token_specs.end();
+  for (ObjectInfos::const_iterator it = object_infos_.begin();
+       it != object_infos_.end();
        ++it) {
-    const ParameterizedInfo& spec = it->second;
-    if (spec.get_name() == name) {
-      return spec;
+    const ObjectInfo& object_info = it->second;
+    if (object_info.get_name() == name) {
+      return object_info;
     }
   }
   throw logic_error("Can not find parameterized object " + name);
@@ -146,7 +146,6 @@ const DataInfo& ConfigParser::findData(const string& name) const {
   }
   throw logic_error("Can not find data " + name);
 }
-
 
 const string& ConfigParser::rootPath() const {
   return root_path_;

@@ -6,6 +6,8 @@ set(SOURCE_PATH ${Source_Path} CACHE STRING "")
 set (LTR_CLIENT_SRC
      ${Source_Path}/ltr_client/factory.h
      ${Source_Path}/ltr_client/factory.cc
+     ${Source_Path}/ltr_client/dependency_resolving_factory.h
+     ${Source_Path}/ltr_client/dependency_resolving_factory.cc
      ${Source_Path}/ltr_client/ltr_client.cc
      ${Source_Path}/ltr_client/ltr_client.h
      ${Source_Path}/ltr_client/configurator.cc
@@ -22,6 +24,7 @@ set (LTR_CLIENT_SRC
      ${Source_Path}/ltr_client/utility/train_launch_info.h
      ${Source_Path}/ltr_client/utility/train_launch_info.cc
      ${Source_Path}/ltr_client/registration.h
+     ${Source_Path}/ltr_client/main.cc
 )
 
 source_group(initers FILES ${INITERS_SRC})

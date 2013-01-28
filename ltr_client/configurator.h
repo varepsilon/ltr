@@ -31,7 +31,7 @@ typedef map<string, TagHandler*> TagHandlers;
 class ConfigParser {
  public:
   typedef map<string, DataInfo> DataInfos;
-  typedef map<string, ParameterizedInfo> ParameterizedInfos;
+  typedef map<string, ObjectInfo> ObjectInfos;
   typedef map<string, TrainLaunchInfo> TrainInfos;
   typedef map<string, CrossvalidationLaunchInfo>
     CrossvalidationInfos;
@@ -60,15 +60,15 @@ class ConfigParser {
    */
   DataInfos& dataInfos();
   /**
-   * Constant accessor to the data_info_ field
-   * @returns xml_token_specs_ constant  link
+   * Constant accessor to the object_infos_ field
+   * @returns object_infos_ constant  link
    */
-  const ParameterizedInfos& xmlTokenSpecs() const;
+  const ObjectInfos& objectInfos() const;
   /**
-   * Accessor to the xml_token_specs_ field
-   * @returns xml_token_specs_ link
+   * Accessor to the object_infos_ field
+   * @returns object_infos_ link
    */
-  ParameterizedInfos& xmlTokenSpecs();
+  ObjectInfos& objectInfos();
   /**
    * Constant accessor to the train_infos_ field
    * @returns train_infos_ constant link
@@ -93,9 +93,9 @@ class ConfigParser {
    * Performs a search in the xml tokens for the Parameterized
    * object with given name
    * @param name - string with the name of the learner
-   * @returns ParameterizedInfo constant link
+   * @returns ObjectInfo constant link
    */
-  const ParameterizedInfo& findParameterized(const string& name) const;
+  const ObjectInfo& findObject(const string& name) const;
   /**
    * Performs a search in the xml tokens for the dataset
    * with given name
@@ -105,7 +105,7 @@ class ConfigParser {
   const DataInfo& findData(const string& name) const;
   /**
    * Root path constant accessor
-   * @returns constant link to the root_path variable
+   * @returns constant link to the root_path_ variable
    */
   const string& rootPath() const;
 
@@ -117,11 +117,11 @@ class ConfigParser {
   TiXmlElement* root_;
   string root_path_;
   ConfigParser::DataInfos data_infos_;
-  ConfigParser::ParameterizedInfos xml_token_specs;
-  ConfigParser::TrainInfos train_infos;
-  ConfigParser::CrossvalidationInfos crossvalidation_infos;
+  ConfigParser::ObjectInfos object_infos_;
+  ConfigParser::TrainInfos train_infos_;
+  ConfigParser::CrossvalidationInfos crossvalidation_infos_;
 };
 
-class ParameterizedInfo;
+class ObjectInfo;
 
 #endif  // LTR_CLIENT_CONFIGURATOR_H_
