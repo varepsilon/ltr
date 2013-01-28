@@ -84,6 +84,8 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/multi_vector_print.h
               ${Source_Path}/ltr/utility/random_number_generator.h
               ${Source_Path}/ltr/utility/random_number_generator.cc
+              ${Source_Path}/ltr/utility/cross_platform_time.h
+              ${Source_Path}/ltr/utility/cross_platform_time.cc
               ${Source_Path}/ltr/utility/numerical.h
               ${Source_Path}/ltr/utility/numerical.cc
               ${Source_Path}/ltr/utility/murmur_hash.h
