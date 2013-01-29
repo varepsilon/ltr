@@ -54,8 +54,7 @@ namespace io_utility {
            * It processes features and saves it in the map in the parser,
            * given in init.
            */
-          void operator()(const char* feature,
-                          const char* it) const;
+          void operator()(const char* feature) const;
           /**
            * Function prepares NextFeatureParser to process the next object.
            */

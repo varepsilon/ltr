@@ -1,11 +1,5 @@
 // Copyright 2011 Yandex
 
-#include <boost/spirit/include/classic_push_back_actor.hpp>
-#include <boost/spirit/include/classic_insert_at_actor.hpp>
-#include <boost/spirit/include/classic_assign_actor.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/trim.hpp>
-
 #include <stdexcept>
 #include <sstream>
 
@@ -13,24 +7,11 @@
 
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/string_utils.h"
 
-using boost::algorithm::trim_copy;
-using boost::spirit::classic::parse;
-using boost::spirit::classic::parse_info;
-using boost::spirit::classic::real_p;
-using boost::spirit::classic::ch_p;
-using boost::spirit::classic::uint_p;
-using boost::spirit::classic::space_p;
-using boost::spirit::classic::digit_p;
-using boost::spirit::classic::anychar_p;
-using boost::spirit::classic::alnum_p;
-using boost::spirit::classic::assign_a;
-using boost::spirit::classic::insert_at_a;
-using boost::spirit::classic::str_p;
-using boost::spirit::classic::lexeme_d;
-using boost::spirit::classic::anychar_p;
-using boost::spirit::classic::push_back_a;
-using boost::spirit::classic::rule;
+using ltr::utility::trim;
+using ltr::utility::split;
+using ltr::utility::to_upper;
 using ltr::utility::lexical_cast;
 
 using std::string;
@@ -62,21 +43,21 @@ namespace io_utility {
     parseNextFeature.init(this);
     parseNextFeature.reset();
 
-    rule<> number = !ch_p('-') >> +digit_p >> !('.' >> *digit_p);
-    rule<> nan = lexeme_d[str_p("?")];
-    rule<> string_rule = lexeme_d[*(anychar_p - ch_p('\''))];
-    rule<> simple_string = lexeme_d[*(alnum_p | '-')];
-    rule<> quoter = ch_p('\'');
+    trim(&line);
+    vector<string> splitted;
+    split(line, ",", &splitted);
+    trim(&splitted);
+    for (int value_num = 0; value_num < splitted.size(); ++value_num) {
+      if (splitted[value_num][0] == '\'') {
+        if (splitted[value_num][splitted[value_num].size() - 1] != '\'')
+          throw std::logic_error("can't parse ARFF object: "
+              "bad quoting");
+        splitted[value_num] =
+            splitted[value_num].substr(1, splitted[value_num].size());
+      }
+      parseNextFeature(splitted[value_num].c_str());
+    }
 
-    string line_ = trim_copy(line);
-    parse_info<> info = boost::spirit::classic::parse(line_.c_str(),
-      ((nan | number | simple_string)[parseNextFeature] |
-        (quoter >> string_rule[parseNextFeature] >> quoter))
-       % ','
-      , space_p);
-
-    if (!info.hit)
-      throw std::logic_error("can't parse ARFF string");
     *result = features_;
   }
 
@@ -92,17 +73,15 @@ namespace io_utility {
       if (line.size() == 0 || line[0] != '@')
         continue;
       line = line.substr(1, line.size() - 1);
-      boost::algorithm::trim(line);
+      trim(&line);
       string first;
       string other;
-      parse_info<> info = boost::spirit::classic::parse(line.c_str(),
-        lexeme_d[+alnum_p][assign_a(first)] >> *space_p >>
-        lexeme_d[*anychar_p][assign_a(other)]);
+      vector<string> splitted;
+      split(line, &splitted, 1);
+      if (splitted.size() >= 1) first = splitted[0];
+      if (splitted.size() >= 2) other = splitted[1];
 
-      if (!info.hit)
-        throw std::logic_error("can't parse ARFF header");
-
-      boost::to_upper(first);
+      to_upper(&first);
       if (first == "DATA")
         break;
 
@@ -116,20 +95,32 @@ namespace io_utility {
       string attr_type;
       vector<string> values;
 
-      rule<> string_rule = lexeme_d[*(anychar_p - ch_p('\''))];
-      rule<> simple_string = lexeme_d[*(alnum_p | '-')];
-      rule<> quoter = ch_p('\'');
+      split(other, &splitted, 1);
+      trim(&splitted);
+      if (splitted.size() != 2)
+        throw std::logic_error("can't parse ARFF header: bad @ATTRIBUTE field");
+      attr_name = splitted[0];
+      attr_type = splitted[1];
 
-      info = boost::spirit::classic::parse(other.c_str(),
-        lexeme_d[+(alnum_p | '_' | '-')][assign_a(attr_name)] >> +space_p >>
-        (lexeme_d[+alnum_p][assign_a(attr_type)] |
-        ('{' >> (( (quoter >> string_rule[push_back_a(values)] >> quoter) |
-                  simple_string[push_back_a(values)]) % ',')
-             >> '}') ));
-      if (!info.hit)
-        throw std::logic_error("can't parse ARFF header");
+      if (attr_type[0] == '{') {
+        if (attr_type[attr_type.size() - 1] != '}')
+          throw std::logic_error("can't parse ARFF header: "
+              "bad nominal attribute");
+        attr_type = attr_type.substr(1, attr_type.size() - 2);
+        split(attr_type, ",", &values);
+        trim(&values);
+        for (int value_num = 0; value_num < values.size(); ++value_num) {
+          if (values[value_num][0] == '\'') {
+            if (values[value_num][values[value_num].size() - 1] != '\'')
+              throw std::logic_error("can't parse ARFF header: "
+                  "bad quoting");
+            values[value_num] =
+                values[value_num].substr(1, values[value_num].size());
+          }
+        }
+      }
 
-      boost::to_upper(attr_type);
+      to_upper(&attr_type);
       raw_feature_info_[feature_id].feature_name = attr_name;
       if (attr_name == "class") {
         raw_feature_info_[feature_id].feature_type = CLASS;
@@ -157,9 +148,8 @@ namespace io_utility {
     parser_->meta_features_.clear();
   }
 
-  void ARFFParser::NextFeatureParser::operator()(const char* feature_,
-                                                 const char* it) const {
-    std::string feature(feature_, it);
+  void ARFFParser::NextFeatureParser::operator()(const char* feature_) const {
+    std::string feature(feature_);
     int cur_id = parser_->current_id_;
     Parser::RawFeatureType type =
         parser_->raw_feature_info_[cur_id].feature_type;
