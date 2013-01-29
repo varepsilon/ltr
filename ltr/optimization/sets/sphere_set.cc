@@ -22,13 +22,11 @@ void SphereSet::getBoundaries(Point* top, Point* bottom) const {
   CHECK(top->size() == dimension());
   CHECK(bottom->size() == dimension());
 
-  for (int i = 0; i < dimension(); ++i) {
-    (*top)[i] = radius();
-    (*bottom)[i] = -radius();
-  }
+  top->setConstant(radius());
+  bottom->setConstant(-radius());
 }
 
-Point SphereSet::getRandomPointInSet() const {
+Point SphereSet::sampleRandomPointInside() const {
   return (getRandomPoint().normalized()) * radius();
 }
 

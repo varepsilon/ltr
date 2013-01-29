@@ -14,7 +14,7 @@ class SphereSet : public Set {
   virtual Point project(const Point& point) const;
   virtual void getBoundaries(Point* top, Point* bottom) const;
 
-  virtual Point getRandomPointInSet() const;
+  virtual Point sampleRandomPointInside() const;
 
   double radius() const;
   double precision() const;

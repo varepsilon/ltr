@@ -8,28 +8,32 @@
 #include "ltr/utility/macros.h"
 
 namespace optimization {
+/** \class\brief SimulatedAnnealingSolver
+ * Implements simulated annealing optimization algorithm
+ */
 class SimulatedAnnealingSolver : public IterationSolver<Function> {
  public:
+  /**
+   * next point is selected randomly in a cube with diameter twice the
+   * jump_area_width and center in current point
+   */
   GET_SET(double, jump_area_width);
+  /**
+   * number of iterations after which 'temperature' reaches 0
+   */
   GET_SET(int, max_iterations);
  private:
-  double jump_area_width_;
-  int max_iterations_;
-
-  virtual Point selectNextPoint(const Function& function,
+  virtual State selectNextPoint(const Function& function,
                                 const Set& set,
-                                const Point& current_point,
-                                int iteration);
-  virtual bool stop(const Function& function,
-                    const Set& set,
-                    const Point& current_point,
-                    int iteration);
-
+                                const State& state);
   Point getRandomPoint(const Point& point) const;
 
-  bool needTransition(double prevValue, double nextValue,
-    double temperature) const;
-  double temperature(int iteration, int maxIterations) const;
+  bool needTransition(double prev_value, double next_value,
+                      double temperature) const;
+  double temperature(int iteration, int max_iterations) const;
+
+  double jump_area_width_;
+  int max_iterations_;
 };
 }
 

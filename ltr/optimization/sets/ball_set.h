@@ -6,6 +6,8 @@
 #include "ltr/optimization/sets/set.h"
 
 namespace optimization {
+/** \class\brief Implements ball of a given radius
+ */
 class BallSet : public Set {
  public:
   BallSet(double radius, int dimension);
@@ -13,6 +15,8 @@ class BallSet : public Set {
   virtual bool isInside(const Point& point) const;
   virtual Point project(const Point& point) const;
   virtual void getBoundaries(Point* top, Point* bottom) const;
+
+  virtual Point sampleRandomPointInside() const;
 
   double radius() const;
  private:

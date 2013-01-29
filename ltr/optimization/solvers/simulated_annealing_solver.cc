@@ -2,18 +2,18 @@
 
 #include "ltr/optimization/solvers/simulated_annealing_solver.h"
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/utility/macros.h"
 
 namespace optimization {
-Point SimulatedAnnealingSolver::selectNextPoint(const Function& function,
-  const Set& set, const Point& current_point, int iteration) {
-    double current_value = function.value(current_point);
-    Point next_point = set.project(getRandomPoint(current_point));
+State SimulatedAnnealingSolver::selectNextPoint(const Function& function,
+  const Set& set, const State& state) {
+    Point next_point = set.project(getRandomPoint(state.point()));
     double next_value = function.value(next_point);
-    if (needTransition(current_value, next_value,
-      temperature(iteration, max_iterations()))) {
-        return next_point;
+    if (needTransition(state.value(), next_value,
+      temperature(state.iteration(), max_iterations()))) {
+        return State(next_point, state.iteration() + 1, next_value);
       } else {
-        return current_point;
+        return State(state.point(), state.iteration() + 1, state.value());
       }
 }
 
@@ -36,14 +36,9 @@ bool SimulatedAnnealingSolver::needTransition(
     return probability > ltr::utility::randomizer.doubleRand(0, 1);
   }
 
-bool SimulatedAnnealingSolver::stop(const Function& function, const Set& set,
-  const Point& current_point, int iteration) {
-    return iteration >= max_iterations();
-}
-
 double SimulatedAnnealingSolver::temperature(int iteration,
   int max_iterations) const {
-    assert(max_iterations > 0);
+    CHECK(max_iterations > 0);
     double time = (static_cast<double>(iteration))/(max_iterations + 1);
     return 1 - time;
   }

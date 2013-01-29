@@ -23,7 +23,7 @@ Point Set::getRandomPoint() const {
   return random_point;
 }
 
-Point Set::getRandomPointInSet() const {
+Point Set::sampleRandomPointInside() const {
   Point random_point;
   do {
     random_point = getRandomPoint();

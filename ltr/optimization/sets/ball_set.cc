@@ -2,6 +2,7 @@
 
 #include "ltr/optimization/sets/ball_set.h"
 #include "ltr/utility/macros.h"
+#include "ltr/utility/random_number_generator.h"
 
 namespace optimization {
 bool BallSet::isInside(const Point& point) const {
@@ -20,10 +21,14 @@ void BallSet::getBoundaries(Point* top, Point* bottom) const {
   CHECK(top->size() == dimension());
   CHECK(bottom->size() == dimension());
 
-  for (int i = 0; i < dimension(); ++i) {
-    (*top)[i] = radius();
-    (*bottom)[i] = -radius();
-  }
+  top->setConstant(radius());
+  bottom->setConstant(-radius());
+}
+
+// this distribution is not uniform, but will do for now
+Point BallSet::sampleRandomPointInside() const {
+  Point random_point = getRandomPoint();
+  return random_point.normalized() * ltr::utility::randomizer.doubleRand(0, radius());
 }
 
 BallSet::BallSet(double radius, int dimension): Set(dimension),
