@@ -1,6 +1,9 @@
 #include "gtest/gtest.h"
 
-#include "random_number_generator.h"
+#include "ltr/utility/random_number_generator.h"
 
 namespace ltr {
+namespace utility {
+
+};
 };

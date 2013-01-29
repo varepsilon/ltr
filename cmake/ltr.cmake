@@ -110,6 +110,35 @@ SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/string_utils.cc
               ${Source_Path}/ltr/utility/boost/triple.h)
 
+SET(LTR_RANDOM ${Source_Path}/ltr/utility/random/LeadingZeros.hpp
+               ${Source_Path}/ltr/utility/random/RandomCanonical.hpp
+               ${Source_Path}/ltr/utility/random/Config.h
+               ${Source_Path}/ltr/utility/random/MPFRExponential.hpp
+               ${Source_Path}/ltr/utility/random/MPFRExponentialL.hpp
+               ${Source_Path}/ltr/utility/random/RandomEngine.hpp
+               ${Source_Path}/ltr/utility/random/ExactExponential.hpp
+               ${Source_Path}/ltr/utility/random/MPFRNormal.hpp
+               ${Source_Path}/ltr/utility/random/Random.hpp
+               ${Source_Path}/ltr/utility/random/ExactNormal.hpp
+               ${Source_Path}/ltr/utility/random/MPFRNormalK.hpp
+               ${Source_Path}/ltr/utility/random/RandomMixer.hpp
+               ${Source_Path}/ltr/utility/random/ExactPower.hpp
+               ${Source_Path}/ltr/utility/random/MPFRNormalR.hpp
+               ${Source_Path}/ltr/utility/random/RandomNumber.hpp
+               ${Source_Path}/ltr/utility/random/ExponentialDistribution.hpp
+               ${Source_Path}/ltr/utility/random/MPFRRandom.hpp
+               ${Source_Path}/ltr/utility/random/RandomPower2.hpp
+               ${Source_Path}/ltr/utility/random/ExponentialProb.hpp
+               ${Source_Path}/ltr/utility/random/MPFRUniform.hpp
+               ${Source_Path}/ltr/utility/random/RandomSeed.hpp
+               ${Source_Path}/ltr/utility/random/InverseEProb.hpp
+               ${Source_Path}/ltr/utility/random/NormalDistribution.hpp
+               ${Source_Path}/ltr/utility/random/RandomSelect.hpp
+               ${Source_Path}/ltr/utility/random/InversePiProb.hpp
+               ${Source_Path}/ltr/utility/random/RandomAlgorithm.hpp
+               ${Source_Path}/ltr/utility/random/RandomType.hpp
+               ${Source_Path}/ltr/utility/random/Random.cpp)
+
 SET(LTR_INTERFACES ${Source_Path}/ltr/interfaces/reporter.h
                    ${Source_Path}/ltr/interfaces/aliaser.h
                    ${Source_Path}/ltr/interfaces/parameterized.h
@@ -316,6 +345,7 @@ SOURCE_GROUP(density_estimators\\learners FILES ${LTR_DENSITY_ESTIMATORS_LEARNER
 SOURCE_GROUP(predictions_aggregators FILES ${LTR_PREDICTIONS_AGGREGATORS})
 SOURCE_GROUP(data FILES ${LTR_DATA})
 SOURCE_GROUP(utils FILES ${LTR_UTILS})
+SOURCE_GROUP(random FILES ${LTR_RANDOM})
 SOURCE_GROUP(learners FILES ${LTR_LEARNERS})
 SOURCE_GROUP(learners\\decision_tree FILES ${LTR_DECISION_TREE})
 SOURCE_GROUP(learners\\decision_tree\\condition FILES ${LTR_DECISION_TREE_CONDITION})
@@ -346,7 +376,7 @@ SOURCE_GROUP(contrib\\getoptpp FILES ${GETOPTPP})
 SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOPCRITERIA})
 SOURCE_GROUP(optimization\\stand_functions FILES ${OPTIMIZATION_STAND_FUNCTIONS})
 
-SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_INTERFACES}
+SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
             ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES} ${LTR_FEATURE_CONVERTERS}
             ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION}
