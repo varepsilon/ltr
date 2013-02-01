@@ -221,5 +221,14 @@ void erase_all(string* input, const string& search) {
     pos = input->find(search, pos);
   }
 }
+
+bool iequals(const string& input, const string& test, const locale& loc) {
+  if (input.size() != test.size())
+    return false;
+  for (int i = 0; i < static_cast<int>(input.size()); ++i)
+    if (std::tolower(input[i], loc) != std::tolower(test[i], loc))
+      return false;
+  return true;
+}
 };
 };

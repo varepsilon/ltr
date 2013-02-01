@@ -3,10 +3,10 @@
 #define LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
 
 #include <string>
-
-#include "boost/unordered_set.hpp"
+#include <set>
 
 using std::string;
+using std::set;
 /**
  * Contains the information about the crossvalidation launch,
  * including the leaners vector, measures vector,
@@ -23,9 +23,9 @@ struct CrossvalidationLaunchInfo {
   explicit CrossvalidationLaunchInfo(const string& fold_)
     : splitter(fold_) { }
   string splitter;
-  boost::unordered_set<string> learners;
-  boost::unordered_set<string> measures;
-  boost::unordered_set<string> datas;
+  set<string> learners;
+  set<string> measures;
+  set<string> datas;
 };
 /**
  * Converts CrossvalidationLaunchInfo object into the printable string.

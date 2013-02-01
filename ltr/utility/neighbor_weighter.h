@@ -4,6 +4,7 @@
 #define LTR_UTILITY_NEIGHBOR_WEIGHTER_H_
 
 #include <string>
+#include <cmath>
 
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/utility/boost/shared_ptr.h"
@@ -81,9 +82,9 @@ class InversePowerDistance: public NeighborWeighter {
 
   virtual double getWeight(double neighbor_distance, int neighbor_order) const {
     if (neighbor_distance < min_distance_) {
-      return 1. / pow(min_distance_, power_);
+      return 1. / std::pow(min_distance_, power_);
     }
-    return 1.0 / pow(neighbor_distance, power_);
+    return 1.0 / std::pow(neighbor_distance, power_);
   }
 
   string generateCppCode(const string& function_name) const {

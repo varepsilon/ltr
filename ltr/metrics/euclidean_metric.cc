@@ -2,6 +2,8 @@
 
 #include "ltr/metrics/euclidean_metric.h"
 
+#include <cmath>
+
 using ltr::EuclideanMetric;
 
 namespace ltr {
@@ -16,9 +18,9 @@ double EuclideanMetric::distance(const ltr::Object& lhs,
   for (int feature_index = 0;
        feature_index < lhs.feature_count();
        ++feature_index) {
-    distance += pow(lhs[feature_index] - rhs[feature_index], 2.0);
+    distance += std::pow(lhs[feature_index] - rhs[feature_index], 2.0);
   }
-  return sqrt(distance);
+  return std::sqrt(distance);
 }
 
 string EuclideanMetric::generateCppCode(const string& function_name) const {

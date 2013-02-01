@@ -6,15 +6,11 @@
 #include <string>
 #include <vector>
 
-#include <boost/algorithm/string/classification.hpp>
-
 #include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/utility/boost/lexical_cast.h"
 
 using std::vector;
 using std::string;
-
-using boost::is_any_of;
 
 namespace ltr {
 namespace utility {

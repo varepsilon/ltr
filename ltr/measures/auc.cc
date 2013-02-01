@@ -7,14 +7,12 @@
 #include <utility>
 
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/triple.h"
 #include "ltr/measures/utils/measure_utility.h"
 #include "ltr/measures/measure.h"
 #include "ltr/measures/auc.h"
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
-
-#include "boost/tuple/tuple.hpp"
-#include "boost/tuple/tuple_comparison.hpp"
 
 using std::fabs;
 using std::string;
@@ -30,10 +28,8 @@ using ltr::utility::PredictedAndActualLabels;
 using ltr::utility::PredictedDecreasingActualIncreasing;
 using ltr::utility::ExtractLabels;
 using ltr::utility::DoubleEqual;
-
-using boost::tuples::make_tuple;
-using boost::tuples::tuple;
-
+using ltr::utility::triple;
+using ltr::utility::make_triple;
 
 namespace ltr {
   string AUC::toString() const {
@@ -41,11 +37,11 @@ namespace ltr {
   }
 
   double AUC::operator()(const DataSet<Object>& data_set) const {
-    vector<tuple<double, double, double> > predicted_actual_weight(
+    vector<triple<double, double, double> > predicted_actual_weight(
       data_set.size());
 
     for (int index = 0; index < data_set.size(); ++index) {
-      predicted_actual_weight[index] = make_tuple(
+      predicted_actual_weight[index] = make_triple(
         data_set[index].predicted_label(),
         data_set[index].actual_label(),
         data_set.getWeight(index));
@@ -59,8 +55,8 @@ namespace ltr {
     for (int index = 0;
          index < predicted_actual_weight.size();
          ++index) {
-      double actual_label = predicted_actual_weight[index].get<1>();
-      double weight = predicted_actual_weight[index].get<2>();
+      double actual_label = predicted_actual_weight[index].get_1();
+      double weight = predicted_actual_weight[index].get_2();
       if (DoubleEqual(actual_label, 1.)) {
         true_actual += weight;
       } else {
@@ -71,8 +67,8 @@ namespace ltr {
     for (int index = 0;
          index < predicted_actual_weight.size();
          ++index) {
-      double actual_label = predicted_actual_weight[index].get<1>();
-      double weight = predicted_actual_weight[index].get<2>();
+      double actual_label = predicted_actual_weight[index].get_1();
+      double weight = predicted_actual_weight[index].get_2();
       if (DoubleEqual(actual_label, 1)) {
         true_positive_rate +=
           weight / true_actual;

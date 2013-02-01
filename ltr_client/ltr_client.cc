@@ -7,8 +7,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
-
-#include "boost/algorithm/string.hpp"
+#include <set>
 
 #include "ltr/predictions_aggregators/predictions_aggregator.h"
 #include "ltr/predictions_aggregators/average_predictions_aggregator.h"
@@ -40,6 +39,7 @@
 
 #include "ltr/utility/neighbor_weighter.h"
 #include "ltr/utility/boost/path.h"
+#include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/html.h"
 
 #include "contrib/getopt_pp/getopt_pp.h"
@@ -77,6 +77,7 @@ using ltr::io_utility::loadDataSet;
 using ltr::utility::InverseLinearDistance;
 using ltr::utility::AppendTrailingPathSeparator;
 using ltr::utility::FileLink;
+using ltr::utility::split;
 
 using GetOpt::GetOpt_pp;
 using GetOpt::Option;
@@ -187,8 +188,9 @@ static ParametersContainer Create(
           any_cast<ParameterizedDependency>(&parameter)) {
         typedef vector<string> TStringVector;
         TStringVector strings;
-        boost::split(strings, *dependency,
-                     boost::is_any_of("\t ,"));
+        split(*dependency, "\t", &strings);
+        split(&strings, " ");
+        split(&strings, ",");
 
         assert(strings.size());
         if (strings.size() == 1 && dependency->find_first_of(',') == string::npos) {
@@ -244,7 +246,6 @@ void LtrClient::launchTrain(Any parameterized,
   typename Learner<TElement>::Ptr learner =
     any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
   assert(learner);
-
   const ParameterizedInfo& learner_info =
     configurator_.findParameterized(train_info.learner);
 
@@ -266,7 +267,7 @@ void LtrClient::launchTrain(Any parameterized,
   Scorer::Ptr scorer = learner->make();
 
   rInfo("\n\nStarted predicting\n");
-  for (boost::unordered_set<string>::const_iterator predict_it =
+  for (std::set<string>::const_iterator predict_it =
        train_info.predicts.begin();
        predict_it != train_info.predicts.end();
        ++predict_it) {
@@ -303,7 +304,7 @@ void LtrClient::launchTrain(Any parameterized,
 template <class TElement>
 void LtrClient::launchCrossvalidation(
   const CrossvalidationLaunchInfo& crossvalidation_info) {
-    boost::unordered_set<string>::const_iterator
+    std::set<string>::const_iterator
       learners_alias = crossvalidation_info.learners.begin(),
       measures_alias = crossvalidation_info.measures.begin(),
       datas_alias = crossvalidation_info.datas.begin();

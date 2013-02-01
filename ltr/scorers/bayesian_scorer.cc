@@ -2,6 +2,8 @@
 
 #include "ltr/scorers/bayesian_scorer.h"
 
+#include <cmath>
+
 using ltr::BayesianScorer;
 
 namespace ltr {
@@ -14,7 +16,7 @@ double BayesianScorer::scoreImpl(const Object& object) const {
        ++label_iterator) {
     double label = label_iterator->first;
     double probability = label_iterator->second;
-    double current_score = log(probability) +
+    double current_score = std::log(probability) +
       estimator_->estimate(object, label);
     if (current_score > max_score ||
         label_iterator == prior_probability_.begin()) {

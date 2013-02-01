@@ -5,9 +5,8 @@
 
 #include <stdexcept>
 #include <sstream>
-
-#include "boost/unordered_map.hpp"
-#include "boost/unordered_set.hpp"
+#include <map>
+#include <set>
 
 using std::logic_error;
 using std::stringstream;
@@ -22,7 +21,7 @@ static inline bool Contains(const TCont& cont,
 
 template <class ValueType>
 static inline ValueType &SafeInsert(
-    boost::unordered_map<string, ValueType> &container,
+    std::map<string, ValueType> &container,
     const char* key) {
   if (!key) {
     throw logic_error("empty name!!!!");
@@ -34,7 +33,7 @@ static inline ValueType &SafeInsert(
 }
 
 static inline void SafeInsert(
-    boost::unordered_set<string>& cont,
+    std::set<string>& cont,
     const char* key) {
   if (!key) {
     return;
@@ -46,15 +45,15 @@ static inline void SafeInsert(
 }
 
 /**
- * Converts boost::unordered_map<Key, Value> to string
+ * Converts std::map<Key, Value> to string
  * if the ToString(Value) is defined and operator << (ostream, Key)
  * is defined.
  * @param cont - cantainer to convert to string
  * @returns converted string
  */
 template <class Key, class Value>
-inline string ToString(const boost::unordered_map<Key, Value>& cont) {
-  typedef typename boost::unordered_map<Key, Value>::const_iterator TIter;
+inline string ToString(const std::map<Key, Value>& cont) {
+  typedef typename std::map<Key, Value>::const_iterator TIter;
   stringstream out(stringstream::out);
   size_t i = 0;
   for (TIter it = cont.begin(); it != cont.end(); ++it)
@@ -63,14 +62,14 @@ inline string ToString(const boost::unordered_map<Key, Value>& cont) {
 }
 
 /**
- * Converts boost::unordered_set<Value> to string
+ * Converts std::set<Value> to string
  * if the operator << (ostream, Value) is defined.
  * @param cont - cantainer to convert to string
  * @returns converted string
  */
 template <class Value>
-inline string ToString(const boost::unordered_set<Value>& cont) {
-  typedef typename boost::unordered_set<Value>::const_iterator TIter;
+inline string ToString(const std::set<Value>& cont) {
+  typedef typename std::set<Value>::const_iterator TIter;
   stringstream out(stringstream::out);
   out << "set(";
   for (TIter it = cont.begin(); it != cont.end(); ++it)

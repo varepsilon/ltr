@@ -2,6 +2,8 @@
 
 #include "ltr/metrics/manhattan_metric.h"
 
+#include <cmath>
+
 using ltr::ManhattanMetric;
 
 namespace ltr {
@@ -16,7 +18,7 @@ double ManhattanMetric::distance(const ltr::Object& lhs,
   for (int feature_index = 0;
         feature_index < lhs.feature_count();
         ++feature_index) {
-    distance += fabs(lhs[feature_index] - rhs[feature_index]);
+    distance += std::fabs(lhs[feature_index] - rhs[feature_index]);
   }
   return distance;
 }
