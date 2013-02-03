@@ -27,12 +27,17 @@ class ObliviousTreeSplitter : public BaseSplitter {
 
   ObliviousTreeSplitter() {}
 
-  ObliviousTreeSplitter(const ParametersContainer& parameters);
+  explicit ObliviousTreeSplitter(const ParametersContainer& parameters);
 
   string toString() const;
 
   virtual void generateNextLayer(const vector<VertexWithData>& layer,
                                  vector<VertexWithData>* next_layer) const;
+  void findBestThresholdWithQualityByFeature(
+                                const vector<VertexWithData>& layer,
+                                vector<Threshold>& thresholds,
+                                int feature_index,
+                                double* layer_split_quality) const;
 };
 };
 };

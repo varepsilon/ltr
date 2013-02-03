@@ -24,7 +24,6 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc
 
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
-                      ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
 
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.h
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.cc

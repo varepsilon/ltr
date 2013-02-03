@@ -99,7 +99,7 @@ class DecisionTreeTest : public ::testing::Test {
 };
 
 TEST_F(DecisionTreeTest, TestingObliviousTree) {
-  DecisionTreeLearner decision_tree_learner(
+  DecisionTreeLearner<Object> decision_tree_learner(
     new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
   decision_tree_learner.add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);
@@ -124,7 +124,7 @@ TEST_F(DecisionTreeTest, TestingObliviousTree) {
 }
 
 TEST_F(DecisionTreeTest, TestingID3) {
-  DecisionTreeLearner decision_tree_learner(
+  DecisionTreeLearner<Object> decision_tree_learner(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
   decision_tree_learner.add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);

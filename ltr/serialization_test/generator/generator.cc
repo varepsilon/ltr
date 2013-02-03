@@ -67,13 +67,13 @@ int main(int argc, char* argv[]) {
   GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
   generator.setScorerTest(gp_learner, "GPLearner");
 
-  DecisionTreeLearner::Ptr ID3 = new DecisionTreeLearner(
+  DecisionTreeLearner<Object>::Ptr ID3 = new DecisionTreeLearner<Object>(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
   ID3->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
   ID3->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
   generator.setScorerTest(ID3, "ID3");
 
-  DecisionTreeLearner::Ptr ODT = new DecisionTreeLearner(
+  DecisionTreeLearner<Object>::Ptr ODT = new DecisionTreeLearner<Object>(
     new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
   ODT->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
   ODT->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
