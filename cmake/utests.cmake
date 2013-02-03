@@ -90,7 +90,8 @@ SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc
                           ${Source_Path}/ltr/optimization/stop_criteria/and_criterion_unittest.cc
                           ${Source_Path}/ltr/optimization/stop_criteria/or_criterion_unittest.cc
                           ${Source_Path}/ltr/optimization/functions/linear_function_unittest.cc
-                          ${Source_Path}/ltr/optimization/functions/quadratic_function_unittest.cc)
+                          ${Source_Path}/ltr/optimization/functions/quadratic_function_unittest.cc
+                          ${Source_Path}/ltr/optimization/functions/test_functions/stand_functions_unittest.cc)
 
 SOURCE_GROUP(density_estimators FILES ${DENSITY_ESTIMATORS_TEST})
 SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS_TEST})
