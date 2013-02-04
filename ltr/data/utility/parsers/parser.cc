@@ -70,7 +70,7 @@ int Parser::parseNextObject(ltr::Object* result) {
       parseRawObject(line, &raw_object);
       *result = makeObject(raw_object);
       return 1;
-  } catch(Parser::bad_line err) {}
+    } catch(Parser::bad_line err) {}
   return 0;
 }
 
@@ -97,14 +97,16 @@ Object Parser::makeObject(const RawObject& raw_object) {
       case NOMINAL: result[feature_index] = hash(iterator->second); break;
       case BOOLEAN: break;
       case NUMERIC:
-        result[feature_index] = ltr::utility::lexical_cast<double>(iterator->second);
+        result[feature_index] =
+            ltr::utility::lexical_cast<double>(iterator->second);
         break;
       case META:
         result.setMetaInfo(raw_feature_info_[raw_idx].feature_name,
                            iterator->second);
         break;
       case CLASS:
-        result.set_actual_label(ltr::utility::lexical_cast<double>(iterator->second));
+        result.set_actual_label(
+            ltr::utility::lexical_cast<double>(iterator->second));
         break;
       default: throw std::logic_error("Unknown raw feature type");
       }
@@ -115,5 +117,23 @@ Object Parser::makeObject(const RawObject& raw_object) {
 
   return result;
 }
+
+void Parser::makeString(
+    const FeatureInfo & feature_info,
+    const vector<const Object *> & objects,
+    std::string* result) {
+  stringstream result_stream;
+  for (int object_index = 0;
+       object_index < objects.size();
+       ++object_index) {
+    string str;
+    makeString(*(objects[object_index]), &str);
+    result_stream << str;
+    if (object_index + 1 < objects.size())
+      result_stream << std::endl;
+  }
+  *result = result_stream.str();    
+}
+
 };
 };
