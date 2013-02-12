@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block title %} LTRSite {% endblock %}
+
+{% block body %} 
+  <table cellpadding="10" cellspacing="0" width="100%">
+    <tr>
+      <td width="250px"> Existing objects: </td>
+      <td> Selected object: </td>
+    </tr>
+    <tr>
+      <td bgcolor="e0e0e0">
+        {% for object in objects %}
+          <p><a href="/view/{{ forloop.counter0 }}">{{ object.name_ }}</a></p>
+        {% endfor %}
+        <p><a href="/create">Create object...</a></p>
+      </td>
+      <td> 
+        {% if formType %}
+          <form action="" method="post">
+            {% csrf_token %}
+            <table>
+              {{ formType.as_table }}
+            </table>
+            <div id="id_settings_">
+              <table>
+              {{ formSettings.as_table }}
+              </table>
+            </div>
+            <br>
+            <table cellpadding="5">
+              <tr>
+                <td>
+                  <input type="submit" value={% if edit %}"Save"{% else %}"Create"{% endif %} onClick="this.form.action=''">
+                </td>
+                <td>
+                  {% if edit %}
+                    <input type="button" value="Delete" onClick="this.form.action='/delete/{{ objectName }}'; submit_with_confirm(this.form, 'Are you sure you want to delete \'{{ objectName }}\'?')">
+                  {% endif %}
+                </td>
+                <td>
+                  <button onclick="window.location='/'">Cancel</button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        {% else %}
+          Select an object to view
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+  Debug:<br>
+  Objects: {{ objects }}
+
+  {% if not edit and load_types %}
+  <script>
+    get_object_types()
+  </script>
+  {% endif %}
+{% endblock %}
