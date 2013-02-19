@@ -26,7 +26,7 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
 
   fill(max_features_values->begin(),
        max_features_values->end(),
-       numeric_limits<double>::min());
+       -numeric_limits<double>::max());
 
   for (int element_index = 0;
        element_index < (int)dataset.size();
