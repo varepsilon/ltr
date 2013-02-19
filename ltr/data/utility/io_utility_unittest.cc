@@ -79,6 +79,22 @@ TEST_F(IOUtilityTest, TestingSVMParser) {
   EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "SVMLIGHT"), list_data);
 }
 
+TEST_F(IOUtilityTest, TestingARFFParser) {
+  DataSet<Object> data;
+  const int N = 145;
+  const int featureN = 3;
+  for (int i = 0; i < N; ++i) {
+    Object obj;
+    for (int j = 0; j < featureN; j++)
+      obj << static_cast<double>(randomizer.rand()) / 15332;
+    data << obj;
+  }
+
+  saveDataSet(data, tmp_file_name, "ARFF");
+  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "ARFF");
+  EXPECT_EQ(data2, data);
+}
+
 TEST_F(IOUtilityTest, TestingYandexParser) {
   DataSet<Object> data;
   const int N = 145;
@@ -114,7 +130,7 @@ TEST_F(IOUtilityTest, TestingYandexParser) {
       list_data);
 }
 
-TEST_F(IOUtilityTest, TestingARFFParser) {
+TEST_F(IOUtilityTest, TestingARFFAndSVMParsers) {
   DataSet<Object> arff_data =
       loadDataSet<ltr::Object>(arff_arff_test_file_name, "arff");
 

@@ -25,7 +25,11 @@ namespace io_utility {
 
     public:
       virtual void parseRawObject(string line, RawObject* result);
-      void makeString(const Object& obj, std::string* result);
+      virtual void makeString(const Object& object, string* result);
+      virtual void makeString(
+          const FeatureInfo & feature_info,
+          const vector<const Object *> & objects,
+          std::string* result);
 
       PairwiseDataSet buildPairwiseDataSet(const std::vector<Object>& objects,
                                            const FeatureInfo& info);
@@ -38,32 +42,6 @@ namespace io_utility {
       map<int, string> features_;
       map<string, double> classes_;
       map<string, string> meta_features_;
-      /**
-       * @class NextFeatureParser
-       * This class is used only by ARFF Parser. It is functor,
-       * which is used in callbacks from boost::spirit
-       */
-      class NextFeatureParser {
-        public:
-          /**
-           * Function inits NextFatureParser.
-           */
-          void init(ARFFParser* parser);
-          /**
-           * This operator is called by boost::spirit.
-           * It processes features and saves it in the map in the parser,
-           * given in init.
-           */
-          void operator()(const char* feature) const;
-          /**
-           * Function prepares NextFeatureParser to process the next object.
-           */
-          void reset();
-
-        private:
-          ARFFParser* parser_;
-      } parseNextFeature;
-      friend class NextFeatureParser;
   };
 };
 };

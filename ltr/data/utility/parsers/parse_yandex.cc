@@ -37,42 +37,37 @@ void YandexParser::parseRawObject(string line_, RawObject* result) {
   RawObject& features = *result;
   int key;
   string relevance;
-  try {
-    string line = trim_copy(line_);
-    vector<string> parse_data;
-    split(line, "#", &parse_data);
-    if (parse_data.size() > 2)
-      throw std::logic_error("too much #");
-    if (parse_data.size() == 0)
-      throw std::logic_error("no data");
+  string line = trim_copy(line_);
+  vector<string> parse_data;
+  split(line, "#", &parse_data);
+  if (parse_data.size() > 2)
+    throw std::logic_error("too much #");
+  if (parse_data.size() == 0)
+    throw std::logic_error("no data");
 
-    if (parse_data.size() == 2) {
-      qid = trim_copy(parse_data[1]);
-      lexical_cast<int>(qid);
-      parse_data.pop_back();
-    }
-
-    line = trim_copy(parse_data[0]);
-    split(line, &parse_data);
-
-    relevance = parse_data.front();
-    lexical_cast<double>(relevance);
-
-    for (int i = 1; i < parse_data.size(); ++i) {
-      vector<string> feature;
-      split(parse_data[i], ":", &feature);
-      if (feature.size() != 2)
-        throw logic_error("can't parse feature " + parse_data[i]);
-      features[lexical_cast<int>(trim_copy(feature[0]))] =
-          trim_copy(feature[1]);
-    }
-    features[raw_relevance_idx_] = relevance;
-    if (!qid.empty())
-      features[raw_query_id_idx_] = qid;
-  } catch(std::exception e) {
-    throw std::logic_error(
-        "failed parse line " + line_ + " as Yandex (" + e.what() + ")");
+  if (parse_data.size() == 2) {
+    qid = trim_copy(parse_data[1]);
+    lexical_cast<int>(qid);
+    parse_data.pop_back();
   }
+
+  line = trim_copy(parse_data[0]);
+  split(line, &parse_data);
+
+  relevance = parse_data.front();
+  lexical_cast<double>(relevance);
+
+  for (int i = 1; i < parse_data.size(); ++i) {
+    vector<string> feature;
+    split(parse_data[i], ":", &feature);
+    if (feature.size() != 2)
+      throw logic_error("can't parse feature " + parse_data[i]);
+    features[lexical_cast<int>(trim_copy(feature[0]))] =
+        trim_copy(feature[1]);
+  }
+  features[raw_relevance_idx_] = relevance;
+  if (!qid.empty())
+    features[raw_query_id_idx_] = qid;
 }
 
 void YandexParser::makeString(const Object& object, string* result) {

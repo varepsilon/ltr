@@ -20,10 +20,63 @@ using std::map;
 
 namespace ltr {
 namespace io_utility {
-
-  void ARFFParser::makeString(const Object& obj, std::string* result) {
-    throw std::logic_error("it is impossible to save data in ARFF format");
+  void ARFFParser::makeString(const Object& object, string* result) {
+    throw std::logic_error("Can't make string from single object");
   }
+
+  void ARFFParser::makeString(
+      const FeatureInfo & feature_info,
+      const vector<const Object *> & objects,
+      std::string* result) {
+    stringstream stream;
+    stream.precision(utility::DOUBLE_PRECISION);
+    stream << "@RELATION 'LTR dataset'" << std::endl << std::endl;
+    stream << "@ATTRIBUTE class NUMERIC" << std::endl;
+    for (int feature_num = 0;
+        feature_num < feature_info.feature_count();
+        ++feature_num) {
+      if (feature_info.getFeatureType(feature_num) == ltr::NOMINAL) {
+        stream << "@ATTRIBUTE attr" << feature_num << " {";
+        const NominalFeatureValues nominals =
+            feature_info.getFeatureValues(feature_num);
+        for (NominalFeatureValues::const_iterator i = nominals.begin();
+            i != nominals.end();
+            ++i) {
+          if (i != nominals.begin())
+            stream << ",";
+          stream << i->second;
+        }
+        stream << "}" << std::endl;
+      } else {
+        stream << "@ATTRIBUTE attr" << feature_num << " NUMERIC" << std::endl;
+      }
+    }
+    stream << std::endl << "@DATA" << std::endl;
+    for (int object_num = 0; object_num < objects.size(); ++object_num) {
+      const Object &object = *objects[object_num];
+      stream << object.actual_label();
+      for (int feature_num = 0;
+          feature_num < object.feature_count();
+          ++feature_num) {
+        stream << ',';
+        switch (feature_info.getFeatureType(feature_num)) {
+          case NUMERIC:
+          case BOOLEAN:
+            stream << object[feature_num];
+            break;
+          case NOMINAL:
+            stream <<
+                feature_info.getFeatureValues(feature_num).
+                    find(static_cast<int>(object[feature_num]))->second;
+            break;
+        }
+      }
+      if (object_num + 1 < objects.size())
+        stream << std::endl;
+    }
+    *result = stream.str();
+  }
+
 
   PairwiseDataSet ARFFParser::buildPairwiseDataSet(
       const std::vector<Object>& objects,
@@ -40,8 +93,10 @@ namespace io_utility {
   void ARFFParser::parseRawObject(string line, RawObject* result) {
     if (line[0] == '%')
       throw Parser::bad_line();
-    parseNextFeature.init(this);
-    parseNextFeature.reset();
+    current_id_ = 1;
+    current_relevance_ = 0;
+    features_.clear();
+    meta_features_.clear();
 
     trim(&line);
     vector<string> splitted;
@@ -55,7 +110,17 @@ namespace io_utility {
         splitted[value_num] =
             splitted[value_num].substr(1, splitted[value_num].size());
       }
-      parseNextFeature(splitted[value_num].c_str());
+      string feature = splitted[value_num];
+      Parser::RawFeatureType type =
+          raw_feature_info_[current_id_].feature_type;
+      if (feature == "?") {
+        current_id_++;
+      } else if (type == CLASS) {
+        features_[current_id_++] =
+          ltr::utility::lexical_cast<string>(classes_[feature]);
+      } else {
+        features_[current_id_++] = feature;
+      }
     }
 
     *result = features_;
@@ -89,7 +154,7 @@ namespace io_utility {
         continue;
 
       if (first != "ATTRIBUTE")
-        throw std::logic_error("can't parse ARFF header");
+        throw std::logic_error("can't parse ARFF header: unknown parameter");
 
       string attr_name;
       string attr_type;
@@ -137,36 +202,6 @@ namespace io_utility {
       }
       feature_id++;
     }
-    if (class_feature_id_ == -1)
-      throw std::logic_error("no class attribute found");
 }
-
-  void ARFFParser::NextFeatureParser::reset() {
-    parser_->current_id_ = 1;
-    parser_->current_relevance_ = 0;
-    parser_->features_.clear();
-    parser_->meta_features_.clear();
-  }
-
-  void ARFFParser::NextFeatureParser::operator()(const char* feature_) const {
-    std::string feature(feature_);
-    int cur_id = parser_->current_id_;
-    Parser::RawFeatureType type =
-        parser_->raw_feature_info_[cur_id].feature_type;
-    if (feature == "?") {
-      parser_->current_id_++;
-      return;
-    }
-    if (type == CLASS) {
-      parser_->features_[parser_->current_id_++] =
-        ltr::utility::lexical_cast<string>(parser_->classes_[feature]);
-      return;
-    }
-    parser_->features_[parser_->current_id_++] = feature;
-  }
-
-  void ARFFParser::NextFeatureParser::init(ARFFParser* parser) {
-    parser_ = parser;
-  }
 }
 }

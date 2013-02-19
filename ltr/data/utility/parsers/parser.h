@@ -7,8 +7,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 using std::vector;
+using std::string;
+using std::stringstream;
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -94,9 +97,23 @@ class Parser {
    * @code
    * string result;
    * parser->makeString(object, &result);
-   * @endcoe
+   * @endcode
    */
   virtual void makeString(const Object& object, std::string* result) = 0;
+  /**
+   * Functions serializes dataset into string.
+   * @param feature_info - information about features
+   * @param objects - vector of dataset's objects
+   * @param result - string, which will contain serialized object
+   * @code
+   * string result;
+   * parser->makeString(data, &result);
+   * @endcode
+   */
+  virtual void makeString(
+      const FeatureInfo & feature_info,
+      const vector<const Object *> & objects,
+      std::string* result);
   /**
    * Function to create Pairwise data set of given objects
    * @param objects - objects to create data set from
@@ -136,6 +153,7 @@ class Parser {
     return utility::murmurHash(str.c_str(), str.size(), 19837);
   }
 };
+
 /**
  * Returns the parser for given format.
  * @param format - format to create parser for.

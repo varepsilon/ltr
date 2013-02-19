@@ -169,6 +169,8 @@ void saveDataSet(const DataSet<TElement>& data,
     throw std::logic_error("can't open " + filename + " for writing");
   }
   Parser::Ptr parser = getParser(format);
+  string str;
+  vector<const Object *> objects;
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
@@ -176,11 +178,11 @@ void saveDataSet(const DataSet<TElement>& data,
     for (int object_index = 0;
          object_index < per_object_accessor.object_count();
          ++object_index) {
-      string str;
-      parser->makeString(per_object_accessor.object(object_index), &str);
-      file << str << std::endl;
+      objects.push_back(&per_object_accessor.object(object_index));
     }
   }
+  parser->makeString(data.feature_info(), objects, &str);
+  file << str << std::endl;
   file.close();
 }
 
