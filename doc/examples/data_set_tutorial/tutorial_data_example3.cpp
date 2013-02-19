@@ -24,3 +24,4 @@ int main() {
   cout << obj.getMetaInfo("info2") << endl;
   return 0;
 }
+

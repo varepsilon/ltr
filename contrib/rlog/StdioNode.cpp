@@ -42,6 +42,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <assert.h>
 
 #ifdef _WIN32
 #  include <io.h>
@@ -235,6 +236,7 @@ StdioNode::publish( const RLogData &data )
     ss << '\n';
 
     string out = ss.str();
-    write( fdOut, out.c_str(), out.length() );
+    size_t wc = write( fdOut, out.c_str(), out.length() );
+    assert(wc == out.length());
 }
 

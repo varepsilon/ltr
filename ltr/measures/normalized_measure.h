@@ -67,7 +67,7 @@ class NormalizedMeasure : public Measure<TElement> {
     std::stringstream str;
     std::fixed(str);
     str.precision(2);
-    if (weak_measure_ == NULL) {
+    if (weak_measure_ == typename Measure<TElement>::Ptr()) {
       str << "Normalized measure without setted weak measure";
     } else {
       str << "Normalized measure over { ";
@@ -94,7 +94,7 @@ class NormalizedMeasure : public Measure<TElement> {
   }
 
   virtual double get_measure(const TElement& element) const {
-    if (weak_measure_ == NULL) {
+    if (weak_measure_ == typename Measure<TElement>::Ptr()) {
       rError("No weak measure");
       throw std::logic_error("No weak measure");
     }

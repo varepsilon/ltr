@@ -212,10 +212,11 @@ class TOnParameterTag: public TagHandler {
         rWarning("parameter %s has no value", name.c_str());
         return;
     }
-    const string* type = element->Attribute(string(TYPE_ATTR));
-    rInfo("TOnParametersExecutor: name:%s val:%s type:%d\n", name.c_str(),
-         val.c_str(), type);
-    addParameter(name, type ? *type : guessType(val), val);
+    const string *type = element->Attribute(string(TYPE_ATTR));
+    const string extr_type = type ? *type : guessType(val);
+    rInfo("TOnParametersExecutor: name:%s val:%s type:%s\n", name.c_str(),
+         val.c_str(), extr_type.c_str());
+    addParameter(name, extr_type, val);
   }
 
  private:
@@ -274,8 +275,9 @@ class TOnParameterTag: public TagHandler {
                     const string& value) {
     if (type == "bool") {
       container->AddNew(name, toBool(value));
-      rInfo("TOnParametersExecutor: Added bool %s %b\n",
-           name.c_str(), toBool(value));
+      rInfo("TOnParametersExecutor: Added bool %s %s\n",
+           name.c_str(),
+           ltr::utility::lexical_cast<string>(toBool(value)).c_str());
     } else if (type == "double") {
       container->AddNew(name, toDouble(value));
       rInfo("TOnParametersExecutor: Added double %s %lf\n",
@@ -306,7 +308,7 @@ class TOnParameterTag: public TagHandler {
    * Yet is under construction.
    */
   static string guessType(const string& value) {
-    const string::size_type pos_of_space = value.find_first_of("\t ,");
+    const int pos_of_space = value.find_first_of("\t ,");
     rInfo("TOnParametersExecutor: guessing type of %s %d\n",
          value.c_str(), pos_of_space);
 

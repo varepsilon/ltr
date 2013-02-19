@@ -351,7 +351,7 @@ void LtrClient::launchCrossvalidation(
     }
 
     cross_validator.launch();
-    rInfo(cross_validator.toString().c_str());
+    rInfo("%s", cross_validator.toString().c_str());
     addToReport("<p><b>Crossvalidation results:</b></p>\n" + cross_validator.toHTML());
 }
 

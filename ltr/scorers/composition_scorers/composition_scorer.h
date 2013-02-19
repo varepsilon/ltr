@@ -50,19 +50,19 @@ class CompositionScorer : public Scorer, Parameterized {
   /**
    * Returns the weighted scorer by its index in composition
    */
-  const ScorerAndWeight& operator[](size_t scorer_index) const;
+  const ScorerAndWeight& operator[](int scorer_index) const;
   /**
    * Returns the weighted scorer by its index in composition
    */
-  ScorerAndWeight& operator[](size_t scorer_index);
+  ScorerAndWeight& operator[](int scorer_index);
   /**
    * Returns the weighted scorer by its index in composition
    */
-  const ScorerAndWeight& at(size_t scorer_index) const;
+  const ScorerAndWeight& at(int scorer_index) const;
   /**
    * Returns the weighted scorer by its index in composition
    */
-  ScorerAndWeight& at(size_t scorer_index);
+  ScorerAndWeight& at(int scorer_index);
   /**
    * Appends the weighted scorer to the composition
    */

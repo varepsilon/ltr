@@ -372,7 +372,7 @@ void GPLearner<TElement>::
       best_tree_ = population_[best_tree_index];
       log_out << best_tree_ << " | ";
       log_out << "with fitness " << best_tree_.mFitness;
-      rDebug(log_out.str().c_str());
+      rDebug("%s", log_out.str().c_str());
     }
     // \TODO ? rewrite with setters and getters
     *scorer = GPScorer(best_tree_, context_, feature_count_);

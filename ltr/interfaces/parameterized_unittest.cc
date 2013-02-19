@@ -17,7 +17,7 @@ TEST(InterfacesTest, ParameterizedTest) {
   parameters_container.Set("bool1", false);
   parameters_container.Set("double1", 3.24);
 
-  EXPECT_EQ(false, parameters_container.Get<bool>("bool1"));
+  EXPECT_FALSE(parameters_container.Get<bool>("bool1"));
   EXPECT_EQ(3.24, parameters_container.Get<double>("double1"));
 
   EXPECT_ANY_THROW(parameters_container.Get<double>("none"));

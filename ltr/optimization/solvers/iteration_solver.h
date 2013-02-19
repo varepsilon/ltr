@@ -60,7 +60,7 @@ template<class TFunction> class IterationSolver : public Solver<TFunction> {
   }
 
   bool stop(const State& curr_state, const State& prev_state) const {
-    if (stop_criterion() == NULL) {
+    if (stop_criterion() == StopCriterion::Ptr()) {
       return true;
     }
     return stop_criterion()->isTrue(curr_state, prev_state);

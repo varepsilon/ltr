@@ -20,22 +20,22 @@ namespace composition {
   }
 
   const CompositionScorer::ScorerAndWeight&
-      CompositionScorer::at(size_t scorer_index) const {
+      CompositionScorer::at(int scorer_index) const {
     rDebug("Getting scorer at %d index", scorer_index);
     return weighted_scorers_.at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
-      CompositionScorer::at(size_t scorer_index) {
+      CompositionScorer::at(int scorer_index) {
     rDebug("Getting scorer at %d index", scorer_index);
     return weighted_scorers_.at(scorer_index);
   }
   const CompositionScorer::ScorerAndWeight&
-      CompositionScorer::operator[](size_t scorer_index) const {
+      CompositionScorer::operator[](int scorer_index) const {
     rDebug("Setting scorer at %d index", scorer_index);
     return at(scorer_index);
   }
   CompositionScorer::ScorerAndWeight&
-      CompositionScorer::operator[](size_t scorer_index) {
+      CompositionScorer::operator[](int scorer_index) {
     rDebug("Setting scorer at %d index", scorer_index);
     return at(scorer_index);
   }

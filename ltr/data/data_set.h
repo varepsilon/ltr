@@ -168,7 +168,7 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   PerObjectAccessor<const TElement> per_object_accessor(&element);
-  if (feature_info_ == NULL || feature_info_->feature_count() == 0) {
+  if (feature_info_ == FeatureInfo::Ptr() || feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
       new FeatureInfo(per_object_accessor.object(0).feature_count()));
   }
