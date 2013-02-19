@@ -39,8 +39,9 @@ INCLUDE(${Source_Path}/cmake/include_openmp.cmake)
 
 # let use pthread on unix
 IF(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -pthread")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -pthread -lrt")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread -lrt")
+    SET(RT "rt")
 ENDIF(UNIX)
 
 ########################################################################################
@@ -62,7 +63,7 @@ ADD_LIBRARY(tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE(${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY(ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES(ltr puppy rlog)
+TARGET_LINK_LIBRARIES(ltr puppy rlog ${RT})
 
 # installing
 INSTALL(TARGETS ltr puppy rlog ARCHIVE DESTINATION ${Install_Path})
