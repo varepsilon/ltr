@@ -14,7 +14,7 @@ using std::endl;
 
 using ltr::utility::iequals;
 
-typedef string ParameterizedDependency;
+typedef string ObjectDependency;
 
 namespace { // NOLINT
 static const char* const CONFIG               = "config";
@@ -287,7 +287,7 @@ class TOnParameterTag: public TagHandler {
       rInfo("TOnParametersExecutor: Added int %s %d\n",
            name.c_str(), toInt(value));
     } else if (type == XML_TOKEN_DEPENDENCY_TYPE) {
-      container->AddNew(name, ParameterizedDependency(value));
+      container->AddNew(name, ObjectDependency(value));
       rInfo("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
            name.c_str(), value.c_str());
     } else if (type.substr(0, 6) == "vector") {   //TODO: rewrite using split
@@ -383,7 +383,7 @@ class OnGeneralParameterized: public TagHandler {
     rInfo("TOnGeneralXmlToken\n");
 
     const char* name = element->Attribute(NAME_ATTR);
-    ParameterizedInfo& spec = ltr::utility::SafeInsert(d->xmlTokenSpecs(),
+    ObjectInfo& info = ltr::utility::SafeInsert(d->objectInfos(),
                                                       name);
     const char* type = element->Attribute(TYPE_ATTR);
     if (!type) {
@@ -400,12 +400,12 @@ class OnGeneralParameterized: public TagHandler {
       throw logic_error("no tag name");
     }
 
-    spec.tag_name_ = tag_name;
-    spec.object_name_ = name;
-    spec.object_type_ = type;
-    spec.approach_ = approach;
+    info.tag_name_ = tag_name;
+    info.object_name_ = name;
+    info.object_type_ = type;
+    info.approach_ = approach;
 
-    parameters_executor->setContainer(&spec.parameters_);
+    parameters_executor->setContainer(&info.parameters_);
     GenericParse(TagHandlers(),
                  element->FirstChildElement(),
                  parameters_executor);

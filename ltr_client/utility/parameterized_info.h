@@ -12,8 +12,8 @@
 using std::string;
 using std::stringstream;
 
-class ParameterizedInfo;
-typedef std::list<const ParameterizedInfo*> ParameterizedInfosList;
+class ObjectInfo;
+typedef std::list<const ObjectInfo*> ObjectInfosList;
 
 /**
  * Contains information about any object that inherits
@@ -21,44 +21,44 @@ typedef std::list<const ParameterizedInfo*> ParameterizedInfosList;
  * splitters, measures, metrics, scorers that was initialized
  * during the LTR Client session.
  */
-class ParameterizedInfo {
+class ObjectInfo {
  public:
   /**
    * Dictionary with string keys and the
-   * ParameterizedInfo stored type
+   * ObjectInfo stored type
    */
-  typedef std::map<string, ParameterizedInfo> ParameterizedInfos;
+  typedef std::map<string, ObjectInfo> ObjectInfos;
   /**
    * Basic constructor.
-   * @returns ParameterizedInfo constructed object.
+   * @returns ObjectInfo constructed object.
    */
-  ParameterizedInfo();
+  ObjectInfo();
   /**
    * Another constructor implementation.
    * @param category is the type of base class
    * @param alias is the name of the entity
    * @param type is the type of the derived class
-   * @returns ParameterizedInfo constructed object.
+   * @returns ObjectInfo constructed object.
    */
-  ParameterizedInfo(const string& category,  // e.g. Measure, Learner
+  ObjectInfo(const string& category,  // e.g. Measure, Learner
                    const string& alias,     // e.g. NDCGlistwise
                    const string& type,      // e.g. NDCG, KNN
                    const string& approach,  // e.g. Listwise, Pointwise
                    ltr::ParametersContainer parameters);
   /**
    * Deep copy constructor.
-   * @returns ParameterizedInfo constructed object.
+   * @returns ObjectInfo constructed object.
    */
-  ParameterizedInfo(const ParameterizedInfo& other);
+  ObjectInfo(const ObjectInfo& other);
   /**
    * Deep copy '=' operator.
-   * @returns ParameterizedInfo link to the modified object.
+   * @returns ObjectInfo link to the modified object.
    */
-  ParameterizedInfo& operator=(const ParameterizedInfo& other);
+  ObjectInfo& operator=(const ObjectInfo& other);
   /**
    * Basic destructor.
    */
-  ~ParameterizedInfo();
+  ~ObjectInfo();
 
   /**
    * @returns constant link to the name of the tag where
@@ -86,17 +86,17 @@ class ParameterizedInfo {
    */
   const ltr::ParametersContainer& get_parameters() const;
   /**
-   * @returns the constant link to the ParameterizedInfos that
+   * @returns the constant link to the ObjectInfos that
    * contains dependency specifications.
    */
-  const ParameterizedInfosList& dependency_specs() const;
+  const ObjectInfosList& dependency_infos() const;
   /**
    * Fills the dependency list.
-   * @param token_specifications - ParameterizedInfos constant object
+   * @param object_infos - ObjectInfos constant object
    * link that contains all the registered objects.
    */
   void fill_dependency_list(
-      const ParameterizedInfos& token_specifications);
+      const ObjectInfos& object_infos);
 
  private:
   string tag_name_;
@@ -104,18 +104,18 @@ class ParameterizedInfo {
   string object_type_;
   string approach_;
   ltr::ParametersContainer parameters_;
-  ParameterizedInfosList dependency_specs_;
+  ObjectInfosList dependency_infos_;
 
   friend class ConfigParser;
   friend class OnGeneralParameterized;
 };
 /**
- * Converts the ParameterizedInfo object into the
+ * Converts the ObjectInfo object into the
  * printable string.
- * @param Info - ParameterizedInfo to convert
- * @returns string with converted ParameterizedInfo
+ * @param Info - ObjectInfo to convert
+ * @returns string with converted ObjectInfo
  */
-string ToString(const ParameterizedInfo& Info);
+string ToString(const ObjectInfo& Info);
 
 #endif //LTR_CLIENT_UTILITY_PARAMETERIZED_INFO_H_
 

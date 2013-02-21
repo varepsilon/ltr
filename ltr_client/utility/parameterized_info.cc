@@ -8,17 +8,17 @@ using std::logic_error;
 
 using ltr::utility::split;
 
-typedef string ParameterizedDependency;
+typedef string ObjectDependency;
 
-void ParameterizedInfo::fill_dependency_list(
-    const ParameterizedInfos& token_specs) {
-  dependency_specs_.clear();
+void ObjectInfo::fill_dependency_list(
+    const ObjectInfos& object_infos) {
+  dependency_infos_.clear();
 
-  typedef ltr::ParametersContainer::NameValue<const ParameterizedDependency>
+  typedef ltr::ParametersContainer::NameValue<const ObjectDependency>
       TNameValue;
   typedef list<TNameValue> TDependencies;
   const TDependencies& my_dependencies =
-      parameters_.getValuesByType<const ParameterizedDependency>();
+      parameters_.getValuesByType<const ObjectDependency>();
 
   for (TDependencies::const_iterator my_dependency_it = my_dependencies.begin();
       my_dependency_it != my_dependencies.end();
@@ -29,37 +29,37 @@ void ParameterizedInfo::fill_dependency_list(
     split(&dependency_parts, " ");
     split(&dependency_parts, ",");
     for (int i = 0; i < dependency_parts.size(); ++i) {
-      const ParameterizedInfo* found = NULL;
+      const ObjectInfo* found = NULL;
 
       if (dependency_parts[i].empty()) continue;  // TODO: remove
       // this after getting rid of boost::split
 
       assert(!dependency_parts[i].empty());
 
-      ParameterizedInfos::const_iterator it = token_specs.find(
+      ObjectInfos::const_iterator it = object_infos.find(
             dependency_parts[i]);
-      assert(it != token_specs.end());
+      assert(it != object_infos.end());
       found = &it->second;
 
       if (!found) {
-        throw logic_error("TXmlTokenSpec::fillDependency List: "
+        throw logic_error("TXmlObjectInfo::fillDependency List: "
                           "Could not resolve dependency " +
                           dependency_parts[i]);
       }
-      dependency_specs_.push_back(found);
+      dependency_infos_.push_back(found);
     }
   }
 }
 
-ParameterizedInfo::ParameterizedInfo()
+ObjectInfo::ObjectInfo()
   : tag_name_()
   , object_name_()
   , object_type_()
   , approach_()
   , parameters_()
-  , dependency_specs_() {}
+  , dependency_infos_() {}
 
-ParameterizedInfo::ParameterizedInfo(const string& tag_name,
+ObjectInfo::ObjectInfo(const string& tag_name,
                  const string& object_name,
                  const string& object_type,
                  const string& approach,
@@ -70,11 +70,11 @@ ParameterizedInfo::ParameterizedInfo(const string& tag_name,
   , approach_(approach)
   , parameters_(parameters) {}
 
-ParameterizedInfo::ParameterizedInfo(const ParameterizedInfo& other) {
+ObjectInfo::ObjectInfo(const ObjectInfo& other) {
   *this = other;
 }
 
-ParameterizedInfo& ParameterizedInfo::operator= (const ParameterizedInfo& other) {
+ObjectInfo& ObjectInfo::operator= (const ObjectInfo& other) {
   if (this == &other) {
     return *this;
   }
@@ -82,43 +82,43 @@ ParameterizedInfo& ParameterizedInfo::operator= (const ParameterizedInfo& other)
   object_type_ = other.get_type();
   approach_ = other.get_approach();
   parameters_ = other.get_parameters();
-  dependency_specs_ = other.dependency_specs();
+  dependency_infos_ = other.dependency_infos();
   return *this;
 }
 
 
-ParameterizedInfo::~ParameterizedInfo() {
+ObjectInfo::~ObjectInfo() {
 }
 
-const string& ParameterizedInfo::get_tag_name() const {
+const string& ObjectInfo::get_tag_name() const {
   return tag_name_;
 }
-const string& ParameterizedInfo::get_name() const {
+const string& ObjectInfo::get_name() const {
   return object_name_;
 }
-const string& ParameterizedInfo::get_type() const {
+const string& ObjectInfo::get_type() const {
   return object_type_;
 }
-const string& ParameterizedInfo::get_approach() const {
+const string& ObjectInfo::get_approach() const {
   return approach_;
 }
-const ltr::ParametersContainer& ParameterizedInfo::get_parameters() const {
+const ltr::ParametersContainer& ObjectInfo::get_parameters() const {
   return parameters_;
 }
-const ParameterizedInfosList& ParameterizedInfo::dependency_specs() const {
-  return dependency_specs_;
+const ObjectInfosList& ObjectInfo::dependency_infos() const {
+  return dependency_infos_;
 }
 
-string ToString(const ParameterizedInfo& info) {
+string ToString(const ObjectInfo& info) {
   stringstream out(stringstream::out);
-  out << "TXmlTokenSpec(name=" << info.get_name()
+  out << "TXmlTokenInfo(name=" << info.get_name()
       << ", type=" << info.get_type()
       << ", approach=" << info.get_approach()
       << ", parameters=" << info.get_parameters().toString()
          << ", my dependencies=(";
-  for (ParameterizedInfosList::const_iterator it =
-         info.dependency_specs().begin();
-       it != info.dependency_specs().end();
+  for (ObjectInfosList::const_iterator it =
+         info.dependency_infos().begin();
+       it != info.dependency_infos().end();
        ++it) {
     out << (*it)->get_name() << ", ";
   }

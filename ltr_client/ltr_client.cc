@@ -2,60 +2,37 @@
 
 #include "rlog/rlog_default.h"
 
-#include <iostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 #include <ctime>
-#include <set>
-
-#include "ltr/predictions_aggregators/predictions_aggregator.h"
-#include "ltr/predictions_aggregators/average_predictions_aggregator.h"
-#include "ltr/predictions_aggregators/vote_predictions_aggregator.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
-#include "ltr/crossvalidation/k_fold_simple_splitter.h"
+#include "ltr/learners/learner.h"
+#include "ltr/measures/measure.h"
+#include "ltr/metrics/metric.h"
+#include "ltr/utility/neighbor_weighter.h"
 
 #include "ltr/data/utility/io_utility.h"
-
-#include "ltr/learners/learner.h"
-#include "ltr/learners/best_feature_learner/best_feature_learner.h"
-#include "ltr/learners/linear_learner/linear_learner.h"
-#include "ltr/learners/nearest_neighbor_learner/nearest_neighbor_learner.h"
-
-#include "ltr/measures/measure.h"
-#include "ltr/measures/dcg.h"
-#include "ltr/measures/ndcg.h"
-#include "ltr/measures/abs_error.h"
-
-#include "ltr/metrics/metric.h"
-#include "ltr/metrics/euclidean_metric.h"
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/configurator.h"
 #include "ltr_client/factory.h"
-#include "ltr_client/registration.h"
 
-#include "ltr/utility/neighbor_weighter.h"
 #include "ltr/utility/boost/path.h"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/html.h"
 
-#include "contrib/getopt_pp/getopt_pp.h"
-
-using std::cout;
-using std::cerr;
 using std::find;
 using std::logic_error;
 using std::exception;
 using std::string;
 using std::vector;
+using std::set;
 using std::endl;
 using std::ofstream;
 
-using ltr::PredictionsAggregator;
-using ltr::AveragePredictionsAggregator;
 using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::Learner;
@@ -63,158 +40,19 @@ using ltr::DataSet;
 using ltr::Scorer;
 using ltr::ObjectList;
 using ltr::ObjectPair;
-using ltr::BestFeatureLearner;
-using ltr::LinearLearner;
-using ltr::EuclideanMetric;
 using ltr::Measure;
-using ltr::NNLearner;
-using ltr::NDCG;
-using ltr::DCG;
-
 using ltr::cv::Splitter;
-using ltr::cv::KFoldSimpleSplitter;
+using ltr::cv::CrossValidator;
+
 using ltr::io_utility::loadDataSet;
-using ltr::utility::InverseLinearDistance;
 using ltr::utility::AppendTrailingPathSeparator;
 using ltr::utility::FileLink;
 using ltr::utility::split;
 
-using GetOpt::GetOpt_pp;
-using GetOpt::Option;
-using GetOpt::OptionPresent;
-using GetOpt::GetOptEx;
-using GetOpt::TooManyOptionsEx;
 
-using ltr::LOG;
-
-typedef  string ParameterizedDependency;
-
-static bool BuildObjectCreationChain(const ParameterizedInfo* spec,
-    ParameterizedInfosList* queue,
-    ParameterizedInfosList* circularity_check_queue) {
-  if (find(queue->begin(), queue->end(), spec) != queue->end()) {
-    return true;
-  }
-
-  // check for circular dependencies
-  ParameterizedInfosList::const_iterator begin_it = find(
-    circularity_check_queue->begin(), circularity_check_queue->end(), spec);
-
-  if (begin_it != circularity_check_queue->end()) {
-    throw logic_error("circular dependency detected");
-  }
-  circularity_check_queue->push_back(spec);
-
-  // add dependencies
-  for (ParameterizedInfosList::const_iterator it =
-        spec->dependency_specs().begin();
-        it != spec->dependency_specs().end();
-        ++it) {
-    const ParameterizedInfo* dep_spec = *it;
-    if (!BuildObjectCreationChain(dep_spec, queue, circularity_check_queue)) {
-      throw logic_error("can not resolve dependencies");
-    }
-  }
-
-  // add self
-  queue->push_back(spec);
-  return true;
-}
-
-static ParameterizedInfosList values(
-    const ConfigParser::ParameterizedInfos& cont) {
-  ParameterizedInfosList values;
-  for (ConfigParser::ParameterizedInfos::const_iterator it = cont.begin();
-       it != cont.end();
-       ++it) {
-    const ParameterizedInfo& spec = it->second;
-    values.push_back(&spec);
-  }
-  return values;
-}
-
-ParameterizedInfosList LtrClient::getLoadQueue() const {
-  const ParameterizedInfosList& all_specs =
-    values(configurator_.xmlTokenSpecs());
-
-  ParameterizedInfosList result;
-  for (ParameterizedInfosList::const_iterator it = all_specs.begin();
-       it != all_specs.end();
-       ++it) {
-    const ParameterizedInfo* spec = *it;
-    ParameterizedInfosList circularity_check_queue;
-    BuildObjectCreationChain(spec, &result, &circularity_check_queue);
-  }
-  return result;
-}
-
-LtrClient::LtrClient()
-: configurator_() {}
+LtrClient::LtrClient(): factory_(configurator_) {}
 
 LtrClient::~LtrClient() {}
-
-static ParametersContainer Create(
-  const ParametersContainer& src_parameters,
-  const ConfigParser::ParameterizedInfos& all_specs);
-
-static Any Create(const string& name,
-  const ConfigParser::ParameterizedInfos& all_specs) {
-    ConfigParser::ParameterizedInfos::const_iterator it = all_specs.find(name);
-    assert(it != all_specs.end());
-    const ParameterizedInfo* spec = &it->second;
-    const ParametersContainer& parameters =
-      Create(spec->get_parameters(), all_specs);
-    try {
-      return Factory::instance()->Create(spec->get_type(), parameters);
-    } catch (const logic_error& err) {
-      rDebug("Exception '%s' was successfully processed", err.what());
-      return Factory::instance()->Create(spec->get_type() +
-                                         spec->get_approach(), parameters);
-    }
-}
-
-static ParametersContainer Create(
-  const ParametersContainer& src_parameters,
-  const ConfigParser::ParameterizedInfos& all_specs) {
-    ParametersContainer result;
-    for (ParametersContainer::StringAnyHash::const_iterator it =
-         src_parameters.begin();
-         it != src_parameters.end();
-         ++it) {
-      Any& parameter = const_cast<Any&>(it->second);
-      const string& name = it->first;
-
-      if (const ParameterizedDependency* dependency =
-          any_cast<ParameterizedDependency>(&parameter)) {
-        typedef vector<string> TStringVector;
-        TStringVector strings;
-        split(*dependency, "\t", &strings);
-        split(&strings, " ");
-        split(&strings, ",");
-
-        assert(strings.size());
-        if (strings.size() == 1 && dependency->find_first_of(',') == string::npos) {
-          result.AddNew(name, Create(strings[0], all_specs));
-        } else {
-          vector<Any> list;
-          for (TStringVector::const_iterator str_it = strings.begin();
-               str_it != strings.end();
-               ++str_it) {
-            if (!str_it->empty()){  // TODO: remove if after getting rid of boost::split
-              list.push_back(Create(*str_it, all_specs));
-            }
-          }
-          result.AddNew(name, list);
-        }
-      } else if (const ParametersContainer::Ptr cont =
-                 any_cast<ParametersContainer>(&parameter)) {
-        result.AddNew(name, Create(*cont, all_specs));
-      } else {
-        result.AddNew(name, parameter);
-      }
-    }
-    return result;
-}
 
 void LtrClient::initFrom(const string& file_name) {
   addToReport("<h3>Experiment with LTR Client</h3>");
@@ -222,32 +60,29 @@ void LtrClient::initFrom(const string& file_name) {
   addToReport("<p>Started on " +
               static_cast<string>(ctime(&current_time)) + ".</p>");
   configurator_.parseConfig(file_name);
-  getLoadQueue();  // check absence of circularity dependencies
+  factory_.checkCircularDependencyAbsence();
 }
 
 void LtrClient::addToReport(const string& text) {
-  report_body += "\n" + text;
+  report_body_ += "\n" + text;
 }
 
-void LtrClient::saveReport(const string& file_name) {
+void LtrClient::saveReport(const string& file_name) const {
   ofstream file_out(file_name.c_str());
   file_out << "<!DOCTYPE html>\n<html>\n<head>\n<title>"
            << "Experiment with LTR Client"
            << "</title>\n</head>\n<body>"
-           << report_body
+           << report_body_
            << "</body>\n</html>";
   file_out.close();
   rInfo("Report saved into %s\n", file_name.c_str());
 }
 
 template <class TElement>
-void LtrClient::launchTrain(Any parameterized,
+void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
                             const TrainLaunchInfo& train_info) {
-  typename Learner<TElement>::Ptr learner =
-    any_cast<typename Learner<TElement>::Ptr>(parameterized);  //NOLINT
-  assert(learner);
-  const ParameterizedInfo& learner_info =
-    configurator_.findParameterized(train_info.learner);
+  const ObjectInfo& learner_info =
+    configurator_.findObject(train_info.learner);
 
   const DataInfo& data_info = configurator_.findData(train_info.data);
 
@@ -258,10 +93,10 @@ void LtrClient::launchTrain(Any parameterized,
   const DataSet<TElement>& data_set =
     loadDataSet<TElement>(data_info.file, data_info.format);
 
-  rInfo("\n\nvoid doLaunch\n");
+  rInfo("\n\nTrain started\n");
   learner->learn(data_set);
 
-  rInfo("\n\nTrain %s finished. Report:%s\n", data_info.file.c_str(),
+  rInfo("\n\nTrain %s finished. Learner's report:%s\n", data_info.file.c_str(),
        learner->report().c_str());
 
   Scorer::Ptr scorer = learner->make();
@@ -292,9 +127,9 @@ void LtrClient::launchTrain(Any parameterized,
     string cpp_file_path =
       AppendTrailingPathSeparator(configurator_.rootPath()) +
       learner_info.get_name() + ".cpp";
-    ofstream fout(cpp_file_path.c_str());
-    fout << scorer->generateCppCode(learner_info.get_name());
-    fout.close();
+    ofstream file_out(cpp_file_path.c_str());
+    file_out << scorer->generateCppCode(learner_info.get_name());
+    file_out.close();
     rInfo("Cpp code saved into %s\n", cpp_file_path.c_str());
     addToReport("<p>\n\tCpp code for <i>" + learner_info.get_name() +
                 "</i> saved to " + FileLink(cpp_file_path) + ".\n</p>");
@@ -302,51 +137,37 @@ void LtrClient::launchTrain(Any parameterized,
 }
 
 template <class TElement>
-void LtrClient::launchCrossvalidation(
+void LtrClient::launchCrossvalidationImpl(
   const CrossvalidationLaunchInfo& crossvalidation_info) {
-    std::set<string>::const_iterator
-      learners_alias = crossvalidation_info.learners.begin(),
-      measures_alias = crossvalidation_info.measures.begin(),
-      datas_alias = crossvalidation_info.datas.begin();
+    typedef set<string>::const_iterator TSetIterator;
+    CrossValidator<TElement> cross_validator;
 
-    ltr::cv::CrossValidator<TElement> cross_validator;
-
-    for (; learners_alias != crossvalidation_info.learners.end();
-         ++learners_alias) {
-      const ParameterizedInfo& learner_info =
-        configurator_.findParameterized(*learners_alias);
-      const ParametersContainer& parameters =
-        Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
-      Any learner = Factory::instance()->Create(
-        learner_info.get_type() + learner_info.get_approach(), parameters);
+    for (TSetIterator learners_alias = crossvalidation_info.learners.begin();
+        learners_alias != crossvalidation_info.learners.end();
+        ++learners_alias) {
       cross_validator.add_learner(
-        any_cast<typename Learner<TElement>::Ptr>(learner));
+          factory_.CreateObject<typename Learner<TElement>::Ptr>(
+              *learners_alias));
     }
 
-    for (; measures_alias != crossvalidation_info.measures.end();
-            ++measures_alias) {
-      const ParameterizedInfo& measure_info =
-        configurator_.findParameterized(*measures_alias);
-      const ParametersContainer& parameters =
-        Create(measure_info.get_parameters(), configurator_.xmlTokenSpecs());
-      Any measure = Factory::instance()->
-        Create(measure_info.get_type() + measure_info.get_approach(), parameters); // NOLINT
-      cross_validator.add_measure(any_cast<typename Measure<TElement>::Ptr>(measure)); // NOLINT
+    for (TSetIterator measures_alias = crossvalidation_info.measures.begin();
+         measures_alias != crossvalidation_info.measures.end();
+         ++measures_alias) {
+      cross_validator.add_measure(
+          factory_.CreateObject<typename Measure<TElement>::Ptr>(
+              *measures_alias));
     }
 
-    const ParameterizedInfo& splitter_info =
-      configurator_.findParameterized(crossvalidation_info.splitter);
-    const ParametersContainer& parameters =
-      Create(splitter_info.get_parameters(), configurator_.xmlTokenSpecs());
-    Any splitter = Factory::instance()->
-      Create(splitter_info.get_type() + splitter_info.get_approach(), parameters); // NOLINT
-    cross_validator.add_splitter(any_cast<typename Splitter<TElement>::Ptr>(splitter)); // NOLINT
+    cross_validator.add_splitter(
+        factory_.CreateObject<typename Splitter<TElement>::Ptr>(
+            crossvalidation_info.splitter));
 
-    for (; datas_alias != crossvalidation_info.datas.end();
+    for (TSetIterator datas_alias = crossvalidation_info.datas.begin();
+         datas_alias != crossvalidation_info.datas.end();
          ++datas_alias) {
       const DataInfo& data_info = configurator_.findData(*datas_alias);
-      DataSet<TElement> data_set = DataSet<TElement>();
-      data_set = loadDataSet<TElement>(data_info.file, data_info.format);
+      DataSet<TElement> data_set =
+          loadDataSet<TElement>(data_info.file, data_info.format);
       cross_validator.add_data_set(data_set);
     }
 
@@ -355,56 +176,58 @@ void LtrClient::launchCrossvalidation(
     addToReport("<p><b>Crossvalidation results:</b></p>\n" + cross_validator.toHTML());
 }
 
-void LtrClient::launch() {
-  for (ConfigParser::TrainInfos::const_iterator it =
-       configurator_.trainInfos().begin();
-       it != configurator_.trainInfos().end();
-       ++it) {
-    const TrainLaunchInfo& train_info = it->second;
-    const ParameterizedInfo& learner_info =
-      configurator_.findParameterized(train_info.learner);
-
-    const ParametersContainer& parameters =
-      Create(learner_info.get_parameters(), configurator_.xmlTokenSpecs());
-
-    rInfo("\nvoid LtrClient::launch()\nparameters=%s\n",
-         parameters.toString().c_str());
-
-    Any parameterized = Factory::instance()->
-      Create(learner_info.get_type() + learner_info.get_approach(), parameters);
+void LtrClient::launchTrain() {
+  for (ConfigParser::TrainInfos::const_iterator iterator =
+          configurator_.trainInfos().begin();
+       iterator != configurator_.trainInfos().end();
+       ++iterator) {
+    const TrainLaunchInfo& train_info = iterator->second;
+    const ObjectInfo& learner_info =
+      configurator_.findObject(train_info.learner);
 
     if (learner_info.get_approach() == "listwise") {
-      launchTrain<ObjectList>(parameterized, train_info);
+      launchTrainImpl<ObjectList>(factory_.CreateObject<Learner<ObjectList>::Ptr>(
+                                      train_info.learner),
+                                  train_info);
     } else if (learner_info.get_approach() == "pairwise") {
-      launchTrain<ObjectPair>(parameterized, train_info);
+      launchTrainImpl<ObjectPair>(factory_.CreateObject<Learner<ObjectPair>::Ptr>(
+                                      train_info.learner),
+                                  train_info);
     } else if (learner_info.get_approach() == "pointwise") {
-      launchTrain<Object>(parameterized, train_info);
+      launchTrainImpl<Object>(factory_.CreateObject<Learner<Object>::Ptr>(
+                                  train_info.learner),
+                              train_info);
     } else {
       throw logic_error("unknown learner's approach");
     }
   }
+}
 
+void LtrClient::launchCrossvalidation() {
   for (ConfigParser::CrossvalidationInfos::const_iterator iterator =
        configurator_.crossvalidationInfos().begin();
        iterator != configurator_.crossvalidationInfos().end();
        ++iterator) {
     const CrossvalidationLaunchInfo& crossvalidation_info =
       iterator->second;
-    const ParameterizedInfo& learner_info =
-      configurator_.findParameterized(*crossvalidation_info.learners.begin());
+    const ObjectInfo& learner_info =
+      configurator_.findObject(*crossvalidation_info.learners.begin());
 
     if (learner_info.get_approach() == "listwise") {
-      launchCrossvalidation<ObjectList>(crossvalidation_info);
-    }
-
-    if (learner_info.get_approach() == "pairwise") {
-      launchCrossvalidation<ObjectPair>(crossvalidation_info);
-    }
-
-    if (learner_info.get_approach() == "pointwise") {
-      launchCrossvalidation<Object>(crossvalidation_info);
+      launchCrossvalidationImpl<ObjectList>(crossvalidation_info);
+    } else if (learner_info.get_approach() == "pairwise") {
+      launchCrossvalidationImpl<ObjectPair>(crossvalidation_info);
+    } else if (learner_info.get_approach() == "pointwise") {
+      launchCrossvalidationImpl<Object>(crossvalidation_info);
+    } else {
+      throw logic_error("unknown learner's approach");
     }
   }
+}
+
+void LtrClient::launch() {
+  launchTrain();
+  launchCrossvalidation();
 
   time_t current_time(time(NULL));
   addToReport("<p>Finished on " +
@@ -413,66 +236,4 @@ void LtrClient::launch() {
   string report_path = AppendTrailingPathSeparator(configurator_.rootPath()) +
       "report.html";
   saveReport(report_path);
-}
-
-
-// ===========================================================================
-
-void show_usage() {
-  cout << "Usage: ltr_client -f <configfilename> [-v | -h]" << endl;
-  cout << "Executes commands defined in xml config file." << endl << endl;
-  cout << "Options:" << endl;
-  cout << "  -f,  filename\t\tconfig file name" << endl;
-  cout << "  -h,  help    \t\tdisplay this help and exit" << endl;
-  cout << "  -s,  silent  \t\tproduce no output to console (overrides 'verbose')" << endl;
-  cout << "  -v,  verbose \t\tproduce additional output to console" << endl;
-}
-
-int main(int argc, char *argv[]) {
-  GetOpt_pp args(argc, argv);
-  args.exceptions_all();
-
-  try {
-    if (args >> OptionPresent('h', "help")) {
-      show_usage();
-      return 0;
-    }
-
-//    LOG.reset();
-    LOG.subscribeCout("error");
-    if (!(args >> OptionPresent('s', "silent"))) {
-      if (args >> OptionPresent('v', "verbose")) {
-        LOG.subscribeCout("info");
-      }
-      LOG.subscribeCout("warning");
-    }
-    LOG.subscribeFile("log.txt", "info");
-    LOG.subscribeFile("log.txt", "warning");
-    LOG.subscribeFile("log.txt", "error");
-
-    string filename;
-    args >> Option('f', "configfile", filename, "");
-    if (filename.empty()) {
-      cerr << "Configuration file name not specified. Type 'ltr_client -h' for usage." << endl;
-      return 0;
-    }
-    args.end_of_options();
-
-    Factory factory;
-    RegisterAllTypes(&factory);
-
-    LtrClient client;
-    client.initFrom(filename);
-    client.launch();
-
-  } catch(TooManyOptionsEx) {
-    cerr << "Unrecognized options specified. Type 'ltr_client -h' for usage." << endl;
-  } catch(const GetOptEx& err) {
-    cerr << "Invalid parameters. Type 'ltr_client -h' for usage." << endl;
-  } catch(const logic_error& err) {
-    cerr << "Failed: " << err.what() << endl;
-  } catch(const std::exception err) {
-    cerr << "Caught exception: " << err.what() << endl;
-  }
-  return 0;
 }
