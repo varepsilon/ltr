@@ -15,10 +15,6 @@ macro(SetUpLTR LTR_Source_Path)
 	
 	MESSAGE(STATUS "LTR_Source_Path       : ${LTR_Source_Path}")
 	
-	########################################################################################
-	# lets SETup boost 
-	INCLUDE(${LTR_Source_Path}/cmake/boost.cmake)
-
 	##########################################################################################
 	# lets SETup ltr
 	SET(LTR_Install_Path ${LTR_Source_Path}/lib)

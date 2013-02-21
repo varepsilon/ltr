@@ -1,8 +1,8 @@
 // Copyright 2012 Yandex
 
-#include "boost/lexical_cast.hpp"
-
 #include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
+
+#include "ltr/utility/boost/lexical_cast.h"
 
 using ltr::utility::lexical_cast;
 

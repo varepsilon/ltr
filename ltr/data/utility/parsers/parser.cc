@@ -1,19 +1,18 @@
 // Copyright 2011 Yandex
 
-#include <boost/algorithm/string.hpp>
-
 #include "ltr/data/utility/parsers/parser.h"
 #include "ltr/data/utility/parsers/parse_svm.h"
 #include "ltr/data/utility/parsers/parse_yandex.h"
 #include "ltr/data/utility/parsers/parse_arff.h"
 
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/boost/string_utils.h"
 
 namespace ltr {
 namespace io_utility {
 Parser::Ptr getParser(const std::string& format) {
   std::string format_ = format;
-  boost::to_upper(format_);
+  ltr::utility::to_upper(&format_);
   if (format_ == "SVMLIGHT")
     return Parser::Ptr(new SVMParser());
   else if (format_ == "YANDEX")

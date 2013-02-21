@@ -1,7 +1,5 @@
 // Copyright 2012 Yandex
 
-#include "boost/lexical_cast.hpp"
-
 #include "ltr/feature_converters/nan_to_neutral_converter.h"
 
 namespace ltr {

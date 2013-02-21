@@ -11,10 +11,6 @@
 #include <vector>
 #include <functional>
 
-#include "boost/random.hpp"  //NOLINT
-#include "boost/random/random_number_generator.hpp"  //NOLINT
-#include "boost/shared_ptr.hpp"  //NOLINT
-
 #include "ltr/data_preprocessors/data_preprocessor.h"
 #include "ltr/utility/indices.h"
 #include "ltr/utility/random_number_generator.h"

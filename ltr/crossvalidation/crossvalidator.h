@@ -9,14 +9,11 @@
 #include <string>
 #include <vector>
 
-#include "boost/tuple/tuple.hpp"
-
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/data/data_set.h"
 #include "ltr/learners/learner.h"
 #include "ltr/measures/measure.h"
 #include "ltr/utility/multitable.h"
-
 
 using std::list;
 using std::reverse;

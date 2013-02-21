@@ -44,10 +44,6 @@ IF(UNIX)
 ENDIF(UNIX)
 
 ########################################################################################
-# lets SETup boost
-INCLUDE(${Source_Path}/cmake/boost.cmake)
-
-########################################################################################
 # lets SETup rlog
 INCLUDE(${Source_Path}/cmake/rlog.cmake)
 ADD_LIBRARY(rlog STATIC ${RLOG_HEADERS} ${RLOG_SOURCES})
@@ -66,7 +62,7 @@ ADD_LIBRARY(tinyxml STATIC ${TINYXML_SOURCES})
 # lets SETup LTR as a static library project, called ltr
 INCLUDE(${Source_Path}/cmake/ltr.cmake)
 ADD_LIBRARY(ltr STATIC ${LTR_ALL})
-TARGET_LINK_LIBRARIES(ltr puppy rlog ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(ltr puppy rlog)
 
 # installing
 INSTALL(TARGETS ltr puppy rlog ARCHIVE DESTINATION ${Install_Path})
@@ -81,7 +77,7 @@ TARGET_LINK_LIBRARIES(ltr_client ltr tinyxml)
 # lets SETup generator project, which learns scorers and serialize them
 INCLUDE(${Source_Path}/cmake/serialization.cmake)
 ADD_EXECUTABLE(serialization_generator ${Serialization_generator_SOURCES})
-TARGET_LINK_LIBRARIES(serialization_generator ltr puppy rlog ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(serialization_generator ltr puppy rlog)
 CreateEmptyTesterFile()
 
 ##########################################################################################
@@ -100,7 +96,7 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 # lets SETup our unit-tests for LTR (executed by Google Test)
 INCLUDE(${Source_Path}/cmake/utests.cmake)
 ADD_EXECUTABLE(ltr_test ${LTR_TEST_ALL} ${Serialization_tester_SOURCES})
-TARGET_LINK_LIBRARIES(ltr_test ltr gtest ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(ltr_test ltr gtest)
 
 # lets copy the test data to the build directory
 INCLUDE(${Source_Path}/cmake/copy_test_data.cmake)
