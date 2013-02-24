@@ -6,18 +6,21 @@
 
   {% for data in datas %}
   <data name="{{ data.name }}" approach="{{ data.approach }}" format="{{ data.format }}">
-    {{ data.path }}
+    {{ data.file.path }}
   </data>
   {% endfor %}
 
   {% for object in objects %}
-  {{ object.xml|safe }}
+  <object name="{{ object.name }}" type="{{ object.get_type }}"{% if object.approach %} approach="{{ object.approach }}"{% endif %}>
+    {% for property, value in object.get_properties|special_properties %}
+      <{{ property }}>{{ value }}</{{ property }}>
+    {% endfor %}</object>
   {% endfor %}
 
   <launch>
     {% for train in trains %}
-    <train name="{{ train.name }}" data="{{ train.trainData.name }}" learner="{{ train.learner.name }}">
-      {% for data in train.predict_ %}
+    <train name="{{ train.name }}" data="{{ train.train_data.name }}" learner="{{ train.learner.name }}">
+      {% for data in train.predict %}
       <predict>{{ data.name }}</predict>
       {% endfor %}
       {% if train.generate_cpp %}
@@ -28,11 +31,11 @@
 
     {% for crossvalidation in crossvalidations %}
     <crossvalidation fold="{{ crossvalidation.splitter }}">
-      {% for learner in crossvalidation.learners.all %}
+      {% for learner in crossvalidation.learners %}
       <learner>{{ learner.name }}</learner>
       {% endfor %}
 
-      {%for measure in crossvalidation.measures.all %}
+      {% for measure in crossvalidation.measures %}
       <measure>{{ measure.name }}</measure>
       {% endfor %}
 

@@ -1,7 +1,7 @@
 # Copyright 2011 Yandex
 """
 This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test" or "manage.py test ConfigMaker".
+when you run "manage.py test" or "manage.py test config_maker".
 
 Replace this with more appropriate tests for your application.
 """

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load object_handlers %}
+
+{% block title %} {{ request.user.username }} {% endblock %}
+
+<!-- TODO: add AJAX-->
+
+{% block body %}
+<h2>Tasks</h2>
+<table>
+{% for task in tasks %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td><a href="{{ task.configFilename|path_to_url }}">Config</a></td>
+    <td>
+      {% if task.isComplete %}
+        <a href="{{ task.reportFilename|path_to_url }}">Report</a>
+      {% else %}
+        In progress...
+      {% endif %}
+    </td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

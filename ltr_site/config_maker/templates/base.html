@@ -3,11 +3,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">
   <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     {% block scripts %}
-      <script type="text/javascript" src="{{ MEDIA_URL }}prototype.js"></script>
-      <script type="text/javascript" src="{{ MEDIA_URL }}ui.js"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}prototype.js"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}ui.js"></script>
     {% endblock %}
-    <link rel="shortcut icon" href="{{ MEDIA_URL }}logo.png" type="image/png" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}logo.png" type="image/png">
     <title>
       {% block title %} {% endblock %}
     </title>
@@ -18,10 +19,10 @@
       <table width="100%" height="100px">
         <tr>
           <td width="130px">
-            <a href="/"><img src="{{ MEDIA_URL }}logo.png" alt ="Home" /></a>
+            <a href="/"><img src="{{ STATIC_URL }}logo.png" alt="Home"></a>
           </td>
           <td width = "100px">
-            <a href="about"><img src="{{ MEDIA_URL }}about.jpg" alt ="About" /></a>
+            <a href="about"><img src="{{ STATIC_URL }}about.jpg" alt="About"></a>
           </td>
           <td>
           </td>
@@ -36,6 +37,6 @@
 
     {% block body %} {% endblock %}
     <hr>
-    {% block copyright %} &copy; Yandex, 2011 {% endblock %}
+    {% block copyright %}<p>&copy; Yandex, 2011</p>{% endblock %}
   </body>
 </html>

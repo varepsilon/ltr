@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %} Select file {% endblock %}
+<!-- TODO: replace this with AJAX window -->
+
+{% block body %}
+<form enctype="multipart/form-data" action="/import" method="post">
+  {% csrf_token %}
+  <input id="file" type="file" name="file">
+  <input type="submit" value="Load">
+</form>
+{% endblock %}
