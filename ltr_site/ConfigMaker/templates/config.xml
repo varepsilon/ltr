@@ -5,40 +5,40 @@
   </config>
 
   {% for data in datas %}
-  <data name="{{ data.name_ }}" approach="{{ data.approach_ }}" format="{{ data.format_ }}">
-    {{ data.path_ }}
+  <data name="{{ data.name }}" approach="{{ data.approach }}" format="{{ data.format }}">
+    {{ data.path }}
   </data>
   {% endfor %}
 
   {% for object in objects %}
-  <object name="{{ object.name_ }}" type="{{ object.type_ }}"{% if object.approach_ %} approach="{{ object.approach_ }}"{% endif %}>
-    {% for property, value in object|special_properties %}
-    <{{ property }}>{{ value }}</{{ property }}>
-  {% endfor %}</object>
+  {{ object.xml|safe }}
   {% endfor %}
 
   <launch>
-    <train name="test1" data="learn" learner="BF">
-      <predict>learn</predict>
-      <!-- <predict>test</predict> -->
-      <!-- <predict>vali</predict> -->
-      <cpp/>
+    {% for train in trains %}
+    <train name="{{ train.name }}" data="{{ train.trainData.name }}" learner="{{ train.learner.name }}">
+      {% for data in train.predict_ %}
+      <predict>{{ data.name }}</predict>
+      {% endfor %}
+      {% if train.generate_cpp %}
+      <cpp />
+      {% endif %}
     </train>
-    <crossvalidation fold="K_FOLD1">
-      <learner>BF</learner>
-      <!-- <learner>NB</learner>
-      <learner>NN</learner>
-      <learner>Lin</learner>
-      <learner>Composition</learner> -->
+    {% endfor %}
 
-      <measure>ndcg</measure>
-      <!-- <measure>avp</measure> -->
+    {% for crossvalidation in crossvalidations %}
+    <crossvalidation fold="{{ crossvalidation.splitter }}">
+      {% for learner in crossvalidation.learners.all %}
+      <learner>{{ learner.name }}</learner>
+      {% endfor %}
 
-      <data>learn</data>
-      <!-- <data>test</data>
-      <data>vali</data> -->
+      {%for measure in crossvalidation.measures.all %}
+      <measure>{{ measure.name }}</measure>
+      {% endfor %}
 
+      <data>{{ crossvalidation.data.name }}</data>
     </crossvalidation>
+    {% endfor %}
   </launch>
 
 </LTR_experiment>
