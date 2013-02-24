@@ -1,0 +1,34 @@
+{% if user.is_authenticated %}
+  Hello, <a href="/users/{{ user.username }}">{{ user.username }}</a>.<br>
+  <a href="/logout?next={{ request.path }}"><font size="2">Logout</font></a>
+{% else %}
+  <form action="/login?next={{ request.path }}" method="POST">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>
+          <input type="text" name="username" id="username" placeholder="Login">
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="password" name="password" id="password" placeholder="Password">
+        </td>
+        <td>
+          <input type="submit" value=">">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {% if request.GET.login_failed %}
+            <font size="2" color="red">Incorrect login/password combination</font>
+          {% else %}
+            <a href="/register"><font size="2">Not registered yet?</font></a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </form>
+{% endif %}

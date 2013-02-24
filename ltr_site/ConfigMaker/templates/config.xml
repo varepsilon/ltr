@@ -1,0 +1,44 @@
+{% load object_handlers %}
+<LTR_experiment>
+  <config>
+    <root_directory>{{ root_directory }}</root_directory>
+  </config>
+
+  {% for data in datas %}
+  <data name="{{ data.name_ }}" approach="{{ data.approach_ }}" format="{{ data.format_ }}">
+    {{ data.path_ }}
+  </data>
+  {% endfor %}
+
+  {% for object in objects %}
+  <object name="{{ object.name_ }}" type="{{ object.type_ }}"{% if object.approach_ %} approach="{{ object.approach_ }}"{% endif %}>
+    {% for property, value in object|special_properties %}
+    <{{ property }}>{{ value }}</{{ property }}>
+  {% endfor %}</object>
+  {% endfor %}
+
+  <launch>
+    <train name="test1" data="learn" learner="BF">
+      <predict>learn</predict>
+      <!-- <predict>test</predict> -->
+      <!-- <predict>vali</predict> -->
+      <cpp/>
+    </train>
+    <crossvalidation fold="K_FOLD1">
+      <learner>BF</learner>
+      <!-- <learner>NB</learner>
+      <learner>NN</learner>
+      <learner>Lin</learner>
+      <learner>Composition</learner> -->
+
+      <measure>ndcg</measure>
+      <!-- <measure>avp</measure> -->
+
+      <data>learn</data>
+      <!-- <data>test</data>
+      <data>vali</data> -->
+
+    </crossvalidation>
+  </launch>
+
+</LTR_experiment>
