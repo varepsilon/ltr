@@ -15,6 +15,7 @@
 #include "ltr/feature_converters/feature_sampler_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
 #include "ltr/feature_converters/feature_normalizer_learner.h"
+#include "ltr/feature_converters/pca_learner.h"
 #include "ltr/feature_converters/nan_to_zero_learner.h"
 #include "ltr/feature_converters/nan_to_average_learner.h"
 #include "ltr/feature_converters/nominal_to_bool_learner.h"
@@ -36,6 +37,7 @@ using ltr::FakeFeatureConverterLearner;
 using ltr::FeatureSamplerLearner;
 using ltr::FeatureRandomSamplerLearner;
 using ltr::FeatureNormalizerLearner;
+using ltr::PCALearner;
 using ltr::NanToZeroConverterLearner;
 using ltr::NanToAverageConverterLearner;
 using ltr::NominalToBoolConverterLearner;
@@ -211,6 +213,45 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
   EXPECT_TRUE(DoubleEqual(converted_data[1][2], 0.0));
   EXPECT_TRUE(DoubleEqual(converted_data[2][2], 1.0));
   EXPECT_TRUE(DoubleEqual(converted_data[3][2], -2.0));
+}
+
+TEST_F(FeatureConvertersLearnerTest, PCALearnerTest) {
+  PCALearner<Object> pca_learner;
+
+  DataSet<Object> train_data;
+  Object object1, object2, object3, object4, object5, object6, object7, object8;
+  object1 << 2.0 << 2.0;
+  object2 << 3.0 << 3.0;
+  object3 << 5.0 << 5.0;
+  object4 << 6.0 << 6.0;
+  object5 << 4.0 << 3.0;
+  object6 << 4.0 << 5.0;
+  object7 << 3.0 << 4.0;
+  object8 << 5.0 << 4.0;
+
+  train_data.add(object1);
+  train_data.add(object2);
+  train_data.add(object3);
+  train_data.add(object4);
+  train_data.add(object5);
+  train_data.add(object6);
+  train_data.add(object7);
+  train_data.add(object8);
+
+  pca_learner.learn(train_data);
+  FeatureConverter::Ptr converter = pca_learner.make();
+
+  DataSet<Object> converted_data;
+  converter->apply(train_data, &converted_data);
+
+  EXPECT_TRUE(DoubleEqual(converted_data[0][0], 4/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][0], 6/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[2][0], 10/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[3][0], 12/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[4][0], 7/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[5][0], 9/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[6][0], 7/sqrt(2.0)));
+  EXPECT_TRUE(DoubleEqual(converted_data[7][0], 9/sqrt(2.0)));
 }
 
 TEST_F(FeatureConvertersLearnerTest, NanToAverageConverterLearnerTest) {

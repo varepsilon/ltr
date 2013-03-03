@@ -5,6 +5,8 @@
 #include <map>
 #include <string>
 
+#include <Eigen/Dense>
+
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/feature_info.h"
@@ -14,9 +16,10 @@
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/feature_converters/fake_feature_converter.h"
 #include "ltr/feature_converters/feature_sampler.h"
-#include "ltr/feature_converters/per_feature_linear_converter.h"
+#include "ltr/feature_converters/linear_converter.h"
 #include "ltr/feature_converters/nan_to_neutral_converter.h"
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
+#include "ltr/feature_converters/per_feature_linear_converter.h"
 #include "ltr/feature_converters/remove_nominal_converter.h"
 
 using ltr::Object;
@@ -30,10 +33,14 @@ using ltr::utility::Indices;
 using ltr::FeatureConverter;
 using ltr::FakeFeatureConverter;
 using ltr::FeatureSampler;
-using ltr::PerFeatureLinearConverter;
+using ltr::LinearConverter;
 using ltr::NanToNeutralConverter;
 using ltr::NominalToBoolConverter;
+using ltr::PerFeatureLinearConverter;
 using ltr::RemoveNominalConverter;
+
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
 TEST(FeatureConvertersTest, FakeFeatureConverterTest) {
   Object object;
@@ -118,6 +125,32 @@ TEST(FeatureConvertersTest, PerFeatureLinearConverterTest) {
   EXPECT_TRUE(DoubleEqual(converted_data[0][3], 0.0));
 }
 
+TEST(FeatureConvertersTest, LinearConverterTest) {
+  Object object1, object2;
+  object1 << 1.0 << 2.0 << 3.0;
+  object2 << -1.0 << 1.0 << 0.0;
+  DataSet<Object> data, converted_data;
+  data.add(object1);
+  data.add(object2);
+
+  MatrixXd factor(2, 3);
+  factor << 1.0,  0.0,  2.0,
+            -1.0, 10.0, 5.0;
+
+  VectorXd shift(2);
+  shift << 0.0, 1.0;
+
+  LinearConverter::Ptr linear_converter
+    (new LinearConverter(object1.feature_count()));
+  linear_converter->set_input_feature_info(data.feature_info());
+  linear_converter->set_factor(factor);
+  linear_converter->set_shift(shift);
+  linear_converter->apply(data, &converted_data);
+  EXPECT_TRUE(DoubleEqual(converted_data[0][0], 7.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[0][1], 35.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][0], -1.0));
+  EXPECT_TRUE(DoubleEqual(converted_data[1][1], 12.0));
+}
 TEST(FeatureConvertersTest, NanToNeutralConverterTest) {
   Object nan_features_object, object;
   nan_features_object << numeric_limits<double>::quiet_NaN();

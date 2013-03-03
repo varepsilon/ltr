@@ -188,7 +188,7 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
                  ${Source_Path}/ltr/measures/normalized_measure.h
                  ${Source_Path}/ltr/measures/binary_classification_accuracy.h
-				 ${Source_Path}/ltr/measures/binary_classification_margin.h
+                 ${Source_Path}/ltr/measures/binary_classification_margin.h
                  ${Source_Path}/ltr/measures/auc.h ${Source_Path}/ltr/measures/auc.cc)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
@@ -233,6 +233,9 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
+                           ${Source_Path}/ltr/feature_converters/pca_learner.h
+                           ${Source_Path}/ltr/feature_converters/linear_converter.h
+                           ${Source_Path}/ltr/feature_converters/linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_sampler_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_random_sampler_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
@@ -264,10 +267,10 @@ SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_
                     ${Source_Path}/ltr/learners/composition_learner/data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/average_composition_scorer_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
+                    ${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
 
 SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predictions_aggregator.h
                     ${Source_Path}/ltr/predictions_aggregators/average_predictions_aggregator.h
@@ -385,7 +388,7 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVERS}
-			      ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${OPTIMIZATION_STOPCRITERIA}
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${OPTIMIZATION_STOPCRITERIA}
             ${OPTIMIZATION_STAND_FUNCTIONS})
 
 INCLUDE_DIRECTORIES(${Source_Path})
