@@ -5,10 +5,13 @@ namespace ltr {
 You can see a full list of contributors (in alphabetical order) below.
 
 \li Alexander Sayko
+\li Alexey Zolotov
 \li Arseny Chelnokov
 \li Artem Babenko
+\li Boris Moiseev
 \li Dmitry Sokolov
 \li Egor Samosvat
+\li Evgeny Primako
 \li Evgeny Sobolev
 \li Igor Bichurin
 \li Lev Tolmachev
@@ -17,7 +20,12 @@ You can see a full list of contributors (in alphabetical order) below.
 \li Michael Romanov
 \li Michael Shachrai
 \li Oleg Ignatjev
+\li Roman Shvetsov
 \li Stas Artuhin
+\li Stepan Lobastov
+\li Yury Nesterenko
+\li Zahar Ovsyannikov
+
 
 **/
 }

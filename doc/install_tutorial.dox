@@ -11,13 +11,6 @@ file and the following folders: cmake, contrib, data, doc, ltr and ltr_client.
 
 \section WindowsInstall Installation on Windows
 
-\subsection WInstallingBoost Installing Boost
-
-%The simplest way to install boost under Windows is to use an installer from
-<a href=http://www.boostpro.com/download>http://www.boostpro.com/download</a>.
-
-Now LTR uses only <i>multithreaded</i> and <i>multithreaded debug</i> versions of boost, but it is recommended to install DLL variants too.
-
 \subsection WInstallingCMake Installing CMake
 
 Install CMake from <a href=www.cmake.org/cmake/resources/software.html>www.cmake.org/cmake/resources/software.html</a>
@@ -66,14 +59,6 @@ This will create an <LTR_root>/lib directory with 3 static libraries in there: l
 use LTR in your project, you have to link to these libraries.
 
 \section LinuxInstall Installation on Linux
-
-\subsection LInstallingBoostCmake Installing Boost and Cmake
-
-One can install boost and cmake with one command as follows
-
-\code
-sudo apt-get install libboost-all-dev cmake
-\endcode
 
 \subsection LConfiguringLTR Configuring LTR
 

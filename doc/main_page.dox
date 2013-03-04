@@ -11,6 +11,9 @@ User can write code performing learning and testing by himself \ref HowToCreateN
 \n
 Each trained ranker/classifier/regressor can be serialized in C++ code so it can be used in other projects with no dependecies on the LTR library.
 
+\section SOURCELINK Link to sources
+One can download LTR sources from <a href="https://github.com/yaschool/ltr">here</a>.
+
 \section PHILOSOPHY Philosophy of LTR
 From theoretical point of view every algorithms of machine learning can be decomposed to a few simple ideas.\n
 Many of these ideas are similar of even coincident for ranking, classification, regression.\n
@@ -49,9 +52,6 @@ LTR is an actively growing project so this list will be expanded significantly.
 One can see the results \ref QualityTable "here".
 
 \section REQUIREMENTS Requirements
-\li Boost\n
-LTR assumes that you already have <a href=http://www.boost.org>Boost</a> sources and some static libraries in your system.
-%The detailed inatallation manual is \ref HowToInstall "here". 
 \li CMake\n
 LTR uses the <a href=http://www.cmake.org>CMake</a> build system so you should install it. 
 
