@@ -2,7 +2,9 @@
 
 #ifndef LTR_OPTIMIZATION_STOP_CRITERIA_STATE_H_
 #define LTR_OPTIMIZATION_STOP_CRITERIA_STATE_H_
-#include "Eigen/Core"
+
+#include "contrib/include_Eigen.h"
+
 #include "ltr/utility/macros.h"
 
 namespace optimization {

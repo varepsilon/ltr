@@ -9,7 +9,7 @@
 #include <string>
 #include <sstream>
 
-#include <Eigen/Dense>
+#include "contrib/include_Eigen.h"
 
 #include "ltr/feature_converters/linear_converter.h"
 #include "ltr/feature_converters/feature_converter_learner.h"

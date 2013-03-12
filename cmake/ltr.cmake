@@ -343,6 +343,8 @@ SET(OPTIMIZATION_STAND_FUNCTIONS ${Source_Path}/ltr/optimization/functions/test_
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
 
+SET(CONTRIB_INCLUDE ${Source_Path}/contrib/include_Eigen.h)
+
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})
 SOURCE_GROUP(density_estimators\\learners FILES ${LTR_DENSITY_ESTIMATORS_LEARNERS})
@@ -389,6 +391,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVERS}
             ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${OPTIMIZATION_STOPCRITERIA}
-            ${OPTIMIZATION_STAND_FUNCTIONS})
+            ${OPTIMIZATION_STAND_FUNCTIONS} ${CONTRIB_INCLUDE})
 
 INCLUDE_DIRECTORIES(${Source_Path})

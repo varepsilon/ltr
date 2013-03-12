@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 
-#include <Eigen/Dense>
+#include "contrib/include_Eigen.h"
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"

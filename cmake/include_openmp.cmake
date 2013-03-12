@@ -4,4 +4,4 @@ IF(OPENMP_FOUND)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 ENDIF(OPENMP_FOUND)
 
-CONFIGURE_FILE(${Source_Path}/ltr/utility/include_openmp.h.in ${Source_Path}/ltr/utility/include_openmp.h)
+CONFIGURE_FILE(${Source_Path}/contrib/include_openmp.h.in ${Source_Path}/contrib/include_openmp.h)

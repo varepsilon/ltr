@@ -8,7 +8,7 @@
 #include <map>
 #include <functional>
 
-#include <Eigen/Dense>
+#include "contrib/include_Eigen.h"
 
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"

@@ -7,7 +7,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "ltr/utility/include_openmp.h"
+#include "contrib/include_openmp.h"
 
 #include "ltr/data/data_set.h"
 #include "ltr/data/feature_info.h"

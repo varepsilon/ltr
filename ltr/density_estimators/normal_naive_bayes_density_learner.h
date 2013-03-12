@@ -2,10 +2,10 @@
 #ifndef LTR_DENSITY_ESTIMATORS_NORMAL_NAIVE_BAYES_DENSITY_LEARNER_H_
 #define LTR_DENSITY_ESTIMATORS_NORMAL_NAIVE_BAYES_DENSITY_LEARNER_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <vector>
+
+#include "contrib/include_Eigen.h"
 
 #include "ltr/density_estimators/base_probability_density_estimator.h"
 #include "ltr/density_estimators/non_linear_discriminant_density_learner.h"

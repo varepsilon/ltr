@@ -1,11 +1,11 @@
 // Copyright 2012 Yandex
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <vector>
 
 #include "gtest/gtest.h"
+
+#include "contrib/include_Eigen.h"
 
 #include "ltr/density_estimators/fisher_discriminant_density_learner.h"
 #include "ltr/density_estimators/quadratic_discriminant_density_learner.h"

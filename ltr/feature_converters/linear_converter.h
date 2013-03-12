@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
+#include "contrib/include_Eigen.h"
 
 #include "ltr/feature_converters/feature_converter.h"
 #include "ltr/utility/boost/shared_ptr.h"

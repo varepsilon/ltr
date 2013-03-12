@@ -4,7 +4,7 @@
 
 #include <map>
 
-#include <Eigen/Dense>  // NOLINT
+#include "contrib/include_Eigen.h"
 
 #include "ltr/utility/eigen_converters.h"
 #include "ltr/utility/boost/shared_ptr.h"

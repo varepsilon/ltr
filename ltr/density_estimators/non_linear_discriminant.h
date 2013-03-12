@@ -2,12 +2,11 @@
 #ifndef LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_H_
 #define LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <string>
 #include <vector>
 
+#include "contrib/include_Eigen.h"
 
 #include "ltr/data/object.h"
 #include "ltr/density_estimators/base_probability_density_estimator.h"

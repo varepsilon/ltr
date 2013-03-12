@@ -5,7 +5,9 @@
 
 #include <vector>
 #include <string>
-#include "Eigen/Core"
+
+#include "contrib/include_Eigen.h"
+
 #include "ltr/interfaces/aliaser.h"
 
 namespace optimization {
