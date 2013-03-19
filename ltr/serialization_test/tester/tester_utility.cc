@@ -9,15 +9,6 @@ using std::fabs;
 using std::cout;
 
 namespace serialization_test {
-vector<double> ApplySerializatedScorerToDataSet(const DataSet<Object>& dataset,
-    double (*scorer)(const vector<double>& features)) {
-  vector<double> output;
-  for (int i = 0; i < dataset.size(); ++i) {
-    output.push_back((*scorer)(dataset[i].features()));
-  }
-  return output;
-}
-
 bool Equal(const vector<double>& left, const vector<double>& right) {
   if (left.size() != right.size()) {
     return false;
@@ -32,10 +23,23 @@ bool Equal(const vector<double>& left, const vector<double>& right) {
   return true;
 }
 
-ostream& operator<<(ostream& output, const Report& rep) {
-  for (int i = 0; i < (int)rep.first.size(); ++i) {
-    output << rep.first[i] << "\t\t" << rep.second[i] << "\n";
+bool Equal(
+    const vector<vector<double> >& left,
+    const vector<vector<double> >& right) {
+  if (left.size() != right.size()) {
+    return false;
   }
-  return output;
+
+  for (int i = 0; i < (int)left.size(); ++i) {
+    if (left[i].size() != right[i].size())
+      return false;
+    for (int j = 0; j < (int)left[i].size(); ++j) {
+      if (fabs(left[i][j] - right[i][j]) > COMPARE_EPS) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 };

@@ -16,6 +16,7 @@
 #include "ltr/learners/gp_learner/gp_learner.h"
 #include "ltr/learners/composition_learner/composition_learner.h"
 #include "ltr/feature_converters/feature_random_sampler_learner.h"
+#include "ltr/feature_converters/pca_learner.h"
 #include "ltr/learners/linear_learner/linear_learner.h"
 #include "ltr/learners/bayesian_learner/bayesian_learner.h"
 #include "ltr/scorers/nearest_neighbor_scorer.h"
@@ -50,6 +51,7 @@ using ltr::FisherDiscriminantLearner;
 using ltr::NormalNaiveBayesLearner;
 using ltr::SumPredictionsAggregator;
 using ltr::composition::CompositionScorer;
+using ltr::PCALearner;
 
 using serialization_test::Generator;
 
@@ -62,52 +64,47 @@ int main(int argc, char* argv[]) {
   Measure<Object>::Ptr abs_error(new AbsError());
   BestFeatureLearner<Object>::Ptr bf_learner(
       new BestFeatureLearner<Object>(abs_error));
-  generator.setScorerTest(bf_learner, "BFLearner");
+  generator.addScorerTest(bf_learner, "BFLearner");
 
   GPLearner<Object>::Ptr gp_learner(new GPLearner<Object>(abs_error));
-  generator.setScorerTest(gp_learner, "GPLearner");
+  generator.addScorerTest(gp_learner, "GPLearner");
 
   DecisionTreeLearner<Object>::Ptr ID3 = new DecisionTreeLearner<Object>(
     new ID3Splitter, new MostCommonLabelLeafGenerator);
   ID3->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
   ID3->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
-  generator.setScorerTest(ID3, "ID3");
+  generator.addScorerTest(ID3, "ID3");
 
   DecisionTreeLearner<Object>::Ptr ODT = new DecisionTreeLearner<Object>(
     new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
   ODT->add_stop_splitting_criteria(new DataSizeStopSplittingCriteria(1));
   ODT->add_stop_splitting_criteria(new SameLabelStopSplittingCriteria);
-  generator.setScorerTest(ODT, "ObliviousTree");
+  generator.addScorerTest(ODT, "ObliviousTree");
 
   LinearLearner<Object>::Ptr linear_learner(new LinearLearner<Object>);
-  generator.setScorerTest(linear_learner, "LinearLearner");
+  generator.addScorerTest(linear_learner, "LinearLearner");
 
-  SumPredictionsAggregator::Ptr sum_aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(sum_aggregator);
-  CompositionLearner<Object>::Ptr rsm_lc_learner(
-    new CompositionLearner<Object>);
-  rsm_lc_learner->setInitialScorer(scorer);
   FeatureRandomSamplerLearner<Object>::Ptr
     rsm(new FeatureRandomSamplerLearner<Object>);
-  bf_learner->add_feature_converter_learner(rsm);
-  rsm_lc_learner->set_weak_learner(bf_learner);
-
-  generator.setScorerTest(rsm_lc_learner, "RSMLCLearner");
+  generator.addFeatureConverterTest(rsm, "RSMLCLearner");
 
   NNLearner<Object>::Ptr
     nn_learner(new NNLearner<Object>(new ltr::EuclideanMetric,
                                      new ltr::utility::InverseLinearDistance,
                                      new ltr::VotePredictionsAggregator,
                                      2));
-  generator.setScorerTest(nn_learner, "KNNScorer");
+  generator.addScorerTest(nn_learner, "KNNScorer");
 
   FisherDiscriminantLearner<Object>::Ptr
     fisher_learner(new FisherDiscriminantLearner<Object>);
-  generator.setScorerTest(fisher_learner, "FisherDiscriminant");
+  generator.addScorerTest(fisher_learner, "FisherDiscriminant");
 
   NormalNaiveBayesLearner<Object>::Ptr
     naive_learner(new NormalNaiveBayesLearner<Object>);
-  generator.setScorerTest(naive_learner, "NaiveBayes");
+  generator.addScorerTest(naive_learner, "NaiveBayes");
+
+  PCALearner<Object>::Ptr pca_learner(new PCALearner<Object>);
+  generator.addFeatureConverterTest(pca_learner, "PCALearner");
 
   generator.write(argv[1]);
   return 0;

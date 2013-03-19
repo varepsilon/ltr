@@ -26,7 +26,7 @@ namespace ltr {
   string FisherDiscriminant::generateCppCode(
       const string& function_name) const {
     string result;
-    result += "#include <Eigen/Dense>\n";
+    result += "#include \"contrib/include_Eigen.h\"\n";
     result += "#include <map>\n";
 
     result += "using Eigen::VectorXd;\n";

@@ -33,7 +33,7 @@ namespace ltr {
   string NonLinearDiscriminant::generateCppCode(
       const string& function_name) const {
     string result;
-    result += "#include <Eigen/Dense>\n";
+    result += "#include \"contrib/include_Eigen.h\"\n";
     result += "#include <cmath>\n";
     result += "#include <map>\n";
 
