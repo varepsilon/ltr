@@ -21,7 +21,7 @@ TEST(FeaturesInfoTest, TestingBasicOperations) {
   info1.addFeature(ltr::NOMINAL, values);
 
   EXPECT_EQ(info1.getFeatureType(5), ltr::NOMINAL);
-  EXPECT_EQ(info1.getFeatureValues(5), values);
+  EXPECT_EQ(info1.getNominalFeatureValues(5), values);
 
   FeatureInfo info2;
   info2.resize(5, ltr::NUMERIC);

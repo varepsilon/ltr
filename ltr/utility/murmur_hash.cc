@@ -38,5 +38,9 @@ unsigned int murmurHash(const void* key, int len, unsigned int seed) {
   h ^= h >> 15;
   return h;
 }
+
+unsigned int hash(const string& str) {
+  return murmurHash(str.c_str(), str.size(), 19837);
+}
 }
 }

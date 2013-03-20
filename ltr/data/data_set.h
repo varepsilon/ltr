@@ -35,7 +35,9 @@ class DataSet : public Printable, public Aliaser {
   /** The constructor creates a data set to store objects with the given
    * FeatureInfo.
    */
-  DataSet(const FeatureInfo& feature_info = FeatureInfo());
+  DataSet(
+      const FeatureInfo& feature_info = FeatureInfo(),
+      const LabelInfo& label_info = LabelInfo());
   /** Destructor
    */
   virtual ~DataSet();
@@ -46,6 +48,11 @@ class DataSet : public Printable, public Aliaser {
   /** Simple feature info setter
    */
   void set_feature_info(const FeatureInfo &feature_info);
+  /**
+   * Getters and setters for label value type information
+   */
+  const LabelInfo& label_info() const;
+  void set_label_info(const LabelInfo& label_info);
   /** Returns the number of features in objects of the DataSet.
    */
   int feature_count() const;
@@ -112,6 +119,9 @@ class DataSet : public Printable, public Aliaser {
   /** The information about objects that are stored in the DataSet.
    */
   FeatureInfo::Ptr feature_info_;
+  /** Information about label value type
+   */
+  ltr::utility::shared_ptr<LabelInfo> label_info_;
   /** Shared pointer to the vector of elements' weights.
    */
   ltr::utility::shared_ptr<vector<double> > weights_;
@@ -131,8 +141,11 @@ typedef DataSet<ObjectPair> PairwiseDataSet;
 typedef DataSet<ObjectList> ListwiseDataSet;
 
 template <typename TElement>
-DataSet<TElement>::DataSet(const FeatureInfo& feature_info)
+DataSet<TElement>::DataSet(
+    const FeatureInfo& feature_info,
+    const LabelInfo& label_info)
   : feature_info_(new FeatureInfo(feature_info)),
+    label_info_(new LabelInfo(label_info)),
     elements_(new vector<TElement>()),
     weights_(new vector<double>()) {}
 
@@ -154,6 +167,18 @@ int DataSet<TElement>::feature_count() const {
   return this->feature_info().feature_count();
 }
 
+template<typename TElement>
+const LabelInfo& DataSet<TElement>::label_info() const {
+  return *label_info_;
+}
+
+template<typename TElement>
+void DataSet<TElement>::set_label_info(
+    const LabelInfo &label_info) {
+  label_info_ = ltr::utility::shared_ptr<LabelInfo>(
+      new LabelInfo(label_info));
+}
+
 template <typename TElement>
 DataSet<TElement>& DataSet<TElement>::operator<<(const TElement& element) {
   this->add(element);
@@ -168,7 +193,8 @@ void DataSet<TElement>::add(const TElement& element) {
 template <typename TElement>
 void DataSet<TElement>::add(const TElement& element, double weight) {
   PerObjectAccessor<const TElement> per_object_accessor(&element);
-  if (feature_info_ == FeatureInfo::Ptr() || feature_info_->feature_count() == 0) {
+  if (feature_info_ == FeatureInfo::Ptr() ||
+      feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
       new FeatureInfo(per_object_accessor.object(0).feature_count()));
   }
@@ -226,7 +252,7 @@ void DataSet<TElement>::setWeight(int element_index, double weight) const {
 
 template<typename TElement>
 DataSet<TElement> DataSet<TElement>::deepCopy() const {
-  DataSet<TElement> result(this->feature_info());
+  DataSet<TElement> result(this->feature_info(), this->label_info());
   for (int element_index = 0;
        element_index < (int)this->size();
        ++element_index) {
@@ -248,6 +274,9 @@ template<typename TElement>
 bool operator==(const DataSet<TElement>& lhs,
                 const DataSet<TElement>& rhs) {
   if (lhs.feature_info() != rhs.feature_info()) {
+    return false;
+  }
+  if (!(lhs.label_info() == rhs.label_info())) {
     return false;
   }
   if (lhs.size() != rhs.size()) {

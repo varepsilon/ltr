@@ -56,9 +56,9 @@ string NominalToBoolConverter::generateCppCode(
        input_feature_index < input_feature_info_.feature_count();
        input_feature_index++) {
     if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
-      map<int, string> vals =
-        input_feature_info_.getFeatureValues(input_feature_index);
-      for (map<int, string>::iterator iterator = vals.begin();
+      const map<int, string>& vals =
+        input_feature_info_.getNominalFeatureValues(input_feature_index);
+      for (map<int, string>::const_iterator iterator = vals.begin();
            iterator != vals.end(); ++iterator) {
         code.
           append("  feature_outputs[").
@@ -104,9 +104,9 @@ void NominalToBoolConverter::applyImpl(
          ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) == NOMINAL) {
-          map<int, string> vals =
-            input_feature_info_.getFeatureValues(input_feature_index);
-          for (map<int, string>::iterator iterator = vals.begin();
+          const map<int, string>& vals =
+            input_feature_info_.getNominalFeatureValues(input_feature_index);
+          for (map<int, string>::const_iterator iterator = vals.begin();
             iterator != vals.end(); ++iterator) {
               if (input[input_feature_index] == iterator->first) {
                 converted_object << 1.0;

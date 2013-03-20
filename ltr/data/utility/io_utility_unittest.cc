@@ -7,18 +7,26 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/scorers/fake_scorer.h"
-#include "ltr/utility/random_number_generator.h"
 #include "ltr/utility/boost/lexical_cast.h"
 #include "ltr/utility/boost/path.h"
+#include "ltr/utility/numerical.h"
+#include "ltr/utility/random_number_generator.h"
+
+using std::string;
 
 using ltr::DataSet;
+using ltr::FakeScorer;
 using ltr::io_utility::loadDataSet;
 using ltr::io_utility::saveDataSet;
+using ltr::io_utility::savePredictions;
 using ltr::Object;
 using ltr::ObjectList;
 using ltr::ObjectPair;
-using ltr::utility::randomizer;
+using ltr::Scorer;
 using ltr::utility::FixPathSeparators;
+using ltr::utility::lexical_cast;
+using ltr::utility::NaN;
+using ltr::utility::randomizer;
 
 int last_random = 2981984;
 
@@ -28,9 +36,16 @@ class IOUtilityTest : public ::testing::Test {
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
     // before each test).
-    svm_arff_test_file_name = FixPathSeparators("data/tests/svm/arff_test.txt");
-    arff_arff_test_file_name = FixPathSeparators("data/tests/arff/arff_test.txt");
-    tmp_file_name = FixPathSeparators("tmp_file");
+    svm_arff_test_file_name =
+        FixPathSeparators("data/tests/svm/arff_test.txt");
+    arff_arff_test_file_name =
+        FixPathSeparators("data/tests/arff/arff_test.txt");
+    arff_input_test_file_name =
+        FixPathSeparators("data/tests/arff/arff_in_data.txt");
+    arff_output_test_file_name =
+        FixPathSeparators("data/tests/arff/arff_out_data.txt");
+    tmp_file_name =
+        FixPathSeparators("tmp_file");
   }
 
   virtual void TearDown() {
@@ -38,118 +53,132 @@ class IOUtilityTest : public ::testing::Test {
     // before the destructor).
   }
 
-  std::string svm_arff_test_file_name;
-  std::string arff_arff_test_file_name;
-  std::string tmp_file_name;
+  string svm_arff_test_file_name;
+  string arff_arff_test_file_name;
+  string arff_input_test_file_name;
+  string arff_output_test_file_name;
+  string tmp_file_name;
 };
 
 TEST_F(IOUtilityTest, TestingSVMParser) {
   DataSet<Object> data;
-  const int N = 145;
-  const int featureN = 3;
-  for (int i = 0; i < N; ++i) {
+
+  const int OBJECT_COUNT = 145;
+  const int FEATURE_COUNT = 3;
+  for (int object_index = 0; object_index < OBJECT_COUNT; ++object_index) {
     Object obj;
-    for (int j = 0; j < featureN; j++)
+    for (int feature_index = 0; feature_index < FEATURE_COUNT; feature_index++)
       obj << static_cast<double>(randomizer.rand()) / 15332;
+    obj.set_actual_label(static_cast<double>(randomizer.rand()) / 15332);
     data << obj;
   }
-
   saveDataSet(data, tmp_file_name, "SVMLIGHT");
-  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "SVMLIGHT");
-  EXPECT_EQ(data2, data);
 
+  DataSet<Object> data2 = loadDataSet<Object>(tmp_file_name, "SVMLIGHT");
+  EXPECT_TRUE(data2 == data);
   const int max_list_size = 15;
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
-  for (int i = 0; i < N; ++i) {
-    int cn = randomizer.rand() %
+  for (int query_id = 0; query_id < OBJECT_COUNT; ++query_id) {
+    int list_size = randomizer.rand() %
       (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
-    for (int j = 0; j < cn; j++) {
+    for (int object_index = 0; object_index < list_size; ++object_index) {
       Object obj;
-      obj.setMetaInfo("queryId", ltr::utility::lexical_cast<std::string>(i));
-      for (int j = 0; j < featureN; j++)
+      obj.setMetaInfo("queryId", lexical_cast<string>(query_id));
+      for (int feature_index = 0;
+           feature_index < FEATURE_COUNT;
+           ++feature_index) {
         obj << static_cast<double>(randomizer.rand()) / 15332;
+      }
+      obj.set_actual_label(0);
       lst << obj;
     }
     list_data << lst;
   }
 
   saveDataSet(list_data, tmp_file_name, "SVMLIGHT");
-  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "SVMLIGHT"), list_data);
+  EXPECT_TRUE(
+      loadDataSet<ObjectList>(tmp_file_name, "SVMLIGHT") == list_data);
 }
 
 TEST_F(IOUtilityTest, TestingARFFParser) {
   DataSet<Object> data;
-  const int N = 145;
-  const int featureN = 3;
-  for (int i = 0; i < N; ++i) {
+  const int OBJECT_COUNT = 145;
+  const int FEATURE_COUNT = 3;
+  for (int object_index = 0; object_index < OBJECT_COUNT; ++object_index) {
     Object obj;
-    for (int j = 0; j < featureN; j++)
+    for (int feature_index = 0;
+         feature_index < FEATURE_COUNT;
+         ++feature_index) {
       obj << static_cast<double>(randomizer.rand()) / 15332;
+    }
+    obj.set_actual_label(static_cast<double>(randomizer.rand()) / 15332);
     data << obj;
   }
 
   saveDataSet(data, tmp_file_name, "ARFF");
-  DataSet<Object> data2 = loadDataSet<ltr::Object>(tmp_file_name, "ARFF");
-  EXPECT_EQ(data2, data);
+  DataSet<Object> data2 = loadDataSet<Object>(tmp_file_name, "ARFF");
+  EXPECT_TRUE(data2 == data);
 }
 
 TEST_F(IOUtilityTest, TestingYandexParser) {
   DataSet<Object> data;
-  const int N = 145;
-  const int featureN = 3;
-  for (int i = 0; i < N; ++i) {
+  const int OBJECT_COUNT = 145;
+  const int FEATURE_COUNT = 3;
+  for (int object_index = 0; object_index < OBJECT_COUNT; ++object_index) {
     Object obj;
-    for (int j = 0; j < featureN; j++)
+    for (int feature_index = 0;
+         feature_index < FEATURE_COUNT;
+         feature_index++) {
       obj << static_cast<double>(randomizer.rand()) / 15332;
+    }
+    obj.set_actual_label(static_cast<double>(randomizer.rand()) / 15332);
     data << obj;
   }
   saveDataSet(data, tmp_file_name, "yandex");
-  EXPECT_EQ(loadDataSet<ltr::Object>(tmp_file_name, "yandex"), data);
+  EXPECT_EQ(loadDataSet<Object>(tmp_file_name, "yandex"), data);
 
   const int max_list_size = 15;
   const int min_list_size = 5;
   DataSet<ObjectList> list_data;
-  for (int i = 0; i < N; ++i) {
-    int cn = randomizer.rand() %
+  for (int query_id = 0; query_id < OBJECT_COUNT; ++query_id) {
+    int list_size = randomizer.rand() %
       (1 + max_list_size - min_list_size) + min_list_size;
     ObjectList lst;
-    for (int j = 0; j < cn; j++) {
+    for (int object_index = 0; object_index < list_size; ++object_index) {
       Object obj;
-      obj.setMetaInfo("queryId", ltr::utility::lexical_cast<std::string>(i));
-      for (int j = 0; j < featureN; j++)
+      obj.setMetaInfo("queryId",
+                      lexical_cast<string>(query_id));
+      for (int feature_index = 0;
+           feature_index < FEATURE_COUNT;
+           ++feature_index) {
         obj << static_cast<double>(randomizer.rand()) / 15332;
+      }
+      obj.set_actual_label(0);
       lst << obj;
     }
     list_data << lst;
   }
 
   saveDataSet(list_data, tmp_file_name, "yandex");
-  EXPECT_EQ(loadDataSet<ltr::ObjectList>(tmp_file_name, "yandex"),
+  EXPECT_EQ(loadDataSet<ObjectList>(tmp_file_name, "yandex"),
       list_data);
-}
-
-TEST_F(IOUtilityTest, TestingARFFAndSVMParsers) {
-  DataSet<Object> arff_data =
-      loadDataSet<ltr::Object>(arff_arff_test_file_name, "arff");
-
-  DataSet<Object> svm_data =
-      loadDataSet<ltr::Object>(svm_arff_test_file_name, "SVMLIGHT");
-
-  EXPECT_EQ(svm_data, arff_data);
 }
 
 TEST_F(IOUtilityTest, TestingSavePredictions) {
   DataSet<Object> data;
-  const int N = 145;
-  const int featureN = 3;
-  for (int i = 0; i < N; ++i) {
+  const int OBJECT_COUNT = 145;
+  const int FEATURE_COUNT = 3;
+  for (int object_index = 0; object_index < OBJECT_COUNT; ++object_index) {
     Object obj;
-    for (int j = 0; j < featureN; j++)
+    for (int feature_index = 0;
+         feature_index < FEATURE_COUNT;
+         ++feature_index) {
       obj << static_cast<double>(randomizer.rand()) / 15332;
+    }
     data << obj;
   }
-  EXPECT_NO_THROW(ltr::io_utility::savePredictions(data,
-      ltr::Scorer::Ptr(new ltr::FakeScorer()), tmp_file_name));
+  EXPECT_NO_THROW(savePredictions(data,
+      Scorer::Ptr(new FakeScorer()), tmp_file_name));
 }

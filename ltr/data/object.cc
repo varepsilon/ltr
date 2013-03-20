@@ -17,8 +17,8 @@ namespace ltr {
 Object::Object()
   : features_(new Features()),
     meta_info_(new MetaInfo()),
-    actual_label_(0),
-    predicted_label_(0) {}
+    actual_label_(NaN),
+    predicted_label_(NaN) {}
 
 Object::Object(const Object& object)
   : features_(object.features_),

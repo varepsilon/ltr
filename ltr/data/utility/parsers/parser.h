@@ -3,20 +3,23 @@
 #ifndef LTR_DATA_UTILITY_PARSERS_PARSER_H_
 #define LTR_DATA_UTILITY_PARSERS_PARSER_H_
 
+#include <istream>
+#include <ostream>
 #include <map>
-#include <vector>
-#include <string>
-#include <iostream>
 #include <sstream>
+#include <string>
+#include <vector>
 
-using std::vector;
+#include "ltr/data/data_set.h"
+#include "ltr/data/object.h"
+#include "ltr/utility/murmur_hash.h"
+
+using std::istream;
+using std::logic_error;
+using std::ostream;
 using std::string;
 using std::stringstream;
-
-#include "ltr/data/object.h"
-#include "ltr/data/data_set.h"
-#include "ltr/utility/murmur_hash.h"
-#include "ltr/utility/boost/lexical_cast.h"
+using std::vector;
 
 namespace ltr {
 namespace io_utility {
@@ -27,131 +30,91 @@ namespace io_utility {
    */
 class Parser {
  public:
-  typedef int FeatureIndex;
-  typedef string FeatureValue;
-
- protected:
-  typedef int RawFeatureIndex;
-  typedef map<RawFeatureIndex, FeatureValue> RawObject;
-
- public:
-  enum RawFeatureType {
-    NUMERIC,
-    NOMINAL,
-    BOOLEAN,
-    META,
-    CLASS,
-  };
-
-  struct OneFeatureRawInfo {
-    RawFeatureType feature_type;
-    string feature_name;
-    /**
-     * List of possible feature values.
-     * Contains nothing for NUMERIC and META features.
-     */
-    vector<string> feature_values;
-  };
-
-  typedef map<RawFeatureIndex, OneFeatureRawInfo> RawFeatureInfo;
-
-  class bad_line : public std::logic_error {
+  class bad_line : public logic_error {
    public:
-    bad_line() : std::logic_error("") {}
+    bad_line() : logic_error("") {}
   };
 
   typedef ltr::utility::shared_ptr<Parser> Ptr;
   /**
-   * Function sets stream to parse objects from and initialize parser.
+   * Parse file into PointwiseDataSet
+   * @param filename - name of file with data set
+   * @param objects - vector of extracted objects
+   * @param feature_info - feature information of extracted data set
+   * @param label_info - label information of extracted data set
    */
-  void startParsing(std::istream* in);
-  /**
-   * Function returns FeatureInfo for the parsed DataSet.
-   */
-  const FeatureInfo& featureInfo() {return feature_info_;}
-  /**
-   * Function to parse next object from stream.
-   * @return 1 if parsed and 0 if has no more objects in stream.
-   * @param result - Link to the Object to save parsed object.
-   */
-  int parseNextObject(Object* result);
-  /**
-   * Function to parse string into RawObject.
-   * Can throw Parser::bad_line if impossible to parse.
-   * @param line - string to parse.
-   * @param result - link to RawObject to save result in.
-   */
-  virtual void parseRawObject(string line, RawObject* result) = 0;
-  /**
-   * Function to convert RawObject into Object.
-   * It sets actualLabel, meta info
-   * and converts nominal feature into double values.
-   * @return Converted object
-   * @param raw_object - RawObject to convert.
-   */
-  Object makeObject(const RawObject& raw_object);
+  void parse(const string& filename,
+             vector<Object>* objects,
+             FeatureInfo* feature_info,
+             LabelInfo* label_info);
   /**
    * Functions serializes object into string.
    * @param object - object to serialize
-   * @param result - string, which will contain serialized object
+   * @param stream - ostream to output string representation
    * @code
-   * string result;
-   * parser->makeString(object, &result);
+   * parser->saveObject(object, cout);
    * @endcode
    */
-  virtual void makeString(const Object& object, std::string* result) = 0;
+  virtual void saveObject(const Object& object, ostream& result) = 0; // NOLINT
   /**
    * Functions serializes dataset into string.
-   * @param feature_info - information about features
    * @param objects - vector of dataset's objects
-   * @param result - string, which will contain serialized object
+   * @param feature_info - information about feature types
+   * @param label_info - information about label type
+   * @param stream - ostream to output string representation
    * @code
-   * string result;
-   * parser->makeString(data, &result);
+   * parser->saveObjects(object_list, feature_info, label_info, cout);
    * @endcode
    */
-  virtual void makeString(
-      const FeatureInfo & feature_info,
-      const vector<const Object *> & objects,
-      std::string* result);
+  virtual void saveObjects(const vector<Object>& objects,
+                           const FeatureInfo& feature_info,
+                           const LabelInfo& label_info,
+                           ostream& result); // NOLINT
   /**
    * Function to create Pairwise data set of given objects
    * @param objects - objects to create data set from
-   * @param info - information about features in the object
+   * @param feature_info - information about features in the object
+   * @param label_info - information about label values
    */
-  virtual PairwiseDataSet buildPairwiseDataSet(
-    const vector<Object>& objects, const FeatureInfo& info) = 0;
+  virtual PairwiseDataSet buildPairwiseDataSet(const vector<Object>& objects,
+                                               const FeatureInfo& feature_info,
+                                               const LabelInfo& label_info) = 0;
   /**
    * Function to create Listwise data set of given objects
    * @param objects - objects to create data set from
-   * @param info - information about features in the object
+   * @param feature_info - information about features in the object
+   * @param label_info - information about label values
    */
-  virtual ListwiseDataSet buildListwiseDataSet(
-    const vector<Object>& objects, const FeatureInfo& info) = 0;
+  virtual ListwiseDataSet buildListwiseDataSet(const vector<Object>& objects,
+                                               const FeatureInfo& feature_info,
+                                               const LabelInfo& label_info) = 0;
 
   virtual ~Parser() {}
 
  protected:
-  map<RawFeatureIndex, FeatureIndex> feature_id_;
-  RawFeatureInfo raw_feature_info_;
-  int last_feature_index_;
-  FeatureInfo feature_info_;
   /**
-   * Stream to parse objects from.
+   * Realization of parsing data information for format. Function must set 'in'
+   * onto first symbol of first object.
+   * @param in - input stream with file
+   * @param feature_info - parsed information about features
+   * @param label_info - parsed information about label values
    */
-  std::istream* file_;
+  virtual void parseDataInfo(istream& in, // NOLINT
+                             FeatureInfo* feature_info,
+                             LabelInfo* label_info) = 0;
   /**
-   * Method to init parser. It must fill the raw_feature_onfo_.
-   * @code
-   * ifstream fin("file.txt");
-   * parser->init(&fin);
-   * @endcode
-    */
-  virtual void init(std::istream* in) {}
-
-  double hash(const string& str) {
-    return utility::murmurHash(str.c_str(), str.size(), 19837);
-  }
+   * Realization of parsing object by its string representation. Every line
+   * from file starting from position after parsing data information will be
+   * casted into object by this function
+   * @param record - string which contains object to parse
+   * @param feature_info - information about features
+   * @param label_info - information about label values
+   * @param object - result of parsing
+   */
+  virtual void parseObject(const string &record,
+                           const FeatureInfo& feature_info,
+                           const LabelInfo& label_info,
+                           Object* object) = 0;
 };
 
 /**
@@ -161,7 +124,7 @@ class Parser {
  * Parser::Ptr yandex_parser = getParser("yandex");
  * @endcode
  */
-Parser::Ptr getParser(const std::string& format);
+Parser::Ptr getParser(const string& format);
 };
 };
 #endif  // LTR_DATA_UTILITY_PARSERS_PARSER_H_

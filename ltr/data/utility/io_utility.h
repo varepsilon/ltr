@@ -57,15 +57,20 @@ void saveDataSet(const DataSet<TElement>& data,
  * @param objects - objects to build data set from
  * @param info - information about features in objects
  * @code
- * buildDataSet<TElement>(parser, objects, handler->featureInfo());
+ * buildDataSet<TElement>(
+ *     parser,
+ *     objects,
+ *     handler->featureInfo(),
+ *     handler->labelInfo());
  * @endcode
  */
 template<class TElement>
 DataSet<TElement> buildDataSet(Parser::Ptr parser,
                                const vector<Object>& objects,
-                               const FeatureInfo& info);
+                               const FeatureInfo& feature_info,
+                               const LabelInfo& label_info);
 /**
- * Function to save predicted labeles for given data set
+ * Function to save label labeles for given data set
  * @param data - data set for prediction
  * @param scorer - scorer for prediction
  * @param filename - path to file
@@ -119,6 +124,16 @@ void groupByIntMeta(const vector<Object>& objects,
 void groupByFloatMeta(const vector<Object>& objects,
                       const string& group_parameter,
                       map<float, vector<Object> >* result);
+/**
+ * Function groups objects in lists, each having same
+ * double meta-parameter
+ * @param objects - objects to group
+ * @param group_parameter - meta-parameter name
+ * @param result - result lists
+ */
+void groupByDoubleMeta(const vector<Object>& objects,
+                      const string& group_parameter,
+                      map<double, vector<Object> >* result);
 };
 };
 
@@ -129,34 +144,16 @@ namespace io_utility {
 template<class TElement>
 DataSet<TElement> loadDataSet(const string& filename,
                               const string& format) {
-  ifstream file(filename.c_str());
-  if (file.fail()) {
-    throw std::logic_error("File " + filename + " not found");
-  }
   Parser::Ptr parser = getParser(format);
-  parser->startParsing(&file);
-
   vector<Object> objects;
-  Object current_object;
-
-  while (parser->parseNextObject(&current_object)) {
-    objects.push_back(current_object);
-  }
-  file.close();
-  int feature_count = parser->featureInfo().feature_count();
-  for (int object_index = 0;
-       object_index < (int)objects.size();
-       ++object_index) {
-    for (int count = objects[object_index].features().size();
-         count < feature_count;
-         ++count) {
-      objects[object_index] << ltr::utility::NaN;
-    }
-  }
-  DataSet<TElement> result =
-    buildDataSet<TElement>(parser, objects, parser->featureInfo());
-  result.set_alias(filename);
-  return result;
+  FeatureInfo feature_info;
+  LabelInfo label_info;
+  parser->parse(filename, &objects, &feature_info, &label_info);
+  DataSet<TElement> data_set = buildDataSet<TElement>(parser, objects,
+                                                      feature_info,
+                                                      label_info);
+  data_set.set_alias(filename);
+  return data_set;
 }
 
 
@@ -170,7 +167,7 @@ void saveDataSet(const DataSet<TElement>& data,
   }
   Parser::Ptr parser = getParser(format);
   string str;
-  vector<const Object *> objects;
+  vector<Object> objects;
   for (int element_index = 0;
        element_index < (int)data.size();
        ++element_index) {
@@ -178,11 +175,11 @@ void saveDataSet(const DataSet<TElement>& data,
     for (int object_index = 0;
          object_index < per_object_accessor.object_count();
          ++object_index) {
-      objects.push_back(&per_object_accessor.object(object_index));
+      objects.push_back(per_object_accessor.object(object_index));
     }
   }
-  parser->makeString(data.feature_info(), objects, &str);
-  file << str << std::endl;
+  parser->saveObjects(objects, data.feature_info(), data.label_info(), file);
+  file << std::endl;
   file.close();
 }
 

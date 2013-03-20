@@ -3,6 +3,9 @@
 #ifndef LTR_UTILITY_MURMUR_HASH_H_
 #define LTR_UTILITY_MURMUR_HASH_H_
 
+#include <string>
+using std::string;
+
 namespace ltr {
 namespace utility {
 
@@ -17,6 +20,7 @@ namespace utility {
  *    machines.
 */
 unsigned int murmurHash(const void* key, int len, unsigned int seed);
+unsigned int hash(const string& str);
 }
 }
 
