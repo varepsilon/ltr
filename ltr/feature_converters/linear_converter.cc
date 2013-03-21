@@ -1,9 +1,10 @@
 // Copyright 2011 Yandex
 
+#include "ltr/feature_converters/linear_converter.h"
+
 #include <stdexcept>
 #include <sstream>
 
-#include "ltr/feature_converters/linear_converter.h"
 #include "ltr/utility/eigen_converters.h"
 
 using std::logic_error;
@@ -22,21 +23,22 @@ FeatureInfo LinearConverter::convertFeatureInfo() const {
 
 string LinearConverter::generateCppCode(const string& function_name) const {
   stringstream code;
-  code << "#include <vector>\n\nvoid "
-    << function_name
-    << "(const std::vector<double>& features, "
-    << "std::vector<double>* result) {\n"
-    << "\tresult->clear();\n"
-    << "\tdouble new_feature;\n";
+  code
+    << "#include <vector>\n"
+    << "\n"
+    << "void " << function_name << "(const std::vector<double>& features,\n"
+    << "    std::vector<double>* result) {\n"
+    << "  result->clear();\n"
+    << "  double new_feature;\n";
     for (int row_index = 0; row_index < (int)factor_.rows(); ++row_index) {
-      code << "\tnew_feature = 0;\n";
+      code << "  new_feature = 0;\n";
       for (int col_index = 0; col_index < (int)factor_.cols(); ++col_index) {
-        code << "\tnew_feature += "
+        code << "  new_feature += "
           << lexical_cast<string>(factor_(row_index, col_index))
           << " * features[" << lexical_cast<string>(col_index) << "];\n";
       }
-      code << "\tnew_feature += " << lexical_cast<string>(shift_[row_index])
-        << ";\n" << "\tresult->push_back(new_feature);\n";
+      code << "  new_feature += " << lexical_cast<string>(shift_[row_index])
+        << ";\n" << "  result->push_back(new_feature);\n";
     }
   code << "}\n";
   return code.str();

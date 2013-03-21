@@ -1,13 +1,18 @@
 // Copyright 2012 Yandex
 
+#include "ltr/feature_converters/feature_sampler.h"
+
 #include <string>
+#include <sstream>
 #include <stdexcept>
 
-#include "ltr/feature_converters/feature_sampler.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::logic_error;
 using std::string;
 using std::stringstream;
+
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 FeatureInfo FeatureSampler::convertFeatureInfo() const {
@@ -22,28 +27,27 @@ FeatureInfo FeatureSampler::convertFeatureInfo() const {
 }
 
 string FeatureSampler::generateCppCode(const string& function_name) const {
-    string code;
-    code.
-      append("#include <vector>\n\nvoid ").
-      append(function_name).
-      append("(const std::vector<double>& features, ").
-      append("std::vector<double>* result) {\n").
-      append("  result->clear();\n").
-      append("  int indices[] = {");
+    stringstream code;
+    code
+      << "#include <vector>\n"
+      << "\n"
+      << "void " << function_name << "(const std::vector<double>& features,\n"
+      << "    std::vector<double>* result) {\n"
+      << "  result->clear();\n"
+      << "  int indices[] = {";
     for (int i = 0; i < (int)indices_.size(); ++i) {
       if (i != 0)
-        code.append(",");
-      code.append(ltr::utility::lexical_cast<string>(indices_[i]));
+        code << ", ";
+      code << lexical_cast<string>(indices_[i]);
     }
-    code.
-      append("};\n").
-      append("  for (int i = 0; i < ").
-      append(ltr::utility::lexical_cast<string>(indices_.size())).
-      append("; ++i) {\n").
-      append("    result->push_back(features[indices[i]]);\n").
-      append("  }\n").
-      append("}\n");
-    return code;
+    code
+      << "};\n"
+      << "  for (int i = 0; i < " << lexical_cast<string>(indices_.size())
+        << "; ++i) {\n"
+      << "    result->push_back(features[indices[i]]);\n"
+      << "  }\n"
+      << "}\n";
+    return code.str();
 }
 
 void FeatureSampler::set_indices(const Indices& indices) {

@@ -10,7 +10,7 @@
 
 namespace ltr {
 /**
- * Produces NanToNeutralConverter with zero neutral object
+ * \brief Produces NanToNeutralConverter with zero neutral object
  */
 template <typename TElement>
 class NanToZeroConverterLearner
