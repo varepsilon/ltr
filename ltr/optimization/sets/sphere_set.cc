@@ -1,21 +1,22 @@
-// Copyright 2012 Yandex
-
-#include <cmath>
+// Copyright 2013 Yandex
 
 #include "ltr/optimization/sets/sphere_set.h"
-#include "ltr/utility/macros.h"
 
 namespace optimization {
 bool SphereSet::isInside(const Point& point) const {
   CHECK(point.size() == dimension());
-  return fabs(point.norm() - radius()) < precision();
+  return ltr::utility::DoubleEqual((point - center()).norm(), radius());
 }
-
-Point SphereSet::project(const Point& point) const {
+void SphereSet::computeProjection(const Point& point,
+                                  Point* projection) const {
   CHECK(point.size() == dimension());
-  if (isInside(point))
-    return point;
-  return point.normalized() * radius();
+  if (isInside(point)) {
+    *projection = point;
+  } else if (point == center()) {
+    sampleRandomPointInside(projection);
+  } else {
+    *projection = (point - center()).normalized() * radius() + center();
+  }
 }
 
 void SphereSet::getBoundaries(Point* top, Point* bottom) const {
@@ -23,21 +24,20 @@ void SphereSet::getBoundaries(Point* top, Point* bottom) const {
   CHECK(bottom->size() == dimension());
 
   top->setConstant(radius());
+  *top = *top + center();
   bottom->setConstant(-radius());
+  *bottom = *bottom + center();
 }
 
-Point SphereSet::sampleRandomPointInside() const {
-  return (getRandomPoint().normalized()) * radius();
+void SphereSet::sampleRandomPointInside(Point* random_point) const {
+  getRandomPoint(random_point);
+  *random_point = (*random_point - center()).normalized() * radius() +
+    center();
 }
 
-double SphereSet::radius() const {
-  return radius_;
+SphereSet::SphereSet(double radius, const Point& center)
+    : Set(center.rows()),
+      radius_(radius),
+      center_(center) {
 }
-
-double SphereSet::precision() const {
-  return precision_;
-}
-
-SphereSet::SphereSet(double radius, double precision, int dimension)
-  : Set(dimension), radius_(radius), precision_(precision) { }
 }

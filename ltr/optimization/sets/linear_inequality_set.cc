@@ -1,36 +1,37 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
+#include <math.h>
+#include <Eigen/Dense>
 #include <limits>
-
-#include "ltr/optimization/sets/linear_inequality_set.h"
+#include "ltr/utility/numerical.h"
 #include "ltr/utility/random_number_generator.h"
 #include "ltr/utility/macros.h"
+#include "ltr/optimization/sets/linear_inequality_set.h"
 
 namespace optimization {
-LinearInequalitySet::LinearInequalitySet(Vector normal,
-  Point point, int dimension):Set(dimension), positive_normal_(normal),
-  initial_point_(point) { }
+LinearInequalitySet::LinearInequalitySet(const Vector& positive_normal,
+                                         double shift)
+    : Set(positive_normal.rows()),
+      positive_normal_(positive_normal),
+      shift_(shift) {
+  CHECK(positive_normal.rows() > 0);
+  CHECK(positive_normal.lpNorm<2>() != 0.0);
+}
 
 bool LinearInequalitySet::isInside(const Point& point) const {
   CHECK(point.size() == dimension());
-  return !(positive_normal().dot(point - initial_point()) < 0);
+  return (positive_normal().dot(point) + shift() >= 0);
 }
 
-Point LinearInequalitySet::project(const Point& point) const {
+void LinearInequalitySet::computeProjection(const Point& point,
+                                            Point* projection) const {
   CHECK(point.size() == dimension());
-  if (!isInside(point)) {
-    Vector projecting_vector = point - initial_point();
-    Vector projected_vector;
-    if (positive_normal().isZero()) {
-      projected_vector = projecting_vector;
-    } else {
-      double scalar = projecting_vector.dot(positive_normal());
-      double norm = positive_normal().dot(positive_normal());
-      projected_vector = projecting_vector - (scalar/norm) * positive_normal();
-    }
-    return initial_point() + projected_vector;
+  if (isInside(point)) {
+    *projection = point;
   } else {
-    return point;
+    *projection = point -
+      (positive_normal() * (shift() + positive_normal().dot(point))) /
+        pow(positive_normal().norm(), 2);
   }
 }
 
@@ -44,19 +45,13 @@ void LinearInequalitySet::getBoundaries(Point* top, Point* bottom) const {
   }
 }
 
-Vector LinearInequalitySet::positive_normal() const {
-  return positive_normal_;
-}
-
-Point LinearInequalitySet::initial_point() const {
-  return initial_point_;
-}
-
-Point LinearInequalitySet::sampleRandomPointInside() const {
+void LinearInequalitySet::sampleRandomPointInside(Point* random_point) const {
   Vector random_vector(dimension());
   random_vector.setRandom();
-  if (random_vector.dot(positive_normal()) < 0)
+  if (random_vector.dot(positive_normal()) < 0) {
     random_vector = -random_vector;
-  return initial_point() + random_vector;
+  }
+  *random_point = shift() * positive_normal() / positive_normal().lpNorm<2>()
+    + random_vector;
 }
 }

@@ -1,20 +1,28 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
-#include "ltr/optimization/sets/ball_set.h"
-#include "ltr/utility/macros.h"
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/optimization/sets/ball_set.h"
+using ltr::utility::randomizer;
 
 namespace optimization {
-bool BallSet::isInside(const Point& point) const {
-  CHECK(point.size() == dimension());
-  return !(point.norm() > radius());
+BallSet::BallSet(double radius, const Point& center)
+    : Set(center.rows()),
+      radius_(radius),
+      center_(center) {
 }
 
-Point BallSet::project(const Point& point) const {
+bool BallSet::isInside(const Point& point) const {
   CHECK(point.size() == dimension());
-  if (isInside(point))
-    return point;
-  return point.normalized() * radius();
+  return !((point - center()).norm() > radius());
+}
+
+void BallSet::computeProjection(const Point& point, Point* projection) const {
+  CHECK(point.size() == dimension());
+  if (isInside(point)) {
+    *projection = point;
+  } else {
+    *projection = (point - center()).normalized() * radius() + center();
+  }
 }
 
 void BallSet::getBoundaries(Point* top, Point* bottom) const {
@@ -22,19 +30,15 @@ void BallSet::getBoundaries(Point* top, Point* bottom) const {
   CHECK(bottom->size() == dimension());
 
   top->setConstant(radius());
+  *top = *top + center();
   bottom->setConstant(-radius());
+  *bottom = *bottom + center();
 }
 
-// this distribution is not uniform, but will do for now
-Point BallSet::sampleRandomPointInside() const {
-  Point random_point = getRandomPoint();
-  return random_point.normalized() * ltr::utility::randomizer.doubleRand(0, radius());
-}
-
-BallSet::BallSet(double radius, int dimension): Set(dimension),
-  radius_(radius) { }
-
-double BallSet::radius() const {
-  return radius_;
+void BallSet::sampleRandomPointInside(Point* random_point) const {
+  getRandomPoint(random_point);
+  *random_point = (*random_point - center()).normalized() *
+    randomizer.doubleRand(0, radius()) +
+      center();
 }
 }

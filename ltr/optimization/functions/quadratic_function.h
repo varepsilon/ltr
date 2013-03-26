@@ -4,40 +4,57 @@
 #define LTR_OPTIMIZATION_FUNCTIONS_QUADRATIC_FUNCTION_H_
 
 #include <string>
-#include "ltr/optimization/functions/twice_differentiable_function.h"
 #include "ltr/utility/macros.h"
+#include "ltr/optimization/functions/twice_differentiable_function.h"
 
 namespace optimization {
-/**\class\brief class for quadratic functions in R^n
+/**
+ * \class\brief class for quadratic functions in R^n
  * \f$f(\override(x)) = \override(x)^T A \override(x) + B^T override(x) + C$\f
  */
 
 class QuadraticFunction : public TwiceDifferentiableFunction {
  public:
+  typedef ltr::utility::shared_ptr<QuadraticFunction> Ptr;
+
   explicit QuadraticFunction(int dimension)
     : TwiceDifferentiableFunction(dimension) { }
-  explicit QuadraticFunction(Matrix a, Vector b, double c);
+  explicit QuadraticFunction(const Matrix& quadratic,
+                             const Vector& linear,
+                             double shift);
   ~QuadraticFunction() { }
 
-  double value(const Point& point) const;
-  Matrix hessian(const Point& point) const;
-  Vector gradient(const Point& point) const;
+  /**
+   * compute value of this function in a given point
+   */
+  double computeValue(const Point& point) const;
+  /**
+   * compute first derivative of this function in a given point
+   */
+  void computeGradient(const Point& point, Vector* gradient) const;
+  /**
+   * compute second derivative in given point
+   */
+  void computeHessian(const Point& point, Matrix* hessian) const;
 
-  GET_SET(Matrix, a);
-  GET_SET(Vector, b);
-  GET_SET(double, c);
+  GET_SET(Matrix, quadratic);
+  GET_SET(Vector, linear);
+  GET_SET(double, shift);
 
   string getDefaultAlias() const { return "QuadraticFunction";}
  private:
-  /** matrix of quadratic coefficients \f$ A $\f
-  */
-  Matrix a_;
-  /** matrix of linear coefficients \f$ B $\f
-  */
-  Vector b_;
-  /** absolute term \f$ C $\f
-  */
-  double c_;
+  /** 
+   * matrix of quadratic coefficients \f$ A $\f
+   */
+  Matrix quadratic_;
+  /** 
+   * matrix of linear coefficients \f$ B $\f
+   */
+  Vector linear_;
+  /**
+   * shift term \f$ C $\f
+   */
+  double shift_;
 };
 }
 
