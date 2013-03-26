@@ -1,4 +1,7 @@
-# Copyright 2011 Yandex
+# Copyright 2013 Yandex
+"""
+This file contains all the middleware used in LTR Site.
+"""
 
 from django.db.models import signals
 from django.utils.functional import curry
@@ -7,13 +10,14 @@ from models import get_current_solution
 
 
 class SolutionMiddleware(object):
-    """Add solution foreign key ref automatically to any model that has
-    <solution> field. Foreign key is added when saving model.
+    """ Adds 'solution' foreign key ref automatically to any model that has
+    'solution' field. Foreign key is added when saving model.
     Almost entirely taken from: http://stackoverflow.com/questions/862522/\
-django-populate-user-id-when-saving-a-model/12977709#12977709"""
+django-populate-user-id-when-saving-a-model/12977709#12977709
+    """
 
     def process_request(self, request):
-        if not request.method in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
+        if request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
             solution = get_current_solution(request)
             mark_solution = curry(self.mark_solution, solution)
             signals.pre_save.connect(mark_solution,
