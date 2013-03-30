@@ -105,26 +105,9 @@ class Solution(models.Model):
         """ Exports all the objects to JSON """
         raise NotImplementedError()
 
-        base_objects = list(self.get_objects(BaseObject).all())
-        ltr_objects = list(self.get_objects(LtrObject).all())
-        objects = list(obj.cast() for obj in base_objects)
-        # TODO: fix deserialization if using natural keys
-        return serializers.serialize(
-            'json',
-            base_objects + ltr_objects + objects,
-            use_natural_keys=True)
-
     def import_objects(self, data):
         """ Imports all the objects from JSON """
         raise NotImplementedError()
-
-        for deserialized in serializers.deserialize(
-                'json',
-                data,
-                use_natural_keys=True):
-            if hasattr(deserialized.object, 'solution'):
-                deserialized.object.solution = self
-            deserialized.save()
 
 
 APPROACH_CHOICES = (
@@ -237,21 +220,12 @@ class InheritanceCastModel(models.Model):
         abstract = True
 
 
-class BaseObjectManager(models.Manager):
-    """ Manager for accessing objects via their natural keys
-    """
-    def get_by_natural_key(self, name):
-        return self.get(name=name)
-
-
 OBJECT_NAME_REGEX = '^[A-Za-z]\w{0,29}$'
 
 
 class BaseObject(InheritanceCastModel):
     """ Base class in object hierarchy
     """
-    objects = BaseObjectManager()
-
     solution = models.ForeignKey(Solution)
 
     name = models.CharField(
@@ -282,9 +256,6 @@ class BaseObject(InheritanceCastModel):
                     value = value.name
                 fields[field.name] = value
         return fields
-
-    def natural_key(self):
-        return [self.name]
 
     class Meta:
         unique_together = (("name", "solution"),)
