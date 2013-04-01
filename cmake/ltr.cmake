@@ -111,6 +111,15 @@ SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/string_utils.cc
               ${Source_Path}/ltr/utility/boost/triple.h)
 
+SET(LTR_SHARED_PTR ${Source_Path}/ltr/utility/boost/shared_ptr/CastingOperators.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/InactivePtr.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/Ptr.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/PtrRefCounter.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/QuickMutexPOSIX.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/QuickMutexWin32.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/SmartPointers.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/ThreadSynchronization.h)
+
 SET(LTR_RANDOM ${Source_Path}/ltr/utility/random/LeadingZeros.hpp
                ${Source_Path}/ltr/utility/random/RandomCanonical.hpp
                ${Source_Path}/ltr/utility/random/Config.h
@@ -340,7 +349,7 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
 SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
 
-SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_INTERFACES}
+SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_SHARED_PTR} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
             ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES} ${LTR_FEATURE_CONVERTERS}
             ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION}
