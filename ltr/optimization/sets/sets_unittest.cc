@@ -6,6 +6,7 @@
 #include "ltr/optimization/sets/ball_set.h"
 #include "ltr/optimization/sets/linear_inequality_set.h"
 #include "ltr/optimization/sets/sphere_set.h"
+#include "ltr/optimization/sets/polyhedron_set.h"
 
 using ltr::utility::DoubleEqual;
 
@@ -15,6 +16,7 @@ using optimization::Vector;
 using optimization::Matrix;
 using optimization::LinearInequalitySet;
 using optimization::SphereSet;
+using optimization::PolyhedronSet;
 
 TEST(SetTest, BallSetInsideTest) {
   Point center(2);
@@ -39,7 +41,6 @@ TEST(SetTest, BallSetInsideTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
-
 TEST(SetTest, BallSetProjectTest) {
   Point center(2);
   center[0] = 0.0;
@@ -58,7 +59,6 @@ TEST(SetTest, BallSetProjectTest) {
   EXPECT_TRUE(DoubleEqual(projected_point[1], 8.0));
   EXPECT_TRUE(set.isInside(projected_point));
 }
-
 TEST(SetTest, BallSetBoundariesTest) {
   Point center(4);
   center << 0.0, 0.0, 0.0, 0.0;
@@ -75,7 +75,6 @@ TEST(SetTest, BallSetBoundariesTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
-
 TEST(SetTest, BallSetRandomPointTest) {
   Point center(10);
   center << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
@@ -86,7 +85,6 @@ TEST(SetTest, BallSetRandomPointTest) {
   EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
   EXPECT_TRUE(set.isInside(random_point));
 }
-
 TEST(SetTest, NonZeroBallSetInsideTest) {
   Point center(10);
   center << 1.0, 2.0, 0.0, -1.0, 3.0, -9.0, 10.0, 12.0, 6.0, 3.0;
@@ -97,7 +95,6 @@ TEST(SetTest, NonZeroBallSetInsideTest) {
   EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
   EXPECT_TRUE(set.isInside(random_point));
 }
-
 TEST(SetTest, NonZeroBallSetProjectionTest) {
   Point center(3);
   center << 2.0, 2.0, 2.0;
@@ -133,7 +130,6 @@ TEST(SetTest, LinearInequalitySetInsideTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
-
 TEST(SetTest, LinearInequalitySetProjectTest) {
   Vector normal(3);
   normal[0] = 2;
@@ -153,7 +149,6 @@ TEST(SetTest, LinearInequalitySetProjectTest) {
   EXPECT_DOUBLE_EQ(projection[1], 5.0);
   EXPECT_TRUE(set.isInside(point));
 }
-
 TEST(SetTest, NonZeroLinearInequalitySetProjectTest) {
   Vector normal(2);
   normal << 1.0, 1.0;
@@ -165,13 +160,11 @@ TEST(SetTest, NonZeroLinearInequalitySetProjectTest) {
   point << 0.0, 0.0;
 
   Point projection;
-  std::cout<< set.isInside(point) << std::endl;
   set.computeProjection(point, &projection);
 
   EXPECT_DOUBLE_EQ(projection[0], 0.5);
   EXPECT_DOUBLE_EQ(projection[1], 0.5);
 }
-
 TEST(SetTest, LinearInequalitySetBoundariesTest) {
   Vector normal(3);
   normal[0] = 2;
@@ -188,7 +181,6 @@ TEST(SetTest, LinearInequalitySetBoundariesTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
-
 TEST(SetTest, LinearInequalitySetRandomPointTest) {
   Vector normal(3);
   normal[0] = 2;
@@ -223,7 +215,6 @@ TEST(SetTest, SphereSetInsideTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
 }
-
 TEST(SetTest, SphereSetProjectTest) {
   Point center(2);
   center << 0.0, 0.0;
@@ -239,7 +230,6 @@ TEST(SetTest, SphereSetProjectTest) {
   EXPECT_TRUE(DoubleEqual(projection[1], 8.0));
   EXPECT_TRUE(set.isInside(projection));
 }
-
 TEST(SetTest, SphereSetBoundariesTest) {
   Point center(4);
   center << 0.0, 0.0, 0.0, 0.0;
@@ -255,7 +245,6 @@ TEST(SetTest, SphereSetBoundariesTest) {
   Point wrong_dimension_point(1);
   EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
 }
-
 TEST(SetTest, SphereSetRandomPointTest) {
   Point center(2);
   center << 0.0, 0.0;
@@ -265,7 +254,6 @@ TEST(SetTest, SphereSetRandomPointTest) {
   EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
   EXPECT_TRUE(set.isInside(random_point));
 }
-
 TEST(SetTest, NonZeroSphereSetInsideTest) {
   Point center(10);
   center << 1.0, 2.0, 0.0, -1.0, 3.0, -9.0, 10.0, 12.0, 6.0, 3.0;
@@ -276,7 +264,6 @@ TEST(SetTest, NonZeroSphereSetInsideTest) {
   EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
   EXPECT_TRUE(set.isInside(random_point));
 }
-
 TEST(SetTest, NonZeroSphereSetProjectionTest) {
   Point center(3);
   center << 2.0, 2.0, 2.0;
@@ -298,7 +285,7 @@ TEST(SetTest, NonZeroSphereSetProjectionTest) {
   projected_point = set.center();
   EXPECT_NO_THROW(set.computeProjection(projected_point, &projection));
 }
-/*
+
 TEST(SetTest, PolyhedronSetInsideTest) {
   Matrix a(3, 2);
   a << -1 ,  0,
@@ -310,10 +297,13 @@ TEST(SetTest, PolyhedronSetInsideTest) {
 
   PolyhedronSet set(a, b);
   Point point(2);
-  point<<1, 1;
+  point << 1, 1;
   EXPECT_FALSE(set.isInside(point));
+  point << -1, -1;
+  EXPECT_FALSE(set.isInside(point));
+  point << 0.49, 0.49;
+  EXPECT_TRUE(set.isInside(point));
 }
-
 TEST(SetTest, PolyhedronSetProjectionTest) {
   Matrix a(3, 2);
   a << -1 ,  0,
@@ -333,7 +323,6 @@ TEST(SetTest, PolyhedronSetProjectionTest) {
   true_projection << 0.5, 0.5;
 
   set.computeProjection(point, &projection);
-  std::cout << projection << std::endl;
   EXPECT_TRUE(projection.isApprox(true_projection, 0.01));
 
   point << -1, -1;
@@ -347,51 +336,25 @@ TEST(SetTest, PolyhedronSetProjectionTest) {
 
   set.computeProjection(point, &projection);
   EXPECT_TRUE(projection.isApprox(true_projection, 0.01));
- 
 }
-
 TEST(SetTest, PolyhedronSetProjectionBigTest) {
   Matrix a(25, 50);
   a.setRandom();
   Vector b(25);
   b.setRandom();
 
-  PolyhedronSet set(a, b, 0.1);
+  PolyhedronSet set(a, b);
   Point point(50);
-  point.setRandom();
-  Point projection = point;
+  Point projection;
 
-  if (!set.isInside(point)) {
-    projection = set.project(point);
+  for (int i = 0; i < 10; ++i) {
+    point.setRandom();
+    if (!set.isInside(point)) {
+      set.computeProjection(point, &projection);
+      EXPECT_TRUE(set.isInside(projection));
+    }
   }
-
-  EXPECT_TRUE(set.isInside(projection));
 }
-
-TEST(SetTest, PolyhedronSetProjectionHugeTest) {
-  int limitsCount, dimension;
-  limitsCount = 400;
-  dimension = 200;
-  Matrix a(limitsCount, dimension);
-  a.setRandom();
-  Point center(dimension);
-  center.setZero();
-
-  Vector b(limitsCount);
-  b.setOnes();
-
-  PolyhedronSet set(a, b, 0.1);
-  Point point(dimension);
-  point.setRandom();
-  Point projection = point;
-
-  if (!set.isInside(point)) {
-    projection = set.project(point);
-  }
-
-  EXPECT_TRUE(set.isInside(projection));
-}
-
 TEST(SetTest, PolyhedronSetSampleRandomPointTest) {
   Matrix a(3, 2);
   a << -1 ,  0,
@@ -401,10 +364,10 @@ TEST(SetTest, PolyhedronSetSampleRandomPointTest) {
   Vector b(3);
   b << 0, 0, 1;
 
-  PolyhedronSet set(a, b, 0.001);
+  PolyhedronSet set(a, b);
   for (int test_point_id = 0; test_point_id < 100; ++test_point_id) {
-    Point point = set.sampleRandomPointInside();
+    Point point;
+    set.sampleRandomPointInside(&point);
     EXPECT_TRUE(set.isInside(point));
   }
 }
-*/
