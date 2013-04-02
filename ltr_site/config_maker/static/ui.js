@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2013 Yandex
 // Uses Prototype library (MIT licence)
 
 function update_object_types() {

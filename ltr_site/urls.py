@@ -1,4 +1,7 @@
-# Copyright 2011 Yandex
+# Copyright 2013 Yandex
+"""
+This file sets accordance between available URLs and views called for them.
+"""
 
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template

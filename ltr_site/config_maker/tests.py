@@ -1,4 +1,4 @@
-# Copyright 2011 Yandex
+# Copyright 2013 Yandex
 """
 This file demonstrates writing tests using the unittest module. These will pass
 when you run "manage.py test" or "manage.py test config_maker".

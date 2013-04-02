@@ -1,5 +1,7 @@
-# Copyright 2011 Yandex
-# Django settings for LTRSite project.
+# Copyright 2013 Yandex
+"""
+This file contains Django settings for LTRSite project.
+"""
 
 from os.path import abspath
 
@@ -153,20 +155,60 @@ INSTALLED_APPS = (
     'config_maker',
 )
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
+# Logging configuration.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] %(asctime)s %(module)s %(process)d '
+                      '%(thread)d %(message)s'
+        },
+        'medium': {
+            'format': '[%(levelname)s] %(asctime)s  %(module)s: %(message)s'
+        },
+        'simple': {
+            'format': '[%(levelname)s] %(module)s: %(message)s'
+        },
+    },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
         'mail_admins': {
             'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'}},
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': []
+        }
+    },
     'loggers': {
+        'django': {
+            'handlers': ['null'],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['console'],
             'level': 'ERROR',
-            'propagate': True}}}
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'config_maker': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}

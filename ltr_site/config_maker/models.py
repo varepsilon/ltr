@@ -1,4 +1,7 @@
-# Copyright 2011 Yandex
+# Copyright 2013 Yandex
+"""
+This file contains all the models used in LTR Site.
+"""
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -17,8 +20,7 @@ from file_utility import (get_unique_filename, ensure_path_exists,
 
 
 class cached_property(object):
-    """
-    Decorator that converts a method with a single
+    """ Decorator that converts a method with a single
     self argument into a property cached on the instance.
 
     Taken from http://habrahabr.ru/post/159099/
@@ -33,6 +35,8 @@ class cached_property(object):
 
 
 class ObjectTypeController:
+    """ Manages object hierarchy and registered types
+    """
     _registered_types = {}
 
     @cached_property
@@ -56,6 +60,7 @@ object_controller = ObjectTypeController()
 
 
 def get_current_solution(request):
+    """  Returns solution belonging to current user (or anonymous) """
     if request.user.is_authenticated():
         if not hasattr(request.user, 'solution'):
             solution = Solution(user=request.user, session=None)
@@ -72,17 +77,22 @@ def get_current_solution(request):
 
 
 class Solution(models.Model):
+    """ User's solution containing group of objects
+    """
     user = models.OneToOneField(User, blank=True, null=True)
     session = models.OneToOneField(Session, blank=True, null=True)
 
     def get_objects(self, object_type):
+        """ Returns objects belonging to this solution """
         return object_type.objects.filter(solution=self)
 
     def save_form(self, form):
+        # deprecated
         obj = form.save(commit=False)
         obj.save()
 
     def get_content_filename(self, filename):
+        """ Creates filename for file being saved to disk """
         if self.user is not None:
             username = self.user.username
         else:
@@ -92,27 +102,12 @@ class Solution(models.Model):
         return get_unique_filename(os.path.join(path, filename))
 
     def export_objects(self):
+        """ Exports all the objects to JSON """
         raise NotImplementedError()
-
-        base_objects = list(self.get_objects(BaseObject).all())
-        ltr_objects = list(self.get_objects(LtrObject).all())
-        objects = list(obj.cast() for obj in base_objects)
-        # TODO: fix deserialization if using natural keys
-        return serializers.serialize(
-            'json',
-            base_objects + ltr_objects + objects,
-            use_natural_keys=True)
 
     def import_objects(self, data):
+        """ Imports all the objects from JSON """
         raise NotImplementedError()
-
-        for deserialized in serializers.deserialize(
-                'json',
-                data,
-                use_natural_keys=True):
-            if hasattr(deserialized.object, 'solution'):
-                deserialized.object.solution = self
-            deserialized.save()
 
 
 APPROACH_CHOICES = (
@@ -130,6 +125,8 @@ MAX_STRING_LENGTH = 30
 
 
 class Task(models.Model):
+    """ Stores information about launched ltr_client, its config and results
+    """
     solution = models.ForeignKey(Solution)
     config_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
                                        unique=False)
@@ -139,6 +136,7 @@ class Task(models.Model):
 
     @staticmethod
     def create(solution, launchable_id):
+        """ Creates a Task instance """
         task = Task()
         task.solution = solution
         task.working_dir = get_unique_filename(
@@ -157,6 +155,7 @@ class Task(models.Model):
         return task
 
     def make_config(self, launchableId):
+        """ Creates XML config for ltr_client """
         from django.shortcuts import render_to_response
 
         db_objects = self.solution.get_objects(LtrObject)
@@ -185,16 +184,17 @@ class Task(models.Model):
         return response.content
 
     def run(self):
+        """ Runs ltr_client """
         subprocess.Popen([settings.LTR_CLIENT_PATH, '-f',
                           self.config_filename])
 
     def is_complete(self):
+        """ Checks if ltr_client's launch has successfully finished """
         return file_not_empty(self.report_filename)
 
 
 class InheritanceCastModel(models.Model):
-    """
-    An abstract base class that provides a "real_type" FK to ContentType.
+    """ An abstract base class that provides a "real_type" FK to ContentType.
 
     For use in trees of inherited models, to be able to downcast
     parent instances to their child types.
@@ -213,23 +213,19 @@ class InheritanceCastModel(models.Model):
         return ContentType.objects.get_for_model(type(self))
 
     def cast(self):
+        """  Downcasts object to its real type """
         return self.real_type.get_object_for_this_type(pk=self.pk)
 
     class Meta:
         abstract = True
 
 
-class BaseObjectManager(models.Manager):
-    def get_by_natural_key(self, name):
-        return self.get(name=name)
-
-
 OBJECT_NAME_REGEX = '^[A-Za-z]\w{0,29}$'
 
 
 class BaseObject(InheritanceCastModel):
-    objects = BaseObjectManager()
-
+    """ Base class in object hierarchy
+    """
     solution = models.ForeignKey(Solution)
 
     name = models.CharField(
@@ -243,31 +239,32 @@ class BaseObject(InheritanceCastModel):
         return self.name
 
     def get_properties(self):
+        """ Returns object properties that should be stored in XML config """
         def is_auxiliary_field(field):
             return field.name in ('id', 'solution', 'real_type')
 
-        def is_foreign_key(field):
+        def is_pointer_to_base_class(field):
             return field.name.endswith('_ptr')
 
         # TODO: make sure that ManyToMany fields are processed correctly
         fields = {}
         for field in self._meta.fields:
-            if not (is_auxiliary_field(field) or is_foreign_key(field)):
+            if not (is_auxiliary_field(field) or
+                    is_pointer_to_base_class(field)):
                 value = getattr(self, field.name)
                 if isinstance(value, BaseObject):
                     value = value.name
                 fields[field.name] = value
         return fields
 
-    def natural_key(self):
-        return [self.name]
-
     class Meta:
         unique_together = (("name", "solution"),)
 
 
 class LtrObject(BaseObject):
-    # This class is required for object hierarchy
+    """ Base class for objects that should be turned into <object> tag in
+    XML config
+    """
     pass
 
 
