@@ -2,14 +2,16 @@
 
 #include "ltr/scorers/linear_scorer.h"
 
-#include "ltr/utility/boost/lexical_cast.h"
 #include <rlog/rlog.h>
 #include <string>
 #include <sstream>
 
+#include "ltr/utility/boost/lexical_cast.h"
+
 using std::string;
-using ltr::utility::lexical_cast;
 using std::stringstream;
+
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 
@@ -29,18 +31,18 @@ double LinearScorer::scoreImpl(const Object& object) const {
 }
 
 string LinearScorer::generateCppCodeImpl(const string& function_name) const {
-  string code;
-  code.append(
-    "double " + function_name + "(const std::vector<double>& features) {\n")
-      .append(
-    "  double output = " + lexical_cast<string>(weight_[0]) + ";\n");
+  stringstream code;
+  code
+    << "double " + function_name + "(const std::vector<double>& features) {\n"
+    << "  double output = " << lexical_cast<string>(weight_[0]) << ";\n";
   for (int i = 1; i < (int)weight_.size(); ++i) {
-    code.append(
-    "  output += " + lexical_cast<string>(weight_[i]) +
-             " * features[" + lexical_cast<string>(i - 1) +"];\n");
+    code
+      << "  output += " << lexical_cast<string>(weight_[i])
+        << " * features[" << lexical_cast<string>(i - 1) << "];\n";
   }
-  code.append("  return output;\n")
-      .append("}\n");
-  return code;
+  code
+    << "  return output;\n"
+    << "}\n";
+  return code.str();
 }
 };

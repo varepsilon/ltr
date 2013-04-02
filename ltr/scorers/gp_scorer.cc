@@ -52,8 +52,8 @@ double GPScorer::scoreImpl(const Object& object) const {
 }
 
 string GPScorer::generateCppCodeImpl(const string& function_name) const {
-  string code;
-  code.append("#include <vector>\n");
+  stringstream code;
+  code << "#include <vector>\n\n";
   // generate primitive-functions code.
   vector<Puppy::PrimitiveHandle>::const_iterator function_iterator =
     context_.mFunctionSet.begin();
@@ -64,21 +64,20 @@ string GPScorer::generateCppCodeImpl(const string& function_name) const {
     string primirive_function_name =
       serializable->getDefaultSerializableObjectName();
     primirive_function_name += (*function_iterator)->getName();
-    code.append(serializable->generateCppCode(primirive_function_name));
+    code << serializable->generateCppCode(primirive_function_name);
   }
   // generate the function from tree.
   stringstream sstream_for_calls;
   writeTreeAsStringOfCppCalls(sstream_for_calls, 0);
   // generate scoring function
-  code.append("double ");
-  code.append(function_name);
-  code.append("(const std::vector< double >& feature) {\n");
-  code.append("  return ");
-  code.append(sstream_for_calls.str());
-  code.append(";\n");
-  code.append("}\n");
+  code
+    << "\n"
+    << "double " << function_name
+      << "(const std::vector< double >& feature) {\n"
+    << "  return " << sstream_for_calls.str() << ";\n"
+    << "}\n";
 
-  return code;
+  return code.str();
 }
 
 void GPScorer::setContextToObject(const Object& object) const {

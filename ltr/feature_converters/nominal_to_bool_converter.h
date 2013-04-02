@@ -7,6 +7,8 @@
 
 #include "ltr/feature_converters/feature_converter.h"
 
+using std::string;
+
 namespace ltr {
 /**
  * \brief Converts nominal features to boolean.

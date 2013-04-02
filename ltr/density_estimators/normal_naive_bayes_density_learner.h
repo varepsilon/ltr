@@ -39,7 +39,8 @@ class NormalNaiveBayesDensityLearner
 
  private:
   /**
-   * Function calculates the variance of every class from the training data set
+   * \brief Function calculates the variance of every class from the training
+   * data set
    */
   void calculateVariance(const DataSet<TElement>& data_set,
                          doubleVectorXdMap* result) {

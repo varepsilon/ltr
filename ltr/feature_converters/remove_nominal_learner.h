@@ -16,7 +16,7 @@ using ltr::ParametersContainer;
 
 namespace ltr {
 /**
- * Produces RemoveNominalConverter
+ * \brief Produces RemoveNominalConverter
  */
 template <typename TElement>
 class RemoveNominalConverterLearner

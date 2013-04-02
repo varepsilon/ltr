@@ -1,13 +1,17 @@
 // Copyright 2011 Yandex
 
+#include "ltr/scorers/one_feature_scorer.h"
+
 #include <rlog/rlog.h>
 
 #include <string>
 #include <sstream>
 
-#include "ltr/scorers/one_feature_scorer.h"
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::string;
+using std::stringstream;
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 
@@ -20,16 +24,14 @@ namespace ltr {
   string OneFeatureScorer::generateCppCodeImpl(
       const string& function_name) const {
     rInfo("Starting to generate CPP code for OneFeatureScorer");
-    string hpp_code;
+    stringstream code;
 
-    hpp_code.
-      append("inline double ").
-      append(function_name).
-      append("(const std::vector<double>& features) { return ").
-      append("features[").
-      append(ltr::utility::lexical_cast<string>(index_)).
-      append("]; }\n");
+    code
+      << "inline double " << function_name
+        << "(const std::vector<double>& features) {\n"
+      << "  return features[" << lexical_cast<string>(index_) << "];\n"
+      << "}\n";
 
-    return hpp_code;
+    return code.str();
   }
 };
