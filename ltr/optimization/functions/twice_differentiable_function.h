@@ -22,20 +22,26 @@ class TwiceDifferentiableFunction : public DifferentiableFunction {
   virtual ~TwiceDifferentiableFunction() { }
 
   /**
-   * compute value of this function in a given point
-   */
-  virtual double computeValue(const Point& point) const = 0;
-  /**
-   * compute first derivative of this function in a given point
-   */
-  virtual void computeGradient(const Point& point, Vector* gradient) const = 0;
-
-  /**
    * compute second derivative in given point
    */
-  virtual void computeHessian(const Point& point, Matrix* hessian) const = 0;
+  void computeHessian(const Point& point, Matrix* hessian) const;
 
-  string getDefaultAlias() const { return "TwiceDifferentiableFunction";}
+  string getDefaultAlias() const { return "TwiceDifferentiableFunction"; }
+ private:
+  /**
+   * implementation of computeValue method
+   */
+  virtual double computeValueImpl(const Point& point) const = 0;
+  /**
+   * implementation of computeGradient method
+   */
+  virtual void computeGradientImpl(const Point& point,
+                                   Vector* gradient) const = 0;
+  /**
+   * implementation of computeHessian method
+   */
+  virtual void computeHessianImpl(const Point& point,
+                                  Matrix* hessian) const = 0;
 };
 }
 

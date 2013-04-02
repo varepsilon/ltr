@@ -24,25 +24,24 @@ class QuadraticFunction : public TwiceDifferentiableFunction {
                              double shift);
   ~QuadraticFunction() { }
 
-  /**
-   * compute value of this function in a given point
-   */
-  double computeValue(const Point& point) const;
-  /**
-   * compute first derivative of this function in a given point
-   */
-  void computeGradient(const Point& point, Vector* gradient) const;
-  /**
-   * compute second derivative in given point
-   */
-  void computeHessian(const Point& point, Matrix* hessian) const;
-
   GET_SET(Matrix, quadratic);
   GET_SET(Vector, linear);
   GET_SET(double, shift);
 
   string getDefaultAlias() const { return "QuadraticFunction";}
  private:
+  /**
+   * implementation of computeValue method
+   */
+  double computeValueImpl(const Point& point) const;
+  /**
+   * implementation of computeGradient method
+   */
+  void computeGradientImpl(const Point& point, Vector* gradient) const;
+  /**
+   * implementation of computeHessian method
+   */
+  void computeHessianImpl(const Point& point, Matrix* hessian) const;
   /** 
    * matrix of quadratic coefficients \f$ A $\f
    */

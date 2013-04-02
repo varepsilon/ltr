@@ -1,4 +1,4 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
 #ifndef LTR_OPTIMIZATION_FUNCTIONS_FUNCTION_H_
 #define LTR_OPTIMIZATION_FUNCTIONS_FUNCTION_H_
@@ -32,7 +32,7 @@ class Function : public ltr::Aliaser {
   /**
    * compute value of this function in a given point
    */
-  virtual double computeValue(const Point& point) const = 0;
+  double computeValue(const Point& point) const;
   /**
    * compute value of this function in a given point
    */
@@ -43,6 +43,10 @@ class Function : public ltr::Aliaser {
     return "Function";
   }
  private:
+  /**
+   * implementation of computeValue method;
+   */
+  virtual double computeValueImpl(const Point& point) const = 0;
   int dimension_;
 };
 }
