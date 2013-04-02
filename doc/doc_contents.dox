@@ -9,6 +9,7 @@ namespace ltr {
     - \ref TutorialMeasureLearnerScorer
     - \ref HowToUseCrossvalidation
     - \ref TutorialFeatureConverters
+    - \ref TutorialPCA
     - \ref TutorialDataPreprocessors
     - \ref TutorialComposition
     - \ref TutorialDecisionTree

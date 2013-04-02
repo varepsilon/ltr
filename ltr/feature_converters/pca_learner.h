@@ -21,6 +21,7 @@
 
 using std::vector;
 using std::string;
+using std::stringstream;
 using std::logic_error;
 
 using ltr::LinearConverter;
@@ -50,6 +51,11 @@ class PCALearner
 
   virtual string toString() const;
 
+  /**
+   * \brief Returns report about PCALearner
+   */
+  string report() const;
+
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
                          LinearConverter* linear_converter);
@@ -60,7 +66,9 @@ class PCALearner
    * \brief Computes optimal number of principal components using Kaiser's Rule.
    * \param singular_values vector of singular values of train dataset.
    */
-  int kaiserRule(const VectorXd& singualar_values);
+  int kaiserRule() const;
+
+  VectorXd singular_values;
 };
 
 template <typename TElement>
@@ -87,8 +95,8 @@ void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
 
   JacobiSVD<MatrixXd> jacobi_svd = source_matrix.jacobiSvd(ComputeThinU);
   MatrixXd matrix_U = jacobi_svd.matrixU();
-  VectorXd singular_values = jacobi_svd.singularValues();
-  int component_count = kaiserRule(singular_values);
+  singular_values = jacobi_svd.singularValues();
+  int component_count = kaiserRule();
 
   matrix_U.conservativeResize(matrix_U.rows(), component_count);
   linear_converter->set_factor(matrix_U.transpose());
@@ -104,12 +112,24 @@ string PCALearner<TElement>::toString() const {
 }
 
 template <typename TElement>
+string PCALearner<TElement>::report() const {
+  if (singular_values.size() == 0)
+    return "PCALearner haven't learned yet";
+  stringstream out;
+  out << "PCALearner. Singular values of dataset are:\n"
+      << singular_values << "\n"
+      << "Optimal number of principal components by Kaiser rule is "
+      << kaiserRule() << "\n";
+  return out.str();
+}
+
+template <typename TElement>
 string PCALearner<TElement>::getDefaultAlias() const {
   return "PCALearner";
 }
 
 template <typename TElement>
-int PCALearner<TElement>::kaiserRule(const VectorXd& singular_values) {
+int PCALearner<TElement>::kaiserRule() const {
   double trace = 0;
   for (int value_index = 0;
        value_index < (int)singular_values.size();

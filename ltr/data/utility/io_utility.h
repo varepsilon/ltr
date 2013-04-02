@@ -24,6 +24,7 @@ using std::string;
 using std::vector;
 
 using ltr::utility::DOUBLE_PRECISION;
+using ltr::io_utility::Parser;
 
 namespace ltr {
 namespace io_utility {
