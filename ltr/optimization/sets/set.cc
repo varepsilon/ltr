@@ -1,33 +1,31 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
-#include "ltr/optimization/sets/set.h"
 #include "ltr/utility/random_number_generator.h"
+#include "ltr/optimization/sets/set.h"
+using ltr::utility::randomizer;
 
 namespace optimization {
-Set::Set(int dimension):dimension_(dimension) { }
+Set::Set(int dimension) : dimension_(dimension) { }
 
 Set::~Set() { }
 
-int Set::dimension() const {
-  return dimension_;
-}
-
-Point Set::getRandomPoint() const {
+void Set::getRandomPoint(Point* random_point) const {
   Point bottom(dimension());
   Point top(dimension());
   getBoundaries(&top, &bottom);
-  Point random_point(dimension());
-  for (int i = 0; i < dimension(); ++i) {
-    random_point[i] = ltr::utility::randomizer.doubleRand(bottom[i], top[i]);
+
+  random_point->resize(dimension());
+  Point result_point(dimension());
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    (*random_point)(coordinate) =
+      randomizer.doubleRand(bottom(coordinate), top(coordinate));
   }
-  return random_point;
 }
 
-Point Set::sampleRandomPointInside() const {
-  Point random_point;
-  do {
-    random_point = getRandomPoint();
-  } while (!isInside(random_point));
-  return random_point;
+void Set::sampleRandomPointInside(Point* random_point) const {
+  getRandomPoint(random_point);
+  Point projected_random_point;
+  computeProjection((*random_point), &projected_random_point);
+  (*random_point) = projected_random_point;
 }
 }

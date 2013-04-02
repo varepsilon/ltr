@@ -1,33 +1,57 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
 #ifndef LTR_OPTIMIZATION_SETS_LINEAR_INEQUALITY_SET_H_
 #define LTR_OPTIMIZATION_SETS_LINEAR_INEQUALITY_SET_H_
 
+#include <string>
+#include "ltr/utility/macros.h"
+#include "ltr/interfaces/parameterized.h"
 #include "ltr/optimization/sets/set.h"
 #include "ltr/optimization/functions/function.h"
-#include "ltr/interfaces/parameterized.h"
 
 namespace optimization {
-/**\class\brief implements semi-space
+/**
+ * \class\brief implements semi-space
+ *
+ * define solutions of inequality
+ * \f$ (\overrightarrow(x), \overrightarrow(a)) > 0 $\f
+ * \see Set
  */
 class LinearInequalitySet : public Set {
  public:
-  LinearInequalitySet(Vector normal, Point point, int dimension);
+  typedef ltr::utility::shared_ptr<LinearInequalitySet> Ptr;
 
+  LinearInequalitySet(const Vector& positive_normal,
+                      double shift_);
+  /**
+   * checks, whether given point is inside this set
+   */
   virtual bool isInside(const Point& point) const;
-  virtual Point project(const Point& point) const;
+  /**
+   * projects given point on this set
+   */
+  virtual void computeProjection(const Point& point, Point* projection) const;
+   /**
+   * give a cubic boundaries which contain this set
+   */
   virtual void getBoundaries(Point* top, Point* bottom) const;
+  /**
+   * get arbitrary point in given set
+   */
+  virtual void sampleRandomPointInside(Point* random_point) const;
 
-  virtual Point sampleRandomPointInside() const;
-  /** vector, defining border hyperplane and positive direction
-   */
-  Vector positive_normal() const;
-  /** some point on border
-   */
-  Point initial_point() const;
+  GET_SET(Vector, positive_normal);
+  GET_SET(double, shift);
+  virtual string getDefaultAlias() const { return "LinearInequalitySet"; }
  private:
+  /**
+   * positive normal vector to border hyperplane
+   */
   Vector positive_normal_;
-  Point initial_point_;
+  /**
+   * shift above that hyperplane
+   */
+  double shift_;
 };
 }
 

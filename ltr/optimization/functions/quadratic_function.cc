@@ -1,32 +1,36 @@
-// Copyright 2012 Yandex
+// Copyright 2013 Yandex
 
 #include "ltr/optimization/functions/quadratic_function.h"
 
 namespace optimization {
 
-QuadraticFunction::QuadraticFunction(Matrix a, Vector b, double c)
-  : TwiceDifferentiableFunction(a.rows()) {
-  CHECK(a.rows() == a.cols());
-  CHECK(a.rows() == b.rows());
-  a_ = a;
-  b_ = b;
-  c_ = c;
+QuadraticFunction::QuadraticFunction(const Matrix& quadratic,
+                                     const Vector& linear,
+                                     double shift)
+    : TwiceDifferentiableFunction(quadratic.rows()) {
+  CHECK(quadratic.rows() == quadratic.cols());
+  CHECK(quadratic.rows() == linear.rows());
+  quadratic_ = quadratic;
+  linear_ = linear;
+  shift_ = shift;
 }
 
-double QuadraticFunction::value(const Point& point) const {
+double QuadraticFunction::computeValue(const Point& point) const {
   CHECK(point.size() == dimension());
-  double first_term = point.transpose() * (a_ * point);
-  double second_term = b_.transpose() * point;
-  return first_term + second_term + c_;
+  double first_term = point.dot(quadratic_ * point);
+  double second_term = linear_.dot(point);
+  return first_term + second_term + shift_;
 }
 
-Vector QuadraticFunction::gradient(const Point& point) const {
+void QuadraticFunction::computeGradient(const Point& point,
+                                        Vector* gradient) const {
   CHECK(point.size() == dimension());
-  return 2.0 * a_ * point + b_;
+  *gradient = 2.0 * quadratic_ * point + linear_;
 }
 
-Matrix QuadraticFunction::hessian(const Point& point) const {
+void QuadraticFunction::computeHessian(const Point& point,
+                                       Matrix* hessian) const {
   CHECK(point.size() == dimension());
-  return 2.0 * a_;
+  *hessian = 2.0 * quadratic_;
 }
 }
