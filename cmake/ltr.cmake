@@ -309,7 +309,9 @@ SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/sphere_set.h
                     ${Source_Path}/ltr/optimization/sets/sphere_set.cc
                     ${Source_Path}/ltr/optimization/sets/linear_inequality_set.h
-                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc)
+                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.h
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
