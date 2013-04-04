@@ -74,6 +74,8 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_svm.cc
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parse_dsv.h
+                 ${Source_Path}/ltr/data/utility/parsers/parse_dsv.cc
                  ${Source_Path}/ltr/data/utility/parsers/parser_utils.h
                  ${Source_Path}/ltr/data/utility/parsers/parser_utils.cc)
 

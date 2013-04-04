@@ -78,7 +78,7 @@ void escapeSplit(const string& str,
                  char escape_char) {
   result->clear();
   for (int pos = 0; pos < str.size(); ++pos) {
-    while (pos < str.size() && isspace(str[pos])) {
+    while (pos < str.size() && str[pos] == ' ') {
       ++pos;
     }
     if (pos == str.size()) {
@@ -96,19 +96,19 @@ void escapeSplit(const string& str,
       pos = rpos + 1;
     } else {
       int rpos = pos;
-      while (rpos < str.size() && !isspace(str[rpos]) && str[rpos] != delim) {
+      while (rpos < str.size() && str[rpos] != ' ' && str[rpos] != delim) {
         ++rpos;
       }
       part = str.substr(pos, rpos - pos);
       pos = rpos;
     }
     result->push_back(part);
-    while (pos < str.size() && isspace(str[pos])) {
+    while (pos < str.size() && str[pos] == ' ') {
       ++pos;
     }
     if (pos < str.size() && str[pos] != delim) {
       throw std::logic_error("escape_split: garbage between part and "
-          "delimiter/EOLN");
+          "delimiter/EOLN: ");
     }
   }
 }

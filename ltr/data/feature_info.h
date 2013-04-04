@@ -35,9 +35,11 @@ typedef map<int, string> NominalFeatureValues;
  */
 struct OneFeatureInfo {
   OneFeatureInfo(FeatureType type = NUMERIC,
-                 NominalFeatureValues values = NominalFeatureValues())
+                 NominalFeatureValues values = NominalFeatureValues(),
+                 const string& name = "")
   : type_(type),
-    values_(values) {}
+    values_(values),
+    name_(name) {}
   explicit OneFeatureInfo(const vector<string>& values)
   : type_(NOMINAL) {
     for (int value_index = 0; value_index < values.size(); ++value_index) {
@@ -91,8 +93,9 @@ class FeatureInfo {
   /** Adds info about one feature
    */
   void addFeature(FeatureType type = NUMERIC,
-                  const NominalFeatureValues& values = NominalFeatureValues()) {
-    addFeature(OneFeatureInfo(type, values));
+                  const NominalFeatureValues& values = NominalFeatureValues(),
+                  const string& name = "") {
+    addFeature(OneFeatureInfo(type, values, name));
   }
   /** Getters and setters for feature values
    */
@@ -161,6 +164,19 @@ class FeatureInfo {
   void setFeatureType(int feature_index, FeatureType type) {
     CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
     feature_info_[feature_index].type_ = type;
+  }
+
+  /** Returns name of feature with given index
+   */
+  string getFeatureName(int feature_index) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    return feature_info_[feature_index].name_;
+  }
+  /** Changes name of feature with given index
+   */
+  void setFeatureName(int feature_index, const string& name) {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    feature_info_[feature_index].name_ = name;
   }
 
   const OneFeatureInfo& operator[](int feature_index) const {

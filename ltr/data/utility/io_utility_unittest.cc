@@ -122,6 +122,33 @@ TEST_F(IOUtilityTest, TestingARFFParser) {
   EXPECT_TRUE(data2 == data);
 }
 
+TEST_F(IOUtilityTest, TestingDSVParser) {
+  DataSet<Object> data;
+  const int OBJECT_COUNT = 145;
+  const int FEATURE_COUNT = 3;
+  for (int object_index = 0; object_index < OBJECT_COUNT; ++object_index) {
+    Object obj;
+    for (int feature_index = 0;
+         feature_index < FEATURE_COUNT;
+         ++feature_index) {
+      obj << static_cast<double>(randomizer.rand()) / 15332;
+    }
+    data << obj;
+  }
+
+  saveDataSet(data, tmp_file_name, "CSV");
+  DataSet<Object> data2 = loadDataSet<Object>(tmp_file_name, "CSV");
+  EXPECT_TRUE(data2 == data);
+
+  saveDataSet(data, tmp_file_name, "TSV");
+  data2 = loadDataSet<Object>(tmp_file_name, "TSV");
+  EXPECT_TRUE(data2 == data);
+
+  saveDataSet(data, tmp_file_name, ":SV");
+  data2 = loadDataSet<Object>(tmp_file_name, ":SV");
+  EXPECT_TRUE(data2 == data);
+}
+
 TEST_F(IOUtilityTest, TestingYandexParser) {
   DataSet<Object> data;
   const int OBJECT_COUNT = 145;

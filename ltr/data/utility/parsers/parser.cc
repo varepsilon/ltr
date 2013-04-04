@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "ltr/data/utility/parsers/parse_arff.h"
+#include "ltr/data/utility/parsers/parse_dsv.h"
 #include "ltr/data/utility/parsers/parse_svm.h"
 #include "ltr/data/utility/parsers/parse_yandex.h"
 #include "ltr/data/utility/parsers/parser.h"
@@ -29,6 +30,12 @@ Parser::Ptr getParser(const string& format) {
     return Parser::Ptr(new YandexParser());
   else if (format_ == "ARFF")
     return Parser::Ptr(new ARFFParser());
+  else if (format_ == "CSV")
+    return Parser::Ptr(new DSVParser(','));
+  else if (format_ == "TSV")
+    return Parser::Ptr(new DSVParser('\t'));
+  else if (format_.substr(1) == "SV")
+    return Parser::Ptr(new DSVParser(format[0]));
   else
     throw logic_error("unknown format " + format);
 }
