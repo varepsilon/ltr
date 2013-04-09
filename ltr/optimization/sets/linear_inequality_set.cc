@@ -1,8 +1,10 @@
 // Copyright 2013 Yandex
 
 #include <math.h>
-#include <Eigen/Dense>
 #include <limits>
+
+#include <contrib/include_Eigen.h>
+
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/random_number_generator.h"
 #include "ltr/utility/macros.h"
