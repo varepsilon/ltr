@@ -12,15 +12,20 @@
 
 #include "ltr/interfaces/parameterized.h"
 
-using ltr::utility::isNaN;
+using std::string;
 
+using ltr::utility::isNaN;
 using ltr::utility::lexical_cast;
 
 namespace ltr {
 /**
+ * \brief Converts NaN features to average values.
+ * 
  * Converts NaN features to average values of all
  * non NaN features from other Objects. If some feature is
  * NaN in all Objects this feature will be removed.
+ * 
+ * \param neutral_object_ object with neutral values
  */
 class NanToNeutralConverter : public FeatureConverter {
  public:

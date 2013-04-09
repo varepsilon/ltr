@@ -1,0 +1,32 @@
+<table>
+  {% for field in form_object_parameters.hidden_fields %}
+      <tr>{{ field }}</tr>
+  {% endfor %}
+
+  {% for field in form_object_parameters.visible_fields %}
+    <tr>
+      <td width='150px'><b>{{ field.label }}:</b></td><td>{{ field }}</td><td>{{ field.errors }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<br>
+<table cellpadding="5">
+  <tr>
+    <td>
+      <input type="submit" value={% if mode == 'edit_mode' %}"Save"{% else %}"Create"{% endif %} onClick="this.form.action=''">
+    </td>
+    {% if launchable %}
+      <td>
+        <input type="submit" value={% if mode == 'edit_mode' %}"Save and launch"{% else %}"Create and launch"{% endif %} onClick="this.form.action='?launch'">
+      </td>
+    {% endif %}
+    {% if mode == 'edit_mode' %}
+      <td>
+        <input type="button" value="Delete" onClick="this.form.action='/delete/{{ object_name }}'; submit_with_confirm(this.form, 'Are you sure you want to delete \'{{ object_name }}\'?');">
+      </td>
+    {% endif %}
+    <td>
+      <input type="button" value="Cancel" onclick="window.location.href='/'">
+    </td>
+  </tr>
+</table>

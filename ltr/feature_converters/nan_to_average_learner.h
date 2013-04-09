@@ -12,7 +12,7 @@
 
 namespace ltr {
 /**
- * Produces NanToNeutralConverter with average features neutral object.
+ * \brief Produces NanToNeutralConverter with average features neutral object.
  */
 template <typename TElement>
 class NanToAverageConverterLearner

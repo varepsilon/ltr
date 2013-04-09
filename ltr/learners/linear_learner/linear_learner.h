@@ -3,10 +3,10 @@
 #ifndef LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 #define LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_
 
-#include <Eigen/Dense>
-
 #include <string>
 #include <vector>
+
+#include "contrib/include_Eigen.h"
 
 #include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/learners/learner.h"

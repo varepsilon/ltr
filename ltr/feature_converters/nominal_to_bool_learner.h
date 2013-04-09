@@ -10,7 +10,7 @@
 
 namespace ltr {
 /**
- * Produces NominalToBoolConverter
+ * \brief Produces NominalToBoolConverter
  */
 template <typename TElement>
 class NominalToBoolConverterLearner

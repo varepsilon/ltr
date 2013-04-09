@@ -39,8 +39,8 @@ INCLUDE(${Source_Path}/cmake/include_openmp.cmake)
 
 # let use pthread on unix
 IF(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -pthread -lrt")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -pthread -lrt")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Werror -pthread -lrt")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Werror -pthread -lrt")
     SET(RT "rt")
 ENDIF(UNIX)
 

@@ -2,6 +2,10 @@
 
 #include "ltr/scorers/scorer.h"
 
+#include <sstream>
+
+using std::stringstream;
+
 namespace ltr {
 
 double Scorer::score(const ltr::Object& object) const {
@@ -15,6 +19,44 @@ double Scorer::score(const ltr::Object& object) const {
     sourceObject = convertedObject;
   }
   return scoreImpl(sourceObject);
+}
+
+string Scorer::generateCppCode(const string& function_name) const {
+  if (feature_converter_.size() == 0)
+    return generateCppCodeImpl(function_name);
+  stringstream code;
+  string implFunctionName = function_name + "Impl";
+  code << generateCppCodeImpl(implFunctionName);
+
+  for (size_t featureConverterIdx = 0;
+       featureConverterIdx < feature_converter_.size();
+       ++featureConverterIdx) {
+    code << feature_converter_.at(featureConverterIdx)->generateCppCode();
+  }
+
+  code
+    << "double " << function_name << "(const std::vector<double>& feature) {\n";
+
+  string prevVectorName("feature");
+
+  for (size_t featureConverterIdx = 0;
+      featureConverterIdx < feature_converter_.size();
+      ++featureConverterIdx) {
+    string curVectorName = "feature" +
+        ltr::utility::lexical_cast<string>(featureConverterIdx);
+    string featureConverterFunctionName(feature_converter_.at(
+        featureConverterIdx)->getDefaultSerializableObjectName());
+    code
+      << "  std::vector<double> " << curVectorName << ";\n"
+      << "  " << featureConverterFunctionName << "(" << prevVectorName << ",\n"
+      << "    &" << curVectorName << ");\n";
+
+    prevVectorName = curVectorName;
+  }
+  code
+    << "  return " << implFunctionName << "(" << prevVectorName << ");\n"
+    << "}\n";
+  return code.str();
 }
 
 template <class TElement>

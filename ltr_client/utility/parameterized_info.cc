@@ -1,5 +1,6 @@
 // Copyright 2012 Yandex
 #include <stdexcept>
+#include <assert.h>
 
 #include "ltr_client/utility/parameterized_info.h"
 #include "ltr/utility/boost/string_utils.h"

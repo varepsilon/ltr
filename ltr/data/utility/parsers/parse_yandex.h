@@ -11,29 +11,36 @@
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
-
 #include "ltr/data/utility/parsers/parser.h"
+
+using std::vector;
 
 namespace ltr {
 namespace io_utility {
+/** \brief Parse Yandex Mathematics 2009 format
+ * (http://imat2009.yandex.ru/datasets)
+ */
 class YandexParser : public Parser {
- private:
-  void init(std::istream* in);
-
-  static const int raw_query_id_idx_;
-
-  static const int raw_relevance_idx_;
+ protected:
+  virtual void parseDataInfo(istream& in, // NOLINT
+                             FeatureInfo* feature_info,
+                             LabelInfo* label_info);
+  virtual void parseObject(const string& record,
+                           const FeatureInfo& feature_info,
+                           const LabelInfo& label_info,
+                           Object* object);
 
  public:
-  void parseRawObject(string line, RawObject* result);
 
-  void makeString(const Object& obj, std::string* result);
+  void saveObject(const Object& obj, ostream& stream); // NOLINT
 
-  PairwiseDataSet buildPairwiseDataSet(
-    const std::vector<Object>& objects, const FeatureInfo& info);
+  PairwiseDataSet buildPairwiseDataSet(const vector<Object>& objects,
+                                       const FeatureInfo& feature_info,
+                                       const LabelInfo& label_info);
 
-  ListwiseDataSet buildListwiseDataSet(
-    const std::vector<Object>& objects, const FeatureInfo& info);
+  ListwiseDataSet buildListwiseDataSet(const vector<Object>& objects,
+                                       const FeatureInfo& feature_info,
+                                       const LabelInfo& label_info);
 };
 };
 };

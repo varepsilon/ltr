@@ -3,12 +3,14 @@
 #ifndef LTR_SCORERS_FAKE_SCORER_H_
 #define LTR_SCORERS_FAKE_SCORER_H_
 
-#include "ltr/utility/boost/lexical_cast.h"
-
 #include <string>
+#include <sstream>
+
+#include "ltr/utility/boost/lexical_cast.h"
 #include "ltr/scorers/scorer.h"
 
 using std::string;
+using std::stringstream;
 
 namespace ltr {
 /**
@@ -28,14 +30,12 @@ class FakeScorer : public Scorer {
   }
 
   string generateCppCodeImpl(const string& function_name) const {
-    string code;
-    code.
-      append("inline double ").
-      append(function_name).
-      append("(const std::vector<double>& features) { return ").
-      append(ltr::utility::lexical_cast<string>(score_value_)).
-      append("; }\n");
-    return code;
+    stringstream code;
+    code
+      << "inline double " << function_name
+        << "(const std::vector<double>& features) { return "
+        << ltr::utility::lexical_cast<string>(score_value_) << "; }\n";
+    return code.str();
   }
   virtual string getDefaultAlias() const {return "FakeScorer";}
 

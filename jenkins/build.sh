@@ -21,5 +21,7 @@ if [ "$OS" != "Windows_NT" ]; then
   cd doc/build
   cmake ../
   make -j$JOBS
+  cd ../../jenkins
+  ./pep8.sh
 fi
 

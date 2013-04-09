@@ -2,10 +2,10 @@
 #ifndef LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_DENSITY_LEARNER_H_
 #define LTR_DENSITY_ESTIMATORS_NON_LINEAR_DISCRIMINANT_DENSITY_LEARNER_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <vector>
+
+#include "contrib/include_Eigen.h"
 
 #include "ltr/density_estimators/base_probability_density_estimator.h"
 #include "ltr/density_estimators/base_probability_density_learner.h"

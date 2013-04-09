@@ -2,11 +2,11 @@
 #ifndef LTR_DENSITY_ESTIMATORS_FISHER_DISCRIMINANT_DENSITY_LEARNER_H_
 #define LTR_DENSITY_ESTIMATORS_FISHER_DISCRIMINANT_DENSITY_LEARNER_H_
 
-#include <Eigen/Dense>
-
 #include <map>
 #include <stdexcept>
 #include <vector>
+
+#include "contrib/include_Eigen.h"
 
 #include "ltr/density_estimators/base_probability_density_estimator.h"
 #include "ltr/density_estimators/fisher_discriminant.h"

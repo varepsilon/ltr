@@ -1,111 +1,163 @@
 // Copyright 2012 Yandex
 
-#include "ltr/utility/boost/lexical_cast.h"
-
 #include <string>
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <algorithm>
 
+#include "ltr/utility/boost/lexical_cast.h"
 #include "ltr/serialization_test/generator/generator_utility.h"
 #include "ltr/serialization_test/generator/config.h"
 #include "ltr/scorers/scorer.h"
+#include "ltr/feature_converters/feature_converter.h"
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
 
 using std::string;
 using std::vector;
-using std::cout;
 using std::ofstream;
 using std::copy;
 
 using ltr::DataSet;
 using ltr::Object;
 using ltr::io_utility::loadDataSet;
+using ltr::utility::lexical_cast;
 using ltr::Scorer;
+using ltr::FeatureConverter;
 
 namespace serialization_test {
-  string Generator::setIncludes() const {
-    string output;
-    output.append("// Copyright 2012 Yandex\n\n").
-      append("#include <vector>\n").
-      append("#include \"gtest/gtest.h\"\n\n");
-    output.append("#include \"ltr/serialization_test/generator/config.h\"\n").
-      append("#include \"ltr/serialization_test/tester/tester_utility.h\"\n\n").
-      append("#include \"ltr/data/data_set.h\"\n").
-      append("#include \"ltr/data/utility/io_utility.h\"\n\n");
-    output.append("using std::vector;\n").
-      append("using ltr::Object;\n").
-      append("using ltr::DataSet;\n").
-      append("using ltr::io_utility::loadDataSet;\n\n").
-      append("using namespace serialization_test;\n\n");
-
-    return output;
+  void Generator::addIncludes() {
+    tester_code << "// Copyright 2012 Yandex\n\n"
+      << "#include <vector>\n\n"
+      << "#include \"gtest/gtest.h\"\n\n"
+      << "#include \"ltr/serialization_test/generator/config.h\"\n"
+      << "#include \"ltr/serialization_test/tester/tester_utility.h\"\n\n"
+      << "#include \"ltr/data/data_set.h\"\n"
+      << "#include \"ltr/data/utility/io_utility.h\"\n\n"
+      << "using std::vector;\n"
+      << "using ltr::Object;\n"
+      << "using ltr::DataSet;\n"
+      << "using ltr::io_utility::loadDataSet;\n\n"
+      << "using namespace serialization_test;\n\n";
   }
 
-  string Generator::setFixture() const {
-    string output;
-    output.append("class SerializationTest : public ::testing::Test {\n").
-      append("\tprotected:\n").
-      append("\tDataSet<Object> test_data;\n").
-      append("\tvector<double> serializated_labels;\n").
-      append("\tvector<double> test_labels;\n\n").
-      append("\tvirtual void SetUp() {\n").
-      append("\t\ttest_data = loadDataSet<Object>").
-      append("(TestDataPath(), \"SVMLIGHT\");\n").
-      append("\t}\n").
-      append("};\n\n");
-      return output;
+  void Generator::addFixture() {
+    tester_code << "class SerializationTest : public ::testing::Test {\n"
+      << "  protected:\n"
+      << "  DataSet<Object> dataset;\n"
+      << "  vector<double> serializated_labels;\n"
+      << "  vector<double> test_labels;\n\n"
+      << "  virtual void SetUp() {\n"
+      << "    dataset = loadDataSet<Object>(TestDataPath(), \"SVMLIGHT\");\n"
+      << "  }\n"
+      << "};\n\n";
   }
 
-  string Generator::setTestLabelsFunction(string function_name) const {
-    vector<double> labels;
-    for (int i = 0; i < test_data.size(); ++i) {
-      labels.push_back(test_data[i].predicted_label());
+  void Generator::addCheckLabelsFunction() {
+    tester_code << "void checkLabels" << serializating_object_number
+      << "(const vector<double>& labels) {\n";
+
+    tester_code << "  vector<double> test_labels;\n";
+    for (int object_index = 0;
+         object_index < (int)test_data.size();
+         ++object_index) {
+      tester_code << "  test_labels.push_back("
+        << lexical_cast<string>(test_data[object_index].predicted_label())
+        << ");\n";
     }
 
-    string output;
-    output.append("vector<double> " + function_name + "() {\n");
-    output.append("\tvector<double> test_labels;\n");
-    for (int i = 0; i < (int)labels.size(); ++i) {
-      output.append("\ttest_labels.push_back(" +
-        ltr::utility::lexical_cast<string>(labels[i]) + ");\n");
-    }
-    output.append("\treturn test_labels;\n}\n\n");
-
-    return output;
+    tester_code << "  EXPECT_TRUE(Equal(test_labels, labels))\n"
+      << "    << Report<vector<double> >(test_labels, labels);\n"
+      << "}\n\n";
   }
 
-  string Generator::setTestCode(int index,
-                                const string& test_name) const {
-    string output;
-    output.append("TEST_F(SerializationTest, " + test_name +
-      ") {\n");
+  void Generator::addCheckFeaturesFunction(
+      const DataSet<Object>& processed_data) {
+    tester_code << "void checkFeatures" << serializating_object_number
+      << "(const vector<vector<double> >& data) {\n";
 
-    string function_number = ltr::utility::lexical_cast<string>(index);
-    output.append("\tserializated_labels = ").
-      append("ApplySerializatedScorerToDataSet(test_data, &SavedScorer" +
-      function_number + ");\n");
-    output.append("\ttest_labels = SetupTestLabels"
-      + function_number + "();\n");
-    output.append("\tEXPECT_TRUE(Equal(").
-      append("test_labels, serializated_labels)) << Report(test_labels,").
-      append(" serializated_labels);\n").
-      append("}\n\n");
-    return output;
+    tester_code << "  vector<vector<double> > test_data("
+      << processed_data.size() << ");\n";
+    for (int object_index = 0;
+         object_index < processed_data.size();
+         ++object_index) {
+      for (int feature_index = 0;
+           feature_index < processed_data.feature_count();
+           ++feature_index) {
+        tester_code << "  test_data[" << object_index << "].push_back("
+          << lexical_cast<string>(
+          processed_data[object_index].features()[feature_index]) << ");\n";
+        }
+    }
+
+    tester_code << "  EXPECT_TRUE(Equal(test_data, data))\n"
+      << "    << Report<vector< vector<double> > >(test_data, data);\n"
+      << "}\n\n";
+  }
+
+  void Generator::addScorerTest(
+      Learner<Object>::Ptr learner,
+      const string& test_name) {
+    learner->learn(train_data);
+    Scorer::Ptr scorer = learner->make();
+    scorer->predict(test_data);
+
+    addBeginBlockComment(test_name);
+    addCheckLabelsFunction();
+    tester_code << scorer->generateCppCode(
+      "SavedScorer" + lexical_cast<string>(serializating_object_number))
+      << "\n";
+    tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
+      << "  vector<double> testing_labels;\n"
+      << "  for (int i = 0; i < dataset.size(); ++i) {\n"
+      << "    testing_labels.push_back(SavedScorer"
+      << serializating_object_number << "(dataset[i].features()));\n"
+      << "  }\n"
+      << "  checkLabels" << serializating_object_number
+      << "(testing_labels);\n" << "}\n\n";
+    addEndBlockComment(test_name);
+
+    ++serializating_object_number;
+  }
+
+  void Generator::addFeatureConverterTest(
+      FeatureConverterLearner<Object>::Ptr feature_converter_learner,
+      const string& test_name) {
+    feature_converter_learner->learn(train_data);
+    FeatureConverter::Ptr feature_converter = feature_converter_learner->make();
+    DataSet<Object> processed_data;
+    feature_converter->apply(test_data, &processed_data);
+
+    addBeginBlockComment(test_name);
+    addCheckFeaturesFunction(processed_data);
+    tester_code << feature_converter->generateCppCode(
+      "SavedFeatureConverter" +
+      lexical_cast<string>(serializating_object_number));
+
+    tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
+      << "  vector<vector<double> > testing_data(dataset.size());\n"
+      << "  for (int i = 0; i < dataset.size(); ++i) {\n"
+      << "    SavedFeatureConverter" << serializating_object_number
+      << "(dataset[i].features(), &testing_data[i]);\n"
+      << "  }\n"
+      << "  checkFeatures" << serializating_object_number
+      << "(testing_data);\n" << "}\n\n";
+    addEndBlockComment(test_name);
+
+    ++serializating_object_number;
   }
 
   Generator::Generator():
       train_data(loadDataSet<Object>(TrainDataPath(), "SVMLIGHT")),
       test_data(loadDataSet<Object>(TestDataPath(), "SVMLIGHT")),
-      tester_code(setIncludes()),
-      scorers_to_test(0) {
-    tester_code.append(setFixture());
+      serializating_object_number(0) {
+    addIncludes();
+    addFixture();
   }
 
   string Generator::code() const {
-    return tester_code;
+    return tester_code.str();
   }
 
   void Generator::write(const char* filename) const {
@@ -114,36 +166,19 @@ namespace serialization_test {
     fout.close();
   }
 
-  string Generator::setBeginBlockComment(string message) const {
-    string slashes(100, '#');
+  void Generator::addBeginBlockComment(const string& message) {
+      // 80 - correct length of code string, 80 = "//" + 78
+    string slashes(78, '#');
     string inserted = message + "_block_begin";
-    copy(inserted.begin(), inserted.end(), slashes.begin() + 35);
-    return "//" + slashes + "\n";
+      // 20 - near the middle of line, to make message centered
+    copy(inserted.begin(), inserted.end(), slashes.begin() + 20);
+    tester_code << "//" << slashes << "\n";
   }
 
-  string Generator::setEndBlockComment(string message) const {
-    string slashes(100, '#');
+  void Generator::addEndBlockComment(const string& message) {
+    string slashes(78, '#');
     string inserted = message + "_block_end";
-    copy(inserted.begin(), inserted.end(), slashes.begin() + 35);
-    return "//" + slashes + "\n\n";
-  }
-
-  void Generator::setScorerTest(Learner<Object>::Ptr learner,
-      string test_name) {
-    learner->learn(train_data);
-    Scorer::Ptr tested_scorer = learner->make();
-    tested_scorer->predict(test_data);
-
-    string function_number = ltr::utility::lexical_cast<string>(scorers_to_test);
-
-    tester_code.append(setBeginBlockComment(test_name));
-    tester_code.append(setTestLabelsFunction("SetupTestLabels"
-      + function_number));
-    tester_code.append(tested_scorer->generateCppCode(
-      "SavedScorer" + function_number) + "\n");
-    tester_code.append(setTestCode(scorers_to_test, test_name));
-    tester_code.append(setEndBlockComment(test_name));
-
-    ++scorers_to_test;
+    copy(inserted.begin(), inserted.end(), slashes.begin() + 20);
+    tester_code << "//" << slashes << "\n\n";
   }
 };

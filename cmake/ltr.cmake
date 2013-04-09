@@ -24,7 +24,6 @@ SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc
 
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.h
-                      ${Source_Path}/ltr/learners/decision_tree/decision_tree_learner.cc
 
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.h
                       ${Source_Path}/ltr/learners/decision_tree/base_splitter.cc
@@ -74,7 +73,9 @@ SET(LTR_IO_UTILS ${Source_Path}/ltr/data/utility/io_utility.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_svm.h
                  ${Source_Path}/ltr/data/utility/parsers/parse_svm.cc
                  ${Source_Path}/ltr/data/utility/parsers/parse_arff.h
-                 ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc)
+                 ${Source_Path}/ltr/data/utility/parsers/parse_arff.cc
+                 ${Source_Path}/ltr/data/utility/parsers/parser_utils.h
+                 ${Source_Path}/ltr/data/utility/parsers/parser_utils.cc)
 
 SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/two_class_actual_label_converter.h
@@ -109,6 +110,15 @@ SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/string_utils.h
               ${Source_Path}/ltr/utility/boost/string_utils.cc
               ${Source_Path}/ltr/utility/boost/triple.h)
+
+SET(LTR_SHARED_PTR ${Source_Path}/ltr/utility/boost/shared_ptr/CastingOperators.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/InactivePtr.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/Ptr.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/PtrRefCounter.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/QuickMutexPOSIX.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/QuickMutexWin32.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/SmartPointers.h
+                   ${Source_Path}/ltr/utility/boost/shared_ptr/ThreadSynchronization.h)
 
 SET(LTR_RANDOM ${Source_Path}/ltr/utility/random/LeadingZeros.hpp
                ${Source_Path}/ltr/utility/random/RandomCanonical.hpp
@@ -187,7 +197,7 @@ SET(LTR_MEASURES ${Source_Path}/ltr/measures/measure.h
                  ${Source_Path}/ltr/measures/gmrr.h ${Source_Path}/ltr/measures/gmrr.cc
                  ${Source_Path}/ltr/measures/normalized_measure.h
                  ${Source_Path}/ltr/measures/binary_classification_accuracy.h
-				 ${Source_Path}/ltr/measures/binary_classification_margin.h
+                 ${Source_Path}/ltr/measures/binary_classification_margin.h
                  ${Source_Path}/ltr/measures/auc.h ${Source_Path}/ltr/measures/auc.cc)
 
 SET(LTR_MEASURES_UTILS ${Source_Path}/ltr/measures/utils/measure_utility.h
@@ -232,6 +242,9 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/per_feature_linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
+                           ${Source_Path}/ltr/feature_converters/pca_learner.h
+                           ${Source_Path}/ltr/feature_converters/linear_converter.h
+                           ${Source_Path}/ltr/feature_converters/linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_sampler_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_random_sampler_learner.h
                            ${Source_Path}/ltr/feature_converters/fake_feature_converter.h
@@ -263,10 +276,10 @@ SET(LTR_COMPOSITION ${Source_Path}/ltr/learners/composition_learner/composition_
                     ${Source_Path}/ltr/learners/composition_learner/data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_data_set_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
+                    ${Source_Path}/ltr/learners/composition_learner/ada_boost_data_set_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/ada_rank_composition_scorer_weights_updater.h
                     ${Source_Path}/ltr/learners/composition_learner/average_composition_scorer_weights_updater.h
-					${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
+                    ${Source_Path}/ltr/learners/composition_learner/ada_boost_learner.h)
 
 SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predictions_aggregator.h
                     ${Source_Path}/ltr/predictions_aggregators/average_predictions_aggregator.h
@@ -296,48 +309,14 @@ SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/sphere_set.h
                     ${Source_Path}/ltr/optimization/sets/sphere_set.cc
                     ${Source_Path}/ltr/optimization/sets/linear_inequality_set.h
-                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc)
-
-SET(OPTIMIZATION_SOLVERS ${Source_Path}/ltr/optimization/solvers/solver.h
-                    ${Source_Path}/ltr/optimization/solvers/solution.h
-                    ${Source_Path}/ltr/optimization/solvers/iteration_solver.h
-                    ${Source_Path}/ltr/optimization/solvers/simulated_annealing_solver.h
-                    ${Source_Path}/ltr/optimization/solvers/simulated_annealing_solver.cc
-                    ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.h
-                    ${Source_Path}/ltr/optimization/solvers/gradient_descent_solver.cc)
-
-SET(OPTIMIZATION_STOPCRITERIA ${Source_Path}/ltr/optimization/stop_criteria/and_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/and_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/delta_argument_stop_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/delta_argument_stop_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/delta_function_stop_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/delta_function_stop_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/gradient_stop_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/gradient_stop_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/iteration_stop_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/iteration_stop_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/or_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/or_criterion.cc
-                    ${Source_Path}/ltr/optimization/stop_criteria/stop_criterion.h
-                    ${Source_Path}/ltr/optimization/stop_criteria/state.h)
-
-SET(OPTIMIZATION_STAND_FUNCTIONS ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/easom_function/easom_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/easom_function/easom_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/griewank_function/griewank_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/griewank_function/griewank_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/rosenbrock_function/rosenbrock_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/rosenbrock_function/rosenbrock_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/sum_squares_function/sum_squares_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/sum_squares_function/sum_squares_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/trid_function/trid_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/unconstrained/trid_function/trid_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/constrained/g3_problem/g3_function.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/constrained/g3_problem/g3_function.cc
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/constrained/g3_problem/g3_set.h
-                                 ${Source_Path}/ltr/optimization/functions/test_functions/constrained/g3_problem/g3_set.cc)
+                    ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.h
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
+
+SET(CONTRIB_INCLUDE ${Source_Path}/contrib/include_Eigen.h)
 
 # lets divide binaries in groups, for comfort navigation
 SOURCE_GROUP(density_estimators\\scorers FILES ${LTR_DENSITY_ESTIMATORS_SCORERS})
@@ -371,20 +350,15 @@ SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
 SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
-SOURCE_GROUP(optimization\\solvers FILES ${OPTIMIZATION_SOLVERS})
-SOURCE_GROUP(contrib\\getoptpp FILES ${GETOPTPP})
-SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOPCRITERIA})
-SOURCE_GROUP(optimization\\stand_functions FILES ${OPTIMIZATION_STAND_FUNCTIONS})
 
-SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_INTERFACES}
+SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_SHARED_PTR} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
             ${LTR_GP_LEARNER} ${LTR_GP_LEARNER_STRATEGIES} ${LTR_FEATURE_CONVERTERS}
             ${LTR_FEATURE_CONVERTERS_UTILITY} ${LTR_MEASURES} ${LTR_MEASURES_UTILS} ${LTR_CROSSVALIDATION}
             ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
-            ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVERS}
-			      ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${OPTIMIZATION_STOPCRITERIA}
-            ${OPTIMIZATION_STAND_FUNCTIONS})
+            ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS}
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE})
 
 INCLUDE_DIRECTORIES(${Source_Path})

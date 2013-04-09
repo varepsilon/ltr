@@ -15,6 +15,15 @@ VectorXd StdVectorToEigenVector(const vector<double>& std_vector) {
   return result;
 }
 
+void EigenVectorToStdVector(const VectorXd& eigen_vector,
+                            vector<double>* std_vector) {
+  int feature_count = eigen_vector.size();
+  std_vector->resize(feature_count);
+  for (int feature_index = 0; feature_index < feature_count; ++feature_index) {
+    (*std_vector)[feature_index] = eigen_vector[feature_index];
+  }
+}
+
 void InitEigenMatrix(MatrixXd* eigen_matrix) {
   for (int row = 0; row < eigen_matrix->rows(); ++row) {
     for (int col = 0; col < eigen_matrix->cols(); ++col) {

@@ -1,4 +1,4 @@
-// Copyright 2011 Yandex
+// Copyright 2013 Yandex
 
 #include <gtest/gtest.h>
 #include "ltr/optimization/functions/quadratic_function.h"
@@ -27,7 +27,7 @@ TEST(QuadraticFunctionTest, QuadraticFunctionValueTest) {
   testpoint(0) = 1.0;
   testpoint(1) = 2.0;
 
-  EXPECT_EQ(21.0, testfunc.value(testpoint));
+  EXPECT_EQ(21.0, testfunc.computeValue(testpoint));
 }
 
 TEST(QuadraticFunctionTest, QuadraticFunctionGradientTest) {
@@ -53,7 +53,9 @@ TEST(QuadraticFunctionTest, QuadraticFunctionGradientTest) {
   result(0) = 10.0;
   result(1) = 16.0;
 
-  EXPECT_EQ(result, testfunc.gradient(testpoint));
+  Vector gradient;
+  testfunc.computeGradient(testpoint, &gradient);
+  EXPECT_EQ(result, gradient);
 }
 
 TEST(QuadraticFunctionTest, QuadraticFunctionHessianTest) {
@@ -74,6 +76,8 @@ TEST(QuadraticFunctionTest, QuadraticFunctionHessianTest) {
   Point testpoint(2);
   testpoint(0) = 1.0;
   testpoint(1) = 2.0;
+  Matrix hessian;
+  testfunc.computeHessian(testpoint, &hessian);
 
-  EXPECT_EQ(a * 2.0, testfunc.hessian(testpoint));
+  EXPECT_EQ(a * 2.0, hessian);
 }

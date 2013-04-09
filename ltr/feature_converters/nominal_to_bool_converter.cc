@@ -2,6 +2,14 @@
 
 #include "ltr/feature_converters/nominal_to_bool_converter.h"
 
+#include <sstream>
+
+#include "ltr/utility/boost/lexical_cast.h"
+
+using std::stringstream;
+
+using ltr::utility::lexical_cast;
+
 namespace ltr {
 FeatureInfo NominalToBoolConverter::convertFeatureInfo() const {
   FeatureInfo output_feature_info;
@@ -24,66 +32,63 @@ FeatureInfo NominalToBoolConverter::convertFeatureInfo() const {
 }
 
 string NominalToBoolConverter::generateCppCode(
-    const std::string &function_name) const {
-  string code;
-  code.
-    append("#include <vector>\n\nvoid ").
-    append(function_name).
-    append("(const std::vector<double>& features, ").
-    append("std::vector<double>* result) {\n").
-    append("  result->clear();\n").
-    append("  bool nominal[] = {");
+    const string &function_name) const {
+  stringstream code;
+  code
+    << "#include <vector>\n"
+    << "\n"
+    << "void " << function_name << "(const std::vector<double>& features,\n"
+    << "    std::vector<double>* result) {\n"
+    << "  result->clear();\n"
+    << "  bool nominal[] = {";
   for (int input_feature_index = 0;
        input_feature_index < input_feature_info_.feature_count();
        input_feature_index++) {
     if (input_feature_index != 0) {
-      code.append(",");
+      code << ", ";
     }
     if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
-      code.append("1");
+      code << "1";
     } else {
-      code.append("0");
+      code << "0";
     }
   }
-  code.
-    append("};\n").
-    append("  vector<int> feature_outputs[").
-    append(
-      ltr::utility::lexical_cast<string>(input_feature_info_.feature_count())).
-    append("];\n");
+  code
+    << "  };\n"
+    << "  vector<int> feature_outputs["
+      << lexical_cast<string>(input_feature_info_.feature_count()) << "];\n";
 
   for (int input_feature_index = 0;
        input_feature_index < input_feature_info_.feature_count();
        input_feature_index++) {
     if (input_feature_info_.getFeatureType(input_feature_index) == NOMINAL) {
-      map<int, string> vals =
-        input_feature_info_.getFeatureValues(input_feature_index);
-      for (map<int, string>::iterator iterator = vals.begin();
+      const map<int, string>& vals =
+        input_feature_info_.getNominalFeatureValues(input_feature_index);
+      for (map<int, string>::const_iterator iterator = vals.begin();
            iterator != vals.end(); ++iterator) {
-        code.
-          append("  feature_outputs[").
-          append(ltr::utility::lexical_cast<string>(input_feature_index)).
-          append("].push_back(").
-          append(ltr::utility::lexical_cast<string>(iterator->first)).
-          append(");\n");
+        code
+          << "  feature_outputs["
+          << lexical_cast<string>(input_feature_index)
+          << "].push_back("
+          << lexical_cast<string>(iterator->first)
+          << ");\n";
       }
     }
   }
-  code.
-    append("  for (int i = 0; i < features.size(); ++i) {\n").
-    append("    if (!nominal[i])\n").
-    append("      result->push_back(features[i]);\n").
-    append("  }\n");
-
-  code.
-    append("for (int i = 0; i < features.size(); ++i) {\n").
-    append("  if (nominal[i]) {\n").
-    append("    for (int j = 0; j < feature_outputs[i].size(); j++)\n").
-    append("      result->push_back(features[i] == feature_outputs[i][j]);\n").
-    append("  }\n").
-    append("}\n").
-    append("}\n");
-  return code;
+  code
+    << "  for (int i = 0; i < features.size(); ++i) {\n"
+    << "    if (!nominal[i])\n"
+    << "      result->push_back(features[i]);\n"
+    << "  }\n"
+    << "\n"
+    << "  for (int i = 0; i < features.size(); ++i) {\n"
+    << "    if (nominal[i]) {\n"
+    << "      for (int j = 0; j < feature_outputs[i].size(); j++)\n"
+    << "        result->push_back(features[i] == feature_outputs[i][j]);\n"
+    << "    }\n"
+    << "  }\n"
+    << "}\n";
+  return code.str();
 }
 
 void NominalToBoolConverter::applyImpl(
@@ -104,9 +109,9 @@ void NominalToBoolConverter::applyImpl(
          ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) == NOMINAL) {
-          map<int, string> vals =
-            input_feature_info_.getFeatureValues(input_feature_index);
-          for (map<int, string>::iterator iterator = vals.begin();
+          const map<int, string>& vals =
+            input_feature_info_.getNominalFeatureValues(input_feature_index);
+          for (map<int, string>::const_iterator iterator = vals.begin();
             iterator != vals.end(); ++iterator) {
               if (input[input_feature_index] == iterator->first) {
                 converted_object << 1.0;

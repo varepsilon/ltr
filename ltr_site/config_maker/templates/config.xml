@@ -1,0 +1,47 @@
+{% load object_handlers %}
+<LTR_experiment>
+  <config>
+    <root_directory>{{ root_directory }}</root_directory>
+  </config>
+
+  {% for data in datas %}
+  <data name="{{ data.name }}" approach="{{ data.approach }}" format="{{ data.format }}">
+    {{ data.file.path }}
+  </data>
+  {% endfor %}
+
+  {% for object in objects %}
+  <object name="{{ object.name }}" type="{{ object.get_type }}"{% if object.approach %} approach="{{ object.approach }}"{% endif %}>
+    {% for property, value in object.get_properties|special_properties %}
+      <{{ property }}>{{ value }}</{{ property }}>
+    {% endfor %}</object>
+  {% endfor %}
+
+  <launch>
+    {% for train in trains %}
+    <train name="{{ train.name }}" data="{{ train.train_data.name }}" learner="{{ train.learner.name }}">
+      {% for data in train.predict %}
+      <predict>{{ data.name }}</predict>
+      {% endfor %}
+      {% if train.generate_cpp %}
+      <cpp />
+      {% endif %}
+    </train>
+    {% endfor %}
+
+    {% for crossvalidation in crossvalidations %}
+    <crossvalidation fold="{{ crossvalidation.splitter }}">
+      {% for learner in crossvalidation.learners %}
+      <learner>{{ learner.name }}</learner>
+      {% endfor %}
+
+      {% for measure in crossvalidation.measures %}
+      <measure>{{ measure.name }}</measure>
+      {% endfor %}
+
+      <data>{{ crossvalidation.data.name }}</data>
+    </crossvalidation>
+    {% endfor %}
+  </launch>
+
+</LTR_experiment>

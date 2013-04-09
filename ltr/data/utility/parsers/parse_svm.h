@@ -6,32 +6,41 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include "ltr/data/object.h"
 #include "ltr/data/object_pair.h"
 #include "ltr/data/object_list.h"
-
 #include "ltr/data/utility/parsers/parser.h"
 
+using std::vector;
+
 namespace ltr {
-  namespace io_utility {
-  class SVMParser : public Parser {
-    private:
-      void init(std::istream* in);
-      static const int raw_query_id_idx_;
-      static const int raw_relevance_idx_;
+namespace io_utility {
+/** \brief Parse SVM light format (http://svmlight.joachims.org/)
+ */
+class SVMParser : public Parser {
+ protected:
+  virtual void parseDataInfo(istream& in, // NOLINT
+                             FeatureInfo* feature_info,
+                             LabelInfo* label_info);
+  virtual void parseObject(const string& record,
+                           const FeatureInfo& feature_info,
+                           const LabelInfo& label_info,
+                           Object* object);
 
-    public:
-      void parseRawObject(string line, RawObject* result);
-      void makeString(const Object& obj, std::string* result);
+ public:
 
-      PairwiseDataSet buildPairwiseDataSet(const std::vector<Object>& objects,
-                                           const FeatureInfo& info);
-      ListwiseDataSet buildListwiseDataSet(const std::vector<Object>& objects,
-                                           const FeatureInfo& info);
-  };
-  };
+  virtual void saveObject(const Object& obj, ostream& stream); // NOLINT
+
+  PairwiseDataSet buildPairwiseDataSet(const vector<Object>& objects,
+                                       const FeatureInfo& feature_info,
+                                       const LabelInfo& label_info);
+
+  ListwiseDataSet buildListwiseDataSet(const vector<Object>& objects,
+                                       const FeatureInfo& feature_info,
+                                       const LabelInfo& label_info);
+};
+};
 };
 
 #endif  // LTR_DATA_UTILITY_PARSERS_PARSE_SVM_H_

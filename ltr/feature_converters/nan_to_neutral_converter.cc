@@ -2,6 +2,10 @@
 
 #include "ltr/feature_converters/nan_to_neutral_converter.h"
 
+#include <sstream>
+
+using std::stringstream;
+
 namespace ltr {
 FeatureInfo NanToNeutralConverter::convertFeatureInfo() const  {
   FeatureInfo output_feature_info;
@@ -18,38 +22,38 @@ FeatureInfo NanToNeutralConverter::convertFeatureInfo() const  {
 
 string NanToNeutralConverter::generateCppCode(
   const std::string& function_name) const {
-    string code;
-    code.
-      append("#include <limits>\n").
-      append("#include <vector>\n\nvoid ").
-      append(function_name).
-      append("(const std::vector<double>& features, ").
-      append("std::vector<double>* result) {\n").
-      append("  result->clear();\n\n").
-      append("  std::vector <double> neutral_values;\n");
+    stringstream code;
+    code
+      << "#include <limits>\n"
+      << "#include <vector>\n"
+      << "\n"
+      << "void " << function_name << "(const std::vector<double>& features,\n"
+      << "    std::vector<double>* result) {\n"
+      << "  result->clear();\n\n"
+      << "  std::vector <double> neutral_values;\n";
     for (int index = 0;
          index < (int)neutral_object_.features().size(); ++index) {
-      code.append("  neutral_values.push_back(");
+      code << "  neutral_values.push_back(";
       if (isNaN(neutral_object_.features()[index])) {
-        code.append("std::numeric_limits<double>::quiet_NaN()");
+        code << "std::numeric_limits<double>::quiet_NaN()";
       } else {
-        code.append(lexical_cast<string>(neutral_object_.features()[index]));
+        code << lexical_cast<string>(neutral_object_.features()[index]);
       }
-      code.append(");\n");
+      code << ");\n";
     }
-    code.
-      append("\n").
-      append("  for (int index = 0; index < features.size(); ++index) {\n").
-      append("   if (neutral_values[index] == neutral_values[index]) {\n").
-      append("     if (features[index] == features[index]) {\n").
-      append("       result->push_back(features[index]);\n").
-      append("     } else {\n").
-      append("       result->push_back(neutral_values[index]);\n").
-      append("     }\n").
-      append("   }\n").
-      append("  }\n").
-      append("}\n");
-    return code;
+    code
+      << "\n"
+      << "  for (int index = 0; index < features.size(); ++index) {\n"
+      << "   if (neutral_values[index] == neutral_values[index]) {\n"
+      << "     if (features[index] == features[index]) {\n"
+      << "       result->push_back(features[index]);\n"
+      << "     } else {\n"
+      << "       result->push_back(neutral_values[index]);\n"
+      << "     }\n"
+      << "   }\n"
+      << "  }\n"
+      << "}\n";
+    return code.str();
 }
 
 void NanToNeutralConverter::applyImpl(const Object& input,

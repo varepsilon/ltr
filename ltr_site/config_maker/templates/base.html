@@ -1,0 +1,42 @@
+<!-- Copyright 2011 Yandex -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    {% block scripts %}
+      <script type="text/javascript" src="{{ STATIC_URL }}prototype.js"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}ui.js"></script>
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ STATIC_URL }}logo.png" type="image/png">
+    <title>
+      {% block title %} {% endblock %}
+    </title>
+  </head>
+
+  <body>
+    {% block menu %}
+      <table width="100%" height="100px">
+        <tr>
+          <td width="130px">
+            <a href="/"><img src="{{ STATIC_URL }}logo.png" alt="Home"></a>
+          </td>
+          <td width = "100px">
+            <a href="about"><img src="{{ STATIC_URL }}about.jpg" alt="About"></a>
+          </td>
+          <td>
+          </td>
+          <td width="300">
+            <div id="id_login">
+              {% include '_login.html' %}
+            </div>
+          </td>
+        </tr>
+      </table>
+    {% endblock %}
+
+    {% block body %} {% endblock %}
+    <hr>
+    {% block copyright %}<p>&copy; Yandex, 2011</p>{% endblock %}
+  </body>
+</html>

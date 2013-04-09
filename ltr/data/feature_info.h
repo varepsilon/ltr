@@ -10,10 +10,13 @@
 #include "ltr/utility/macros.h"
 
 #include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/murmur_hash.h"
 
 using std::map;
 using std::string;
 using std::vector;
+
+using ltr::utility::hash;
 
 namespace ltr {
 /**
@@ -35,6 +38,12 @@ struct OneFeatureInfo {
                  NominalFeatureValues values = NominalFeatureValues())
   : type_(type),
     values_(values) {}
+  explicit OneFeatureInfo(const vector<string>& values)
+  : type_(NOMINAL) {
+    for (int value_index = 0; value_index < values.size(); ++value_index) {
+      values_[hash(values[value_index])] = values[value_index];
+    }
+  }
   /**
    * Feature type
    */
@@ -43,7 +52,13 @@ struct OneFeatureInfo {
    * Possible feature values. Matters only for nominal features.
    */
   NominalFeatureValues values_;
+  /**
+   * Feature name
+   */
+  string name_;
 };
+
+typedef OneFeatureInfo LabelInfo;
 
 bool operator==(const OneFeatureInfo& lhs, const OneFeatureInfo& rhs);
 /** \brief Class is storing info about all features
@@ -70,26 +85,70 @@ class FeatureInfo {
   }
   /** Adds info about one feature
    */
-  void addFeature(OneFeatureInfo info) {
+  void addFeature(const OneFeatureInfo& info) {
     feature_info_.push_back(info);
   }
   /** Adds info about one feature
    */
   void addFeature(FeatureType type = NUMERIC,
-                  NominalFeatureValues values = NominalFeatureValues()) {
+                  const NominalFeatureValues& values = NominalFeatureValues()) {
     addFeature(OneFeatureInfo(type, values));
   }
-  /** Returns possible values of feature with given index
+  /** Getters and setters for feature values
    */
-  NominalFeatureValues& getFeatureValues(int feature_index) {
+  void addNominalFeatureValue(int feature_index, const string& value) {
     CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
+    feature_info_[feature_index].values_[hash(value)] = value;
+  }
+  void addNominalFeatureValues(int feature_index,
+                               const vector<string>& values) {
+    for (int value_index = 0; value_index < values.size(); ++value_index) {
+      addNominalFeatureValue(feature_index, values[value_index]);
+    }
+  }
+  string getNominalFeatureValue(int feature_index, int value_hash) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
+    CHECK(feature_info_[feature_index].values_.find(value_hash) !=
+          feature_info_[feature_index].values_.end());
+    return feature_info_[feature_index].values_.find(value_hash)->second;
+  }
+  string getNominalFeatureValue(int feature_index, double value_hash) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
+    int int_value_hash = static_cast<int>(value_hash);
+    CHECK(feature_info_[feature_index].values_.find(int_value_hash) !=
+          feature_info_[feature_index].values_.end());
+    return feature_info_[feature_index].values_.find(int_value_hash)->second;
+  }
+  const NominalFeatureValues& getNominalFeatureValues(int feature_index) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
     return feature_info_[feature_index].values_;
   }
-  /** Returns possible values of feature with given index
-   */
-  const NominalFeatureValues& getFeatureValues(int feature_index) const {
+  NominalFeatureValues& getNominalFeatureValues(int feature_index) {
     CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
     return feature_info_[feature_index].values_;
+  }
+  void getNominalFeatureValues(int feature_index,
+                               vector<string>* result) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
+    const NominalFeatureValues& values_map =
+        feature_info_[feature_index].values_;
+    result->clear();
+    for (NominalFeatureValues::const_iterator value_index = values_map.begin();
+         value_index != values_map.end();
+         ++value_index) {
+      result->push_back(value_index->second);
+    }
+  }
+  void clearNominalFeatureValues(int feature_index) {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    CHECK(feature_info_[feature_index].type_ == NOMINAL);
+    feature_info_[feature_index].values_.clear();
   }
   /** Returns type of feature with given index
    */
@@ -102,6 +161,16 @@ class FeatureInfo {
   void setFeatureType(int feature_index, FeatureType type) {
     CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
     feature_info_[feature_index].type_ = type;
+  }
+
+  const OneFeatureInfo& operator[](int feature_index) const {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    return feature_info_[feature_index];
+  }
+
+  OneFeatureInfo& operator[](int feature_index) {
+    CHECK(feature_index < (int)feature_info_.size() && feature_index >= 0);
+    return feature_info_[feature_index];
   }
 
   void clear() {

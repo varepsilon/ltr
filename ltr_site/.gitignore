@@ -1,5 +1,0 @@
-*.sublime-project
-*.sublime-workspace
-*.pyc
-db.sqlite3
-ConfigMaker/media/users

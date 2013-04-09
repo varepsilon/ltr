@@ -262,12 +262,8 @@ void RegisterAllTypes(Factory* factory) {
   REGISTER_EVERY_WISE(Learner, GPLearner);
   REGISTER_POINTWISE(Learner, LinearLearner);
   REGISTER_LISTWISE(Learner, LinearLearner);
-  REGISTER_EVERY_WISE(Learner, CompositionLearner);
 
-//  REGISTER(Learner<Object>, DecisionTreeLearner);
-  factory->registerType<Learner<Object>,
-      DecisionTreeLearner>("DecisionTreeLearnerpointwise");
-
+  REGISTER_EVERY_WISE(Learner, DecisionTreeLearner);
   REGISTER(BaseSplitter, ID3Splitter);
   REGISTER(BaseSplitter, ObliviousTreeSplitter);
   REGISTER(LeafGenerator, MostCommonLabelLeafGenerator);

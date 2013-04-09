@@ -1,11 +1,16 @@
 // Copyright 2011 Yandex
 
-#include <stdexcept>
-
 #include "ltr/feature_converters/per_feature_linear_converter.h"
+
+#include <stdexcept>
+#include <sstream>
+
+#include "ltr/utility/boost/lexical_cast.h"
 
 using std::logic_error;
 using std::stringstream;
+
+using ltr::utility::lexical_cast;
 
 namespace ltr {
 FeatureInfo PerFeatureLinearConverter::convertFeatureInfo() const {
@@ -19,25 +24,21 @@ void PerFeatureLinearConverter::resize(const FeatureInfo& input_feature_info) {
 
 string PerFeatureLinearConverter::generateCppCode(
     const string& function_name) const {
-  string code;
-  code.
-    append("#include <vector>\n\nvoid ").
-    append(function_name).
-    append("(const std::vector<double>& features, ").
-    append("std::vector<double>* result) {\n").
-    append("  result->clear();\n");
+  stringstream code;
+  code
+    << "#include <vector>\n"
+    << "\n"
+    << "void " << function_name << "(const std::vector<double>& features,\n"
+    << "    std::vector<double>* result) {\n"
+    << "  result->clear();\n";
     for (int i = 0; i < (int)factor_.size(); ++i) {
-      code.
-        append("  result->push_back(features[").
-        append(ltr::utility::lexical_cast<string>(i)).
-        append("] * ").
-        append(ltr::utility::lexical_cast<string>(factor_[i])).
-        append(" + ").
-        append(ltr::utility::lexical_cast<string>(shift_[i])).
-        append(");\n");
+      code
+        << "  result->push_back(features[" << lexical_cast<string>(i) << "] * "
+        << lexical_cast<string>(factor_[i]) << " + "
+        << lexical_cast<string>(shift_[i]) << ");\n";
     }
-  code.append("}\n");
-  return code;
+  code << "}\n";
+  return code.str();
 }
 
 void PerFeatureLinearConverter::applyImpl(const Object& input,

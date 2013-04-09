@@ -9,8 +9,9 @@ namespace io_utility {
 template<>
 DataSet<Object> buildDataSet(Parser::Ptr parser,
                              const vector<Object>& objects,
-                             const FeatureInfo& info) {
-  DataSet<Object> data(info);
+                             const FeatureInfo& feature_info,
+                             const LabelInfo& label_info) {
+  DataSet<Object> data(feature_info, label_info);
   typedef map<size_t, vector<Object> >::const_iterator object_iterator;
 
   for (int object_index = 0; object_index < objects.size(); ++object_index) {
@@ -22,15 +23,17 @@ DataSet<Object> buildDataSet(Parser::Ptr parser,
 template<>
 DataSet<ObjectPair> buildDataSet(Parser::Ptr parser,
                                  const vector<Object>& objects,
-                                 const FeatureInfo& info) {
-  return parser->buildPairwiseDataSet(objects, info);
+                                 const FeatureInfo& feature_info,
+                                 const LabelInfo& label_info) {
+  return parser->buildPairwiseDataSet(objects, feature_info, label_info);
 }
 
 template<>
 DataSet<ObjectList> buildDataSet(Parser::Ptr parser,
                                  const vector<Object>& objects,
-                                 const FeatureInfo& info) {
-  return parser->buildListwiseDataSet(objects, info);
+                                 const FeatureInfo& feature_info,
+                                 const LabelInfo& label_info) {
+  return parser->buildListwiseDataSet(objects, feature_info, label_info);
 }
 
 void groupByMeta(const vector<Object>& objects,
@@ -66,6 +69,20 @@ void groupByFloatMeta(const vector<Object>& objects,
     try {
       string value = objects[object_index].getMetaInfo(group_parameter);
       (*result)[ltr::utility::lexical_cast<float>(value)]
+                       .push_back(objects[object_index]);
+    } catch(ltr::utility::bad_lexical_cast) {
+      throw std::logic_error("can't group objects by " + group_parameter);
+    }
+}
+
+void groupByDoubleMeta(const vector<Object>& objects,
+                      const string& group_parameter,
+                      map<double, vector<Object> >* result) {
+  result->clear();
+  for (int object_index = 0; object_index < objects.size(); ++object_index)
+    try {
+      string value = objects[object_index].getMetaInfo(group_parameter);
+      (*result)[ltr::utility::lexical_cast<double>(value)]
                        .push_back(objects[object_index]);
     } catch(ltr::utility::bad_lexical_cast) {
       throw std::logic_error("can't group objects by " + group_parameter);

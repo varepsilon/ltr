@@ -1,6 +1,7 @@
 // Copyright 2012 Yandex School Practice
 
 #include <map>
+#include <algorithm>
 
 #include "gtest/gtest.h"
 

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+
+{% block title %} LTRSite {% endblock %}
+
+{% block body %} 
+  <table cellpadding="10" cellspacing="0" width="100%">
+    <tr>
+      <td width="250px">
+        <table>
+          <tr>
+            <td>
+              <a href="/create"><img src="{{ STATIC_URL }}create.gif" alt="Create..." width="32" height="32"></a>
+            </td>
+            <td>
+              <a href="/export"><img src="{{ STATIC_URL }}save.png" alt="Export" width="32" height="32"></a>
+            </td>
+            <td>
+              <a href="/import"><img src="{{ STATIC_URL }}open.jpg" alt="Import..." width="32" height="32"></a>
+            </td>
+            <td>
+              <form name="delete_all" action="/delete_all" method="post">
+              {% csrf_token %}
+                <a href="javascript:submit_with_confirm(document.delete_all, 'Are you sure you want to delete all the objects?');"><img src="{{ STATIC_URL }}delete.jpg" alt="Delete all" width="32" height="32"></a>
+            </form>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td> Selected object: </td>
+    </tr>
+    <tr>
+      <td bgcolor="e0e0e0">
+        {% for object in objects %}
+          <p><a href="/view/{{ forloop.counter0 }}">{{ object.name }}</a></p>
+        {% empty %}
+          No objects were created
+        {% endfor %}
+      </td>
+      <td> 
+        {% if form_object_type %}
+          <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <table>
+              {% for field in form_object_type.visible_fields %}
+                <tr>
+                  <td width='150px'><b>{{ field.label }}:</b></td><td>{{ field }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+            <br>
+            <div id="id_parameters_">
+              {% include '_object_properties.html' %}
+            </div>
+          </form>
+        {% else %}
+          Select an object to view
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+  <p>
+    Debug:<br>
+    Objects: {{ objects }} <br>
+    Session key: {{ request.session.session_key }}
+  </p>
+
+  {% if mode == 'create_mode' %}
+    {% if reload_type_list %}
+      <script>
+          update_object_types()
+      </script>
+    {%  endif %}
+  {% endif %}
+{% endblock %}

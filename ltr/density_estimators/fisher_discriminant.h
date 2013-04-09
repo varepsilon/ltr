@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
+#include "contrib/include_Eigen.h"
 
 #include "ltr/data/object.h"
 #include "ltr/density_estimators/base_probability_density_estimator.h"
