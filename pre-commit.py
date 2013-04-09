@@ -20,7 +20,7 @@ for file in diff_files:
         continue
     if "doc" in file.split('/'):
         continue
-    if file.split('.')[-1] != "h" and file.split('.')[-1] != "cc" and file.split('.')[-1] != "cpp":
+    if file.split('.')[-1] != "h" and file.split('.')[-1] != "cc" and file.split('.')[-1] != "cpp" and file.split('.')[-1] != "hpp":
         continue
     if file.split('/')[-1] == "visitors.h":
         continue
