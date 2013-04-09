@@ -15,22 +15,19 @@ QuadraticFunction::QuadraticFunction(const Matrix& quadratic,
   shift_ = shift;
 }
 
-double QuadraticFunction::computeValue(const Point& point) const {
-  CHECK(point.size() == dimension());
+double QuadraticFunction::computeValueImpl(const Point& point) const {
   double first_term = point.dot(quadratic_ * point);
   double second_term = linear_.dot(point);
   return first_term + second_term + shift_;
 }
 
-void QuadraticFunction::computeGradient(const Point& point,
+void QuadraticFunction::computeGradientImpl(const Point& point,
                                         Vector* gradient) const {
-  CHECK(point.size() == dimension());
   *gradient = 2.0 * quadratic_ * point + linear_;
 }
 
-void QuadraticFunction::computeHessian(const Point& point,
+void QuadraticFunction::computeHessianImpl(const Point& point,
                                        Matrix* hessian) const {
-  CHECK(point.size() == dimension());
   *hessian = 2.0 * quadratic_;
 }
 }

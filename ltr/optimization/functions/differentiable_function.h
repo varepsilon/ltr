@@ -22,15 +22,20 @@ class DifferentiableFunction : public Function {
   virtual ~DifferentiableFunction() { }
 
   /**
-   * compute value of this function in a given point
-   */
-  virtual double computeValue(const Point& point) const = 0;
-  /**
    * compute first derivative of this function in a given point
    */
-  virtual void computeGradient(const Point& point, Vector* gradient) const = 0;
-
-  virtual string getDefaultAlias() const { return "DifferentiableFunction";}
+  void computeGradient(const Point& point, Vector* gradient) const;
+  virtual string getDefaultAlias() const {return "DifferentiableFunction"; }
+ private:
+  /**
+   * implementation of computeValue method
+   */
+  virtual double computeValueImpl(const Point& point) const = 0;
+  /**
+   * implementation of computeGradient method
+   */
+  virtual void computeGradientImpl(const Point& point,
+                                   Vector* gradient) const = 0;
 };
 }
 

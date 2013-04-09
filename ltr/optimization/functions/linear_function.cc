@@ -4,20 +4,15 @@
 
 namespace optimization {
 
-double LinearFunction::computeValue(const Point& point) const {
-  CHECK(point.size() == dimension());
+double LinearFunction::computeValueImpl(const Point& point) const {
   return factor_.transpose() * point + shift_;
 }
 
-void LinearFunction::computeGradient(const Point& point,
+void LinearFunction::computeGradientImpl(const Point& point,
                                      Vector* gradient) const {
-  CHECK(point.size() == dimension());
   *gradient = factor_;
 }
 
-void LinearFunction::computeHessian(const Point& point, Matrix* hessian) const {
-  CHECK(point.size() == dimension());
-  hessian->resize(dimension(), dimension());
-  hessian->setZero();
-}
+void LinearFunction::computeHessianImpl(const Point& point,
+                                        Matrix* hessian) const { }
 }

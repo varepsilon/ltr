@@ -294,7 +294,9 @@ SET(LTR_PREDICTIONS_AGGREGATORS ${Source_Path}/ltr/predictions_aggregators/predi
                     ${Source_Path}/ltr/predictions_aggregators/order_statistic_predictions_aggregator.cc)
 
 SET(OPTIMIZATION_FUNCTIONS ${Source_Path}/ltr/optimization/functions/differentiable_function.h
+                    ${Source_Path}/ltr/optimization/functions/differentiable_function.cc
                     ${Source_Path}/ltr/optimization/functions/twice_differentiable_function.h
+                    ${Source_Path}/ltr/optimization/functions/twice_differentiable_function.cc
                     ${Source_Path}/ltr/optimization/functions/function.h
                     ${Source_Path}/ltr/optimization/functions/function.cc
                     ${Source_Path}/ltr/optimization/functions/linear_function.h
@@ -312,6 +314,13 @@ SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc
                     ${Source_Path}/ltr/optimization/sets/polyhedron_set.h
                     ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc)
+
+SET(OPTIMIZATION_TEST_PROBLEMS ${Source_Path}/ltr/optimization/test_problems/constrained_functions.cc
+                               ${Source_Path}/ltr/optimization/test_problems/constrained_functions.h
+                               ${Source_Path}/ltr/optimization/test_problems/constrained_sets.cc
+                               ${Source_Path}/ltr/optimization/test_problems/constrained_sets.h
+                               ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.cc
+                               ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.h)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
@@ -350,6 +359,7 @@ SOURCE_GROUP(metrics FILES ${LTR_METRICS})
 SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
 SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
+SOURCE_GROUP(optimization\\test_problems FILES ${OPTIMIZATION_TEST_PROBLEMS})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_SHARED_PTR} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
@@ -359,6 +369,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS}
-            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE})
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS})
 
 INCLUDE_DIRECTORIES(${Source_Path})
