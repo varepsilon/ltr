@@ -58,10 +58,8 @@ string LinearConverter::getDefaultAlias() const {
 
 string LinearConverter::toString() const {
   stringstream str;
-  str << "Linear feature converter with factors:\n";
-  str << factor_;
-  str << " and shifts\n";
-  str << shift_;
+  str << "Linear feature converter with factors:\n" << factor_
+      << "\n  and shifts:\n" << shift_ << "\n"; 
   return str.str();
 }
 

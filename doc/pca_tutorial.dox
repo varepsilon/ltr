@@ -1,0 +1,46 @@
+namespace ltr {
+/** \page TutorialPCA PCA Learner
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section TutorialPCA PCA Learner
+
+This is a learner which realizes principal component analisys. It converts a set
+of observations of possibly correlated features into a set of values of linearly
+uncorrelated features and removes unsignificant features.
+
+\image html pca.png
+
+In general, algorithm creates a linear converter which decreases number of features
+by special calculated linear transformation.
+
+In the first step calculate average value for each feature and make dataset centered.
+
+In the second step calculates singular value decomposition using Jacobi method from
+Eigen library. The result is matrices \f$U\f$ and \f$V\f$ and vector of singular
+values \f$X\f$, such that \f$A = UXV\f$, where \f$A\f$ is training data. Singular
+values in vector \f$X\f$ are sorted in ascending order.
+
+In the third step calculates the optimal number of principal components \f$N\f$
+using Kaiser rule. Kaiser rule means that principal component corresponding to
+some singular value is considered significant if this value is more than average
+of all singular values. Then creates matrix \f$U'\f$ as set of \f$N\f$ first
+lines of \f$U\f$ and vector \f$X'\f$ as vector of \f$N\f$ first singular values.
+
+In the last step calculates factor matrix for linear converter as product of
+matrix \f$U'\f$ and vector \f$X'\f$. Shift matrix remains equal to zero.
+
+<table class="example">
+<tr><td>Example: learn pca converter and convert features.</td></tr>
+<tr><td>
+\include tutorial_pca_example1.cpp
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\include tutorial_pca_example1.out
+</td></tr>
+</table>
+
+**/
+}

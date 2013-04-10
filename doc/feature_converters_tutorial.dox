@@ -58,6 +58,7 @@ NanToZeroConverter        | Converts NaN features to zero values
 NanToAverageConverter     |  Converts NaN features to average values of all non NaN features from other Objects
 NominalToBoolConverter    |   Converts nominal features to boolean, and move they to the end of features list
 RemoveNominalConverter    | Removes all nominal features
+LinearConverter           | Performs linear transformation Ax + b, where x is vector of features 
 
 
 <table class="example">
