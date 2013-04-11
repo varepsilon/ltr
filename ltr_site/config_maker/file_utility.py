@@ -1,7 +1,5 @@
 # Copyright 2013 Yandex
-"""
-This file contains functions for work with files.
-"""
+"""This file contains functions for work with files."""
 
 import os
 import itertools
@@ -9,12 +7,13 @@ import itertools
 
 def get_unique_name(name, existing_names=(),
                     existence_predicate=lambda x: False):
-    """ Appends a counter to the end of the name if
-    such name already exists.
+    """Appends a counter to the end of the name if such name already exists.
+
     :param name: desired name
     :param existing_names: list of occupied names
     :param existence_predicate: predicate checking if name is occupied
     :return: unique name
+
     """
     # TODO: add doctests
     if name not in existing_names and not existence_predicate(name):
@@ -28,24 +27,23 @@ def get_unique_name(name, existing_names=(),
 
 
 def get_unique_filename(filename):
-    """ Appends a counter to the end of file name if
-    such file already exists.
+    """Appends a counter to the end of file name if such file already exists.
+
     :param filename: desired filename
     :return: unique filename
+
     """
     return get_unique_name(os.path.basename(filename), (), os.path.exists)
 
 
 def ensure_path_exists(path):
-    """ Creates path if it doesn't exist
-    """
+    """Creates path if it doesn't exist."""
     if not os.path.exists(path):
         os.makedirs(path)
 
 
 def file_not_empty(filename):
-    """ Checks if file is available and not empty
-    """
+    """Checks if file is available and not empty."""
     if not os.path.isfile(filename):
         return False
     try:

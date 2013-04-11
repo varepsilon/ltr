@@ -1,6 +1,5 @@
 # Copyright 2013 Yandex
-"""
-This file contains Django settings for LTRSite project.
+"""This file contains Django settings for LTRSite project.
 """
 
 from os.path import abspath

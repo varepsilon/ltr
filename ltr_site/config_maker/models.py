@@ -1,13 +1,10 @@
 # Copyright 2013 Yandex
-"""
-This file contains all the models used in LTR Site.
-"""
+"""This file contains all the models used in LTR Site."""
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import RegexValidator
-from django.core import serializers
 from django.contrib.sessions.models import Session
 from django.conf import settings
 
@@ -20,12 +17,15 @@ from file_utility import (get_unique_filename, ensure_path_exists,
 
 
 class cached_property(object):
-    """ Decorator that converts a method with a single
-    self argument into a property cached on the instance.
 
-    Taken from http://habrahabr.ru/post/159099/
-    In Django >= 1.4 can be found in django.utils.functional
+    """Decorator that converts a method with a single self argument into a
+    property cached on the instance.
+
+    Taken from http://habrahabr.ru/post/159099/.
+    In Django >= 1.4 can be found in django.utils.functional.
+
     """
+
     def __init__(self, func):
         self.func = func
 
@@ -35,8 +35,7 @@ class cached_property(object):
 
 
 class ObjectTypeController:
-    """ Manages object hierarchy and registered types
-    """
+    """Manages object hierarchy and registered types."""
     _registered_types = {}
 
     @cached_property
@@ -60,7 +59,7 @@ object_controller = ObjectTypeController()
 
 
 def get_current_solution(request):
-    """  Returns solution belonging to current user (or anonymous) """
+    """Returns solution belonging to current user (or anonymous)."""
     if request.user.is_authenticated():
         if not hasattr(request.user, 'solution'):
             solution = Solution(user=request.user, session=None)
@@ -77,13 +76,12 @@ def get_current_solution(request):
 
 
 class Solution(models.Model):
-    """ User's solution containing group of objects
-    """
+    """User's solution containing group of objects."""
     user = models.OneToOneField(User, blank=True, null=True)
     session = models.OneToOneField(Session, blank=True, null=True)
 
     def get_objects(self, object_type):
-        """ Returns objects belonging to this solution """
+        """Returns objects belonging to this solution."""
         return object_type.objects.filter(solution=self)
 
     def save_form(self, form):
@@ -92,7 +90,7 @@ class Solution(models.Model):
         obj.save()
 
     def get_content_filename(self, filename):
-        """ Creates filename for file being saved to disk """
+        """Creates filename for file being saved to disk."""
         if self.user is not None:
             username = self.user.username
         else:
@@ -102,11 +100,11 @@ class Solution(models.Model):
         return get_unique_filename(os.path.join(path, filename))
 
     def export_objects(self):
-        """ Exports all the objects to JSON """
+        """Exports all the objects to JSON."""
         raise NotImplementedError()
 
     def import_objects(self, data):
-        """ Imports all the objects from JSON """
+        """Imports all the objects from JSON."""
         raise NotImplementedError()
 
 
@@ -125,8 +123,9 @@ MAX_STRING_LENGTH = 30
 
 
 class Task(models.Model):
-    """ Stores information about launched ltr_client, its config and results
-    """
+
+    """Stores information about launched ltr_client, its config and results."""
+
     solution = models.ForeignKey(Solution)
     config_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
                                        unique=False)
@@ -136,7 +135,7 @@ class Task(models.Model):
 
     @staticmethod
     def create(solution, launchable_id):
-        """ Creates a Task instance """
+        """Creates a Task instance."""
         task = Task()
         task.solution = solution
         task.working_dir = get_unique_filename(
@@ -155,7 +154,7 @@ class Task(models.Model):
         return task
 
     def make_config(self, launchableId):
-        """ Creates XML config for ltr_client """
+        """Creates XML config for ltr_client."""
         from django.shortcuts import render_to_response
 
         db_objects = self.solution.get_objects(LtrObject)
@@ -184,24 +183,27 @@ class Task(models.Model):
         return response.content
 
     def run(self):
-        """ Runs ltr_client """
+        """Runs ltr_client."""
         subprocess.Popen([settings.LTR_CLIENT_PATH, '-f',
                           self.config_filename])
 
     def is_complete(self):
-        """ Checks if ltr_client's launch has successfully finished """
+        """Checks if ltr_client's launch has successfully finished."""
         return file_not_empty(self.report_filename)
 
 
 class InheritanceCastModel(models.Model):
-    """ An abstract base class that provides a "real_type" FK to ContentType.
+
+    """An abstract base class that provides a "real_type" FK to ContentType.
 
     For use in trees of inherited models, to be able to downcast
     parent instances to their child types.
 
     Taken from http://stackoverflow.com/questions/929029/how-do-i-access\
 -the-child-classes-of-an-object-in-django-without-knowing-the-nam
+
     """
+
     real_type = models.ForeignKey(ContentType, editable=False)
 
     def save(self, *args, **kwargs):
@@ -224,8 +226,9 @@ OBJECT_NAME_REGEX = '^[A-Za-z]\w{0,29}$'
 
 
 class BaseObject(InheritanceCastModel):
-    """ Base class in object hierarchy
-    """
+
+    """Base class in object hierarchy."""
+
     solution = models.ForeignKey(Solution)
 
     name = models.CharField(
@@ -239,7 +242,7 @@ class BaseObject(InheritanceCastModel):
         return self.name
 
     def get_properties(self):
-        """ Returns object properties that should be stored in XML config """
+        """Returns object properties that should be stored in XML config."""
         def is_auxiliary_field(field):
             return field.name in ('id', 'solution', 'real_type')
 
@@ -262,21 +265,24 @@ class BaseObject(InheritanceCastModel):
 
 
 class LtrObject(BaseObject):
-    """ Base class for objects that should be turned into <object> tag in
-    XML config
+
+    """Base class for objects that should be turned into <object> tag in XML
+    config.
+
     """
+
     pass
 
 
 def object_(cls):
-    """ Class decorator used to register categories in object hierarchy """
+    """Class decorator used to register categories in object hierarchy."""
     cls.get_type = staticmethod(lambda: cls.__name__)
     object_controller.register(cls.get_category(), cls.__name__)
     return cls
 
 
 def category(cls):
-    """ Class decorator used to register objects in object hierarchy """
+    """Class decorator used to register objects in object hierarchy."""
     cls.get_category = staticmethod(lambda: cls.__name__.lower())
     return cls
 

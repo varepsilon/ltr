@@ -7,3 +7,7 @@ lib
 ltr/serialization_test/tester/tester.cc
 ltr/serialization_test/tester/tester.cc.rule
 ltr/utility/include_openmp.h
+
+# For ltr_site
+*.pyc
+/ltr_site/db.sqlite3

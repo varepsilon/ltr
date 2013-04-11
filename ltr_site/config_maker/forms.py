@@ -1,7 +1,5 @@
 # Copyright 2013 Yandex
-"""
-This file contains all the forms used in LTR Site
-"""
+"""This file contains all the forms used in LTR Site."""
 
 from django import forms
 
@@ -9,14 +7,18 @@ from models import object_controller
 
 
 def choices(list_):
-    """ Zips a list for using as ChoiceField.choices """
+    """Zips a list for using as ChoiceField.choices."""
     return zip(list_, list_)
 
 
 class FormType(forms.Form):
-    """ Form for selecting object's category and type. Can be in edit_mode or
-    create_mode.
+
+    """Form for selecting object's category and type.
+
+    Form can be in edit_mode or create_mode.
+
     """
+
     category_ = forms.ChoiceField(
         choices=choices(object_controller.categories),
         label='Category',

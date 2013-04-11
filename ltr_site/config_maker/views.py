@@ -1,7 +1,5 @@
 # Copyright 2013 Yandex
-"""
-This file contains all the views used in LTR Site.
-"""
+"""This file contains all the views used in LTR Site."""
 
 from django.http import (HttpResponse, Http404, HttpResponseRedirect,
                          HttpResponseForbidden)
@@ -26,8 +24,7 @@ from file_utility import get_unique_name
 
 @require_GET
 def view_home(request):
-    """ Main page with list of created objects.
-    """
+    """Main page with list of created objects."""
     db_objects = get_current_solution(request).get_objects(BaseObject)
     return render_to_response('home.html', {'objects': db_objects},
                               context_instance=RequestContext(request))
@@ -35,8 +32,7 @@ def view_home(request):
 
 @require_http_methods(["GET", "POST"])
 def view_parameters(request, object_id):
-    """ Page with parameters of selected object.
-    """
+    """Page with parameters of selected object."""
     try:
         # TODO: call objects by name
         object_id = int(object_id)
@@ -80,8 +76,7 @@ def view_parameters(request, object_id):
 
 @require_http_methods(["GET", "POST"])
 def view_create(request):
-    """ Page with parameters of object being created.
-    """
+    """Page with parameters of object being created."""
     solution = get_current_solution(request)
     db_objects = solution.get_objects(BaseObject)
     if request.method == 'POST':
@@ -127,8 +122,7 @@ def view_create(request):
 
 @require_POST
 def view_delete(request, object_name):
-    """ Deletes objects and redirects to main page.
-    """
+    """Deletes objects and redirects to main page."""
     try:
         db_objects = get_current_solution(request).get_objects(BaseObject)
         possible_objects = db_objects.filter(name=object_name)
@@ -142,8 +136,7 @@ def view_delete(request, object_name):
 
 @require_POST
 def view_login(request):
-    """ Attempts to log user in.
-    """
+    """Attempts to log user in."""
     redirect_to = request.REQUEST.get('next', '')
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
@@ -161,8 +154,7 @@ def view_login(request):
 
 
 def view_logout(request):
-    """ Logs current user out.
-    """
+    """Logs current user out."""
     # TODO: make via POST
     redirect_to = request.REQUEST.get('next', '')
     logout(request)
@@ -171,8 +163,7 @@ def view_logout(request):
 
 @require_GET
 def view_file(request, folder, filename):
-    """ Returns file stored in current user's directory.
-    """
+    """Returns file stored in current user's directory."""
     if request.user.is_authenticated():
         username = request.user.username
     else:
@@ -201,8 +192,9 @@ def view_file(request, folder, filename):
 
 @require_POST
 def view_launch(request, object_id):
-    """ Launches task associated with given Launchable object and redirects to
+    """Launches task associated with given Launchable object and redirects to
     user's profile.
+
     """
     try:
         # TODO: call settings by name
@@ -221,8 +213,7 @@ def view_launch(request, object_id):
 
 @require_GET
 def view_user(request, username):
-    """ Page with user's profile.
-    """
+    """Page with user's profile."""
     # TODO: do we need other users' profiles?
     if request.user.is_authenticated() and username == request.user.username:
         return view_profile(request)
@@ -234,8 +225,7 @@ def view_user(request, username):
 
 @require_GET
 def view_profile(request):
-    """ Page with current user's profile (list of launched tasks).
-    """
+    """Page with current user's profile (list of launched tasks)."""
     tasks = get_current_solution(request).get_objects(Task)
     return render_to_response('profile.html',
                               {'tasks': tasks},
@@ -244,8 +234,9 @@ def view_profile(request):
 
 @require_http_methods(["GET", "POST"])
 def view_delete_all_tasks(request):
-    """ Deletes all the user's tasks (both completed and running) and
+    """Deletes all the user's tasks (both completed and running) and
     redirects to user's profile.
+
     """
     # To be removed
     get_current_solution(request).get_objects(Task).delete()
@@ -254,8 +245,7 @@ def view_delete_all_tasks(request):
 
 @require_GET
 def view_export(request):
-    """ Exports current solution to JSON file.
-    """
+    """Exports current solution to JSON file."""
     response = HttpResponse(get_current_solution(request).export_objects())
     response['Content-Disposition'] = 'attachment; filename=export.json'
     return response
@@ -263,8 +253,7 @@ def view_export(request):
 
 @require_http_methods(["GET", "POST"])
 def view_import(request):
-    """ Imports solution from JSON file.
-    """
+    """Imports solution from JSON file."""
     if request.method == 'POST':
         data = request.FILES['file'].read()
         get_current_solution(request).import_objects(data)
@@ -276,8 +265,7 @@ def view_import(request):
 
 @require_POST
 def view_delete_all(request):
-    """ Deletes all the objects from solution and redirects to main page.
-    """
+    """Deletes all the objects from solution and redirects to main page."""
     get_current_solution(request).get_objects(BaseObject).delete()
     return HttpResponseRedirect('/')
 
@@ -285,8 +273,9 @@ def view_delete_all(request):
 @csrf_exempt
 @require_POST
 def view_get_object_types(request):
-    """ Returns list of types (from given category), packed to <option> HTML
+    """Returns list of types (from given category), packed to <option> HTML
     tags (for inserting to <select> tag).
+
     """
     if request.is_ajax():
         category = request.POST.get('category', '')
@@ -298,8 +287,9 @@ def view_get_object_types(request):
 @csrf_exempt
 @require_POST
 def view_get_object_parameters(request):
-    """ Returns HTML code of form with object's parameters (without <form>
-    tag).
+    """Returns HTML code of form with object's parameters
+    (without <form> tag).
+
     """
     if request.is_ajax():
         type_ = request.POST.get('type', '')
