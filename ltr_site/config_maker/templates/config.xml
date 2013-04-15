@@ -20,7 +20,7 @@
   <launch>
     {% for train in trains %}
     <train name="{{ train.name }}" data="{{ train.train_data.name }}" learner="{{ train.learner.name }}">
-      {% for data in train.predict %}
+      {% for data in train.predict.all %}
       <predict>{{ data.name }}</predict>
       {% endfor %}
       {% if train.generate_cpp %}

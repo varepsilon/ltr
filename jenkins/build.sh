@@ -25,5 +25,6 @@ if [ "$OS" != "Windows_NT" ]; then
   make -j$JOBS
   cd ../../jenkins
   ./pep8.sh
+  ./ltr_site_tests.sh
 fi
 

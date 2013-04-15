@@ -17,8 +17,8 @@ urlpatterns = patterns(
     '',
     url(r'^about$', direct_to_template, {'template': 'about.html'}),
     url(r'^$', views.view_home),
-    url(r'^view/(\d+)$', views.view_parameters),
-    url(r'^launch/(\d+)$', views.view_launch),   # deprecated
+    url(r'^view/(\w+)$', views.view_parameters),
+    url(r'^launch/(\w+)$', views.view_launch),   # deprecated
     url(r'^create$', views.view_create),
     url(r'^delete/(\w+)$', views.view_delete),
     url(r'^get_object_types$', views.view_get_object_types),

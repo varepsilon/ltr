@@ -14,15 +14,26 @@ def get_unique_name(name, existing_names=(),
     :param existence_predicate: predicate checking if name is occupied
     :return: unique name
 
+    This function generates name, which is not already used. Name is counted as
+    used if it contains in `existing_names` or if `existence_predicate`
+    function returns `True` on it.
+
+    >>> get_unique_name("file.txt", ("abc.txt", "def.txt"))
+    "file.txt"
+    >>> get_unique_name("file.txt", ("abc.txt", "file.txt"))
+    "file_1.txt"
+    >>> get_unique_name("file.txt", existence_predicate=lambda x: len(x) <= 10)
+    "file_10.txt"
+
     """
-    # TODO: add doctests
     if name not in existing_names and not existence_predicate(name):
         return name
 
     root, extension = os.path.splitext(name)
     for i in itertools.count(1):
         new_name = "%s_%d%s" % (root, i, extension)
-        if new_name not in existing_names and not existence_predicate(name):
+        if (new_name not in existing_names and
+                not existence_predicate(new_name)):
             return new_name
 
 

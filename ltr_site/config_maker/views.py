@@ -31,13 +31,11 @@ def view_home(request):
 
 
 @require_http_methods(["GET", "POST"])
-def view_parameters(request, object_id):
+def view_parameters(request, object_name):
     """Page with parameters of selected object."""
     try:
-        # TODO: call objects by name
-        object_id = int(object_id)
         db_objects = get_current_solution(request).get_objects(BaseObject)
-        obj = db_objects[object_id]
+        obj = db_objects.get(name=object_name)
     except (ValueError, IndexError, ObjectDoesNotExist):
         raise Http404()
     obj = obj.cast()
@@ -52,7 +50,7 @@ def view_parameters(request, object_id):
             try:
                 get_current_solution(request).save_form(form_object_parameters)
                 if 'launch' in request.REQUEST:
-                    return view_launch(request, object_id)
+                    return view_launch(request, object_name)
                 return HttpResponseRedirect('/')
             except IntegrityError:
                 # TODO: handle IntegrityError
@@ -84,15 +82,13 @@ def view_create(request):
         object_type = getattr(models, object_type_string)
         launchable = (object_type.get_category() == 'launch')
         form_object_type = modelform_factory(object_type,
-                                             exclude=("solution",))
+                                             exclude=('solution',))
         form_object_parameters = form_object_type(request.POST, request.FILES)
         if form_object_parameters.is_valid():
             try:
                 get_current_solution(request).save_form(form_object_parameters)
                 if 'launch' in request.REQUEST:
-                    db_objects = solution.get_objects(BaseObject)
-                    object_id = db_objects.count() - 1
-                    return view_launch(request, object_id)
+                    return view_launch(request, request.POST['name'])
                 return HttpResponseRedirect('/')
             except IntegrityError:
                 # TODO: show validation errors
@@ -107,7 +103,7 @@ def view_create(request):
         launchable = (default_type.get_category() == 'launch')
         form_object_type = FormType(mode='create_mode')
         form_object_parameters = modelform_factory(default_type,
-                                                   exclude=("solution",))()
+                                                   exclude=('solution',))()
         reload_type_list = True
     return render_to_response(
         'home.html',
@@ -191,22 +187,21 @@ def view_file(request, folder, filename):
 
 
 @require_POST
-def view_launch(request, object_id):
+def view_launch(request, object_name):
     """Launches task associated with given Launchable object and redirects to
     user's profile.
 
     """
     try:
-        # TODO: call settings by name
-        object_id = int(object_id)
-        obj = get_current_solution(request).get_objects(BaseObject)[object_id]
+        db_objects = get_current_solution(request).get_objects(BaseObject)
+        obj = db_objects.get(name=object_name)
     except (ValueError, IndexError, ObjectDoesNotExist):
         raise Http404()
     obj = obj.cast()
     if obj.get_category() != 'launch':
         return HttpResponse('Unable to launch "%s"' % obj.get_category())
 
-    task = Task.create(get_current_solution(request), object_id)
+    task = Task.create(get_current_solution(request), object_name)
     task.run()
     return HttpResponseRedirect('/profile')
 

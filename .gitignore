@@ -11,3 +11,6 @@ ltr/utility/include_openmp.h
 # For ltr_site
 *.pyc
 /ltr_site/db.sqlite3
+/ltr_site/config_maker/users
+/ltr_site/ltr.log
+/ltr_site/log.txt

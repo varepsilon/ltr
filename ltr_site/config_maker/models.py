@@ -117,7 +117,9 @@ APPROACH_CHOICES = (
 FORMAT_CHOICES = (
     ('Yandex', 'Yandex'),
     ('ARFF', 'ARFF'),
-    ('SVMLIGHT', 'SVMLight'))
+    ('SVMLIGHT', 'SVMLight'),
+    ('CSV', 'CSV'),
+    ('TSV', 'TSV'))
 
 MAX_FILE_PATH_LENGTH = 260
 MAX_STRING_LENGTH = 30
@@ -135,7 +137,7 @@ class Task(models.Model):
     working_dir = ""
 
     @staticmethod
-    def create(solution, launchable_id):
+    def create(solution, launchable_name):
         """Creates a Task instance."""
         task = Task()
         task.solution = solution
@@ -146,7 +148,7 @@ class Task(models.Model):
         task.config_filename = get_unique_filename(
             task.working_dir + '/config.xml')
         file_config = open(task.config_filename, "w")
-        file_config.write(task.make_config(launchable_id))
+        file_config.write(task.make_config(launchable_name))
 
         task.report_filename = get_unique_filename(
             task.working_dir + '/report.html')
@@ -154,7 +156,7 @@ class Task(models.Model):
         task.save()
         return task
 
-    def make_config(self, launchableId):
+    def make_config(self, launchable_name):
         """Creates XML config for ltr_client."""
         from django.shortcuts import render_to_response
 
@@ -165,7 +167,7 @@ class Task(models.Model):
         ltr_datas = tuple(data.cast() for data in db_datas)
 
         all_objects = self.solution.get_objects(BaseObject)
-        launchable = all_objects[launchableId].cast()
+        launchable = all_objects.get(name=launchable_name).cast()
 
         ltr_trains, ltr_crossvalidations = (), ()
         if launchable in self.solution.get_objects(Train):
@@ -276,14 +278,14 @@ class LtrObject(BaseObject):
 
 
 def object_(cls):
-    """Class decorator used to register categories in object hierarchy."""
+    """Class decorator used to register objects in object hierarchy."""
     cls.get_type = staticmethod(lambda: cls.__name__)
     object_controller.register(cls.get_category(), cls.__name__)
     return cls
 
 
 def category(cls):
-    """Class decorator used to register objects in object hierarchy."""
+    """Class decorator used to register categories in object hierarchy."""
     cls.get_category = staticmethod(lambda: cls.__name__.lower())
     return cls
 
