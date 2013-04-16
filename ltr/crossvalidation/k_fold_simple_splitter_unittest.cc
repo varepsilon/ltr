@@ -43,7 +43,7 @@ TEST_F(SplitterTest, KFoldSimpleSplitterTest) {
     // every element expects not to be used in two different test data
     // (for different splits)
     for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
-      int test_object_feature = spl_data.test_set.at(test_i).features().at(0);
+      int test_object_feature = spl_data.test_set.at(test_i).at(0);
       EXPECT_FALSE(used[test_object_feature])
         << ::testing::PrintToString(test_object_feature);
       used[test_object_feature] = true;

@@ -13,6 +13,8 @@
 
 #include "ltr/utility/boost/shared_ptr.h"
 
+#include "ltr/data/inner_representation.h"
+
 using std::vector;
 
 namespace ltr {
@@ -35,6 +37,11 @@ class ObjectList : public Printable {
    *  the given vector.
    */
   explicit ObjectList(const vector<Object>& objects);
+  /**
+   * The constructor creates a new list of objects links from data set
+   */
+  ObjectList(InnerRepresentation::Ptr presentation,
+             ElementBounds bounds);
   /**
    * Returns a constant link to the ith object in the object list.
    */

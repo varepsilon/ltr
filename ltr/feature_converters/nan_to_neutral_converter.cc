@@ -12,7 +12,7 @@ FeatureInfo NanToNeutralConverter::convertFeatureInfo() const  {
   for (int input_feature_index = 0;
        input_feature_index < (int)input_feature_info_.feature_count();
        input_feature_index++) {
-    if (!isNaN(neutral_object_.features()[input_feature_index])) {
+    if (!isNaN(neutral_object_[input_feature_index])) {
       output_feature_info.addFeature(
         input_feature_info_.getFeatureType(input_feature_index));
     }
@@ -32,12 +32,12 @@ string NanToNeutralConverter::generateCppCode(
       << "  result->clear();\n\n"
       << "  std::vector <double> neutral_values;\n";
     for (int index = 0;
-         index < (int)neutral_object_.features().size(); ++index) {
+         index < (int)neutral_object_.feature_count(); ++index) {
       code << "  neutral_values.push_back(";
-      if (isNaN(neutral_object_.features()[index])) {
+      if (isNaN(neutral_object_[index])) {
         code << "std::numeric_limits<double>::quiet_NaN()";
       } else {
-        code << lexical_cast<string>(neutral_object_.features()[index]);
+        code << lexical_cast<string>(neutral_object_[index]);
       }
       code << ");\n";
     }
@@ -59,13 +59,13 @@ string NanToNeutralConverter::generateCppCode(
 void NanToNeutralConverter::applyImpl(const Object& input,
                                       Object* output) const {
   Object converted_object = input.deepCopy();
-  converted_object.features().clear();
+  converted_object.clear();
   for (int feature_index = 0;
-       feature_index < (int)input.features().size();
+       feature_index < (int)input.feature_count();
        ++feature_index) {
-    if (!isNaN(neutral_object_.features()[feature_index])) {
+    if (!isNaN(neutral_object_[feature_index])) {
       if (isNaN(input[feature_index])) {
-        converted_object << neutral_object_.features()[feature_index];
+        converted_object << neutral_object_[feature_index];
       } else {
         converted_object << input[feature_index];
       }

@@ -35,7 +35,8 @@ template <typename TElement>
 void NanToZeroConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set, NanToNeutralConverter* feature_converter) {
     Object zero_features_object;
-    zero_features_object.features().assign(data_set.feature_count(), 0.0);
+    zero_features_object.set_eigen_features(
+      VectorXd::Zero(data_set.feature_count()));
     feature_converter->set_neutral_object(zero_features_object);
 }
 

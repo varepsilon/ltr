@@ -57,8 +57,7 @@ void Parser::parse(const string& filename,
   while (getline(file, record)) {
     try {
       Object object;
-      object.features() = vector<double>(feature_info->feature_count(),
-                                         numeric_limits<double>::quiet_NaN());
+      object.set_feature_count(feature_info->feature_count());
       parseObject(record, *feature_info, *label_info, &object);
       objects->push_back(object);
     } catch(Parser::bad_line err) {}

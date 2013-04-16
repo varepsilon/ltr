@@ -22,6 +22,7 @@ using ltr::LabelToMean;
 using ltr::utility::LabelToCapacity;
 using ltr::utility::extractAllObjects;
 
+
 namespace ltr {
 /**
  * \brief Probability density learner that uses Quadratic Discriminant
@@ -60,7 +61,7 @@ class QuadraticDiscriminantDensityLearner
       double label = data[object_index].actual_label();
       ++object_counter[label];
       VectorXd features =
-        StdVectorToEigenVector(data[object_index].features());
+        data[object_index].eigen_features();
       (*result)[label] += (features - mean[label]) *
         (features - mean[label]).transpose();
     }

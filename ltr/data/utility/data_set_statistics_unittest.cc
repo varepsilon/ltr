@@ -27,7 +27,7 @@ TEST(DataSetStatisticsTest, TestingGetFeaturesMinMaxValues) {
   data.add(object3);
   data.add(object4);
 
-  vector<double> min_values, max_values;
+  Eigen::VectorXd min_values, max_values;
   getFeaturesMinMaxValues(data, &min_values, &max_values);
 
   EXPECT_TRUE(DoubleEqual(min_values[0], 1.0));
@@ -51,7 +51,7 @@ TEST(DataSetStatisticsTest, TestingGetFeaturesAverageValues) {
   data.add(object3);
   data.add(object4);
 
-  vector<double> average_values;
+  Eigen::VectorXd average_values;
   getFeaturesAverageValues(data, &average_values);
 
   EXPECT_TRUE(DoubleEqual(average_values[0], 7.25));

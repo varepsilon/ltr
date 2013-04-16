@@ -94,9 +94,9 @@ string NominalToBoolConverter::generateCppCode(
 void NominalToBoolConverter::applyImpl(
   const Object& input, Object* output) const {
     Object converted_object = input.deepCopy();
-    converted_object.features().clear();
+    converted_object.clear();
     for (int input_feature_index = 0;
-         input_feature_index < (int)input.features().size();
+         input_feature_index < (int)input.feature_count();
          ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) != NOMINAL) {
@@ -105,7 +105,7 @@ void NominalToBoolConverter::applyImpl(
     }
 
     for (int input_feature_index = 0;
-         input_feature_index < (int)input.features().size();
+         input_feature_index < (int)input.feature_count();
          ++input_feature_index) {
         if (input_feature_info_.getFeatureType(
             input_feature_index) == NOMINAL) {
@@ -121,7 +121,7 @@ void NominalToBoolConverter::applyImpl(
           }
         }
     }
-    converted_object.features().resize(input.feature_count());
+    converted_object.set_feature_count(input.feature_count());
     *output = converted_object;
 }
 

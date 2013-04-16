@@ -26,6 +26,11 @@ using Eigen::aligned_allocator;
 namespace ltr {
 namespace utility {
 
+void EigenVectorToStdVector(const VectorXd& eigen_vector,
+                            vector<double>* std_vector);
+
+void EigenVectorToStdVector(const Object& eigen_vector,
+                            vector<double>* std_vector);
 /**
  * \brief maps double to VectorXd.
  */
@@ -36,20 +41,6 @@ typedef map<double, VectorXd, std::less<double>,
  */
 typedef map<double, MatrixXd, std::less<double>,
             aligned_allocator<std::pair<double, MatrixXd> > > doubleMatrixXdMap;
-
-/**
- * \brief Converts std::vector to Eigen::VectorXd.
- * \param std_vector input std::vector.
- */
-VectorXd StdVectorToEigenVector(const vector<double>& std_vector);
-
-/**
- * \brief Converts Eigen::VectorXd to ltr::Object.
- * \param eigen_vector input Eigen vector.
- * \param std_vector output std::vector.
- */
-void EigenVectorToStdVector(const VectorXd& eigen_vector,
-                            vector<double>* std_vector);
 
 /**
  * \brief Converts ltr::DataSet to Eigen::MatrixXd.
@@ -68,7 +59,7 @@ MatrixXd DataSetToEigenMatrix(const DataSet<TElement>& source) {
          object_index < object_accessor.object_count();
          ++object_index) {
       result.row(row_index) =
-        StdVectorToEigenVector(object_accessor.object(object_index).features());
+        object_accessor.object(object_index).eigen_features();
       ++row_index;
     }
   }

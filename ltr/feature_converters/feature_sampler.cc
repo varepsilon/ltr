@@ -60,7 +60,7 @@ void FeatureSampler::set_indices(const Indices& indices) {
 
 void FeatureSampler::applyImpl(const Object& input, Object* output) const {
   Object converted_object = input.deepCopy();
-  converted_object.features().resize(indices_.size());
+  converted_object.set_feature_count(indices_.size());
   for (int index = 0; index < (int)indices_.size(); ++index) {
     converted_object[index] = input[indices_[index]];
   }

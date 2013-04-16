@@ -13,6 +13,8 @@
 
 #include "ltr/utility/boost/shared_ptr.h"
 
+#include "ltr/data/object_representation.h"
+
 using std::map;
 using std::string;
 using std::vector;
@@ -28,10 +30,6 @@ typedef vector<double> Features;
  * Type for pointer to feature vector.
  */
 typedef ltr::utility::shared_ptr<Features> FeaturesPtr;
-/** 
- * Type for meta information. Just map from info field name to info field value
- */
-typedef map<string, string> MetaInfo;
 /**
  * \brief Base class for storing information in a Dataset. An object consist of
  * feature vector and meta information.
@@ -50,16 +48,14 @@ class Object : public Printable {
    * Default constructor, creates an deep copy of an object.
    */
   Object(const Object& object);
+  /** Construct object from InnerRepresentation
+   */
+  Object(InnerRepresentation::Ptr presentation,
+         ElementBounds bounds);
+  Object(InnerRepresentation::Ptr presentation,
+         int object_index);
   /**
    * Returns constant link to the feature vector of an object.
-   */
-  const Features& features() const;
-  /**
-   * Returns link to the feature vector of an object.
-   */
-  Features& features();
-  /**
-   * Gets a piece of meta information by name.
    */
   const string& getMetaInfo(const string& name) const;
   /**
@@ -69,7 +65,7 @@ class Object : public Printable {
   /**
    * Append a feature to the feature vector of the object.
    */
-  Object& operator<<(double feature_value);
+  Object& operator<<(double feature);
 
   // \TODO(sameg) Don't like the next 3 operators
 
@@ -90,9 +86,17 @@ class Object : public Printable {
    */
   double& at(int feature_index);
   /**
-   * Easy weighted operator=. Makes the object to use the feature vector and
-   * meta information of the other object. If it is needed, the resources of
-   * the object (feature vector and meta information) are destroyed.
+   * Returns link to Eigen vector of features
+   */
+  EigenColumn eigen_features();
+  /**
+   * Returns constant link to Eigen row
+   */
+  const EigenColumn eigen_features() const;
+  void set_eigen_features(const VectorXd& row);
+  /**
+   * Heavy operator=. Copies data from one object to another.
+   * To copy only references, use lightCopy
    */
   Object& operator=(const Object& other);
   /**
@@ -103,6 +107,10 @@ class Object : public Printable {
    * Returns the number of features in the object.
    */
   int feature_count() const;
+  /**
+   * Resizes feature vector
+   */
+  void set_feature_count(int feature_count);
   /**
    * Returns actual (that means, the label was read from input file or any
    * other way is known) scoring label of the object.
@@ -130,6 +138,11 @@ class Object : public Printable {
    */
   Object deepCopy() const;
   /**
+   * Makes reference copy of given object - if one object changes,
+   * other changes too.
+   */
+  void lightCopyFrom(const Object& obj);
+  /**
    * Friend operator, checks whether two objects are equal.
    */
   friend bool operator==(const Object& lhs, const Object& rhs);
@@ -140,25 +153,9 @@ class Object : public Printable {
   virtual string toString() const;
 
  private:
-  /**
-   * Shared pointer to feature vector.
-   */
-  FeaturesPtr features_;
-  /**
-   * Shared pointer to meta information container.
-   */
-  ltr::utility::shared_ptr<MetaInfo> meta_info_;
-  /**
-   * Actual label.
-   */
-  double actual_label_;
-  /**
-   * Predicted label. Changing those isn't considered as changing the object,
-   * thought it's mutable.
-   */
-  mutable double predicted_label_;
+  ObjectRepresentation::Ptr presentation_;
 
-  template<class TElement>
+  template<typename TElement>
   friend class DataSet;
 };
 /**

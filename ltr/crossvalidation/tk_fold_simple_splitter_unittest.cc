@@ -51,7 +51,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterAsKFoldTest) {
       // (for different splits)
       for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
         int test_object_feature =
-          spl_data.test_set.at(test_i).features().at(0);
+          spl_data.test_set.at(test_i).at(0);
         EXPECT_FALSE(used[test_object_feature])
           << ::testing::PrintToString(test_object_feature);
         used[test_object_feature] = true;
@@ -104,7 +104,7 @@ TEST_F(SplitterTest, TKFoldSimpleSplitterTUniquenessTest) {
         spl.split(current_t * k + block_i, data);
 
       for (int test_i = 0; test_i < spl_data.test_set.size(); ++test_i) {
-        int test_object_feature = spl_data.test_set.at(test_i).features().at(0);
+        int test_object_feature = spl_data.test_set.at(test_i).at(0);
         marks[current_t][test_object_feature] = block_i;
       }
     }

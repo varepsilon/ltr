@@ -14,6 +14,11 @@ ObjectPair::ObjectPair(const Object& first, const Object& second)
   : first(first),
     second(second) {}
 
+ObjectPair::ObjectPair(InnerRepresentation::Ptr presentation,
+                       ElementBounds bounds)
+  : first(presentation, bounds.start_line_index),
+    second(presentation, bounds.start_line_index + 1) { }
+
 ObjectPair ObjectPair::deepCopy() const {
   ObjectPair result = *this;
   result.first = this->first.deepCopy();

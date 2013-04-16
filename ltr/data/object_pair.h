@@ -13,6 +13,8 @@
 
 #include "ltr/utility/boost/shared_ptr.h"
 
+#include "ltr/data/inner_representation.h"
+
 namespace ltr {
 /**
  * \brief The class stores a pair of two objects. The container for two
@@ -33,6 +35,10 @@ namespace ltr {
    * Constructor creates a new pair of two copies of the two given objects.
    */
   ObjectPair(const Object& first, const Object& second);
+  /** Constructor creates a new pair of objects links from data set
+   */
+  ObjectPair(InnerRepresentation::Ptr presentation,
+             ElementBounds bounds);
   /**
    * Makes a deep copy of the pair, the new created copy consists of two copies
    * of the objects in the pair.

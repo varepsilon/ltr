@@ -23,14 +23,11 @@ int main() {
   cout << "obj[0] = "  << obj[0] << ", "          // Two ways to get the feature value.
        << "obj.at(1) = "  << obj.at(1) << endl;   //
 
-  vector<double> new_features;
-  new_features.push_back(1);
-  new_features.push_back(5.0);
-  new_features.push_back(2);
+  Eigen::VectorXd new_features(3);
+  new_features << 1, 5.0, 2;
 
-  obj.features() = new_features;  // You can also set all objects features at once.
+  obj.set_eigen_features(new_features);  // You can also set all objects features at once.
   cout << "obj = " << obj;
-
   return 0;
 }
 

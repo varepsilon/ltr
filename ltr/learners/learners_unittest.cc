@@ -19,6 +19,8 @@
 #include "ltr/scorers/linear_scorer.h"
 #include "ltr/utility/boost/path.h"
 
+#include "contrib/include_Eigen.h"
+
 using ltr::utility::FixPathSeparators;
 
 using std::string;
@@ -33,10 +35,10 @@ using ltr::DataSet;
 class LearnersTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
+    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");  // NOLINT
     learn_data = loadDataSet<Object>(learn_data_file_name, "YANDEX");
 
-    string test_data_file_name = FixPathSeparators("data/imat2009/imat2009_test_small.txt");
+    string test_data_file_name = FixPathSeparators("data/imat2009/imat2009_test_small.txt");  // NOLINT
     test_data = loadDataSet<Object>(test_data_file_name, "YANDEX");
   }
 

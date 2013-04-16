@@ -36,7 +36,7 @@ class NanToAverageConverterLearner
 template <typename TElement>
 void NanToAverageConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set, NanToNeutralConverter* feature_converter) {
-    vector<double> average_features_values(data_set.feature_count());
+    VectorXd average_features_values(data_set.feature_count());
 
     for (int feature_index = 0;
          feature_index < (int)data_set.feature_count(); ++feature_index) {
@@ -60,7 +60,7 @@ void NanToAverageConverterLearner<TElement>::learnImpl(
     }
 
     Object average_features_object;
-    average_features_object.features() = average_features_values;
+    average_features_object.set_eigen_features(average_features_values);
     feature_converter->set_neutral_object(average_features_object);
 }
 

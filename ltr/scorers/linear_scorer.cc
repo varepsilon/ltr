@@ -5,7 +5,6 @@
 #include <rlog/rlog.h>
 #include <string>
 #include <sstream>
-
 #include "ltr/utility/boost/lexical_cast.h"
 
 using std::string;
@@ -24,7 +23,7 @@ string LinearScorer::toStringImpl() const {
 
 double LinearScorer::scoreImpl(const Object& object) const {
   double output = weight_[0];
-  for (int i = 0; i < (int)object.features().size(); ++i) {
+  for (int i = 0; i < (int)object.feature_count(); ++i) {
     output += object[i] * weight_[i + 1];
   }
   return output;

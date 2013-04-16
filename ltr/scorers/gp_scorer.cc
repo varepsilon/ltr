@@ -84,7 +84,7 @@ void GPScorer::setContextToObject(const Object& object) const {
   for (int feature_index = 0;
        feature_index < object.feature_count();
        ++feature_index) {
-    double feature_value = object.features().at(feature_index);
+    double feature_value = object.at(feature_index);
     string feature_name =
       "feature[" + ltr::utility::lexical_cast<string>(feature_index);
     feature_name += "]";

@@ -11,8 +11,6 @@ using std::logic_error;
 using std::stringstream;
 
 using ltr::utility::lexical_cast;
-using ltr::utility::StdVectorToEigenVector;
-using ltr::utility::EigenVectorToStdVector;
 
 namespace ltr {
 FeatureInfo LinearConverter::convertFeatureInfo() const {
@@ -46,10 +44,9 @@ string LinearConverter::generateCppCode(const string& function_name) const {
 
 void LinearConverter::applyImpl(const Object& input, Object* output) const {
   checkParameters(input);
-  VectorXd input_eigen = StdVectorToEigenVector(input.features());
+  EigenColumn input_eigen = input.eigen_features();
   VectorXd output_eigen = factor_ * input_eigen + shift_;
-  *output = input.deepCopy();
-  EigenVectorToStdVector(output_eigen, &output->features());
+  output->set_eigen_features(output_eigen);
 }
 
 string LinearConverter::getDefaultAlias() const {
@@ -59,7 +56,7 @@ string LinearConverter::getDefaultAlias() const {
 string LinearConverter::toString() const {
   stringstream str;
   str << "Linear feature converter with factors:\n" << factor_
-      << "\n  and shifts:\n" << shift_ << "\n"; 
+      << "\n  and shifts:\n" << shift_ << "\n";
   return str.str();
 }
 

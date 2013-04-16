@@ -96,6 +96,7 @@ template<class TElement>
 void FeatureConverter::apply(const DataSet<TElement>& input,
                              DataSet<TElement>* output) const {
   *output = input.deepCopy();
+  output->set_feature_info(convertFeatureInfo());
 #pragma omp parallel for
   for (int element_index = 0; element_index < input.size(); ++element_index) {
     PerObjectAccessor<const TElement> input_element(&input.at(element_index));
@@ -106,7 +107,6 @@ void FeatureConverter::apply(const DataSet<TElement>& input,
             &output_element.object(object_index));
     }
   }
-  output->set_feature_info(convertFeatureInfo());
 }
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_H_

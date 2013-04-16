@@ -10,42 +10,44 @@
 
 #include "ltr/utility/numerical.h"
 
+#include "ltr/data/stand_alone_object_representation.h"
+#include "ltr/data/data_set_object_representation.h"
+
 using ltr::utility::DoubleEqualWithNaN;
 using ltr::utility::NaN;
 
 namespace ltr {
-Object::Object()
-  : features_(new Features()),
-    meta_info_(new MetaInfo()),
-    actual_label_(NaN),
-    predicted_label_(NaN) {}
+
+Object::Object(): presentation_(new StandAloneObjectRepresentation()) { }
 
 Object::Object(const Object& object)
-  : features_(object.features_),
-    meta_info_(object.meta_info_),
-    actual_label_(object.actual_label_),
-    predicted_label_(object.predicted_label_) {}
-
-const Features& Object::features() const {
-  return *features_;
+  : presentation_(new StandAloneObjectRepresentation()) {
+  presentation_->deepCopyFrom(*object.presentation_);
 }
 
-Features& Object::features() {
-  return *features_;
-}
+Object::Object(InnerRepresentation::Ptr presentation,
+               ElementBounds bounds)
+               : presentation_(new DataSetObjectRepresentation(presentation,
+                                                               bounds.start_line_index)) { }  // NOLINT
+
+Object::Object(InnerRepresentation::Ptr presentation, int object_index)
+               : presentation_(new DataSetObjectRepresentation(presentation,
+                                                           object_index)) { }
 
 const string& Object::getMetaInfo(const string& name) const {
-  if (meta_info_->find(name) == meta_info_->end())
+  // TODO(wd28): think of refactoring to not to find each name 2 times
+  MetaInfoPtr meta_info = presentation_->meta_info();
+  if (meta_info->find(name) == meta_info->end())
     throw std::logic_error("unknown meta info " + name);
-  return meta_info_->find(name)->second;
+  return meta_info->find(name)->second;
 }
 
 void Object::setMetaInfo(const string& name, const string& value) {
-  meta_info_->operator[](name) = value;
+  presentation_->meta_info()->operator[](name) = value;
 }
 
 Object& Object::operator<<(double feature) {
-  features_->push_back(feature);
+  presentation_->push_back(feature);
   return *this;
 }
 
@@ -58,56 +60,68 @@ double& Object::operator[](int feature_index) {
 }
 
 const double& Object::at(int feature_index) const {
-  if (feature_index < 0 || feature_index >= (int)features_->size()) {
-    throw std::logic_error("Error: feature index out of bounds");
-  }
-  return features_->at(feature_index);
+  return presentation_->at(feature_index);
 }
 
 double& Object::at(int feature_index) {
-  if (feature_index < 0 || feature_index >= (int)features_->size()) {
-    throw std::logic_error("Error: feature index out of bounds");
-  }
-  return features_->at(feature_index);
+  return presentation_->at(feature_index);
 }
 
-Object& Object::operator=(const Object& other)  {
-  features_ = other.features_;
-  meta_info_ = other.meta_info_;
-  actual_label_ = other.actual_label_;
-  predicted_label_ = other.predicted_label_;
+EigenColumn Object::eigen_features() {
+  return presentation_->getEigenColumn();
+}
+
+const EigenColumn Object::eigen_features() const {
+  return presentation_->getEigenColumn();
+}
+
+Object& Object::operator=(const Object& other) {
+  presentation_->deepCopyFrom(*other.presentation_);
   return *this;
 }
 
 void Object::clear() {
-  features_->clear();
+  presentation_->clear();
 }
 
 int Object::feature_count() const {
-  return (*features_).size();
+  return presentation_->size();
+}
+
+void Object::set_feature_count(int feature_count) {
+  presentation_->resize(feature_count);
 }
 
 double Object::actual_label() const {
-  return actual_label_;
+  return presentation_->actual_label();
 }
 
 double Object::predicted_label() const {
-  return predicted_label_;
+  return presentation_->predicted_label();
 }
 
 void Object::set_actual_label(double actual_label) {
-  actual_label_ = actual_label;
+  presentation_->set_actual_label(actual_label);
 }
 
 void Object::set_predicted_label(double predicted_label) const {
-  predicted_label_ = predicted_label;
+  presentation_->set_predicted_label(predicted_label);
 }
 
 Object Object::deepCopy() const {
-  Object result = *this;
-  result.features_.reset(new Features(*(this->features_)));
-  result.meta_info_.reset(new map<string, string>(*(this->meta_info_)));
-  return result;
+  Object to_return;
+  to_return.presentation_->deepCopyFrom(*this->presentation_);
+  return to_return;
+}
+
+void Object::lightCopyFrom(const Object& obj) {
+  if (!presentation_->allowLightCopy())
+    throw std::logic_error("Light copy is not allowed.");
+  presentation_ = obj.presentation_;
+}
+
+void Object::set_eigen_features(const VectorXd& row) {
+  presentation_->setEigenColumn(row);
 }
 
 string Object::toString() const {
@@ -116,11 +130,11 @@ string Object::toString() const {
   str.precision(2);
   str << '[';
   for (int feature_index = 0;
-       feature_index < (int)features().size();
+       feature_index < feature_count();
        ++feature_index) {
     if (feature_index != 0)
       str << ", ";
-    str << features()[feature_index];
+    str << at(feature_index);
   }
   str << ']';
   str << '{' << actual_label() << ", " << predicted_label() << '}';
@@ -128,8 +142,11 @@ string Object::toString() const {
 }
 
 bool operator==(const Object& lhs, const Object& rhs) {
-  return DoubleEqualWithNaN(*lhs.features_, *rhs.features_) &&
-         *lhs.meta_info_ == *rhs.meta_info_ &&
+  if (lhs.feature_count() != rhs.feature_count())
+    return false;
+
+  return lhs.eigen_features().isApprox(rhs.eigen_features()) &&
+         *lhs.presentation_->meta_info() == *rhs.presentation_->meta_info() &&
          utility::DoubleEqualWithNaN(lhs.actual_label(), rhs.actual_label()) &&
          utility::DoubleEqualWithNaN(lhs.predicted_label(),
                                      rhs.predicted_label());
