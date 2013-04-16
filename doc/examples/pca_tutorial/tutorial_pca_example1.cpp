@@ -12,6 +12,7 @@ using ltr::Object;
 using ltr::DataSet;
 using ltr::FeatureConverter;
 using ltr::PCALearner;
+using ltr::FixedNumberOfComponentsRule;
 
 int main() {
   Object object1, object2, object3;
@@ -26,6 +27,7 @@ int main() {
   data.add(object3);
 
   PCALearner<Object> pca_learner;
+  pca_learner.setNumberOfComponentsRule(new FixedNumberOfComponentsRule(2));
   pca_learner.learn(data);
   FeatureConverter::Ptr converter = pca_learner.make();
 

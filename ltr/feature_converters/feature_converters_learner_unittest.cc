@@ -43,6 +43,11 @@ using ltr::NanToAverageConverterLearner;
 using ltr::NominalToBoolConverterLearner;
 using ltr::RemoveNominalConverterLearner;
 
+using ltr::NumberOfComponentsRule;
+using ltr::KaiserRule;
+using ltr::FixedNumberOfComponentsRule;
+using ltr::BrokenStickRule;
+
 const int features_count = 11;
 
 class FeatureConvertersLearnerTest : public ::testing::Test {
@@ -252,6 +257,38 @@ TEST_F(FeatureConvertersLearnerTest, PCALearnerTest) {
   EXPECT_TRUE(DoubleEqual(converted_data[5][0], 9/sqrt(2.0)));
   EXPECT_TRUE(DoubleEqual(converted_data[6][0], 7/sqrt(2.0)));
   EXPECT_TRUE(DoubleEqual(converted_data[7][0], 9/sqrt(2.0)));
+
+  VectorXd eigenvalues1(4);
+  eigenvalues1[0] = 1;
+  eigenvalues1[1] = 0.5;
+  eigenvalues1[2] = 0.3;
+  eigenvalues1[3] = 0.1;
+
+  VectorXd eigenvalues2(4);
+  eigenvalues2[0] = 1;
+  eigenvalues2[1] = 0.5;
+  eigenvalues2[2] = 0.3;
+  eigenvalues2[3] = 0.3;
+
+  VectorXd eigenvalues3(5);
+  eigenvalues3[0] = 0.5;
+  eigenvalues3[1] = 0.3;
+  eigenvalues3[2] = 0.1;
+  eigenvalues3[3] = 0.06;
+  eigenvalues3[4] = 0.05;
+
+  shared_ptr<NumberOfComponentsRule> rule1(new KaiserRule);
+  EXPECT_EQ(rule1->getNumberOfComponents(eigenvalues1), 2);
+  EXPECT_EQ(rule1->getNumberOfComponents(eigenvalues2), 1);
+
+  shared_ptr<NumberOfComponentsRule> rule2(new FixedNumberOfComponentsRule(2));
+  EXPECT_EQ(rule2->getNumberOfComponents(eigenvalues1), 2);
+  shared_ptr<NumberOfComponentsRule> rule3(new FixedNumberOfComponentsRule(10));
+  EXPECT_EQ(rule3->getNumberOfComponents(eigenvalues1), 4);
+  EXPECT_ANY_THROW(FixedNumberOfComponentsRule(0));
+
+  shared_ptr<NumberOfComponentsRule> rule4(new BrokenStickRule);
+  EXPECT_EQ(rule4->getNumberOfComponents(eigenvalues3), 2);
 }
 
 TEST_F(FeatureConvertersLearnerTest, NanToAverageConverterLearnerTest) {
