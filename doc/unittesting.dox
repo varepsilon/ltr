@@ -14,7 +14,7 @@ to unittesting, for more information see the documentation here http://code.goog
 Unittest is a code, which uses some staff from our library which is needed to be checked, and verifies if while
 running that staff certain assertions do not fail.
 
-To create a unittest one takes a .cc file, already listed in <LTR_ROOT>/cmake/utests.cmake, which contains files for ltr_test project,
+To create a unittest one takes a .cc file, already listed in \<LTR_ROOT>/cmake/utests.cmake, which contains files for ltr_test project,
 or creates a new one in the folder with the files to be tested, and adds the new file to the list. In the file the main piece of code,
 within which your test code would be placed, is as follows:
 
@@ -39,7 +39,7 @@ There is a way to shorten the code with the help of TEST_F macro.
 
 \section UnittestsRunning Running unittests
 
-See \ref BuildingLTR for detail information.
+See \ref WBuildingLTR for detail information.
 
 **/
 }

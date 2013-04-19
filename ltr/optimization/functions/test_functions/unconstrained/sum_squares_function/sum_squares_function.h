@@ -7,11 +7,12 @@
 #include "ltr/optimization/functions/twice_differentiable_function.h"
 
 namespace optimization {
-/** \class\brief SumSquaresFunction
- * Class for Sum Squares function in \f$\mathbb{R}^n$\f.
- * \f$f(x) = \sum_{i = 1}^{n} i * x_i^2 $\f
- * minimum at \f$ x = (0, \dots, 0), \quad f(x) = 0 $\f
- * get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page674.htm
+/**
+ * \brief Class for Sum Squares function in \f$\mathbb{R}^n\f$.
+ * \f$f(x) = \sum_{i = 1}^{n} i * x_i^2 \f$,
+ * minimum at \f$ x = (0, \dots, 0), \quad f(x) = 0 \f$.
+ *
+ * Get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page674.htm
  */
 class SumSquaresFunction : public TwiceDifferentiableFunction {
  public:

@@ -27,9 +27,9 @@ using ltr::VotePredictionsAggregator;
 
 namespace ltr {
 /**
- \brief NNLearner
- Implements nearest neighbor approach.
- \tparam TElement object container of those the dataset consists (it should
+ \brief Implements nearest neighbor approach.
+
+ \tparam TElement is object container of those the dataset consists (it should
  be Object).
  */
 template<class TElement>
@@ -63,6 +63,12 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
   GET_SET(int, number_of_neighbors_to_process);
 
  private:
+  /**
+   * The implementation of nearest neighbor approach.
+   *
+   * \param data is DataSet that will be stored in the scorer.
+   * \param scorer is scorer to be learned.
+   */
   void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
   virtual string getDefaultAlias() const {return "NearestNeighborLearner";}
 
@@ -72,9 +78,6 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
   int number_of_neighbors_to_process_;
 };
 
-/** The implementation of nearest neighbor approach.
-  * \param data DataSet that will be stored in the scorer.
-  */
 template<class TElement>
 void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
                                     NNScorer* scorer) {

@@ -18,7 +18,7 @@ typedef Eigen::VectorXd Vector;
 typedef Eigen::MatrixXd Matrix;
 
 /**
- * \class\brief abstract class for defining functions in \f$\mathbb{R}^n\f$
+ * \brief Abstract class for defining functions in \f$\mathbb{R}^n\f$.
  */
 class Function : public ltr::Aliaser {
  public:
@@ -27,16 +27,16 @@ class Function : public ltr::Aliaser {
   explicit Function(int dimension);
   virtual ~Function() { }
   /** 
-   * get dimension of the function domain
+   * Get dimension of the function domain.
    */
   int dimension() const;
 
   /**
-   * compute value of this function in a given point
+   * Compute value of this function in a given point.
    */
   double computeValue(const Point& point) const;
   /**
-   * compute value of this function in a given point
+   * Compute value of this function in a given point.
    */
   double operator() (const Point& point) const {
     return computeValue(point);
@@ -46,7 +46,7 @@ class Function : public ltr::Aliaser {
   }
  private:
   /**
-   * implementation of computeValue method;
+   * Implementation of computeValue method.
    */
   virtual double computeValueImpl(const Point& point) const = 0;
   int dimension_;

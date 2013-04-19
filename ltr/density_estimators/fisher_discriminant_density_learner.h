@@ -45,8 +45,9 @@ using ltr::utility::extractAllObjects;
 namespace ltr {
 /**
  * \brief Probability density learner that uses Fisher discriminant
- * to generate probability density estimator. To learn more visit
- * http://www.ics.uci.edu/~welling/classnotes/papers_class/Fisher-LDA.pdf
+ * to generate probability density estimator.
+ * 
+ * To learn more visit http://www.ics.uci.edu/~welling/classnotes/papers_class/Fisher-LDA.pdf
  */
 template<class TElement>
 class FisherDiscriminantDensityLearner : public

@@ -26,26 +26,24 @@ using ltr::BaseProbabilityDensityEstimator;
 namespace ltr {
 
 /**
- * \typedef double value representing actual label of object
+ * Double value representing actual label of object.
  */
 typedef double Label;
 
 /**
- * \typedef map representing the linear factor
- * of the class with some certain label
+ * Map representing the linear factor of the class with some certain label.
  */
 typedef map<Label, VectorXd, std::less<Label>,
             aligned_allocator<std::pair<Label, VectorXd> > > LabelToLinearFactor;
 
 /**
- * \typedef map representing the linear bias
- * of the class with some certain label
+ * Map representing the linear bias of the class with some certain label.
  */
 typedef map<Label, double> LabelToLinearBias;
 
 /**
- * \brief probability density estimator that uses
- * Fisher Linear Discriminant approach
+ * \brief Probability density estimator that uses
+ * Fisher Linear Discriminant approach.
  */
 class FisherDiscriminant : public BaseProbabilityDensityEstimator {
  public:

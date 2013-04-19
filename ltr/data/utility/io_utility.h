@@ -30,23 +30,24 @@ namespace ltr {
 namespace io_utility {
 /**
  * Function to load data set from file.
- * @param filename - path to file
- * @param format - data format (SVMLIGHT, yandex, arff)
- * @code
+ *
+ * \param filename is a path to file
+ * \param format is data format (SVMLIGHT, yandex, arff)
+ * \code
  * DataSet<Object> = loadDataSet<Object>("dataset.txt", "SVMLIGHT");
- * @endcode
+ * \endcode
  */
 template<class TElement>
-DataSet<TElement> loadDataSet(const string& filename,
-                              const string& format);
+DataSet<TElement> loadDataSet(const string& filename, const string& format);
 /**
  * Function to save data set into file.
- * @param data - data set to save
- * @param filename - path to file
- * @param format - data format (SVMLIGHT, yandex, arff)
- * @code
+ *
+ * \param data is data set to save
+ * \param filename is path to file
+ * \param format is data format (SVMLIGHT, yandex, arff)
+ * \code
  * saveDataSet(data, "dataset.txt", "SVMLIGHT");
- * @endcode
+ * \endcode
  */
 template<class TElement>
 void saveDataSet(const DataSet<TElement>& data,
@@ -54,16 +55,18 @@ void saveDataSet(const DataSet<TElement>& data,
                  const string& format);
 /**
  * Function to build data set of given objects
- * @param parser - parser, which will build data set
- * @param objects - objects to build data set from
- * @param info - information about features in objects
- * @code
+ *
+ * \param parser is a parser, which will build data set
+ * \param objects are objects to build data set from
+ * \param feature_info is information about features in objects
+ * \param label_info is information about labels in objects
+ * \code
  * buildDataSet<TElement>(
  *     parser,
  *     objects,
  *     handler->featureInfo(),
  *     handler->labelInfo());
- * @endcode
+ * \endcode
  */
 template<class TElement>
 DataSet<TElement> buildDataSet(Parser::Ptr parser,
@@ -72,12 +75,13 @@ DataSet<TElement> buildDataSet(Parser::Ptr parser,
                                const LabelInfo& label_info);
 /**
  * Function to save label labeles for given data set
- * @param data - data set for prediction
- * @param scorer - scorer for prediction
- * @param filename - path to file
- * @code
+ *
+ * \param data is data set for prediction
+ * \param scorer is scorer for prediction
+ * \param filename is path to file
+ * \code
  * savePredictions(data, scorer, "predictions.txt");
- * @endcode
+ * \endcode
  */
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
@@ -86,51 +90,52 @@ void savePredictions(const DataSet<TElement>& data,
 
 /**
  * Function to save predicted labeles for given data set
- * @param data - data set with marked predicted labeles
- * @param filename - path to file
- * @code
+ *
+ * \param data is data set with marked predicted labeles
+ * \param filename is path to file
+ * \code
  * savePredictions(data, "predictions.txt");
- * @endcode
+ * \endcode
  */
 template<class TElement>
 void savePredictions(const DataSet<TElement>& data,
                      const string& filename);
 /**
- * Function groups objects in lists, each having same
- * meta-parameter
- * @param objects - objects to group
- * @param group_parameter - meta-parameter name
- * @param result - result lists
+ * Function groups objects in lists, each having same meta-parameter
+ *
+ * \param objects are objects to group
+ * \param group_parameter is meta-parameter name
+ * \param result is result lists
  */
 void groupByMeta(const vector<Object>& objects,
                  const string& group_parameter,
                  map<string, vector<Object> >* result);
 /**
- * Function groups objects in lists, each having same
- * integer meta-parameter
- * @param objects - objects to group
- * @param group_parameter - meta-parameter name
- * @param result - result lists
+ * Function groups objects in lists, each having same integer meta-parameter
+ *
+ * \param objects are objects to group
+ * \param group_parameter is meta-parameter name
+ * \param result is result lists
  */
 void groupByIntMeta(const vector<Object>& objects,
                     const string& group_parameter,
                     map<int, vector<Object> >* result);
 /**
- * Function groups objects in lists, each having same
- * float meta-parameter
- * @param objects - objects to group
- * @param group_parameter - meta-parameter name
- * @param result - result lists
+ * Function groups objects in lists, each having same float meta-parameter
+ *
+ * \param objects are objects to group
+ * \param group_parameter are meta-parameter name
+ * \param result are result lists
  */
 void groupByFloatMeta(const vector<Object>& objects,
                       const string& group_parameter,
                       map<float, vector<Object> >* result);
 /**
- * Function groups objects in lists, each having same
- * double meta-parameter
- * @param objects - objects to group
- * @param group_parameter - meta-parameter name
- * @param result - result lists
+ *\ Function groups objects in lists, each having same double meta-parameter
+ *
+ * \param objects are objects to group
+ * \param group_parameter is meta-parameter name
+ * \param result is result lists
  */
 void groupByDoubleMeta(const vector<Object>& objects,
                       const string& group_parameter,

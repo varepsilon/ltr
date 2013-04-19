@@ -27,17 +27,17 @@ using ltr::utility::IndicesPtr;
 namespace ltr {
 /**
  * \brief Samples features with specified indices.
- * \param indices indices of features to sample
  */
 class FeatureSampler : public FeatureConverter {
   public:
   typedef ltr::utility::shared_ptr<FeatureSampler> Ptr;
-  /**
-   * \param indices indices of features to sample
-   */
+
   explicit FeatureSampler(const ParametersContainer& parameters) {
   }
-
+  /**
+   * \param indices are indices of features to sample.
+   * \param feature_info is feature_info structure.
+   */
   explicit FeatureSampler(const Indices& indices = Indices(),
                           const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info),
@@ -56,7 +56,9 @@ class FeatureSampler : public FeatureConverter {
   void applyImpl(const Object& input, Object* output) const;
 
   virtual string getDefaultAlias() const;
-
+  /**
+   * Indices of features to sample.
+   */
   Indices indices_;
 };
 };

@@ -15,45 +15,48 @@ using std::string;
 using ltr::Learner;
 
 /**
- * Performs all the application actions
+ * \brief Performs all the application actions.
  */
 class LtrClient {
  public:
   /**
-   * Basic constructor for LtrClient
+   * Basic constructor for LtrClient.
    */
   LtrClient();
   /**
-   * Basic destructor for LtrClient
+   * Basic destructor for LtrClient.
    */
   ~LtrClient();
   /**
-   * Reads all the settings from the config file specified
-   * @param name - string with the name of config file
+   * Reads all the settings from the config file specified.
+   *
+   * \param file_name is a string with the name of config file.
    */
   void initFrom(const string& file_name);
   /**
-   * Starts all the computations according to the settings read from config
+   * Starts all the computations according to the settings read from config.
    */
   void launch();
   /**
-   * Starts train according to the settings read from config
+   * Starts train according to the settings read from config.
    */
   void launchTrain();
   /**
-   * Starts crossvalidation according to the settings read from config
+   * Starts crossvalidation according to the settings read from config.
    */
   void launchCrossvalidation();
   /**
-   * Saves the report to file
-   * @param name - string with the name of report file
+   * Saves the report to file.
+   *
+   * \param file_name is a string with the name of report file.
    */
   void saveReport(const string& file_name) const;
 
  private:
   /**
-   * Adds given text to report
-   * @param text - text to be added
+   * Adds given text to report.
+   *
+   * \param text is a text to be added
    */
   void addToReport(const string& text);
 

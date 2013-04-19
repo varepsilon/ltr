@@ -30,27 +30,24 @@ using ltr::utility::StdVectorToEigenVector;
 namespace ltr {
 
 /**
- * \typedef double value representing actual label of object
+ * Double value representing actual label of object.
  */
 typedef double Label;
 
 /**
- * \typedef map representing the mean of the class with
- * some certain label
+ * Map representing the mean of the class with some certain label.
  */
 typedef map<Label, VectorXd, std::less<Label>,
             aligned_allocator<std::pair<Label, VectorXd> > > LabelToMean;
 
 /**
- * \typedef map representing the covariance matrix
- *  of the class with some certain label
+ * Map representing the covariance matrix of the class with some certain label.
  */
 typedef map<Label, MatrixXd, std::less<Label>,
             aligned_allocator<std::pair<Label, MatrixXd> > > LabelToCovarianceMatrix;
 
 /**
- * \brief Simple interface of the probability
- * density estimation learner
+ * \brief Simple interface of the probability density estimation learner.
  */
 template<class TElement, class TEstimator>
 class BaseProbabilityDensityLearner : public Parameterized {
@@ -84,6 +81,7 @@ class BaseProbabilityDensityLearner : public Parameterized {
 
   /**
    * The function implements learning using given training data set.
+   *
    * \param data_set is the training data
    * \param estimator is the pointer to the generated density estimator
    */

@@ -11,13 +11,16 @@
 #include "ltr/data/object.h"
 
 namespace ltr {
-/** Base class for all functors on Object.
- * \tparam TValue - type of the result of the function on Object
+/**
+ * \brief Base class for all functors on Object.
+ *
+ * \tparam TValue is a type of the result of the function on Object
  */
 template<class TValue>
 class Functor {
   public:
-  /** \typedef boost shared pointer to the Functor
+  /**
+   * boost shared pointer to the Functor
    */
   typedef ltr::utility::shared_ptr<Functor> Ptr;
   /**

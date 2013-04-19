@@ -11,10 +11,9 @@
 
 namespace optimization {
 /**
- * \class\brief implements semi-space
+ * \brief Implements semi-space define solutions of inequality.
  *
- * define solutions of inequality
- * \f$ (\overrightarrow(x), \overrightarrow(a)) > 0 $\f
+ * \f$ ( \overrightarrow{x}, \overrightarrow{a}) > 0 \f$
  * \see Set
  */
 class LinearInequalitySet : public Set {
@@ -24,19 +23,19 @@ class LinearInequalitySet : public Set {
   LinearInequalitySet(const Vector& positive_normal,
                       double shift_);
   /**
-   * checks, whether given point is inside this set
+   * Checks, whether given point is inside this set.
    */
   virtual bool isInside(const Point& point) const;
   /**
-   * projects given point on this set
+   * Projects given point on this set.
    */
   virtual void computeProjection(const Point& point, Point* projection) const;
    /**
-   * give a cubic boundaries which contain this set
+   * Give a cubic boundaries which contain this set.
    */
   virtual void getBoundaries(Point* top, Point* bottom) const;
   /**
-   * get arbitrary point in given set
+   * Get arbitrary point in given set.
    */
   virtual void sampleRandomPointInside(Point* random_point) const;
 
@@ -45,11 +44,11 @@ class LinearInequalitySet : public Set {
   virtual string getDefaultAlias() const { return "LinearInequalitySet"; }
  private:
   /**
-   * positive normal vector to border hyperplane
+   * Positive normal vector to border hyperplane.
    */
   Vector positive_normal_;
   /**
-   * shift above that hyperplane
+   * Shift above that hyperplane.
    */
   double shift_;
 };

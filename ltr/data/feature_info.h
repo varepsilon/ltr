@@ -27,7 +27,7 @@ namespace ltr {
  */
 enum FeatureType {NUMERIC, NOMINAL, BOOLEAN};
 /**
- * \typedef Map from numeric to string values for nominal features.
+ * Map from numeric to string values for nominal features.
  */
 typedef map<int, string> NominalFeatureValues;
 /**
@@ -67,7 +67,7 @@ bool operator==(const OneFeatureInfo& lhs, const OneFeatureInfo& rhs);
  */
 class FeatureInfo {
  public:
-  /** \typedef Shared pointer to feature info.
+  /** Shared pointer to feature info.
    */
   typedef ltr::utility::shared_ptr<FeatureInfo> Ptr;
   /** Constructor, creates info about given count of features

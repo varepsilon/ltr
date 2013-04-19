@@ -18,7 +18,7 @@ using std::string;
 
 namespace ltr {
 /**
- * \brief Class that can for every object evaluate a value - its rank, or score
+ * \brief Class that can for every object evaluate a value - its rank, or score.
  */
 class Scorer : public SerializableFunctor<double>,
                public Printable,
@@ -63,5 +63,23 @@ class Scorer : public SerializableFunctor<double>,
 
   virtual string toStringImpl() const;
 };
+
+template <class TElement>
+void Scorer::predict(const DataSet<TElement>& elements) const {
+  for (int i = 0; i < elements.size(); ++i) {
+    predict(elements[i]);
+  }
+}
+
+template <class TElement>
+void Scorer::predict(const TElement& element) const {
+  PerObjectAccessor<const TElement> per_object_accessor(&element);
+  for (int object_index = 0;
+       object_index < (int)per_object_accessor.object_count();
+       ++object_index) {
+    per_object_accessor.object(object_index).set_predicted_label(
+      score(per_object_accessor.object(object_index)));
+  }
+}
 }
 #endif  // LTR_SCORERS_SCORER_H_

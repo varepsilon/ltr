@@ -74,7 +74,7 @@ class Measure : public Aliaser, public Parameterized, public Printable {
   bool better(double expected_better, double expected_worse) const;
 
   /**
-   * Returns the worst measure's possible value or -ltr::Inf if unlimited
+   * Returns the worst measure's possible value or -ltr\::Inf if unlimited
    */
   virtual double worst() const = 0;
   /**

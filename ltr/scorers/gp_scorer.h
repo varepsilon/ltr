@@ -36,17 +36,16 @@ class GPScorer : public Scorer {
  public:
   GPScorer() {}
   /**
-   * \typedef boost shared pointer to GPScorer;
+   * boost shared pointer to GPScorer;
    */
   typedef ltr::utility::shared_ptr< GPScorer > Ptr;
   /**
-   * Constructor.
-   * \param best_tree the best Puppy::tree(formula, individ) in the population.
-   * \param context the context upon which the Puppy::trees in the population
+   * \param best_tree is the best Puppy::tree(formula, individ) in the population.
+   * \param context is the context upon which the Puppy::trees in the population
    * are constructed.
-   * \param feature_count the number of features for those the context
+   * \param feature_count is the number of features for those the context
    * was created.
-   * \param feature_converters the vector of feature_converters to be applied
+   * \param feature_converters is the vector of feature_converters to be applied
    * to the dataset before scoring.
    */
   GPScorer(const Puppy::Tree& best_tree,
@@ -75,7 +74,7 @@ class GPScorer : public Scorer {
   double scoreImpl(const Object& object) const;
   /**
    * The function generates code for the scorer as cpp code function
-   * \param class_name the name for the class that would be created.
+   * \param function_name is the name of generating function.
    */
   string generateCppCodeImpl(const string& function_name) const;
 
@@ -83,7 +82,7 @@ class GPScorer : public Scorer {
   /**
    * The function sets up the values for primitives that represent feature
    * values to the concrete values from the given object.
-   * \param object, whose feature values would be set up.
+   * \param object - object, whose feature values would be set up.
    */
   void setContextToObject(const Object& object) const;
   /**
@@ -115,7 +114,6 @@ class GPScorer : public Scorer {
   int feature_count_;
 
   string toStringImpl() const {return "Genetic programming scorer";}
-
 
   /**
    * GPlearner can access the class private data to set up the scorer as the

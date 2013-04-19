@@ -9,10 +9,11 @@
 
 namespace optimization {
 /**
- * \class\brief G1Function
- * Class for G1 function in \f$\mathbb{R}^13$\f.
- * \f$f(x) = 5 * \sum_{i = 1} ^4 (x_i - x_i^2) - sum_{i = 5}^13 x_i$\f
- * get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page506.htm
+ * \brief Class for G1 function in \f$\mathbb{R}^13\f$.
+ *
+ * \f$f(x) = 5 * \sum_{i = 1} ^4 (x_i - x_i^2) - sum_{i = 5}^13 x_i\f$.
+ *
+ * Get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page506.htm
  */
 class G1Function : public TwiceDifferentiableFunction {
  public:
@@ -24,48 +25,49 @@ class G1Function : public TwiceDifferentiableFunction {
   string getDefaultAlias() const { return "G1Function"; }
  private:
   /**
-   * implementation of computeValue method
+   * Implementation of computeValue method.
    */
   double computeValueImpl(const Point& point) const;
   /**
-   * implementation of computeGradient method
+   * Implementation of computeGradient method.
    */
   void computeGradientImpl(const Point& point, Vector* gradient) const;
   /**
-   * implementation of computeHessian method
+   * Implementation of computeHessian method.
    */
   void computeHessianImpl(const Point& point, Matrix* hessian) const;
 };
 
 /**
- * \class\brief G3Function
- * Class for G3 function in \f$\mathbb{R}^n$\f.
- * \f$f(x) = (\sqrt{n})^n \prod_{i = 1}^n x_i$\f
- * get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2613.htm
+ * \brief Class for G3 function in \f$\mathbb{R}^n\f$.
+ *
+ * \f$f(x) = (\sqrt{n})^n \prod_{i = 1}^n x_i\f$.
+ *
+ * Get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2613.htm.
  */
 class G3Function : public TwiceDifferentiableFunction {
  public:
   explicit G3Function(int dimension)
-    : TwiceDifferentiableFunction(dimension) { }
-  ~G3Function() { }
+    : TwiceDifferentiableFunction(dimension) {}
+  ~G3Function() {}
   typedef ltr::utility::shared_ptr<G3Function> Ptr;
 
   string getDefaultAlias() const { return "G3Function"; }
  private:
   /**
-   * implementation of computeValue method
+   * Implementation of computeValue method.
    */
   double computeValueImpl(const Point& point) const;
   /**
-   * implementation of computeGradient method
+   * Implementation of computeGradient method.
    */
   void computeGradientImpl(const Point& point, Vector* gradient) const;
   /**
-   * implementation of computeHessian method
+   * Implementation of computeHessian method.
    */
   void computeHessianImpl(const Point& point, Matrix* hessian) const;
   /**
-   * compute second part deriviate of function
+   * Compute second part deriviate of function.
    */
   double computePartHessian(int first_coordinate,
                             int second_coordinate,

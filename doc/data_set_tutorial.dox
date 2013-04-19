@@ -26,7 +26,7 @@ Every feature has index and double value.
 Every Object has several features with indexes 0, 1, 2... Every feature is a double value.
 
 You can operate with features using this functions:
-\li \link Object::featureCount() featureCount() \endlink - returns number of features
+\li \link Object::feature_count() feature_count() \endlink - returns number of features
 \li \link Object::features() features() \endlink - returns vector of features
 \li \link Object::operator[] operator[](int i)\endlink, \link Object::at at(int i)\endlink - access to the i'th feature of the object
 \li Object::operator<<(double value) - adds new feature to the object
@@ -42,10 +42,10 @@ Every object has an actual label and a predicted label. This labels are double v
 
 
 You can manage them, using this functions:
-\li \link Object::setActualLabel(double) setActualLabel(double label) \endlink
-\li \link Object::setPredictedLabel(double) const setPredictedLabel(double label) \endlink
-\li \link Object::actualLabel() const actualLabel() \endlink
-\li \link Object::pedictedLabel() const predictedLabel() \endlink
+\li \link Object::set_actual_label(double) set_actual_label(double label) \endlink
+\li \link Object::set_predicted_label(double) const set_predicted_abel(double label) \endlink
+\li \link Object::actual_label() const actual_label() \endlink
+\li \link Object::predicted_label() const predicted_label() \endlink
 
 
 Example: Operating with actual and predicted labels  | Output:
@@ -81,8 +81,8 @@ Example: Manipulating objects in pair            | Output:
 %Class to operate pairs of object. Every list contains several objects.
 
 There are several ways to get object from a list.
-\li \link ObjectList::at(const size_t) at(const size_t id) \endlink
-\li \link ObjectList::operator[](const size_t) operator[](const size_t id) \endlink
+\li \link ObjectList::at(const int) at(const int id) \endlink
+\li \link ObjectList::operator[](const int) operator[](const int id) \endlink
 
 You can also add objects into list using operator<< or \link ObjectList::add(const Object& obj) add(Object) \endlink method.<br>
 List can be cleared by calling \link ObjectList::clear() clear()\endlink method.<br>

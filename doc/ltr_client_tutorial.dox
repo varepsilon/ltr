@@ -111,7 +111,7 @@ Now we can launch the process. To mark the dataset you need to introduce the lau
   </launch>
 ~~~~~~~~~~~~~
 
-Here "TrainAndMark" is a name of the train section. Learn is a name of the training dataset. LearnerName is a name of the learner that you want to use to mark the dataset. Test is the name of the dataset that you want to mark. Include <cpp/> tag if you want to create the c++ code for your experiment.
+Here "TrainAndMark" is a name of the train section. Learn is a name of the training dataset. LearnerName is a name of the learner that you want to use to mark the dataset. Test is the name of the dataset that you want to mark. Include \<cpp/> tag if you want to create the c++ code for your experiment.
 
 \n\n
 
@@ -217,7 +217,7 @@ For example, you have the config like:
 
 \n
 
-Then you should launch <i>ltr_client -f <config_file_name></i>. You will receive a file <i>report.html</i> looking like this:
+Then you should launch <i>ltr_client -f \<config_file_name></i>. You will receive a file <i>report.html</i> looking like this:
 
 \image html report.png
 

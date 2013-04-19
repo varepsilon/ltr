@@ -7,11 +7,13 @@
 #include "ltr/optimization/functions/twice_differentiable_function.h"
 
 namespace optimization {
-/** \class\brief RosenbrockFunction
- * Class for Rosenbrock function in \f$\mathbb{R}^n$\f.
- * \f$f(x) = \sum_{i = 1}^{n - 1} (100 * (x_i^2 - x_{i + 1}) + (x_i - 1)^2)$\f
- * minimum at \f$ x = (1, \dots, 1), \quad f(x) = 0 $\f
- * get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2537.htm
+/**
+ * \brief Class for Rosenbrock function in \f$\mathbb{R}^n\f$.
+ * 
+ * \f$f(x) = \sum_{i = 1}^{n - 1} (100 * (x_i^2 - x_{i + 1}) + (x_i - 1)^2)\f$,
+ * minimum at \f$ x = (1, \dots, 1), \quad f(x) = 0 \f$.
+ *
+ * Get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2537.htm
  */
 class RosenbrockFunction : public TwiceDifferentiableFunction {
  public:

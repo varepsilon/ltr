@@ -15,7 +15,9 @@ using std::vector;
 namespace ltr {
 namespace decision_tree {
 /**
- * \class ObliviousTreeSplitter Implements ObliviousTree splitting aplorithm.
+ * \class ObliviousTreeSplitter 
+ * \brief Implements ObliviousTree splitting aplorithm.
+ * 
  * Checks all the possible features and determines the one that
  * has the highest layer quality.
  * For continious features try all possible thresholds

@@ -9,8 +9,9 @@
 
 namespace optimization {
 /**
- * \class\brief abstract class for defining
- *  differentiable functions in \f$\mathbb{R}^n\f$
+ * \brief Abstract class for defining differentiable functions
+ * in \f$\mathbb{R}^n\f$
+ *
  * \see Function
  */
 class DifferentiableFunction : public Function {
@@ -22,17 +23,17 @@ class DifferentiableFunction : public Function {
   virtual ~DifferentiableFunction() { }
 
   /**
-   * compute first derivative of this function in a given point
+   * Compute first derivative of this function in a given point.
    */
   void computeGradient(const Point& point, Vector* gradient) const;
   virtual string getDefaultAlias() const {return "DifferentiableFunction"; }
  private:
   /**
-   * implementation of computeValue method
+   * Implementation of computeValue method.
    */
   virtual double computeValueImpl(const Point& point) const = 0;
   /**
-   * implementation of computeGradient method
+   * Implementation of computeGradient method.
    */
   virtual void computeGradientImpl(const Point& point,
                                    Vector* gradient) const = 0;

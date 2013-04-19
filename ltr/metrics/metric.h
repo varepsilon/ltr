@@ -34,7 +34,8 @@ class BaseMetric : public Aliaser, public Parameterized, public Serializable {
 
   /**
   * Value of metric(distance between objects)
-  * @param lhs and rhs - elements to calculate measure on
+  * @param lhs is a first element to calculate measure on
+  * @param rhs is a second element to calculate measure on
   */
   virtual double distance(const ltr::Object& lhs,
                           const ltr::Object& rhs) const = 0 ;

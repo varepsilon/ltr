@@ -476,7 +476,7 @@ namespace RandomLib {
      * n, \e i + \e k + 2\e n, and the new Count() is \e i + \e k + 3\e n.
      * With leapfrogging in effect, the time to produce raw random numbers is
      * roughly proportional to 1 + (\e n &minus; 1)/3.  Reseed(...) and Reset()
-     * both reset the stride back to 1.  See \ref parallel for a description of
+     * both reset the stride back to 1.  See parallel for a description of
      * how to use this facility.
      *
      * @param[in] n the stride (default 1).

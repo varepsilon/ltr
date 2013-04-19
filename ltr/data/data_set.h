@@ -18,91 +18,118 @@
 using std::vector;
 
 namespace ltr {
-/** The default weight for an element in data set.
+/** 
+ * The default weight for an element in data set.
  */
 const double DEFAULT_ELEMENT_WEIGHT = 1.0;
-/** \class \brief Template class that implements DataSet.
- *  \tparam type of elements, which would be stored in the DataSet. The
- *  elements should implement Object container interface. Those could be
- *  Object, ObjectPair or ObjectList.
+/**
+ * \brief Template class that implements DataSet.
+ *
+ * \tparam Type of elements, which would be stored in the DataSet. The
+ * elements should implement Object container interface. Those could be
+ * Object, ObjectPair or ObjectList.
  */
 template <typename TElement>
 class DataSet : public Printable, public Aliaser {
  public:
-  /** Shared pointer type to the DataSet.
+  /**
+   * Shared pointer type to the DataSet.
    */
   typedef ltr::utility::shared_ptr<DataSet> Ptr;
-  /** The constructor creates a data set to store objects with the given
-   * FeatureInfo.
+
+  /**
+   * \param feature_info Information about features.
+   * \param label_info Information about labels.
    */
   DataSet(
       const FeatureInfo& feature_info = FeatureInfo(),
       const LabelInfo& label_info = LabelInfo());
-  /** Destructor
-   */
+
   virtual ~DataSet();
-  /** Returns FeatureInfo, objects with the same FeatureInfo are allowed to be
+  /**
+   * Returns FeatureInfo, objects with the same FeatureInfo are allowed to be
    * stored in the DataSet.
    */
   const FeatureInfo& feature_info() const;
-  /** Simple feature info setter
+  /** 
+   * Simple feature info setter
    */
-  void set_feature_info(const FeatureInfo &feature_info);
+  void set_feature_info(const FeatureInfo& feature_info);
   /**
-   * Getters and setters for label value type information
+   * Getter for label value type information
    */
   const LabelInfo& label_info() const;
+  /**
+   * Setter for label value type information
+   */
   void set_label_info(const LabelInfo& label_info);
-  /** Returns the number of features in objects of the DataSet.
+  /**
+   * Returns the number of features in objects of the DataSet.
    */
   int feature_count() const;
-  /** Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
+  /**
+   * Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
    */
   DataSet& operator<<(const TElement& element);
-  /** Adds an element(Object, ObjectPair, ObjectList etc.) with
+  /**
+   * Adds an element(Object, ObjectPair, ObjectList etc.) with
    * DEFAULT_ELEMENT_WEIGHT to the DataSet.
    */
   void add(const TElement& element);
-  /** Adds an element(Object, ObjectPair, ObjectList etc.) with given weight
+  /**
+   * Adds an element(Object, ObjectPair, ObjectList etc.) with given weight
    * to the DataSet.
    */
   void add(const TElement& element, double weight);
-  /** Returns the number of elements in the DataSet.
+  /**
+   * Returns the number of elements in the DataSet.
    */
   int size() const;
-  /** Deletes all elements from the DataSet.
+  /**
+   * Deletes all elements from the DataSet.
    */
   void clear();
-  /** Deletes the element with given index from the DataSet.
+  /**
+   * Deletes the element with given index from the DataSet.
    */
   void erase(int element_index);
-  /** Returns a constant link to the ith element of the DataSet.
+  /**
+   * Returns a constant link to the ith element of the DataSet.
    */
   const TElement& operator[](int element_index) const;
-  /** Returns a link to the ith element of the DataSet.
+  /**
+   * Returns a link to the ith element of the DataSet.
    */
   TElement& operator[](int element_index);
-  /** Returns a constant link to the ith element of the DataSet.
+  /**
+   * Returns a constant link to the ith element of the DataSet.
    */
   const TElement& at(int element_index) const;
-  /** Returns a link to the ith element of the DataSet.
+  /**
+   * Returns a link to the ith element of the DataSet.
    */
   TElement& at(int element_index);
-  /** Returns the weight of ith element.
+  /**
+   * Returns the weight of ith element.
    */
   double getWeight(int element_index) const;
-  /** Sets the weight of ith element.
-   * \param element_idx index of the element to set up weight.
-   * \param new weight value.
+  /**
+   * Sets the weight of ith element.
+   *
+   * \param element_index is an index of the element to set up weight.
+   * \param weight is a new weight value.
    */
   void setWeight(int element_index, double weight) const;
-  /** Creates a new DataSet containing the copies of the elements in the
+  /**
+   * Creates a new DataSet containing the copies of the elements in the
    * DataSet.
    */
   DataSet<TElement> deepCopy() const;
-  /** Creates new DataSet, which contains easy copies of elements
+  /**
+   * Creates new DataSet, which contains easy copies of elements
    * with given indexes (easy means that they share objects' resources: feature
    * vectors, objects' meat information).
+   *
    * \param indices the indices of elements from data based on those the subset
    * is build.
    */
@@ -113,30 +140,39 @@ class DataSet : public Printable, public Aliaser {
   virtual string toString() const;
 
  private:
-  /** Shared pointer to the actual vector, in which the elements are stored.
+  /**
+   * Shared pointer to the actual vector, in which the elements are stored.
    */
   ltr::utility::shared_ptr<vector<TElement> > elements_;
-  /** The information about objects that are stored in the DataSet.
+  /**
+   * The information about objects that are stored in the DataSet.
    */
   FeatureInfo::Ptr feature_info_;
-  /** Information about label value type
+  /**
+   * Information about label value type
    */
   ltr::utility::shared_ptr<LabelInfo> label_info_;
-  /** Shared pointer to the vector of elements' weights.
+  /**
+   * Shared pointer to the vector of elements' weights.
    */
   ltr::utility::shared_ptr<vector<double> > weights_;
-
+  /**
+   * Returns default alias of class
+   */
   virtual string getDefaultAlias() const {
     return "DataSet";
   }
 };
-/** \typedef Type for a data set that implements pointwise approach.
+/**
+ * Type for a data set that implements pointwise approach.
  */
 typedef DataSet<Object> PointwiseDataSet;
-/** \typedef Type for a data set that implements pairwise approach.
+/**
+ * Type for a data set that implements pairwise approach.
  */
 typedef DataSet<ObjectPair> PairwiseDataSet;
-/** \typedef Type for a data set that implements listwise approach.
+/**
+ * Type for a data set that implements listwise approach.
  */
 typedef DataSet<ObjectList> ListwiseDataSet;
 

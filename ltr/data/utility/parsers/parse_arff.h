@@ -16,7 +16,8 @@ using std::vector;
 
 namespace ltr {
 namespace io_utility {
-/** \brief Parse ARFF format (http://www.cs.waikato.ac.nz/ml/weka/arff.html)
+/**
+ * \brief Parse ARFF format (http://www.cs.waikato.ac.nz/ml/weka/arff.html)
  */
 class ARFFParser : public Parser {
  protected:

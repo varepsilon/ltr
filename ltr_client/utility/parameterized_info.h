@@ -30,15 +30,19 @@ class ObjectInfo {
   typedef std::map<string, ObjectInfo> ObjectInfos;
   /**
    * Basic constructor.
-   * @returns ObjectInfo constructed object.
+   *
+   * \returns ObjectInfo constructed object.
    */
   ObjectInfo();
   /**
    * Another constructor implementation.
-   * @param category is the type of base class
-   * @param alias is the name of the entity
-   * @param type is the type of the derived class
-   * @returns ObjectInfo constructed object.
+   *
+   * \param category is a type of the base class
+   * \param alias is a name of the entity
+   * \param type is a type of the derived class
+   * \param approach is an approach of the derived class
+   * \param parameters is a container of parameters
+   * \returns ObjectInfo constructed object.
    */
   ObjectInfo(const string& category,  // e.g. Measure, Learner
                    const string& alias,     // e.g. NDCGlistwise

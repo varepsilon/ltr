@@ -39,8 +39,7 @@ using ltr::utility::lexical_cast;
 namespace ltr {
 namespace gp {
 /**
- * \brief GPLearner
- * Implements genetic programming approach applied to learning to rank.
+ * \brief Implements genetic programming approach applied to learning to rank.
  * \tparam TElement object container of those the dataset consists (it can be
  * Object, ObjectPair, ObjectList).
  */
@@ -49,10 +48,9 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
  public:
   typedef shared_ptr<GPLearner> Ptr;
   /**
-   * Constructor creates a GPLearner.
-   * \param measure shared pointer to the measure that would be maximized on
+   * \param measure is a shared pointer to the measure that would be maximized on
    * a dataset within learning.
-   * \param parameters the ParametersContainer parameters from which would
+   * \param parameters is the ParametersContainer parameters from which would
    * overwrite the default parameters.
    */
   explicit GPLearner(typename Measure<TElement>::Ptr measure,
@@ -63,7 +61,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   }
   /**
    * Constructor creates a GPLearner. But leaves p_measure uninitialized.
-   * \param parameters the ParametersContainer parameters from which would
+   * \param parameters is the ParametersContainer parameters from which would
    * overwrite the default parameters.
    */
   explicit GPLearner(const ParametersContainer& parameters)
@@ -118,7 +116,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
   string toString() const;
   /**
    * The function sets up context and population from the given GPScorer.
-   * \param scorer GPScorer whose population and context would be set up.
+   * \param scorer is GPScorer whose population and context would be set up.
    */
   void setInitialScorer(const GPScorer& scorer);
 
@@ -150,20 +148,23 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   void initPopulation();
   /**
-   * \brief This function implements the changes made in the population at each
+   * This function implements the changes made in the population at each
    * algorithm's iteration.
    */
   virtual void evaluationStepImpl();
   /**
    * The implementation of genetic programming optimization approach.
-   * \param data DataSet on which the measure would be maximized within the
+   *
+   * \param data is DataSet on which the measure would be maximized within the
    * learning procedure.
+   * \param scorer is learning scorer
    */
   void learnImpl(const DataSet<TElement>& data, GPScorer* scorer);
   /**
    * Method evaluates the population, it sets individ tree fitness to the
    * average on the data set metric value.
-   * @param data data set for calculation of the average metric value
+   *
+   * \param data is data set for calculation of the average metric value
    */
   void evaluatePopulation(const DataSet<TElement>& data);
   /**
@@ -193,8 +194,7 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    */
   Puppy::Context context_;
   /**
-   * The best Puppy::tree(formula,
-   * individ) in the population.
+   * The best Puppy::tree(formula, individ) in the population.
    */
   Puppy::Tree best_tree_;
 

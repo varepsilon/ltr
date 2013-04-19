@@ -41,8 +41,9 @@ One can use FeatureConverters via \link FeatureConverter::apply() apply() \endli
 \li \link FeatureConverter::apply() apply(const Object &input, Object *output) \endlink - convert one object
 \li \link FeatureConverter::apply() apply(const DataSet<TElement> &input, DataSet<TElement> *output) \endlink - convert whole dataset
 
-If you want to add a kind of features preprocessing in training of your Scorer you should add corresponding FeatureConverterLearner via
-via \link Learner::addFeatureConverterLearner() addFeatureConverterLearner() \endlink method of Learner.
+If you want to add a kind of features preprocessing in training of your Scorer you should add corresponding FeatureConverterLearner
+via \link Learner::GET_SET_VECTOR_OF_PTR(FeatureConverterLearner< TElement >, feature_converter_learner) 
+set_feature_converter_learner() \endlink method of Learner.
 
 After learning on converted data Scorer can be applied only to objects which features are preprocessed the same way. For this reason FeatureConverters used in Scorer should be also serialized in C++ code during Scorer serialization.
 

@@ -19,7 +19,7 @@ using std::logic_error;
 namespace ltr {
 namespace cv {
 /**
- * Splits leaving only one test object
+ * \brief Splits leaving only one test object
  */
 template<class TElement>
 class LeaveOneOutSplitter : public Splitter<TElement> {
@@ -27,15 +27,14 @@ class LeaveOneOutSplitter : public Splitter<TElement> {
   typedef ltr::utility::shared_ptr<LeaveOneOutSplitter> Ptr;
 
   virtual int splitCount(const DataSet<TElement>& base_set) const;
-  /**
-   * @param parameters Standart LTR parameter container with no parameters
-   * (LeaveOneOutSplitter has no parameters at all)
-   */
 
   explicit LeaveOneOutSplitter() {
     this->setDefaultParameters();
   }
-
+  /**
+   * \param parameters is Standart LTR parameter container with no parameters
+   * (LeaveOneOutSplitter has no parameters at all)
+   */
   explicit LeaveOneOutSplitter
       (const ParametersContainer& parameters) {
     this->setParameters(parameters);

@@ -18,7 +18,7 @@ private:
   virtual string generateCppCodeImpl(const string& function_name) const;
 \endcode
 
-This method outputs a piece of C++ code, including a function with the name of <function_name> parameter of the generateCppCodeImpl call.
+This method outputs a piece of C++ code, including a function with the name of \<function_name> parameter of the generateCppCodeImpl call.
 %The printed function must have the following signature:
 
 \code

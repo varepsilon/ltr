@@ -10,9 +10,8 @@
 
 namespace optimization {
 /**
- * \class\brief Implements sphere of a given radius with
+ * \brief Implements sphere of a given radius with center in a given point.
  *
- * Center in a given point
  * \see Set
  */
 class SphereSet : public Set {
@@ -21,19 +20,19 @@ class SphereSet : public Set {
 
   SphereSet(double radius, const Point& center);
   /**
-   * checks, whether given point is inside this set
+   * Checks, whether given point is inside this set.
    */
   virtual bool isInside(const Point& point) const;
   /**
-   * projects given point on this set
+   * Projects given point on this set.
    */
   virtual void computeProjection(const Point& point, Point* projection) const;
   /**
-   * give a cubic boundaries which contain this set
+   * Give a cubic boundaries which contain this set.
    */
   virtual void getBoundaries(Point* top, Point* bottom) const;
   /**
-   * get arbitrary point in given set
+   * Get arbitrary point in given set.
    */
   virtual void sampleRandomPointInside(Point* point) const;
 
@@ -43,11 +42,11 @@ class SphereSet : public Set {
   virtual string getDefaultAlias() const { return "SphereSet"; }
  private:
   /**
-   * radius of sphere set
+   * Radius of sphere set.
    */
   double radius_;
   /**
-   * center of sphere set
+   * Center of sphere set.
    */
   Point center_;
 };

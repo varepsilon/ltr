@@ -14,7 +14,7 @@ using std::pair;
 
 namespace ltr {
 namespace utility {
-  /** \typedef
+  /**
    * Type for predicted and actual labels of an object.
    */
   struct PredictedAndActualLabels {

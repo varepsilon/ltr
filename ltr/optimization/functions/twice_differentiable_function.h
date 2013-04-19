@@ -9,8 +9,9 @@
 
 namespace optimization {
 /**
- * \class\brief abstract class for defining twice
- *  differentiable functions in \f$\mathbb{R}^n\f$
+ * \brief Abstract class for defining twice
+ * differentiable functions in \f$\mathbb{R}^n\f$
+ *
  * \see DifferentiableFunction
  */
 class TwiceDifferentiableFunction : public DifferentiableFunction {
@@ -22,23 +23,23 @@ class TwiceDifferentiableFunction : public DifferentiableFunction {
   virtual ~TwiceDifferentiableFunction() { }
 
   /**
-   * compute second derivative in given point
+   * Compute second derivative in given point.
    */
   void computeHessian(const Point& point, Matrix* hessian) const;
 
   string getDefaultAlias() const { return "TwiceDifferentiableFunction"; }
  private:
   /**
-   * implementation of computeValue method
+   * Implementation of computeValue method.
    */
   virtual double computeValueImpl(const Point& point) const = 0;
   /**
-   * implementation of computeGradient method
+   * Implementation of computeGradient method.
    */
   virtual void computeGradientImpl(const Point& point,
                                    Vector* gradient) const = 0;
   /**
-   * implementation of computeHessian method
+   * Implementation of computeHessian method.
    */
   virtual void computeHessianImpl(const Point& point,
                                   Matrix* hessian) const = 0;

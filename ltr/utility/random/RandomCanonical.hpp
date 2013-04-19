@@ -222,22 +222,21 @@ namespace RandomLib {
      **********************************************************************/
     ///@{
     /**
-     * In the description of the functions FixedX returning \ref fixed
-     * "fixed-point" numbers, \e u is a random real number uniformly
+     * In the description of the functions FixedX returning fixed-point numbers,
+     * \e u is a random real number uniformly
      * distributed in (0, 1), \e p is the precision, and \e h =
      * 1/2<sup><i>p</i></sup>.  Each of the functions come in three variants,
      * e.g.,
-     *   - RandomCanonical::Fixed<RealType,p>() --- return \ref fixed
-     *     "fixed-point" real of type RealType, precision \e p;
+     *   - RandomCanonical::Fixed<RealType,p>() --- return fixed-point real of
+     *     type RealType, precision \e p;
      *   - RandomCanonical::Fixed<RealType>() --- as above with \e p =
      *     std::numeric_limits<RealType>::digits;
      *   - RandomCanonical::Fixed() --- as above with RealType = double.
      *
-     * See the \ref reals "summary" for a comparison of the functions.
+     * See the summary for a comparison of the functions.
      *
      * Return \e i \e h with \e i in [0,2<sup><i>p</i></sup>) by rounding \e u
-     * down to the previous \ref fixed "fixed" real.  Result is in default
-     * interval [0,1).
+     * down to the previous fixed real.  Result is in default interval [0,1).
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -299,8 +298,7 @@ namespace RandomLib {
 
     /**
      * Return \e i \e h with \e i in (0,2<sup><i>p</i></sup>] by rounding \e u
-     * up to the next \ref fixed "fixed" real.  Result is in upper interval
-     * (0,1].
+     * up to the next fixed real.  Result is in upper interval (0,1].
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -325,7 +323,7 @@ namespace RandomLib {
 
     /**
      * Return \e i \e h with \e i in [0,2<sup><i>p</i></sup>] by rounding \e u
-     * to the nearest \ref fixed "fixed" real.  Result is in nearest interval
+     * to the nearest fixed real.  Result is in nearest interval
      * [0,1].  The probability of returning interior values is <i>h</i> while
      * the probability of returning the endpoints is <i>h</i>/2.
      *
@@ -354,8 +352,8 @@ namespace RandomLib {
 
     /**
      * Return \e i \e h with \e i in [&minus;2<sup><i>p</i></sup>,
-     * 2<sup><i>p</i></sup>] by rounding 2\e u &minus; 1 to the nearest \ref
-     * fixed "fixed" real.  Result is in wide interval [&minus;1,1].  The
+     * 2<sup><i>p</i></sup>] by rounding 2\e u &minus; 1 to the nearest
+     * fixed real.  Result is in wide interval [&minus;1,1].  The
      * probability of returning interior values is <i>h</i>/2 while the
      * probability of returning the endpoints is <i>h</i>/4.
      *
@@ -400,7 +398,7 @@ namespace RandomLib {
     /**
      * Return (<i>i</i>+1/2)\e h with \e i in [2<sup><i>p</i>&minus;1</sup>,
      * 2<sup><i>p</i>&minus;1</sup>) by rounding \e u &minus; 1/2 to nearest
-     * offset \ref fixed "fixed" real.  Result is in symmetric interval
+     * offset fixed real.  Result is in symmetric interval
      * (&minus;1/2,1/2).
      *
      * @tparam RealType the real type of the returned random numbers.
@@ -427,8 +425,7 @@ namespace RandomLib {
 
     /**
      * Return \e i \e h with \e i in (0,2<sup><i>p</i></sup>) by rounding (1
-     * &minus; \e h)\e u up to next \ref fixed "fixed" real.  Result is in open
-     * interval (0,1).
+     * &minus; \e h)\e u up to next fixed real.  Result is in open interval (0,1).
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -465,7 +462,7 @@ namespace RandomLib {
 
     /**
      * Return \e i \e h with \e i in [0,2<sup><i>p</i></sup>] by rounding (1 +
-     * \e h)\e u down to previous \ref fixed "fixed" real.  Result is in closed
+     * \e h)\e u down to previous fixed real.  Result is in closed
      * interval [0,1].
      *
      * @tparam RealType the real type of the returned random numbers.
@@ -554,22 +551,22 @@ namespace RandomLib {
     // separation between possible results is smaller for smaller numbers.
 
     /**
-     * In the description of the functions FloatX returning \ref floating
-     * "floating-point" numbers, \e u is a random real number uniformly
+     * In the description of the functions FloatX returning floating-point
+     * numbers, \e u is a random real number uniformly
      * distributed in (0, 1), \e p is the precision, and \e e is the exponent
      * range.  Each of the functions come in three variants, e.g.,
-     *   - RandomCanonical::Float<RealType,p,e>() --- return \ref floating
-     *     "floating-point" real of type RealType, precision \e p, and exponent
+     *   - RandomCanonical::Float<RealType,p,e>() --- return floating-point
+     *     real of type RealType, precision \e p, and exponent
      *     range \e e;
      *   - RandomCanonical::Float<RealType>() --- as above with \e p =
      *     std::numeric_limits<RealType>::digits and \e e =
      *     - std::numeric_limits<RealType>::min_exponent;
      *   - RandomCanonical::Float() --- as above with RealType = double.
      *
-     * See the \ref reals "summary" for a comparison of the functions.
+     * See the summary for a comparison of the functions.
      *
      * Return result is in default interval [0,1) by rounding \e u down
-     * to the previous \ref floating "floating" real.
+     * to the previous floating real.
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -597,7 +594,7 @@ namespace RandomLib {
 
     /**
      * Return result is in upper interval (0,1] by round \e u up to the
-     * next \ref floating "floating" real.
+     * next floating real.
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -625,7 +622,7 @@ namespace RandomLib {
 
     /**
      * Return result is in nearest interval [0,1] by rounding \e u to
-     * the nearest \ref floating "floating" real.
+     * the nearest floating real.
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.
@@ -664,7 +661,7 @@ namespace RandomLib {
 
     /**
      * Return result is in wide interval [&minus;1,1], by rounding 2\e u
-     * &minus; 1 to the nearest \ref floating "floating" real.
+     * &minus; 1 to the nearest floating real.
      *
      * @tparam RealType the real type of the returned random numbers.
      * @tparam prec the precision of the returned random numbers.

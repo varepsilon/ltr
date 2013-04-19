@@ -6,10 +6,11 @@
 #include "ltr/optimization/sets/sphere_set.h"
 
 namespace optimization {
-/** \class\brief G1Set
- * Class for G1 set in \f$\mathbb{R}^n$\f.
- * \f$h(x) = \sum_{i = 1}^n x_i^2 - 1 = 0$\f
- * get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2613.htm
+/** \brief Class for G1 set in \f$\mathbb{R}^n\f$.
+ *
+ * \f$h(x) = \sum_{i = 1}^n x_i^2 - 1 = 0\f$
+ *
+ * Get more info on http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO_files/Page2613.htm
  */
 class G3Set : public SphereSet {
  public:

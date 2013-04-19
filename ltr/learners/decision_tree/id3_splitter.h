@@ -17,7 +17,9 @@ using std::vector;
 namespace ltr {
 namespace decision_tree {
 /**
- * \class ID3Splitter Implements ID3 splitting aplorithm.
+ * \class ID3Splitter 
+ * \brief Implements ID3 splitting aplorithm.
+ * 
  * For each vertex at given layer checks all the possible features
  * and determines the one that has the highest quality.
  * For continious features try all possible thresholds

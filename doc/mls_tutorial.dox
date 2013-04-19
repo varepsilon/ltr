@@ -57,8 +57,10 @@ Learner public fuctions:
  - \link Learner::make make \endlink, \link BaseLearner::makeSpecific makeSpecific \endlink   - return the pointer to a new scorer, see the example below to understand the difference
  - \link BaseLearner::setInitialScorer setInitialScorer \endlink - set the initial approximation of a scorer
  - \link BaseLearner::reset reset \endlink - reset a current state of the learner
- - \link Learner::addDataPreprocessor addDataPreprocessor \endlink - add data preprocessor, see \ref TutorialDataPreprocessors
- - \link Learner::addFeatureConverterLearner addFeatureConverterLearner \endlink - add feature converter learner, see \ref TutorialFeatureConverters
+ - \link Learner::GET_SET_VECTOR_OF_PTR(DataPreprocessor< TElement >, data_preprocessor)
+   set_data_preprocessor \endlink - add data preprocessor, see \ref TutorialDataPreprocessors
+ - \link Learner::GET_SET_VECTOR_OF_PTR(FeatureConverterLearner< TElement >, feature_converter_learner)
+   set_feature_converter_learner \endlink - add feature converter learner, see \ref TutorialFeatureConverters
 
 \section Scorer Scorer
 
@@ -79,7 +81,7 @@ decision_tree::DecisionTreeLearner | \ref TutorialDecisionTree  | decision_tree:
 \section Measure Measure
 
 Measure public fuctions:
- - \link Measure::operator() operator() \endlink - compute how well predicted labels aproximates actual
+ - \link Measure::operator()(const TElement &element)const operator() \endlink - compute how well predicted labels aproximates actual
 
 %Measure Name:                | Description:
 ------------------------------|--------------------------------------

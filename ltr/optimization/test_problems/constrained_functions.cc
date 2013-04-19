@@ -7,7 +7,7 @@
 namespace optimization {
 double G1Function::computeValueImpl(const Point& point) const {
   /**
-   * \f$ f(x) = 5.0 * sum_1 - 5.0 * sum_2 - sum_3 $\f
+   * \f$ f(x) = 5.0 * sum_1 - 5.0 * sum_2 - sum_3 \f$
    */
   double sum1 = 0.0;
   double sum2 = 0.0;

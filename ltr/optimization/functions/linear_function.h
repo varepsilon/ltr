@@ -9,10 +9,9 @@
 
 namespace optimization {
 /**
- * \class\brief class for defining
- *  linear functions in \f$\mathbb{R}^n\f$
+ * \brief Class for defining linear functions in \f$\mathbb{R}^n\f$.
  *
- *  \f$f(x_1...x_n) = a_1*x_1 + ..+ a_n*x_n + b\f$
+ * \f$f(x_1...x_n) = a_1*x_1 + ..+ a_n*x_n + b\f$
  * \see Function
  */
 
@@ -34,23 +33,23 @@ class LinearFunction : public TwiceDifferentiableFunction {
   string getDefaultAlias() const { return "LinearFunction";}
  private:
   /**
-   * implementation of computeValue method
+   * Implementation of computeValue method.
    */
   double computeValueImpl(const Point& point) const;
   /**
-   * implementation of computeGradient method
+   * Implementation of computeGradient method.
    */
   void computeGradientImpl(const Point& point, Vector* gradient) const;
   /**
-   * implementation of computeHessian method
+   * Implementation of computeHessian method.
    */
   void computeHessianImpl(const Point& point, Matrix* hessian) const;
   /**
-   * vector of coefficients in linear form
+   * Vector of coefficients in linear form.
    */
   Vector factor_;
   /**
-   * free term in linear form
+   * Free term in linear form.
    */
   double shift_;
 };

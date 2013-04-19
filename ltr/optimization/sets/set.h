@@ -11,7 +11,7 @@
 
 namespace optimization {
 /** 
- * \class\brief Interface class for sets in \f$\mathbb{R}^n$\f.
+ * \brief Interface class for sets in \f$\mathbb{R}^n\f$.
  */
 class Set : public ltr::Aliaser {
  public:
@@ -21,38 +21,36 @@ class Set : public ltr::Aliaser {
   virtual ~Set();
 
   /** 
-   * checks, whether given point is inside this set
+   * Checks, whether given point is inside this set.
    */
   virtual bool isInside(const Point& point) const = 0;
   /** 
-   * projects given point on this set
+   * Projects given point on this set.
    */
   virtual void computeProjection(const Point& point,
                                  Point* projection) const = 0;
   /**
-   * give a cubic boundaries which contain this set
+   * Give a cubic boundaries which contain this set.
    */
   virtual void getBoundaries(Point* top, Point* bottom) const = 0;
   /**
-   * get arbitrary point in given set
+   * Get arbitrary point in given set.
    */
   virtual void sampleRandomPointInside(Point* random_point) const;
-
   /**
-   * number of dimensions of this set
+   * Get nmber of dimensions of this set.
    */
   GET(int, dimension);
 
   virtual string getDefaultAlias() const { return "Set"; }
  protected:
   /**
-   * get random point in boundaries of this set
+   * Get random point in boundaries of this set.
    */
   void getRandomPoint(Point* random_point) const;
  private:
   /**
-   * dimension of space which
-   * contains set
+   * Dimension of space which contains set.
    */
   int dimension_;
 };

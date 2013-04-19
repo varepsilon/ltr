@@ -14,19 +14,23 @@
 #include "ltr/utility/boost/shared_ptr.h"
 
 namespace ltr {
-/** \brief The class stores a pair of two objects. The container for two
+/**
+ * \brief The class stores a pair of two objects. The container for two
  *  objects, can be stored in DataSet. That would represent a pairwise data set.
  */
   class ObjectPair : public Printable {
   public:
-  /** \typedef Shared pointer to an object pair.
+  /**
+   * Shared pointer to an object pair.
    */
   typedef ltr::utility::shared_ptr<ObjectPair> Ptr;
-  /** Default constructor creates a pair of two objects with no features.
+  /**
+   * Default constructor creates a pair of two objects with no features.
    *
    */
   ObjectPair();
-  /** Constructor creates a new pair of two copies of the two given objects.
+  /**
+   * Constructor creates a new pair of two copies of the two given objects.
    */
   ObjectPair(const Object& first, const Object& second);
   /**
@@ -38,17 +42,21 @@ namespace ltr {
    * Function for serialization pair into string.
    */
   string toString() const;
-  /** The first object in the pair.
+  /**
+   * The first object in the pair.
    */
   Object first;
-  /** The second object in the pair.
+  /**
+   * The second object in the pair.
    */
   Object second;
 };
-/** Operator, checks whether two objects are equal.
+/**
+ * Operator, checks whether two objects are equal.
  */
 bool operator==(const ObjectPair& lhs, const ObjectPair& rhs);
-/** Operator, checks whether two objects are not equal.
+/**
+ * Operator, checks whether two objects are not equal.
  */
 bool operator!=(const ObjectPair& lhs, const ObjectPair& rhs);
 };

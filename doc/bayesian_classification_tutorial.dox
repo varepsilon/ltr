@@ -12,8 +12,6 @@ learn more visit http://en.wikipedia.org/wiki/Bayesian_inference.
 
 Bayesian classification algorithm is determined by the method of estimation of \f$P_y\f$ and \f$p_y(x)\f$. Priors are usually estimated by relative frequencies and there is a lot of ways to estimate density. One can see different algorithms for density estimation below. 
 
-\subsection DensityEstimatorsList List of all density estimation learners
-
 %Density estimation learner          | Description
 -------------------------------------|------------------------------------------------------------------------
 NormalNaiveBayesDensityLearner       | Assumes the independence of features
@@ -26,8 +24,8 @@ LTR allows to use different algorithms of unparameterized Bayesian classificatio
 To use Bayesian Learner you need to:
 \li choose estimation algorithm
 \li according to chosen algorothm, declare either FisherDiscriminantLearner or NormalNaiveBayesLearner or QuadraticDiscriminantLearner
-\li learn the declared classifier on some DataSet with ::learn() method
-\li generate classifier with ::make() method
+\li learn the declared classifier on some DataSet with \::learn() method
+\li generate classifier with \::make() method
 
 
 Example: usage of LTR Bayesian classification          | Output:

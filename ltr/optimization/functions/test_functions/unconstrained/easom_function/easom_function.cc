@@ -9,17 +9,20 @@ double EasomFunction::squareExp(double variable) const {
 
   return square_exp;
 }
+
 double EasomFunction::partValue(double variable) const {
   double part_value = squareExp(variable) * cos(variable);
 
   return part_value;
 }
+
 double EasomFunction::partGradient(double variable) const {
   double part_gradient = squareExp(variable) *
     (-2.0 * (variable - PI) * cos(variable) - sin(variable));
 
   return part_gradient;
 }
+
 double EasomFunction::partHessian(double variable) const {
   double part_hessian = -2.0 * (variable - PI) * partGradient(variable) +
     squareExp(variable) * (-3.0 * cos(variable) +
@@ -27,6 +30,7 @@ double EasomFunction::partHessian(double variable) const {
 
   return part_hessian;
 }
+
 double EasomFunction::value(const Point& point) const {
   CHECK(point.size() == dimension());
 
@@ -34,6 +38,7 @@ double EasomFunction::value(const Point& point) const {
 
   return value;
 }
+
 Vector EasomFunction::gradient(const Point& point) const {
   CHECK(point.size() == dimension());
 
@@ -43,6 +48,7 @@ Vector EasomFunction::gradient(const Point& point) const {
 
   return gradient;
 }
+
 Matrix EasomFunction::hessian(const Point& point) const {
   CHECK(point.size() == dimension());
 
