@@ -15,7 +15,7 @@
 #include "ltr/utility/boost/shared_ptr.h"
 
 using std::string;
-
+   
 namespace ltr {
 /**
  * \brief Class that can for every object evaluate a value - its rank, or score.
