@@ -5,7 +5,7 @@ import os
 import commands
 import popen2
 
-ins, outs = os.popen2("git diff HEAD^ HEAD --cached --name-only --diff-filter=AM")
+ins, outs = os.popen2("git diff HEAD^ HEAD --name-only --diff-filter=AM")
 output_lines =  outs.read().split('\n')
 ins.close()
 outs.close()
