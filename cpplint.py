@@ -587,7 +587,7 @@ class FileInfo:
 
   def IsSource(self):
     """File has a source file extension."""
-    return self.Extension()[1:] in ('c', 'cc', 'cpp', 'cxx')
+    return self.Extension()[1:] in ('c', 'cc', 'cpp', 'cxx', 'hpp')
 
 
 def _ShouldPrintError(category, confidence):
