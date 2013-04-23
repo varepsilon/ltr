@@ -1,0 +1,104 @@
+namespace ltr {
+/** \page ObjectPresentation Two kinds of object's presentations
+	\ingroup Advanced
+
+\tableofcontents
+
+\section StandAlonePresentation How objects are presented without data set.
+
+%Object is a set of features, predicted and actual labels and meta info.
+
+Each feature is effectively double, so features can be presented as vector of doubles.
+
+LTR library uses Eigen library to contain objects.
+
+Features are contained in Eigen library vector, predicted and actual values and meta info are kept as additional values.
+
+\section DataSetPresentation How objects are presented in data set.
+
+%Data set is a set of objects, or object pairs, or object lists. In all three cases it boils down to set of objects we want to keep and transform efficiently.
+
+An example of transformation is PCA which uses matrix-like operations on set of objects.
+
+Features of data set are kept into Eigen library matrix, predicted and actual values are kept in Eigen library vector, meta info - in std::vector<MetaInfo>.
+
+Each object in data set is a column of features.
+
+\section PresentationDifferences Differences and conflicts in two presentations.
+
+Each object that one works with is either a stand alone object, represented as vector of features, or an object in data set, represented as column. This approaches are a bit different and they impose different behaviour of two presentation.
+
+Thus we have two kinds of objects and unless you explicitly get your object from matrix like
+
+\code
+cout << data_set[i];
+\endcode
+
+or explicilty create new stand alone object (all new objects are stand alone objects)
+
+\code
+Object object;
+\endcode
+
+you cannot know for sure what type of object you get.
+
+\subsection PresentationDifferenceOperatorPush Operator <<.
+
+Operator << adds a feature to our object. While this code
+
+\code
+Object obj;
+obj << 1.0 << 2.0 << 3.0;
+\endcode
+
+is fine and should throw no error, this code
+
+\code
+data_set[index] << 1.0;
+\endcode
+
+is unacceptable, because we would have to resize the whole matrix of features. Thus operator << throws an exception if you try to use it with data set object.
+
+\subsection PresentationDifferenceResize Method resize(int).
+
+Method resize is prohibited in data set objects and throws an exception for the same reason as above (we shouldn't change the whole matrix just because one object wants to do so).
+
+\subsection PresentationDifferenceOperatorAssign Operator =.
+
+When one uses operator =, all features are deep copied into existing container.
+
+\code
+Object object1 = data_set[0];  // Here we copy values from data set to stand alone object
+object1 << 1;  // object remains stand alone, changes do not affect data set
+
+Object object2;
+object2 << 1.0 << 2.0;  // suppose data set objects have two features
+data_set[0] = object2;  // object's features are copied into data set
+\endcode
+
+Use operator = freely, but keep in mind it is not a cheap operation.
+
+\subsection PresentationDifferenceLightCopy Light copy and associated problems.
+
+If you want to do operations with given object under another name, class Object has method
+\code
+void lightCopyFrom(Object&);
+\endcode
+
+This method links given object to the one we use with all its properties.
+
+\code
+Object object1;
+Object object2;
+Object object3;
+
+object1.lightCopyFrom(data_set[0]);  // Now object1 is a data set object
+object2 << 0.0 << 0.0;
+object1 = object2;  // object2 features are copied into data_set[0]
+object1 << 1.0;  // this code throws an exception
+
+data_set[0].lightCopyFrom(object3);  // this code throws an exception, because we'd have to remove data set object to do this.
+object1.lightCopyFrom(object3);  // this code throws an exception too!!!
+\endcode
+**/
+}
