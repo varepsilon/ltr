@@ -18,6 +18,7 @@ using GetOpt::GetOptEx;
 using GetOpt::TooManyOptionsEx;
 
 using std::cout;
+using std::cin;
 using std::cerr;
 using std::endl;
 
