@@ -15,6 +15,8 @@ typedef Eigen::VectorXd Point;
  * \brief Abtract class for test one point from population
  * independently on other points.
  *
+ * \tparam is a type of function.
+ *
  * \see StopCriterion, PerPointStopCriterion
  */
 template<class TFunction> class OnePointStopCriterion : public ltr::Aliaser {
