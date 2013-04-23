@@ -3,6 +3,7 @@ set -e
 [ -z $JOBS ] && JOBS=2
 ! [ -d build ] && mkdir build
 rm -rf build/*
+python ./pre-push_check.py
 cd build
 if [ "$OS" = "Windows_NT" ]; then
   $COMSPEC /c '..\jenkins\build.cmd'
