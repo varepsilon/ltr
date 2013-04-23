@@ -245,6 +245,7 @@ SET(LTR_FEATURE_CONVERTERS ${Source_Path}/ltr/feature_converters/feature_convert
                            ${Source_Path}/ltr/feature_converters/feature_converter_learner.h
                            ${Source_Path}/ltr/feature_converters/feature_normalizer_learner.h
                            ${Source_Path}/ltr/feature_converters/pca_learner.h
+                           ${Source_Path}/ltr/feature_converters/pca_learner.cc
                            ${Source_Path}/ltr/feature_converters/linear_converter.h
                            ${Source_Path}/ltr/feature_converters/linear_converter.cc
                            ${Source_Path}/ltr/feature_converters/feature_sampler_learner.h

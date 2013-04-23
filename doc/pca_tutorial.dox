@@ -23,10 +23,22 @@ values \f$X\f$, such that \f$A = UXV\f$, where \f$A\f$ is training data. Singula
 values in vector \f$X\f$ are sorted in ascending order.
 
 In the third step calculates the optimal number of principal components \f$N\f$
-using Kaiser rule. Kaiser rule means that principal component corresponding to
+using one of the rules:
+
+ - Kaiser rule means that principal component corresponding to
 some singular value is considered significant if this value is more than average
-of all singular values. Then creates matrix \f$U'\f$ as set of \f$N\f$ first
-lines of \f$U\f$ and vector \f$X'\f$ as vector of \f$N\f$ first singular values.
+of all singular values.
+
+ - Broken stick rule. See description of this method in
+ "Principal Component Analysis. Second Edition" I.T.Jolliffe, Springer, 2002.
+
+ - Rule of fixed number of components. This rule return value given from input
+ of rule's constructor.
+
+Then creates matrix \f$U'\f$ as set of \f$N\f$ first lines of \f$U\f$ and 
+vector \f$X'\f$ as vector of \f$N\f$ first singular values. Kaiser rule is
+default but you can set any of these rules by method setNumberOfComponentsRule()
+(see example below).
 
 In the last step calculates factor matrix for linear converter as product of
 matrix \f$U'\f$ and vector \f$X'\f$. Shift matrix remains equal to zero.
