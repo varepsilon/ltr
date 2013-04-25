@@ -48,7 +48,6 @@ class TagHandler {
  public:
   /**
    * Basic TagHandler constructor
-   * @param configuratorInstance - the ConfigParser instance.
    */
   explicit TagHandler(ConfigParser* configuratorInstance)
     : d(configuratorInstance) {}
@@ -59,6 +58,7 @@ class TagHandler {
   /**
    * Virtual () operator. Must be overloaded to use.
    * @param xmlElement - TiXmlElement to parse.
+   * @param configuration - current configuration
    */
   virtual void operator()(TiXmlElement* xmlElement) = 0;
  protected:
@@ -72,6 +72,7 @@ typedef std::map<string, TagHandler*> TagHandlers;
  * @param parsers - the map of the functors that handles opened but
  * yet not closed tags
  * @param xmlNode - the node to be parsed
+ * @param configuration - current configuration
  * @param on_unknown_token - the functor that will be called if the function
  * encounters an unknown token.
  */
@@ -126,7 +127,6 @@ class TOnDataTag: public TagHandler {
  public:
   /**
    * Basic constructor.
-   * @param impl - Config Parser object to initialize the TagHandler object.
    */
   explicit TOnDataTag(ConfigParser* impl): TagHandler(impl) { }
   virtual void operator()(TiXmlElement* element) {
@@ -174,7 +174,6 @@ class TOnParameterTag: public TagHandler {
  public:
   /**
    * Basic constructor for the TOnParameterTag object.
-   * @param impl - ConfigParser pointer to initialize
    *the TagHandler object
    */
   explicit TOnParameterTag(ConfigParser* impl)
@@ -193,6 +192,7 @@ class TOnParameterTag: public TagHandler {
    * Performing the parsing of the XML token. Adds the
    * parameter element to the container of parameterized object.
    * @param element - the parameter specification.
+   * @param configuration - current configuration
    * @returns bool value
    */
   virtual void operator()(TiXmlElement* element) {
@@ -364,7 +364,6 @@ class OnGeneralParameterized: public TagHandler {
  public:
   /**
    * Basic OnGeneralXmlToken constructor.
-   * @param impl - ConfigParser pointer to initialize TagHandler.
    */
   explicit OnGeneralParameterized(ConfigParser* impl): TagHandler(impl) {
     parameters_executor = new TOnParameterTag(impl);
@@ -379,6 +378,7 @@ class OnGeneralParameterized: public TagHandler {
    * () operator. If all the parameters of the tag are correct,
    * it performs parsing. Else throws logic error.
    * @param element - TiXmlElement pointer to parse.
+   * @param configuration - current configuration
    */
   virtual void operator()(TiXmlElement* element) {
     rInfo("TOnGeneralXmlToken\n");
@@ -428,7 +428,6 @@ class OnCVLearnerTag: public TagHandler {
   public:
   /**
    * Basic OnCVLearnerTag constructor.
-   * @param impl - a ConfigParser pointer to initialize TagHandler.
    */
   explicit OnCVLearnerTag(ConfigParser* impl): TagHandler(impl) {
     info = NULL;
@@ -444,6 +443,7 @@ class OnCVLearnerTag: public TagHandler {
   /**
    * () operator. Inserts the leaner into crossvalidator.
    * @param element - TiXmlElement pointer. Must contain
+   * @param configuration - current configuration
    * leaner.
    */
   virtual void operator()(TiXmlElement* element) {
@@ -464,7 +464,6 @@ class OnCVMeasureTag: public TagHandler {
  public:
   /**
    * Basic OnCVMeasureTag constructor.
-   * @param impl - ConfigParser pointer to initialize
    * the TagHandler object.
    */
   explicit OnCVMeasureTag(ConfigParser* impl): TagHandler(impl) {
@@ -481,6 +480,7 @@ class OnCVMeasureTag: public TagHandler {
   /**
    * () operator inserts measure into the crossvalidator.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    * Must contain the measure.
    */
   virtual void operator()(TiXmlElement* element) {
@@ -501,7 +501,6 @@ class OnCVDataTag: public TagHandler {
  public:
   /**
    * Basic OnCVDataTag constructor.
-   * @param impl - ConfigParser pointer to initialize
    * the TagHandler object.
    */
   explicit OnCVDataTag(ConfigParser* impl)
@@ -518,6 +517,7 @@ class OnCVDataTag: public TagHandler {
   /**
    * () operator inserts dataset into the crossvalidator.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    * Must contain the dataset.
    */
   virtual void operator() (TiXmlElement* element) {
@@ -539,7 +539,6 @@ class OnCrossvalidationTag: public TagHandler {
  public:
   /**
    * Basic OnCVCrossvalidationTag constructor.
-   * @param impl - ConfigParser pointer to initialize
    * the TagHandler object.
    */
   explicit OnCrossvalidationTag(ConfigParser* impl):
@@ -557,6 +556,7 @@ class OnCrossvalidationTag: public TagHandler {
   /**
    * () operator inserts dataset into the crossvalidator.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    * Must contain the dataset.
    */
   virtual void operator()(TiXmlElement* element) {
@@ -607,6 +607,7 @@ class OnPredictTag: public TagHandler {
   /**
    * () operator. Adds element text to the TrainLaunchInfo.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    * Must contain predict tag.
    */
   virtual void operator() (TiXmlElement* element) {
@@ -627,8 +628,6 @@ class OnCppGenTag: public TagHandler {
   public:
   /**
    * Basic OnCppGenTag constructor.
-   * @param impl - ConfigParser pointer to initialize
-   * the TagHandler object.
    */
   explicit OnCppGenTag(ConfigParser* impl)
     : TagHandler(impl)
@@ -642,8 +641,6 @@ class OnCppGenTag: public TagHandler {
   }
   /**
    * () operator. Sets gen_cpp flag to the true value.
-   * @param element - TiXmlElement pointer to the XML tag.
-   * Must contain the сpp tag.
    */
   virtual void operator() (TiXmlElement* element) {
     assert(info);
@@ -662,7 +659,6 @@ class OnTrainTag: public TagHandler {
  public:
   /**
    * Basic OnTrainTag constructor.
-   * @param impl - ConfigParser pointer to initialize
    * the TagHandler object.
    */
   explicit OnTrainTag(ConfigParser* impl): TagHandler(impl) {
@@ -681,6 +677,7 @@ class OnTrainTag: public TagHandler {
   /**
    * () operator. Sets the train info according to the tag.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    * Must contain the train tag.
    */
   virtual void operator() (TiXmlElement* element) {
@@ -728,7 +725,6 @@ class OnLaunchTag: public TagHandler {
  public:
   /**
    * Basic OnLaunchTag constructor.
-   * @param impl - ConfigParser pointer to initialize
    * the TagHandler object.
    */
   explicit OnLaunchTag(ConfigParser* impl): TagHandler(impl) {
@@ -743,6 +739,7 @@ class OnLaunchTag: public TagHandler {
   /**
    * () operator. Performs GenericParse from the first element.
    * @param element - TiXmlElement pointer to the XML tag.
+   * @param configuration - current configuration
    */
   virtual void operator() (TiXmlElement* element) {
     rInfo("TOnLaunchExecutor\n");

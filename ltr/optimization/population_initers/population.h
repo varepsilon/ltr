@@ -11,6 +11,7 @@
 #include "ltr/utility/macros.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
+
 using std::map;
 using std::pair;
 
