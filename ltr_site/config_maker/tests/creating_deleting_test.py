@@ -24,8 +24,10 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
                            **object_parameters)
         self.delete_object(object_name)
 
-    def test_fake_splitter(self):
-        self.create_delete_object('splitter', 'FakeSplitter')
+    def test_leave_one_out_splitter(self):
+        self.create_delete_object('splitter',
+                                  'LeaveOneOutSplitter',
+                                  approach='pointwise')
 
     def test_abs_error(self):
         self.create_delete_object('measure', 'AbsError')
@@ -80,7 +82,10 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
                            approach='pointwise',
                            format='Yandex',
                            file=open(self._testfiles + '/data.yandex'))
-        self.create_object('splitter', 'FakeSplitter', 'test_splitter')
+        self.create_object('splitter',
+                           'LeaveOneOutSplitter',
+                           'test_splitter',
+                           approach='pointwise')
         self.create_delete_object('launch',
                                   'CrossValidation',
                                   data=3,
