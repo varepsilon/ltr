@@ -2624,7 +2624,7 @@ def ProcessFile(filename, vlevel):
   # should rely on the extension.
   if (filename != '-' and file_extension != 'cc' and file_extension != 'h'
       and file_extension != 'hpp' and file_extension != 'cpp'):
-    sys.stderr.write('Ignoring %s; not a .cc or .h file\n' % filename)
+    sys.stderr.write('Ignoring %s; not a .cc or .h or .cpp or .hpp file\n' % filename)
   else:
     ProcessFileData(filename, file_extension, lines, Error)
     if carriage_return_found and os.linesep != '\r\n':
