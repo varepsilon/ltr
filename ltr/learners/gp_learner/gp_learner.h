@@ -3,8 +3,6 @@
 #ifndef LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
 #define LTR_LEARNERS_GP_LEARNER_GP_LEARNER_H_
 
-#include "ltr/utility/boost/lexical_cast.h"
-
 #include <string>
 #include <sstream>
 #include <vector>
@@ -28,6 +26,7 @@
 #include "ltr/measures/reciprocal_rank.h"
 
 #include "ltr/parameters_container/parameters_container.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::vector;
 using std::string;
@@ -271,7 +270,8 @@ void GPLearner<TElement>::
     number_of_generations_ = parameters.Get<int>("NUMBER_OF_GENERATIONS", 3);
     min_init_depth_ = parameters.Get<int>("MIN_INIT_DEPTH", 2);
     max_init_depth_ = parameters.Get<int>("MAX_INIT_DEPTH", 5);
-    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY", 0.5);
+    init_grow_probability_ = parameters.Get<double>("INIT_GROW_PROBABILITY",
+                                                    0.5);
     seed_ = parameters.Get<int>("SEED", 1);
     population_handler_ =
         parameters.Get<vector<BasePopulationHandler::Ptr> >("STRATEGIES",

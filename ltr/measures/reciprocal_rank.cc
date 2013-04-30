@@ -1,12 +1,13 @@
 // Copyright 2011 Yandex
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/measures/reciprocal_rank.h"
+
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
 
-#include "ltr/measures/reciprocal_rank.h"
 #include "ltr/measures/utils/measure_utility.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::sort;
 using std::string;

@@ -15,7 +15,7 @@
 #include "ltr/data/utility/parsers/parser.h"
 #include "ltr/scorers/scorer.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::ifstream;
 using std::map;

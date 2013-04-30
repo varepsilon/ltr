@@ -16,7 +16,7 @@
 #include "ltr/data/utility/data_set_statistics.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/eigen_converters.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/shared_ptr.h"
 
 using std::vector;

@@ -9,7 +9,7 @@
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/boost/string_utils.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using ltr::utility::isNaN;
 using ltr::utility::lexical_cast;

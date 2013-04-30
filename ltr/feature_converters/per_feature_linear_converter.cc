@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <sstream>
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::logic_error;
 using std::stringstream;

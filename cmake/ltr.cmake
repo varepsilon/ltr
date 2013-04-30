@@ -114,7 +114,7 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
 SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/path.h
               ${Source_Path}/ltr/utility/boost/path.cc
-              ${Source_Path}/ltr/utility/boost/lexical_cast.h
+              ${Source_Path}/ltr/utility/boost/lexical_cast.hpp
               ${Source_Path}/ltr/utility/boost/multi_array.h
               ${Source_Path}/ltr/utility/boost/shared_ptr.h
               ${Source_Path}/ltr/utility/boost/string_utils.h

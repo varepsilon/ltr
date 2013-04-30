@@ -6,7 +6,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/serialization_test/generator/generator_utility.h"
 #include "ltr/serialization_test/generator/config.h"
 #include "ltr/scorers/scorer.h"

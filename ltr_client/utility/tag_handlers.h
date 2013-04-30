@@ -6,7 +6,7 @@
 #include <string>
 #include <map>
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/string_utils.h"
 
 using std::cout;
@@ -244,7 +244,7 @@ class TOnParameterTag: public TagHandler {
   static int toInt(const string& value) {
     try {
       return ltr::utility::lexical_cast<int>(value);
-    } catch(ltr::utility::bad_lexical_cast&) {
+    } catch(invalid_argument&) {
       throw logic_error("can not convert " + value + " to int");
     }
   }
@@ -258,7 +258,7 @@ class TOnParameterTag: public TagHandler {
   static double toDouble(const string& value) {
     try {
       return ltr::utility::lexical_cast<double>(value);
-    } catch(ltr::utility::bad_lexical_cast&) {
+    } catch(invalid_argument&) {
       throw logic_error("can not convert " + value + " to double");
     }
   }
@@ -290,7 +290,8 @@ class TOnParameterTag: public TagHandler {
       container->AddNew(name, ObjectDependency(value));
       rInfo("TOnParametersExecutor: Added TXmlTokenDependency %s %s\n",
            name.c_str(), value.c_str());
-    } else if (type.substr(0, 6) == "vector") {   //TODO: rewrite using split
+    } else if (type.substr(0, 6) == "vector") {
+        // TODO(skyhawk): rewrite using split
       int space_pos = type.find_last_of("\t ,");
       string subtype = type.substr(space_pos + 1);
       rInfo("Parsing vector of %s", subtype.c_str());
@@ -335,7 +336,7 @@ class TOnParameterTag: public TagHandler {
     if (pos_of_decimal_point != string::npos) {
       try {
         ltr::utility::lexical_cast<double>(value);
-      } catch(ltr::utility::bad_lexical_cast&) {
+      } catch(invalid_argument&) {
         return XML_TOKEN_DEPENDENCY_TYPE;
       }
       return "double";
@@ -343,7 +344,7 @@ class TOnParameterTag: public TagHandler {
 
     try {
       ltr::utility::lexical_cast<int>(value);
-    } catch(ltr::utility::bad_lexical_cast&) {
+    } catch(invalid_argument&) {
       return XML_TOKEN_DEPENDENCY_TYPE;
     }
     return "int";
@@ -392,7 +393,8 @@ class OnGeneralParameterized: public TagHandler {
 
     const char* approach = element->Attribute(APPROACH_ATTR);
     if (!approach) {
-      rWarning("No approach defined for '%s'. Trying to define automatically.", name);
+      rWarning("No approach defined for '%s'. Trying to define automatically.",
+               name);
       approach = "";
     }
     const char* tag_name = element->Value();

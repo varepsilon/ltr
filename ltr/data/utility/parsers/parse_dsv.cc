@@ -6,7 +6,7 @@
 #include <iostream>
 #include "ltr/data/utility/parsers/parse_dsv.h"
 #include "ltr/data/utility/parsers/parser_utils.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/numerical.h"
 
@@ -20,7 +20,6 @@ using std::stringstream;
 using ltr::io_utility::applyQuoting;
 using ltr::io_utility::escapeSplit;
 using ltr::NominalFeatureValues;
-using ltr::utility::bad_lexical_cast;
 using ltr::utility::lexical_cast;
 using ltr::utility::NaN;
 using ltr::utility::split;
@@ -62,7 +61,7 @@ void DSVParser::parseDataInfo(istream& in, // NOLINT
       if (feature_types[value_index] == NUMERIC) {
         try {
           lexical_cast<double>(values[value_index]);
-        } catch(bad_lexical_cast err) {
+        } catch(invalid_argument err) {
           feature_types[value_index] = NOMINAL;
         }
       }

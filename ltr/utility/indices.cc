@@ -5,7 +5,7 @@
 #include <algorithm>
 
 #include "ltr/utility/random_number_generator.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/string_utils.h"
 
 using std::logic_error;

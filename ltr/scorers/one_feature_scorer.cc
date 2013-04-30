@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::string;
 using std::stringstream;

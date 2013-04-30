@@ -55,7 +55,7 @@ void groupByIntMeta(const vector<Object>& objects,
       string value = objects[object_index].getMetaInfo(group_parameter);
       (*result)[ltr::utility::lexical_cast<int>(value)]
                        .push_back(objects[object_index]);
-    } catch(ltr::utility::bad_lexical_cast) {
+    } catch(invalid_argument) {
       throw std::logic_error("can't group objects by " + group_parameter);
     }
   }
@@ -70,7 +70,7 @@ void groupByFloatMeta(const vector<Object>& objects,
       string value = objects[object_index].getMetaInfo(group_parameter);
       (*result)[ltr::utility::lexical_cast<float>(value)]
                        .push_back(objects[object_index]);
-    } catch(ltr::utility::bad_lexical_cast) {
+    } catch(invalid_argument) {
       throw std::logic_error("can't group objects by " + group_parameter);
     }
 }
@@ -84,7 +84,7 @@ void groupByDoubleMeta(const vector<Object>& objects,
       string value = objects[object_index].getMetaInfo(group_parameter);
       (*result)[ltr::utility::lexical_cast<double>(value)]
                        .push_back(objects[object_index]);
-    } catch(ltr::utility::bad_lexical_cast) {
+    } catch(invalid_argument) {
       throw std::logic_error("can't group objects by " + group_parameter);
     }
 }

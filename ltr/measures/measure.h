@@ -5,7 +5,6 @@
 
 #include <rlog/rlog.h>
 
-#include "ltr/utility/boost/lexical_cast.h"
 #include <algorithm>
 #include <stdexcept>
 #include <string>
@@ -23,7 +22,7 @@
 
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/boost/shared_ptr.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::string;
 using std::logic_error;

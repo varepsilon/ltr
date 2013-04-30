@@ -3,7 +3,6 @@
 #ifndef LTR_SCORERS_SCORER_H_
 #define LTR_SCORERS_SCORER_H_
 
-#include "ltr/utility/boost/lexical_cast.h"
 #include <vector>
 #include <string>
 
@@ -13,9 +12,10 @@
 #include "ltr/interfaces/serializable_functor.h"
 #include "ltr/interfaces/printable.h"
 #include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::string;
-      
+
 namespace ltr {
 /**
  * \brief Class that can for every object evaluate a value - its rank, or score.

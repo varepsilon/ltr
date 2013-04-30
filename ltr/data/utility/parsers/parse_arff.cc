@@ -5,7 +5,7 @@
 
 #include "ltr/data/utility/parsers/parse_arff.h"
 #include "ltr/data/utility/parsers/parser_utils.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/numerical.h"
 

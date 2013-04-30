@@ -3,10 +3,10 @@
 #ifndef LTR_INTERFACES_FUNCTOR_H_
 #define LTR_INTERFACES_FUNCTOR_H_
 
-#include "ltr/utility/boost/shared_ptr.h"
-#include "ltr/utility/boost/lexical_cast.h"
-
 #include <string>
+
+#include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 #include "ltr/data/object.h"
 

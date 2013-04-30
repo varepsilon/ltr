@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/scorers/scorer.h"
 
 using std::string;

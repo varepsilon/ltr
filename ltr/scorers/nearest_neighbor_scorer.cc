@@ -9,7 +9,7 @@
 #include <sstream>
 
 #include "ltr/data/object.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::string;
 using std::pair;

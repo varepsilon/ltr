@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "ltr/utility/boost/shared_ptr.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::vector;
 using std::string;

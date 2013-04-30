@@ -7,7 +7,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/utility/io_utility.h"
 #include "ltr/scorers/fake_scorer.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/path.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/random_number_generator.h"

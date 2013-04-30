@@ -1,6 +1,5 @@
 // Copyright 2011 Yandex
 
-#include "ltr/utility/boost/lexical_cast.h"
 #include <string>
 #include <sstream>
 #include <algorithm>
@@ -9,6 +8,7 @@
 
 #include "ltr/measures/average_precision.h"
 #include "ltr/measures/utils/measure_utility.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using std::sort;
 using std::string;

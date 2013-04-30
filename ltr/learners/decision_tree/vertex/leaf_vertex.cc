@@ -2,7 +2,7 @@
 
 #include "ltr/learners/decision_tree/vertex/leaf_vertex.h"
 
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using ltr::utility::lexical_cast;
 

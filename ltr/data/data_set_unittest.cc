@@ -12,7 +12,7 @@
 #include "ltr/data/utility/data_set_converters.h"
 
 #include "ltr/utility/random_number_generator.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using ltr::utility::convertDataSet;
 using ltr::utility::randomizer;

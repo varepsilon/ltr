@@ -5,7 +5,7 @@
 #include "ltr/learners/decision_tree/vertex/decision_vertex.h"
 
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/boost/lexical_cast.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
 using ltr::utility::lexical_cast;
 using ltr::utility::Inf;
