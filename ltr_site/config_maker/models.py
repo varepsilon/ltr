@@ -88,6 +88,7 @@ class Solution(models.Model):
         # deprecated
         obj = form.save(commit=False)
         obj.save()
+        form.save_m2m()
 
     def get_content_filename(self, filename):
         """Creates filename for file being saved to disk."""
