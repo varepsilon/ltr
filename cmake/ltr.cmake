@@ -325,6 +325,18 @@ SET(OPTIMIZATION_TEST_PROBLEMS ${Source_Path}/ltr/optimization/test_problems/con
                                ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.cc
                                ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.h)
 
+SET(OPTIMIZATION_POPULATION_INITERS  ${Source_Path}/ltr/optimization/population_initers/population.h
+                                    ${Source_Path}/ltr/optimization/population_initers/population.cc
+                                    ${Source_Path}/ltr/optimization/population_initers/naive_initer.h
+                                    ${Source_Path}/ltr/optimization/population_initers/naive_initer.cc
+                                    ${Source_Path}/ltr/optimization/population_initers/population_initer.h)
+
+SET(OPTIMIZATION_STOP_CRITERIA ${Source_Path}/ltr/optimization/stop_criteria/and_or_stop_criteria.hpp
+                               ${Source_Path}/ltr/optimization/stop_criteria/one_point_stop_criteria.hpp
+                               ${Source_Path}/ltr/optimization/stop_criteria/one_point_stop_criterion.h
+                               ${Source_Path}/ltr/optimization/stop_criteria/vote_aggregator.cc
+                               ${Source_Path}/ltr/optimization/stop_criteria/vote_aggregator.h)
+
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
 
@@ -363,6 +375,8 @@ SOURCE_GROUP(crossvalidation FILES ${LTR_CROSSVALIDATION})
 SOURCE_GROUP(optimization\\functions FILES ${OPTIMIZATION_FUNCTIONS})
 SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
 SOURCE_GROUP(optimization\\test_problems FILES ${OPTIMIZATION_TEST_PROBLEMS})
+SOURCE_GROUP(optimization\\population_initers FILES ${OPTIMIZATION_POPULATION_INITERS})
+SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOP_CRITERIA})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_SHARED_PTR} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
@@ -372,6 +386,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS}
-            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS})
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS} ${OPTIMIZATION_POPULATION_INITERS} ${OPTIMIZATION_STOP_CRITERIA})
 
 INCLUDE_DIRECTORIES(${Source_Path})
