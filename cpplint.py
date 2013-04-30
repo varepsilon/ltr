@@ -1877,7 +1877,7 @@ def CheckStyle(filename, clean_lines, linenum, file_extension, error):
 
   # Check if the line is a header guard.
   is_header_guard = False
-  if file_extension == 'h':
+  if file_extension == 'h' or file_extension == 'hpp':
     cppvar = GetHeaderGuardCPPVariable(filename)
     if (line.startswith('#ifndef %s' % cppvar) or
         line.startswith('#define %s' % cppvar) or
@@ -2196,7 +2196,7 @@ def CheckLanguage(filename, clean_lines, linenum, file_extension, include_state,
     error(filename, linenum, 'runtime/init', 4,
           'You seem to be initializing a member variable with itself.')
 
-  if file_extension == 'h':
+  if file_extension == 'h' or file_extension == 'hpp':
     # TODO(unknown): check that 1-arg constructors are explicit.
     #                How to tell it's a constructor?
     #                (handled in CheckForNonStandardConstructs for now)
@@ -2319,7 +2319,7 @@ def CheckLanguage(filename, clean_lines, linenum, file_extension, include_state,
   # Check for use of unnamed namespaces in header files.  Registration
   # macros are typically OK, so we allow use of "namespace {" on lines
   # that end with backslashes.
-  if (file_extension == 'h'
+  if ((file_extension == 'h' or file_extension == 'hpp')
       and Search(r'\bnamespace\s*{', line)
       and line[-1] != '\\'):
     error(filename, linenum, 'build/namespaces', 4,
@@ -2555,7 +2555,7 @@ def ProcessFileData(filename, file_extension, lines, error):
 
   CheckForCopyright(filename, lines, error)
 
-  if file_extension == 'h':
+  if file_extension == 'h' or file_extension == 'hpp':
     CheckForHeaderGuard(filename, lines, error)
 
   RemoveMultiLineComments(filename, lines, error)
@@ -2624,7 +2624,8 @@ def ProcessFile(filename, vlevel):
   # should rely on the extension.
   if (filename != '-' and file_extension != 'cc' and file_extension != 'h'
       and file_extension != 'hpp' and file_extension != 'cpp'):
-    sys.stderr.write('Ignoring %s; not a .cc or .h or .cpp or .hpp file\n' % filename)
+    sys.stderr.write(
+        'Ignoring %s; not a .cc or .h or .cpp or .hpp file\n' % filename)
   else:
     ProcessFileData(filename, file_extension, lines, Error)
     if carriage_return_found and os.linesep != '\r\n':
