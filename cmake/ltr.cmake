@@ -64,8 +64,7 @@ SET(LTR_DECISION_TREE_VERTEX ${Source_Path}/ltr/learners/decision_tree/vertex/ve
                              ${Source_Path}/ltr/learners/decision_tree/vertex/leaf_vertex.h
                              ${Source_Path}/ltr/learners/decision_tree/vertex/leaf_vertex.cc)
 
-SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/object_utility.h
-                   ${Source_Path}/ltr/data/utility/data_set_converters.h
+SET(LTR_DATA_UTILS ${Source_Path}/ltr/data/utility/data_set_converters.h
                    ${Source_Path}/ltr/data/utility/data_set_converters.cc
                    ${Source_Path}/ltr/data/utility/data_set_statistics.h
                    ${Source_Path}/ltr/data/utility/data_set_statistics.cc

@@ -101,3 +101,6 @@ TARGET_LINK_LIBRARIES(ltr_test ltr gtest)
 
 # lets copy the test data to the build directory
 INCLUDE(${Source_Path}/cmake/copy_test_data.cmake)
+
+ADD_CUSTOM_COMMAND(TARGET ltr POST_BUILD
+                   COMMAND python ../create_header.py ../ltr > ../LTR.h)

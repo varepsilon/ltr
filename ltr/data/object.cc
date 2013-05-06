@@ -6,8 +6,6 @@
 
 #include "ltr/data/object.h"
 
-#include "ltr/data/utility/object_utility.h"
-
 #include "ltr/utility/numerical.h"
 
 #include "ltr/data/stand_alone_object_representation.h"
