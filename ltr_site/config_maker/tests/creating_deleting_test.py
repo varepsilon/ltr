@@ -100,4 +100,4 @@ class AuthCreatingDeletingTestCase(CreatingDeletingTestCase):
 
     def setUp(self):
         super(LTRObjectsTestCase, self).setUp()
-        self.login()
+        self.login('test_user')

@@ -11,7 +11,8 @@ from django.views.decorators.http import (require_POST, require_GET,
                                           require_http_methods)
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
-from django.forms.models import modelform_factory
+from django.forms.models import (modelform_factory, ModelChoiceField,
+                                 ModelMultipleChoiceField)
 from django.db import IntegrityError
 from django.conf import settings
 
@@ -297,6 +298,9 @@ def view_get_object_parameters(request):
         object_names = list(obj.name for obj in objects)
         name = get_unique_name(type_, object_names)
         form = form_type(initial={'name': name})
+        for field in form.fields.values():
+            if type(field) in (ModelChoiceField, ModelMultipleChoiceField):
+                field.queryset = field.queryset.filter(solution=solution)
         return render_to_response('_object_properties.html',
                                   {'form_object_parameters': form,
                                    'mode': mode,
