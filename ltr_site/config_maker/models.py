@@ -252,7 +252,6 @@ class BaseObject(InheritanceCastModel):
         def is_pointer_to_base_class(field):
             return field.name.endswith('_ptr')
 
-        # TODO: make sure that ManyToMany fields are processed correctly
         fields = {}
         for field in self._meta.fields:
             if not (is_auxiliary_field(field) or
@@ -261,6 +260,10 @@ class BaseObject(InheritanceCastModel):
                 if isinstance(value, BaseObject):
                     value = value.name
                 fields[field.name] = value
+        for field in self._meta.many_to_many:
+            value = getattr(self, field.name)
+            names = [item.name for item in value.all()]
+            fields[field.name] = ','.join(names)
         return fields
 
     class Meta:
