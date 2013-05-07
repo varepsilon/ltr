@@ -28,7 +28,7 @@ string FakeFeatureConverter::generateCppCode(
 
 void FakeFeatureConverter::applyImpl(
   const Object& input, Object* output) const {
-    *output = input.deepCopy();
+    output->set_eigen_features(input.eigen_features());
 }
 
 string FakeFeatureConverter::getDefaultAlias() const {

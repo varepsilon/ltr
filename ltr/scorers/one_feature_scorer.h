@@ -33,7 +33,7 @@ class OneFeatureScorer : public Scorer {
 
  private:
   double scoreImpl(const Object& obj) const {
-    return obj.features().at(index_);
+    return obj.at(index_);
   }
 
   virtual string toStringImpl() const;

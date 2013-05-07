@@ -49,10 +49,10 @@ class NormalNaiveBayesDensityLearner
     for (int subset_index = 0;
          subset_index < splitted_data.size();
          ++subset_index) {
-      vector<double> variance;
+      VectorXd variance;
       CalculateFeaturesVariance(splitted_data[subset_index], &variance);
       double label = splitted_data[subset_index][0].actual_label();
-      (*result)[label] = StdVectorToEigenVector(variance);
+      (*result)[label] = variance;
     }
   }
 

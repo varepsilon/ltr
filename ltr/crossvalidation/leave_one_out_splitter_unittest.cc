@@ -26,7 +26,7 @@ TEST_F(SplitterTest, LeaveOneOutSplitterTest) {
     EXPECT_EQ(1, spl_data.test_set.size());
     EXPECT_EQ(data.size() - 1, spl_data.train_set.size());
 
-    int test_object_feature = spl_data.test_set.at(0).features().at(0);
+    int test_object_feature = spl_data.test_set.at(0).at(0);
     EXPECT_FALSE(used[test_object_feature]);
     used[test_object_feature] = true;
   }

@@ -21,8 +21,8 @@ namespace utility {
  */
 template <typename TElement>
 void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
-                             vector<double>* min_features_values,
-                             vector<double>* max_features_values);
+                             VectorXd* min_features_values,
+                             VectorXd* max_features_values);
 
 /**
  * \brief Calculates average value of each feature for given dataset.
@@ -31,9 +31,9 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
  */
 template <typename TElement>
 void getFeaturesAverageValues(const DataSet<TElement>& dataset,
-                              vector<double>* average_values) {
+                              VectorXd* average_values) {
   average_values->resize(dataset.feature_count());
-  fill(average_values->begin(), average_values->end(), 0);
+  average_values->setConstant(0);
 
   if ((int)dataset.feature_count() == 0) {
     return;
@@ -50,7 +50,7 @@ void getFeaturesAverageValues(const DataSet<TElement>& dataset,
       for (int feature_index = 0;
            feature_index < (int)dataset.feature_count();
            ++feature_index) {
-        average_values->at(feature_index) +=
+        average_values->operator()(feature_index) +=
             per_object_accessor.object(object_index)[feature_index];
       }
     }
@@ -59,7 +59,7 @@ void getFeaturesAverageValues(const DataSet<TElement>& dataset,
   for (int feature_index = 0;
        feature_index < (int)dataset.feature_count();
        ++feature_index) {
-    average_values->at(feature_index) /= (int)dataset.size();
+    average_values->operator()(feature_index) /= (int)dataset.size();
   }
 }
 

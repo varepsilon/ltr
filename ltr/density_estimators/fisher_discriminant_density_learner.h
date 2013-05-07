@@ -37,7 +37,6 @@ using ltr::utility::CalculateLabelsCapacity;
 using ltr::utility::LabelToCapacity;
 using ltr::utility::SplitDataSetByActualLabel;
 using ltr::utility::CalculateFeaturesMean;
-using ltr::utility::StdVectorToEigenVector;
 using ltr::utility::InitEigenMatrix;
 using ltr::utility::InitEigenVector;
 using ltr::utility::extractAllObjects;
@@ -74,9 +73,9 @@ class FisherDiscriminantDensityLearner : public
          subset_index < splitted_data.size();
          ++subset_index) {
       double label = splitted_data[subset_index][0].actual_label();
-      vector<double> mean;
+      VectorXd mean;
       CalculateFeaturesMean(splitted_data[subset_index], &mean);
-      (*result)[label] = StdVectorToEigenVector(mean);
+      (*result)[label] = mean;
     }
   }
 
@@ -94,7 +93,7 @@ class FisherDiscriminantDensityLearner : public
     DataSet<Object> data = extractAllObjects(data_set);
     for (int object_index = 0; object_index < data.size(); ++object_index) {
       VectorXd features =
-        StdVectorToEigenVector(data[object_index].features());
+        data[object_index].eigen_features();
       LabelToMean::const_iterator mean_iterator =
         mean.find(data[object_index].actual_label());
 

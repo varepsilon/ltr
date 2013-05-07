@@ -34,7 +34,9 @@ namespace serialization_test {
       << "#include \"ltr/serialization_test/generator/config.h\"\n"
       << "#include \"ltr/serialization_test/tester/tester_utility.h\"\n\n"
       << "#include \"ltr/data/data_set.h\"\n"
-      << "#include \"ltr/data/utility/io_utility.h\"\n\n"
+      << "#include \"ltr/data/utility/io_utility.h\"\n"
+      << "#include \"ltr/utility/eigen_converters.h\"\n\n"
+      << "using ltr::utility::EigenVectorToStdVector;\n"
       << "using std::vector;\n"
       << "using ltr::Object;\n"
       << "using ltr::DataSet;\n"
@@ -87,7 +89,7 @@ namespace serialization_test {
            ++feature_index) {
         tester_code << "  test_data[" << object_index << "].push_back("
           << lexical_cast<string>(
-          processed_data[object_index].features()[feature_index]) << ");\n";
+          processed_data[object_index][feature_index]) << ");\n";
         }
     }
 
@@ -111,8 +113,10 @@ namespace serialization_test {
     tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
       << "  vector<double> testing_labels;\n"
       << "  for (int i = 0; i < dataset.size(); ++i) {\n"
+      << "    vector<double> test;\n"
+      << "    EigenVectorToStdVector(dataset[i], &test);\n"
       << "    testing_labels.push_back(SavedScorer"
-      << serializating_object_number << "(dataset[i].features()));\n"
+      << serializating_object_number << "(test));\n"
       << "  }\n"
       << "  checkLabels" << serializating_object_number
       << "(testing_labels);\n" << "}\n\n";
@@ -138,8 +142,10 @@ namespace serialization_test {
     tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
       << "  vector<vector<double> > testing_data(dataset.size());\n"
       << "  for (int i = 0; i < dataset.size(); ++i) {\n"
+      << "    vector<double> test;\n"
+      << "    EigenVectorToStdVector(dataset[i], &test);\n"
       << "    SavedFeatureConverter" << serializating_object_number
-      << "(dataset[i].features(), &testing_data[i]);\n"
+      << "(test, &testing_data[i]);\n"
       << "  }\n"
       << "  checkFeatures" << serializating_object_number
       << "(testing_data);\n" << "}\n\n";

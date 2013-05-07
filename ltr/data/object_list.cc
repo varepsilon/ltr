@@ -10,20 +10,30 @@
 namespace ltr {
 ObjectList::ObjectList() : objects_(new vector<Object>()) {}
 
-const Object& ObjectList::operator[](int i) const {
-  return at(i);
+ObjectList::ObjectList(InnerRepresentation::Ptr presentation,
+                       ElementBounds bounds) {
+  objects_ = new vector<Object>();
+
+  for (int object_index = bounds.start_line_index;
+       object_index < bounds.end_line_index;
+       ++object_index)
+    (*objects_).push_back(Object(presentation, object_index));
 }
 
-Object& ObjectList::operator[](int i) {
-  return at(i);
+const Object& ObjectList::operator[](int index) const {
+  return at(index);
 }
 
-const Object& ObjectList::at(int i) const {
-  return (*objects_)[i];
+Object& ObjectList::operator[](int index) {
+  return at(index);
 }
 
-Object& ObjectList::at(int i) {
-    return (*objects_)[i];
+const Object& ObjectList::at(int index) const {
+  return (*objects_)[index];
+}
+
+Object& ObjectList::at(int index) {
+    return (*objects_)[index];
 }
 
 ObjectList& ObjectList::operator<<(const Object& obj) {

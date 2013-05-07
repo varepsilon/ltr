@@ -8,6 +8,11 @@
 #include <string>
 #include <vector>
 
+#include "ltr/utility/macros.h"
+
+#include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/numerical.h"
+
 #include "ltr/data/object.h"
 #include "ltr/data/object_list.h"
 #include "ltr/data/object_pair.h"
@@ -15,13 +20,22 @@
 #include "ltr/data/per_object_accessor.h"
 #include "ltr/interfaces/aliaser.h"
 
-using std::vector;
+
 
 namespace ltr {
 /** 
  * The default weight for an element in data set.
  */
 const double DEFAULT_ELEMENT_WEIGHT = 1.0;
+
+using std::vector;
+using std::map;
+using ltr::utility::shared_ptr;
+using ltr::utility::DoubleEqual;
+
+using Eigen::VectorXd;
+using Eigen::MatrixXd;
+
 /**
  * \brief Template class that implements DataSet.
  *
@@ -70,7 +84,7 @@ class DataSet : public Printable, public Aliaser {
   /**
    * Adds an element(Object, ObjectPair, ObjectList etc.) to the DataSet.
    */
-  DataSet& operator<<(const TElement& element);
+  DataSet<TElement>& operator<<(const TElement& element);
   /**
    * Adds an element(Object, ObjectPair, ObjectList etc.) with
    * DEFAULT_ELEMENT_WEIGHT to the DataSet.
@@ -127,7 +141,7 @@ class DataSet : public Printable, public Aliaser {
   DataSet<TElement> deepCopy() const;
   /**
    * Creates new DataSet, which contains easy copies of elements
-   * with given indexes (easy means that they share objects' resources: feature
+   * with given indices (easy means that they share objects' resources: feature
    * vectors, objects' meat information).
    *
    * \param indices the indices of elements from data based on those the subset
@@ -138,16 +152,7 @@ class DataSet : public Printable, public Aliaser {
    * Function for serialization dataset into string.
    */
   virtual string toString() const;
-
  private:
-  /**
-   * Shared pointer to the actual vector, in which the elements are stored.
-   */
-  ltr::utility::shared_ptr<vector<TElement> > elements_;
-  /**
-   * The information about objects that are stored in the DataSet.
-   */
-  FeatureInfo::Ptr feature_info_;
   /**
    * Information about label value type
    */
@@ -155,7 +160,17 @@ class DataSet : public Printable, public Aliaser {
   /**
    * Shared pointer to the vector of elements' weights.
    */
-  ltr::utility::shared_ptr<vector<double> > weights_;
+  mutable vector<double> weights_;
+  /** Each element has its objects in the matrix ob lines, defined by this bounds
+   */
+  vector<ElementBounds> element_bounds_;
+  /** Representation for objects storage
+   */
+  shared_ptr<InnerRepresentation> inner_representation_;
+  shared_ptr<FeatureInfo> feature_info_;
+  /** Vector of elements of the data set
+   */
+  vector< shared_ptr<TElement> > element_vector_;
   /**
    * Returns default alias of class
    */
@@ -177,30 +192,31 @@ typedef DataSet<ObjectPair> PairwiseDataSet;
 typedef DataSet<ObjectList> ListwiseDataSet;
 
 template <typename TElement>
-DataSet<TElement>::DataSet(
-    const FeatureInfo& feature_info,
-    const LabelInfo& label_info)
-  : feature_info_(new FeatureInfo(feature_info)),
-    label_info_(new LabelInfo(label_info)),
-    elements_(new vector<TElement>()),
-    weights_(new vector<double>()) {}
+DataSet<TElement>::DataSet(const FeatureInfo& feature_info,
+                           const LabelInfo& label_info) {
+  feature_info_ = new FeatureInfo(feature_info);
+  label_info_ = new LabelInfo(label_info);
+  inner_representation_ = new InnerRepresentation(0,
+                                              feature_info_->feature_count());
+}
 
-template<typename TElement>
-DataSet<TElement>::~DataSet() {}
+template <typename TElement>
+inline DataSet<TElement>::~DataSet() { }
 
-template<typename TElement>
-const FeatureInfo& DataSet<TElement>::feature_info() const {
+template <typename TElement>
+inline const FeatureInfo& DataSet<TElement>::feature_info() const {
   return *feature_info_;
 }
 
-template<typename TElement>
-void DataSet<TElement>::set_feature_info(const FeatureInfo &feature_info) {
-  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(feature_info));
+template <typename TElement>
+inline void DataSet<TElement>::set_feature_info(const FeatureInfo& info) {
+  feature_info_ = FeatureInfo::Ptr(new FeatureInfo(info));
+  inner_representation_->set_row_count(info.feature_count());
 }
 
 template <typename TElement>
 int DataSet<TElement>::feature_count() const {
-  return this->feature_info().feature_count();
+  return feature_info_->feature_count();
 }
 
 template<typename TElement>
@@ -222,73 +238,104 @@ DataSet<TElement>& DataSet<TElement>::operator<<(const TElement& element) {
 }
 
 template <typename TElement>
-void DataSet<TElement>::add(const TElement& element) {
+inline void DataSet<TElement>::add(const TElement& element) {
   this->add(element, DEFAULT_ELEMENT_WEIGHT);
 }
 
 template <typename TElement>
-void DataSet<TElement>::add(const TElement& element, double weight) {
-  PerObjectAccessor<const TElement> per_object_accessor(&element);
-  if (feature_info_ == FeatureInfo::Ptr() ||
-      feature_info_->feature_count() == 0) {
+inline void DataSet<TElement>::add(const TElement& element, double weight) {
+  PerObjectAccessor<const TElement> accessor(&element);
+  if ((bool)feature_info_ || feature_info_->feature_count() == 0) {
     feature_info_ = FeatureInfo::Ptr(
-      new FeatureInfo(per_object_accessor.object(0).feature_count()));
+      new FeatureInfo(accessor.object(0).feature_count()));
+    inner_representation_->set_row_count(feature_info_->feature_count());
   }
-  (*elements_).push_back(element.deepCopy());
-  (*weights_).push_back(weight);
-}
 
-template <typename TElement>
-int DataSet<TElement>::size() const {
-  return elements_->size();
-}
+  int start_index = inner_representation_->column_count();
 
-template <typename TElement>
-void DataSet<TElement>::clear() {
-  elements_->clear();
-  weights_->clear();
-  feature_info_->clear();
+  inner_representation_->add_several_objects(accessor.object_count());
+
+  for (int object_index = 0;
+       object_index < accessor.object_count();
+       ++object_index) {
+    Object to_push = accessor.object(object_index);
+
+    CHECK(to_push.feature_count() == inner_representation_->row_count())
+
+    int presentation_index = start_index + object_index;
+
+    inner_representation_->set_actual_label(presentation_index,
+                                          to_push.actual_label());
+    inner_representation_->set_predicted_label(presentation_index,
+                                             to_push.predicted_label());
+    inner_representation_->set_meta_info(presentation_index,
+                                       to_push.presentation_->meta_info());
+    inner_representation_->set_features_column(presentation_index,
+                                          to_push.eigen_features());
+  }
+
+  element_bounds_.push_back(ElementBounds(start_index, start_index +
+                                          accessor.object_count()));
+  weights_.push_back(weight);
+
+  element_vector_.push_back(
+    new TElement(inner_representation_,
+                 element_bounds_[element_bounds_.size() - 1]));
 }
 
 template <typename TElement>
 void DataSet<TElement>::erase(int element_index) {
-  elements_->erase(elements_->begin() + element_index);
-  weights_->erase(weights_->begin() + element_index);
+  // Warning! Currently does nothing!
 }
 
 template <typename TElement>
-const TElement& DataSet<TElement>::at(int element_index) const {
-  return (*elements_)[element_index];
+inline int DataSet<TElement>::size() const {
+  return element_vector_.size();
 }
 
 template <typename TElement>
-TElement& DataSet<TElement>::at(int element_index) {
-  return (*elements_)[element_index];
+inline void DataSet<TElement>::clear() {
+  element_vector_.clear();
+  element_bounds_.clear();
+  weights_.clear();
+  inner_representation_ = new InnerRepresentation(0,
+                                              feature_info().feature_count());
 }
 
 template <typename TElement>
-const TElement& DataSet<TElement>::operator[](int element_index) const {
-  return at(element_index);
+inline const TElement& DataSet<TElement>::operator[](int element_index) const {
+  return this->at(element_index);
 }
 
 template <typename TElement>
-TElement& DataSet<TElement>::operator[](int element_index) {
-  return at(element_index);
+inline TElement& DataSet<TElement>::operator[](int element_index) {
+  return this->at(element_index);
 }
 
 template <typename TElement>
-double DataSet<TElement>::getWeight(int element_index) const {
-  return (*weights_)[element_index];
+inline const TElement& DataSet<TElement>::at(int element_index) const {
+  return *(element_vector_[element_index]);
 }
 
 template <typename TElement>
-void DataSet<TElement>::setWeight(int element_index, double weight) const {
-  (*weights_)[element_index] = weight;
+inline TElement& DataSet<TElement>::at(int element_index) {
+  return  *(element_vector_[element_index]);
 }
 
-template<typename TElement>
-DataSet<TElement> DataSet<TElement>::deepCopy() const {
-  DataSet<TElement> result(this->feature_info(), this->label_info());
+template <typename TElement>
+inline double DataSet<TElement>::getWeight(int element_index) const {
+  return weights_[element_index];
+}
+
+template <typename TElement>
+inline void DataSet<TElement>::setWeight(int element_index,
+                                         double weight) const {
+  weights_[element_index] = weight;
+}
+
+template <typename TElement>
+inline DataSet<TElement> DataSet<TElement>::deepCopy() const {
+  DataSet<TElement> result(this->feature_info());
   for (int element_index = 0;
        element_index < (int)this->size();
        ++element_index) {
@@ -297,8 +344,25 @@ DataSet<TElement> DataSet<TElement>::deepCopy() const {
   return result;
 }
 
-template<typename TElement>
-string DataSet<TElement>::toString() const {
+template <typename TElement>
+DataSet<TElement>
+DataSet<TElement>::lightSubset(const vector<int>& indices) const {
+  DataSet result(feature_info());
+  result.inner_representation_ = this->inner_representation_;
+
+  for (int indices_index = 0; indices_index < (int)indices.size(); ++indices_index) {  // NOLINT
+    CHECK(indices[indices_index] < size() && indices[indices_index] >= 0);
+    result.element_bounds_.push_back(element_bounds_[indices[indices_index]]);
+    result.element_vector_.push_back(
+      new TElement(result.inner_representation_,
+                   result.element_bounds_[indices_index]));
+    result.weights_.push_back(weights_[indices[indices_index]]);
+  }
+  return result;
+}
+
+template <typename TElement>
+inline string DataSet<TElement>::toString() const {
   std::stringstream str;
   for (int element_index = 0; element_index < (int)size(); ++element_index) {
     str << (*this)[element_index].toString() << std::endl;
@@ -310,9 +374,6 @@ template<typename TElement>
 bool operator==(const DataSet<TElement>& lhs,
                 const DataSet<TElement>& rhs) {
   if (lhs.feature_info() != rhs.feature_info()) {
-    return false;
-  }
-  if (!(lhs.label_info() == rhs.label_info())) {
     return false;
   }
   if (lhs.size() != rhs.size()) {
@@ -337,21 +398,6 @@ bool operator==(const DataSet<TElement>& lhs,
     }
   }
   return true;
-}
-
-template <typename TElement>
-DataSet<TElement>
-DataSet<TElement>::lightSubset(const vector<int>& indices) const {
-  DataSet<TElement> resultDataSet(feature_info());
-
-  for (int index_index = 0; index_index < (int)indices.size(); ++index_index) {
-    if (indices[index_index] > size()) {
-      throw std::logic_error("Index is too large");
-    }
-    resultDataSet.elements_->push_back(elements_->at(indices[index_index]));
-    resultDataSet.weights_->push_back(getWeight(indices[index_index]));
-  }
-  return resultDataSet;
 }
 };
 #endif  // LTR_DATA_DATA_SET_H_

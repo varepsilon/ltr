@@ -73,11 +73,11 @@ void SplitDataSetByActualLabel(
  */
 template<class TElement>
 void CalculateFeaturesMean(const DataSet<TElement>& data,
-                           vector<double>* mean) {
+                           VectorXd* mean) {
   PerObjectAccessor<const TElement> per_object_accessor(&data[0]);
   int number_of_features = per_object_accessor.object(0).feature_count();
 
-  mean->assign(number_of_features, 0);
+  mean->setZero(number_of_features);
   int data_size = 0;
 
   for (int element_index = 0; element_index < data.size(); ++element_index) {
@@ -107,12 +107,12 @@ void CalculateFeaturesMean(const DataSet<TElement>& data,
  */
 template<class TElement>
 void CalculateFeaturesVariance(const DataSet<TElement>& data,
-                               vector<double>* variance) {
-  vector<double> mean;
+                               VectorXd* variance) {
+  VectorXd mean;
   CalculateFeaturesMean(data, &mean);
 
   int number_of_features = data[0].feature_count();
-  variance->assign(number_of_features, 0);
+  variance->setZero(number_of_features);
   int data_size = 0;
 
   for (int element_index = 0; element_index < data.size(); ++element_index) {
@@ -144,7 +144,7 @@ void CalculateFeaturesVariance(const DataSet<TElement>& data,
 template<class TElement>
 static void CalculateActualLabelToFeaturesMean(
     const DataSet<TElement>& data,
-    map<double, vector<double> >* result) {
+    map<double, VectorXd >* result) {
 
   vector<DataSet<Object> > splitted_data;
   SplitDataSetByActualLabel(data, &splitted_data);

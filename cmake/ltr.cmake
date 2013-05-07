@@ -17,8 +17,16 @@ SET(LTR_DATA ${Source_Path}/ltr/data/data_set.h ${Source_Path}/ltr/data/data_set
              ${Source_Path}/ltr/data/object_pair.h ${Source_Path}/ltr/data/object_pair.cc
              ${Source_Path}/ltr/data/object_list.h ${Source_Path}/ltr/data/object_list.cc
              ${Source_Path}/ltr/data/object.h ${Source_Path}/ltr/data/object.cc
-             ${Source_Path}/ltr/data/feature_info.h ${Source_Path}/ltr/data/feature_info.cc
-             ${Source_Path}/ltr/data/per_object_accessor.h)
+             ${Source_Path}/ltr/data/feature_info.h
+             ${Source_Path}/ltr/data/feature_info.cc
+             ${Source_Path}/ltr/data/per_object_accessor.h
+             ${Source_Path}/ltr/data/object_representation.h
+             ${Source_Path}/ltr/data/inner_representation.h
+             ${Source_Path}/ltr/data/inner_representation.cc
+             ${Source_Path}/ltr/data/data_set_object_representation.h
+             ${Source_Path}/ltr/data/data_set_object_representation.cc
+             ${Source_Path}/ltr/data/stand_alone_object_representation.h
+             ${Source_Path}/ltr/data/stand_alone_object_representation.cc)
 
 SET(LTR_DECISION_TREE ${Source_Path}/ltr/learners/decision_tree/decision_tree.h
                       ${Source_Path}/ltr/learners/decision_tree/decision_tree.cc

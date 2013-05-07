@@ -3,6 +3,7 @@
 #define LTR_DENSITY_ESTIMATORS_BASE_PROBABILITY_DENSITY_LEARNER_H_
 
 #include <map>
+#include <functional>
 
 #include "contrib/include_Eigen.h"
 
@@ -25,7 +26,6 @@ using ltr::DataSet;
 using ltr::Object;
 using ltr::ParametersContainer;
 using ltr::Parameterized;
-using ltr::utility::StdVectorToEigenVector;
 
 namespace ltr {
 
@@ -44,7 +44,8 @@ typedef map<Label, VectorXd, std::less<Label>,
  * Map representing the covariance matrix of the class with some certain label.
  */
 typedef map<Label, MatrixXd, std::less<Label>,
-            aligned_allocator<std::pair<Label, MatrixXd> > > LabelToCovarianceMatrix;
+            aligned_allocator<std::pair<Label, MatrixXd> > >
+              LabelToCovarianceMatrix;
 
 /**
  * \brief Simple interface of the probability density estimation learner.

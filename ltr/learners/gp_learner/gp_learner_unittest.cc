@@ -51,13 +51,14 @@ using ltr::gp::CrossoverAdjacentTreesStrategy;
 class GPLearnerTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
+    string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");  // NOLINT
     learn_data = loadDataSet<Object>(learn_data_file_name, "YANDEX");
 
     NanToNeutralConverter::Ptr nan_to_zero_converter
     (new NanToNeutralConverter(learn_data.feature_info()));
     Object zero_features_object;
-    zero_features_object.features().assign(learn_data.feature_count(), 0.0);
+    zero_features_object.set_eigen_features(
+      Eigen::VectorXd::Zero(learn_data.feature_count()));
     nan_to_zero_converter->set_neutral_object(zero_features_object);
     nan_to_zero_converter->apply(learn_data, &learn_data);
   }
@@ -69,7 +70,7 @@ TEST_F(GPLearnerTest, GPLearnerTest) {
   Measure<ObjectList>::Ptr pMeasure(new DCG());
   GPLearner<ObjectList> gp_learner(pMeasure);
 
-  string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");
+  string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");  // NOLINT
 
   DataSet<ObjectList> learn_data_listwise =
     loadDataSet<ObjectList>(learn_data_file_name, "YANDEX");

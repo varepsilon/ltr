@@ -59,9 +59,9 @@ string RemoveNominalConverter::generateCppCode(
 void RemoveNominalConverter::applyImpl(const Object& input,
                                              Object* output) const {
   Object converted_object = input.deepCopy();
-  converted_object.features().clear();
+  converted_object.clear();
   for (int input_feature_index = 0;
-       input_feature_index < (int)input.features().size();
+       input_feature_index < (int)input.feature_count();
        ++input_feature_index) {
     if (input_feature_info_.getFeatureType(input_feature_index) != NOMINAL) {
       converted_object << input[input_feature_index];

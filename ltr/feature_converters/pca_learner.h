@@ -26,7 +26,6 @@ using std::logic_error;
 
 using ltr::LinearConverter;
 using ltr::utility::getFeaturesAverageValues;
-using ltr::utility::StdVectorToEigenVector;
 using ltr::utility::DataSetToEigenMatrix;
 using ltr::utility::InitEigenVector;
 using ltr::utility::shared_ptr;
@@ -172,9 +171,8 @@ PCALearner<TElement>::PCALearner(const ParametersContainer& parameters)
 template <typename TElement>
 void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
                                      LinearConverter* linear_converter) {
-  Features average_features;
-  getFeaturesAverageValues(data_set, &average_features);
-  VectorXd eigen_average_features = StdVectorToEigenVector(average_features);
+  VectorXd eigen_average_features;
+  getFeaturesAverageValues(data_set, &eigen_average_features);
 
   MatrixXd source_matrix = DataSetToEigenMatrix(data_set).transpose();
 

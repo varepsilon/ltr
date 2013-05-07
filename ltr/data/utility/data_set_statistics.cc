@@ -15,18 +15,13 @@ namespace utility {
 
 template <typename TElement>
 void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
-                             vector<double>* min_features_values,
-                             vector<double>* max_features_values) {
+                             VectorXd* min_features_values,
+                             VectorXd* max_features_values) {
   min_features_values->resize(dataset.feature_count());
   max_features_values->resize(dataset.feature_count());
 
-  fill(min_features_values->begin(),
-       min_features_values->end(),
-       numeric_limits<double>::max());
-
-  fill(max_features_values->begin(),
-       max_features_values->end(),
-       -numeric_limits<double>::max());
+  min_features_values->setConstant(numeric_limits<double>::max());
+  max_features_values->setConstant(-numeric_limits<double>::max());
 
   for (int element_index = 0;
        element_index < (int)dataset.size();
@@ -39,11 +34,11 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
       for (int feature_index = 0;
            feature_index < (int)dataset.feature_count();
            ++feature_index) {
-        min_features_values->at(feature_index) = min(
-            min_features_values->at(feature_index),
+        min_features_values->operator()(feature_index) = min(
+            min_features_values->operator()(feature_index),
             per_object_accessor.object(object_index)[feature_index]);
-        max_features_values->at(feature_index) = max(
-            max_features_values->at(feature_index),
+        max_features_values->operator()(feature_index) = max(
+            max_features_values->operator()(feature_index),
             per_object_accessor.object(object_index)[feature_index]);
       }
     }
@@ -52,18 +47,18 @@ void getFeaturesMinMaxValues(const DataSet<TElement>& dataset,
 
 template void
   getFeaturesMinMaxValues<Object>(const DataSet<Object>& data_set,
-                                  vector<double>* min_features_values,
-                                  vector<double>* max_features_values);
+                                  VectorXd* min_features_values,
+                                  VectorXd* max_features_values);
 
 template void
   getFeaturesMinMaxValues<ObjectPair>(const DataSet<ObjectPair>& data_set,
-                                      vector<double>* min_features_values,
-                                      vector<double>* max_features_values);
+                                      VectorXd* min_features_values,
+                                      VectorXd* max_features_values);
 
 template void
   getFeaturesMinMaxValues<ObjectList>(const DataSet<ObjectList>& data_set,
-                                      vector<double>* min_features_values,
-                                      vector<double>* max_features_values);
+                                      VectorXd* min_features_values,
+                                      VectorXd* max_features_values);
 
 double getDataSetEntropy(const LabelStatisticComputer& label_stat_computer) {
   double entropy = 0.0;

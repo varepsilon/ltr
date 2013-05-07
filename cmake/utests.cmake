@@ -21,7 +21,8 @@ SET(LTR_PREDICTIONS_AGGREGATORS_TEST ${Source_Path}/ltr/predictions_aggregators/
 
 SET(LIST_TO_ALL_PAIRS_CONVERTER_TEST ${Source_Path}/ltr/data/list_to_all_pairs_converter_unittest.cc)
 
-SET(LTR_OBJECT_TEST ${Source_Path}/ltr/data/object_unittest.cc)
+SET(LTR_OBJECT_TEST ${Source_Path}/ltr/data/object_unittest.cc
+                    ${Source_Path}/ltr/data/object_representations_unittest.cc)
 
 SET(LTR_FEATURE_INFO_TEST ${Source_Path}/ltr/data/feature_info_unittest.cc)
 

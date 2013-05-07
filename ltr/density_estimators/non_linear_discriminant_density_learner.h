@@ -38,14 +38,14 @@ class NonLinearDiscriminantDensityLearner : public
  protected:
   virtual void calculateMean(const DataSet<TElement>& data_set,
                              LabelToMean* result) {
-    map<double, vector<double> > means;
+    map<double, VectorXd> means;
     CalculateActualLabelToFeaturesMean(data_set, &means);
 
-    for (map<double, vector<double> >::iterator mean_iterator = means.begin();
+    for (map<double, VectorXd>::iterator mean_iterator = means.begin();
          mean_iterator != means.end();
          ++mean_iterator) {
       (*result)[mean_iterator->first] =
-        StdVectorToEigenVector(mean_iterator->second);
+        mean_iterator->second;
     }
   };
 
