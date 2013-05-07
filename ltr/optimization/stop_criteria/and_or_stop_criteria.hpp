@@ -3,6 +3,7 @@
 #ifndef LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERION_H_
 #define LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERION_H_
 
+#include <string>
 #include "ltr/utility/macros.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/boost/shared_ptr.h"
@@ -16,6 +17,8 @@ namespace optimization {
  * Stop criterion is true when both of stop criteria
  * is true in current point.
  *
+ * \tparam is a type of function.
+ *
  * \see OnePointStopCriterion, PerPointStopCriterion
  */
 template<class TFunction>
@@ -26,7 +29,7 @@ class And : public OnePointStopCriterion<TFunction> {
   explicit And(typename TFunction::Ptr function,
                typename OnePointStopCriterion<TFunction>::Ptr first,
                typename OnePointStopCriterion<TFunction>::Ptr second);
-  ~And() { };
+  ~And() { }
 
   /**
    * Init data for future test of current point.
@@ -64,7 +67,7 @@ class Or : public OnePointStopCriterion<TFunction> {
   explicit Or(typename TFunction::Ptr function,
               typename OnePointStopCriterion<TFunction>::Ptr first,
               typename OnePointStopCriterion<TFunction>::Ptr second);
-  ~Or() { };
+  ~Or() { }
 
   /**
    * Init data for future test of current point.

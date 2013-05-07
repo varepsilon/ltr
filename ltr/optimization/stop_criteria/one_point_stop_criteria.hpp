@@ -3,6 +3,7 @@
 #ifndef LTR_OPTIMIZATION_STOP_CRITERIA_ITERATION_STOP_CRITERIA_H_
 #define LTR_OPTIMIZATION_STOP_CRITERIA_ITERATION_STOP_CRITERIA_H_
 
+#include <string>
 #include "ltr/utility/macros.h"
 #include "ltr/utility/numerical.h"
 #include "ltr/utility/boost/shared_ptr.h"
@@ -18,14 +19,14 @@ typedef Eigen::MatrixXd Matrix;
  * Stop criterion is true when current iteration is
  * more than max_iteration.
  *
- * \tparam TFunction is a type of function.
+ * \tparam is a type of function.
  *
  * \see OnePointStopCriterion, PerPointStopCriterion.
  */
 template<class TFunction> class IterationCountStopCriterion
   : public OnePointStopCriterion<TFunction> {
  public:
-  typedef ltr::utility::shared_ptr< IterationCountStopCriterion<TFunction> > Ptr;
+  typedef ltr::utility::shared_ptr< IterationCountStopCriterion<TFunction> > Ptr;  // NOLINT
 
   explicit IterationCountStopCriterion(typename TFunction::Ptr function,
                                        int max_iteration = 1000)
@@ -47,7 +48,7 @@ template<class TFunction> class IterationCountStopCriterion
   GET_SET(int, current_iteration)
 
   string getDefaultAlias() const {
-   return "IterationCountStopCriterion";
+    return "IterationCountStopCriterion";
   }
   /**
    * Create deep copy of this stop criterion.
@@ -198,7 +199,7 @@ void IterationCountStopCriterion<TFunction>::init(const Point& point) {
 }
 template<class TFunction>
 void IterationCountStopCriterion<TFunction>::update(const Point& point) {
-  current_iteration_++;  
+  ++current_iteration_;
   this->set_is_true(current_iteration_ >= max_iteration_);
 }
 template<class TFunction>
@@ -223,7 +224,7 @@ void DeltaFunctionStopCriterion<TFunction>::update(const Point& point) {
   current_value_ = this->function_->computeValue(point);
 }
 template<class TFunction>
-typename OnePointStopCriterion<TFunction>::Ptr 
+typename OnePointStopCriterion<TFunction>::Ptr
     DeltaFunctionStopCriterion<TFunction>::clone() const {
   typename DeltaFunctionStopCriterion<TFunction>::Ptr stop_criterion =
     new DeltaFunctionStopCriterion<TFunction>(this->function_, min_delta_);
@@ -242,7 +243,7 @@ void DeltaArgumentStopCriterion<TFunction>::update(const Point& point) {
   current_argument_ = point;
 }
 template<class TFunction>
-typename OnePointStopCriterion<TFunction>::Ptr 
+typename OnePointStopCriterion<TFunction>::Ptr
     DeltaArgumentStopCriterion<TFunction>::clone() const {
   typename DeltaArgumentStopCriterion<TFunction>::Ptr stop_criterion =
     new DeltaArgumentStopCriterion<TFunction>(this->function_, min_delta_);
@@ -261,10 +262,11 @@ void GradientMagnitudeStopCriterion<TFunction>::update(const Point& point) {
 }
 
 template<class TFunction>
-typename OnePointStopCriterion<TFunction>::Ptr 
+typename OnePointStopCriterion<TFunction>::Ptr
     GradientMagnitudeStopCriterion<TFunction>::clone() const {
     typename GradientMagnitudeStopCriterion<TFunction>::Ptr stop_criterion =
-      new GradientMagnitudeStopCriterion<TFunction>(this->function_, min_gradient_);
+      new GradientMagnitudeStopCriterion<TFunction>(this->function_,
+                                                    min_gradient_);
     stop_criterion->set_is_true(this->isTrue());
     return stop_criterion;
   }
