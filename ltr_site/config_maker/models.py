@@ -64,6 +64,7 @@ def get_current_solution(request):
         if not hasattr(request.user, 'solution'):
             solution = Solution(user=request.user, session=None)
             solution.save()
+            createSSCChoices(solution)
         return request.user.solution
     else:
         if not request.session.exists(request.session.session_key):
@@ -72,6 +73,7 @@ def get_current_solution(request):
         if not hasattr(session, 'solution'):
             solution = Solution(user=None, session=session)
             solution.save()
+            createSSCChoices(solution)
         return session.solution
 
 
@@ -87,6 +89,7 @@ class Solution(models.Model):
     def save_form(self, form):
         # deprecated
         obj = form.save(commit=False)
+        obj.solution = self
         obj.save()
         form.save_m2m()
 
@@ -109,20 +112,32 @@ class Solution(models.Model):
         raise NotImplementedError()
 
 
-APPROACH_CHOICES = (
-    ('pointwise', 'pointwise'),
-    ('pairwise', 'pairwise'),
-    ('listwise', 'listwise'))
+def choices(list):
+    return zip(list, list)
 
-FORMAT_CHOICES = (
-    ('Yandex', 'Yandex'),
-    ('ARFF', 'ARFF'),
-    ('SVMLIGHT', 'SVMLight'),
-    ('CSV', 'CSV'),
-    ('TSV', 'TSV'))
+APPROACH_CHOICES = choices(('pointwise', 'pairwise', 'listwise'))
+
+FORMAT_CHOICES = choices(('Yandex', 'ARFF', 'SVMLIGHT', 'CSV', 'TSV'))
+
+METRIC_CHOICES = choices(('EUCLIDEAN_METRIC', 'MANHATTAN_METRIC'))
+
+NEIGHBOR_WEIGHTER_CHOICES = choices(('INVERSE_LINEAR_DISTANCE',
+                                     'INVERSE_POWER_DISTANCE',
+                                     'INVERSE_ORDER'))
+
+PREDICTIONS_AGGREGATOR_CHOICES = choices((
+    'AVERAGE_PREDICTIONS_AGGREGATOR',
+    'SUM_PREDICTIONS_AGGREGATOR',
+    'VOTE_PREDICTIONS_AGGREGATOR',
+    'ORDER_STATISTIC_PREDICTIONS_AGGREGATOR',
+    'MAX_WEIGHT_PREDICTIONS_AGGREGATOR'))
+
+BASE_SPLITTER_CHOICES = choices(('ID3_SPLITTER', 'OBLIVIOUS_TREE_SPLITTER'))
+
+LEAF_GENERATOR_CHOICES = choices(('MOST_COMMON_LABEL_LEAF_GENERATOR',))
 
 MAX_FILE_PATH_LENGTH = 260
-MAX_STRING_LENGTH = 30
+MAX_STRING_LENGTH = 45
 
 
 class Task(models.Model):
@@ -144,12 +159,12 @@ class Task(models.Model):
         task.working_dir = get_unique_filename(
             settings.MEDIA_ROOT +
             '/'.join([task.solution.user.username, 'task']))
+
         ensure_path_exists(task.working_dir)
         task.config_filename = get_unique_filename(
             task.working_dir + '/config.xml')
         file_config = open(task.config_filename, "w")
         file_config.write(task.make_config(launchable_name))
-
         task.report_filename = get_unique_filename(
             task.working_dir + '/report.html')
         open(task.report_filename, 'w').close()
@@ -318,37 +333,7 @@ class Splitter(LtrObject):
     pass
 
 
-@object_
-class File(Data):
-    approach = models.CharField(max_length=MAX_STRING_LENGTH,
-                                choices=APPROACH_CHOICES)
-    format = models.CharField(max_length=MAX_STRING_LENGTH,
-                              choices=FORMAT_CHOICES)
-    file = models.FileField(
-        upload_to=lambda x, y: x.solution.get_content_filename(y))
-
-
-@object_
-class AbsError(Measure):
-    pass
-
-
-@object_
-class AveragePrecision(Measure):
-    pass
-
-
-@object_
-class FakeSplitter(Splitter):
-    pass
-
-
-@object_
-class BestFeatureLearner(Learner):
-    approach = models.CharField(max_length=MAX_STRING_LENGTH,
-                                choices=APPROACH_CHOICES)
-    measure = models.ForeignKey(Measure)
-
+## LAUNCHABLE OBJECTS
 
 @object_
 class Train(Launch):
@@ -365,8 +350,106 @@ class CrossValidation(Launch):
     measures = models.ManyToManyField(Measure)
     splitter = models.ForeignKey(Splitter)
 
+## DATA FILES
 
+
+@object_
+class File(Data):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    format = models.CharField(max_length=MAX_STRING_LENGTH,
+                              choices=FORMAT_CHOICES)
+    file = models.FileField(
+        upload_to=lambda x, y: x.solution.get_content_filename(y))
+
+
+## MEASURES
+
+
+@object_
+class AbsError(Measure):
+    pass
+
+
+@object_
+class AveragePrecision(Measure):
+    pass
+
+
+@object_
+class NDCG(Measure):
+    number_of_objects_to_consider = models.PositiveIntegerField()
+
+
+@object_
+class DCG(Measure):
+    number_of_objects_to_consider = models.PositiveIntegerField()
+
+
+@object_
+class Accuracy(Measure):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=choices(('pointwise', 'pairwise')))
+
+
+@object_
+class AveragePrecision(Measure):
+    score_for_relevant = models.DecimalField()
+
+
+@object_
+class BinaryClassificationAccuracy(Measure):
+    pass
+
+
+@object_
+class GMRR(Measure):
+    max_label = models.DecimalField(decimal_places=5, max_digits=8)
+    number_of_objects_to_consider = models.PositiveIntegerField()
+
+
+@object_
+class NormalizedMeasure(Measure):
+    weak_measure = models.ForeignKey(Measure, related_name='weak_measure')
+    worst = models.DecimalField(decimal_places=5, max_digits=8)
+    best = models.DecimalField(decimal_places=5, max_digits=8)
+
+
+@object_
+class PFound(Measure):
+    p_break = models.DecimalField(decimal_places=5, max_digits=8)
+    max_label = models.DecimalField(decimal_places=5, max_digits=8)
+    number_of_objects_to_consider = models.PositiveIntegerField()
+
+
+@object_
+class ReciprocalRank(Measure):
+    score_for_relevant = models.DecimalField(decimal_places=5, max_digits=8)
+
+
+@object_
+class SquaredError(Measure):
+    pass
+
+
+@object_
+class TruePoint(Measure):
+    pass
+
+## LEARNERS
+
+
+@object_
+class BestFeatureLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    measure = models.ForeignKey(Measure)
+
+
+@object_
 class GPLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
     population_size = models.PositiveIntegerField()
     number_of_generations = models.PositiveIntegerField()
     min_init_depth = models.PositiveIntegerField()
@@ -374,3 +457,147 @@ class GPLearner(Learner):
     init_grow_probability = models.DecimalField(max_digits=4,
                                                 decimal_places=3)
     seed = models.PositiveIntegerField()
+
+
+@object_
+class NNLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    metric = models.CharField(max_length=MAX_STRING_LENGTH,
+                              choices=METRIC_CHOICES)
+    neighbor_weighter = models.CharField(
+        max_length=MAX_STRING_LENGTH,
+        choices=NEIGHBOR_WEIGHTER_CHOICES)
+    predictions_aggregator = models.CharField(
+        max_length=MAX_FILE_PATH_LENGTH,
+        choices=PREDICTIONS_AGGREGATOR_CHOICES)
+    number_of_neighbors_to_process = models.PositiveIntegerField()
+
+
+@object_
+class LinearLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=choices(('pointwise', 'listwise')))
+
+
+# This is a stub class designed to process stop splitting criteria choices
+# in Desicion Tree Learner
+class StopSplittingCriteriaChoice(models.Model):
+    name = models.CharField(max_length=MAX_STRING_LENGTH)
+    solution = models.ForeignKey(Solution)
+
+    def __unicode__(self):
+        return self.name
+
+
+def registerSSCChoice(name, solution):
+    obj = StopSplittingCriteriaChoice()
+    obj.name = name
+    obj.solution = solution
+    obj.save()
+
+
+def createSSCChoices(solution):
+    registerSSCChoice('SAME_LABEL_STOP_SPLITTING_CRITERIA', solution)
+    registerSSCChoice('DATA_SIZE_STOP_SPLITTING_CRITERIA', solution)
+
+
+@object_
+class DecisionTreeLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    # Django requires that name 'splitter' is used
+    # only for Splitter class instance
+    # need to rewrite ltr in this part
+    base_splitter = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
+                                     choices=BASE_SPLITTER_CHOICES)
+    leaf_generator = models.CharField(max_length=MAX_STRING_LENGTH,
+                                      choices=LEAF_GENERATOR_CHOICES)
+    stop_splitting_criterias = models.ManyToManyField(
+        StopSplittingCriteriaChoice)
+
+
+@object_
+class FisherDiscriminantLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class QuadraticDiscriminantLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class NormalNaiveBayesLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class FakeFeatureConverterLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class FeatureNormalizerLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    min = models.PositiveIntegerField()
+    max = models.PositiveIntegerField()
+
+
+@object_
+class FeatureSamplerLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    indices = models.CharField(max_length=MAX_FILE_PATH_LENGTH)
+
+
+@object_
+class NanToAverageConverterLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class NanToZeroConverterLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class NominalToBoolConverterLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+
+@object_
+class RemoveNominalConverterLearner(Learner):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+
+## SPLITTERS
+
+
+@object_
+class KFoldSimpleSplitter(Splitter):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    k = models.PositiveIntegerField()
+
+
+@object_
+class TKFoldSimpleSplitter(Splitter):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
+    k = models.PositiveIntegerField()
+    t = models.PositiveIntegerField()
+
+
+@object_
+class LeaveOneOutSplitter(Splitter):
+    approach = models.CharField(max_length=MAX_STRING_LENGTH,
+                                choices=APPROACH_CHOICES)
