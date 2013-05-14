@@ -22,6 +22,6 @@ namespace ltr {
     - \ref HowToCheckSerialization
     - \ref HowToUseLogging
     - \ref TutorialLTRClientForDeveloper
-
+    - \ref ObjectPresentation
 **/
 }
