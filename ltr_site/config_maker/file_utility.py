@@ -44,7 +44,7 @@ def get_unique_filename(filename):
     :return: unique filename
 
     """
-    return get_unique_name(os.path.basename(filename), (), os.path.exists)
+    return get_unique_name(filename, (), os.path.exists)
 
 
 def ensure_path_exists(path):

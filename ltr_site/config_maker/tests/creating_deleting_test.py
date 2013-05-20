@@ -1,5 +1,6 @@
 # Copyright 2013 Yandex
 from ltr_object_test_case import LTRObjectsTestCase
+from os.path import join
 
 
 class CreatingDeletingTestCase(LTRObjectsTestCase):
@@ -47,7 +48,8 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
                                   'File',
                                   approach='pointwise',
                                   format='Yandex',
-                                  file=open(self._testfiles + '/data.yandex'))
+                                  file=open(join(self._testfiles,
+                                                 'data.yandex')))
 
     def test_train(self):
         self.create_object('measure', 'AbsError', 'test_measure')
@@ -61,7 +63,7 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
                            'test_file',
                            approach='pointwise',
                            format='Yandex',
-                           file=open(self._testfiles + '/data.yandex'))
+                           file=open(join(self._testfiles, 'data.yandex')))
         self.create_delete_object('launch',
                                   'Train',
                                   train_data=3,
@@ -81,7 +83,7 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
                            'test_file',
                            approach='pointwise',
                            format='Yandex',
-                           file=open(self._testfiles + '/data.yandex'))
+                           file=open(join(self._testfiles, 'data.yandex')))
         self.create_object('splitter',
                            'LeaveOneOutSplitter',
                            'test_splitter',

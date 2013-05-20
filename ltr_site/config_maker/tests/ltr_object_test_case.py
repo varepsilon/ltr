@@ -11,7 +11,8 @@ class LTRObjectsTestCase(TestCase):
 
     """Some fuctions to make testing LTR objects easier."""
 
-    _testfiles = os.path.abspath(os.path.dirname(__file__)) + '/testfiles'
+    _testfiles = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                              'testfiles')
 
     def setUp(self):
         """Create django client for surfing."""

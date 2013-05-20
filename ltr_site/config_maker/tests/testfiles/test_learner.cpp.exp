@@ -1,0 +1,3 @@
+inline double test_learner(const std::vector<double>& features) {
+  return features[2];
+}
