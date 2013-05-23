@@ -48,9 +48,6 @@ class PerPointStopCriterion : public StopCriterion<TFunction> {
   /**
    * Is this stop criterion true
    *
-   * \param aggregator_threshold is a part of points in population
-   * which should be satisfied for stop criterion.
-   *
    * \return True if stopping condition is satisfied for more
    * than given part of points in population.
    */

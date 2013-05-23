@@ -4,7 +4,7 @@
 #define LTR_OPTIMIZATION_STOP_CRITERIA_ONE_POINT_STOP_CRITERION_H_
 
 #include <string>
-#include "Eigen/Core"
+#include "contrib/include_Eigen.h"
 #include "ltr/utility/macros.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"

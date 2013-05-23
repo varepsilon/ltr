@@ -1,7 +1,7 @@
 //  Copyright 2013 yandex
 
-#ifndef LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERION_H_
-#define LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERION_H_
+#ifndef LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERIA_HPP_
+#define LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERIA_HPP_
 
 #include <string>
 #include "ltr/utility/macros.h"
@@ -107,7 +107,7 @@ template<class TFunction>
 void And<TFunction>::update(const Point& point) {
   first_->update(point);
   second_->update(point);
-  set_is_true(first_->isTrue() && second_->isTrue());
+  this->set_is_true(first_->isTrue() && second_->isTrue());
 }
 template<class TFunction>
 string And<TFunction>::getDefaultAlias() const {
@@ -142,7 +142,7 @@ template<class TFunction>
 void Or<TFunction>::update(const Point& point) {
   first_->update(point);
   second_->update(point);
-  set_is_true(first_->isTrue() || second_->isTrue());
+  this->set_is_true(first_->isTrue() || second_->isTrue());
 }
 template<class TFunction>
 string Or<TFunction>::getDefaultAlias() const {
@@ -158,4 +158,4 @@ typename OnePointStopCriterion<TFunction>::Ptr Or<TFunction>::clone() const {
   return stop_criterion;
 }
 }
-#endif  // LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERION_H_
+#endif  // LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERIA_HPP_
