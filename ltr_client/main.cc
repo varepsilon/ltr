@@ -1,8 +1,8 @@
 // Copyright 2012 Yandex
 
-#include "rlog/rlog_default.h"
-
 #include <iostream>
+
+#include "rlog/rlog_default.h"
 
 #include "ltr_client/ltr_client.h"
 #include "ltr_client/configurator.h"
@@ -31,7 +31,8 @@ void show_usage() {
        << "Options:" << endl
        << "  -f,  filename\t\tconfig file name" << endl
        << "  -h,  help    \t\tdisplay this help and exit" << endl
-       << "  -s,  silent  \t\tproduce no output to console (overrides 'verbose')" << endl
+       << "  -s,  silent  \t\tproduce no output to console"
+       << " (overrides 'verbose')" << endl
        << "  -v,  verbose \t\tproduce additional output to console" << endl;
 }
 
@@ -60,7 +61,8 @@ int main(int argc, char *argv[]) {
     string filename;
     args >> Option('f', "configfile", filename, "");
     if (filename.empty()) {
-      cerr << "Configuration file name not specified. Type 'ltr_client -h' for usage." << endl;
+      cerr << "Configuration file name not specified."
+           << " Type 'ltr_client -h' for usage." << endl;
       return 0;
     }
     args.end_of_options();
@@ -71,14 +73,14 @@ int main(int argc, char *argv[]) {
     LtrClient client;
     client.initFrom(filename);
     client.launch();
-
-  } catch(TooManyOptionsEx) {
-    cerr << "Unrecognized options specified. Type 'ltr_client -h' for usage." << endl;
-  } catch(const GetOptEx& err) {
+  } catch (TooManyOptionsEx) {
+    cerr << "Unrecognized options specified."
+         << " Type 'ltr_client -h' for usage." << endl;
+  } catch (const GetOptEx& err) {
     cerr << "Invalid parameters. Type 'ltr_client -h' for usage." << endl;
-  } catch(const logic_error& err) {
+  } catch (const logic_error& err) {
     cerr << "Failed: " << err.what() << endl;
-  } catch(const std::exception err) {
+  } catch (const std::exception err) {
     cerr << "Caught exception: " << err.what() << endl;
   }
   return 0;

@@ -15,15 +15,19 @@ bool DependencyResolvingFactory::tryBuildingObjectCreationChain(
     const ObjectInfo* object_info,
     ObjectInfosList* info_queue,
     ObjectInfosList* circularity_check_queue) const {
-  if (find(info_queue->begin(), info_queue->end(), object_info) != info_queue->end()) {
+  if (find(info_queue->begin(), info_queue->end(), object_info) !=
+      info_queue->end()) {
     return true;
   }
   // check for circular dependencies
   ObjectInfosList::const_iterator begin_iterator = find(
-    circularity_check_queue->begin(), circularity_check_queue->end(), object_info);
+      circularity_check_queue->begin(),
+      circularity_check_queue->end(),
+      object_info);
 
   if (begin_iterator != circularity_check_queue->end()) {
-    throw logic_error("circular dependency detected when processing " + object_info->get_name());
+    throw logic_error("circular dependency detected when processing " +
+        object_info->get_name());
   }
   circularity_check_queue->push_back(object_info);
 
@@ -33,7 +37,9 @@ bool DependencyResolvingFactory::tryBuildingObjectCreationChain(
         iterator != object_info->dependency_infos().end();
         ++iterator) {
     const ObjectInfo* dep_info = *iterator;
-    if (!tryBuildingObjectCreationChain(dep_info, info_queue, circularity_check_queue)) {
+    if (!tryBuildingObjectCreationChain(dep_info,
+                                        info_queue,
+                                        circularity_check_queue)) {
       throw logic_error("can not resolve dependencies");
     }
   }
@@ -52,7 +58,9 @@ void DependencyResolvingFactory::checkCircularDependencyAbsence() const {
        ++iterator) {
     const ObjectInfo* object_info = *iterator;
     ObjectInfosList circularity_check_queue;
-    tryBuildingObjectCreationChain(object_info, &info_queue, &circularity_check_queue);
+    tryBuildingObjectCreationChain(object_info,
+                                   &info_queue,
+                                   &circularity_check_queue);
   }
 }
 
@@ -89,14 +97,16 @@ ParametersContainer DependencyResolvingFactory::Create(
       TStringVector strings = split(split(split(*dependency, "\t"), " "), ",");
 
       assert(strings.size());
-      if (strings.size() == 1 && dependency->find_first_of(',') == string::npos) {
+      if (strings.size() == 1 &&
+          dependency->find_first_of(',') == string::npos) {
         result.AddNew(name, Create(strings[0]));
       } else {
         vector<Any> list;
         for (TStringVector::const_iterator str_iterator = strings.begin();
              str_iterator != strings.end();
              ++str_iterator) {
-          if (!str_iterator->empty()) {  // TODO: remove if after getting rid of boost::split
+          if (!str_iterator->empty()) {
+              // TODO(username): remove if after getting rid of boost::split
             list.push_back(Create(*str_iterator));
           }
         }
