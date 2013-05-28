@@ -4,7 +4,9 @@
 #define LTR_OPTIMIZATION_POPULATION_INITERS_POPULATION_INITER_H_
 
 #include <string>
-#include "Eigen/Core"
+
+#include "contrib/include_Eigen.h"
+
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/optimization/population_initers/population.h"

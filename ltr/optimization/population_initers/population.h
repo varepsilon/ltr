@@ -5,7 +5,9 @@
 
 #include <string>
 #include <map>
-#include "Eigen/Core"
+
+#include "contrib/include_Eigen.h"
+
 #include "ltr/utility/macros.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
