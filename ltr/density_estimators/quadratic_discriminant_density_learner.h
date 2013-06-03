@@ -51,9 +51,9 @@ class QuadraticDiscriminantDensityLearner
     for (LabelToMean::iterator mean_iterator = mean.begin();
          mean_iterator != mean.end();
          ++mean_iterator) {
-      (*result)[mean_iterator->first] = MatrixXd(mean_iterator->second.size(),
-                                                 mean_iterator->second.size());
-      InitEigenMatrix(&(*result)[mean_iterator->first]);
+      (*result)[mean_iterator->first] =
+              MatrixXd::Zero(mean_iterator->second.size(),
+              mean_iterator->second.size());
     }
 
     DataSet<Object> data = extractAllObjects(data_set);

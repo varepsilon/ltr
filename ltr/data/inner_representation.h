@@ -57,6 +57,9 @@ class InnerRepresentation {
    * Access to elements of feature matrix
    */
   double& feature(int row, int column);
+  /** const access to whole feature matrix
+   */
+  const MatrixXd& get_features_matrix() const;
 
   GET(VectorXd, predicted_labels);
   void set_predicted_label(int index, double value);

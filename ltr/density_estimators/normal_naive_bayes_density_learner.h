@@ -12,6 +12,7 @@
 #include "ltr/data/data_set.h"
 #include "ltr/data/object.h"
 #include "ltr/utility/statistics_calculation.h"
+#include "ltr/utility/typedefs.h"
 
 using ltr::BaseProbabilityDensityEstimator;
 using ltr::NonLinearDiscriminantDensityLearner;
@@ -68,8 +69,7 @@ class NormalNaiveBayesDensityLearner
          ++variance_iterator) {
       double label = variance_iterator->first;
       int features_count = variance_iterator->second.size();
-      (*result)[label] = MatrixXd(features_count, features_count);
-      InitEigenMatrix(&(*result)[label]);
+      (*result)[label] = MatrixXd::Zero(features_count, features_count);
 
       for (int feature_index = 0;
            feature_index < features_count;

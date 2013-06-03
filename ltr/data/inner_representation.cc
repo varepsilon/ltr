@@ -41,6 +41,10 @@ void InnerRepresentation::set_features_column(int index, const VectorXd& row) {
   features_.col(index) = row;
 }
 
+const MatrixXd& InnerRepresentation::get_features_matrix() const {
+  return features_;
+}
+
 void InnerRepresentation::set_row_count(int rows) {
   resize(rows, column_count());
 }

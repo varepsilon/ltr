@@ -3,19 +3,17 @@
 #include <sstream>
 
 #include "ltr/density_estimators/fisher_discriminant.h"
-#include "ltr/utility/eigen_converters.h"
+#include "ltr/utility/typedefs.h"
 
 using std::stringstream;
 
 using ltr::FisherDiscriminant;
-using ltr::utility::InitEigenVector;
 using ltr::utility::doubleVectorXdMap;
 
 namespace ltr {
 double FisherDiscriminant::estimate(const Object& object,
                                     const double label) const {
-  VectorXd features(object.feature_count());
-  InitEigenVector(&features);
+  VectorXd features = VectorXd::Zero(object.feature_count());
 
   for (int feature_index = 0;
        feature_index < object.feature_count();

@@ -5,8 +5,6 @@
 #include <stdexcept>
 #include <sstream>
 
-#include "ltr/utility/eigen_converters.h"
-
 using std::logic_error;
 using std::stringstream;
 

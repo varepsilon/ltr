@@ -5,21 +5,18 @@
 #include <cmath>
 #include <sstream>
 
-#include "ltr/utility/eigen_converters.h"
+#include "ltr/utility/typedefs.h"
 
 using std::stringstream;
 
 using ltr::NonLinearDiscriminant;
-using ltr::utility::InitEigenMatrix;
-using ltr::utility::InitEigenVector;
 using ltr::utility::doubleVectorXdMap;
 using ltr::utility::doubleMatrixXdMap;
 
 namespace ltr {
   double NonLinearDiscriminant::estimate(const Object& object,
                                          const double label) const {
-    VectorXd features(object.feature_count());
-    InitEigenVector(&features);
+    VectorXd features = VectorXd::Zero(object.feature_count());
     for (int feature_index = 0;
          feature_index < object.feature_count();
          ++feature_index) {
@@ -28,7 +25,8 @@ namespace ltr {
 
     int feature_count = object.feature_count();
     double result = log(pow(M_PI, - feature_count / 2.0) *
-                        pow(covariance_matrix_.find(label)->second.determinant(), -0.5));
+                        pow(covariance_matrix_.find(label)->
+                                  second.determinant(), -0.5));
     result -= 0.5 * (features - mean_.find(label)->second).transpose() *
                      covariance_matrix_.find(label)->second.inverse() *
                      (features - mean_.find(label)->second);

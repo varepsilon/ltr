@@ -11,6 +11,7 @@
 #include "ltr/density_estimators/fisher_discriminant.h"
 #include "ltr/density_estimators/non_linear_discriminant.h"
 #include "ltr/utility/numerical.h"
+#include "ltr/utility/typedefs.h"
 
 using std::map;
 

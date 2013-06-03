@@ -206,6 +206,10 @@ class DataSet : public Printable, public Aliaser {
    * End of constant iterator over elements in data set.
    */
   const_element_iterator element_end() const;
+  /**
+   * Const access to whole feature matrix from inner representation
+   */
+  const MatrixXd& get_features_matrix() const;
  private:
   /**
    * Information about label value type.
@@ -881,6 +885,11 @@ bool operator==(const DataSet<TElement>& lhs,
     }
   }
   return true;
+}
+
+template<typename TElement>
+const MatrixXd& DataSet<TElement>::get_features_matrix() const {
+  return inner_representation_->get_features_matrix();
 }
 };
 #endif  // LTR_DATA_DATA_SET_H_

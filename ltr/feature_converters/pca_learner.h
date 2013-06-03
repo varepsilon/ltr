@@ -15,7 +15,6 @@
 
 #include "ltr/data/utility/data_set_statistics.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/utility/eigen_converters.h"
 #include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/boost/shared_ptr.h"
 
@@ -26,8 +25,6 @@ using std::logic_error;
 
 using ltr::LinearConverter;
 using ltr::utility::getFeaturesAverageValues;
-using ltr::utility::DataSetToEigenMatrix;
-using ltr::utility::InitEigenVector;
 using ltr::utility::shared_ptr;
 using ltr::utility::lexical_cast;
 
@@ -174,7 +171,7 @@ void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
   VectorXd eigen_average_features;
   getFeaturesAverageValues(data_set, &eigen_average_features);
 
-  MatrixXd source_matrix = DataSetToEigenMatrix(data_set).transpose();
+  MatrixXd source_matrix = data_set.get_features_matrix();
 
   for (int object_index = 0;
        object_index < source_matrix.cols();
@@ -191,8 +188,7 @@ void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
   matrix_U.conservativeResize(matrix_U.rows(), component_count);
   linear_converter->set_factor(matrix_U.transpose());
 
-  VectorXd shift(component_count);
-  InitEigenVector(&shift);
+  VectorXd shift = VectorXd::Zero(component_count);
   linear_converter->set_shift(shift);
 }
 

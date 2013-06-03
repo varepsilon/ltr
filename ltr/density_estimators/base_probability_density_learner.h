@@ -7,7 +7,6 @@
 
 #include "contrib/include_Eigen.h"
 
-#include "ltr/utility/eigen_converters.h"
 #include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/density_estimators/base_probability_density_estimator.h"
 #include "ltr/data/data_set.h"

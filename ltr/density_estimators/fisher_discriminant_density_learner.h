@@ -37,8 +37,6 @@ using ltr::utility::CalculateLabelsCapacity;
 using ltr::utility::LabelToCapacity;
 using ltr::utility::SplitDataSetByActualLabel;
 using ltr::utility::CalculateFeaturesMean;
-using ltr::utility::InitEigenMatrix;
-using ltr::utility::InitEigenVector;
 using ltr::utility::extractAllObjects;
 
 namespace ltr {
@@ -87,8 +85,7 @@ class FisherDiscriminantDensityLearner : public
                                  const LabelToMean& mean,
                                  MatrixXd* result) {
     int features_count = mean.begin()->second.size();
-    (*result) = MatrixXd(features_count, features_count);
-    InitEigenMatrix(result);
+    (*result) = MatrixXd::Zero(features_count, features_count);
 
     DataSet<Object> data = extractAllObjects(data_set);
     for (int object_index = 0; object_index < data.size(); ++object_index) {
