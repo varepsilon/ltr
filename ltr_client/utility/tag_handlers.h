@@ -244,7 +244,7 @@ class TOnParameterTag: public TagHandler {
   static int toInt(const string& value) {
     try {
       return ltr::utility::lexical_cast<int>(value);
-    } catch(invalid_argument&) {
+    } catch (invalid_argument&) {
       throw logic_error("can not convert " + value + " to int");
     }
   }
@@ -258,7 +258,7 @@ class TOnParameterTag: public TagHandler {
   static double toDouble(const string& value) {
     try {
       return ltr::utility::lexical_cast<double>(value);
-    } catch(invalid_argument&) {
+    } catch (invalid_argument&) {
       throw logic_error("can not convert " + value + " to double");
     }
   }
@@ -336,7 +336,7 @@ class TOnParameterTag: public TagHandler {
     if (pos_of_decimal_point != string::npos) {
       try {
         ltr::utility::lexical_cast<double>(value);
-      } catch(invalid_argument&) {
+      } catch (invalid_argument&) {
         return XML_TOKEN_DEPENDENCY_TYPE;
       }
       return "double";
@@ -344,7 +344,7 @@ class TOnParameterTag: public TagHandler {
 
     try {
       ltr::utility::lexical_cast<int>(value);
-    } catch(invalid_argument&) {
+    } catch (invalid_argument&) {
       return XML_TOKEN_DEPENDENCY_TYPE;
     }
     return "int";
