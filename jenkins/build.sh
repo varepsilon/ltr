@@ -26,5 +26,7 @@ if [ "$OS" != "Windows_NT" ]; then
   cd ../../jenkins
   ./pep8.sh
   ./ltr_site_tests.sh
+  ./doxygen.sh
+  ./eigen.sh
 fi
 

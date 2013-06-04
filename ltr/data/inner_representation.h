@@ -18,37 +18,43 @@ using std::string;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using Eigen::RowVectorXd;
-/** \typedef
- * Type for meta information.
- * Just map from info field name to info field value
+/**
+ * Type for meta information. Just map from info field name to info field value.
  */
 typedef map<string, string> MetaInfo;
 typedef ltr::utility::shared_ptr<MetaInfo> MetaInfoPtr;
 typedef Eigen::Block<Eigen::MatrixXd, -1, 1, true, true> EigenColumn;
 
-/** \brief Structure for storing matrix of features and accompanying vectors.
+/**
+ * \brief Structure for storing matrix of features and accompanying vectors.
  */
 class InnerRepresentation {
  public:
-  /** \typedef shared pointer to presentation
+  /**
+   * Shared pointer to presentation
    */
   typedef ltr::utility::shared_ptr<InnerRepresentation> Ptr;
 
-  /** Default constructor, creates matrix of _size_ vectors with
+  /**
+   * Default constructor, creates matrix of _size_ vectors with
    * _features_ number of features
    */
   InnerRepresentation(int size, int features);
 
-  /** returns feature vector for given index
+  /**
+   * Returns feature vector for given index
    */
   EigenColumn get_features_column(int index);
-  /** sets feature vector for given index
+  /**
+   * Sets feature vector for given index
    */
   void set_features_column(int index, const VectorXd& column);
-  /** const access to elements of feature matrix
+  /**
+   * Const access to elements of feature matrix
    */
   const double& feature(int row, int column) const;
-  /** access to elements of feature matrix
+  /**
+   * Access to elements of feature matrix
    */
   double& feature(int row, int column);
 
@@ -58,40 +64,48 @@ class InnerRepresentation {
   GET(VectorXd, actual_labels);
   void set_actual_label(int index, double value);
 
-  /** meta information for given index
+  /**
+   * Meta information for given index
    */
   MetaInfoPtr meta_info(int index) const;
-  /** meta information setter
+  /**
+   * Meta information setter
    */
   void set_meta_info(int index, MetaInfoPtr ptr);
 
-  /** get number of columns in the matrix
-   * columns represent vectors
+  /**
+   * Get number of columns in the matrix columns represent vectors
    */
   int column_count() const { return features_.cols(); }
-  /** get number of rows in the matrix
-   * rows represent features
+  /**
+   * Get number of rows in the matrix rows represent features
    */
   int row_count() const { return features_.rows(); }
 
-  /** Set number of objects
+  /**
+   * Set number of objects
    */
   void set_column_count(int cols);
-  /** Set number of features of each object
+  /**
+   * Set number of features of each object
    */
   void set_row_count(int rows);
-  /** resize matrix and accompanying vectors
+  /**
+   * Resize matrix and accompanying vectors
    */
   void resize(int rows, int columns);
 
-  /** add several new columns to the matrix and appropriate vectors
+  /**
+   * Add several new columns to the matrix and appropriate vectors
    */
   void add_several_objects(int num_objects);
  private:
-  /** Check whether index is in appropriate range
+  /**
+   * Check whether index is in appropriate range
    */
   void checkIndex(int row, int column) const;
-  /** Check whether index is in appropriate range
+  /**
+   * Check whether index is in appropriate range
    */
   void checkIndex(int index) const;
 
@@ -101,7 +115,8 @@ class InnerRepresentation {
   vector<MetaInfoPtr> meta_info_;
 };
 
-/** \brief Structure that keeps start and end lines of element
+/**
+ * \brief Structure that keeps start and end lines of element
  * (object, pair, list) in the presentation.
  */
 struct ElementBounds {

@@ -27,7 +27,6 @@ Every Object has several features with indexes 0, 1, 2... Every feature is a dou
 
 You can operate with features using this functions:
 \li \link Object::feature_count() feature_count() \endlink - returns number of features
-\li \link Object::features() features() \endlink - returns vector of features
 \li \link Object::operator[] operator[](int i)\endlink, \link Object::at at(int i)\endlink - access to the i'th feature of the object
 \li Object::operator<<(double value) - adds new feature to the object
 
