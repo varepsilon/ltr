@@ -19,7 +19,7 @@ and add CMake to the system PATH.
 \subsection WConfiguringLTR Configuring LTR
 
 Create a directory for building, the recommended name of which is \<LTR_root>/build. Further shell commands will be written as if you've chosen
-the \<LTR_root>/build directory for building. From the chosen directory run the following shell command:
+the \<LTR_root>/build directory for building. From the \<LTR_root>/build directory run the following shell command:
 
 \code
 cmake ../
@@ -49,13 +49,9 @@ As you already have created your favorite IDE's project, compiling will now be s
 After building you can run unittests from \<LTR_root>/build. In Visual Studio it can be done, by setting ltr_test as a
 startup project and pressing Ctrl+F5.
 
-It is important that after successful build you should build an INSTALL project, or (depending on your IDE) run
+It is important that after successful build you should set an INSTALL project as startup and build.
 
-\code
-make install
-\endcode
-
-This will create an \<LTR_root>/lib directory with 3 static libraries in there: ltr, logog and puppy (with "_d" suffix if the debug build has been used). If you want to
+This will create an \<LTR_root>/lib directory with 3 static libraries in there: ltr, rgog and puppy (with "_d" suffix if the debug build has been used). If you want to
 use LTR in your project, you have to link to these libraries.
 
 \section LinuxInstall Installation on Linux
@@ -101,7 +97,8 @@ use LTR in your project, you have to link to these libraries.
 
 \section LinkingtoLTR Linking to LTR
 
-Lets start from a rather simple test project, that uses LTR. Here is an example of the test project's CMakeLists.txt:
+Now you can create test project. Create a directory for your project, for example \<LTR_root>/test. Put here your source code (main.cpp) and CMakeLists.txt, 
+which should contains:
 
 \verbatim
 PROJECT(LTRTestProject CXX C)
@@ -114,9 +111,9 @@ ENDIF()
 
 # Test_Source_Path variable - the path to the sources of the test project. Usually it equals to the
 # CMAKE_CURRENT_SOURCE_DIR variable, i.e., the path to the current CMakeLists.txt file.
-SET(Test_Source_Path ${CMAKE_CURRENT_SOURCE_DIR})
+SET(Test_Source_Path "<LTR_root>/test")
 # LTR_Source_Path - path to the LTR
-SET(LTR_Source_Path "C:/Data/Ltr1")
+SET(LTR_Source_Path "<LTR_root>")
 
 INCLUDE(${LTR_Source_Path}/cmake/setup_ltr.cmake)
 # This macro sets up all the necessary variables for using LTR (and also Boost)
@@ -125,14 +122,21 @@ SetUpLTR(${LTR_Source_Path})
 # The directory for header files of the test project
 INCLUDE_DIRECTORIES(${Test_Source_Path})
 # Test_SOURCES variable - a list of test sources
-SET(Test_SOURCES ${Test_Source_Path}/file1.cpp
-                 ${Test_Source_Path}/file2.cpp)
-
+SET(Test_SOURCES ${Test_Source_Path}/main.cpp
+	   ${Test_Source_Path}/another_source.cpp) ---- if there is another source file
 # Creates an executable project called test_executable from Test_SOURCES files
 ADD_EXECUTABLE(test_executable ${Test_SOURCES})
 # Makes test_executable project use LTR by invoking LTR_libs variable, defined in SetUpLTR macro call
 TARGET_LINK_LIBRARIES(test_executable ${LTR_libs})
 \endverbatim
+
+Create directory \<LTR_root>/test/build, for building your project and run the following shell command from this directory:
+
+\code
+cmake ../test
+\endcode
+
+Now your project are in \<LTR_root>/test/build.
 
 
 **/

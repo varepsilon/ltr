@@ -100,5 +100,21 @@ namespace ltr {
   if (!(expression)) { \
     throw std::logic_error("Expected: " #expression); \
   }
+
+/**
+* Allows only heap creation and makes shared_ptr<A> friendly
+* Must be inserted at the beginning or end of the class
+* The only way to create object will be the following
+* \code{.cpp}
+    Class::Ptr object(new Class());
+  \endcode
+*/
+#define ALLOW_SHARED_PTR_ONLY_CREATION(class_name) \
+public: \
+  typedef ltr::utility::shared_ptr< class_name > Ptr; \
+private: \
+  virtual ~class_name() {} \
+  friend class ltr::utility::shared_ptr< class_name >;
 }
+
 #endif  // LTR_UTILITY_MACROS_H_
