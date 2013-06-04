@@ -39,6 +39,7 @@ TEST(LexicalCastTest, TestingToStringConversion) {
 
 TEST(LexicalCastTest, TestingToAnyConversion) {
   EXPECT_EQ(any_cast<int>(lexical_cast<Any>("42")), 42);
+  EXPECT_TRUE(DoubleEqual(any_cast<double>(lexical_cast<Any>("3.14")), 3.14));
   EXPECT_TRUE(any_cast<bool>(lexical_cast<Any>("true")));
   EXPECT_EQ(any_cast<string>(lexical_cast<Any>("Hello!")), "Hello!");
 

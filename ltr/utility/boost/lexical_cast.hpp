@@ -108,6 +108,12 @@ static bool fromString(const string& input, Any* result) {
     return true;
   }
 
+  double double_value;
+  if (fromString(input, &double_value)) {
+    *result = double_value;
+    return true;
+  }
+
   vector<int> vector_int_value;
   if (fromString(input, &vector_int_value)) {
     *result = vector_int_value;
