@@ -97,7 +97,8 @@ SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc
                           ${Source_Path}/ltr/optimization/test_problems/test_problems_unittest.cc
                           ${Source_Path}/ltr/optimization/population_initers/population_initers_unittest.cc
                           ${Source_Path}/ltr/optimization/stop_criteria/stop_criteria_unittest.cc
-                          ${Source_Path}/ltr/optimization/population_updaters/updaters_unittest.cc)
+                          ${Source_Path}/ltr/optimization/population_updaters/updaters_unittest.cc
+                          ${Source_Path}/ltr/optimization/solver/solver_unittest.cc)
 
 SET(LTR_CLIENT_TEST ${Source_Path}/ltr_client/config_parser_unittest.cc)
 

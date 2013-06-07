@@ -62,10 +62,10 @@ template<class TFunction>
 void PerPointUpdater<TFunction>::init(Population* population,
                                       typename TFunction::Ptr function,
                                       Set::Ptr set) {
-  one_point_updaters_info_ = new OnePointUpdaterInfo(population,
-                                  one_point_updater_sample_);
   this->set_set(set);
   this->set_function(function);
+  one_point_updaters_info_ = new OnePointUpdaterInfo(population,
+                                  one_point_updater_sample_);
 }
 
 template<class TFunction>

@@ -90,8 +90,6 @@ TEST(PerPointUpdaterTest, GradientDescentUpdaterTest) {
       new GradientDirectionCalculator<DifferentiableFunction>(),
       new BruteForceStepCalculator<DifferentiableFunction>(1.0, 0.01));
 
-  gradient_updater->set_set(new BallSet(2.0, center));
-  gradient_updater->set_function(new SumSquaresFunction(2));
   PerPointUpdater<DifferentiableFunction>::Ptr per_point_updater =
     new PerPointUpdater<DifferentiableFunction>(gradient_updater);
   Point a(2);
