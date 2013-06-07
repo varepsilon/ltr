@@ -6,6 +6,7 @@ namespace optimization {
 void NaiveIniter::populationInit(int population_size,
                                  const Set& set,
                                  Population* population) const {
+  CHECK(population_size != 0);
   Point random_point;
   for (int point_id = 0; point_id < population_size; ++point_id) {
     set.sampleRandomPointInside(&random_point);

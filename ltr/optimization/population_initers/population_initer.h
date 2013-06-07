@@ -9,7 +9,7 @@
 
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
-#include "ltr/optimization/population_initers/population.h"
+#include "ltr/optimization/population_info/population.h"
 #include "ltr/optimization/sets/set.h"
 
 namespace optimization {

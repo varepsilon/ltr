@@ -1,7 +1,7 @@
 //  Copyright 2013 yandex
 
-#ifndef LTR_OPTIMIZATION_STOP_CRITERIA_ITERATION_STOP_CRITERIA_H_
-#define LTR_OPTIMIZATION_STOP_CRITERIA_ITERATION_STOP_CRITERIA_H_
+#ifndef LTR_OPTIMIZATION_STOP_CRITERIA_ONE_POINT_STOP_CRITERIA_HPP_
+#define LTR_OPTIMIZATION_STOP_CRITERIA_ONE_POINT_STOP_CRITERIA_HPP_
 
 #include <string>
 #include "ltr/utility/macros.h"
@@ -28,10 +28,8 @@ template<class TFunction> class IterationCountStopCriterion
  public:
   typedef ltr::utility::shared_ptr< IterationCountStopCriterion<TFunction> > Ptr;  // NOLINT
 
-  explicit IterationCountStopCriterion(typename TFunction::Ptr function,
-                                       int max_iteration = 1000)
-    : OnePointStopCriterion<TFunction>(function),
-      max_iteration_(max_iteration) { }
+  explicit IterationCountStopCriterion(int max_iteration = 1000)
+    : max_iteration_(max_iteration) { }
 
   ~IterationCountStopCriterion() { }
 
@@ -74,10 +72,8 @@ template<class TFunction> class DeltaFunctionStopCriterion
  public:
   typedef ltr::utility::shared_ptr< DeltaFunctionStopCriterion<TFunction> > Ptr;
 
-  explicit DeltaFunctionStopCriterion(typename TFunction::Ptr function,
-                                      double min_delta = 0.01)
-    : OnePointStopCriterion<TFunction>(function),
-      min_delta_(min_delta) { }
+  explicit DeltaFunctionStopCriterion(double min_delta = 0.01)
+    : min_delta_(min_delta) { }
 
   ~DeltaFunctionStopCriterion() { }
 
@@ -120,10 +116,8 @@ template<class TFunction> class DeltaArgumentStopCriterion
  public:
   typedef ltr::utility::shared_ptr<DeltaArgumentStopCriterion> Ptr;
 
-  explicit DeltaArgumentStopCriterion(typename TFunction::Ptr function,
-                                      double min_delta = 0.01)
-    : OnePointStopCriterion<TFunction>(function),
-      min_delta_(min_delta) { }
+  explicit DeltaArgumentStopCriterion(double min_delta = 0.01)
+    : min_delta_(min_delta) { }
 
   ~DeltaArgumentStopCriterion() { }
 
@@ -165,10 +159,8 @@ template<class TFunction> class GradientMagnitudeStopCriterion
  public:
   typedef ltr::utility::shared_ptr<GradientMagnitudeStopCriterion> Ptr;
 
-  explicit GradientMagnitudeStopCriterion(typename TFunction::Ptr function,
-                                          double min_gradient = 0.01)
-    : OnePointStopCriterion<TFunction>(function),
-      min_gradient_(min_gradient) { }
+  explicit GradientMagnitudeStopCriterion(double min_gradient = 0.01)
+    : min_gradient_(min_gradient) { }
 
   ~GradientMagnitudeStopCriterion() { }
 
@@ -206,8 +198,8 @@ template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr
     IterationCountStopCriterion<TFunction>::clone() const {
   typename IterationCountStopCriterion<TFunction>::Ptr stop_criterion =
-    new IterationCountStopCriterion<TFunction>(this->function_,
-                                               max_iteration_);
+    new IterationCountStopCriterion<TFunction>(max_iteration_);
+  stop_criterion->set_function(this->function_);
   stop_criterion->set_current_iteration(this->current_iteration());
   stop_criterion->set_is_true(this->isTrue());
   return stop_criterion;
@@ -227,7 +219,8 @@ template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr
     DeltaFunctionStopCriterion<TFunction>::clone() const {
   typename DeltaFunctionStopCriterion<TFunction>::Ptr stop_criterion =
-    new DeltaFunctionStopCriterion<TFunction>(this->function_, min_delta_);
+    new DeltaFunctionStopCriterion<TFunction>(min_delta_);
+  stop_criterion->set_function(this->function());
   stop_criterion->set_is_true(this->isTrue());
   stop_criterion->set_current_value(current_value());
   return stop_criterion;
@@ -246,7 +239,8 @@ template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr
     DeltaArgumentStopCriterion<TFunction>::clone() const {
   typename DeltaArgumentStopCriterion<TFunction>::Ptr stop_criterion =
-    new DeltaArgumentStopCriterion<TFunction>(this->function_, min_delta_);
+    new DeltaArgumentStopCriterion<TFunction>(min_delta_);
+  stop_criterion->set_function(this->function());
   stop_criterion->set_is_true(this->isTrue());
   stop_criterion->set_current_argument(this->current_argument());
   return stop_criterion;
@@ -265,10 +259,10 @@ template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr
     GradientMagnitudeStopCriterion<TFunction>::clone() const {
     typename GradientMagnitudeStopCriterion<TFunction>::Ptr stop_criterion =
-      new GradientMagnitudeStopCriterion<TFunction>(this->function_,
-                                                    min_gradient_);
+      new GradientMagnitudeStopCriterion<TFunction>(min_gradient_);
+    stop_criterion->set_function(this->function_);
     stop_criterion->set_is_true(this->isTrue());
     return stop_criterion;
   }
 }
-#endif  // LTR_OPTIMIZATION_STOP_CRITERIA_ITERATION_STOP_CRITERIA_H_
+#endif  // LTR_OPTIMIZATION_STOP_CRITERIA_ONE_POINT_STOP_CRITERIA_HPP_

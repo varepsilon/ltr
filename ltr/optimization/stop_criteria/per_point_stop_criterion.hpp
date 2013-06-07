@@ -8,11 +8,11 @@
 #include "ltr/optimization/stop_criteria/one_point_stop_criterion.h"
 #include "ltr/optimization/stop_criteria/stop_criterion.h"
 #include "ltr/optimization/stop_criteria/vote_aggregator.h"
-#include "ltr/optimization/population_initers/population.h"
+#include "ltr/optimization/population_info/population.h"
+#include "ltr/optimization/population_info/population_info.hpp"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/optimization/test_problems/unconstrained_functions.h"
 #include "ltr/utility/boost/shared_ptr.h"
-
 
 namespace optimization {
 typedef int PointId;
@@ -31,16 +31,14 @@ template<class TFunction>
 class PerPointStopCriterion : public StopCriterion<TFunction> {
  public:
   explicit PerPointStopCriterion(
-      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion)
-      : StopCriterion<TFunction>(one_point_stop_criterion->function()),
-        one_point_stop_criterion_(one_point_stop_criterion) { }
+      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample);  // NOLINT
   ~PerPointStopCriterion() { }
-
+  typedef PopulationInfo<OnePointStopCriterion<TFunction> > StopCriterionInfo;  // NOLINT
   typedef ltr::utility::shared_ptr<PerPointStopCriterion> Ptr;
   /**
    * Init data for future test of population.
    */
-  virtual void init(const Population& population);
+  virtual void init(Population* population);
   /**
    * Update data for future test of population.
    */
@@ -53,119 +51,69 @@ class PerPointStopCriterion : public StopCriterion<TFunction> {
    */
   virtual bool isTrue();
 
+  virtual void set_function(typename TFunction::Ptr function);
   GET_SET(double, aggregator_threshold);
   virtual string getDefaultAlias() const;
  private:
   /**
-   * Add OnePointStopCriterion to point with point_id.
+   * Sample of one point stop criterion for per point stop criterion.
    */
-  virtual void addOnePointStopCriterion(const Point& point, PointId point_id);
+  typename OnePointStopCriterion<TFunction>::Ptr
+    one_point_stop_criterion_sample_;
   /**
-   * Remove OnePointStopCriterion to point with point_id.
+   * Population info for per point stop criterion.
    */
-  virtual void removeOnePointStopCriterion(PointId point_id);
-  map<PointId, typename OnePointStopCriterion<TFunction>::Ptr > one_point_stop_criteria_;  // NOLINT
-  typedef typename map<PointId, typename OnePointStopCriterion<TFunction>::Ptr >::iterator Iterator;  // NOLINT
+  typename StopCriterionInfo::Ptr stop_criterion_info_;
   VoteAggregator aggregator_;
-  typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_;
   double aggregator_threshold_;
 };
 
 // template realization
+template<class TFunction>
+PerPointStopCriterion<TFunction>::PerPointStopCriterion(
+      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample)  // NOLINT
+      : one_point_stop_criterion_sample_(one_point_stop_criterion_sample),
+        aggregator_threshold_(1.0) { }
 
 template<class TFunction>
-void PerPointStopCriterion<TFunction>::init(const Population& population) {
-  typename OnePointStopCriterion<TFunction>::Ptr stop_criterion =
-    one_point_stop_criterion_->clone();
-  for (Population::Iterator iterator = population.begin();
-       iterator != population.end();
-       ++iterator) {
-     stop_criterion->init(iterator.point());
-     one_point_stop_criteria_[iterator.point_id()] = stop_criterion->clone();
-  }
+void PerPointStopCriterion<TFunction>::init(Population* population) {
+  stop_criterion_info_ = new StopCriterionInfo(
+      population,
+      one_point_stop_criterion_sample_);
 }
 
 template<class TFunction>
 void PerPointStopCriterion<TFunction>::update(const Population& population) {
-  /**
-   * Deleting old stopcriteria, adding new stopcriteria for new points in population
-   * via 2 iterators like in merge-step in merge-sort.
-   */
-  Population::Iterator population_iterator = population.begin();
-  Iterator stop_criteria_iterator = one_point_stop_criteria_.begin();
-
-  aggregator_.reset();
-  while (stop_criteria_iterator != one_point_stop_criteria_.end() &&
-          population_iterator != population.end()) {
-    PointId stop_criteria_id = stop_criteria_iterator->first;
-    PointId point_id = population_iterator.point_id();
-
-    if (stop_criteria_id < point_id) {
-      // Delete old points from one_point_stop_criteria_.
-      ++stop_criteria_iterator;
-      removeOnePointStopCriterion(stop_criteria_id);
-    } else if (stop_criteria_id == point_id) {
-      // Update ordinary points in one_point_stop_criteria_.
-      one_point_stop_criteria_[stop_criteria_id]->update(population_iterator.point());  // NOLINT
-
-      bool answer = one_point_stop_criteria_[stop_criteria_id]->isTrue();
-      aggregator_.push(answer);
-
-      ++population_iterator;
-      ++stop_criteria_iterator;
-    } else {
-      // Add new points to one_point_stop_criteria_.
-      addOnePointStopCriterion(population_iterator.point(), point_id);
-
-      bool answer = one_point_stop_criteria_[point_id]->isTrue();
-      aggregator_.push(answer);
-
-      ++population_iterator;
-    }
-  }
-
-  if (stop_criteria_iterator == one_point_stop_criteria_.end()) {
-    // add points
-    while (population_iterator != population.end()) {
-      PointId point_id = population_iterator.point_id();
-      addOnePointStopCriterion(population_iterator.point(), point_id);
-
-      bool answer = one_point_stop_criteria_[point_id]->isTrue();
-      aggregator_.push(answer);
-
-      ++population_iterator;
-    }
-  } else {
-    // delete points
-    while (stop_criteria_iterator != one_point_stop_criteria_.end()) {
-      one_point_stop_criteria_.erase(
-          (++stop_criteria_iterator)->first);
-    }
+  for (Population::Iterator it = population.begin();
+       it != population.end();
+       ++it) {
+    typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion =
+      stop_criterion_info_->getInfoById(it.point_id());
+    one_point_stop_criterion->update(it.point());
   }
 }
 
 template<class TFunction>
 bool PerPointStopCriterion<TFunction>::isTrue() {
+  aggregator_.reset();
+  for (typename StopCriterionInfo::Iterator it = stop_criterion_info_->begin();
+       it != stop_criterion_info_->end();
+       ++it) {
+    aggregator_.push(it->second->isTrue());
+  }
   return aggregator_.isTrue(aggregator_threshold_);
 }
 
 template<class TFunction>
-void PerPointStopCriterion<TFunction>::addOnePointStopCriterion(const Point& point,  // NOLINT
-                                                                PointId point_id) {  // NOLINT
-  typename OnePointStopCriterion<TFunction>::Ptr stop_criterion =
-    one_point_stop_criterion_->clone();
-  stop_criterion->init(point);
-  one_point_stop_criteria_[point_id] = stop_criterion;
-}
-
-template<class TFunction>
-void PerPointStopCriterion<TFunction>::removeOnePointStopCriterion(PointId point_id) {  // NOLINT
-  one_point_stop_criteria_.erase(point_id);
-}
-
-template<class TFunction>
 string PerPointStopCriterion<TFunction>::getDefaultAlias() const {
-  return "PerPointStopCriterion_with_" + one_point_stop_criterion_->alias();
+  return "PerPointStopCriterion_with_" +
+    one_point_stop_criterion_sample_->alias();
+}
+template<class TFunction>
+void PerPointStopCriterion<TFunction>::set_function(
+    typename TFunction::Ptr function) {
+  one_point_stop_criterion_sample_->set_function(function);
+  this->function_ = function;
 }
 }
 

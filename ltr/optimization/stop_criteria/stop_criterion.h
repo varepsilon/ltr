@@ -5,7 +5,7 @@
 
 #include <string>
 #include "ltr/interfaces/aliaser.h"
-#include "ltr/optimization/population_initers/population.h"
+#include "ltr/optimization/population_info/population.h"
 
 namespace optimization {
 /**
@@ -18,15 +18,14 @@ namespace optimization {
 template<class TFunction>
 class StopCriterion : public ltr::Aliaser {
  public:
-  explicit StopCriterion(typename TFunction::Ptr function)
-      : function_(function) { }
+  explicit StopCriterion() { }
   ~StopCriterion() { }
 
   typedef ltr::utility::shared_ptr<StopCriterion> Ptr;
   /**
    * Init data for future test of population.
    */
-  virtual void init(const Population& population) = 0;
+  virtual void init(Population* population) = 0;
   /**
    * Update data for future test of population.
    */
@@ -36,11 +35,15 @@ class StopCriterion : public ltr::Aliaser {
    */
   virtual bool isTrue() = 0;
 
+  virtual void set_function(typename TFunction::Ptr function) = 0;
+  virtual typename TFunction::Ptr function() {
+    return function_;
+  }
   virtual string getDefaultAlias() const {
     return "StopCriterion";
   }
 
- private:
+ protected:
   typename TFunction::Ptr function_;
 };
 }

@@ -1,21 +1,20 @@
 //  Copyright 2013 Yandex
 
-#ifndef LTR_OPTIMIZATION_POPULATION_INITERS_POPULATION_H_
-#define LTR_OPTIMIZATION_POPULATION_INITERS_POPULATION_H_
+#ifndef LTR_OPTIMIZATION_POPULATION_INFO_POPULATION_H_
+#define LTR_OPTIMIZATION_POPULATION_INFO_POPULATION_H_
 
 #include <string>
 #include <map>
-
+#include <vector>
 #include "contrib/include_Eigen.h"
-
 #include "ltr/utility/macros.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
-
 using std::map;
-using std::pair;
+using std::vector;
 
 namespace optimization {
+class BasePopulationInfo;
 typedef int PointId;
 typedef Eigen::VectorXd Point;
 /**
@@ -28,7 +27,7 @@ typedef Eigen::VectorXd Point;
 class Population : public ltr::Aliaser {
  public:
   typedef ltr::utility::shared_ptr<Population> Ptr;
-
+  friend class BasePopulationInfo;
   explicit Population() : id_counter_(0) { }
   ~Population() { }
 
@@ -68,6 +67,7 @@ class Population : public ltr::Aliaser {
      * Get point.
      */
     Point point() const;
+
    private:
     map<PointId, Point>::const_iterator map_iterator_;
   };
@@ -109,10 +109,18 @@ class Population : public ltr::Aliaser {
    */
   map<PointId, Point> points_;
   /**
+   * attach population_info to population
+   */
+  void attachInfo(BasePopulationInfo* population_info);
+  /**
+   * Vector of attached population info.
+   */
+  vector<BasePopulationInfo*> population_info_;
+  /**
    * Total count of added points.
    */
   int id_counter_;
 };
 }
 
-#endif  // LTR_OPTIMIZATION_POPULATION_INITERS_POPULATION_H_
+#endif  // LTR_OPTIMIZATION_POPULATION_INFO_POPULATION_H_

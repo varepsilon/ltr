@@ -4,17 +4,7 @@
 #include "ltr/optimization/test_problems/constrained_functions.h"
 #include "ltr/optimization/test_problems/unconstrained_functions.h"
 
-using optimization::Point;
-using optimization::Vector;
-using optimization::Matrix;
-using optimization::G1Function;
-using optimization::G3Function;
-using optimization::EasomFunction;
-using optimization::GriewankFunction;
-using optimization::RosenbrockFunction;
-using optimization::SumSquaresFunction;
-using optimization::TridFunction;
-
+namespace optimization {
 const double PI = 3.141592653589797;
 
 TEST(G1FunctionTest, G1FunctionValueTest) {
@@ -344,4 +334,5 @@ TEST(TridFunctionTest, TridFunctionHessianTest) {
 TEST(TridFunctionTest, TridFunctionExceptionTest) {
   EXPECT_ANY_THROW(TridFunction trid_function(1));
   EXPECT_NO_THROW(TridFunction trid_function(2));
+}
 }

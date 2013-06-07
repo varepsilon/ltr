@@ -1,7 +1,7 @@
 // Copyright 2013 Yandex
 
 #include <gtest/gtest.h>
-#include "ltr/optimization/population_initers/population.h"
+#include "ltr/optimization/population_info/population.h"
 #include "ltr/optimization/population_initers/naive_initer.h"
 #include "ltr/optimization/sets/ball_set.h"
 

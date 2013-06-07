@@ -23,9 +23,8 @@ template<class TFunction> class OnePointStopCriterion : public ltr::Aliaser {
  public:
   typedef ltr::utility::shared_ptr< OnePointStopCriterion<TFunction> > Ptr;
 
-  explicit OnePointStopCriterion(typename TFunction::Ptr function)
-      : function_(function),
-        is_true_(false) { }
+  explicit OnePointStopCriterion()
+      : is_true_(false) { }
 
   ~OnePointStopCriterion() { }
 

@@ -26,8 +26,7 @@ class And : public OnePointStopCriterion<TFunction> {
  public:
   typedef ltr::utility::shared_ptr<And> Ptr;
 
-  explicit And(typename TFunction::Ptr function,
-               typename OnePointStopCriterion<TFunction>::Ptr first,
+  explicit And(typename OnePointStopCriterion<TFunction>::Ptr first,
                typename OnePointStopCriterion<TFunction>::Ptr second);
   ~And() { }
 
@@ -45,6 +44,7 @@ class And : public OnePointStopCriterion<TFunction> {
    * Create deep copy of this stop criterion.
    */
   typename OnePointStopCriterion<TFunction>::Ptr clone() const;
+  void set_function(typename TFunction::Ptr function);
  private:
   typename OnePointStopCriterion<TFunction>::Ptr first_;
   typename OnePointStopCriterion<TFunction>::Ptr second_;
@@ -64,8 +64,7 @@ class Or : public OnePointStopCriterion<TFunction> {
  public:
   typedef ltr::utility::shared_ptr<Or> Ptr;
 
-  explicit Or(typename TFunction::Ptr function,
-              typename OnePointStopCriterion<TFunction>::Ptr first,
+  explicit Or(typename OnePointStopCriterion<TFunction>::Ptr first,
               typename OnePointStopCriterion<TFunction>::Ptr second);
   ~Or() { }
 
@@ -80,6 +79,7 @@ class Or : public OnePointStopCriterion<TFunction> {
 
   string getDefaultAlias() const;
 
+  void set_function(typename TFunction::Ptr function);
   typename OnePointStopCriterion<TFunction>::Ptr clone() const;
  private:
   typename OnePointStopCriterion<TFunction>::Ptr first_;
@@ -89,14 +89,10 @@ class Or : public OnePointStopCriterion<TFunction> {
 //  template realization
 
 template<class TFunction>
-And<TFunction>::And(typename TFunction::Ptr function,
-                    typename OnePointStopCriterion<TFunction>::Ptr first,
+And<TFunction>::And(typename OnePointStopCriterion<TFunction>::Ptr first,
                     typename OnePointStopCriterion<TFunction>::Ptr second)
-    : OnePointStopCriterion<TFunction>(function),
-      first_(first),
+    : first_(first),
       second_(second) {
-  first_->set_function(function);
-  second_->set_function(function);
 }
 template<class TFunction>
 void And<TFunction>::init(const Point& point) {
@@ -116,22 +112,22 @@ string And<TFunction>::getDefaultAlias() const {
 template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr And<TFunction>::clone() const {
   typename And<TFunction>::Ptr stop_criterion =
-    new And<TFunction>(this->function_,
-                       first_->clone(),
+    new And<TFunction>(first_->clone(),
                        second_->clone());
+  stop_criterion->set_function(this->function());
   stop_criterion->set_is_true(this->isTrue());
   return stop_criterion;
 }
-
 template<class TFunction>
-Or<TFunction>::Or(typename TFunction::Ptr function,
-                  typename OnePointStopCriterion<TFunction>::Ptr first,
-                  typename OnePointStopCriterion<TFunction>::Ptr second)
-    : OnePointStopCriterion<TFunction>(function),
-      first_(first),
-      second_(second) {
+void And<TFunction>::set_function(typename TFunction::Ptr function) {
   first_->set_function(function);
   second_->set_function(function);
+}
+template<class TFunction>
+Or<TFunction>::Or(typename OnePointStopCriterion<TFunction>::Ptr first,
+                  typename OnePointStopCriterion<TFunction>::Ptr second)
+    : first_(first),
+      second_(second) {
 }
 template<class TFunction>
 void Or<TFunction>::init(const Point& point) {
@@ -151,11 +147,16 @@ string Or<TFunction>::getDefaultAlias() const {
 template<class TFunction>
 typename OnePointStopCriterion<TFunction>::Ptr Or<TFunction>::clone() const {
   typename Or<TFunction>::Ptr stop_criterion =
-    new  Or<TFunction>(this->function_,
-                       first_->clone(),
+    new  Or<TFunction>(first_->clone(),
                        second_->clone());
+  stop_criterion->set_function(this->function());
   stop_criterion->set_is_true(this->isTrue());
   return stop_criterion;
+}
+template<class TFunction>
+void Or<TFunction>::set_function(typename TFunction::Ptr function) {
+  first_->set_function(function);
+  second_->set_function(function);
 }
 }
 #endif  // LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERIA_HPP_

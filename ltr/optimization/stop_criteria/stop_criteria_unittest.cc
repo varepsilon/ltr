@@ -9,31 +9,34 @@
 #include "ltr/optimization/sets/ball_set.h"
 #include "ltr/optimization/functions/function.h"
 #include "ltr/optimization/stop_criteria/vote_aggregator.h"
-#include "ltr/optimization/population_initers/population.h"
+#include "ltr/optimization/population_info/population.h"
 #include "ltr/optimization/stop_criteria/per_point_stop_criterion.hpp"
 
-using optimization::IterationCountStopCriterion;
-using optimization::DeltaFunctionStopCriterion;
-using optimization::DeltaArgumentStopCriterion;
-using optimization::GradientMagnitudeStopCriterion;
-using optimization::And;
-using optimization::Or;
 using optimization::Population;
-using optimization::SumSquaresFunction;
-using optimization::Function;
-using optimization::DifferentiableFunction;
-using optimization::VoteAggregator;
-using optimization::BallSet;
-using optimization::PerPointStopCriterion;
-using optimization::OnePointStopCriterion;
 typedef Eigen::VectorXd Point;
+void PutTestPointsToPopulation(Population* population) {
+  Point a(2);
+  a << 1, 1;
+  Point b(2);
+  b << 2, 2;
+  Point c(2);
+  c << 3, 3;
+  population->addPoint(a);
+  population->addPoint(b);
+  population->addPoint(c);
+}
+
+namespace optimization {
 typedef Eigen::VectorXd Vector;
 typedef Eigen::MatrixXd Matrix;
 
 TEST(OnePointStopCriterionTest, IterationStopCriterionTest) {
   Point point(2);
+  point.setZero();
   IterationCountStopCriterion<Function>
-    iteration_stop_criterion(new SumSquaresFunction(2));
+    iteration_stop_criterion;
+
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   iteration_stop_criterion.set_max_iteration(2);
   iteration_stop_criterion.update(point);
@@ -50,7 +53,8 @@ TEST(OnePointStopCriterionTest, DeltaFunctionStopCriterionTest) {
   Point point(2);
   point.setZero();
   DeltaFunctionStopCriterion<Function>
-    iteration_stop_criterion(new SumSquaresFunction(2));
+    iteration_stop_criterion;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   iteration_stop_criterion.set_min_delta(0.01);
   iteration_stop_criterion.update(point);
@@ -64,7 +68,8 @@ TEST(OnePointStopCriterionTest, DeltaArgumentStopCriterionTest) {
   Point point(2);
   point.setZero();
   DeltaArgumentStopCriterion<Function>
-    iteration_stop_criterion(new SumSquaresFunction(2));
+    iteration_stop_criterion;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   iteration_stop_criterion.set_min_delta(0.01);
   iteration_stop_criterion.update(point);
@@ -78,7 +83,8 @@ TEST(OnePointStopCriterionTest, GradientStopCriterionTest) {
   Point point(2);
   point.setZero();
   GradientMagnitudeStopCriterion<DifferentiableFunction>
-    iteration_stop_criterion(new SumSquaresFunction(2));
+    iteration_stop_criterion;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   iteration_stop_criterion.set_min_gradient(0.01);
   iteration_stop_criterion.update(point);
@@ -91,11 +97,11 @@ TEST(OnePointStopCriterionTest, GradientStopCriterionTest) {
 TEST(OnePointStopCriterionTest, AndStopCriterionTest) {
   Point point(2);
   And<Function> iteration_stop_criterion(
-      new SumSquaresFunction(2),
-      new DeltaFunctionStopCriterion<Function>(new SumSquaresFunction(3), 0.1),  // NOLINT
-      new IterationCountStopCriterion<Function>(new SumSquaresFunction(3), 3));  // NOLINT
+      new DeltaFunctionStopCriterion<Function>(0.1),  // NOLINT
+      new IterationCountStopCriterion<Function>(3));  // NOLINT
 
   point << 0, 0;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   point << 100, 100;
   iteration_stop_criterion.update(point);
@@ -110,11 +116,11 @@ TEST(OnePointStopCriterionTest, AndStopCriterionTest) {
 TEST(OnePointStopCriterionTest, OrStopCriterionTest) {
   Point point(2);
   Or<Function> iteration_stop_criterion(
-      new SumSquaresFunction(2),
-      new DeltaFunctionStopCriterion<Function>(new SumSquaresFunction(3), 0.1),
-      new IterationCountStopCriterion<Function>(new SumSquaresFunction(3), 3));
+      new DeltaFunctionStopCriterion<Function>(0.1),
+      new IterationCountStopCriterion<Function>(3));
 
   point << 0, 0;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.init(point);
   point << 100, 100;
   iteration_stop_criterion.update(point);
@@ -127,9 +133,8 @@ TEST(OnePointStopCriterionTest, OrStopCriterionTest) {
 }
 TEST(OrStopCriterionTest, OrAliasTest) {
   Or<Function> iteration_stop_criterion(
-      new SumSquaresFunction(2),
-      new DeltaFunctionStopCriterion<Function>(new SumSquaresFunction(3), 0.1),
-      new IterationCountStopCriterion<Function>(new SumSquaresFunction(3), 3));
+      new DeltaFunctionStopCriterion<Function>(0.1),
+      new IterationCountStopCriterion<Function>(3));
 
   EXPECT_TRUE("DeltaFunctionStopCriterion_||_IterationCountStopCriterion" ==
                 iteration_stop_criterion.alias());
@@ -148,7 +153,8 @@ TEST(VoteAggregatorTest, VoteAggregatorTest) {
 TEST(OnePointStopCriterionTest, CloneTest) {
   Point point(2);
   IterationCountStopCriterion<Function>
-    iteration_stop_criterion(new SumSquaresFunction(2));
+    iteration_stop_criterion;
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.set_max_iteration(2);
   OnePointStopCriterion<Function>::Ptr cloned_stop_criterion =
     iteration_stop_criterion.clone();
@@ -166,27 +172,17 @@ TEST(OnePointStopCriterionTest, CloneTest) {
 }
 
 TEST(PerPointStopCriterionTest, IterationCountTest) {
-  IterationCountStopCriterion<Function>::Ptr
-    one_point_stop_criterion =
-      new IterationCountStopCriterion<Function>(new SumSquaresFunction(2));
-  one_point_stop_criterion->set_max_iteration(3);
-
-  PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
-  iteration_stop_criterion.set_aggregator_threshold(0.5);
-
   Population population;
-  Point a(2);
-  a << 1, 1;
-  Point b(2);
-  b << 2, 2;
-  Point c(2);
-  c << 3, 3;
+  IterationCountStopCriterion<Function>::Ptr one_point_stop_criterion =
+      new IterationCountStopCriterion<Function>;
+  one_point_stop_criterion->set_max_iteration(3);
+  PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
+  iteration_stop_criterion.set_aggregator_threshold(0.5);
+  iteration_stop_criterion.init(&population);
 
-  population.addPoint(a);
-  population.addPoint(b);
-  population.addPoint(c);
+  PutTestPointsToPopulation(&population);
 
-  iteration_stop_criterion.init(population);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
   iteration_stop_criterion.update(population);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
@@ -197,27 +193,20 @@ TEST(PerPointStopCriterionTest, IterationCountTest) {
 }
 
 TEST(PerPointStopCriterionTest, DeltaArgumentTest) {
+  Population population;
   DeltaArgumentStopCriterion<Function>::Ptr
     one_point_stop_criterion =
-      new DeltaArgumentStopCriterion<Function>(new SumSquaresFunction(2));
+      new DeltaArgumentStopCriterion<Function>;
   one_point_stop_criterion->set_min_delta(0.05);
 
   PerPointStopCriterion<Function> delta_argument_stop_criterion(one_point_stop_criterion); // NOLINT
   delta_argument_stop_criterion.set_aggregator_threshold(0.5);
+  delta_argument_stop_criterion.set_function(new SumSquaresFunction(2));
 
-  Population population;
-  Point a(2);
-  a << 1, 1;
-  Point b(2);
-  b << 2, 2;
-  Point c(2);
-  c << 3, 3;
+  delta_argument_stop_criterion.init(&population);
 
-  population.addPoint(a);
-  population.addPoint(b);
-  population.addPoint(c);
+  PutTestPointsToPopulation(&population);
 
-  delta_argument_stop_criterion.init(population);
   EXPECT_FALSE(delta_argument_stop_criterion.isTrue());
   Point point(2);
   point << 2, 2;
@@ -235,27 +224,18 @@ TEST(PerPointStopCriterionTest, DeltaArgumentTest) {
 }
 
 TEST(PerPointStopCriterionTest, DeltaValueTest) {
+  Population population;
   DeltaFunctionStopCriterion<Function>::Ptr
     one_point_stop_criterion =
-      new DeltaFunctionStopCriterion<Function>(new SumSquaresFunction(2));
+      new DeltaFunctionStopCriterion<Function>;
   one_point_stop_criterion->set_min_delta(0.05);
-
   PerPointStopCriterion<Function> delta_value_stop_criterion(one_point_stop_criterion); // NOLINT
   delta_value_stop_criterion.set_aggregator_threshold(0.5);
+  delta_value_stop_criterion.set_function(new SumSquaresFunction(2));
+  delta_value_stop_criterion.init(&population);
 
-  Population population;
-  Point a(2);
-  a << 1, 1;
-  Point b(2);
-  b << 2, 2;
-  Point c(2);
-  c << 3, 3;
+  PutTestPointsToPopulation(&population);
 
-  population.addPoint(a);
-  population.addPoint(b);
-  population.addPoint(c);
-
-  delta_value_stop_criterion.init(population);
   EXPECT_FALSE(delta_value_stop_criterion.isTrue());
   Point point(2);
   point << 2, 2;
@@ -273,27 +253,19 @@ TEST(PerPointStopCriterionTest, DeltaValueTest) {
 }
 
 TEST(PerPointStopCriterionTest, GradientMagnitudeTest) {
+  Population population;
   GradientMagnitudeStopCriterion<DifferentiableFunction>::Ptr
     one_point_stop_criterion =
-      new GradientMagnitudeStopCriterion<DifferentiableFunction>(new SumSquaresFunction(2));  // NOLINT
+      new GradientMagnitudeStopCriterion<DifferentiableFunction>;  // NOLINT
   one_point_stop_criterion->set_min_gradient(0.05);
 
   PerPointStopCriterion<DifferentiableFunction> gradient_magnitude_stop_criterion(one_point_stop_criterion); // NOLINT
   gradient_magnitude_stop_criterion.set_aggregator_threshold(0.5);
+  gradient_magnitude_stop_criterion.set_function(new SumSquaresFunction(2));
+  gradient_magnitude_stop_criterion.init(&population);
 
-  Population population;
-  Point a(2);
-  a << 1, 1;
-  Point b(2);
-  b << 1, 1;
-  Point c(2);
-  c << 1, 1;
+  PutTestPointsToPopulation(&population);
 
-  population.addPoint(a);
-  population.addPoint(b);
-  population.addPoint(c);
-
-  gradient_magnitude_stop_criterion.init(population);
   EXPECT_FALSE(gradient_magnitude_stop_criterion.isTrue());
   Point point(2);
   point << 2, 2;
@@ -312,28 +284,21 @@ TEST(PerPointStopCriterionTest, GradientMagnitudeTest) {
 }
 
 TEST(PerPointStopCriterionTest, UpdateTest) {
+  Population population;
   IterationCountStopCriterion<Function>::Ptr one_point_stop_criterion =
-    new IterationCountStopCriterion<Function>(new SumSquaresFunction(2));
+    new IterationCountStopCriterion<Function>;
   one_point_stop_criterion->set_max_iteration(3);
 
   PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
   iteration_stop_criterion.set_aggregator_threshold(0.3);
+  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
+  iteration_stop_criterion.init(&population);
 
-  Population population;
+  PutTestPointsToPopulation(&population);
+
+  EXPECT_FALSE(iteration_stop_criterion.isTrue());
   Point a(2);
   a << 1, 1;
-  Point b(2);
-  b << 2, 2;
-  Point c(2);
-  c << 3, 3;
-
-  population.addPoint(a);
-  population.addPoint(b);
-  population.addPoint(c);
-
-  iteration_stop_criterion.init(population);
-  EXPECT_FALSE(iteration_stop_criterion.isTrue());
-
   population.addPoint(a);
   population.removePoint(0);
   iteration_stop_criterion.update(population);
@@ -348,9 +313,10 @@ TEST(PerPointStopCriterionTest, UpdateTest) {
   iteration_stop_criterion.update(population);
 
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
-  iteration_stop_criterion.set_aggregator_threshold(0.5);
+  iteration_stop_criterion.set_aggregator_threshold(0.67);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
 
   iteration_stop_criterion.update(population);
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
+}
 }

@@ -1,4 +1,4 @@
-# lets list all LTR's binaries
+    # lets list all LTR's binaries
 # lets list all LTR's source binaries
 
 SET(LTR_DENSITY_ESTIMATORS_SCORERS ${Source_Path}/ltr/density_estimators/base_probability_density_estimator.h
@@ -332,17 +332,31 @@ SET(OPTIMIZATION_TEST_PROBLEMS ${Source_Path}/ltr/optimization/test_problems/con
                                ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.cc
                                ${Source_Path}/ltr/optimization/test_problems/unconstrained_functions.h)
 
-SET(OPTIMIZATION_POPULATION_INITERS  ${Source_Path}/ltr/optimization/population_initers/population.h
-                                    ${Source_Path}/ltr/optimization/population_initers/population.cc
-                                    ${Source_Path}/ltr/optimization/population_initers/naive_initer.h
+SET(OPTIMIZATION_POPULATION_INITERS ${Source_Path}/ltr/optimization/population_initers/naive_initer.h
                                     ${Source_Path}/ltr/optimization/population_initers/naive_initer.cc
                                     ${Source_Path}/ltr/optimization/population_initers/population_initer.h)
 
 SET(OPTIMIZATION_STOP_CRITERIA ${Source_Path}/ltr/optimization/stop_criteria/and_or_stop_criteria.hpp
                                ${Source_Path}/ltr/optimization/stop_criteria/one_point_stop_criteria.hpp
                                ${Source_Path}/ltr/optimization/stop_criteria/one_point_stop_criterion.h
+                               ${Source_Path}/ltr/optimization/stop_criteria/per_point_stop_criterion.hpp
+                               ${Source_Path}/ltr/optimization/stop_criteria/stop_criterion.h
                                ${Source_Path}/ltr/optimization/stop_criteria/vote_aggregator.cc
                                ${Source_Path}/ltr/optimization/stop_criteria/vote_aggregator.h)
+
+SET(OPTIMIZATION_POPULATION_UPDATERS ${Source_Path}/ltr/optimization/population_updaters/directed_updater.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/directed_updaters.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/direction_calculator.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/direction_calculators.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/step_size_calculator.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/step_size_calculators.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/one_point_updater.h
+                                     ${Source_Path}/ltr/optimization/population_updaters/per_point_updater.hpp
+                                     ${Source_Path}/ltr/optimization/population_updaters/population_updater.h)
+
+SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info/population.h
+                                 ${Source_Path}/ltr/optimization/population_info/population.cc
+                                 ${Source_Path}/ltr/optimization/population_info/population_info.hpp)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
@@ -384,6 +398,8 @@ SOURCE_GROUP(optimization\\sets FILES ${OPTIMIZATION_SETS})
 SOURCE_GROUP(optimization\\test_problems FILES ${OPTIMIZATION_TEST_PROBLEMS})
 SOURCE_GROUP(optimization\\population_initers FILES ${OPTIMIZATION_POPULATION_INITERS})
 SOURCE_GROUP(optimization\\stop_criteria FILES ${OPTIMIZATION_STOP_CRITERIA})
+SOURCE_GROUP(optimization\\population_info FILES ${OPTIMIZATION_POPULATION_INFO})
+SOURCE_GROUP(optimization\\population_updaters FILES ${OPTIMIZATION_POPULATION_UPDATERS})
 
 SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_UTILS} ${LTR_RANDOM} ${LTR_SHARED_PTR} ${LTR_INTERFACES}
             ${LTR_IO_UTILS} ${LTR_SCORERS} ${LTR_LEARNERS} ${LTR_PARAMETERS_CONTAINER} ${LTR_SCORERS_UTILS}
@@ -393,6 +409,6 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
             ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS}
-            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS} ${OPTIMIZATION_POPULATION_INITERS} ${OPTIMIZATION_STOP_CRITERIA})
+            ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS} ${OPTIMIZATION_POPULATION_INITERS} ${OPTIMIZATION_STOP_CRITERIA} ${OPTIMIZATION_POPULATION_INFO} ${OPTIMIZATION_POPULATION_UPDATERS})
 
 INCLUDE_DIRECTORIES(${Source_Path})
