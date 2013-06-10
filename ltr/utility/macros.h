@@ -10,31 +10,31 @@ using std::vector;
 
 namespace ltr {
 /**
-* Simple setter
-*/
+ * Simple setter
+ */
 #define SET(type, name) \
   void set_##name(const type& name) { \
     name##_ = name; \
   }
 
 /**
-* Simple getter
-*/
+ * Simple getter
+ */
 #define GET(type, name) \
   type name() const { \
     return name##_; \
   }
 
 /**
-* Simple getter and setter
-*/
+ * Simple getter and setter
+ */
 #define GET_SET(type, name) \
   GET(type, name) \
   SET(type, name)
 
 /**
-* Simple getter for vectors
-*/
+ * Simple getter for vectors
+ */
 #define GET_VECTOR(type, name) \
   vector<type> name() const { \
     return name##_; \
@@ -47,8 +47,8 @@ namespace ltr {
   }
 
 /**
-* Simple getter and setter for vectors
-*/
+ * Simple getter and setter for vectors
+ */
 #define GET_SET_VECTOR(type, name) \
   GET_VECTOR(type, name); \
   void set_##name(const vector<type>& name) { \
@@ -65,8 +65,8 @@ namespace ltr {
   }
 
 /**
-* Simple getter and setter for vectors of stared_ptr
-*/
+ * Simple getter and setter for vectors of stared_ptr
+ */
 #define GET_SET_VECTOR_OF_PTR(type, name) \
   void set_##name(const vector<ltr::utility::shared_ptr<type> >& name) { \
     name##_ = name; \
@@ -94,21 +94,29 @@ namespace ltr {
   }
 
 /**
-* Throw an exception if expression is false
-*/
+ * Throw an exception if expression is false
+ */
 #define CHECK(expression) \
   if (!(expression)) { \
     throw std::logic_error("Expected: " #expression); \
   }
 
 /**
-* Allows only heap creation and makes shared_ptr<A> friendly
-* Must be inserted at the beginning or end of the class
-* The only way to create object will be the following
-* \code{.cpp}
+ * Throw an exception with given message if expression is false
+ */
+#define CHECK_MSG(expression, message) \
+  if (!(expression)) { \
+    throw std::logic_error(message); \
+  }
+
+/**
+ * Allows only heap creation and makes shared_ptr<A> friendly
+ * Must be inserted at the beginning or end of the class
+ * The only way to create object will be the following
+ * \code{.cpp} bn
     Class::Ptr object(new Class());
   \endcode
-*/
+ */
 #define ALLOW_SHARED_PTR_ONLY_CREATION(class_name) \
 public: \
   typedef ltr::utility::shared_ptr< class_name > Ptr; \
