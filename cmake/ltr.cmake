@@ -106,7 +106,9 @@ SET(LTR_UTILS ${Source_Path}/ltr/utility/two_class_predicted_label_converter.h
               ${Source_Path}/ltr/utility/neighbor_weighter.h
               ${Source_Path}/ltr/utility/neighbor_weighter.cc
               ${Source_Path}/ltr/utility/container_utility.h
-              ${Source_Path}/ltr/utility/statistics_calculation.h)
+              ${Source_Path}/ltr/utility/statistics_calculation.h
+              ${Source_Path}/ltr/utility/safe_map.hpp
+              ${Source_Path}/ltr/utility/safe_set.hpp)
 
 SET(LTR_BOOST ${Source_Path}/ltr/utility/boost/any.h
               ${Source_Path}/ltr/utility/boost/path.h

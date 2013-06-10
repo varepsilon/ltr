@@ -83,7 +83,9 @@ SET(LTR_UTILITY_TEST ${Source_Path}/ltr/utility/multitable_unittest.cc
                      ${Source_Path}/ltr/utility/boost/shared_ptr_unittest.cc
                      ${Source_Path}/ltr/utility/boost/any_unittest.cc
                      ${Source_Path}/ltr/utility/boost/string_utils_unittest.cc
-                     ${Source_Path}/ltr/utility/boost/triple_unittest.cc)
+                     ${Source_Path}/ltr/utility/boost/triple_unittest.cc
+                     ${Source_Path}/ltr/utility/safe_map_unittest.cc
+                     ${Source_Path}/ltr/utility/safe_set_unittest.cc)
 
 SET(LTR_COMPOSITION_TEST ${Source_Path}/ltr/learners/composition_learner/linear_composition_unittest.cc
                      ${Source_Path}/ltr/learners/composition_learner/composition_learner_unittest.cc)
@@ -113,10 +115,33 @@ SOURCE_GROUP(utility FILES ${LTR_UTILITY_TEST})
 SOURCE_GROUP(optimization FILES ${LTR_OPTIMIZATION_TEST})
 
 # lets list all LTR_TEST's source binaries
-SET(LTR_TEST ${LTR_PREDICTIONS_AGGREGATORS_TEST} ${LTR_TWO_CLASS_CONVERTERS_TEST} ${NEIGHBOR_WEIGHTER_TEST} ${TOSTRING_TEST} ${INDICES_TEST} ${NUMERICAL_TEST} ${SAVE_PREDICTION_TEST} ${LIST_TO_ALL_PAIRS_CONVERTER_TEST} ${LTR_OBJECT_TEST}
-             ${LTR_OBJECT_LIST_TEST} ${LTR_FEATURE_INFO_TEST} ${LTR_DATA_TEST} ${LTR_LEARNERS_TEST} ${LTR_SCORERS_TEST} ${LTR_FEATURE_CONVERTERS_TEST}
-             ${LTR_DATA_UTILITY_TEST} ${LTR_INTERFACES_TEST} ${LTR_PARAMETERS_CONTAINER_TEST} ${LTR_CROSSVALIDATION_TEST} ${LTR_DECISION_TREE_TEST}
-             ${LTR_DATA_PREPROCESSORS_TEST} ${LTR_MEASURES_TEST} ${LTR_COMPOSITION_TEST} ${LTR_METRICS_TEST} ${DENSITY_ESTIMATORS_TEST} ${LTR_UTILITY_TEST} ${LTR_OPTIMIZATION_TEST})
+SET(LTR_TEST ${LTR_PREDICTIONS_AGGREGATORS_TEST}
+             ${LTR_TWO_CLASS_CONVERTERS_TEST}
+             ${NEIGHBOR_WEIGHTER_TEST}
+             ${TOSTRING_TEST}
+             ${INDICES_TEST}
+             ${NUMERICAL_TEST}
+             ${SAVE_PREDICTION_TEST}
+             ${LIST_TO_ALL_PAIRS_CONVERTER_TEST}
+             ${LTR_OBJECT_TEST}
+             ${LTR_OBJECT_LIST_TEST}
+             ${LTR_FEATURE_INFO_TEST}
+             ${LTR_DATA_TEST}
+             ${LTR_LEARNERS_TEST}
+             ${LTR_SCORERS_TEST}
+             ${LTR_FEATURE_CONVERTERS_TEST}
+             ${LTR_DATA_UTILITY_TEST}
+             ${LTR_INTERFACES_TEST}
+             ${LTR_PARAMETERS_CONTAINER_TEST}
+             ${LTR_CROSSVALIDATION_TEST}
+             ${LTR_DECISION_TREE_TEST}
+             ${LTR_DATA_PREPROCESSORS_TEST}
+             ${LTR_MEASURES_TEST}
+             ${LTR_COMPOSITION_TEST}
+             ${LTR_METRICS_TEST}
+             ${DENSITY_ESTIMATORS_TEST}
+             ${LTR_UTILITY_TEST}
+             ${LTR_OPTIMIZATION_TEST})
 
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)
