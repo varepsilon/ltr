@@ -13,7 +13,7 @@
 #define RANDOMLIB_INVERSEPIPROB_HPP 1
 
 #include <cstdlib>              // for abs(int)
-#include "ltr/utility/random/Random.hpp"
+#include "contrib/random/Random.hpp"
 
 namespace RandomLib {
 

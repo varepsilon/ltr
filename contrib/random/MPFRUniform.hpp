@@ -12,7 +12,7 @@
 #if !defined(RANDOMLIB_MPFRUNIFORM_HPP)
 #define RANDOMLIB_MPFRUNIFORM_HPP 1
 
-#include "ltr/utility/random/MPFRRandom.hpp"
+#include "contrib/random/MPFRRandom.hpp"
 
 #if HAVE_MPFR
 

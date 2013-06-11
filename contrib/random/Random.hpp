@@ -14,7 +14,7 @@
 #if !defined(RANDOMLIB_RANDOM_HPP)
 #define RANDOMLIB_RANDOM_HPP 1
 
-#include "ltr/utility/random/Config.h"
+#include "contrib/random/Config.h"
 
 #if defined(_MSC_VER)
 typedef unsigned uint32_t;
@@ -110,7 +110,7 @@ namespace RandomLib {
 
 } // namespace RandomLib
 
-#include "ltr/utility/random/RandomCanonical.hpp"
+#include "contrib/random/RandomCanonical.hpp"
 
 #if !defined(RANDOMLIB_BUILDING_LIBRARY)
 

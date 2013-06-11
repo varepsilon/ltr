@@ -59,7 +59,7 @@
  **********************************************************************/
 #define RANDOMLIB_BUILDING_LIBRARY 1
 
-#include "ltr/utility/random/Random.hpp"
+#include "contrib/random/Random.hpp"
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #define RANDOMLIB_WINDOWS 1

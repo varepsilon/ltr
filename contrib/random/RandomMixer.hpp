@@ -18,7 +18,7 @@
 
 #include <vector>
 #include <string>
-#include "ltr/utility/random/RandomSeed.hpp"
+#include "contrib/random/RandomSeed.hpp"
 
 namespace RandomLib {
 
@@ -98,8 +98,8 @@ namespace RandomLib {
         std::string(mixer_t::width == 32 ? "32" : "64") + ">";
     }
   private:
-    static const mixer_type a0 = 5489ULL;
-    static const mixer_type a1 = 19650218ULL;
+    static const mixer_type a0;
+    static const mixer_type a1;
     static const mixer_type
       b = mixer_t::width == 32 ? 1812433253ULL : 6364136223846793005ULL;
     static const mixer_type
@@ -107,6 +107,11 @@ namespace RandomLib {
     static const mixer_type
       d = mixer_t::width == 32 ? 1566083941ULL : 2862933555777941757ULL;
   };
+
+  template<class RandomType>
+  const typename MixerMT0<RandomType>::mixer_type MixerMT0<RandomType>::a0 = 5489ULL;
+  template<class RandomType>
+  const typename MixerMT0<RandomType>::mixer_type MixerMT0<RandomType>::a1 = 19650218ULL;
 
   /**
    * \brief The modified %MT19937 mixing functionality

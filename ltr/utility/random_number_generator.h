@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-#include "ltr/utility/random/Random.hpp"
+#include "contrib/random/Random.hpp"
 
 using std::swap;
 

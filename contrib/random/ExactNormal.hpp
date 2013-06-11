@@ -12,7 +12,7 @@
 #if !defined(RANDOMLIB_EXACTNORMAL_HPP)
 #define RANDOMLIB_EXACTNORMAL_HPP 1
 
-#include "ltr/utility/random/RandomNumber.hpp"
+#include "contrib/random/RandomNumber.hpp"
 #include <algorithm>            // for max/min
 
 namespace RandomLib {

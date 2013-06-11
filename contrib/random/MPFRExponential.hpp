@@ -12,7 +12,7 @@
 #if !defined(RANDOMLIB_MPFREXPONENTIAL_HPP)
 #define RANDOMLIB_MPFREXPONENTIAL_HPP 1
 
-#include "ltr/utility/random/MPFRRandom.hpp"
+#include "contrib/random/MPFRRandom.hpp"
 
 #if HAVE_MPFR
 

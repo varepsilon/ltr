@@ -13,7 +13,7 @@
 #define RANDOMLIB_MPFRNORMAL_HPP 1
 
 #include <algorithm>            // for max/min
-#include "ltr/utility/random/MPFRRandom.hpp"
+#include "contrib/random/MPFRRandom.hpp"
 
 #if HAVE_MPFR
 

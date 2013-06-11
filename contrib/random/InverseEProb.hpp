@@ -13,7 +13,7 @@
 #define RANDOMLIB_INVERSEEPROB_HPP 1
 
 #include <vector>
-#include "ltr/utility/random/Random.hpp"
+#include "contrib/random/Random.hpp"
 
 namespace RandomLib {
 

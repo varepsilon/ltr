@@ -14,8 +14,8 @@
 #define RANDOMLIB_RANDOMCANONICAL_HPP 1
 
 #include <bitset>
-#include "ltr/utility/random/RandomPower2.hpp"
-#include "ltr/utility/random/RandomEngine.hpp"
+#include "contrib/random/RandomPower2.hpp"
+#include "contrib/random/RandomEngine.hpp"
 
 namespace RandomLib {
   /**

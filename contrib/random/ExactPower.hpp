@@ -12,7 +12,7 @@
 #if !defined(RANDOMLIB_EXACTPOWER_HPP)
 #define RANDOMLIB_EXACTPOWER_HPP 1
 
-#include "ltr/utility/random/RandomNumber.hpp"
+#include "contrib/random/RandomNumber.hpp"
 
 namespace RandomLib {
   /**

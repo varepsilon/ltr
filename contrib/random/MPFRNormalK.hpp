@@ -13,8 +13,8 @@
 #define RANDOMLIB_MPFRNORMALK_HPP 1
 
 #include <algorithm>            // for max
-#include "ltr/utility/random/MPFRRandom.hpp"
-#include "ltr/utility/random/MPFRExponential.hpp"
+#include "contrib/random/MPFRRandom.hpp"
+#include "contrib/random/MPFRExponential.hpp"
 
 #if HAVE_MPFR
 
