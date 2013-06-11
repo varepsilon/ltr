@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 
+#include "ltr/interfaces/printable.h"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/boost/any.h"
 
@@ -16,6 +17,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+using ltr::Printable;
 using ltr::utility::iequals;
 using ltr::utility::split;
 using ltr::utility::trim;
@@ -45,17 +47,25 @@ bool fromString(const string& input, TypeTo* result);
  * \return is flag if conversion was succesfull.
  */
 static bool toString(const bool& input, string* result);
+static bool toString(const string& input, string* result);
+static bool toString(const char*& input, string* result);
+static bool toString(const char input[], string* result);
+static bool toString(const int& input, string* result);
+static bool toString(const long int& input, string* result); // NOLINT
+static bool toString(const size_t& input, string* result);
+static bool toString(const double& input, string* result);
+static bool toString(const char& input, string* result);
 
 template <class T>
 static bool toString(const vector<T>& input, string* result);
 
-template <class TypeFrom>
-bool toString(const TypeFrom& input, string* result);
+static bool toString(const Printable& input, string* result);
 
 /**
- * \brief Cast some type to other by converting to string. Can cast to Any too.
- * In this case value will be cast firstly to the simpliest appropriate type.
- * If value contains commas, then it will be interpreted as vector.
+ * \brief Cast some type to or from string. Printable object may be casted to
+ * string. Can cast from string to Any too. In this case value will be cast
+ * firstly to the simpliest appropriate type. If value contains commas, then
+ * it will be interpreted as vector.
  *
  * \param input is string to be converted.
  */
@@ -172,6 +182,56 @@ static bool toString(const bool& input, string* result) {
   return true;
 }
 
+static bool toString(const string& input, string* result) {
+  *result = input;
+  return true;
+}
+
+static bool toString(const char*& input, string* result) {
+  *result = input;
+  return true;
+}
+
+static bool toString(const char input[], string* result) {
+  *result = input;
+  return true;
+}
+
+static bool toString(const char& input, string* result) {
+  *result = input;
+  return true;
+}
+
+static bool toString(const int& input, string* result) {
+  stringstream stream;
+  stream << input;
+  *result = stream.str();
+  return true;
+}
+
+static bool toString(const long int& input, string* result) { // NOLINT
+  stringstream stream;
+  stream << input;
+  *result = stream.str();
+  return true;
+}
+
+static bool toString(const size_t& input, string* result) {
+  stringstream stream;
+  stream << input;
+  *result = stream.str();
+  return true;
+}
+
+static bool toString(const double& input, string* result) {
+  stringstream out;
+  out.precision(12);
+  fixed(out);
+  out << input;
+  *result = out.str();
+  return true;
+}
+
 template <class T>
 static bool toString(const vector<T>& input, string* result) {
   result->clear();
@@ -188,16 +248,8 @@ static bool toString(const vector<T>& input, string* result) {
   return true;
 }
 
-template <class TypeFrom>
-bool toString(const TypeFrom& input, string* result) {
-  stringstream out;
-  out.precision(12);
-  fixed(out);
-  out << input;
-  if (!out) {
-    return false;
-  }
-  *result = out.str();
+static bool toString(const Printable& input, string* result) {
+  *result = input.toString();
   return true;
 }
 };

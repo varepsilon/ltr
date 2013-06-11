@@ -5,11 +5,21 @@
 
 #include "ltr/utility/boost/lexical_cast.hpp"
 #include "ltr/utility/numerical.h"
+#include "ltr/interfaces/printable.h"
+
+using std::string;
 
 using ltr::utility::lexical_cast;
 using ltr::utility::DoubleEqual;
 using ltr::utility::any_cast;
-using std::string;
+using ltr::Printable;
+
+class TestPrintable: public Printable {
+ public:
+  string toString() const {
+    return "TestPrintable";
+  }
+};
 
 TEST(LexicalCastTest, TestingFromStringConversion) {
   EXPECT_EQ(lexical_cast<int>(" 42  "), 42);
@@ -35,6 +45,9 @@ TEST(LexicalCastTest, TestingToStringConversion) {
   EXPECT_EQ(lexical_cast<string>(42.0000000001), "42.000000000100");
   EXPECT_EQ(lexical_cast<string>(true), "true");
   EXPECT_EQ(lexical_cast<string>("Hello,world!"), "Hello,world!");
+
+  TestPrintable printable_object;
+  EXPECT_EQ(lexical_cast<string>(printable_object), "TestPrintable");
 }
 
 TEST(LexicalCastTest, TestingToAnyConversion) {
