@@ -119,6 +119,7 @@ Syntax: cpplint.py [--verbose=#] [--output=vs7] [--filter=-x,+y,...]
 # If you add a new error message with a new category, add it to the list
 # here!  cpplint_unittest.py should tell you if you forget to do this.
 _ERROR_CATEGORIES = """\
+  build/macros
   build/class
   build/deprecated
   build/endif_comment
@@ -1043,6 +1044,8 @@ class _ClassInfo(object):
     self.virtual_method_linenumber = None
     self.has_virtual_destructor = False
     self.brace_depth = 0
+    self.start_of_class = -1
+    self.end_of_class = -1
 
 
 class _ClassState(object):
@@ -1174,6 +1177,11 @@ def CheckForNonStandardConstructs(filename, clean_lines, linenum,
       classinfo_stack.pop()
       return
     classinfo.seen_open_brace = (line.find('{') != -1)
+    if classinfo.seen_open_brace:
+    # Get the start of class
+      classinfo.start_of_class = linenum
+    # Get the end of class
+      (_, classinfo.end_of_class, _) = CloseExpression(clean_lines, linenum, line.find('{'))
     # Look for a bare ':'
     if Search('(^|[^:]):($|[^:])', line):
       classinfo.is_derived = True
@@ -1204,6 +1212,14 @@ def CheckForNonStandardConstructs(filename, clean_lines, linenum,
     # more than one line.
     if Search(r'~%s\s*\(' % base_classname, line):
       classinfo.has_virtual_destructor = True
+
+  # Look for ALLOW_SHARED_PTR_ONLY_CREATION macros
+  if Search(r'\bALLOW_SHARED_PTR_ONLY_CREATION\b', line):
+    classinfo.has_virtual_destructor = True
+    if (GetPreviousNonBlankLine(clean_lines, linenum)[1] != classinfo.start_of_class and
+        GetPreviousNonBlankLine(clean_lines, classinfo.end_of_class)[1] != linenum):
+      error(filename, linenum, 'build/macros', 4,
+          'ALLOW_SHARED_PTR_ONLY_CREATION must be inserted at the beginning or end of the class.')
 
   # Look for class end.
   brace_depth = classinfo.brace_depth
