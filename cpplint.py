@@ -2121,7 +2121,8 @@ def CheckLanguage(filename, clean_lines, linenum, file_extension, include_state,
   # Don't check the implemention on same line.
   fnline = line.split('{', 1)[0]
   if (len(re.findall(r'\([^()]*\b(?:[\w:]|<[^()]*>)+(\s?&|&\s?)\w+', fnline)) >
-      len(re.findall(r'\([^()]*\bconst\s+(?:typename\s+)?(?:struct\s+)?'
+      len(re.findall(r'\([^()]*\bconst\s+(?:unsigned\s+)'
+                     r'?(?:typename\s+)?(?:struct\s+)?'
                      r'(?:[\w:]|<[^()]*>)+(\s?&|&\s?)\w+', fnline)) +
       len(re.findall(r'\([^()]*\b(?:[\w:]|<[^()]*>)+\s+const(\s?&|&\s?)[\w]+',
                      fnline))):
