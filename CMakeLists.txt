@@ -71,7 +71,9 @@ INSTALL(TARGETS ltr puppy rlog ARCHIVE DESTINATION ${Install_Path})
 ##########################################################################################
 # lets SETup LTR_client
 INCLUDE(${Source_Path}/cmake/ltr_client.cmake)
-ADD_EXECUTABLE(ltr_client ${LTR_CLIENT_SRC})
+ADD_LIBRARY(ltr_client_lib ${LTR_CLIENT_SRC})
+ADD_EXECUTABLE(ltr_client ${LTR_CLIENT_SRC} ${LTR_CLIENT_MAIN})
+#SET_TARGET_PROPERTIES(ltr_client PROPERTIES ENABLE_EXPORTS TRUE)
 TARGET_LINK_LIBRARIES(ltr_client ltr tinyxml)
 
 ##########################################################################################
@@ -97,7 +99,7 @@ cxx_library(gtest "${cxx_strict}" ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 # lets SETup our unit-tests for LTR (executed by Google Test)
 INCLUDE(${Source_Path}/cmake/utests.cmake)
 ADD_EXECUTABLE(ltr_test ${LTR_TEST_ALL} ${Serialization_tester_SOURCES})
-TARGET_LINK_LIBRARIES(ltr_test ltr gtest)
+TARGET_LINK_LIBRARIES(ltr_test ltr ltr_client_lib gtest tinyxml)
 
 # lets copy the test data to the build directory
 INCLUDE(${Source_Path}/cmake/copy_test_data.cmake)
