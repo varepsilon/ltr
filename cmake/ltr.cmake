@@ -361,7 +361,8 @@ SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info
                                  ${Source_Path}/ltr/optimization/population_info/population_info.hpp)
 
 SET(OPTIMIZATION_SOLVER ${Source_Path}/ltr/optimization/solver/solver.h
-                        ${Source_Path}/ltr/optimization/solver/solution.h)
+                        ${Source_Path}/ltr/optimization/solver/solution.h
+                        ${Source_Path}/ltr/optimization/solver/solver_benchmark.h)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
