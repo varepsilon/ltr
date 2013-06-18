@@ -54,7 +54,7 @@ void SplitDataSetByActualLabel(
     for (int object_index = 0;
          object_index < per_object_accessor.object_count();
          ++object_index) {
-      int label = per_object_accessor.object(object_index).actual_label();
+      double label = per_object_accessor.object(object_index).actual_label();
       subsets_elements[label].add(per_object_accessor.object(object_index));
     }
   }
