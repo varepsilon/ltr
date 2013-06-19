@@ -10,11 +10,12 @@
 #include <vector>
 #include <exception>
 #include <stdexcept>
-#include <iostream>
 #include "ltr/utility/boost/multi_array.h"
 #include "ltr/utility/html.h"
 #include "ltr/interfaces/printable.h"
+#include "ltr/utility/boost/lexical_cast.hpp"
 
+using std::max;
 using std::sort;
 using std::logic_error;
 using std::string;
@@ -24,6 +25,8 @@ using std::cout;
 using ltr::Printable;
 using ltr::utility::MultiArray;
 using ltr::utility::FileLink;
+using ltr::utility::lexical_cast;
+using ltr::utility::LexicalCastConfig;
 
 namespace ltr {
 namespace utility {
@@ -95,15 +98,15 @@ class MultiTable : public Printable {
    * @param axis_index - int number of the axis to set label.
    * @param label - string label to set
    */
-  void setAxisLabel(const int axis_index, const string& label);
+  void setAxisLabel(int axis_index, const string& label);
   /**
    * Sets tick label.
    * @param axis_index - int index of the axis to modify
    * @param tick_index - int index of the tick to set
    * @param label - string label to set
    */
-  void setTickLabel(const int axis_index,
-                    const int tick_index,
+  void setTickLabel(int axis_index,
+                    int tick_index,
                     const string& label);
   virtual string toString() const;
 
@@ -131,19 +134,32 @@ class MultiTable : public Printable {
   vector<DimensionMetaInfo> table_meta_info_;
   void printMultiTableInner(const vector<DimensionSize>& multi_size,
                             vector<int>* multi_index,
-                            const int depth,
+                            int depth,
                             stringstream* const outstream,
                             Format format) const;
-  void print2DTable(const int first_axis_index,
-                    const int second_axis_index,
+  void print2DTable(int first_axis_index,
+                    int second_axis_index,
                     vector<int>* const multi_index,
                     stringstream* const out_stream) const;
-  void print2DTableAsHTML(const int first_axis_index,
-                    const int second_axis_index,
-                    vector<int>* const multi_index,
-                    stringstream* const out_stream) const;
+  void print2DTableAsHTML(int first_axis_index,
+                          int second_axis_index,
+                          vector<int>* const multi_index,
+                          stringstream* const out_stream) const;
   string convertToText(Format format) const;
+
+  /**
+   * Minimum witdh for a column in plain text output
+   */
+  static const int MIN_COL_WIDTH;
+  /**
+   * Number of spaces between columns in plain text output
+   */
+  static const int COL_SPACING;
 };
+template<typename T, int N>
+const int MultiTable<T, N>::MIN_COL_WIDTH = 8;
+template<typename T, int N>
+const int MultiTable<T, N>::COL_SPACING = 1;
 
 /**
  * Iterator for a MultiTable class.
@@ -224,10 +240,12 @@ void MultiTable<T, N>::clear() {
 }
 
 template<typename T, int N>
-void MultiTable<T, N>::print2DTable(const int first_axis_index,
-                                    const int second_axis_index,
+void MultiTable<T, N>::print2DTable(int first_axis_index,
+                                    int second_axis_index,
                                     vector<int>* const multi_index,
                                     stringstream* const out_stream) const {
+  LexicalCastConfig::getInstance().restoreDefaults();
+
   int first_size = table_contents_->shape()[first_axis_index];
   int second_size = table_contents_->shape()[second_axis_index];
 
@@ -248,32 +266,50 @@ void MultiTable<T, N>::print2DTable(const int first_axis_index,
        << ", column: "
        << table_meta_info_[second_axis_index].axis_label
        << ")\n";
-  *out_stream << "\t";
+
+  vector<vector<string> > output(first_size + 1,
+                                 vector<string>(second_size + 1));
+
   for (int second_index = 0; second_index < (int)second_size; ++second_index) {
-    *out_stream
-        << table_meta_info_
-           [second_axis_index].axis_ticks_labels[second_index]
-         << "\t";
+    output[0][second_index + 1] = lexical_cast<string>(
+        table_meta_info_[second_axis_index].axis_ticks_labels[second_index]);
   }
-  *out_stream << "\n";
   for (int first_index = 0; first_index < first_size; ++first_index) {
     (*multi_index)[first_axis_index] = first_index;
-    *out_stream << table_meta_info_
-                   [first_axis_index].axis_ticks_labels[first_index]
-                << "\t";
+    output[first_index + 1][0] = lexical_cast<string>(
+        table_meta_info_[first_axis_index].axis_ticks_labels[first_index]);
     for (int second_index = 0; second_index < second_size; ++second_index) {
       (*multi_index)[second_axis_index] = second_index;
-      *out_stream << table_contents_->operator()(*multi_index) << "\t";
+      output[first_index + 1][second_index + 1] = lexical_cast<string>(
+        table_contents_->operator()(*multi_index));
     }
-    *out_stream << "\n";
+  }
+
+  vector<int> col_size(second_size + 1, MIN_COL_WIDTH);
+  for (int first_index = 0; first_index < first_size + 1; ++first_index) {
+    for (int second_index = 0; second_index < second_size + 1; ++second_index) {
+      col_size[second_index] = max(col_size[second_index],
+                                (int)output[first_index][second_index].size());
+    }
+  }
+  for (int first_index = 0; first_index < first_size + 1; ++first_index) {
+    for (int second_index = 0; second_index < second_size + 1; ++second_index) {
+      string output_string = output[first_index][second_index];
+      *out_stream << output_string
+                  << string(col_size[second_index] - output_string.length(),
+                            ' ')
+                  // to add spacing between columns
+                  << (second_index == second_size ? "\n" : " ");
+    }
   }
 }
 
 template<typename T, int N>
-void MultiTable<T, N>::print2DTableAsHTML(const int first_axis_index,
-                                    const int second_axis_index,
-                                    vector<int>* const multi_index,
-                                    stringstream* const out_stream) const {
+void MultiTable<T, N>::print2DTableAsHTML(int first_axis_index,
+                                          int second_axis_index,
+                                          vector<int>* const multi_index,
+                                          stringstream* const
+                                              out_stream) const {
   int first_size = table_contents_->shape()[first_axis_index];
   int second_size = table_contents_->shape()[second_axis_index];
 
@@ -327,7 +363,7 @@ template <typename T, int N>
 void MultiTable<T, N>::printMultiTableInner(
     const vector<DimensionSize>& axis_print_order,
     vector<int>* multi_index,
-    const int depth,
+    int depth,
     stringstream* const out_stream,
     Format format) const {
   if (depth + 2 == axis_print_order.size()) {
@@ -391,20 +427,27 @@ T& MultiTable<T, N>::operator[] (const vector<int>& multi_index) {
 }
 
 template<typename T, int N>
-void MultiTable<T, N>::setAxisLabel(const int dim_index,
+void MultiTable<T, N>::setAxisLabel(int dim_index,
                                     const string& label) {
+  if (dim_index >= (int)table_meta_info_.size()) {
+    throw logic_error("Axis label index out of range\n");
+  }
   table_meta_info_[dim_index].axis_label = label;
 }
 
 template<typename T, int N>
 void MultiTable<T, N>::setTickLabel(
-    const int dim_index, const int axis_index, const string& label) {
+    int dim_index, int axis_index, const string& label) {
+  if (dim_index >= (int)table_meta_info_.size() ||
+     axis_index >= (int)table_meta_info_[dim_index].axis_ticks_labels.size()) {
+    throw logic_error("Axis tick label index out of range");
+  }
   table_meta_info_[dim_index].axis_ticks_labels[axis_index] = label;
 }
 
 template<typename T, int N>
 string MultiTable<T, N>::convertToText(Format format) const {
-  const int dimensions_count = table_contents_->dimensions_count();
+  int dimensions_count = table_contents_->dimensions_count();
   vector<DimensionSize> multi_size;
   vector<int> dims_size = table_contents_->shape();
   for (int i = 0; i < dimensions_count; ++i) {

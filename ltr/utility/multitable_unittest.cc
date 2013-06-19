@@ -56,19 +56,19 @@ TEST(MultiTableTest, MultiTableTest) {
   check_table_stream <<
     "\nsecondDim: tick2_0\n" <<
     "Table (row: thirdDim, column: firstDim)\n" <<
-    "\ttick1_0\ttick1_1\ttick1_2\ttick1_3\ttick1_4\ttick1_5\t\n" <<
-    "tick3_0\t10\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_1\t100\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_2\t100\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_3\t100\t100\t100\t100\t100\t100\t\n" <<
+    "         tick1_0  tick1_1  tick1_2  tick1_3  tick1_4  tick1_5 \n" <<
+    "tick3_0  10       100      100      100      100      100     \n" <<
+    "tick3_1  100      100      100      100      100      100     \n" <<
+    "tick3_2  100      100      100      100      100      100     \n" <<
+    "tick3_3  100      100      100      100      100      100     \n" <<
     "\n" <<
     "secondDim: tick2_1\n" <<
     "Table (row: thirdDim, column: firstDim)\n" <<
-    "\ttick1_0\ttick1_1\ttick1_2\ttick1_3\ttick1_4\ttick1_5\t\n" <<
-    "tick3_0\t100\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_1\t100\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_2\t100\t100\t100\t100\t100\t100\t\n" <<
-    "tick3_3\t100\t100\t100\t100\t100\t100\t\n";
+    "         tick1_0  tick1_1  tick1_2  tick1_3  tick1_4  tick1_5 \n" <<
+    "tick3_0  100      100      100      100      100      100     \n" <<
+    "tick3_1  100      100      100      100      100      100     \n" <<
+    "tick3_2  100      100      100      100      100      100     \n" <<
+    "tick3_3  100      100      100      100      100      100     \n";
 
   EXPECT_EQ(check_table_stream.str(), table.toString());
 
