@@ -120,7 +120,7 @@ namespace ltr {
 #define ALLOW_SHARED_PTR_ONLY_CREATION(class_name) \
 public: \
   typedef ltr::utility::shared_ptr< class_name > Ptr; \
-private: \
+protected: \
   virtual ~class_name() {} \
   friend class ltr::utility::shared_ptr< class_name >;
 }
