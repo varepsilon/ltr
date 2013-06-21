@@ -92,7 +92,7 @@ namespace serialization_test {
     /**
      * Number of added to generator objects. Needed to avoid name collisions
      */
-    int serializating_object_number;
+    int serializable_object_number;
     /**
      * Train dataset
      */

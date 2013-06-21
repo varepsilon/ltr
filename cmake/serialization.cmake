@@ -1,6 +1,7 @@
 SET(Serialization_generator_SOURCES ${Source_Path}/ltr/serialization_test/generator/generator.cc
                       ${Source_Path}/ltr/serialization_test/generator/config.h
 					  ${Source_Path}/ltr/serialization_test/generator/generator_utility.cc
+					  ${Source_Path}/ltr/utility/boost/lexical_cast_config.hpp
 					  ${Source_Path}/ltr/serialization_test/generator/generator_utility.h)
 
 SET(Serialization_tester_SOURCES ${Source_Path}/ltr/serialization_test/tester/tester.cc

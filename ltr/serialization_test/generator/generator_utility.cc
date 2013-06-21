@@ -1,9 +1,7 @@
 // Copyright 2012 Yandex
 
 #include <string>
-#include <iostream>
 #include <vector>
-#include <fstream>
 #include <algorithm>
 
 #include "ltr/utility/boost/lexical_cast.hpp"
@@ -55,7 +53,9 @@ namespace serialization_test {
   }
 
   void Generator::addCheckLabelsFunction() {
-    tester_code << "void checkLabels" << serializating_object_number
+    LexicalCastConfig::getInstance().setPrecision(12);
+    LexicalCastConfig::getInstance().setFixed(true);
+    tester_code << "void checkLabels" << serializable_object_number
       << "(const vector<double>& labels) {\n";
 
     tester_code << "  vector<double> test_labels;\n";
@@ -74,7 +74,9 @@ namespace serialization_test {
 
   void Generator::addCheckFeaturesFunction(
       const DataSet<Object>& processed_data) {
-    tester_code << "void checkFeatures" << serializating_object_number
+    LexicalCastConfig::getInstance().setPrecision(12);
+    LexicalCastConfig::getInstance().setFixed(true);
+    tester_code << "void checkFeatures" << serializable_object_number
       << "(const vector<vector<double> >& data) {\n";
 
     tester_code << "  vector<vector<double> > test_data("
@@ -99,6 +101,8 @@ namespace serialization_test {
   void Generator::addScorerTest(
       Learner<Object>::Ptr learner,
       const string& test_name) {
+    LexicalCastConfig::getInstance().setPrecision(12);
+    LexicalCastConfig::getInstance().setFixed(true);
     learner->learn(train_data);
     Scorer::Ptr scorer = learner->make();
     scorer->predict(test_data);
@@ -106,7 +110,7 @@ namespace serialization_test {
     addBeginBlockComment(test_name);
     addCheckLabelsFunction();
     tester_code << scorer->generateCppCode(
-      "SavedScorer" + lexical_cast<string>(serializating_object_number))
+      "SavedScorer" + lexical_cast<string>(serializable_object_number))
       << "\n";
     tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
       << "  vector<double> testing_labels;\n"
@@ -117,18 +121,20 @@ namespace serialization_test {
       << "      test[feature] = dataset[i][feature];\n"
       << "    }\n"
       << "    testing_labels.push_back(SavedScorer"
-      << serializating_object_number << "(test));\n"
+      << serializable_object_number << "(test));\n"
       << "  }\n"
-      << "  checkLabels" << serializating_object_number
+      << "  checkLabels" << serializable_object_number
       << "(testing_labels);\n" << "}\n\n";
     addEndBlockComment(test_name);
 
-    ++serializating_object_number;
+    ++serializable_object_number;
   }
 
   void Generator::addFeatureConverterTest(
       FeatureConverterLearner<Object>::Ptr feature_converter_learner,
       const string& test_name) {
+    LexicalCastConfig::getInstance().setPrecision(12);
+    LexicalCastConfig::getInstance().setFixed(true);
     feature_converter_learner->learn(train_data);
     FeatureConverter::Ptr feature_converter = feature_converter_learner->make();
     DataSet<Object> processed_data;
@@ -138,7 +144,7 @@ namespace serialization_test {
     addCheckFeaturesFunction(processed_data);
     tester_code << feature_converter->generateCppCode(
       "SavedFeatureConverter" +
-      lexical_cast<string>(serializating_object_number));
+      lexical_cast<string>(serializable_object_number));
 
     tester_code << "TEST_F(SerializationTest, " << test_name << ") {\n"
       << "  vector<vector<double> > testing_data(dataset.size());\n"
@@ -148,20 +154,20 @@ namespace serialization_test {
       << "    for (int feature = 0; feature < feature_count; ++feature) {\n"
       << "      test[feature] = dataset[i][feature];\n"
       << "    }\n"
-      << "    SavedFeatureConverter" << serializating_object_number
+      << "    SavedFeatureConverter" << serializable_object_number
       << "(test, &testing_data[i]);\n"
       << "  }\n"
-      << "  checkFeatures" << serializating_object_number
+      << "  checkFeatures" << serializable_object_number
       << "(testing_data);\n" << "}\n\n";
     addEndBlockComment(test_name);
 
-    ++serializating_object_number;
+    ++serializable_object_number;
   }
 
   Generator::Generator():
       train_data(loadDataSet<Object>(TrainDataPath(), "SVMLIGHT")),
       test_data(loadDataSet<Object>(TestDataPath(), "SVMLIGHT")),
-      serializating_object_number(0) {
+      serializable_object_number(0) {
     addIncludes();
     addFixture();
   }

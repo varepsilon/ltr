@@ -40,6 +40,8 @@ TEST(LexicalCastTest, TestingFromStringConversion) {
 }
 
 TEST(LexicalCastTest, TestingToStringConversion) {
+  LexicalCastConfig::getInstance().setPrecision(12);
+  LexicalCastConfig::getInstance().setFixed(true);
   EXPECT_EQ(lexical_cast<string>(42), "42");
   EXPECT_EQ(lexical_cast<string>(42.0), "42.000000000000");
   EXPECT_EQ(lexical_cast<string>(42.0000000001), "42.000000000100");
@@ -48,6 +50,24 @@ TEST(LexicalCastTest, TestingToStringConversion) {
 
   TestPrintable printable_object;
   EXPECT_EQ(lexical_cast<string>(printable_object), "TestPrintable");
+}
+
+TEST(LexicalCastTest, TestingConfig) {
+  LexicalCastConfig::getInstance().setPrecision(12);
+  LexicalCastConfig::getInstance().setFixed(true);
+  EXPECT_EQ(lexical_cast<string>(42.0), "42.000000000000");
+  EXPECT_EQ(lexical_cast<string>(42.42), "42.420000000000");
+
+  LexicalCastConfig::getInstance().restoreDefaults();
+  EXPECT_EQ(lexical_cast<string>(42.0), "42");
+  EXPECT_EQ(lexical_cast<string>(42.42), "42.42");
+
+  // this is called twice to check that settings
+  // are applied correctly after restoreDefaults() call
+  LexicalCastConfig::getInstance().setPrecision(12);
+  LexicalCastConfig::getInstance().setFixed(true);
+  EXPECT_EQ(lexical_cast<string>(42.0), "42.000000000000");
+  EXPECT_EQ(lexical_cast<string>(42.42), "42.420000000000");
 }
 
 TEST(LexicalCastTest, TestingToAnyConversion) {

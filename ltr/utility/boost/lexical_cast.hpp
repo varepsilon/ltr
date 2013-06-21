@@ -11,6 +11,7 @@
 #include "ltr/interfaces/printable.h"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/boost/any.h"
+#include "ltr/utility/boost/lexical_cast_config.hpp"
 
 using std::invalid_argument;
 using std::string;
@@ -22,6 +23,7 @@ using ltr::utility::iequals;
 using ltr::utility::split;
 using ltr::utility::trim;
 using ltr::utility::Any;
+using ltr::utility::LexicalCastConfig;
 
 namespace ltr {
 namespace utility {
@@ -225,8 +227,7 @@ static bool toString(const size_t& input, string* result) {
 
 static bool toString(const double& input, string* result) {
   stringstream out;
-  out.precision(12);
-  fixed(out);
+  LexicalCastConfig::getInstance().configure(&out);
   out << input;
   *result = out.str();
   return true;
