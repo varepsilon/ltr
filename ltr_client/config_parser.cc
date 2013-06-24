@@ -1,0 +1,220 @@
+// Copyright 2012 Yandex
+
+#include "ltr_client/config_parser.h"
+
+#include <stdexcept>
+
+#include "rlog/rlog.h"
+#include "tinyxml/tinyxml.h"
+
+#include "ltr/utility/macros.h"
+
+using std::string;
+using std::logic_error;
+
+Configuration::Ptr ConfigParser::parse(const string& file_name) {
+  shared_ptr<TiXmlDocument> document = new TiXmlDocument(file_name);
+  CHECK_MSG(document->LoadFile(), "not valid config in " + file_name +
+      " or file not found");
+
+  TiXmlElement* root = document->FirstChildElement(ROOT);
+  CHECK_MSG(root, "can't find <LTR_experiment>");
+
+  rInfo(" LTR Client. Copyright 2013 Yandex");
+  rInfo(" Experiment started ");
+
+  parseTags(*(root->FirstChildElement()));
+
+  rInfo("\n\nEnd of loadConfig. Collected data:\n");
+  rInfo("data_infos\n%s\n", configuration_->data_infos.toString().c_str());
+  rInfo("object_infos\n%s\n",
+        configuration_->object_infos.toString().c_str());
+  rInfo("train_infos\n%s\n", configuration_->train_infos.toString().c_str());
+  rInfo("crossvalidation_infos\n%s\n",
+        configuration_->crossvalidation_infos.toString().c_str());
+
+  for (ObjectInfo::ObjectInfos::iterator it =
+       configuration_->object_infos.begin();
+       it != configuration_->object_infos.end();
+       ++it) {
+    it->second->fill_dependency_list(configuration_->object_infos);
+  }
+
+  return configuration_;
+}
+
+void ConfigParser::parseTags(const TiXmlElement& element) {
+  for (const TiXmlElement* current_element = &element;
+       current_element;
+       current_element = nextTiXmlElement(current_element)) {
+    string tag_name = current_element->Value();
+    if (tag_name == CONFIG) {
+      parseConfig(*current_element);
+    } else if (tag_name == DATA) {
+      parseData(*current_element);
+    } else if (tag_name == LAUNCH) {
+      parseLaunch(*current_element);
+    } else {
+      parseParameterized(*current_element);
+    }
+  }
+}
+
+void ConfigParser::parseConfig(const TiXmlElement& element) {
+  const TiXmlElement* root_dir = element.FirstChildElement(ROOT_DIR);
+  CHECK_MSG(root_dir, "no root directory specified");
+  CHECK_MSG(root_dir->GetText(),  "no root directory specified");
+
+  configuration_->root_path = root_dir->GetText();
+}
+
+void ConfigParser::parseData(const TiXmlElement& element) {
+  const char* name = element.Attribute(NAME_ATTR);
+  const char* format = element.Attribute(FORMAT_ATTR);
+  const char* approach = element.Attribute(APPROACH_ATTR);
+  const char* file_name = element.GetText();
+
+  CHECK_MSG(name, "<data> with no 'name' attribute");
+  CHECK_MSG(format, "<data> with no 'format' attribute");
+  CHECK_MSG(file_name, "data '" + string(name) + "' has no file path");
+  if (!approach) {
+    rWarning(
+      "No approach defined for data '%s'. It will be used as listwise.", name);
+    approach = LISTWISE;
+  }
+
+  configuration_->data_infos.safeInsert(name) =
+    new DataInfo(name, approach, format, file_name);
+}
+
+void ConfigParser::parseParameterized(const TiXmlElement& element) {
+  const char* tag_name = element.Value();
+  const char* name = element.Attribute(NAME_ATTR);
+  const char* type = element.Attribute(TYPE_ATTR);
+  const char* approach = element.Attribute(APPROACH_ATTR);
+
+  CHECK(tag_name);
+  CHECK_MSG(name, string(tag_name) + " with no 'name' attribute");
+  CHECK_MSG(type, string(tag_name) + " with no 'type' attribute");
+  if (!approach) {
+    rWarning("No approach defined for '%s'. Trying to define automatically.",
+             name);
+    approach = "";
+  }
+
+  ParametersContainer parameters;
+  parseParameters(*(element.FirstChildElement()), &parameters);
+  configuration_->object_infos.safeInsert(name) =
+      new ObjectInfo(tag_name, name, type, approach, parameters);
+}
+
+void ConfigParser::parseParameters(const TiXmlElement& element,
+                                   ParametersContainer* parameters) {
+  for (const TiXmlElement* current_element = &element;
+       current_element;
+       current_element = nextTiXmlElement(current_element)) {
+    const string name = current_element->Value();
+    const string value = current_element->GetText() != NULL ?
+        current_element->GetText() : "";
+
+    CHECK_MSG(!value.empty(), "parameter " + string(name.c_str()) +
+        " has no value");
+
+    parameters->AddNew(name, lexical_cast<Any>(value));
+  }
+}
+
+void ConfigParser::parseLaunch(const TiXmlElement& xmlElement) {
+  for (const TiXmlElement* current_element = xmlElement.FirstChildElement();
+       current_element;
+       current_element = nextTiXmlElement(current_element)) {
+    string tag_name = current_element->Value();
+    if (tag_name == TRAIN) {
+      TrainLaunchInfo::Ptr info(new TrainLaunchInfo());
+      parseTrain(*current_element, info.get());
+      configuration_->train_infos.safeInsert(info->name) = info;
+    } else if (tag_name == CROSSVALIDATION) {
+      CrossvalidationLaunchInfo::Ptr info(new CrossvalidationLaunchInfo());
+      parseCrossvalidation(*current_element, info.get());
+      configuration_->crossvalidation_infos.safeInsert(info->splitter) = info;
+    } else {
+      throw logic_error("Undefined tag " + tag_name + " in launch section");
+    }
+  }
+}
+
+void ConfigParser::parseTrain(const TiXmlElement& element,
+                              TrainLaunchInfo* info) {
+  const char* name = element.Attribute("name");
+  const char* data = element.Attribute("data");
+  const char* learner = element.Attribute("learner");
+
+  CHECK_MSG(name, "<train> tag with no name");
+  CHECK_MSG(data, string(name) + " with no \"data\" attribute");
+  CHECK_MSG(learner, string(name) + " with no \"learner\" attribute");
+
+  info->name = name;
+  info->data = data;
+  info->learner = learner;
+
+  for (const TiXmlElement* current_element = element.FirstChildElement();
+       current_element;
+       current_element = nextTiXmlElement(current_element)) {
+    string tag_name = current_element->Value();
+    if (tag_name == PREDICT) {
+      const char* predict_name = current_element->GetText();
+      CHECK_MSG(predict_name,
+                string("empty <") + PREDICT + "> tag in train section");
+      info->predicts.safeInsert(predict_name);
+    } else if (tag_name == CPP_GEN) {
+      info->gen_cpp = true;
+    } else {
+      throw logic_error("Undefined tag " + tag_name + " in train "
+          + name + " section");
+    }
+  }
+}
+
+void ConfigParser::parseCrossvalidation(const TiXmlElement& element,
+                                        CrossvalidationLaunchInfo* info) {
+  const char* fold = element.Attribute(FOLD_ATTR);
+  CHECK_MSG(fold, "<crossvalidation> tag with no fold");
+  info->splitter = fold;
+
+  for (const TiXmlElement* current_element = element.FirstChildElement();
+       current_element;
+       current_element = nextTiXmlElement(current_element)) {
+    string tag_name = current_element->Value();
+    if (tag_name == LEARNER) {
+      const char* learner_name = current_element->GetText();
+      CHECK_MSG(learner_name, string("empty <") + LEARNER +
+          "> tag in crossvalidation section");
+      info->learners.safeInsert(learner_name);
+    } else if (tag_name == MEASURE) {
+      const char* measure_name = current_element->GetText();
+      CHECK_MSG(measure_name, string("empty <") + MEASURE +
+          "> tag in crossvalidation section");
+      info->measures.safeInsert(measure_name);
+    } else if (tag_name == DATA) {
+      const char* data_name = current_element->GetText();
+      CHECK_MSG(data_name, string("empty <") + DATA +
+          "> tag in crossvalidation section");
+      info->datas.safeInsert(data_name);
+    } else {
+      throw logic_error("Undefined tag " + tag_name +
+          " in crossvalidation fold " + fold + ".");
+    }
+  }
+}
+
+const TiXmlElement* ConfigParser::nextTiXmlElement(const TiXmlNode* node) {
+  for (const TiXmlNode* next_node = node->NextSibling();
+       next_node;
+       next_node = node->NextSibling()) {
+    const TiXmlElement* next_element = next_node->ToElement();
+    if (next_element) {
+      return next_element;
+    }
+  }
+  return NULL;
+}

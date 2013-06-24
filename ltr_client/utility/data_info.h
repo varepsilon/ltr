@@ -1,29 +1,41 @@
-//Copyright Yandex 2012
+// Copyright Yandex 2012
 
 #ifndef LTR_CLIENT_UTILITY_DATA_INFO_H_
 #define LTR_CLIENT_UTILITY_DATA_INFO_H_
 
 #include <string>
 
+#include "ltr/interfaces/printable.h"
+#include "ltr/utility/macros.h"
+
 using std::string;
+
+using ltr::Printable;
+
 /**
- * Contains the information about the dataset, including
- * name of the dataset, approach in the dataset,
- * the format of the dataset and the file name.
+ * \brief Contains the information about the dataset as text.
  */
-struct DataInfo {
+struct DataInfo: public Printable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataInfo);
+ public:
+  string toString() const {
+    return "DataInfo(name=" + name +
+        ", approach=" + approach +
+        ", format=" + format +
+        ", file_name=" + file +
+        ")";
+  }
   /**
-   * Basic constructor.
+   * Basic constructor
    */
   DataInfo() { }
-  // C++11 -> we have no initializer, so we MUST write
-  // stupid conctructor manually
   /**
-   * Another implementation of the basic constructor.
-   * @param name_ - string containing the name
-   * @param approach_ - string containing approach information
-   * @param format_ - string containing format information
-   * @param file_name_ - string containing file name information
+   * Basic constructor.
+   *
+   * \param name_ - string containing the name
+   * \param approach_ - string containing approach information
+   * \param format_ - string containing format information
+   * \param file_name_ - string containing file name information
    */
   DataInfo(const string& name_, const string& approach_,
             const string& format_, const string& file_name_)
@@ -31,17 +43,23 @@ struct DataInfo {
     , approach(approach_)
     , format(format_)
     , file(file_name_) { }
+  /**
+   * Name of the dataset.
+   */
   string name;
+  /**
+   * Approach of the dataset.
+   */
   string approach;
+  /**
+   * Format of the dataset.
+   */
   string format;
+  /**
+   * File that contains dataset.
+   */
   string file;
 };
-/**
- * Converts DataInfo object into the printable string
- * @param Info - TDataInfo to convert
- * @returns converted string
- */
-string ToString(const DataInfo& Info);
 
-#endif //LTR_CLIENT_UTILITY_DATA_INFO_H_
+#endif  // LTR_CLIENT_UTILITY_DATA_INFO_H_
 

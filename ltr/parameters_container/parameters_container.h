@@ -13,7 +13,6 @@
 #include <map>
 
 #include "ltr/utility/boost/any.h"
-
 #include "ltr/utility/boost/shared_ptr.h"
 
 #include "ltr/interfaces/printable.h"
@@ -21,6 +20,7 @@
 
 using std::list;
 using std::string;
+using std::logic_error;
 
 using ltr::utility::Any;
 using ltr::utility::any_cast;
@@ -103,7 +103,7 @@ class ParametersContainer: public Printable {
   bool TypeCoincides(const string& name) const {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
     return iterator->second.type() == typeid(T);
   }
@@ -114,19 +114,19 @@ class ParametersContainer: public Printable {
    */
   template<class T>
   T Get(const string& name, const Any& default_value = Any()) const
-      throw(std::logic_error, std::bad_cast) {
+      throw(logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end() && default_value.empty()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
     const Any& found_value = (iterator != name_value_hash_.end() ?
                               iterator->second : default_value);
 
     try {
       return any_cast<T>(found_value);
-    } catch(const bad_any_cast &exc) {
+    } catch (const bad_any_cast &exc) {
       rError("bad_any_cast");
-      throw std::logic_error(string(exc.what()) +
+      throw logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
     }
   }
@@ -136,10 +136,10 @@ class ParametersContainer: public Printable {
    */
   template<class StoredType, class DesiredType>
   DesiredType Get(const string& name, const Any& default_value = Any()) const
-      throw(std::logic_error, std::bad_cast) {
+      throw(logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end() && default_value.empty()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
     const Any& found_value = (iterator != name_value_hash_.end() ?
                               iterator->second : default_value);
@@ -148,12 +148,12 @@ class ParametersContainer: public Printable {
       const StoredType &value = any_cast<StoredType>(found_value);
       DesiredType desired_type_value = dynamic_cast<DesiredType>(value); //NOLINT
       return desired_type_value;
-    } catch(const bad_any_cast &exc) {
+    } catch (const bad_any_cast &exc) {
       rError("bad_any_cast");
-      throw std::logic_error(string(exc.what()) +
+      throw logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
-    } catch(const std::bad_cast &exc) {
-      throw std::logic_error(string(exc.what()) +
+    } catch (const std::bad_cast &exc) {
+      throw logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
     }
   }
@@ -162,18 +162,18 @@ class ParametersContainer: public Printable {
    */
   template<class T>
   const T& GetRef(const string& name) const
-      throw(std::logic_error, std::bad_cast) {
+      throw(logic_error, std::bad_cast) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
 
     try {
       return *any_cast<T>(&iterator->second);
     }
-    catch(const bad_any_cast &exc) {
+    catch (const bad_any_cast &exc) {
       rError("bad_any_cast");
-      throw std::logic_error(string(exc.what()) +
+      throw logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
     }
   }
@@ -182,18 +182,18 @@ class ParametersContainer: public Printable {
    */
   template<class T>
   T& GetRef(const string &name)
-      throw(std::logic_error, std::bad_cast) {
+      throw(logic_error, std::bad_cast) {
     const StringAnyHash::iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
 
     try {
       return *any_cast<T>(&iterator->second);
     }
-    catch(const bad_any_cast &exc) {
+    catch (const bad_any_cast &exc) {
       rError("bad_any_cast");
-      throw std::logic_error(string(exc.what()) +
+      throw logic_error(string(exc.what()) +
                              "\nParameter name: " + name);
     }
   }
@@ -220,7 +220,7 @@ class ParametersContainer: public Printable {
   void SetExisting(const string& name, const T& value) {
     const StringAnyHash::iterator iterator = name_value_hash_.find(name);
     if (iterator == name_value_hash_.end()) {
-      throw std::logic_error("Parameter '" + name +  "' not defined");
+      throw logic_error("Parameter '" + name +  "' not defined");
     }
     iterator->second = value;
   }
@@ -228,14 +228,14 @@ class ParametersContainer: public Printable {
   /**
    * Adds new parameter with given name and value.
    * Throws if container already has such parameter name.
-   * @param name - name of parameter to add
-   * @param value - value to add
+   *
+   * \param name - name of parameter to add
+   * \param value - value to add.
    */
-  template<class T>
-  void AddNew(const string& name, const T& value) {
+  void AddNew(const string& name, const Any& value) {
     const StringAnyHash::const_iterator iterator = name_value_hash_.find(name);
     if (iterator != name_value_hash_.end()) {
-      throw std::logic_error("There is already exist such parameter: " + name);
+      throw logic_error("There is already exist such parameter: " + name);
     }
     name_value_hash_[name] = value;
   }

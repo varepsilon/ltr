@@ -97,7 +97,7 @@
 
 #include "ltr_client/factory.h"
 #include "ltr_client/ltr_client.h"
-#include "ltr_client/configurator.h"
+#include "ltr_client/configuration.h"
 
 #include "ltr/utility/neighbor_weighter.h"
 

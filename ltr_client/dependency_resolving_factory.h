@@ -5,10 +5,9 @@
 
 #include <string>
 
-#include "ltr_client/configurator.h"
+#include "ltr_client/configuration.h"
 #include "ltr_client/factory.h"
-#include "ltr_client/utility/parameterized_info.h"
-
+#include "ltr_client/utility/object_info.h"
 
 using std::string;
 
@@ -16,12 +15,8 @@ using std::string;
  * Manages object creation and checks for circular dependencies
  */
 class DependencyResolvingFactory {
-public:
-  /**
-   * Constructor for DependencyResolvingFactory
-   */
-  DependencyResolvingFactory(const ConfigParser& configurator):
-      configurator_(configurator) {}
+ public:
+  DependencyResolvingFactory() {}
   /**
    * Checks for circular dependencies. Throws exception if found
    */
@@ -43,30 +38,36 @@ public:
    */
   template <typename RequestedType>
   RequestedType CreateObject(const string& object_name) const;
+  /**
+   * Initializes factory by given configuration.
+   *
+   * \param configuration - initializing configuration
+   */
+  void init(const Configuration::Ptr configuration);
 
-protected:
+ protected:
   /**
    * Generates a name for an object
    * @param object_info - all the object's properties
    */
-  static string getObjectAlias(const ObjectInfo& object_info);
+  static string getObjectAlias(const ObjectInfo::Ptr object_info);
 
-private:
-  bool tryBuildingObjectCreationChain(const ObjectInfo* object_info,
-    ObjectInfosList* info_queue,
-    ObjectInfosList* circularity_check_queue) const;
+ private:
+  bool tryBuildingObjectCreationChain(
+      const ObjectInfo::Ptr object_info,
+      ObjectInfosList* info_queue,
+      ObjectInfosList* circularity_check_queue) const;
 
-  const ConfigParser& configurator_;
+  Configuration::Ptr configuration_;
 };
 
 
 template <typename RequestedType>
 RequestedType DependencyResolvingFactory::CreateObject(
           const string& object_name) const {
-  const ObjectInfo& object_info =
-      configurator_.findObject(object_name);
-  const ParametersContainer& parameters =
-      Create(object_info.get_parameters());
+  const ObjectInfo::Ptr object_info =
+      configuration_->object_infos.safeFind(object_name)->second;
+  ParametersContainer parameters = Create(object_info->parameters);
   Any object = Factory::instance()->Create(getObjectAlias(object_info),
                                            parameters);
   return any_cast<RequestedType>(object);

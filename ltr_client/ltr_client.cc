@@ -1,11 +1,11 @@
 // Copyright 2012 Yandex
 
-#include "rlog/rlog_default.h"
-
 #include <stdexcept>
 #include <string>
 #include <vector>
 #include <ctime>
+
+#include "rlog/rlog_default.h"
 
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
@@ -17,7 +17,6 @@
 #include "ltr/data/utility/io_utility.h"
 
 #include "ltr_client/ltr_client.h"
-#include "ltr_client/configurator.h"
 #include "ltr_client/factory.h"
 
 #include "ltr/utility/boost/path.h"
@@ -50,7 +49,7 @@ using ltr::utility::FileLink;
 using ltr::utility::split;
 
 
-LtrClient::LtrClient(): factory_(configurator_) {}
+LtrClient::LtrClient(): configuration_(new Configuration) {}
 
 LtrClient::~LtrClient() {}
 
@@ -59,7 +58,8 @@ void LtrClient::initFrom(const string& file_name) {
   time_t current_time(time(NULL));
   addToReport("<p>Started on " +
               static_cast<string>(ctime(&current_time)) + ".</p>");
-  configurator_.parseConfig(file_name);
+  configuration_ = config_parser_.parse(file_name);
+  factory_.init(configuration_);
   factory_.checkCircularDependencyAbsence();
 }
 
@@ -80,41 +80,41 @@ void LtrClient::saveReport(const string& file_name) const {
 
 template <class TElement>
 void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
-                            const TrainLaunchInfo& train_info) {
-  const ObjectInfo& learner_info =
-    configurator_.findObject(train_info.learner);
+                                const TrainLaunchInfo::Ptr train_info) {
+  const ObjectInfo::Ptr learner_info(
+      configuration_->object_infos.safeAt(train_info->learner));
 
-  const DataInfo& data_info = configurator_.findData(train_info.data);
+  const DataInfo::Ptr data_info(
+      configuration_->data_infos.safeAt(train_info->data));
 
-  if (learner_info.get_approach() != data_info.approach) {
+  if (learner_info->approach != data_info->approach) {
     throw logic_error("approaches of learner and data do not coincide");
   }
 
   const DataSet<TElement>& data_set =
-    loadDataSet<TElement>(data_info.file, data_info.format);
+    loadDataSet<TElement>(data_info->file, data_info->format);
 
   rInfo("\n\nTrain started\n");
   learner->learn(data_set);
 
-  rInfo("\n\nTrain %s finished. Learner's report:%s\n", data_info.file.c_str(),
+  rInfo("\n\nTrain %s finished. Learner's report:%s\n", data_info->file.c_str(),
        learner->report().c_str());
 
   Scorer::Ptr scorer = learner->make();
 
   rInfo("\n\nStarted predicting\n");
   for (std::set<string>::const_iterator predict_it =
-       train_info.predicts.begin();
-       predict_it != train_info.predicts.end();
+       train_info->predicts.begin();
+       predict_it != train_info->predicts.end();
        ++predict_it) {
     const string& predict = *predict_it;
-    if (configurator_.dataInfos().find(predict) ==
-        configurator_.dataInfos().end()) {
+    if (!configuration_->data_infos.contains(predict)) {
       rInfo("Can't predict. Unknown data %s\n", predict.c_str());
       return;
     }
     const string& predict_file_path =
-      AppendTrailingPathSeparator(configurator_.rootPath()) +
-      learner_info.get_name() + "." + predict + ".predicts";
+      AppendTrailingPathSeparator(configuration_->root_path) +
+      learner_info->name + "." + predict + ".predicts";
 
     ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
 
@@ -123,35 +123,35 @@ void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
     addToReport("<p>\n\tPredictions for <i>" + predict +
                   "</i> saved to " + FileLink(predict_file_path) + ".\n</p>");
   }
-  if (train_info.gen_cpp) {
+  if (train_info->gen_cpp) {
     string cpp_file_path =
-      AppendTrailingPathSeparator(configurator_.rootPath()) +
-      learner_info.get_name() + ".cpp";
+      AppendTrailingPathSeparator(configuration_->root_path) +
+      learner_info->name + ".cpp";
     ofstream file_out(cpp_file_path.c_str());
-    file_out << scorer->generateCppCode(learner_info.get_name());
+    file_out << scorer->generateCppCode(learner_info->name);
     file_out.close();
     rInfo("Cpp code saved into %s\n", cpp_file_path.c_str());
-    addToReport("<p>\n\tCpp code for <i>" + learner_info.get_name() +
+    addToReport("<p>\n\tCpp code for <i>" + learner_info->name +
                 "</i> saved to " + FileLink(cpp_file_path) + ".\n</p>");
   }
 }
 
 template <class TElement>
 void LtrClient::launchCrossvalidationImpl(
-  const CrossvalidationLaunchInfo& crossvalidation_info) {
+  const CrossvalidationLaunchInfo::Ptr crossvalidation_info) {
     typedef set<string>::const_iterator TSetIterator;
     CrossValidator<TElement> cross_validator;
 
-    for (TSetIterator learners_alias = crossvalidation_info.learners.begin();
-        learners_alias != crossvalidation_info.learners.end();
+    for (TSetIterator learners_alias = crossvalidation_info->learners.begin();
+        learners_alias != crossvalidation_info->learners.end();
         ++learners_alias) {
       cross_validator.add_learner(
           factory_.CreateObject<typename Learner<TElement>::Ptr>(
               *learners_alias));
     }
 
-    for (TSetIterator measures_alias = crossvalidation_info.measures.begin();
-         measures_alias != crossvalidation_info.measures.end();
+    for (TSetIterator measures_alias = crossvalidation_info->measures.begin();
+         measures_alias != crossvalidation_info->measures.end();
          ++measures_alias) {
       cross_validator.add_measure(
           factory_.CreateObject<typename Measure<TElement>::Ptr>(
@@ -160,43 +160,45 @@ void LtrClient::launchCrossvalidationImpl(
 
     cross_validator.add_splitter(
         factory_.CreateObject<typename Splitter<TElement>::Ptr>(
-            crossvalidation_info.splitter));
+            crossvalidation_info->splitter));
 
-    for (TSetIterator datas_alias = crossvalidation_info.datas.begin();
-         datas_alias != crossvalidation_info.datas.end();
+    for (TSetIterator datas_alias = crossvalidation_info->datas.begin();
+         datas_alias != crossvalidation_info->datas.end();
          ++datas_alias) {
-      const DataInfo& data_info = configurator_.findData(*datas_alias);
+      const DataInfo::Ptr data_info =
+          configuration_->data_infos.safeAt(*datas_alias);
       DataSet<TElement> data_set =
-          loadDataSet<TElement>(data_info.file, data_info.format);
+          loadDataSet<TElement>(data_info->file, data_info->format);
       cross_validator.add_data_set(data_set);
     }
 
     cross_validator.launch();
     rInfo("%s", cross_validator.toString().c_str());
-    addToReport("<p><b>Crossvalidation results:</b></p>\n" + cross_validator.toHTML());
+    addToReport("<p><b>Crossvalidation results:</b></p>\n" +
+        cross_validator.toHTML());
 }
 
 void LtrClient::launchTrain() {
-  for (ConfigParser::TrainInfos::const_iterator iterator =
-          configurator_.trainInfos().begin();
-       iterator != configurator_.trainInfos().end();
+  for (Configuration::TrainInfos::const_iterator iterator =
+          configuration_->train_infos.begin();
+       iterator != configuration_->train_infos.end();
        ++iterator) {
-    const TrainLaunchInfo& train_info = iterator->second;
-    const ObjectInfo& learner_info =
-      configurator_.findObject(train_info.learner);
+    const TrainLaunchInfo::Ptr train_info = iterator->second;
+    const ObjectInfo::Ptr learner_info =
+      configuration_->object_infos.safeAt(train_info->learner);
 
-    if (learner_info.get_approach() == "listwise") {
-      launchTrainImpl<ObjectList>(factory_.CreateObject<Learner<ObjectList>::Ptr>(
-                                      train_info.learner),
-                                  train_info);
-    } else if (learner_info.get_approach() == "pairwise") {
-      launchTrainImpl<ObjectPair>(factory_.CreateObject<Learner<ObjectPair>::Ptr>(
-                                      train_info.learner),
-                                  train_info);
-    } else if (learner_info.get_approach() == "pointwise") {
-      launchTrainImpl<Object>(factory_.CreateObject<Learner<Object>::Ptr>(
-                                  train_info.learner),
-                              train_info);
+    if (learner_info->approach == "listwise") {
+      launchTrainImpl<ObjectList>(
+        factory_.CreateObject<Learner<ObjectList>::Ptr>(train_info->learner),
+        train_info);
+    } else if (learner_info->approach == "pairwise") {
+      launchTrainImpl<ObjectPair>(
+        factory_.CreateObject<Learner<ObjectPair>::Ptr>(train_info->learner),
+        train_info);
+    } else if (learner_info->approach == "pointwise") {
+      launchTrainImpl<Object>(
+        factory_.CreateObject<Learner<Object>::Ptr>(train_info->learner),
+        train_info);
     } else {
       throw logic_error("unknown learner's approach");
     }
@@ -204,20 +206,21 @@ void LtrClient::launchTrain() {
 }
 
 void LtrClient::launchCrossvalidation() {
-  for (ConfigParser::CrossvalidationInfos::const_iterator iterator =
-       configurator_.crossvalidationInfos().begin();
-       iterator != configurator_.crossvalidationInfos().end();
+  for (Configuration::CrossvalidationInfos::const_iterator iterator =
+       configuration_->crossvalidation_infos.begin();
+       iterator != configuration_->crossvalidation_infos.end();
        ++iterator) {
-    const CrossvalidationLaunchInfo& crossvalidation_info =
+    const CrossvalidationLaunchInfo::Ptr crossvalidation_info =
       iterator->second;
-    const ObjectInfo& learner_info =
-      configurator_.findObject(*crossvalidation_info.learners.begin());
+    const ObjectInfo::Ptr learner_info =
+      configuration_->object_infos.safeAt(
+        *(crossvalidation_info->learners.begin()));
 
-    if (learner_info.get_approach() == "listwise") {
+    if (learner_info->approach == "listwise") {
       launchCrossvalidationImpl<ObjectList>(crossvalidation_info);
-    } else if (learner_info.get_approach() == "pairwise") {
+    } else if (learner_info->approach == "pairwise") {
       launchCrossvalidationImpl<ObjectPair>(crossvalidation_info);
-    } else if (learner_info.get_approach() == "pointwise") {
+    } else if (learner_info->approach == "pointwise") {
       launchCrossvalidationImpl<Object>(crossvalidation_info);
     } else {
       throw logic_error("unknown learner's approach");
@@ -233,7 +236,7 @@ void LtrClient::launch() {
   addToReport("<p>Finished on " +
               static_cast<string>(ctime(&current_time)) + ".</p>");
   addToReport("<hr/>&copy; Yandex, 2011");
-  string report_path = AppendTrailingPathSeparator(configurator_.rootPath()) +
+  string report_path = AppendTrailingPathSeparator(configuration_->root_path) +
       "report.html";
   saveReport(report_path);
 }

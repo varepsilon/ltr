@@ -12,7 +12,7 @@ typedef string ObjectDependency;
 
 
 bool DependencyResolvingFactory::tryBuildingObjectCreationChain(
-    const ObjectInfo* object_info,
+    const ObjectInfo::Ptr object_info,
     ObjectInfosList* info_queue,
     ObjectInfosList* circularity_check_queue) const {
   if (find(info_queue->begin(), info_queue->end(), object_info) !=
@@ -27,16 +27,16 @@ bool DependencyResolvingFactory::tryBuildingObjectCreationChain(
 
   if (begin_iterator != circularity_check_queue->end()) {
     throw logic_error("circular dependency detected when processing " +
-        object_info->get_name());
+        object_info->name);
   }
   circularity_check_queue->push_back(object_info);
 
   // add dependencies
   for (ObjectInfosList::const_iterator iterator =
-        object_info->dependency_infos().begin();
-        iterator != object_info->dependency_infos().end();
+        object_info->dependency_infos.begin();
+        iterator != object_info->dependency_infos.end();
         ++iterator) {
-    const ObjectInfo* dep_info = *iterator;
+    const ObjectInfo::Ptr dep_info = *iterator;
     if (!tryBuildingObjectCreationChain(dep_info,
                                         info_queue,
                                         circularity_check_queue)) {
@@ -49,14 +49,19 @@ bool DependencyResolvingFactory::tryBuildingObjectCreationChain(
 }
 
 void DependencyResolvingFactory::checkCircularDependencyAbsence() const {
-  const ObjectInfosList& all_infos =
-    GetValues(configurator_.objectInfos());
+  ObjectInfosList all_infos;
+  for (map<string, ObjectInfo::Ptr>::const_iterator it =
+       configuration_->object_infos.begin();
+       it != configuration_->object_infos.end();
+       ++it) {
+    all_infos.push_back(it->second);
+  }
 
   ObjectInfosList info_queue;
   for (ObjectInfosList::const_iterator iterator = all_infos.begin();
        iterator != all_infos.end();
        ++iterator) {
-    const ObjectInfo* object_info = *iterator;
+    ObjectInfo::Ptr object_info = *iterator;
     ObjectInfosList circularity_check_queue;
     tryBuildingObjectCreationChain(object_info,
                                    &info_queue,
@@ -65,19 +70,19 @@ void DependencyResolvingFactory::checkCircularDependencyAbsence() const {
 }
 
 Any DependencyResolvingFactory::Create(const string& name) const {
-  const ConfigParser::ObjectInfos& all_infos =
-      configurator_.objectInfos();
-  ConfigParser::ObjectInfos::const_iterator iter = all_infos.find(name);
+  const Configuration::ObjectInfos& all_infos =
+      configuration_->object_infos;
+  Configuration::ObjectInfos::const_iterator iter = all_infos.find(name);
   assert(iter != all_infos.end());
-  const ObjectInfo* object_info = &iter->second;
+  const ObjectInfo::Ptr object_info = iter->second;
   const ParametersContainer& parameters =
-    Create(object_info->get_parameters());
+    Create(object_info->parameters);
   try {
-    return Factory::instance()->Create(object_info->get_type(), parameters);
+    return Factory::instance()->Create(object_info->type, parameters);
   } catch (const logic_error& err) {
     rDebug("Exception '%s' was successfully processed", err.what());
-    return Factory::instance()->Create(object_info->get_type() +
-                                       object_info->get_approach(), parameters);
+    return Factory::instance()->Create(object_info->type +
+                                       object_info->approach, parameters);
   }
 }
 
@@ -122,7 +127,11 @@ ParametersContainer DependencyResolvingFactory::Create(
   return result;
 }
 
+void DependencyResolvingFactory::init(const Configuration::Ptr configuration) {
+  configuration_ = configuration;
+}
+
 string DependencyResolvingFactory::getObjectAlias(
-          const ObjectInfo& object_info) {
-  return object_info.get_type() + object_info.get_approach();
+    const ObjectInfo::Ptr object_info) {
+  return object_info->type + object_info->approach;
 }

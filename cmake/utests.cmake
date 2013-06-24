@@ -99,6 +99,8 @@ SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc
                           ${Source_Path}/ltr/optimization/stop_criteria/stop_criteria_unittest.cc
                           ${Source_Path}/ltr/optimization/population_updaters/updaters_unittest.cc)
 
+SET(LTR_CLIENT_TEST ${Source_Path}/ltr_client/config_parser_unittest.cc)
+
 SOURCE_GROUP(density_estimators FILES ${DENSITY_ESTIMATORS_TEST})
 SOURCE_GROUP(aggregators FILES ${LTR_AGGREGATORS_TEST})
 SOURCE_GROUP(interfaces FILES ${LTR_INTERFACES_TEST})
@@ -142,7 +144,9 @@ SET(LTR_TEST ${LTR_PREDICTIONS_AGGREGATORS_TEST}
              ${LTR_METRICS_TEST}
              ${DENSITY_ESTIMATORS_TEST}
              ${LTR_UTILITY_TEST}
-             ${LTR_OPTIMIZATION_TEST})
+             ${LTR_OPTIMIZATION_TEST}
+             ${LTR_CLIENT_UTILITY_TEST}
+             ${LTR_CLIENT_TEST})
 
 SET(LTR_TEST_H)
 SET(LTR_TEST_ALL ${LTR_TEST} ${LTR_TEST_H} ${gtest_SOURCE_DIR}/src/gtest_main.cc)

@@ -90,6 +90,28 @@ class SafeMap: public map<Key, T>, public Printable {
           << lexical_cast<string>(it->second) << '\n';
     return out.str();
   }
+
+  /**
+   * Returns constant link to value with given key, if it exists, or throws
+   * error otherwise.
+   *
+   * \param key - key to be searched for.
+   * \return Link to value.
+   */
+  const T& safeAt(const Key& key) const {
+    return safeFind(key)->second;
+  }
+
+  /**
+   * Returns link to value with given key, if it exists, or throws
+   * error otherwise.
+   *
+   * \param key - key to be searched for.
+   * \return Link to value.
+   */
+  T& safeAt(const Key& key) {
+    return safeFind(key)->second;
+  }
 };
 };
 };

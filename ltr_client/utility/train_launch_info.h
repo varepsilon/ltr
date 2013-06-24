@@ -3,34 +3,68 @@
 #define LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_
 
 #include <string>
-#include <set>
+
+#include "ltr/interfaces/printable.h"
+#include "ltr/utility/safe_set.hpp"
 
 using std::string;
+
+using ltr::Printable;
+using ltr::utility::SafeSet;
+
 /**
- * Contains all the information about the train launch,
+ * \brief Contains all the information about the train launch,
  * including name, data iinformation and learner information.
  * Also it contains the flag that defines if the library will
  * generate the C++ code or not.
  */
-struct TrainLaunchInfo {
-  TrainLaunchInfo() {}
-  // C++11 -> we have no initializer, so we MUST write stupid
-  // conctructor manually
-  TrainLaunchInfo(const string& nm,
-             const string& dt,
-             const string& lr):
-    name(nm), data(dt), learner(lr) { gen_cpp = false; }
+struct TrainLaunchInfo: public Printable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(TrainLaunchInfo);
+ public:
+  /**
+   * Basic constructor
+   */
+  TrainLaunchInfo(): gen_cpp(false) { }
+  /**
+   * Basic constructor.
+   *
+   * \param name_ - name of the train launch
+   * \param data_ - dataset to launch train
+   * \param learner_ - learner to launch train
+   */
+  TrainLaunchInfo(const string& name_,
+                  const string& data_,
+                  const string& learner_):
+      name(name_), data(data_), learner(learner_), gen_cpp(false) { }
+  string toString() const {
+    return "TrainLaunchInfo(name=" + name +
+        ", data=" + data +
+        ", learner=" + learner +
+        ", predicts=" + predicts.toString() +
+        ", gen_cpp=" + lexical_cast<string>(gen_cpp) +
+        ")";
+  }
+
+  /**
+   * Name of the train launch
+   */
   string name;
+  /**
+   * Dataset for train launch
+   */
   string data;
+  /**
+   * Learner for train launch
+   */
   string learner;
-  std::set<string> predicts;
+  /**
+   * Datasets to predict
+   */
+  SafeSet<string> predicts;
+  /**
+   * C++ code generation flag
+   */
   bool gen_cpp;
 };
-/**
- * Converts TrainLaunchInfo to string
- * @param Info - TrinLaunchInfo to convert
- * @returns string with all the information about TrainLaunchInfo
- */
-string ToString(const TrainLaunchInfo& Info);
 
-#endif //LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_
+#endif  // LTR_CLIENT_UTILITY_TRAIN_LAUNCH_INFO_H_

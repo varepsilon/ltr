@@ -7,9 +7,10 @@
 
 #include "ltr/learners/learner.h"
 
-#include "ltr_client/configurator.h"
+#include "ltr_client/configuration.h"
+#include "ltr_client/config_parser.h"
 #include "ltr_client/dependency_resolving_factory.h"
-#include "ltr_client/utility/parameterized_info.h"
+#include "ltr_client/utility/object_info.h"
 
 using std::string;
 using ltr::Learner;
@@ -62,13 +63,14 @@ class LtrClient {
 
   template <class TElement>
   void launchTrainImpl(typename Learner<TElement>::Ptr learner,
-                   const TrainLaunchInfo& train_info);
+                       const TrainLaunchInfo::Ptr train_info);
 
   template <class TElement>
   void launchCrossvalidationImpl(
-    const CrossvalidationLaunchInfo& crossvalidation_info);
+    const CrossvalidationLaunchInfo::Ptr crossvalidation_info);
 
-  ConfigParser configurator_;
+  ConfigParser config_parser_;
+  Configuration::Ptr configuration_;
   DependencyResolvingFactory factory_;
   string report_body_;
 };

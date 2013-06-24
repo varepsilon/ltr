@@ -6,6 +6,8 @@
 #include <vector>
 #include <stdexcept>
 
+#include "ltr/utility/boost/shared_ptr.h"
+
 using std::vector;
 
 namespace ltr {

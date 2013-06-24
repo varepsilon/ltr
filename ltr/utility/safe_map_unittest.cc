@@ -32,3 +32,16 @@ TEST(MapTest, TestingSafeInsert) {
   EXPECT_EQ(test_map[0], 13);
   EXPECT_ANY_THROW(test_map.safeInsert(0) = 5);
 }
+
+TEST(MapTest, TestingSafeAt) {
+  SafeMap<int, int> test_map;
+  test_map.safeInsert(0) = 13;
+  test_map.safeInsert(1) = 14;
+  EXPECT_NO_THROW(test_map.safeAt(0) = 42);
+  EXPECT_EQ(test_map.safeAt(0), 42);
+  EXPECT_ANY_THROW(test_map.safeAt(2));
+
+  const SafeMap<int, int> const_test_map = test_map;
+  EXPECT_EQ(const_test_map.safeAt(0), 42);
+  EXPECT_ANY_THROW(const_test_map.safeAt(2));
+}

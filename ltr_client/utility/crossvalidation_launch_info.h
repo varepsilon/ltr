@@ -3,36 +3,59 @@
 #define LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
 
 #include <string>
-#include <set>
+
+#include "ltr/interfaces/printable.h"
+#include "ltr/utility/safe_set.hpp"
+#include "ltr/utility/macros.h"
 
 using std::string;
-using std::set;
+
+using ltr::Printable;
+using ltr::utility::SafeSet;
+
 /**
- * Contains the information about the crossvalidation launch,
- * including the leaners vector, measures vector,
- * datasets vector and the splitter
+ * \brief Contains the information about the crossvalidation launch,
+ * including the leaners vector, measures vector, datasets vector and the
+ * splitter. Must be used by shared_ptr only.
  */
-struct CrossvalidationLaunchInfo {
+struct CrossvalidationLaunchInfo: public Printable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(CrossvalidationLaunchInfo);
+ public:
+  string toString() const {
+    return "CrossvalidationLaunchInfo(fold=" + splitter +
+        ", learners=" + learners.toString() +
+        ", measures=" + measures.toString() +
+        ", datas=" + datas.toString() +
+        ")";
+  }
+  /**
+   * Basic constructor
+   */
   CrossvalidationLaunchInfo() { }
-  // C++11 -> we have no initializer, so we MUST write stupid
-  // conctructor manually
   /**
    * Basic constructor.
-   * @param fold_ - splitter fold
+   *
+   * \param fold_ - splitter fold
    */
   explicit CrossvalidationLaunchInfo(const string& fold_)
     : splitter(fold_) { }
-  string splitter;
-  set<string> learners;
-  set<string> measures;
-  set<string> datas;
-};
-/**
- * Converts CrossvalidationLaunchInfo object into the printable string.
- * @param Info - CrossvalidationLaunchInfo object to convert
- * @returns converted string
- */
-string ToString(const CrossvalidationLaunchInfo& Info);
 
-#endif //LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
+  /**
+   * Splitter fold
+   */
+  string splitter;
+  /**
+   * Set of names of using learners.
+   */
+  SafeSet<string> learners;
+  /**
+   * Set of names of using measures.
+   */
+  SafeSet<string> measures;
+  /**
+   * Set of names of using datasets.
+   */
+  SafeSet<string> datas;
+};
+#endif  // LTR_CLIENT_UTILITY_CROSSVALIDATION_LAUNCH_INFO_H_
 
