@@ -8,6 +8,7 @@
 #include "ltr/optimization/sets/sphere_set.h"
 #include "ltr/optimization/sets/polyhedron_set.h"
 #include "ltr/optimization/sets/cube_set.h"
+#include "ltr/optimization/sets/unconstrained_set.h"
 
 using ltr::utility::DoubleEqual;
 
@@ -19,6 +20,7 @@ using optimization::LinearInequalitySet;
 using optimization::SphereSet;
 using optimization::PolyhedronSet;
 using optimization::CubeSet;
+using optimization::UnconstrainedSet;
 
 TEST(SetTest, BallSetInsideTest) {
   Point center(2);
@@ -429,4 +431,37 @@ TEST(SetTest, CubeSetRandomPointTest) {
   Point random_point(1);
   EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
   EXPECT_TRUE(set->isInside(random_point));
+}
+
+TEST(UnconstrainedSetTest, UnconstrainedSetIsInsideTest) {
+  Point point(2);
+  point << 0, 1;
+
+  UnconstrainedSet unconstrained_set(2);
+  EXPECT_TRUE(unconstrained_set.isInside(point));
+}
+
+TEST(UnconstrainedSetTest, UnconstrainedSetExceptionTest) {
+  Point point(3);
+  point << 0, 1, 2;
+
+  UnconstrainedSet unconstrained_set(2);
+  EXPECT_ANY_THROW(unconstrained_set.isInside(point));
+}
+
+TEST(UnconstrainedSetTest, UnconstrainedSampleRandomPointTest) {
+  UnconstrainedSet unconstrained_set(2);
+  Point point;
+  for (int i = 0; i < 10; ++i) {
+    unconstrained_set.sampleRandomPointInside(&point);
+    EXPECT_TRUE(unconstrained_set.isInside(point));
+  }
+}
+TEST(UnconstrainedSetTest, ProjectionTest) {
+  UnconstrainedSet unconstrained_set(2);
+  Point point(2);
+  point << 1, 6;
+  Point projection;
+  unconstrained_set.computeProjection(point, &projection);
+  EXPECT_TRUE(projection.isApprox(point, 0.1));
 }

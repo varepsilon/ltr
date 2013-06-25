@@ -11,11 +11,16 @@
 #include "ltr/optimization/functions/function.h"
 #include "ltr/optimization/sets/set.h"
 #include "ltr/optimization/population_initers/population_initer.h"
+#include "ltr/optimization/population_initers/naive_initer.h"
 #include "ltr/optimization/population_updaters/population_updater.h"
+#include "ltr/optimization/population_updaters/per_point_updater.hpp"
+#include "ltr/optimization/stop_criteria/per_point_stop_criterion.hpp"
 #include "ltr/optimization/population_info/population.h"
 #include "ltr/optimization/stop_criteria/stop_criterion.h"
 #include "ltr/optimization/solver/solution.h"
 #include "ltr/utility/cross_platform_time.h"
+#include "ltr/optimization/population_updaters/one_point_updater.h"
+#include "ltr/optimization/stop_criteria/one_point_stop_criterion.h"
 
 using std::numeric_limits;
 using ltr::utility::time;
@@ -29,9 +34,14 @@ namespace optimization {
 template<typename TFunction>
 class Solver : public ltr::Aliaser {
   public:
+    typedef typename ltr::utility::shared_ptr<Solver> Ptr;
     Solver(PopulationIniter::Ptr population_initer,
            typename PopulationUpdater<TFunction>::Ptr population_updater,
            typename StopCriterion<TFunction>::Ptr stop_criterion);
+
+    Solver(typename OnePointUpdater<TFunction>::Ptr population_updater,
+           typename OnePointStopCriterion<TFunction>::Ptr stop_criterion,
+           double stop_criteria_quorum = 1.0);
     /**
      * A trigger for solving given optimization task.
      */
@@ -50,14 +60,26 @@ class Solver : public ltr::Aliaser {
 };
 
 template<typename TFunction>
-Solver<TFunction>::Solver(PopulationIniter::Ptr population_initer,
-               typename PopulationUpdater<TFunction>::Ptr population_updater,
-               typename StopCriterion<TFunction>::Ptr stop_criterion) :
-    initer_(population_initer),
-    updater_(population_updater),
-    stop_criterion_(stop_criterion)
-      {  }
+Solver<TFunction>::Solver(
+    PopulationIniter::Ptr population_initer,
+    typename PopulationUpdater<TFunction>::Ptr population_updater,
+    typename StopCriterion<TFunction>::Ptr stop_criterion) :
+      initer_(population_initer),
+      updater_(population_updater),
+      stop_criterion_(stop_criterion) {
+}
 
+template<typename TFunction>
+Solver<TFunction>::Solver(
+    typename OnePointUpdater<TFunction>::Ptr updater,
+    typename OnePointStopCriterion<TFunction>::Ptr stop_criterion,
+    double stop_criteria_quorum) :
+      initer_(new NaiveIniter),
+      updater_(new PerPointUpdater<TFunction>(updater)),
+      stop_criterion_(new PerPointStopCriterion<TFunction>(
+          stop_criterion,
+          stop_criteria_quorum)) {
+}
 template<typename TFunction>
 Solution Solver<TFunction>::solve(typename TFunction::Ptr function,
                                   Set::Ptr set,
@@ -66,12 +88,11 @@ Solution Solver<TFunction>::solve(typename TFunction::Ptr function,
   initer_->populationInit(population_size, *set, population.get());
 
   stop_criterion_->init(population.get(), function, set);
-
   updater_->init(population.get(), function, set);
 
+  std::cout << stop_criterion_->alias() << std::endl;
   int iteration_count = 0;
   int start_time = time();
-
   while (!stop_criterion_->isTrue()) {
     ++iteration_count;
     updater_->update(population.get());

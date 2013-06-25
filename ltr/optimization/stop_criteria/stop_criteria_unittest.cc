@@ -170,7 +170,7 @@ TEST(PerPointStopCriterionTest, IterationCountTest) {
       new IterationCountStopCriterion<Function>;
   one_point_stop_criterion->set_max_iteration(3);
   PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
-  iteration_stop_criterion.set_aggregator_threshold(0.5);
+  iteration_stop_criterion.set_stop_criteria_quorum(0.5);
   iteration_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
@@ -192,7 +192,7 @@ TEST(PerPointStopCriterionTest, DeltaArgumentTest) {
   one_point_stop_criterion->set_min_delta(0.05);
 
   PerPointStopCriterion<Function> delta_argument_stop_criterion(one_point_stop_criterion); // NOLINT
-  delta_argument_stop_criterion.set_aggregator_threshold(0.5);
+  delta_argument_stop_criterion.set_stop_criteria_quorum(0.5);
 
   delta_argument_stop_criterion.init(
       &population, new SumSquaresFunction(2));
@@ -211,7 +211,7 @@ TEST(PerPointStopCriterionTest, DeltaArgumentTest) {
   population.updatePoint(2, point);
   delta_argument_stop_criterion.update(population);
   EXPECT_TRUE(delta_argument_stop_criterion.isTrue());
-  delta_argument_stop_criterion.set_aggregator_threshold(0.67);
+  delta_argument_stop_criterion.set_stop_criteria_quorum(0.67);
   EXPECT_FALSE(delta_argument_stop_criterion.isTrue());
 }
 
@@ -223,7 +223,7 @@ TEST(PerPointStopCriterionTest, DeltaValueTest) {
   one_point_stop_criterion->set_min_delta(0.05);
 
   PerPointStopCriterion<Function> delta_value_stop_criterion(one_point_stop_criterion); // NOLINT
-  delta_value_stop_criterion.set_aggregator_threshold(0.5);
+  delta_value_stop_criterion.set_stop_criteria_quorum(0.5);
   delta_value_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
@@ -240,7 +240,7 @@ TEST(PerPointStopCriterionTest, DeltaValueTest) {
   population.updatePoint(2, point);
   delta_value_stop_criterion.update(population);
   EXPECT_TRUE(delta_value_stop_criterion.isTrue());
-  delta_value_stop_criterion.set_aggregator_threshold(0.67);
+  delta_value_stop_criterion.set_stop_criteria_quorum(0.67);
   EXPECT_FALSE(delta_value_stop_criterion.isTrue());
 }
 
@@ -252,7 +252,7 @@ TEST(PerPointStopCriterionTest, GradientMagnitudeTest) {
   one_point_stop_criterion->set_min_gradient(0.05);
 
   PerPointStopCriterion<DifferentiableFunction> gradient_magnitude_stop_criterion(one_point_stop_criterion); // NOLINT
-  gradient_magnitude_stop_criterion.set_aggregator_threshold(0.5);
+  gradient_magnitude_stop_criterion.set_stop_criteria_quorum(0.5);
   gradient_magnitude_stop_criterion.init(
       &population, new SumSquaresFunction(2));
 
@@ -271,7 +271,7 @@ TEST(PerPointStopCriterionTest, GradientMagnitudeTest) {
   population.updatePoint(2, point);
   gradient_magnitude_stop_criterion.update(population);
   EXPECT_TRUE(gradient_magnitude_stop_criterion.isTrue());
-  gradient_magnitude_stop_criterion.set_aggregator_threshold(0.67);
+  gradient_magnitude_stop_criterion.set_stop_criteria_quorum(0.67);
   EXPECT_FALSE(gradient_magnitude_stop_criterion.isTrue());
 }
 
@@ -282,7 +282,7 @@ TEST(PerPointStopCriterionTest, UpdateTest) {
   one_point_stop_criterion->set_max_iteration(3);
 
   PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
-  iteration_stop_criterion.set_aggregator_threshold(0.3);
+  iteration_stop_criterion.set_stop_criteria_quorum(0.3);
   iteration_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
@@ -304,7 +304,7 @@ TEST(PerPointStopCriterionTest, UpdateTest) {
   iteration_stop_criterion.update(population);
 
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
-  iteration_stop_criterion.set_aggregator_threshold(0.67);
+  iteration_stop_criterion.set_stop_criteria_quorum(0.67);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
 
   iteration_stop_criterion.update(population);

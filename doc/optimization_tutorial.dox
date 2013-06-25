@@ -1,0 +1,273 @@
+namespace optimization {
+/** \page OptimizationTutorial Optimization tutorial
+
+\tableofcontents
+
+\section ABOUT About ltr::optimization
+Ltr::optimization is an open-source C++ library of algorithms for numerical optimization. Basically, this library should be used for finding minimum of the given function on the given set, but you can invent new applications of these methods.
+For your reasons, you should use presented methods for solving your optimization problems, or create your own optimization methods and check it on the number of conventional optimization problems, like the Easom or Rosenbrock functions for example.
+
+\section PROBLEM Formulation of the problem
+We have a function
+
+\f$F(x_1, x_2, \dots, x_n)\f$
+
+and a set
+
+\f$S \in \mathbb{R}^n\f$.
+
+So we should find a minimum of the function F on the set S.
+
+
+\section OPTIMIZATIONPHILOSOPHY Philosophy of optimization
+All of the implemented methods based on the iterative population approach. In detail, we have many points in the set.
+First of all, we should initialize these points.
+After initialization, we should update all points many times. We continue updating of the population until a stop criterion is satisfied.
+So, as you may guess, for solving the optimization problem you should define
+  - Population initer
+  - Population updater
+  - Stop criterion
+
+And collect them all into the Solver.
+
+\section SOLUTION What can you find with LTR::optimization
+When you solve the problem, your solver should give you the solution. Solution includes 
+  - Minimum of the function and argument of the minimum
+  - Number of iterations in solving process and elapsed time
+
+\section HOWTOCREATEPROBLEM How to create problems
+As you guessed, if you need to create a problem, you should define function and set.
+
+\section HOWTOCREATEFUNCTION How to create function
+We should define a functions according to the special conditions for optimize it via wide variety of methods.
+
+Some functions don't have derivatives; some have only the gradient, and someone have more. More than, some methods use only values of function in different points (0-rang methods), someone use gradients (1-rank methods), etc. So we divide functions into classes according this classification.
+
+There are 3 based classes of functions, which depend on their properties:
+  - Function
+  - DifferentiableFunction
+  - TwiceDifferentiableFunction
+
+Class Function is a special class for non-differentiable functions, or for solve problem via methods, which don't use derivatives of functions.
+
+Class DifferntiableFunction is a class for differentiable functions, or for solve problem via methods, which use first derivatives of functions (for example, number of gradient methods).
+
+Class TwiceDifferentiableFunction is a class for twice differentiable functions, or for solve problem via methods, which use second derivatives of functions (for example, Newton's method).
+
+More than, there are some classes for special types of functions:
+  - LinearFunction for functions of form \f$(\overrightarrow{x}) = (\overrightarrow{A}, \overrightarrow{x}) + B\f$
+  - QuadraticFunction for functions of form \f$f(\overrightarrow{x}) = \overrightarrow{x^T} A \overrightarrow{x} +
+  B^T \overrightarrow{x} + C\f$
+
+When you select type of function, you should inherit your function from selected base class and realize required methods.
+
+For example, let's implement function \f$ f(x_1, x_2) = x_1^4 + x_2^4\f$
+
+First of all, we should inherit our class from TwiceDifferentiableFunction:
+
+\code
+class MyFunction : public TwiceDifferentiableFunction {
+}
+\endcode
+
+Then we should implement constructor and destructor:
+
+\code
+explicit MyFunction() : TwiceDifferentiableFunction(2) { }
+~MyFunction() { }
+\endcode
+Now you need to define some inner pointer Ptr to your class:
+
+\code
+  typedef ltr::utility::shared_ptr<MyFunction> Ptr;
+\endcode
+
+And realized method getDefaultAlias() in the public section (this is common method for all classes) :
+
+\code
+  string getDefaultAlias() const { return "MyFunction";}
+\endcode
+
+
+Now we should implement methods for computing value, gradient and hessian (because our function is twice differentiable). This is computeValueImpl, computeGradientImpl and computeHessianImpl into private section. You shouldn't care about validating arguments.
+
+\code
+double computeValueImpl(const Point& point) const {
+    return pow(point(0), 4) + pow(point(1), 4);
+}
+void computeGradientImpl(const Point& point, Vector* gradient) const{
+    gradient(0) = 4.0 * pow(point[0], 3);
+    gradient(1) = 4.0 * pow(point[1], 3);
+}
+void computeHessianImpl(const Point& point, Matrix* hessian) const {
+    (*hessian)(0, 0) = 12.0 * pow(point[0], 2);
+    (*hessian)(1, 1) = 12.0 * pow(point[1], 2);
+    (*hessian)(0, 1) = 0.0;
+    (*hessian)(1, 0) = 0.0;
+}
+\endcode
+
+So, that's all. Now our class is
+
+\code
+class MyFunction : public TwiceDifferentiableFunction {
+ public:
+  explicit MyFunction() : TwiceDifferentiableFunction(2) { }
+  ~MyFunction() { }
+
+  typedef ltr::utility::shared_ptr<MyFunction> Ptr;
+  string getDefaultAlias() const { return "MyFunction";}
+ private:
+  double computeValueImpl(const Point& point) const {
+    return pow(point[0], 4) + pow(point[1], 4);
+  }
+  void computeGradientImpl(const Point& point, Vector* gradient) const{
+     (*gradient)(0) = 4.0 * pow(point[0], 3);
+     (*gradient)(1) = 4.0 * pow(point[1], 3);
+  }
+  void computeHessianImpl(const Point& point, Matrix* hessian) const {
+     (*hessian)(0, 0) = 12.0 * pow(point[0], 2);
+     (*hessian)(1, 1) = 12.0 * pow(point[1], 2);
+     (*hessian)(0, 1) = 0.0;
+     (*hessian)(1, 0) = 0.0;
+  }
+};
+\endcode
+
+More than, there are some previously realised functions:
+  - G1Function
+  - G3Function
+  - EasomFunction
+  - SumSquaresFunction
+  - RosenbrockFunction
+  - GriewankFunction
+  - TridFunction
+
+\section HOWTOCREATESET How to create set
+
+You should define set to solve your problem, despite of your problem may be unconstrained (in this set you should use UnconstrainedSet).
+
+Obviously, class for sets should have method \b isInside, which is used to define, is point in set or not.
+
+More than, in our library every set should have method \b computeProjection to project any point into space on set. It is useful for solving constrained optimization problems.
+
+For your pleasure, there are some already realized sets. That is:
+  - BallSet
+  - LinearInequalitySet
+  - PolyhedronSet
+  - SphereSet
+  - UnconstrainedSet
+
+ To create your own set you should use one of these sets as a basis, or create absolutely new set.
+ For example, let's create set for our problem, which can be described by equation \f$ x_1^2 + x_2 ^2 \leq 4\f$. It is BallSet with dimension = 2 and radius = 2, and center at (0, 0) so we have to inherit our set from it (and don't forget about getDefaultAlias):
+
+ \code
+class MySet : public BallSet {
+ public:
+  explicit MySet() : BallSet(2.0, Point(2)) {
+      Point center(2);
+      center.setZero();
+      set_center(center);
+  }
+  ~MySet() { }
+
+  string getDefaultAlias() const { return "MySet"; }
+};
+\endcode
+
+ We have created MyFunction and MySet, and now we should create Solver.
+
+ \section HOWTOCREATESOLVER How to create solver
+
+ As I say, each of solvers consists of
+  - PopulationIniter
+  - PopulationUpdater
+  - StopCriterion
+
+ Solver use PopulationIniter to initialize population primarily. There is list of available population initers:
+   - NaiveIniter
+
+ The last 3 updaters use first derivative of functions, so they are not available for non-differentiable functions.
+
+ Solver use StopCriterion to define, is it enough to stop calculations or not. There are different stop criteria, which based, for example, on maximal number of iterations, or obtained accuracy.
+ 
+ Class PerPointStopCriterion based on the simple idea. Let's create an one point stop criterion, which test stop condition only for one point. So, when we use this stop criterion for all points in the population, for some points this condition will be true, and for other points it will be false. Then let's define the minimal part of true answers (stop_criteria_quorum) and then use it and aggregate answers from one point stop criteria. Now, when part of the true answers is more than stop_criteria_quorum, stop criterion for all population is true, in other way it is false.
+
+ There is a list of available one point stop criteria:
+   - IterationCountStopCriterion
+   - DeltaFunctionStopCriterion
+   - DeltaArgumentStopCriterion
+   - GradientMagnitudeStopCriterion
+ The last one use a first derivative of functions, so they are not available for non-differentiable functions.
+
+ To create a PerPointStopCriterion from the OnePointStoipCriterion, we should use a simple ctor. For example:
+
+ \code
+ int max_iteration = 1000;
+ PerPointStopCriterion<Function>::Ptr stop_criterion =
+	new PerPointStopCriterion<Function>(new IterationCountStopCriterion<Function>(
+		max_iteration));
+ \endcode
+
+ So, you should create a solver absolutely manually, using the base Solver class, but it's very hard. So you can use some specialized solvers:
+  - GradientDescentSolver
+  - SteepestGradientSolver
+  - ConjugateGradientSolver
+ These solvers use a first derivative of functions, so they are not available for non-differentiable functions.
+
+ All of these solvers use, by default, a GradientMagnitudeStopCriterion, but you can change it. To change a stop criterion, you should use a special ctors.
+ To use your own population stop criterion, you should use this ctor:
+ \code
+ double fixed_step = 0.1;
+ Solver<Function>::Ptr solver = new GradientDescentSolver(fixed_step,
+                                                          new YourOwnStopCriterion(your parameters));
+ \endcode
+ But many stop criteria are per point stop criteria, so there is a aspecial ctor for creating solvers with per point stop criteria, which based on your own one point stop criterion and minimal part of true answers in per point stop criterion (stop_criteria_quorum). For example:
+
+ \code
+  double fixed_step = 0.1;
+  double stop_criteria_quorum = 0.7;
+  Solver<Function>::Ptr solver = new GradientDescentSolver(fixed_step,
+                                                           new YourOwnOnePointStopCriterion(your parameters),
+                                                           stop_criteria_quorum);
+ \endcode
+
+ The last one use a first derivative of functions, so they are not available for non-differentiable functions.
+
+ So, for define a Solver, you should select an initer, updater and stop criterion. For example
+
+\code
+class MySolver : public Solver<DifferentiableFunction> {
+ public:
+  explicit MySolver(double max_step,
+                    double brute_force_step,
+                    int max_iteration,
+                    double stop_criteria_quorum = 1.0)
+      : SteepestGradientSolver<DifferentiableFunction>(
+            max_step,
+            brute_force_step,
+            new IterationCountStopCriterion<DifferentiableFunction>(max_iteration),
+            stop_criteria_quorum) {}
+    ~MySolver() {}
+ }
+
+ \endcode
+
+ \section HOWTOUSESOLVER How to use solver
+
+ When you have solver and problem (set and function) you can solve problem via solver. Result is a Solution :
+
+ \code
+ MyFunction::Ptr my_function = new MyFunction;
+ MySet::Ptr my_set = new MySet;
+ int population_size = 10;
+ MySolver my_solver(1000, 1.0, 0.1);
+ Solution solution;
+
+ solution = my_solver.solve(my_function, my_set, population_size);
+
+ \endcode
+
+ That's all!
+  **/
+}

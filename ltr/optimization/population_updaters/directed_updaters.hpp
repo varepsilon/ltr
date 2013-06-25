@@ -38,7 +38,7 @@ template<class TFunction>
 class SteepestGradientUpdater : public DirectedUpdater<TFunction> {
  public:
   SteepestGradientUpdater(double max_step,
-                                         double brute_force_step)
+                          double brute_force_step)
       : DirectedUpdater<TFunction>(
             new GradientDirectionCalculator<TFunction>(),
             new BruteForceStepCalculator<TFunction>(max_step,
@@ -60,11 +60,11 @@ class ConjugateGradientUpdater
     : public DirectedUpdater<TFunction> {
  public:
   ConjugateGradientUpdater(double max_step,
-                                                  double brute_force_step)
+                           double brute_force_step)
       : DirectedUpdater<TFunction>(NULL,
-                                    new BruteForceStepCalculator<TFunction>(
-                                        max_step,
-                                        brute_force_step)) {
+                                   new BruteForceStepCalculator<TFunction>(
+                                   max_step,
+                                   brute_force_step)) {
     typename ConjugateDirectionCalculator<TFunction>::Ptr
       conjugate_gradient_calculator =
         new ConjugateDirectionCalculator<TFunction>();

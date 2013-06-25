@@ -11,6 +11,7 @@
 
 namespace optimization {
 /**
+ * \page SphereSet
  * \brief Implements sphere of a given radius with center in a given point.
  *
  * \see Set

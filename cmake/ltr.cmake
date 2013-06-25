@@ -1,5 +1,4 @@
-    # lets list all LTR's binaries
-# lets list all LTR's source binaries
+# lets list all LTR's source files
 
 SET(LTR_DENSITY_ESTIMATORS_SCORERS ${Source_Path}/ltr/density_estimators/base_probability_density_estimator.h
                                    ${Source_Path}/ltr/density_estimators/fisher_discriminant.h
@@ -327,7 +326,10 @@ SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/polyhedron_set.h
                     ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc
                     ${Source_Path}/ltr/optimization/sets/cube_set.h
-                    ${Source_Path}/ltr/optimization/sets/cube_set.cc)
+                    ${Source_Path}/ltr/optimization/sets/cube_set.cc
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc
+                    ${Source_Path}/ltr/optimization/sets/unconstrained_set.h
+                    ${Source_Path}/ltr/optimization/sets/unconstrained_set.cc)
 
 SET(OPTIMIZATION_TEST_PROBLEMS ${Source_Path}/ltr/optimization/test_problems/constrained_functions.cc
                                ${Source_Path}/ltr/optimization/test_problems/constrained_functions.h
@@ -365,6 +367,7 @@ SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info
                                  ${Source_Path}/ltr/optimization/population_info/population_info.hpp)
 
 SET(OPTIMIZATION_SOLVER ${Source_Path}/ltr/optimization/solver/solver.h
+                        ${Source_Path}/ltr/optimization/solver/solvers.hpp
                         ${Source_Path}/ltr/optimization/solver/solution.h
                         ${Source_Path}/ltr/optimization/solver/solver_benchmark.h
                         ${Source_Path}/ltr/optimization/solver/artificial_bee_colony.h

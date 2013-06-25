@@ -140,7 +140,7 @@ TEST(PopulationUpdaterTest, SolveTest) {
     new PerPointStopCriterion<DifferentiableFunction>(one_point_stop_criterion);  // NOLINT
   gradient_updater->init(&population, function, set);
   stop_criterion->init(&population, function, set);
-  stop_criterion->set_aggregator_threshold(1.0);
+  stop_criterion->set_stop_criteria_quorum(1.0);
   Point a(2);
   a << 1, 1;
   Point b(2);

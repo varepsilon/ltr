@@ -32,7 +32,8 @@ class PerPointStopCriterion : public StopCriterion<TFunction> {
  public:
   using StopCriterion<TFunction>::init;
   explicit PerPointStopCriterion(
-      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample);  // NOLINT
+      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample,  // NOLINT
+      double stop_criteria_quorum = 1.0);  // NOLINT
   ~PerPointStopCriterion() { }
   typedef PopulationInfo<OnePointStopCriterion<TFunction> > StopCriterionInfo;  // NOLINT
   typedef ltr::utility::shared_ptr<PerPointStopCriterion> Ptr;
@@ -54,7 +55,7 @@ class PerPointStopCriterion : public StopCriterion<TFunction> {
    */
   virtual bool isTrue();
 
-  GET_SET(double, aggregator_threshold);
+  GET_SET(double, stop_criteria_quorum);
   virtual string getDefaultAlias() const;
  private:
   /**
@@ -67,15 +68,16 @@ class PerPointStopCriterion : public StopCriterion<TFunction> {
    */
   typename StopCriterionInfo::Ptr stop_criterion_info_;
   VoteAggregator aggregator_;
-  double aggregator_threshold_;
+  double stop_criteria_quorum_;
 };
 
 // template realization
 template<class TFunction>
 PerPointStopCriterion<TFunction>::PerPointStopCriterion(
-      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample)  // NOLINT
+      typename OnePointStopCriterion<TFunction>::Ptr one_point_stop_criterion_sample,  // NOLINT
+      double stop_criteria_quorum)  // NOLINT
       : one_point_stop_criterion_sample_(one_point_stop_criterion_sample),
-        aggregator_threshold_(1.0) { }
+        stop_criteria_quorum_(stop_criteria_quorum) { }
 
 template<class TFunction>
 void PerPointStopCriterion<TFunction>::init(
@@ -84,11 +86,11 @@ void PerPointStopCriterion<TFunction>::init(
     Set::Ptr set) {
   this->set_function(function);
   this->set_set(set);
+  Point point(function->dimension());
+  one_point_stop_criterion_sample_->init(point, function, set);
   stop_criterion_info_ = new StopCriterionInfo(
       population,
       one_point_stop_criterion_sample_);
-  Point point(function->dimension());
-  one_point_stop_criterion_sample_->init(point, function, set);
 }
 
 template<class TFunction>
@@ -111,7 +113,7 @@ bool PerPointStopCriterion<TFunction>::isTrue() {
        ++individual) {
     aggregator_.push(individual->second->isTrue());
   }
-  return aggregator_.isTrue(aggregator_threshold_);
+  return aggregator_.isTrue(stop_criteria_quorum_);
 }
 
 template<class TFunction>
