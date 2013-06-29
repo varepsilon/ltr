@@ -45,15 +45,13 @@ namespace ltr {
 class FeatureConverter : public Serializable,
                          public Aliaser,
                          public Printable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FeatureConverter)
  public:
-  typedef ltr::utility::shared_ptr<FeatureConverter> Ptr;
   typedef ltr::utility::shared_ptr<const FeatureConverter> ConstPtr;
 
   FeatureConverter(const FeatureInfo& input_feature_info = FeatureInfo()) {
     input_feature_info_ =  input_feature_info;
   }
-
-  virtual ~FeatureConverter() {}
 
   GET_SET(FeatureInfo, input_feature_info);
   /**

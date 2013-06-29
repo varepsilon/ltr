@@ -34,9 +34,8 @@ namespace composition {
  */
 template <class TElement>
 class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(AdaRankDataSetWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<AdaRankDataSetWeightsUpdater> Ptr;
-
   AdaRankDataSetWeightsUpdater() {
     this->setDefaultParameters();
   }
@@ -47,7 +46,8 @@ class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   explicit AdaRankDataSetWeightsUpdater(
       const ParametersContainer& parameters) {
     this->setDefaultParameters();
-    this->set_measure(parameters.Get<typename Measure<TElement>::Ptr>("measure"));
+    this->set_measure(
+      parameters.Get<typename Measure<TElement>::Ptr>("measure"));
   }
   /**
    * @param measure Measure to be used for weights updating
@@ -58,7 +58,7 @@ class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   }
 
   void updateWeights(const DataSet<TElement>* data,
-      const CompositionScorer& composition_scorer) const;
+      const CompositionScorer::Ptr& composition_scorer) const;
  private:
   virtual string getDefaultAlias() const {
     return "AdaRankDataSetWeightsUpdater";
@@ -69,8 +69,8 @@ class AdaRankDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
 template <class TElement>
 void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>* data,
-    const CompositionScorer& composition_scorer) const {
-  if (composition_scorer.size() == 0) {
+    const CompositionScorer::Ptr& composition_scorer) const {
+  if (composition_scorer->size() == 0) {
     rError("Zero-length scorer as an input");
     throw logic_error("Zero-length scorer for " + this->getDefaultAlias());
   }
@@ -82,7 +82,7 @@ void AdaRankDataSetWeightsUpdater<TElement>::updateWeights(
     throw std::logic_error(this->getDefaultAlias()
       + " has an infinity measure");
   }
-  composition_scorer.predict(*data);
+  composition_scorer->predict(*data);
 
   vector<double> measure_exps(data->size());
   double sum_of_exps = 0.0;

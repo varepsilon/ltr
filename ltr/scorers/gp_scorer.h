@@ -33,12 +33,9 @@ typedef vector<Puppy::Tree> Population;
  * population of genetic programming's evolution process.
  */
 class GPScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(GPScorer)
  public:
   GPScorer() {}
-  /**
-   * boost shared pointer to GPScorer;
-   */
-  typedef ltr::utility::shared_ptr< GPScorer > Ptr;
   /**
    * \param best_tree is the best Puppy::tree(formula, individ) in the population.
    * \param context is the context upon which the Puppy::trees in the population

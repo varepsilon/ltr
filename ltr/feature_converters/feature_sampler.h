@@ -29,9 +29,8 @@ namespace ltr {
  * \brief Samples features with specified indices.
  */
 class FeatureSampler : public FeatureConverter {
-  public:
-  typedef ltr::utility::shared_ptr<FeatureSampler> Ptr;
-
+  ALLOW_SHARED_PTR_ONLY_CREATION(FeatureSampler)
+ public:
   explicit FeatureSampler(const ParametersContainer& parameters) {
   }
   /**

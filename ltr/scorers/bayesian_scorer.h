@@ -19,9 +19,9 @@ using ltr::utility::lexical_cast;
 namespace ltr {
 
 class BayesianScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BayesianScorer)
  public:
   typedef map<double, double> LabelToPriorProbability;
-  typedef ltr::utility::shared_ptr<BayesianScorer> Ptr;
 
   BayesianScorer() {
   }

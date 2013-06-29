@@ -51,9 +51,8 @@ typedef map<Label, MatrixXd, std::less<Label>,
  */
 template<class TElement, class TEstimator>
 class BaseProbabilityDensityLearner : public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseProbabilityDensityLearner)
  public:
-  typedef ltr::utility::shared_ptr<BaseProbabilityDensityLearner> Ptr;
-
   BaseProbabilityDensityLearner() {
   }
 
@@ -61,16 +60,12 @@ class BaseProbabilityDensityLearner : public Parameterized {
     const ParametersContainer& parameters) {
   }
 
-  virtual ~BaseProbabilityDensityLearner() {
-  }
-
   virtual void learn(const DataSet<TElement>& data_set) {
     learnImpl(data_set, &estimator_);
   }
 
   typename TEstimator::Ptr makeSpecific() const {
-    return typename TEstimator::Ptr(
-      new TEstimator(estimator_));
+    return estimator_;
   };
 
   BaseProbabilityDensityEstimator::Ptr make() const {
@@ -86,9 +81,9 @@ class BaseProbabilityDensityLearner : public Parameterized {
    * \param estimator is the pointer to the generated density estimator
    */
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         TEstimator* estimator) = 0;
+                         typename TEstimator::Ptr* estimator) = 0;
 
-  TEstimator estimator_;
+  typename TEstimator::Ptr estimator_;
 };
 };
 

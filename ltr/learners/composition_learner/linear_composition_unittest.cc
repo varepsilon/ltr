@@ -70,20 +70,20 @@ class LinearCompositionTest : public ::testing::Test {
 
 TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    linear_composition_learner;
-  linear_composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    linear_composition_learner(new CompositionLearner<Object>);
+  linear_composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  linear_composition_learner.set_weak_learner(best_feature_learner);
+  linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  linear_composition_learner.learn(data);
+  linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_scorer =
-    linear_composition_learner.makeSpecific();
+    linear_composition_learner->makeSpecific();
 
   EXPECT_EQ(10, linear_scorer->size());
   for (int i = 0; i < linear_scorer->size(); ++i) {
@@ -96,15 +96,15 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
     average_composition_scorer_weights_updater(
       new AverageCompositionScorerWeightsUpdater<Object>);
 
-  CompositionLearner<Object>
-    average_linear_composition_learner;
-  average_linear_composition_learner.setDefaultScorer();
-  average_linear_composition_learner.set_composition_scorer_weights_updater(
+  CompositionLearner<Object>::Ptr
+    average_linear_composition_learner(new CompositionLearner<Object>);
+  average_linear_composition_learner->setDefaultScorer();
+  average_linear_composition_learner->set_composition_scorer_weights_updater(
     average_composition_scorer_weights_updater);
-  average_linear_composition_learner.set_weak_learner(best_feature_learner);
-  average_linear_composition_learner.learn(data);
+  average_linear_composition_learner->set_weak_learner(best_feature_learner);
+  average_linear_composition_learner->learn(data);
   CompositionScorer::Ptr average_linear_scorer =
-    average_linear_composition_learner.makeSpecific();
+    average_linear_composition_learner->makeSpecific();
   average_linear_scorer->predict(data);
   EXPECT_NEAR(0.0, abs_error->average(data), 1e-8);
 }
@@ -112,10 +112,10 @@ TEST_F(LinearCompositionTest, SimpleLinearCompositionTest) {
 
 TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    linear_composition_learner;
-  linear_composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    linear_composition_learner(new CompositionLearner<Object>);
+  linear_composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -123,11 +123,11 @@ TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
   DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
   best_feature_learner->add_data_preprocessor(bagging);
-  linear_composition_learner.set_weak_learner(best_feature_learner);
+  linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  linear_composition_learner.learn(data);
+  linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_scorer =
-    linear_composition_learner.makeSpecific();
+    linear_composition_learner->makeSpecific();
 
   EXPECT_EQ(10, linear_scorer->size());
   for (int i = 0; i < linear_scorer->size(); ++i) {
@@ -137,9 +137,9 @@ TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
   }
 
   bagging->set_sampling_fraction(2.);
-  linear_composition_learner.set_number_of_iterations(15);
-  linear_composition_learner.learn(data);
-  linear_scorer = linear_composition_learner.makeSpecific();
+  linear_composition_learner->set_number_of_iterations(15);
+  linear_composition_learner->learn(data);
+  linear_scorer = linear_composition_learner->makeSpecific();
 
   EXPECT_EQ(15, linear_scorer->size());
   for (int i = 0; i < linear_scorer->size(); ++i) {
@@ -151,10 +151,10 @@ TEST_F(LinearCompositionTest, BaggingSimpleLinearCompositionTest) {
 
 TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    linear_composition_learner;
-  linear_composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    linear_composition_learner(new CompositionLearner<Object>);
+  linear_composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
@@ -164,21 +164,21 @@ TEST_F(LinearCompositionTest, RSMSimpleLinearCompositionTest) {
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
   best_feature_learner->add_feature_converter_learner(rsm);
-  linear_composition_learner.set_weak_learner(best_feature_learner);
+  linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  linear_composition_learner.learn(data);
+  linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_scorer =
-    linear_composition_learner.makeSpecific();
+    linear_composition_learner->makeSpecific();
 
   EXPECT_NO_THROW(linear_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    ada_linear_composition_learner;
-  ada_linear_composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    ada_linear_composition_learner(new CompositionLearner<Object>);
+  ada_linear_composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
   TruePoint::Ptr true_point(new TruePoint);
@@ -186,26 +186,26 @@ TEST_F(LinearCompositionTest, AdaRankDSWUSimpleLinearCompositionTest) {
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_rank_data_set_weight_updater(
       new AdaRankDataSetWeightsUpdater<Object>(true_point));
-  ada_linear_composition_learner.set_data_set_weights_updater(
+  ada_linear_composition_learner->set_data_set_weights_updater(
     ada_rank_data_set_weight_updater);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  ada_linear_composition_learner.set_weak_learner(best_feature_learner);
+  ada_linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  ada_linear_composition_learner.learn(data);
+  ada_linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_scorer =
-    ada_linear_composition_learner.makeSpecific();
+    ada_linear_composition_learner->makeSpecific();
 
   EXPECT_NO_THROW(linear_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankCSWUSimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    ada_linear_composition_learner;
-  ada_linear_composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    ada_linear_composition_learner(new CompositionLearner<Object>);
+  ada_linear_composition_learner->setInitialScorer(scorer);
 
   TruePoint::Ptr true_point(new TruePoint);
   AbsError::Ptr abs_error(new AbsError);
@@ -213,25 +213,25 @@ TEST_F(LinearCompositionTest, AdaRankCSWUSimpleLinearCompositionTest) {
   AdaRankScorerWeightsUpdater<Object>::Ptr
     ada_rank_weight_updater(new
       AdaRankScorerWeightsUpdater<Object>(true_point));
-  ada_linear_composition_learner.set_composition_scorer_weights_updater(
+  ada_linear_composition_learner->set_composition_scorer_weights_updater(
     ada_rank_weight_updater);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  ada_linear_composition_learner.set_weak_learner(best_feature_learner);
+  ada_linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  ada_linear_composition_learner.learn(data);
+  ada_linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_scorer =
-    ada_linear_composition_learner.makeSpecific();
+    ada_linear_composition_learner->makeSpecific();
 
   EXPECT_NO_THROW(linear_scorer->predict(data));
 }
 
 TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object> ada_learner;
-  ada_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr ada_learner(new CompositionLearner<Object>);
+  ada_learner->setInitialScorer(scorer);
 
   TruePoint::Ptr true_point(new TruePoint);
   AbsError::Ptr abs_error(new AbsError);
@@ -240,19 +240,19 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
     ada_rank_weights_updater(new
       AdaRankScorerWeightsUpdater<Object>);
   ada_rank_weights_updater->set_measure(true_point);
-  ada_learner.set_composition_scorer_weights_updater(
+  ada_learner->set_composition_scorer_weights_updater(
     ada_rank_weights_updater);
 
   AdaRankDataSetWeightsUpdater<Object>::Ptr
     ada_rank_data_set_weights_updater(
       new AdaRankDataSetWeightsUpdater<Object>);
   ada_rank_data_set_weights_updater->set_measure(true_point);
-  ada_learner.set_data_set_weights_updater(
+  ada_learner->set_data_set_weights_updater(
     ada_rank_data_set_weights_updater);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  ada_learner.set_weak_learner(best_feature_learner);
+  ada_learner->set_weak_learner(best_feature_learner);
 
   FeatureRandomSamplerLearner<Object>::Ptr
     random_sampler_learner(new FeatureRandomSamplerLearner<Object>);
@@ -262,8 +262,8 @@ TEST_F(LinearCompositionTest, AdaRankBeggingRSMSimpleLinearCompositionTest) {
   DataRandomSampler<Object>::Ptr bagging(new DataRandomSampler<Object>);
   best_feature_learner->add_data_preprocessor(bagging);
 
-  ada_learner.learn(data);
-  CompositionScorer::Ptr linear_scorer = ada_learner.makeSpecific();
+  ada_learner->learn(data);
+  CompositionScorer::Ptr linear_scorer = ada_learner->makeSpecific();
 
   EXPECT_NO_THROW(linear_scorer->predict(data));
 }

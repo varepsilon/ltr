@@ -24,18 +24,19 @@ TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   weights1[0] = 0.5;
   weights1[1] = 1.7;
 
-  LinearScorer::Ptr ls1(new LinearScorer(weights1));
-  OneFeatureScorer::Ptr ofs1(new OneFeatureScorer());
+  LinearScorer::Ptr linear_scorer1(new LinearScorer(weights1));
+  OneFeatureScorer::Ptr one_feature_scorer1(new OneFeatureScorer());
 
   Object obj1;
   obj1 << 1.2;
 
   SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-  CompositionScorer lcs1(aggregator);
-  lcs1.add(ls1, 5.2);
-  lcs1.add(ofs1, 4.2);
+  CompositionScorer::Ptr linear_composition_scorer1(
+      new CompositionScorer(aggregator));
+  linear_composition_scorer1->add(linear_scorer1, 5.2);
+  linear_composition_scorer1->add(one_feature_scorer1, 4.2);
 
-  EXPECT_TRUE(DoubleEqual(18.248, lcs1(obj1)));
+  EXPECT_TRUE(DoubleEqual(18.248, (*linear_composition_scorer1)(obj1)));
 
   vector<double> weights2(5);
   weights2[0] = 0.4;
@@ -51,24 +52,25 @@ TEST(LinearCompositionScorer, LinearCompositionScorerTest) {
   weights3[3] = 0.02;
   weights3[4] = 0.07;
 
-  LinearScorer::Ptr ls2(new LinearScorer(weights2));
-  LinearScorer::Ptr ls3(new LinearScorer(weights3));
+  LinearScorer::Ptr linear_scorer2(new LinearScorer(weights2));
+  LinearScorer::Ptr linear_scorer3(new LinearScorer(weights3));
 
-  CompositionScorer lcs2(aggregator);
-  lcs2.add(ls2, 2.1);
-  lcs2.add(ls3, 0.7);
+  CompositionScorer::Ptr linear_composition_scorer2(
+      new CompositionScorer(aggregator));
+  linear_composition_scorer2->add(linear_scorer2, 2.1);
+  linear_composition_scorer2->add(linear_scorer3, 0.7);
 
   Object obj2;
   obj2 << 1.9 << 3.7 << 0.2 << 4.1;
 
-  EXPECT_TRUE(DoubleEqual(14.52381, lcs2(obj2)));
-  EXPECT_EQ(2, lcs2.size());
+  EXPECT_TRUE(DoubleEqual(14.52381, (*linear_composition_scorer2)(obj2)));
+  EXPECT_EQ(2, linear_composition_scorer2->size());
 
-  LinearScorer::Ptr ls4(new LinearScorer(weights2));
-  lcs2.clear();
-  lcs2.add(ls4, 1);
-  EXPECT_TRUE(DoubleEqual(2.9991, lcs2(obj2)));
-  EXPECT_EQ(1, lcs2.size());
+  LinearScorer::Ptr linear_scorer4(new LinearScorer(weights2));
+  linear_composition_scorer2->clear();
+  linear_composition_scorer2->add(linear_scorer4, 1);
+  EXPECT_TRUE(DoubleEqual(2.9991, (*linear_composition_scorer2)(obj2)));
+  EXPECT_EQ(1, linear_composition_scorer2->size());
 
-  lcs2.toString();
+  linear_composition_scorer2->toString();
 }

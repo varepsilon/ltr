@@ -22,9 +22,8 @@ namespace ltr {
  * \param shifts vector of shifts
  */
 class PerFeatureLinearConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(PerFeatureLinearConverter)
  public:
-  typedef ltr::utility::shared_ptr<PerFeatureLinearConverter> Ptr;
-
   explicit PerFeatureLinearConverter(const ParametersContainer& parameters) {
   }
 

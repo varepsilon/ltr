@@ -17,6 +17,7 @@ namespace ltr {
 template <typename TElement>
 class NanToAverageConverterLearner
   : public BaseFeatureConverterLearner<TElement, NanToNeutralConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NanToAverageConverterLearner)
  public:
   explicit NanToAverageConverterLearner(const ParametersContainer& parameters) {
   }
@@ -25,7 +26,7 @@ class NanToAverageConverterLearner
   }
 
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         NanToNeutralConverter* feature_converter);
+                         NanToNeutralConverter::Ptr* feature_converter);
 
   virtual string toString() const;
 
@@ -35,7 +36,8 @@ class NanToAverageConverterLearner
 
 template <typename TElement>
 void NanToAverageConverterLearner<TElement>::learnImpl(
-  const DataSet<TElement>& data_set, NanToNeutralConverter* feature_converter) {
+  const DataSet<TElement>& data_set,
+  NanToNeutralConverter::Ptr* feature_converter) {
     VectorXd average_features_values(data_set.feature_count());
 
     for (int feature_index = 0;
@@ -61,7 +63,7 @@ void NanToAverageConverterLearner<TElement>::learnImpl(
 
     Object average_features_object;
     average_features_object.set_eigen_features(average_features_values);
-    feature_converter->set_neutral_object(average_features_object);
+    (*feature_converter)->set_neutral_object(average_features_object);
 }
 
 template <typename TElement>

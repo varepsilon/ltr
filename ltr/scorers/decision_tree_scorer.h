@@ -15,9 +15,8 @@ using std::string;
 namespace ltr {
 namespace decision_tree {
 class DecisionTreeScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DecisionTreeScorer)
  public:
-  typedef ltr::utility::shared_ptr<DecisionTreeScorer> Ptr;
-
   DecisionTreeScorer() {}
 
   explicit DecisionTreeScorer(DecisionTree::Ptr tree)

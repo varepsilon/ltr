@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream> // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -32,13 +34,12 @@ int main() {
   data.add(object2);
   data.add(object3);
 
-  DataSampler<Object> data_sampler;
-  data_sampler.set_indices(indices);
-  data_sampler.apply(data, &preprocessed_data);
+  DataSampler<Object>::Ptr data_sampler(new DataSampler<Object>);
+  data_sampler->set_indices(indices);
+  data_sampler->apply(data, &preprocessed_data);
 
   cout << "Before:" << endl << data << endl;
   cout << "After:" << endl << preprocessed_data << endl;
 
   return 0;
 }
-

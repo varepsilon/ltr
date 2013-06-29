@@ -31,9 +31,8 @@ namespace composition {
 template <class TElement>
 class AverageCompositionScorerWeightsUpdater
   : public CompositionScorerWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(AverageCompositionScorerWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<AverageCompositionScorerWeightsUpdater> Ptr;
-
   /**
    * @param parameters Standart LTR parameter container with no parameters
    */
@@ -43,7 +42,7 @@ class AverageCompositionScorerWeightsUpdater
   }
 
   void updateWeights(const DataSet<TElement>& data,
-      CompositionScorer* composition_scorer) const;
+      CompositionScorer::Ptr composition_scorer) const;
  private:
   virtual string getDefaultAlias() const {
     return "AverageCompositionScorerWeightsUpdater";
@@ -54,7 +53,7 @@ class AverageCompositionScorerWeightsUpdater
 template <class TElement>
 void AverageCompositionScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
-    CompositionScorer* composition_scorer) const {
+    CompositionScorer::Ptr composition_scorer) const {
   double weight = 1.0 / composition_scorer->size();
   for (int scorer_index = 0;
        scorer_index < composition_scorer->size();

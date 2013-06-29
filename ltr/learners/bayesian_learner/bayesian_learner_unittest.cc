@@ -44,9 +44,10 @@ TEST(BayesianLearnerTests, TestBayesianLearner) {
   data.add(object1);
   data.add(object2);
   data.add(object3);
-  FisherDiscriminantLearner<Object> learner;
-  learner.learn(data);
-  BayesianScorer::Ptr scorer = learner.makeSpecific();
+  FisherDiscriminantLearner<Object>::Ptr learner(
+    new FisherDiscriminantLearner<Object>);
+  learner->learn(data);
+  BayesianScorer::Ptr scorer = learner->makeSpecific();
 
   Object object4;
   object4 << 1 << 0;

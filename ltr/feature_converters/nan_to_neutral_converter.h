@@ -28,9 +28,8 @@ namespace ltr {
  * \param neutral_object_ object with neutral values
  */
 class NanToNeutralConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NanToNeutralConverter)
  public:
-  typedef ltr::utility::shared_ptr<NanToNeutralConverter> Ptr;
-
   explicit NanToNeutralConverter(const ParametersContainer& parameters) {
   }
 

@@ -20,9 +20,8 @@ namespace ltr {
  */
 template<class TElement>
 class NormalizedMeasure : public Measure<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NormalizedMeasure)
  public:
-  typedef ltr::utility::shared_ptr<NormalizedMeasure> Ptr;
-
   NormalizedMeasure() {
   }
 

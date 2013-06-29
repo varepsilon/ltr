@@ -13,9 +13,8 @@ using std::vector;
 
 namespace ltr {
 class LinearScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(LinearScorer)
  public:
-  typedef ltr::utility::shared_ptr<LinearScorer> Ptr;
-
   LinearScorer() {}
   explicit LinearScorer(const vector<double>& weights)
   : weight_(weights) {}

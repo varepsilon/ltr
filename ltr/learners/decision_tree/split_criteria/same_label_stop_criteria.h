@@ -16,13 +16,13 @@ namespace decision_tree {
  * actual labels in data are equal or almost equal.
  */
 class SameLabelStopSplittingCriteria : public StopSplittingCriteria {
+  ALLOW_SHARED_PTR_ONLY_CREATION(SameLabelStopSplittingCriteria)
  public:
-  typedef ltr::utility::shared_ptr<SameLabelStopSplittingCriteria> Ptr;
-
   explicit SameLabelStopSplittingCriteria(double label_eps = 0.001)
   : label_eps_(label_eps) {}
 
-  SameLabelStopSplittingCriteria(const ParametersContainer& parameters);
+  explicit SameLabelStopSplittingCriteria(
+        const ParametersContainer& parameters);
 
   bool needToStopSplitting(const DataSet<Object>& data) const;
 

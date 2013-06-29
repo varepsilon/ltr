@@ -34,10 +34,9 @@ namespace ltr {
 template <typename TElement>
 class FeatureRandomSamplerLearner
     : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FeatureRandomSamplerLearner)
   friend class FeatureSampler;
-
  public:
-  typedef ltr::utility::shared_ptr<FeatureRandomSamplerLearner> Ptr;
   /**
    * \param sampling_fraction portion of features to sample, must be in (0,1]
    * \param seed seed for random numbers generator
@@ -62,7 +61,7 @@ class FeatureRandomSamplerLearner
 
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         FeatureSampler* feature_sampler);
+                         FeatureSampler::Ptr* feature_sampler);
 
   virtual void setParametersImpl(const ParametersContainer& parameters);
 
@@ -89,7 +88,7 @@ void FeatureRandomSamplerLearner<TElement>::setDefaultParameters() {
 template <class TElement>
 void FeatureRandomSamplerLearner<TElement>::checkParameters() const {
   CHECK(sampling_fraction_ > 0. && sampling_fraction_ <= 1.);
-  CHECK(seed_ >= 0);
+  CHECK_GE(seed_, 0);
 }
 
 template <typename TElement>
@@ -104,18 +103,18 @@ string FeatureRandomSamplerLearner<TElement>::toString() const {
 
 template <typename TElement>
 void FeatureRandomSamplerLearner<TElement>::set_seed(int seed) {
-  CHECK(seed >= 0);
+  CHECK_GE(seed, 0);
   seed_ = seed;
   randomizer.setSeed(seed);
 }
 
 template <typename TElement>
 void FeatureRandomSamplerLearner<TElement>::learnImpl(
-    const DataSet<TElement>& data_set, FeatureSampler* feature_sampler) {
+    const DataSet<TElement>& data_set, FeatureSampler::Ptr* feature_sampler) {
   int sample_size = (int)ceil(data_set.feature_count() * sampling_fraction_);
   Indices indices;
   getRandomIndices(&indices, data_set.feature_count(), sample_size);
-  feature_sampler->set_indices(indices);
+  (*feature_sampler)->set_indices(indices);
 }
 
 template <class TElement>

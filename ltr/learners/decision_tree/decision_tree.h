@@ -24,13 +24,15 @@ namespace decision_tree {
  * Decision tree. It contains a pointer to the root Vertex.
  */
 class DecisionTree : public SerializableFunctor<double> {
+  friend class ltr::utility::shared_ptr<DecisionTree>;
  public:
   typedef ltr::utility::shared_ptr<DecisionTree> Ptr;
+ protected:
+  ~DecisionTree();
 
+ public:
   explicit DecisionTree(Vertex::Ptr root)
   : root_(root) {}
-
-  ~DecisionTree();
   /**
    * Returns the decision of the tree for the given object.
    * @param object - object to decide.

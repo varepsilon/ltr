@@ -38,11 +38,8 @@ struct Threshold {
  * generates next layer by performing split in each Vertex.
  */
 class BaseSplitter : public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseSplitter)
  public:
-  typedef ltr::utility::shared_ptr<BaseSplitter> Ptr;
-
-  virtual ~BaseSplitter() {}
-
   virtual string toString() const = 0;
   /**
    * Function used to generate the next tree layer.

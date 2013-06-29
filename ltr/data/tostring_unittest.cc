@@ -45,16 +45,18 @@ TEST(ToStringTest, TestToStringOperation) {
   data.add(object2);
   rInfo("%s", data.toString().c_str());
 
-  ltr::DataRandomSampler<ltr::Object> random_sampler;
-  rInfo("%s", random_sampler.toString().c_str());
+  ltr::DataRandomSampler<ltr::Object>::Ptr random_sampler(
+    new ltr::DataRandomSampler<ltr::Object>);
+  rInfo("%s", random_sampler->toString().c_str());
 
   Indices indices;
   for (int index = 1; index <= 10; ++index) {
     indices.push_back(index);
   }
 
-  ltr::DataSampler<ltr::Object> sampler(indices);
-  rInfo("%s", sampler.toString().c_str());
+  ltr::DataSampler<ltr::Object>::Ptr sampler(
+    new ltr::DataSampler<ltr::Object>(indices));
+  rInfo("%s", sampler->toString().c_str());
 
   ltr::ParametersContainer container;
   container.AddNew("first", 1);
@@ -62,27 +64,31 @@ TEST(ToStringTest, TestToStringOperation) {
   container.AddNew("third", 3);
   rInfo("%s", container.toString().c_str());
 
-  ltr::decision_tree::DecisionTreeScorer decision_tree_scorer;
-  rInfo("%s", decision_tree_scorer.toString().c_str());
+  ltr::decision_tree::DecisionTreeScorer::Ptr decision_tree_scorer(
+    new ltr::decision_tree::DecisionTreeScorer);
+  rInfo("%s", decision_tree_scorer->toString().c_str());
 
-  ltr::FakeScorer fake_scorer;
-  rInfo("%s", fake_scorer.toString().c_str());
+  ltr::FakeScorer::Ptr fake_scorer(new ltr::FakeScorer);
+  rInfo("%s", fake_scorer->toString().c_str());
 
-  ltr::gp::GPScorer gp_scorer;
-  rInfo("%s", gp_scorer.toString().c_str());
+  ltr::gp::GPScorer::Ptr gp_scorer(new ltr::gp::GPScorer);
+  rInfo("%s", gp_scorer->toString().c_str());
 
-  ltr::composition::CompositionScorer composition_scorer;
-  composition_scorer.add(ltr::Scorer::Ptr(new ltr::FakeScorer()), 0.2);
-  composition_scorer.add(ltr::Scorer::Ptr(new ltr::gp::GPScorer), 0.7);
-  composition_scorer.add(ltr::Scorer::Ptr(
+  ltr::composition::CompositionScorer::Ptr composition_scorer(
+    new ltr::composition::CompositionScorer);
+  composition_scorer->add(ltr::Scorer::Ptr(new ltr::FakeScorer()), 0.2);
+  composition_scorer->add(ltr::Scorer::Ptr(new ltr::gp::GPScorer), 0.7);
+  composition_scorer->add(ltr::Scorer::Ptr(
     new ltr::decision_tree::DecisionTreeScorer), 0.1);
 
-  rInfo("%s", composition_scorer.toString().c_str());
-  composition_scorer.clear();
+  rInfo("%s", composition_scorer->toString().c_str());
+  composition_scorer->clear();
 
-  ltr::LinearScorer linear_scorer(vector<double>(5, 0.3));
-  rInfo("%s", linear_scorer.toString().c_str());
+  ltr::LinearScorer::Ptr linear_scorer(
+    new ltr::LinearScorer(vector<double>(5, 0.3)));
+  rInfo("%s", linear_scorer->toString().c_str());
 
-  ltr::OneFeatureScorer one_feature_scorer;
-  rInfo("%s", one_feature_scorer.toString().c_str());
+  ltr::OneFeatureScorer::Ptr one_feature_scorer(
+    new ltr::OneFeatureScorer);
+  rInfo("%s", one_feature_scorer->toString().c_str());
 }

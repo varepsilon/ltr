@@ -12,12 +12,12 @@ TEST(FakeScorerTest, FakeScorerScoringTest) {
   Object obj;
   obj << 1.2;
 
-  FakeScorer fs;
-  EXPECT_EQ(0, fs(obj));
+  FakeScorer::Ptr fake_scorer(new FakeScorer);
+  EXPECT_EQ(0, (*fake_scorer)(obj));
 
   obj << 4;
-  EXPECT_EQ(0, fs(obj));
-  EXPECT_EQ(0, fs.score(obj));
+  EXPECT_EQ(0, (*fake_scorer)(obj));
+  EXPECT_EQ(0, (*fake_scorer).score(obj));
 
-  fs.toString();
+  fake_scorer->toString();
 };

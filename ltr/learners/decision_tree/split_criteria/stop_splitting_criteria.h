@@ -16,11 +16,8 @@ namespace decision_tree {
  * It checks the given data and desides should we generate leaf now or not.
  */
 class StopSplittingCriteria : public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(StopSplittingCriteria)
  public:
-  typedef ltr::utility::shared_ptr<StopSplittingCriteria> Ptr;
-
-  virtual ~StopSplittingCriteria() {}
-
   virtual bool needToStopSplitting(const DataSet<Object>& data) const = 0;
 };
 };

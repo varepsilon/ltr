@@ -26,12 +26,11 @@ namespace decision_tree {
  * between two adjacent values of a feature.
  */
 class ID3Splitter : public BaseSplitter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(ID3Splitter)
  public:
-  typedef ltr::utility::shared_ptr<ID3Splitter> Ptr;
-
   ID3Splitter() {}
 
-  ID3Splitter(const ParametersContainer& parameters);
+  explicit ID3Splitter(const ParametersContainer& parameters);
 
   string toString() const;
 

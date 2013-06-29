@@ -3,10 +3,9 @@
 #ifndef LTR_LEARNERS_COMPOSITION_LEARNER_DATA_SET_WEIGHTS_UPDATER_H_
 #define LTR_LEARNERS_COMPOSITION_LEARNER_DATA_SET_WEIGHTS_UPDATER_H_
 
-#include "ltr/utility/boost/shared_ptr.h"
-
 #include <string>
 
+#include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/measures/measure.h"
 #include "ltr/data/data_set.h"
 #include "ltr/scorers/composition_scorers/composition_scorer.h"
@@ -31,9 +30,8 @@ namespace composition {
  */
 template <class TElement>
 class DataSetWeightsUpdater : public Aliaser, public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataSetWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<DataSetWeightsUpdater> Ptr;
-
   /**
    * Updates dataset's weights
    * @param data - dataset to update it's weights
@@ -41,7 +39,7 @@ class DataSetWeightsUpdater : public Aliaser, public Parameterized {
    * by ltr::composition::CompositionScorerWeightsUpdater composition weights
    */
   virtual void updateWeights(const DataSet<TElement>* data,
-      const CompositionScorer& composition_scorer) const = 0;
+      const CompositionScorer::Ptr& composition_scorer) const = 0;
   /**
    * Sets measure, used in DataSetWeightsUpdater. Note that some
    * DataSetWeightsUpdaters don't use measures, so they ignore
@@ -58,9 +56,8 @@ class DataSetWeightsUpdater : public Aliaser, public Parameterized {
  */
 template <class TElement>
 class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeDataSetWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<FakeDataSetWeightsUpdater> Ptr;
-
   /**
    * @param parameters Standart LTR parameter container with no parameters
    */
@@ -69,7 +66,7 @@ class FakeDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   }
 
   void updateWeights(const DataSet<TElement>* data,
-      const CompositionScorer& composition_scorer) const {
+      const CompositionScorer::Ptr& composition_scorer) const {
     // doing nothing
   }
  private:

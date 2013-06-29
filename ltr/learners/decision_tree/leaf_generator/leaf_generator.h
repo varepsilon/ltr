@@ -17,11 +17,8 @@ namespace decision_tree {
  * LeafGenerator is a base class for leaf generators.
  */
 class LeafGenerator : public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(LeafGenerator)
  public:
-  typedef ltr::utility::shared_ptr<LeafGenerator> Ptr;
-
-  virtual ~LeafGenerator() {}
-
   virtual LeafVertex::Ptr operator()(const DataSet<Object>& data) const = 0;
 };
 };

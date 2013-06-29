@@ -32,9 +32,8 @@ using ltr::QuadraticDiscriminantDensityLearner;
 namespace ltr {
 template <class TElement, class TDensityLearner>
 class BayesianLearner : public BaseLearner<TElement, BayesianScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BayesianLearner)
  public:
-  typedef ltr::utility::shared_ptr<BayesianLearner> Ptr;
-
   BayesianLearner() {
   }
 
@@ -42,7 +41,8 @@ class BayesianLearner : public BaseLearner<TElement, BayesianScorer> {
   }
 
  private:
-  void learnImpl(const DataSet<TElement>& data, BayesianScorer* scorer);
+  void learnImpl(const DataSet<TElement>& data,
+                 typename BayesianScorer::Ptr* scorer);
   virtual string getDefaultAlias() const {return "BayesianLearner";}
   TDensityLearner density_learner_;
 };
@@ -53,7 +53,7 @@ typedef map<Label, double> LabelToPriorProbability;
 template <class TElement, class TDensityLearner>
 void BayesianLearner<TElement, TDensityLearner>::learnImpl(
     const DataSet<TElement>& data,
-    BayesianScorer* scorer) {
+    BayesianScorer::Ptr* scorer) {
   LabelToCapacity LabelsCapacity = CalculateLabelsCapacity(data);
   LabelToPriorProbability prior_probability;
   for (map<double, int>::iterator capacity_iterator = LabelsCapacity.begin();
@@ -64,15 +64,15 @@ void BayesianLearner<TElement, TDensityLearner>::learnImpl(
   }
 
   density_learner_.learn(data);
-  *scorer = BayesianScorer(prior_probability, density_learner_.make());
+  (*scorer) = new BayesianScorer(prior_probability, density_learner_.make());
 }
 
 template <class TElement>
 class FisherDiscriminantLearner
   : public BayesianLearner<TElement,
                            FisherDiscriminantDensityLearner<TElement> > {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FisherDiscriminantLearner)
  public:
-  typedef ltr::utility::shared_ptr<FisherDiscriminantLearner> Ptr;
   FisherDiscriminantLearner() {
   }
 
@@ -84,8 +84,8 @@ template <class TElement>
 class NormalNaiveBayesLearner
   : public BayesianLearner<TElement,
                            NormalNaiveBayesDensityLearner<TElement> > {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NormalNaiveBayesLearner)
  public:
-  typedef ltr::utility::shared_ptr<NormalNaiveBayesLearner> Ptr;
   NormalNaiveBayesLearner() {
   }
 
@@ -97,8 +97,8 @@ template <class TElement>
 class QuadraticDiscriminantLearner
   : public BayesianLearner<TElement,
                            QuadraticDiscriminantDensityLearner<TElement> > {
+  ALLOW_SHARED_PTR_ONLY_CREATION(QuadraticDiscriminantLearner)
  public:
-  typedef ltr::utility::shared_ptr<QuadraticDiscriminantLearner> Ptr;
   QuadraticDiscriminantLearner() {
   }
 

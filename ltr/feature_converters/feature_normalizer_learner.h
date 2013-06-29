@@ -32,8 +32,8 @@ namespace ltr {
 template <class TElement>
 class FeatureNormalizerLearner
   : public BaseFeatureConverterLearner<TElement, PerFeatureLinearConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FeatureNormalizerLearner)
  public:
-  typedef ltr::utility::shared_ptr<FeatureNormalizerLearner> Ptr;
   /**
    * \param min desired minimum values
    * \param max desired maximum values
@@ -55,7 +55,7 @@ class FeatureNormalizerLearner
 
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-      PerFeatureLinearConverter* per_feature_linear_converter);
+      PerFeatureLinearConverter::Ptr* per_feature_linear_converter);
 
   virtual void setParametersImpl(const ParametersContainer& parameters);
 
@@ -76,8 +76,8 @@ FeatureNormalizerLearner<TElement>::FeatureNormalizerLearner(
 template <typename TElement>
 void FeatureNormalizerLearner<TElement>::learnImpl(
     const DataSet<TElement>& data_set,
-    PerFeatureLinearConverter* per_feature_linear_converter) {
-  per_feature_linear_converter->resize(data_set.feature_info());
+    PerFeatureLinearConverter::Ptr* per_feature_linear_converter) {
+  (*per_feature_linear_converter)->resize(data_set.feature_info());
   VectorXd input_min, input_max;
   getFeaturesMinMaxValues(data_set, &input_min, &input_max);
 
@@ -92,8 +92,8 @@ void FeatureNormalizerLearner<TElement>::learnImpl(
       coefficient = (max_ - min_) / delta;
       shift = min_ - coefficient * input_min[feature_index];
     }
-    per_feature_linear_converter->set_factor(feature_index, coefficient);
-    per_feature_linear_converter->set_shift(feature_index, shift);
+    (*per_feature_linear_converter)->set_factor(feature_index, coefficient);
+    (*per_feature_linear_converter)->set_shift(feature_index, shift);
   }
 }
 

@@ -29,8 +29,8 @@ namespace composition {
  */
 template <class TElement>
 class CompositionScorerWeightsUpdater : public Aliaser, public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(CompositionScorerWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<CompositionScorerWeightsUpdater> Ptr;
   /**
    * Updates composition's weights
    * @param data - dataset to be used
@@ -38,7 +38,7 @@ class CompositionScorerWeightsUpdater : public Aliaser, public Parameterized {
    * Has last scorer (just added) with weight 1.0
    */
   virtual void updateWeights(const DataSet<TElement>& data,
-      CompositionScorer* composition_scorer) const = 0;
+      CompositionScorer::Ptr composition_scorer) const = 0;
   /**
    * Sets measure, used in BaseCompositionScorerWeightsUpdater. Note that some
    * BaseCompositionScorerWeightsUpdaters don't use measures, so they ignore
@@ -56,8 +56,8 @@ class CompositionScorerWeightsUpdater : public Aliaser, public Parameterized {
 template <class TElement>
 class FakeCompositionScorerWeightsUpdater
     : public CompositionScorerWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeCompositionScorerWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<FakeCompositionScorerWeightsUpdater> Ptr;
   /**
    * @param parameters Standart LTR parameter container with no parameters
    */
@@ -66,7 +66,7 @@ class FakeCompositionScorerWeightsUpdater
   }
 
   void updateWeights(const DataSet<TElement>& data,
-      CompositionScorer* composition_scorer) const {
+      CompositionScorer::Ptr composition_scorer) const {
     // doing nothing
   }
  private:

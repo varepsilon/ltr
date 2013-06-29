@@ -42,8 +42,8 @@ namespace ltr {
  */
 template <class TElement>
 class Measure : public Aliaser, public Parameterized, public Printable {
-  public:
-  typedef ltr::utility::shared_ptr<Measure> Ptr;
+  ALLOW_SHARED_PTR_ONLY_CREATION(Measure)
+ public:
   typedef ltr::utility::shared_ptr<Measure> BasePtr;
 
   /**

@@ -62,15 +62,16 @@ class FeatureConverterLearner : public Parameterized,
 // \TODO(sameg) BaseLearner -> Trainer ?
 template <class TElement, class TFeatureConverter>
 class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseFeatureConverterLearner)
  public:
-  typedef ltr::utility::shared_ptr<BaseFeatureConverterLearner> Ptr;
+  BaseFeatureConverterLearner() :
+  feature_converter_(new TFeatureConverter) {}
   /**
    * \note Don't forget to learn() before makeSpecific().
    * \return pointer to <em>new instance</em> of feature converter
    */
   typename TFeatureConverter::Ptr makeSpecific() const {
-    return typename TFeatureConverter::Ptr(
-      new TFeatureConverter(feature_converter_));
+    return feature_converter_;
   }
 
   virtual FeatureConverter::Ptr make() const {
@@ -83,7 +84,7 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
       this->checkParameters();
     }
 
-    feature_converter_.set_input_feature_info(data_set.feature_info());
+    feature_converter_->set_input_feature_info(data_set.feature_info());
     learnImpl(data_set, &feature_converter_);
   }
 
@@ -93,10 +94,11 @@ class BaseFeatureConverterLearner : public FeatureConverterLearner<TElement> {
    * \param[in] data_set dataset to study
    * \param[out] feature_converter feature converter to train
    */
-  virtual void learnImpl(const DataSet<TElement>& data_set,
-                         TFeatureConverter* feature_converter) = 0;
+  virtual void learnImpl(
+      const DataSet<TElement>& data_set,
+      typename TFeatureConverter::Ptr* feature_converter) = 0;
 
-  TFeatureConverter feature_converter_;
+  typename TFeatureConverter::Ptr feature_converter_;
 };
 };
 #endif  // LTR_FEATURE_CONVERTERS_FEATURE_CONVERTER_LEARNER_H_

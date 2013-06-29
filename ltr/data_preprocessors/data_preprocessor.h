@@ -32,10 +32,9 @@ template <class TElement>
 class DataPreprocessor : public Parameterized,
                          public Printable,
                          public Aliaser {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataPreprocessor)
  public:
   typedef ltr::utility::shared_ptr<DataPreprocessor> BasePtr;
-  typedef ltr::utility::shared_ptr<DataPreprocessor> Ptr;
-  virtual ~DataPreprocessor() {}
   /**
    * Preprocesses DataSet.
    * \param input DataSet to be preprocessed

@@ -99,14 +99,15 @@ class DecisionTreeTest : public ::testing::Test {
 };
 
 TEST_F(DecisionTreeTest, TestingObliviousTree) {
-  DecisionTreeLearner<Object> decision_tree_learner(
-    new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator);
-  decision_tree_learner.add_stop_splitting_criteria(
+  DecisionTreeLearner<Object>::Ptr decision_tree_learner(
+    new DecisionTreeLearner<Object>(
+    new ObliviousTreeSplitter, new MostCommonLabelLeafGenerator));
+  decision_tree_learner->add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);
 
-  decision_tree_learner.learn(data);
+  decision_tree_learner->learn(data);
 
-  Scorer::Ptr decision_tree_scorer = decision_tree_learner.make();
+  Scorer::Ptr decision_tree_scorer = decision_tree_learner->make();
 
   rDebug("%s", decision_tree_scorer->generateCppCode("fun").c_str());
 
@@ -124,14 +125,15 @@ TEST_F(DecisionTreeTest, TestingObliviousTree) {
 }
 
 TEST_F(DecisionTreeTest, TestingID3) {
-  DecisionTreeLearner<Object> decision_tree_learner(
-    new ID3Splitter, new MostCommonLabelLeafGenerator);
-  decision_tree_learner.add_stop_splitting_criteria(
+  DecisionTreeLearner<Object>::Ptr decision_tree_learner(
+    new DecisionTreeLearner<Object>(
+      new ID3Splitter, new MostCommonLabelLeafGenerator));
+  decision_tree_learner->add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);
 
-  decision_tree_learner.learn(data);
+  decision_tree_learner->learn(data);
 
-  Scorer::Ptr decision_tree_scorer = decision_tree_learner.make();
+  Scorer::Ptr decision_tree_scorer = decision_tree_learner->make();
 
   Object test_point1;
   test_point1 << 0.5 << 0.7;

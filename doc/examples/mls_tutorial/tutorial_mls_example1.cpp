@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream> // NOLINT
 #include <vector>
 
 #include "ltr/data/data_set.h"
@@ -26,25 +28,28 @@ int main() {
   data.add(object3);
   cout << "Train data:\n" << data << endl;
 
-  ltr::LinearLearner<Object> learner;    // learn linear regression
-  learner.learn(data);
+  ltr::LinearLearner<Object>::Ptr learner(
+    new ltr::LinearLearner<Object>);  // learn linear regression
+  learner->learn(data);
 
-  ltr::Scorer::Ptr scorer = learner.make();           // make scorer
-  cout << scorer->toString() << endl;                 // human-readable representation of scorer
+  ltr::Scorer::Ptr scorer = learner->make();  // make scorer
+  cout << scorer->toString() << endl;  // human-readable
+                                       // representation of scorer
   cout << endl;
-  cout << scorer->generateCppCode("score") << endl;   // serialize scorer to cpp code
+  cout << scorer->generateCppCode("score") << endl;  //
+  // serialize scorer to cpp code
 
   cout << "score of object1 = " << scorer->value(object1)
        << endl;
-  scorer->predict(data);                                  // compute predicted labels
+  scorer->predict(data);  // compute predicted labels
   cout << "\nPredicted train data:\n" << data;
 
-  ltr::AbsError abs_error;                                // test quality
+  ltr::AbsError abs_error;  // test quality
   cout << "\nAbsError(data) = " << abs_error(data)
        << endl;
 
   // use makeSpecific if you want to analyze result scorer in details
-  ltr::LinearScorer::Ptr linear_scorer = learner.makeSpecific();
+  ltr::LinearScorer::Ptr linear_scorer = learner->makeSpecific();
   cout << "f(x, y) = " << linear_scorer->weight(0)
        << " + "  << linear_scorer->weight(1) << " * x"
        << " + "  << linear_scorer->weight(2) << " * y"

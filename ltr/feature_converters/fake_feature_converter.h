@@ -21,11 +21,10 @@ namespace ltr {
  * Fake feature converter. Does nothing with input object
  */
 class FakeFeatureConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeFeatureConverter)
  public:
   explicit FakeFeatureConverter(const ParametersContainer& parameters) {
   }
-
-  typedef ltr::utility::shared_ptr<FakeFeatureConverter> Ptr;
 
   FakeFeatureConverter(const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info) {}

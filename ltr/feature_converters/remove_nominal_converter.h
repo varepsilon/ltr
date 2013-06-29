@@ -14,12 +14,10 @@ namespace ltr {
  * \brief Remove all nominal features.
  */
 class RemoveNominalConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(RemoveNominalConverter)
  public:
-
   explicit RemoveNominalConverter(const ParametersContainer& parameters) {
   }
-
-  typedef ltr::utility::shared_ptr<RemoveNominalConverter> Ptr;
 
   RemoveNominalConverter(const FeatureInfo& feature_info = FeatureInfo())
     : FeatureConverter(feature_info) {}

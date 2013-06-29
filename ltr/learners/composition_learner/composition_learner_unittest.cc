@@ -51,19 +51,19 @@ class CompositionLearnerTest : public ::testing::Test {
 };
 
 TEST_F(CompositionLearnerTest, LinearCompositionLearnerTest) {
-  CompositionLearner<Object>
-    linear_composition_learner(9);
-  linear_composition_learner.setDefaultScorer();
+  CompositionLearner<Object>::Ptr
+    linear_composition_learner(new CompositionLearner<Object>(9));
+  linear_composition_learner->setDefaultScorer();
 
   AbsError::Ptr abs_error(new AbsError);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  linear_composition_learner.set_weak_learner(best_feature_learner);
+  linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  linear_composition_learner.learn(data);
+  linear_composition_learner->learn(data);
   CompositionScorer::Ptr linear_composition_scorer =
-    linear_composition_learner.makeSpecific();
+    linear_composition_learner->makeSpecific();
 
   EXPECT_EQ(9, linear_composition_scorer->size());
   for (int i = 0; i < linear_composition_scorer->size(); ++i) {
@@ -76,20 +76,20 @@ TEST_F(CompositionLearnerTest, LinearCompositionLearnerTest) {
 TEST_F(CompositionLearnerTest, MaxWeightCompositionLearnerTest) {
   MaxWeightPredictionsAggregator::Ptr aggregator(
     new MaxWeightPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    composition_learner(9);
-  composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    composition_learner(new CompositionLearner<Object>(9));
+  composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  composition_learner.set_weak_learner(best_feature_learner);
+  composition_learner->set_weak_learner(best_feature_learner);
 
-  composition_learner.learn(data);
+  composition_learner->learn(data);
   CompositionScorer::Ptr composition_scorer =
-    composition_learner.makeSpecific();
+    composition_learner->makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {
@@ -102,20 +102,20 @@ TEST_F(CompositionLearnerTest, MaxWeightCompositionLearnerTest) {
 TEST_F(CompositionLearnerTest, MedianCompositionLearnerTest) {
   OrderStatisticPredictionsAggregator::Ptr
     aggregator(new OrderStatisticPredictionsAggregator);
-  CompositionScorer scorer(aggregator);
-  CompositionLearner<Object>
-    composition_learner(9);
-  composition_learner.setInitialScorer(scorer);
+  CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    composition_learner(new CompositionLearner<Object>(9));
+  composition_learner->setInitialScorer(scorer);
 
   AbsError::Ptr abs_error(new AbsError);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  composition_learner.set_weak_learner(best_feature_learner);
+  composition_learner->set_weak_learner(best_feature_learner);
 
-  composition_learner.learn(data);
+  composition_learner->learn(data);
   CompositionScorer::Ptr composition_scorer =
-    composition_learner.makeSpecific();
+    composition_learner->makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {
@@ -128,19 +128,19 @@ TEST_F(CompositionLearnerTest, MedianCompositionLearnerTest) {
 TEST_F(CompositionLearnerTest, OrderStaticticCompositionLearnerTest) {
   OrderStatisticPredictionsAggregator::Ptr aggregator(
     new OrderStatisticPredictionsAggregator(0.3));
-  CompositionLearner<Object>
-    composition_learner(9);
-  composition_learner.setInitialScorer(CompositionScorer(aggregator));
+  CompositionLearner<Object>::Ptr
+    composition_learner(new CompositionLearner<Object>(9));
+  composition_learner->setInitialScorer(new CompositionScorer(aggregator));
 
   AbsError::Ptr abs_error(new AbsError);
 
   BestFeatureLearner<Object>::Ptr
     best_feature_learner(new BestFeatureLearner<Object>(abs_error));
-  composition_learner.set_weak_learner(best_feature_learner);
+  composition_learner->set_weak_learner(best_feature_learner);
 
-  composition_learner.learn(data);
+  composition_learner->learn(data);
   CompositionScorer::Ptr composition_scorer =
-    composition_learner.makeSpecific();
+    composition_learner->makeSpecific();
 
   EXPECT_EQ(9, composition_scorer->size());
   for (int i = 0; i < composition_scorer->size(); ++i) {

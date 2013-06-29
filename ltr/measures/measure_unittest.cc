@@ -74,28 +74,29 @@ TEST(MeasureTest, MeasureTest) {
 
 TEST(MeasureTest, NormalizedMeasureTest) {
   AbsError::Ptr abs_error(new AbsError());
-  NormalizedMeasure<Object> norm(abs_error);
-  NormalizedMeasure<Object> norm2(abs_error, 1, -1);
+  NormalizedMeasure<Object>::Ptr norm(new NormalizedMeasure<Object>(abs_error));
+  NormalizedMeasure<Object>::Ptr norm2(new NormalizedMeasure<Object>(
+                                        abs_error, 1, -1));
   Object obj;
   obj.set_actual_label(1);
   obj.set_predicted_label(0);
 
-  norm.setWeakMeasure(AbsError());
+  norm->setWeakMeasure(AbsError());
 
-  EXPECT_THROW(norm.value(obj), std::logic_error);
+  EXPECT_THROW(norm->value(obj), std::logic_error);
 
-  norm.setWeakMeasure(Accuracy<Object>());
-  norm2.setWeakMeasure(Accuracy<Object>());
-  EXPECT_NO_THROW(norm.value(obj));
-  EXPECT_EQ(norm.worst(), -1);
-  EXPECT_EQ(norm.best(), 1);
+  norm->setWeakMeasure(Accuracy<Object>());
+  norm2->setWeakMeasure(Accuracy<Object>());
+  EXPECT_NO_THROW(norm->value(obj));
+  EXPECT_EQ(norm->worst(), -1);
+  EXPECT_EQ(norm->best(), 1);
 
-  EXPECT_EQ(norm.value(obj), -1);
-  EXPECT_EQ(norm2.value(obj), 1);
+  EXPECT_EQ(norm->value(obj), -1);
+  EXPECT_EQ(norm2->value(obj), 1);
 
   obj.set_predicted_label(1);
-  EXPECT_EQ(norm.value(obj), 1);
-  EXPECT_EQ(norm2.value(obj), -1);
+  EXPECT_EQ(norm->value(obj), 1);
+  EXPECT_EQ(norm2->value(obj), -1);
 }
 
 TEST(MeasureTest, AUCTest) {

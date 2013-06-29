@@ -19,9 +19,8 @@ namespace ltr {
 template <class TElement>
 class FakeFeatureConverterLearner
 : public BaseFeatureConverterLearner<TElement, FakeFeatureConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeFeatureConverterLearner)
  public:
-  typedef ltr::utility::shared_ptr<FakeFeatureConverterLearner> Ptr;
-
   virtual string toString() const;
 
   explicit FakeFeatureConverterLearner(const ParametersContainer& parameters) {
@@ -32,7 +31,7 @@ class FakeFeatureConverterLearner
 
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         FakeFeatureConverter *feature_converter);
+                         FakeFeatureConverter::Ptr* feature_converter);
 
   virtual string getDefaultAlias() const;
 };
@@ -47,7 +46,7 @@ string FakeFeatureConverterLearner<TElement>::toString() const {
 template <class TElement>
 void FakeFeatureConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set,
-  FakeFeatureConverter* feature_converter) {
+  FakeFeatureConverter::Ptr* feature_converter) {
     // DO NOTHING
 }
 

@@ -30,9 +30,9 @@ TEST(LinearLearnerTest, BasicTest) {
   data.add(object1);
   data.add(object2);
 
-  LinearLearner<Object> llearner;
-  llearner.learn(data);
-  LinearScorer::Ptr scorer = llearner.makeSpecific();
+  LinearLearner<Object>::Ptr llearner(new LinearLearner<Object>);
+  llearner->learn(data);
+  LinearScorer::Ptr scorer = llearner->makeSpecific();
 
   EXPECT_TRUE(DoubleEqual(scorer->score(object3), object3.actual_label()));
 }
@@ -51,9 +51,9 @@ TEST(LinearLearnerTest, ShiftTest) {
   data.add(object1);
   data.add(object2);
 
-  LinearLearner<Object> llearner;
-  llearner.learn(data);
-  LinearScorer::Ptr scorer = llearner.makeSpecific();
+  LinearLearner<Object>::Ptr llearner(new LinearLearner<Object>);
+  llearner->learn(data);
+  LinearScorer::Ptr scorer = llearner->makeSpecific();
 
   EXPECT_TRUE(DoubleEqual(scorer->score(object3), object3.actual_label()));
 }
@@ -75,9 +75,9 @@ TEST(LinearLearnerTest, TwoDimensionalTest) {
   data.add(object2);
   data.add(object3);
 
-  LinearLearner<Object> llearner;
-  llearner.learn(data);
-  LinearScorer::Ptr scorer = llearner.makeSpecific();
+  LinearLearner<Object>::Ptr llearner(new LinearLearner<Object>);
+  llearner->learn(data);
+  LinearScorer::Ptr scorer = llearner->makeSpecific();
 
   EXPECT_TRUE(DoubleEqual(scorer->score(object4), object4.actual_label()));
 }
@@ -99,9 +99,9 @@ TEST(LinearLearnerTest, TwoDimensionalShiftTest) {
   data.add(object2);
   data.add(object3);
 
-  LinearLearner<Object> llearner;
-  llearner.learn(data);
-  LinearScorer::Ptr scorer = llearner.makeSpecific();
+  LinearLearner<Object>::Ptr llearner(new LinearLearner<Object>);
+  llearner->learn(data);
+  LinearScorer::Ptr scorer = llearner->makeSpecific();
 
   EXPECT_TRUE(DoubleEqual(scorer->score(object4), object4.actual_label()));
 }

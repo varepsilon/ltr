@@ -30,15 +30,14 @@ namespace ltr {
  */
 template <class TElement>
 class DataRandomSampler : public DataPreprocessor<TElement> {
- public:
-  typedef ltr::utility::shared_ptr<DataRandomSampler> Ptr;
-
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataRandomSampler)
   /**
   * \param sampling_fraction ratio of chosen objects count to dataset size,
   * may be more than 1.0 in case of sampling with replacement
   * \param with_replacement determines whether duplication of objects is allowed 
   * \param seed seed for random numbers generator 
   */
+ public:
   explicit DataRandomSampler(double sampling_fraction = 0.3,
                              bool with_replacement = true,
                              int seed = 42);

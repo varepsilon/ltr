@@ -32,9 +32,8 @@ namespace ltr {
 */
 template <class TElement>
 class DataSampler : public DataPreprocessor<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataSampler)
  public:
-  typedef ltr::utility::shared_ptr<DataSampler> Ptr;
-
   /**
   * \param indices indices of elements to sample,
   * duplication of indices leads to duplication of elements in the result sample

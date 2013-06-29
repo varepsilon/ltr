@@ -14,9 +14,8 @@ namespace decision_tree {
  * with the greatest condition value.
  */
 class DecisionVertex : public Vertex {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DecisionVertex)
  public:
-  typedef ltr::utility::shared_ptr<DecisionVertex> Ptr;
-
   DecisionVertex() {}
 
   virtual double value(const Object& object) const;

@@ -16,9 +16,8 @@ namespace ltr {
  * Nominal feature with k values will be converted to k boolean features.
  */
 class NominalToBoolConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NominalToBoolConverter)
  public:
-  typedef ltr::utility::shared_ptr<NominalToBoolConverter> Ptr;
-
   explicit NominalToBoolConverter(const ParametersContainer& parameters) {
   }
 

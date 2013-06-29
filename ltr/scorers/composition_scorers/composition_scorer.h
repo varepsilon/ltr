@@ -22,9 +22,8 @@ namespace composition {
  * aggregating that weighted scorers is specified in descendant classes
  */
 class CompositionScorer : public Scorer, Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(CompositionScorer)
  public:
-  typedef ltr::utility::shared_ptr<CompositionScorer> Ptr;
-
   CompositionScorer() {}
 
   explicit CompositionScorer(PredictionsAggregator::Ptr predictions_aggregator):

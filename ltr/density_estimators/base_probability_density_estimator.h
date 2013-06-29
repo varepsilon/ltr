@@ -21,11 +21,9 @@ namespace ltr {
  */
 class BaseProbabilityDensityEstimator
   : public Parameterized, public Serializable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseProbabilityDensityEstimator)
  public:
-  typedef ltr::utility::shared_ptr<BaseProbabilityDensityEstimator> Ptr;
   virtual double estimate(const Object& object, const double label) const = 0;
-  virtual ~BaseProbabilityDensityEstimator() {
-  }
 };
 };
 

@@ -23,8 +23,8 @@ TEST(LinearScorer, LinearScorerTest) {
   weights1[2] = 4.1;
   weights1[3] = 0.3;
 
-  LinearScorer ls1(weights1);
-  EXPECT_TRUE(DoubleEqual(27.38, ls1(obj1)));
+  LinearScorer::Ptr linear_scorer1(new LinearScorer(weights1));
+  EXPECT_TRUE(DoubleEqual(27.38, (*linear_scorer1)(obj1)));
 
   Object obj2;
   obj2 << 0 << 1;
@@ -34,8 +34,8 @@ TEST(LinearScorer, LinearScorerTest) {
   weights2[1] = 0.5;
   weights2[2] = 0.03;
 
-  LinearScorer ls2(weights2);
-  EXPECT_TRUE(DoubleEqual(700.03, ls2(obj2)));
+  LinearScorer::Ptr linear_scorer2(new LinearScorer(weights2));
+  EXPECT_TRUE(DoubleEqual(700.03, (*linear_scorer2)(obj2)));
 
   obj2.toString();
 }

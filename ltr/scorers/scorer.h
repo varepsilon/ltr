@@ -26,6 +26,7 @@ class Scorer : public SerializableFunctor<double>,
  public:
   typedef ltr::utility::shared_ptr<Scorer> Ptr;
   typedef ltr::utility::shared_ptr<Scorer> BasePtr;
+  friend class ltr::utility::shared_ptr<Scorer>;
 
   Scorer(const FeatureConverterArray&
             feature_converter = FeatureConverterArray()):
@@ -50,8 +51,6 @@ class Scorer : public SerializableFunctor<double>,
   void predict(const TElement& element) const;
 
   string generateLocalClassName(size_t index) const;
-
-  virtual ~Scorer() {}
 
   virtual string toString() const;
  private:

@@ -44,8 +44,8 @@ template<class TElement>
 class Learner : public Reporter,
                 public Aliaser,
                 public Parameterized {
+  ALLOW_SHARED_PTR_ONLY_CREATION(Learner)
  public:
-  typedef ltr::utility::shared_ptr<Learner> Ptr;
   typedef ltr::utility::shared_ptr<Learner> BasePtr;
 
   typedef vector<typename FeatureConverterLearner<TElement>::Ptr>
@@ -86,17 +86,19 @@ class Learner : public Reporter,
 
 template<class TElement, class TScorer>
 class BaseLearner : public Learner<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseLearner)
  public:
   /**
   * \note Don't forget to learn() before makeSpecific().
   * \return pointer to <em>new instance</em> of scorer
   */
   typename TScorer::Ptr makeSpecific() const;
+  BaseLearner() : scorer_(new TScorer) {}
   virtual Scorer::Ptr make() const;
   virtual void learn(const DataSet<TElement>& data_set,
                      bool check_parameters = true);
   // \TODO ? We don't need it in base class as not all Learners support it
-  virtual void setInitialScorer(const TScorer& scorer);
+  virtual void setInitialScorer(const typename TScorer::Ptr& scorer);
   virtual void setDefaultScorer();
   virtual void reset();
  private:
@@ -106,7 +108,7 @@ class BaseLearner : public Learner<TElement> {
   * \param[out] scorer scorer to train
   */
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         TScorer* scorer) = 0;
+                         typename TScorer::Ptr* scorer) = 0;
 
   using Learner<TElement>::data_preprocessor_;
 
@@ -114,7 +116,7 @@ class BaseLearner : public Learner<TElement> {
   using Learner<TElement>::feature_converter_learner_;
 
  protected:
-  TScorer scorer_;
+  typename TScorer::Ptr scorer_;
 };
 
 // template realization
@@ -123,8 +125,7 @@ class BaseLearner : public Learner<TElement> {
 
 template<class TElement, class TScorer>
 typename TScorer::Ptr BaseLearner<TElement, TScorer>::makeSpecific() const {
-  return typename TScorer::Ptr(
-      new TScorer(scorer_));
+  return scorer_;
 }
 
 template<class TElement, class TScorer>
@@ -140,12 +141,12 @@ void BaseLearner<TElement, TScorer>::reset() {
 
 template<class TElement, class TScorer>
 void BaseLearner<TElement, TScorer>::setDefaultScorer() {
-  TScorer scorer;
-  scorer_ = scorer;
+  scorer_ = new TScorer;
 }
 
 template<class TElement, class TScorer>
-void BaseLearner<TElement, TScorer>::setInitialScorer(const TScorer& scorer) {
+void BaseLearner<TElement, TScorer>::setInitialScorer(
+      const typename TScorer::Ptr& scorer) {
   scorer_ = scorer;
 }
 
@@ -175,7 +176,7 @@ void BaseLearner<TElement, TScorer>::learn(const DataSet<TElement>& data_set,
   }
 
   learnImpl(source_data, &scorer_);
-  scorer_.set_feature_converter(feature_converter_);
+  scorer_->set_feature_converter(feature_converter_);
 }
 };
 #endif  // LTR_LEARNERS_LEARNER_H_

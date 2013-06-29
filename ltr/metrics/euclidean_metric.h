@@ -15,6 +15,7 @@ namespace ltr {
  * \brief Euclidean metric on two objects.
  */
 class EuclideanMetric : public BaseMetric {
+  ALLOW_SHARED_PTR_ONLY_CREATION(EuclideanMetric)
  public:
 
   EuclideanMetric() {
@@ -22,8 +23,6 @@ class EuclideanMetric : public BaseMetric {
 
   explicit EuclideanMetric(const ParametersContainer& parameters) {
   }
-
-  typedef ltr::utility::shared_ptr<EuclideanMetric> Ptr;
 
   virtual double distance(const ltr::Object& lhs, const ltr::Object& rhs) const;
   /**

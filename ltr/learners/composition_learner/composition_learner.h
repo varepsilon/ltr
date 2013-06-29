@@ -54,8 +54,8 @@ namespace composition {
 template <class TElement>
 class CompositionLearner
     : public BaseLearner<TElement, CompositionScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(CompositionLearner)
  public:
-  typedef ltr::utility::shared_ptr<CompositionLearner> Ptr;
   /**
    * @param parameters Standart LTR parameter container with int parameter
    * NUMBER_OF_ITERATIONS (number of scorers to be added into composition
@@ -89,7 +89,7 @@ class CompositionLearner
    */
   virtual void setDefaultScorer() {
     SumPredictionsAggregator::Ptr aggregator(new SumPredictionsAggregator);
-    CompositionScorer scorer(aggregator);
+    CompositionScorer::Ptr scorer(new CompositionScorer(aggregator));
     this->setInitialScorer(scorer);
   }
 
@@ -133,7 +133,8 @@ class CompositionLearner
     data_set_weights_updater_ =
         parameters.Get<typename DataSetWeightsUpdater<TElement>::Ptr>(
             "DATA_SET_WEIGHTS_UPDATER");
-    weak_learner_ = parameters.Get<typename Learner<TElement>::Ptr>("WEAK_LEARNER");
+    weak_learner_ = parameters.Get<typename Learner<TElement>::Ptr>(
+                      "WEAK_LEARNER");
   }
 
   typename CompositionScorerWeightsUpdater<TElement>::Ptr
@@ -141,7 +142,7 @@ class CompositionLearner
   typename DataSetWeightsUpdater<TElement>::Ptr data_set_weights_updater_;
 
   void learnImpl(const DataSet<TElement>& data,
-                 CompositionScorer* scorer);
+                 CompositionScorer::Ptr* scorer);
   virtual string getDefaultAlias() const {return "CompositionLearner";}
 
   int number_of_iterations_;
@@ -150,7 +151,7 @@ class CompositionLearner
 // template realizations
 template <class TElement>
 void CompositionLearner<TElement>::learnImpl(
-    const DataSet<TElement>& data, CompositionScorer* scorer) {
+    const DataSet<TElement>& data, CompositionScorer::Ptr* scorer) {
   rInfo("Learning has been started");
 
   for (int element_index = 0; element_index < data.size(); ++element_index) {
@@ -165,8 +166,8 @@ void CompositionLearner<TElement>::learnImpl(
     this->weak_learner_->learn(data);
     rDebug("Weak learner have been learned");
     Scorer::Ptr weak_scorer = this->weak_learner_->make();
-    scorer->add(weak_scorer, 1.0);
-    composition_scorer_weights_updater_->updateWeights(data, scorer);
+    (*scorer)->add(weak_scorer, 1.0);
+    composition_scorer_weights_updater_->updateWeights(data, *scorer);
     rDebug("Composition scorer's weights have been updated");
     data_set_weights_updater_->updateWeights(&data, *scorer);
     rDebug("Dataset's weights have been updated");

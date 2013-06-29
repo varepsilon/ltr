@@ -21,9 +21,8 @@ using Eigen::MatrixXd;
 namespace ltr {
 template<class TElement>
 class LinearLearner : public BaseLearner<TElement, LinearScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(LinearLearner)
  public:
-  typedef ltr::utility::shared_ptr<LinearLearner> Ptr;
-
   explicit LinearLearner(const ParametersContainer& parameters) {
     // DO NOTHING
   }
@@ -37,14 +36,15 @@ class LinearLearner : public BaseLearner<TElement, LinearScorer> {
   // \TODO ? Implement
   void setInitialScorer(const LinearScorer& scorer) {}
  private:
-  void learnImpl(const DataSet<TElement>& data, LinearScorer* scorer);
+  void learnImpl(const DataSet<TElement>& data,
+                 typename LinearScorer::Ptr* scorer);
   virtual string getDefaultAlias() const {return "LinearLearner";}
 };
 
 
 template<class TElement>
 void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
-                                        LinearScorer* scorer) {
+                                        LinearScorer::Ptr* scorer) {
   rInfo("Learning started");
 
   DataSet<Object> object_data;
@@ -94,7 +94,7 @@ void LinearLearner<TElement>::learnImpl(const DataSet<TElement>& data,
   for (int i = 0; i < b.size(); ++i) {
     weights[i] = b[i];
   }
-  *scorer = LinearScorer(weights);
+  (*scorer) = new LinearScorer(weights);
 }
 }
 #endif  // LTR_LEARNERS_LINEAR_LEARNER_LINEAR_LEARNER_H_

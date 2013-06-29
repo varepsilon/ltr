@@ -17,9 +17,8 @@ namespace ltr {
  * Fake Scorer. Simply always returns a constant, whose default value is 0.0.
  */
 class FakeScorer : public Scorer {
-  public:
-  typedef ltr::utility::shared_ptr< FakeScorer > Ptr;
-
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeScorer)
+ public:
   FakeScorer(double scoreValue = 0.0,
       const FeatureConverterArray& feature_converters = FeatureConverterArray())
   : Scorer(feature_converters), score_value_(scoreValue) {}

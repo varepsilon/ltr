@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream>  // NOLINT
 #include <vector>
 
 #include "ltr/crossvalidation/leave_one_out_splitter.h"
@@ -15,10 +17,10 @@ using std::cout;
 using std::vector;
 using std::endl;
 
-using namespace ltr;
-using namespace ltr::cv;
-using namespace ltr::gp;
-using namespace ltr::io_utility;
+using namespace ltr;  // NOLINT
+using namespace ltr::cv;  // NOLINT
+using namespace ltr::gp;  // NOLINT
+using namespace ltr::io_utility;  // NOLINT
 
 int main() {
   DataSet<ObjectList> test_data = loadDataSet<ObjectList>(

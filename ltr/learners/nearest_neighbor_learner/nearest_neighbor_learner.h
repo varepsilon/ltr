@@ -34,9 +34,8 @@ namespace ltr {
  */
 template<class TElement>
 class NNLearner : public BaseLearner<TElement, NNScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NNLearner)
  public:
-  typedef ltr::utility::shared_ptr<NNLearner> Ptr;
-
   explicit NNLearner(const ParametersContainer& parameters) {
     metric_ = parameters.Get<BaseMetric::Ptr>("metric");
     neighbor_weighter_ =
@@ -48,8 +47,10 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
   }
 
   explicit NNLearner(BaseMetric::Ptr metric = new EuclideanMetric(),
-            NeighborWeighter::Ptr neighbor_weighter = new InverseLinearDistance(),
-            PredictionsAggregator::Ptr predictions_aggregator = new VotePredictionsAggregator(),
+            NeighborWeighter::Ptr neighbor_weighter =
+                new InverseLinearDistance(),
+            PredictionsAggregator::Ptr predictions_aggregator =
+                new VotePredictionsAggregator(),
             int number_of_neighbors_to_process = 3) :
     metric_(metric),
     neighbor_weighter_(neighbor_weighter),
@@ -69,7 +70,8 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
    * \param data is DataSet that will be stored in the scorer.
    * \param scorer is scorer to be learned.
    */
-  void learnImpl(const DataSet<TElement>& data, NNScorer* scorer);
+  void learnImpl(const DataSet<TElement>& data,
+                 typename NNScorer::Ptr* scorer);
   virtual string getDefaultAlias() const {return "NearestNeighborLearner";}
 
   BaseMetric::Ptr metric_;
@@ -80,7 +82,7 @@ class NNLearner : public BaseLearner<TElement, NNScorer> {
 
 template<class TElement>
 void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
-                                    NNScorer* scorer) {
+                                    NNScorer::Ptr* scorer) {
   rInfo("Learning started");
   DataSet<Object> object_data;
 
@@ -96,11 +98,11 @@ void NNLearner<TElement>::learnImpl(const DataSet<TElement>& data,
     }
   }
 
-  *scorer =  NNScorer(metric_,
-                      object_data,
-                      neighbor_weighter_,
-                      predictions_aggregator_,
-                      number_of_neighbors_to_process_);
+  (*scorer) =  new NNScorer(metric_,
+                         object_data,
+                         neighbor_weighter_,
+                         predictions_aggregator_,
+                         number_of_neighbors_to_process_);
 }
 };
 

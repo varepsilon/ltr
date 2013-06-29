@@ -22,8 +22,8 @@ namespace ltr {
  * This class allows to calculate most famous Metrics on pairs of objects.
  */
 class BaseMetric : public Aliaser, public Parameterized, public Serializable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseMetric)
  public:
-  typedef ltr::utility::shared_ptr<BaseMetric> Ptr;
   typedef ltr::utility::shared_ptr<BaseMetric> BasePtr;
 
   BaseMetric() {
@@ -38,7 +38,7 @@ class BaseMetric : public Aliaser, public Parameterized, public Serializable {
   * @param rhs is a second element to calculate measure on
   */
   virtual double distance(const ltr::Object& lhs,
-                          const ltr::Object& rhs) const = 0 ;
+                          const ltr::Object& rhs) const = 0;
 };
 };
 

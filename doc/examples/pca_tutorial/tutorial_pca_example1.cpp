@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream>  // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -26,18 +28,17 @@ int main() {
   data.add(object2);
   data.add(object3);
 
-  PCALearner<Object> pca_learner;
-  pca_learner.setNumberOfComponentsRule(new FixedNumberOfComponentsRule(2));
-  pca_learner.learn(data);
-  FeatureConverter::Ptr converter = pca_learner.make();
+  PCALearner<Object>::Ptr pca_learner(new PCALearner<Object>);
+  pca_learner->setNumberOfComponentsRule(new FixedNumberOfComponentsRule(2));
+  pca_learner->learn(data);
+  FeatureConverter::Ptr converter = pca_learner->make();
 
   converter->apply(data, &converted_data);
 
   cout << "Before:" << endl << data << endl;
-  cout << "Learner:" << endl << pca_learner.report() << endl;
+  cout << "Learner:" << endl << pca_learner->report() << endl;
   cout << "Feature converter:" << endl << (*converter) << endl;
   cout << "After:" << endl << converted_data << endl;
 
   return 0;
 }
-

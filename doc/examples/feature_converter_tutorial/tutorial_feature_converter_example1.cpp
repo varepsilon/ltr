@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream> // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -33,10 +35,11 @@ int main() {
   data.add(object2);
   data.add(object3);
 
-  FeatureSamplerLearner<Object> feature_sampler_learner;
-  feature_sampler_learner.set_indices(indices);
-  feature_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter = feature_sampler_learner.make();
+  FeatureSamplerLearner<Object>::Ptr feature_sampler_learner(
+      new FeatureSamplerLearner<Object>);
+  feature_sampler_learner->set_indices(indices);
+  feature_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter = feature_sampler_learner->make();
 
   converter->apply(data, &converted_data);
 
@@ -45,4 +48,3 @@ int main() {
 
   return 0;
 }
-

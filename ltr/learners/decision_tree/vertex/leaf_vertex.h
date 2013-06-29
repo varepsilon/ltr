@@ -14,9 +14,8 @@ namespace decision_tree {
  * Surprisingly it has no children.
  */
 class LeafVertex : public Vertex {
+  ALLOW_SHARED_PTR_ONLY_CREATION(LeafVertex)
  public:
-  typedef ltr::utility::shared_ptr<LeafVertex> Ptr;
-
   explicit LeafVertex(double value) : value_(value) {}
 
   virtual double value(const Object& object) const;

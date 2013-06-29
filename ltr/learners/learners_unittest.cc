@@ -47,21 +47,24 @@ class LearnersTest : public ::testing::Test {
 };
 
 TEST_F(LearnersTest, TestingBestFeatureLearner) {
-  NanToZeroConverterLearner<Object> nan_to_zero_converter;
-  nan_to_zero_converter.learn(learn_data);
-  FeatureConverter::Ptr remove_nan = nan_to_zero_converter.make();
+  NanToZeroConverterLearner<Object>::Ptr nan_to_zero_converter(
+    new NanToZeroConverterLearner<Object>);
+  nan_to_zero_converter->learn(learn_data);
+  FeatureConverter::Ptr remove_nan = nan_to_zero_converter->make();
   remove_nan->apply(learn_data, &learn_data);
   remove_nan->apply(test_data, &test_data);
 
   ltr::Measure<ltr::Object>::Ptr abs_error_measure(new ltr::AbsError());
-  ltr::BestFeatureLearner<ltr::Object> learner(abs_error_measure);
-  learner.learn(learn_data);
+  ltr::BestFeatureLearner<ltr::Object>::Ptr learner(new
+    ltr::BestFeatureLearner<ltr::Object>(abs_error_measure));
+  learner->learn(learn_data);
 
-  ltr::FakeScorer fake_scorer(std::numeric_limits<double>::max());
-  fake_scorer.predict(test_data);
+  ltr::FakeScorer::Ptr fake_scorer(
+    new ltr::FakeScorer(std::numeric_limits<double>::max()));
+  fake_scorer->predict(test_data);
   double measure_before = abs_error_measure->average(test_data);
 
-  learner.make()->predict(test_data);
+  learner->make()->predict(test_data);
   double measure_after = abs_error_measure->average(test_data);
 
   EXPECT_LE(measure_after, measure_before) << "It can't be worth.\n";

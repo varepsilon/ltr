@@ -41,9 +41,8 @@ namespace composition {
 template <class TElement>
 class AdaRankScorerWeightsUpdater
   : public CompositionScorerWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(AdaRankScorerWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<AdaRankScorerWeightsUpdater> Ptr;
-
   AdaRankScorerWeightsUpdater() {
     this->setDefaultParameters();
   }
@@ -54,7 +53,8 @@ class AdaRankScorerWeightsUpdater
   explicit AdaRankScorerWeightsUpdater(
       const ParametersContainer& parameters) {
     this->setDefaultParameters();
-    this->set_measure(parameters.Get<typename Measure<TElement>::Ptr>("measure"));
+    this->set_measure(
+      parameters.Get<typename Measure<TElement>::Ptr>("measure"));
   }
   /**
    * @param measure Measure to be used for weights updating
@@ -65,7 +65,7 @@ class AdaRankScorerWeightsUpdater
   }
 
   void updateWeights(const DataSet<TElement>& data,
-      CompositionScorer* composition_scorer) const;
+      CompositionScorer::Ptr composition_scorer) const;
  private:
   virtual string getDefaultAlias() const {
     return "AdaRankScorerWeightsUpdater";
@@ -76,7 +76,7 @@ class AdaRankScorerWeightsUpdater
 template <class TElement>
 void AdaRankScorerWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>& data,
-    CompositionScorer* composition_scorer) const {
+    CompositionScorer::Ptr composition_scorer) const {
   if (composition_scorer->size() == 0) {
     rError("Zero-length scorer as an input");
     throw logic_error("Zero-length scorer for " + this->getDefaultAlias());

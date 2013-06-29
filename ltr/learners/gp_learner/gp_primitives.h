@@ -20,9 +20,8 @@ using ltr::utility::lexical_cast;
 namespace ltr {
 namespace gp {
 class BaseGPOperation : public Puppy::Primitive {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BaseGPOperation)
  public:
-  typedef ltr::utility::shared_ptr<BaseGPOperation> Ptr;
-
   BaseGPOperation(int number_of_arguments, string name)
   : Primitive(number_of_arguments, name) {}
 };

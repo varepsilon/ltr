@@ -26,10 +26,8 @@ namespace decision_tree {
  * and conditions of transition to each children.
  */
 class Vertex : public SerializableFunctor<double> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(Vertex)
  public:
-  typedef ltr::utility::shared_ptr<Vertex> Ptr;
-
-  virtual ~Vertex() {}
   /**
    * Adds child to the vertex.
    * @param child - child to add,

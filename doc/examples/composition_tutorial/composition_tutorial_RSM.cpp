@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream>  // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -18,27 +20,32 @@ using ltr::BestFeatureLearner;
 int main() {
   srand(14);
 
-  DataSet<Object> dataset(3); // dataset with 3 features
-  for (int i = 0; i < 20; ++i) { // 20 elements
+  DataSet<Object> dataset(3);  // dataset with 3 features
+  for (int i = 0; i < 20; ++i) {  // 20 elements
     Object current;
-    current << rand() << rand() << rand(); // random features
-    current.set_actual_label(rand()); // random labels
+    current << rand() << rand() << rand();  // random features // NOLINT
+    current.set_actual_label(rand());  // random labels // NOLINT
     dataset << current;
   }
 
   // by default composition learner is linear
-  CompositionLearner<Object> linear_composition_learner;
+  CompositionLearner<Object>::Ptr linear_composition_learner(
+      new CompositionLearner<Object>);
 
-  AbsError::Ptr abs_error(new AbsError); // ::Ptr means a shared pointer wherever in LTR
+  AbsError::Ptr abs_error(new AbsError);  //
+  // ::Ptr means a shared pointer wherever in LTR
 
-  FeatureRandomSamplerLearner<Object>::Ptr rsm(new FeatureRandomSamplerLearner<Object>);
-  BestFeatureLearner<Object>::Ptr best_feature_learner(new BestFeatureLearner<Object>(abs_error));
+  FeatureRandomSamplerLearner<Object>::Ptr rsm(
+      new FeatureRandomSamplerLearner<Object>);
+  BestFeatureLearner<Object>::Ptr best_feature_learner(
+      new BestFeatureLearner<Object>(abs_error));
   best_feature_learner->add_feature_converter_learner(rsm);
 
-  linear_composition_learner.set_weak_learner(best_feature_learner);
+  linear_composition_learner->set_weak_learner(best_feature_learner);
 
-  linear_composition_learner.learn(dataset);
-  CompositionScorer::Ptr linear_composition_scorer = linear_composition_learner.makeSpecific();
+  linear_composition_learner->learn(dataset);
+  CompositionScorer::Ptr linear_composition_scorer =
+    linear_composition_learner->makeSpecific();
 
   std::cout << *linear_composition_scorer;
 }

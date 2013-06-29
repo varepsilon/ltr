@@ -32,8 +32,8 @@ namespace ltr {
 template <typename TElement>
 class FeatureSamplerLearner
   : public BaseFeatureConverterLearner<TElement, FeatureSampler> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FeatureSamplerLearner)
  public:
-  typedef ltr::utility::shared_ptr<FeatureSamplerLearner> Ptr;
   /**
    * \param indices indices of features to sample
    */
@@ -51,7 +51,7 @@ class FeatureSamplerLearner
 
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         FeatureSampler *feature_sampler);
+                         FeatureSampler::Ptr* feature_sampler);
 
   virtual void setParametersImpl(const ParametersContainer& parameters);
 
@@ -91,14 +91,14 @@ void FeatureSamplerLearner<TElement>::setParametersImpl(
 
 template <typename TElement>
 void FeatureSamplerLearner<TElement>::learnImpl(
-    const DataSet<TElement>& data_set, FeatureSampler *feature_sampler) {
+    const DataSet<TElement>& data_set, FeatureSampler::Ptr* feature_sampler) {
   // \TODO(sameg) Is it logic?
   if (indices_->size() != 0) {
-    feature_sampler->set_indices(*indices_);
+    (*feature_sampler)->set_indices(*indices_);
   } else {
     Indices indices;
     getIdPermutation(&indices, data_set.feature_count());
-    feature_sampler->set_indices(indices);
+    (*feature_sampler)->set_indices(indices);
   }
 }
 

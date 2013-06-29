@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream> // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -41,14 +43,15 @@ int main() {
   data.add(point3);
   data.add(point4);
 
-  DecisionTreeLearner<Object> decision_tree_learner(
-    new ID3Splitter, new MostCommonLabelLeafGenerator);
-  decision_tree_learner.add_stop_splitting_criteria(
+  DecisionTreeLearner<Object>::Ptr decision_tree_learner(
+    new DecisionTreeLearner<Object>(new ID3Splitter,
+    new MostCommonLabelLeafGenerator));
+  decision_tree_learner->add_stop_splitting_criteria(
     new SameLabelStopSplittingCriteria);
 
-  decision_tree_learner.learn(data);
+  decision_tree_learner->learn(data);
 
-  Scorer::Ptr decision_tree_scorer = decision_tree_learner.make();
+  Scorer::Ptr decision_tree_scorer = decision_tree_learner->make();
 
   Object test_point1;
   test_point1 << 3 << 3;

@@ -130,11 +130,11 @@ class FisherDiscriminantDensityLearner : public
    * Implementation of the learning of density estimator
    */
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         FisherDiscriminant* estimator) {
+                         FisherDiscriminant::Ptr* estimator) {
     LabelToLinearFactor linear_factors;
     LabelToLinearBias linear_biases;
     findLinearFactorsAndBiases(data_set, &linear_factors, &linear_biases);
-    *estimator = FisherDiscriminant(linear_factors, linear_biases);
+    (*estimator) = new FisherDiscriminant(linear_factors, linear_biases);
   };
 };
 };

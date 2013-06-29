@@ -18,9 +18,8 @@ namespace ltr {
 */
 template <class TElement>
 class FakePreprocessor : public DataPreprocessor<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakePreprocessor)
  public:
-  typedef ltr::utility::shared_ptr<FakePreprocessor> Ptr;
-
   explicit FakePreprocessor(const ParametersContainer& parameters) {
   }
 

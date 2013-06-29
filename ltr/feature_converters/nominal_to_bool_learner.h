@@ -15,6 +15,7 @@ namespace ltr {
 template <typename TElement>
 class NominalToBoolConverterLearner
   : public BaseFeatureConverterLearner<TElement, NominalToBoolConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NominalToBoolConverterLearner)
  public:
   explicit NominalToBoolConverterLearner(
     const ParametersContainer& parameters) {
@@ -24,7 +25,7 @@ class NominalToBoolConverterLearner
   }
 
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         NominalToBoolConverter* feature_converter);
+                         NominalToBoolConverter::Ptr* feature_converter);
 
   virtual string toString() const;
 
@@ -35,7 +36,7 @@ class NominalToBoolConverterLearner
 template <typename TElement>
 void NominalToBoolConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set,
-  NominalToBoolConverter* feature_converter) {
+  NominalToBoolConverter::Ptr* feature_converter) {
     // DO NOTHING
 }
 

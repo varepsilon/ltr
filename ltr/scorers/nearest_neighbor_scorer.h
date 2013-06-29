@@ -27,8 +27,8 @@ namespace ltr {
  * pointers to aggregator, metric and neigbor weighter.
  */
 class NNScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NNScorer)
  public:
-  typedef ltr::utility::shared_ptr<NNScorer> Ptr;
   typedef ltr::utility::shared_ptr<ltr::BaseMetric> BaseMetricPtr;
   explicit NNScorer() {
   }

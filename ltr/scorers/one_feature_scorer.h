@@ -15,9 +15,8 @@ namespace ltr {
  * Simple ranker. Represent single feature.
  */
 class OneFeatureScorer : public Scorer {
+  ALLOW_SHARED_PTR_ONLY_CREATION(OneFeatureScorer)
  public:
-  typedef ltr::utility::shared_ptr<OneFeatureScorer> Ptr;
-
   explicit OneFeatureScorer(size_t feature_index = 0,
     FeatureConverterArray featureConverterArray = FeatureConverterArray()) :
       Scorer(featureConverterArray),

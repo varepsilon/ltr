@@ -16,13 +16,12 @@ namespace decision_tree {
  * data size less then min_vertex_size.
  */
 class DataSizeStopSplittingCriteria : public StopSplittingCriteria {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DataSizeStopSplittingCriteria)
  public:
-  typedef ltr::utility::shared_ptr<DataSizeStopSplittingCriteria> Ptr;
-
   explicit DataSizeStopSplittingCriteria(int min_vertex_size = 5)
   : min_vertex_size_(min_vertex_size) {}
 
-  DataSizeStopSplittingCriteria(const ParametersContainer& parameters);
+  explicit DataSizeStopSplittingCriteria(const ParametersContainer& parameters);
 
   bool needToStopSplitting(const DataSet<Object>& data) const;
 

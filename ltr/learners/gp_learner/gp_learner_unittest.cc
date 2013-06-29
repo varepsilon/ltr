@@ -68,62 +68,69 @@ class GPLearnerTest : public ::testing::Test {
 
 TEST_F(GPLearnerTest, GPLearnerTest) {
   Measure<ObjectList>::Ptr pMeasure(new DCG());
-  GPLearner<ObjectList> gp_learner(pMeasure);
+  GPLearner<ObjectList>::Ptr gp_learner(
+    new GPLearner<ObjectList>(pMeasure));
 
   string learn_data_file_name = FixPathSeparators("data/imat2009/imat2009_learning_small.txt");  // NOLINT
 
   DataSet<ObjectList> learn_data_listwise =
     loadDataSet<ObjectList>(learn_data_file_name, "YANDEX");
 
-  gp_learner.learn(learn_data_listwise);
+  gp_learner->learn(learn_data_listwise);
 
-  GPScorer::Ptr scorer = gp_learner.makeSpecific();
+  GPScorer::Ptr scorer = gp_learner->makeSpecific();
 };
 
 TEST_F(GPLearnerTest, DefaultSelectionStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new DefaultSelectionStrategy));
+    gp_learner->addPopulationHandler(new DefaultSelectionStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultCrossoverStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new DefaultCrossoverStrategy));
+    gp_learner->addPopulationHandler(new DefaultCrossoverStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultMutationStandartStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new DefaultMutationStandardStrategy));
+    gp_learner->addPopulationHandler(new DefaultMutationStandardStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, DefaultMutationSwapStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new DefaultMutationSwapStrategy));
+    gp_learner->addPopulationHandler(new DefaultMutationSwapStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, SelectTopTreesStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new SelectTopTreesStrategy));
+    gp_learner->addPopulationHandler(new SelectTopTreesStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }
 
 TEST_F(GPLearnerTest, CrossoverAdjacentTreesStrategyTest) {
-  GPLearner<Object> gp_learner(new ltr::TruePoint);
+  GPLearner<Object>::Ptr gp_learner(
+    new GPLearner<Object>(new ltr::TruePoint));
   ASSERT_NO_THROW(
-    gp_learner.addPopulationHandler(new CrossoverAdjacentTreesStrategy));
+    gp_learner->addPopulationHandler(new CrossoverAdjacentTreesStrategy));
 
-  ASSERT_NO_THROW(gp_learner.learn(learn_data));
+  ASSERT_NO_THROW(gp_learner->learn(learn_data));
 }

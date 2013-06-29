@@ -24,9 +24,8 @@ namespace decision_tree {
  * between two adjacent values of a feature.
  */
 class ObliviousTreeSplitter : public BaseSplitter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(ObliviousTreeSplitter)
  public:
-  typedef ltr::utility::shared_ptr<ObliviousTreeSplitter> Ptr;
-
   ObliviousTreeSplitter() {}
 
   explicit ObliviousTreeSplitter(const ParametersContainer& parameters);

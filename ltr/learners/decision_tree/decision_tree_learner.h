@@ -34,9 +34,8 @@ namespace decision_tree {
  */
 template <class TElement>
 class DecisionTreeLearner : public BaseLearner<TElement, DecisionTreeScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(DecisionTreeLearner)
  public:
-  typedef ltr::utility::shared_ptr<DecisionTreeLearner> Ptr;
-
   explicit DecisionTreeLearner(const ParametersContainer& parameters);
 
   string toString() const;
@@ -67,7 +66,8 @@ class DecisionTreeLearner : public BaseLearner<TElement, DecisionTreeScorer> {
 
   LeafVertex::Ptr generateLeaf(const DataSet<Object>& data) const;
 
-  void learnImpl(const DataSet<TElement>& data, DecisionTreeScorer* scorer);
+  void learnImpl(const DataSet<TElement>& data,
+                 typename DecisionTreeScorer::Ptr* scorer);
 
   virtual string getDefaultAlias() const;
 
@@ -177,10 +177,10 @@ LeafVertex::Ptr DecisionTreeLearner<TElement>::
 
 template<class TElement>
 void DecisionTreeLearner<TElement>::
-  learnImpl(const DataSet<TElement>& data, DecisionTreeScorer* scorer) {
+  learnImpl(const DataSet<TElement>& data, DecisionTreeScorer::Ptr* scorer) {
     rInfo("Learn started. Data set size: %d" , data.size());
     DecisionTree::Ptr decision_tree = new DecisionTree(buildTree(data));
-    scorer->setTree(decision_tree);
+    (*scorer)->setTree(decision_tree);
   }
 
   template<class TElement>

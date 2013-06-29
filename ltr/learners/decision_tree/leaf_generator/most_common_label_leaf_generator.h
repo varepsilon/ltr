@@ -20,12 +20,11 @@ namespace decision_tree {
  * equals to the most common actual label in given DataSet.
  */
 class MostCommonLabelLeafGenerator : public LeafGenerator {
+  ALLOW_SHARED_PTR_ONLY_CREATION(MostCommonLabelLeafGenerator)
  public:
-  typedef ltr::utility::shared_ptr<MostCommonLabelLeafGenerator> Ptr;
-
   MostCommonLabelLeafGenerator();
 
-  MostCommonLabelLeafGenerator(const ParametersContainer& parameters);
+  explicit MostCommonLabelLeafGenerator(const ParametersContainer& parameters);
 
   LeafVertex::Ptr operator()(const DataSet<Object>& data) const;
 };

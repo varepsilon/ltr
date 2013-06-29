@@ -26,9 +26,8 @@ namespace ltr {
 namespace composition {
 class AdaBoostLearner
     : public CompositionLearner<Object> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(AdaBoostLearner)
  public:
-  typedef ltr::utility::shared_ptr<AdaBoostLearner> Ptr;
-
   explicit AdaBoostLearner(
       const ParametersContainer& parameters)
       : CompositionLearner<Object>(10,

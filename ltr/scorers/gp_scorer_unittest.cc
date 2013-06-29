@@ -47,16 +47,16 @@ TEST(GPScorer, GPScorerTest) {
 
   int best_tree_index = 0;
 
-  GPScorer gp_scorer =
-    GPScorer(population[best_tree_index], context, features_count);
+  GPScorer::Ptr gp_scorer(
+    new GPScorer(population[best_tree_index], context, features_count));
 
   Object object1;
   object1 << 1.3 << 1.7 << 9.2;
 
-  rInfo("%f", gp_scorer(object1));
+  rInfo("%f", (*gp_scorer)(object1));
 
   Object object2;
   object2 << 1.9 << 15.8 << 0.7;
 
-  rInfo("%f", gp_scorer(object2));
+  rInfo("%f", (*gp_scorer)(object2));
 }

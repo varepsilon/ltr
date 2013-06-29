@@ -54,12 +54,12 @@ class NonLinearDiscriminantDensityLearner : public
                                          LabelToCovarianceMatrix* result) = 0;
 
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         NonLinearDiscriminant* estimator) {
+                         NonLinearDiscriminant::Ptr* estimator) {
     LabelToMean mean;
     LabelToCovarianceMatrix covariance_matrix;
     calculateMean(data_set, &mean);
     calculateCovarianceMatrix(data_set, &covariance_matrix);
-    *estimator = NonLinearDiscriminant(covariance_matrix, mean);
+    (*estimator) = new NonLinearDiscriminant(covariance_matrix, mean);
   };
 };
 };

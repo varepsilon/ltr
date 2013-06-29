@@ -15,8 +15,8 @@ using ltr::VotePredictionsAggregator;
 using ltr::utility::DoubleEqual;
 
 TEST(PredictionsAggregators, PredictionsAggregatorsTest) {
-  PredictionsAggregator::Ptr average_predictions_aggregator =
-    new AveragePredictionsAggregator;
+  PredictionsAggregator::Ptr average_predictions_aggregator(
+    new AveragePredictionsAggregator);
 
   vector<double> labels;
   labels.push_back(1.0);

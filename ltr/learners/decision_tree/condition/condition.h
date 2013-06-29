@@ -20,10 +20,8 @@ namespace decision_tree {
  * It returns a value for tested Object.
  */
 class Condition : public Serializable {
+  ALLOW_SHARED_PTR_ONLY_CREATION(Condition)
  public:
-  typedef ltr::utility::shared_ptr<Condition> Ptr;
-
-  virtual ~Condition() {}
   /*
    * Returns the confidence that object satisfied this condition.
    */
@@ -31,9 +29,8 @@ class Condition : public Serializable {
 };
 
 class FakeCondition : public Condition {
+  ALLOW_SHARED_PTR_ONLY_CREATION(FakeCondition)
  public:
-  typedef ltr::utility::shared_ptr<FakeCondition> Ptr;
-
   FakeCondition() {}
 
   double value(const Object& object) const {return 1.0;}

@@ -1,4 +1,6 @@
-#include <iostream>
+// Copyright 2012 Yandex
+
+#include <iostream>  // NOLINT
 
 #include "ltr/data/object.h"
 #include "ltr/data/data_set.h"
@@ -29,12 +31,13 @@ int main() {
   data.add(object2);
   data.add(object3);
 
-  FeatureNormalizerLearner<Object> feature_normalizer_learner;
-  feature_normalizer_learner.set_min(-1.0);
-  feature_normalizer_learner.set_max(1.0);
-  feature_normalizer_learner.learn(data);
+  FeatureNormalizerLearner<Object>::Ptr feature_normalizer_learner(
+      new FeatureNormalizerLearner<Object>);
+  feature_normalizer_learner->set_min(-1.0);
+  feature_normalizer_learner->set_max(1.0);
+  feature_normalizer_learner->learn(data);
 
-  FeatureConverter::Ptr converter = feature_normalizer_learner.make();
+  FeatureConverter::Ptr converter = feature_normalizer_learner->make();
   converter->apply(data, &converted_data);
 
   cout << "Before:" << endl << data << endl;
@@ -42,4 +45,3 @@ int main() {
 
   return 0;
 }
-

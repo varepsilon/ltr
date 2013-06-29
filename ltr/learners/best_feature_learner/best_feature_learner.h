@@ -22,9 +22,8 @@ namespace ltr {
 
 template< class TElement >
 class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BestFeatureLearner)
  public:
-  typedef ltr::utility::shared_ptr<BestFeatureLearner> Ptr;
-
   BestFeatureLearner() {
   }
 
@@ -47,7 +46,7 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
     measure_ = parameters.Get<typename Measure<TElement>::Ptr>("measure");
   }
   virtual void learnImpl(const DataSet<TElement>& data,
-                         OneFeatureScorer* scorer);
+                         typename OneFeatureScorer::Ptr* scorer);
   virtual string getDefaultAlias() const {return "BestFeatureLearner";}
 
   typename Measure<TElement>::Ptr measure_;
@@ -55,7 +54,7 @@ class BestFeatureLearner : public BaseLearner<TElement, OneFeatureScorer> {
 
 template< class TElement >
 void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
-                                             OneFeatureScorer* scorer) {
+                                             OneFeatureScorer::Ptr* scorer) {
   rInfo("Starting learning");
   if (measure_.get() == 0) {
     rError("Measure is not setted");
@@ -68,22 +67,24 @@ void BestFeatureLearner<TElement>::learnImpl(const DataSet<TElement>& data,
 
   // \TODO Rewrite using setter and getters
   size_t best_feature_index = 0;
-  OneFeatureScorer current_scorer(best_feature_index);
-  current_scorer.predict(data);
+  OneFeatureScorer::Ptr current_scorer(
+    new OneFeatureScorer(best_feature_index));
+  current_scorer->predict(data);
   double best_measure_value = this->measure_->average(data);
 
   for (int feature_index = 1;
        feature_index < data.feature_count();
        ++feature_index) {
-    OneFeatureScorer current_scorer(feature_index);
-    current_scorer.predict(data);
+    OneFeatureScorer::Ptr current_scorer(
+      new OneFeatureScorer(feature_index));
+    current_scorer->predict(data);
     double measure_value = this->measure_->average(data);
     if (this->measure_->better(measure_value, best_measure_value)) {
       best_measure_value = measure_value;
       best_feature_index = feature_index;
     }
   }
-  *scorer = OneFeatureScorer(best_feature_index);
+  (*scorer) = new OneFeatureScorer(best_feature_index);
 }
 }
 #endif  // LTR_LEARNERS_BEST_FEATURE_LEARNER_BEST_FEATURE_LEARNER_H_

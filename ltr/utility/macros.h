@@ -112,6 +112,12 @@ namespace ltr {
   }
 
 /**
+ * Throw an exception if a < b
+ */
+#define CHECK_GE(a, b) \
+  CHECK((a) >= (b))
+
+/**
  * Allows only heap creation and makes shared_ptr<A> friendly
  * Must be inserted at the beginning or end of the class
  * The only way to create object will be the following

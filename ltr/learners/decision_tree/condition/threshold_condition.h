@@ -16,9 +16,8 @@ namespace decision_tree {
  * half-interval (left_feature_value_bound_; right_feature_value_bound_].
  */
 class ThresholdCondition : public Condition {
+  ALLOW_SHARED_PTR_ONLY_CREATION(ThresholdCondition)
  public:
-  typedef ltr::utility::shared_ptr<ThresholdCondition> Ptr;
-
   ThresholdCondition(int feature_index,
                      double left_feature_value_bound,
                      double right_feature_value_bound)

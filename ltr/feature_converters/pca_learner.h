@@ -41,9 +41,8 @@ class NumberOfComponentsRule;
 template <class TElement>
 class PCALearner
   : public BaseFeatureConverterLearner<TElement, LinearConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(PCALearner)
  public:
-  typedef ltr::utility::shared_ptr<PCALearner> Ptr;
-
   explicit PCALearner();
 
   explicit PCALearner(const ParametersContainer& parameters);
@@ -59,7 +58,7 @@ class PCALearner
 
  private:
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         LinearConverter* linear_converter);
+                         LinearConverter::Ptr* linear_converter);
 
   virtual string getDefaultAlias() const;
 
@@ -86,7 +85,6 @@ class NumberOfComponentsRule {
    */
   virtual int getNumberOfComponents(
       const VectorXd& singular_values) const = 0;
-
   virtual ~NumberOfComponentsRule() {}
 };
 
@@ -167,7 +165,7 @@ PCALearner<TElement>::PCALearner(const ParametersContainer& parameters)
 
 template <typename TElement>
 void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
-                                     LinearConverter* linear_converter) {
+                                     LinearConverter::Ptr* linear_converter) {
   VectorXd eigen_average_features;
   getFeaturesAverageValues(data_set, &eigen_average_features);
 
@@ -186,10 +184,10 @@ void PCALearner<TElement>::learnImpl(const DataSet<TElement>& data_set,
   int component_count = rule_->getNumberOfComponents(singular_values_);
 
   matrix_U.conservativeResize(matrix_U.rows(), component_count);
-  linear_converter->set_factor(matrix_U.transpose());
+  (*linear_converter)->set_factor(matrix_U.transpose());
 
   VectorXd shift = VectorXd::Zero(component_count);
-  linear_converter->set_shift(shift);
+  (*linear_converter)->set_shift(shift);
 }
 
 template <typename TElement>

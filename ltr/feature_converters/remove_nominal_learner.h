@@ -21,6 +21,7 @@ namespace ltr {
 template <typename TElement>
 class RemoveNominalConverterLearner
   : public BaseFeatureConverterLearner<TElement, RemoveNominalConverter> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(RemoveNominalConverterLearner)
  public:
   explicit RemoveNominalConverterLearner(
     const ParametersContainer& parameters) {
@@ -30,7 +31,7 @@ class RemoveNominalConverterLearner
   }
 
   virtual void learnImpl(const DataSet<TElement>& data_set,
-                         RemoveNominalConverter* feature_converter);
+                         RemoveNominalConverter::Ptr* feature_converter);
 
   virtual string toString() const;
 
@@ -41,7 +42,7 @@ class RemoveNominalConverterLearner
 template <typename TElement>
 void RemoveNominalConverterLearner<TElement>::learnImpl(
   const DataSet<TElement>& data_set,
-  RemoveNominalConverter* feature_converter) {
+  RemoveNominalConverter::Ptr* feature_converter) {
     // DO NOTHING
 }
 

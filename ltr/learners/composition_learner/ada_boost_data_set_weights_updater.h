@@ -35,9 +35,8 @@ namespace composition {
  */
 template <class TElement>
 class AdaBoostDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(AdaBoostDataSetWeightsUpdater)
  public:
-  typedef ltr::utility::shared_ptr<AdaBoostDataSetWeightsUpdater> Ptr;
-
   /**
    * @param parameters Standart LTR parameter container with no parameters
    */
@@ -54,7 +53,7 @@ class AdaBoostDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
   }
 
   void updateWeights(const DataSet<TElement>* data,
-      const CompositionScorer& composition_scorer) const;
+      const CompositionScorer::Ptr& composition_scorer) const;
  private:
   virtual string getDefaultAlias() const {
     return "AdaBoostDataSetWeightsUpdater";
@@ -65,13 +64,13 @@ class AdaBoostDataSetWeightsUpdater : public DataSetWeightsUpdater<TElement> {
 template <class TElement>
 void AdaBoostDataSetWeightsUpdater<TElement>::updateWeights(
     const DataSet<TElement>* data,
-    const CompositionScorer& composition_scorer) const {
-  if (composition_scorer.size() == 0) {
+    const CompositionScorer::Ptr& composition_scorer) const {
+  if (composition_scorer->size() == 0) {
     rError("Zero-length scorer as an input");
     throw logic_error("Zero-length scorer for " + this->getDefaultAlias());
   }
-  int last_scorer_index = static_cast<int>(composition_scorer.size()) - 1;
-  composition_scorer[last_scorer_index].scorer->predict(*data);
+  int last_scorer_index = static_cast<int>(composition_scorer->size()) - 1;
+  (*composition_scorer)[last_scorer_index].scorer->predict(*data);
 
   vector<double> measure_exps(data->size());
   double sum_of_exps = 0.0;
@@ -90,7 +89,7 @@ void AdaBoostDataSetWeightsUpdater<TElement>::updateWeights(
 
     double measure_value_exp = data->getWeight(element_index)
       * exp(-measure_sign *
-        composition_scorer[last_scorer_index].weight * measure_value);
+        (*composition_scorer)[last_scorer_index].weight * measure_value);
     measure_exps[element_index] = measure_value_exp;
     sum_of_exps += measure_exps[element_index];
   }

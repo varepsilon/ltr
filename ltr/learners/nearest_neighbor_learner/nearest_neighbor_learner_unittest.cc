@@ -25,10 +25,11 @@ using ltr::utility::DoubleEqual;
 using ltr::utility::NeighborWeighter;
 
 TEST(NNLearner, NNLearnerTest) {
-  NNLearner<Object> nn_learner(new ltr::EuclideanMetric,
-                               new ltr::utility::InverseLinearDistance,
-                               new ltr::AveragePredictionsAggregator,
-                               2);
+  NNLearner<Object>::Ptr nn_learner(
+    new NNLearner<Object>(new ltr::EuclideanMetric,
+                          new ltr::utility::InverseLinearDistance,
+                          new ltr::AveragePredictionsAggregator,
+                          2));
 
   DataSet<Object> data;
 
@@ -52,8 +53,8 @@ TEST(NNLearner, NNLearnerTest) {
   data.setWeight(1, 1);
   data.setWeight(2, 1);
 
-  nn_learner.learn(data);
-  NNScorer::Ptr nn_scorer_ptr = nn_learner.makeSpecific();
+  nn_learner->learn(data);
+  NNScorer::Ptr nn_scorer_ptr = nn_learner->makeSpecific();
   Object score_object;
   score_object << 0.0 << 0.0 << 0.0;
   EXPECT_TRUE(DoubleEqual(4. / 3., nn_scorer_ptr->operator()(score_object)));

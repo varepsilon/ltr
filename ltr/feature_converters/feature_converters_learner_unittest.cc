@@ -98,9 +98,10 @@ TEST_F(FeatureConvertersLearnerTest, CommonTest) {
 }
 
 TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
-  FeatureSamplerLearner<Object> feature_sampler_learner;
-  feature_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter = feature_sampler_learner.make();
+  FeatureSamplerLearner<Object>::Ptr feature_sampler_learner(
+    new FeatureSamplerLearner<Object>);
+  feature_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter = feature_sampler_learner->make();
 
   DataSet<Object> converted_data;
   converter->apply(data, &converted_data);
@@ -111,9 +112,9 @@ TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
   indices->push_back(3);
   indices->push_back(5);
 
-  feature_sampler_learner.set_indices(indices);
-  feature_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter2 = feature_sampler_learner.make();
+  feature_sampler_learner->set_indices(indices);
+  feature_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter2 = feature_sampler_learner->make();
 
   converter2->apply(data, &converted_data);
   EXPECT_EQ(indices->size(), converted_data.feature_count());
@@ -123,9 +124,10 @@ TEST_F(FeatureConvertersLearnerTest, FeatureSamplerLearnerTest) {
 }
 
 TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
-  FeatureRandomSamplerLearner<Object> feature_random_sampler_learner;
-  feature_random_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter = feature_random_sampler_learner.make();
+  FeatureRandomSamplerLearner<Object>::Ptr feature_random_sampler_learner(
+    new FeatureRandomSamplerLearner<Object>);
+  feature_random_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter = feature_random_sampler_learner->make();
 
   DataSet<Object> converted_data;
   converter->apply(data, &converted_data);
@@ -146,9 +148,9 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
     }
   }
 
-  feature_random_sampler_learner.set_sampling_fraction(0.8);
-  feature_random_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter2 = feature_random_sampler_learner.make();
+  feature_random_sampler_learner->set_sampling_fraction(0.8);
+  feature_random_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter2 = feature_random_sampler_learner->make();
   converter2->apply(data, &converted_data);
 
   EXPECT_EQ(9, converted_data.feature_count());
@@ -167,24 +169,26 @@ TEST_F(FeatureConvertersLearnerTest, FeatureRandomSamplerLearnerTest) {
     }
   }
 
-  feature_random_sampler_learner.set_sampling_fraction(0.0);
-  EXPECT_ANY_THROW(feature_random_sampler_learner.learn(data));
-  feature_random_sampler_learner.set_sampling_fraction(1e-8);
-  feature_random_sampler_learner.learn(data);
-  FeatureConverter::Ptr converter3 = feature_random_sampler_learner.make();
+  feature_random_sampler_learner->set_sampling_fraction(0.0);
+  EXPECT_ANY_THROW(feature_random_sampler_learner->learn(data));
+  feature_random_sampler_learner->set_sampling_fraction(1e-8);
+  feature_random_sampler_learner->learn(data);
+  FeatureConverter::Ptr converter3 = feature_random_sampler_learner->make();
   converter3->apply(data, &converted_data);
   EXPECT_EQ(1, converted_data.feature_count());
 }
 
 TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
-  FeatureNormalizerLearner<Object> bad_feature_normalizer_learner;
-  bad_feature_normalizer_learner.set_min(2.0);
-  bad_feature_normalizer_learner.set_max(-2.0);
-  ASSERT_ANY_THROW(bad_feature_normalizer_learner.checkParameters());
+  FeatureNormalizerLearner<Object>::Ptr bad_feature_normalizer_learner(
+    new FeatureNormalizerLearner<Object>);
+  bad_feature_normalizer_learner->set_min(2.0);
+  bad_feature_normalizer_learner->set_max(-2.0);
+  ASSERT_ANY_THROW(bad_feature_normalizer_learner->checkParameters());
 
-  FeatureNormalizerLearner<Object> feature_normalizer_learner;
-  feature_normalizer_learner.set_min(-2.0);
-  feature_normalizer_learner.set_max(2.0);
+  FeatureNormalizerLearner<Object>::Ptr feature_normalizer_learner(
+    new FeatureNormalizerLearner<Object>);
+  feature_normalizer_learner->set_min(-2.0);
+  feature_normalizer_learner->set_max(2.0);
 
   DataSet<Object> train_data(FeatureInfo(3));
   Object object1, object2, object3, object4;
@@ -197,9 +201,9 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
   train_data.add(object3);
   train_data.add(object4);
 
-  feature_normalizer_learner.learn(train_data);
-  FeatureConverter::Ptr converter = feature_normalizer_learner.make();
-  ASSERT_NO_THROW(feature_normalizer_learner.checkParameters());
+  feature_normalizer_learner->learn(train_data);
+  FeatureConverter::Ptr converter = feature_normalizer_learner->make();
+  ASSERT_NO_THROW(feature_normalizer_learner->checkParameters());
 
   DataSet<Object> converted_data;
   converter->apply(train_data, &converted_data);
@@ -221,7 +225,7 @@ TEST_F(FeatureConvertersLearnerTest, FeatureNormalizerLearnerTest) {
 }
 
 TEST_F(FeatureConvertersLearnerTest, PCALearnerTest) {
-  PCALearner<Object> pca_learner;
+  PCALearner<Object>::Ptr pca_learner(new PCALearner<Object>);
 
   DataSet<Object> train_data;
   Object object1, object2, object3, object4, object5, object6, object7, object8;
@@ -243,8 +247,8 @@ TEST_F(FeatureConvertersLearnerTest, PCALearnerTest) {
   train_data.add(object7);
   train_data.add(object8);
 
-  pca_learner.learn(train_data);
-  FeatureConverter::Ptr converter = pca_learner.make();
+  pca_learner->learn(train_data);
+  FeatureConverter::Ptr converter = pca_learner->make();
 
   DataSet<Object> converted_data;
   converter->apply(train_data, &converted_data);
@@ -318,11 +322,12 @@ TEST_F(FeatureConvertersLearnerTest, NanToAverageConverterLearnerTest) {
   data.add(object1);
   data.add(object2);
 
-  NanToAverageConverterLearner<Object> nan_to_average_converter_learner;
-  nan_to_average_converter_learner.learn(data);
+  NanToAverageConverterLearner<Object>::Ptr nan_to_average_converter_learner(
+    new NanToAverageConverterLearner<Object>);
+  nan_to_average_converter_learner->learn(data);
 
   FeatureConverter::Ptr nan_to_average_converter =
-    nan_to_average_converter_learner.make();
+    nan_to_average_converter_learner->make();
 
   nan_to_average_converter->apply(data, &converted_data);
 

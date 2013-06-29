@@ -44,8 +44,8 @@ namespace gp {
  */
 template <typename TElement>
 class GPLearner : public BaseLearner<TElement, GPScorer> {
+  ALLOW_SHARED_PTR_ONLY_CREATION(GPLearner)
  public:
-  typedef shared_ptr<GPLearner> Ptr;
   /**
    * \param measure is a shared pointer to the measure that would be maximized on
    * a dataset within learning.
@@ -158,7 +158,8 @@ class GPLearner : public BaseLearner<TElement, GPScorer> {
    * learning procedure.
    * \param scorer is learning scorer
    */
-  void learnImpl(const DataSet<TElement>& data, GPScorer* scorer);
+  void learnImpl(const DataSet<TElement>& data,
+                 typename GPScorer::Ptr* scorer);
   /**
    * Method evaluates the population, it sets individ tree fitness to the
    * average on the data set metric value.
@@ -336,7 +337,7 @@ void GPLearner<TElement>::evaluationStepImpl() {
 
 template <typename TElement>
 void GPLearner<TElement>::
-  learnImpl(const DataSet<TElement>& data, GPScorer* scorer) {
+  learnImpl(const DataSet<TElement>& data, GPScorer::Ptr* scorer) {
     if (data.feature_count() != feature_count_) {
       feature_count_ = data.feature_count();
       reset();
@@ -375,7 +376,7 @@ void GPLearner<TElement>::
       rDebug("%s", log_out.str().c_str());
     }
     // \TODO ? rewrite with setters and getters
-    *scorer = GPScorer(best_tree_, context_, feature_count_);
+    *scorer = new GPScorer(best_tree_, context_, feature_count_);
 }
 
 template <typename TElement>

@@ -24,9 +24,8 @@ namespace ltr {
  * features[i] ->  factors[i][j] * features[j] + shifts[i].
  */
 class LinearConverter : public FeatureConverter {
+  ALLOW_SHARED_PTR_ONLY_CREATION(LinearConverter)
  public:
-  typedef ltr::utility::shared_ptr<LinearConverter> Ptr;
-
   explicit LinearConverter(
     const FeatureInfo& input_feature_info = FeatureInfo())
     : FeatureConverter(input_feature_info) {

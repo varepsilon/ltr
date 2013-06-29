@@ -15,9 +15,8 @@ namespace ltr {
  * \brief Manhattan metric on two objects.
  */
 class ManhattanMetric : public BaseMetric {
+  ALLOW_SHARED_PTR_ONLY_CREATION(ManhattanMetric)
  public:
-  typedef ltr::utility::shared_ptr<ManhattanMetric> Ptr;
-
   ManhattanMetric() {
   }
 
