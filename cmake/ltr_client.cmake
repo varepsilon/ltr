@@ -12,8 +12,8 @@ set (LTR_CLIENT_SRC
      ${Source_Path}/ltr_client/ltr_client.h
      ${Source_Path}/ltr_client/configuration.h
      ${Source_Path}/ltr_client/config_parser.cc
-     ${Source_Path}/ltr_client/config_parser_constants.cc
      ${Source_Path}/ltr_client/config_parser.h
+     ${Source_Path}/ltr_client/config_constants.h
      ${Source_Path}/ltr_client/utility/crossvalidation_launch_info.h
      ${Source_Path}/ltr_client/utility/data_info.h
      ${Source_Path}/ltr_client/utility/object_info.h

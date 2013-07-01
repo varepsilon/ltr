@@ -9,6 +9,7 @@
 #include "gtest/gtest.h"
 
 #include "ltr_client/configuration.h"
+#include "ltr_client/config_constants.h"
 #include "ltr_client/utility/object_info.h"
 #include "ltr_client/utility/train_launch_info.h"
 #include "ltr_client/utility/crossvalidation_launch_info.h"
@@ -16,6 +17,7 @@
 
 #include "ltr/parameters_container/parameters_container.h"
 #include "ltr/utility/macros.h"
+#include "ltr/utility/safe_set.hpp"
 
 using std::string;
 
@@ -29,7 +31,7 @@ class ConfigParser {
   /**
    * Basic constructor for ConfigParser
    */
-  ConfigParser(): configuration_(new Configuration()) { }
+  ConfigParser();
   /**
    * Basic destructor for ConfigParser
    */
@@ -113,101 +115,24 @@ class ConfigParser {
   const TiXmlElement* nextTiXmlElement(const TiXmlNode* node);
 
   /**
+   * Initialize set of valid tags
+   */
+  void initValidTags();
+
+  /**
    * Variable to store parsed information
    */
   Configuration::Ptr configuration_;
+  /**
+   * Set of tags that may be used in config
+   */
+  static SafeSet<string> valid_tags_;
 
   FRIEND_TEST(ConfigParserTest, TestingParseConfig);
   FRIEND_TEST(ConfigParserTest, TestingParseData);
   FRIEND_TEST(ConfigParserTest, TestingParseParameterized);
   FRIEND_TEST(ConfigParserTest, TestingParseLaunch);
   FRIEND_TEST(ConfigParserTest, TestingNextTiXmlElement);
-
-  /**
-   * Name of the tag that containes name of the root directory.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const ROOT_DIR;
-  /**
-   * Name of listwise approach.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const LISTWISE;
-  /**
-   * Name of the tag that containes configuration information.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const CONFIG;
-  /**
-   * Name of the root tag.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const ROOT;
-  /**
-   * Name of the tag that containes information about dataset.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const DATA;
-  /**
-   * Name of the tag that containes launch information.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const LAUNCH;
-  /**
-   * Attribute "name"
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const NAME_ATTR;
-  /**
-   * Attribute "format"
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const FORMAT_ATTR;
-  /**
-   * Attribute "type"
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const TYPE_ATTR;
-  /**
-   * Attribute "approach"
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const APPROACH_ATTR;
-  /**
-   * Name of the tag that containes train information.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const TRAIN;
-  /**
-   * Name of the tag that containes crossvalidation information.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const CROSSVALIDATION;
-  /**
-   * Name of the C++ code generation flag.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const CPP_GEN;
-  /**
-   * Name of prediction tag.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const PREDICT;
-  /**
-   * Attribute "fold".
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const FOLD_ATTR;
-  /**
-   * Name of tag that containes information about learners.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const LEARNER;
-  /**
-   * Name of tag that containes information about measure.
-   * Value of the constant see in \ref config_parser_constants.cc
-   */
-  static const char* const MEASURE;
 };
 
 #endif  // LTR_CLIENT_CONFIG_PARSER_H_

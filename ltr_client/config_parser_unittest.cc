@@ -18,7 +18,7 @@ TEST(ConfigParserTest, TestingParse) {
 
   EXPECT_EQ(configuration->root_path, "ltr1");
   EXPECT_EQ(configuration->data_infos.size(), 2);
-  EXPECT_EQ(configuration->object_infos.size(), 22);
+  EXPECT_EQ(configuration->object_infos.size(), 8);
   EXPECT_EQ(configuration->train_infos.size(), 1);
   EXPECT_EQ(configuration->crossvalidation_infos.size(), 1);
 }
@@ -27,7 +27,7 @@ TEST(ConfigParserTest, TestingParseConfig) {
   shared_ptr<TiXmlDocument> document(
       new TiXmlDocument("../ltr_client/config/tests/testing_parse_config.cfg"));
   document->LoadFile();
-  TiXmlElement* root = document->FirstChildElement(ConfigParser::ROOT);
+  TiXmlElement* root = document->FirstChildElement(ROOT);
   const TiXmlElement* element = root->FirstChildElement();
 
   ConfigParser parser;
@@ -48,7 +48,7 @@ TEST(ConfigParserTest, TestingParseData) {
   shared_ptr<TiXmlDocument> document(
       new TiXmlDocument("../ltr_client/config/tests/testing_parse_data.cfg"));
   document->LoadFile();
-  TiXmlElement* root = document->FirstChildElement(ConfigParser::ROOT);
+  TiXmlElement* root = document->FirstChildElement(ROOT);
   const TiXmlElement* element = root->FirstChildElement();
 
   ConfigParser parser;
@@ -67,7 +67,7 @@ TEST(ConfigParserTest, TestingParseParameterized) {
       new TiXmlDocument(
           "../ltr_client/config/tests/testing_parse_parameterized.cfg"));
   document->LoadFile();
-  TiXmlElement* root = document->FirstChildElement(ConfigParser::ROOT);
+  TiXmlElement* root = document->FirstChildElement(ROOT);
   const TiXmlElement* element = root->FirstChildElement();
 
   ConfigParser parser;
@@ -113,7 +113,7 @@ TEST(ConfigParserTest, TestingParseLaunch) {
   shared_ptr<TiXmlDocument> document(
       new TiXmlDocument("../ltr_client/config/tests/testing_parse_launch.cfg"));
   document->LoadFile();
-  TiXmlElement* root = document->FirstChildElement(ConfigParser::ROOT);
+  TiXmlElement* root = document->FirstChildElement(ROOT);
   const TiXmlElement* element = root->FirstChildElement();
 
   ConfigParser parser;

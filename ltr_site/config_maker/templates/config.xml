@@ -11,10 +11,10 @@
   {% endfor %}
 
   {% for object in objects %}
-  <object name="{{ object.name }}" type="{{ object.get_type }}"{% if object.approach %} approach="{{ object.approach }}"{% endif %}>
+  <{{ object.get_category }} name="{{ object.name }}" type="{{ object.get_type }}"{% if object.approach %} approach="{{ object.approach }}"{% endif %}>
     {% for property, value in object.get_properties|special_properties %}
       <{{ property }}>{{ value }}</{{ property }}>
-    {% endfor %}</object>
+    {% endfor %}</{{ object.get_category }}>
   {% endfor %}
 
   <launch>

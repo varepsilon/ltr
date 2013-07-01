@@ -7,21 +7,19 @@
 
 #include "rlog/rlog_default.h"
 
+#include "ltr_client/ltr_client.h"
+#include "ltr_client/factory.h"
+#include "ltr_client/config_constants.h"
 #include "ltr/crossvalidation/splitter.h"
 #include "ltr/crossvalidation/crossvalidator.h"
+#include "ltr/data/utility/io_utility.h"
 #include "ltr/learners/learner.h"
 #include "ltr/measures/measure.h"
 #include "ltr/metrics/metric.h"
-#include "ltr/utility/neighbor_weighter.h"
-
-#include "ltr/data/utility/io_utility.h"
-
-#include "ltr_client/ltr_client.h"
-#include "ltr_client/factory.h"
-
 #include "ltr/utility/boost/path.h"
 #include "ltr/utility/boost/string_utils.h"
 #include "ltr/utility/html.h"
+#include "ltr/utility/neighbor_weighter.h"
 
 using std::find;
 using std::logic_error;
@@ -147,7 +145,8 @@ void LtrClient::launchCrossvalidationImpl(
         ++learners_alias) {
       cross_validator.add_learner(
           factory_.CreateObject<typename Learner<TElement>::Ptr>(
-              *learners_alias));
+              *learners_alias,
+              LEARNER));
     }
 
     for (TSetIterator measures_alias = crossvalidation_info->measures.begin();
@@ -155,12 +154,14 @@ void LtrClient::launchCrossvalidationImpl(
          ++measures_alias) {
       cross_validator.add_measure(
           factory_.CreateObject<typename Measure<TElement>::Ptr>(
-              *measures_alias));
+              *measures_alias,
+              MEASURE));
     }
 
     cross_validator.add_splitter(
         factory_.CreateObject<typename Splitter<TElement>::Ptr>(
-            crossvalidation_info->splitter));
+            crossvalidation_info->splitter,
+            SPLITTER));
 
     for (TSetIterator datas_alias = crossvalidation_info->datas.begin();
          datas_alias != crossvalidation_info->datas.end();
@@ -189,15 +190,18 @@ void LtrClient::launchTrain() {
 
     if (learner_info->approach == "listwise") {
       launchTrainImpl<ObjectList>(
-        factory_.CreateObject<Learner<ObjectList>::Ptr>(train_info->learner),
+        factory_.CreateObject<Learner<ObjectList>::Ptr>(train_info->learner,
+                                                        LEARNER),
         train_info);
     } else if (learner_info->approach == "pairwise") {
       launchTrainImpl<ObjectPair>(
-        factory_.CreateObject<Learner<ObjectPair>::Ptr>(train_info->learner),
+        factory_.CreateObject<Learner<ObjectPair>::Ptr>(train_info->learner,
+                                                        LEARNER),
         train_info);
     } else if (learner_info->approach == "pointwise") {
       launchTrainImpl<Object>(
-        factory_.CreateObject<Learner<Object>::Ptr>(train_info->learner),
+        factory_.CreateObject<Learner<Object>::Ptr>(train_info->learner,
+                                                    LEARNER),
         train_info);
     } else {
       throw logic_error("unknown learner's approach");

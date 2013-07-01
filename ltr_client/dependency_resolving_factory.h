@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "ltr/utility/macros.h"
 #include "ltr_client/configuration.h"
 #include "ltr_client/factory.h"
 #include "ltr_client/utility/object_info.h"
@@ -34,10 +35,13 @@ class DependencyResolvingFactory {
   ParametersContainer Create(const ParametersContainer& parameters) const;
   /**
    * Creates an object, declared in config
-   * @param object_name - string with the object name
+   *
+   * \param object_name - string with the object name
+   * \param type_name - name of the requested type for checking tags
    */
   template <typename RequestedType>
-  RequestedType CreateObject(const string& object_name) const;
+  RequestedType CreateObject(const string& object_name,
+                             const string& type_name);
   /**
    * Initializes factory by given configuration.
    *
@@ -61,16 +65,30 @@ class DependencyResolvingFactory {
   Configuration::Ptr configuration_;
 };
 
-
+// TODO(skyhawk): do this function constant by using const_shared_ptr
 template <typename RequestedType>
 RequestedType DependencyResolvingFactory::CreateObject(
-          const string& object_name) const {
-  const ObjectInfo::Ptr object_info =
-      configuration_->object_infos.safeFind(object_name)->second;
+    const string& object_name,
+    const string& type_name) {
+  ObjectInfo::Ptr object_info;
+  try {
+    object_info = configuration_->object_infos.safeAt(object_name);
+  } catch (logic_error) {
+    throw logic_error("Object " + object_name +" is used but not declared");
+  }
+
+  CHECK_MSG(type_name == object_info->tag_name, "Object " + object_name +
+    " is declared as " + object_info->tag_name + " but used as " + type_name);
   ParametersContainer parameters = Create(object_info->parameters);
   Any object = Factory::instance()->Create(getObjectAlias(object_info),
                                            parameters);
-  return any_cast<RequestedType>(object);
+  try {
+    return any_cast<RequestedType>(object);
+  } catch (bad_any_cast exception) {
+    throw logic_error("Object " + object_info->name +
+        " of type " + object_info->type + " declared as " +
+        object_info->tag_name + " but it's actually not");
+  }
 }
 
 #endif  // LTR_CLIENT_DEPENDENCY_RESOLVING_FACTORY_H_

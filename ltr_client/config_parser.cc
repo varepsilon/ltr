@@ -12,6 +12,8 @@
 using std::string;
 using std::logic_error;
 
+SafeSet<string> ConfigParser::valid_tags_;
+
 Configuration::Ptr ConfigParser::parse(const string& file_name) {
   shared_ptr<TiXmlDocument> document = new TiXmlDocument(file_name);
   CHECK_MSG(document->LoadFile(), "not valid config in " + file_name +
@@ -48,6 +50,8 @@ void ConfigParser::parseTags(const TiXmlElement& element) {
        current_element;
        current_element = nextTiXmlElement(current_element)) {
     string tag_name = current_element->Value();
+    CHECK_MSG(valid_tags_.find(tag_name) != valid_tags_.end(),
+        "Tag " + tag_name + " is not valid");
     if (tag_name == CONFIG) {
       parseConfig(*current_element);
     } else if (tag_name == DATA) {
@@ -218,3 +222,21 @@ const TiXmlElement* ConfigParser::nextTiXmlElement(const TiXmlNode* node) {
   }
   return NULL;
 }
+
+void ConfigParser::initValidTags() {
+  valid_tags_.insert(CONFIG);
+  valid_tags_.insert(DATA);
+  valid_tags_.insert(LAUNCH);
+  valid_tags_.insert(LEARNER);
+  valid_tags_.insert(MEASURE);
+  valid_tags_.insert(SPLITTER);
+  valid_tags_.insert(METRIC);
+  valid_tags_.insert(PREDICTIONS_AGGREGATOR);
+  valid_tags_.insert(NEIGHBOUR_WEIGHTER);
+}
+
+ConfigParser::ConfigParser(): configuration_(new Configuration()) {
+  if (valid_tags_.empty())
+    initValidTags();
+}
+
