@@ -8,9 +8,13 @@
 #include "tinyxml/tinyxml.h"
 
 #include "ltr/utility/macros.h"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::string;
 using std::logic_error;
+
+using ltr::utility::to_lower;
+using ltr::utility::iequals;
 
 SafeSet<string> ConfigParser::valid_tags_;
 
@@ -49,7 +53,7 @@ void ConfigParser::parseTags(const TiXmlElement& element) {
   for (const TiXmlElement* current_element = &element;
        current_element;
        current_element = nextTiXmlElement(current_element)) {
-    string tag_name = current_element->Value();
+    string tag_name = to_lower(current_element->Value());
     CHECK_MSG(valid_tags_.find(tag_name) != valid_tags_.end(),
         "Tag " + tag_name + " is not valid");
     if (tag_name == CONFIG) {
@@ -65,9 +69,12 @@ void ConfigParser::parseTags(const TiXmlElement& element) {
 }
 
 void ConfigParser::parseConfig(const TiXmlElement& element) {
-  const TiXmlElement* root_dir = element.FirstChildElement(ROOT_DIR);
+  const TiXmlElement* root_dir = element.FirstChildElement();
   CHECK_MSG(root_dir, "no root directory specified");
-  CHECK_MSG(root_dir->GetText(),  "no root directory specified");
+  CHECK_MSG(to_lower(root_dir->Value()) == string(ROOT_DIR),
+      string("unexpected tag ") + root_dir->Value() + " in <" + CONFIG +
+      "> section");
+  CHECK_MSG(root_dir->GetText(), "no root directory specified");
 
   configuration_->root_path = root_dir->GetText();
 }
@@ -87,8 +94,11 @@ void ConfigParser::parseData(const TiXmlElement& element) {
     approach = LISTWISE;
   }
 
-  configuration_->data_infos.safeInsert(name) =
-    new DataInfo(name, approach, format, file_name);
+  configuration_->data_infos.safeInsert(to_lower(name)) =
+    new DataInfo(to_lower(name),
+                 to_lower(approach),
+                 to_lower(format),
+                 file_name);
 }
 
 void ConfigParser::parseParameterized(const TiXmlElement& element) {
@@ -108,8 +118,12 @@ void ConfigParser::parseParameterized(const TiXmlElement& element) {
 
   ParametersContainer parameters;
   parseParameters(*(element.FirstChildElement()), &parameters);
-  configuration_->object_infos.safeInsert(name) =
-      new ObjectInfo(tag_name, name, type, approach, parameters);
+  configuration_->object_infos.safeInsert(to_lower(name)) =
+      new ObjectInfo(to_lower(tag_name),
+                     to_lower(name),
+                     to_lower(type),
+                     to_lower(approach),
+                     parameters);
 }
 
 void ConfigParser::parseParameters(const TiXmlElement& element,
@@ -124,7 +138,7 @@ void ConfigParser::parseParameters(const TiXmlElement& element,
     CHECK_MSG(!value.empty(), "parameter " + string(name.c_str()) +
         " has no value");
 
-    parameters->AddNew(name, lexical_cast<Any>(value));
+    parameters->AddNew(to_lower(name), lexical_cast<Any>(value));
   }
 }
 
@@ -133,11 +147,11 @@ void ConfigParser::parseLaunch(const TiXmlElement& xmlElement) {
        current_element;
        current_element = nextTiXmlElement(current_element)) {
     string tag_name = current_element->Value();
-    if (tag_name == TRAIN) {
+    if (iequals(tag_name, TRAIN)) {
       TrainLaunchInfo::Ptr info(new TrainLaunchInfo());
       parseTrain(*current_element, info.get());
       configuration_->train_infos.safeInsert(info->name) = info;
-    } else if (tag_name == CROSSVALIDATION) {
+    } else if (iequals(tag_name, CROSSVALIDATION)) {
       CrossvalidationLaunchInfo::Ptr info(new CrossvalidationLaunchInfo());
       parseCrossvalidation(*current_element, info.get());
       configuration_->crossvalidation_infos.safeInsert(info->splitter) = info;
@@ -157,19 +171,19 @@ void ConfigParser::parseTrain(const TiXmlElement& element,
   CHECK_MSG(data, string(name) + " with no \"data\" attribute");
   CHECK_MSG(learner, string(name) + " with no \"learner\" attribute");
 
-  info->name = name;
-  info->data = data;
-  info->learner = learner;
+  info->name = to_lower(name);
+  info->data = to_lower(data);
+  info->learner = to_lower(learner);
 
   for (const TiXmlElement* current_element = element.FirstChildElement();
        current_element;
        current_element = nextTiXmlElement(current_element)) {
-    string tag_name = current_element->Value();
+    string tag_name = to_lower(current_element->Value());
     if (tag_name == PREDICT) {
       const char* predict_name = current_element->GetText();
       CHECK_MSG(predict_name,
                 string("empty <") + PREDICT + "> tag in train section");
-      info->predicts.safeInsert(predict_name);
+      info->predicts.safeInsert(to_lower(predict_name));
     } else if (tag_name == CPP_GEN) {
       info->gen_cpp = true;
     } else {
@@ -183,27 +197,27 @@ void ConfigParser::parseCrossvalidation(const TiXmlElement& element,
                                         CrossvalidationLaunchInfo* info) {
   const char* fold = element.Attribute(FOLD_ATTR);
   CHECK_MSG(fold, "<crossvalidation> tag with no fold");
-  info->splitter = fold;
+  info->splitter = to_lower(fold);
 
   for (const TiXmlElement* current_element = element.FirstChildElement();
        current_element;
        current_element = nextTiXmlElement(current_element)) {
-    string tag_name = current_element->Value();
+    string tag_name = to_lower(current_element->Value());
     if (tag_name == LEARNER) {
       const char* learner_name = current_element->GetText();
       CHECK_MSG(learner_name, string("empty <") + LEARNER +
           "> tag in crossvalidation section");
-      info->learners.safeInsert(learner_name);
+      info->learners.safeInsert(to_lower(learner_name));
     } else if (tag_name == MEASURE) {
       const char* measure_name = current_element->GetText();
       CHECK_MSG(measure_name, string("empty <") + MEASURE +
           "> tag in crossvalidation section");
-      info->measures.safeInsert(measure_name);
+      info->measures.safeInsert(to_lower(measure_name));
     } else if (tag_name == DATA) {
       const char* data_name = current_element->GetText();
       CHECK_MSG(data_name, string("empty <") + DATA +
           "> tag in crossvalidation section");
-      info->datas.safeInsert(data_name);
+      info->datas.safeInsert(to_lower(data_name));
     } else {
       throw logic_error("Undefined tag " + tag_name +
           " in crossvalidation fold " + fold + ".");

@@ -11,10 +11,9 @@
 #include <map>
 
 #include "ltr/interfaces/parameterized.h"
-
 #include "ltr/parameters_container/parameters_container.h"
-
 #include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::cout;
 using std::endl;
@@ -25,6 +24,7 @@ using ltr::Parameterized;
 using ltr::ParametersContainer;
 using ltr::utility::Any;
 using ltr::utility::shared_ptr;
+using ltr::utility::to_lower;
 
 class Factory {
  public:
@@ -42,12 +42,13 @@ class Factory {
 
   template <class Base, class Derived>
   void registerType(const string& name) {
-    assert(name_creators_.find(name) == name_creators_.end());
-    name_creators_[name] = AbstractCreator::Ptr(new Creator<Base, Derived>);
+    string lower_case_name = to_lower(name);
+    assert(name_creators_.find(lower_case_name) == name_creators_.end());
+    name_creators_[lower_case_name] =
+        AbstractCreator::Ptr(new Creator<Base, Derived>);
   }
 
-  Any Create(const string& name,
-                    const ParametersContainer& parameters) const {
+  Any Create(const string& name, const ParametersContainer& parameters) const {
     rInfo("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
     if (it == name_creators_.end()) {
@@ -72,7 +73,7 @@ class Factory {
    public:
     virtual Any create(const ParametersContainer& parameters) const {
       if (!parameters.empty()) {
-        return shared_ptr<Base>(new Derived(parameters));  // NOLINT
+        return shared_ptr<Base>(new Derived(parameters));
       } else {
         return shared_ptr<Base>(new Derived());
       }

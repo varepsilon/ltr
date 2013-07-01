@@ -212,6 +212,20 @@ void to_lower(string* input, const std::locale& loc) {
     (*input)[it] = std::tolower((*input)[it], loc);
 }
 
+string to_upper(const string& input, const std::locale& loc) {
+  string result(input.size(), 0);
+  for (int it = 0; it < input.size(); ++it)
+    result[it] = std::toupper(input[it], loc);
+  return result;
+}
+
+string to_lower(const string& input, const std::locale& loc) {
+  string result(input.size(), 0);
+  for (int it = 0; it < input.size(); ++it)
+    result[it] = std::tolower(input[it], loc);
+  return result;
+}
+
 void erase_all(string* input, const string& search) {
   if (search.empty())
     return;

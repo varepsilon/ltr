@@ -58,7 +58,7 @@ TEST(ConfigParserTest, TestingParseData) {
   DataInfo::Ptr info = configuration->data_infos["learn"];
   EXPECT_EQ(info->name, string("learn"));
   EXPECT_EQ(info->approach, string("listwise"));
-  EXPECT_EQ(info->format, string("Yandex"));
+  EXPECT_EQ(info->format, string("yandex"));
   EXPECT_EQ(info->file, string("imat2009_learning.txt"));
 }
 
@@ -73,24 +73,24 @@ TEST(ConfigParserTest, TestingParseParameterized) {
   ConfigParser parser;
   parser.parseParameterized(*element);
   Configuration::Ptr configuration(parser.configuration_);
-  ObjectInfo::Ptr info(configuration->object_infos["GP"]);
+  ObjectInfo::Ptr info(configuration->object_infos["gp"]);
 
   EXPECT_EQ(info->tag_name, string("learner"));
-  EXPECT_EQ(info->name, string("GP"));
-  EXPECT_EQ(info->type, string("GPLearner"));
+  EXPECT_EQ(info->name, string("gp"));
+  EXPECT_EQ(info->type, string("gplearner"));
   EXPECT_EQ(info->approach, string("listwise"));
 
   ParametersContainer parameters = info->parameters;
-  bool bool_value = parameters.Get<bool>("BOOL_VALUE");
-  int int_value = parameters.Get<int>("INT_VALUE");
-  double double_value = parameters.Get<double>("DOUBLE_VALUE");
-  string string_value = parameters.Get<string>("STRING_VALUE");
+  bool bool_value = parameters.Get<bool>("bool_value");
+  int int_value = parameters.Get<int>("int_value");
+  double double_value = parameters.Get<double>("double_value");
+  string string_value = parameters.Get<string>("string_value");
   vector<bool> vector_bool_value =
-      parameters.Get<vector<bool> >("VECTOR_BOOL_VALUE");
+      parameters.Get<vector<bool> >("vector_bool_value");
   vector<int> vector_int_value =
-      parameters.Get<vector<int> >("VECTOR_INT_VALUE");
+      parameters.Get<vector<int> >("vector_int_value");
   vector<string> vector_string_value =
-      parameters.Get<vector<string> >("VECTOR_STRING_VALUE");
+      parameters.Get<vector<string> >("vector_string_value");
 
   EXPECT_TRUE(bool_value);
   EXPECT_EQ(int_value, 42);
@@ -121,17 +121,17 @@ TEST(ConfigParserTest, TestingParseLaunch) {
   Configuration::Ptr configuration(parser.configuration_);
   TrainLaunchInfo::Ptr train_info = configuration->train_infos["test1"];
   CrossvalidationLaunchInfo::Ptr cv_info =
-      configuration->crossvalidation_infos["K_FOLD1"];
+      configuration->crossvalidation_infos["k_fold1"];
 
   EXPECT_EQ(train_info->name, "test1");
   EXPECT_EQ(train_info->data, "learn");
-  EXPECT_EQ(train_info->learner, "BF2");
+  EXPECT_EQ(train_info->learner, "bf2");
   EXPECT_TRUE(train_info->gen_cpp);
   EXPECT_TRUE(train_info->predicts.contains("predict_1"));
   EXPECT_TRUE(train_info->predicts.contains("predict_2"));
   EXPECT_EQ(train_info->predicts.size(), 2);
 
-  EXPECT_EQ(cv_info->splitter, "K_FOLD1");
+  EXPECT_EQ(cv_info->splitter, "k_fold1");
   EXPECT_TRUE(cv_info->learners.contains("learner_1"));
   EXPECT_TRUE(cv_info->learners.contains("learner_2"));
   EXPECT_EQ(cv_info->learners.size(), 2);

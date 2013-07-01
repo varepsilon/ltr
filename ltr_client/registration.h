@@ -100,6 +100,7 @@
 #include "ltr_client/configuration.h"
 
 #include "ltr/utility/neighbor_weighter.h"
+#include "ltr/utility/boost/string_utils.h"
 
 using std::string;
 
@@ -212,6 +213,7 @@ using ltr::PairwiseMeasure;
 using ltr::utility::InverseLinearDistance;
 using ltr::utility::InversePowerDistance;
 using ltr::utility::InverseOrder;
+using ltr::utility::to_lower;
 
 string name_storage; // NOLINT
 
@@ -219,17 +221,17 @@ string name_storage; // NOLINT
         factory->registerType<Base, Derived>(#Derived);
 
 #define REGISTER_LISTWISE(Base, Derived)\
-        name_storage = #Derived;\
+        name_storage = to_lower(#Derived);\
         factory->registerType<Base<ObjectList>, \
         Derived<ObjectList> >(name_storage + "listwise");
 
 #define REGISTER_POINTWISE(Base, Derived)\
-        name_storage = #Derived;\
+        name_storage = to_lower(#Derived);\
         factory->registerType<Base<Object>, \
         Derived<Object> >(name_storage + "pointwise");
 
 #define REGISTER_PAIRWISE(Base, Derived)\
-        name_storage = #Derived;\
+        name_storage = to_lower(#Derived);\
         factory->registerType<Base<ObjectPair>, \
         Derived<ObjectPair> >(name_storage + "pairwise");
 

@@ -26,7 +26,7 @@ void ParametersContainer::Clear() {
 }
 
 bool ParametersContainer::Contains(const string& name) const {
-  return name_value_hash_.find(name) != name_value_hash_.end();
+  return name_value_hash_.find(to_lower(name)) != name_value_hash_.end();
 }
 
 void ParametersContainer::Copy(const ParametersContainer& parameters) {

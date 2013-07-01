@@ -100,6 +100,14 @@ void to_upper(string* input, const locale& loc = std::locale());
  */
 void to_lower(string* input, const locale& loc = std::locale());
 /**
+ * Converts all charachters in string to upper case using given locale
+ */
+string to_upper(const string& input, const locale& loc = std::locale());
+/**
+ * Converts all charachters in string to lower case using given locale
+ */
+string to_lower(const string& input, const locale& loc = std::locale());
+/**
  * Сonsequentially erases all occurences of string search
  */
 void erase_all(string* input, const string& search);
