@@ -28,16 +28,48 @@ using ltr::utility::LexicalCastConfig;
 namespace ltr {
 namespace utility {
 /**
- * Converts from string to some type
+ * Converts from string to bool
  *
  * \param input is string to be converted.
  * \param result is pointer to result variable.
  * \return is flag if conversion was succesfull.
  */
 static bool fromString(const string& input, bool* result);
+/**
+ * Converts from string to Any.
+ *
+ * \param input is string to be converted.
+ * \param result is pointer to result variable.
+ * \return is flag if conversion was succesfull.
+ */
 static bool fromString(const string& input, Any* result);
+/**
+ * Converts from string to string.
+ *
+ * \tparam T is type of elements of the vector.
+ * \param input is string to be converted.
+ * \param result is pointer to result variable.
+ * \return is flag if conversion was succesfull.
+ */
+static bool fromString(const string& input, string* result);
+/**
+ * Converts from string to vector.
+ *
+ * \tparam T is type of elements of the vector.
+ * \param input is string to be converted.
+ * \param result is pointer to result variable.
+ * \return is flag if conversion was succesfull.
+ */
 template <class T>
 bool fromString(const string& input, vector<T>* result);
+/**
+ * Converts from string to bool
+ *
+ * \tparam TypeTo is type of result value
+ * \param input is string to be converted.
+ * \param result is pointer to result variable.
+ * \return is flag if conversion was succesfull.
+ */
 template <class TypeTo>
 bool fromString(const string& input, TypeTo* result);
 
@@ -46,22 +78,29 @@ bool fromString(const string& input, TypeTo* result);
  *
  * \param input is value to be converted.
  * \param result is pointer to result string.
- * \return is flag if conversion was succesfull.
+ * \return flag if conversion was succesfull.
  */
 static bool toString(const bool& input, string* result);
-static bool toString(const string& input, string* result);
-static bool toString(const char*& input, string* result);
-static bool toString(const char input[], string* result);
-static bool toString(const int& input, string* result);
-static bool toString(const long int& input, string* result); // NOLINT
-static bool toString(const size_t& input, string* result);
-static bool toString(const double& input, string* result);
-static bool toString(const char& input, string* result);
-
+/**
+ * Converts from vector to string.
+ *
+ * \tparam T is type of elements of the vector.
+ * \param input is value to be converted.
+ * \param result is pointer to result string.
+ * \return flag if conversion was succesfull.
+ */
 template <class T>
 static bool toString(const vector<T>& input, string* result);
-
-static bool toString(const Printable& input, string* result);
+/**
+ * Converts from some type to string.
+ *
+ * \tparam T is type of value to be converted.
+ * \param input is value to be converted.
+ * \param result is pointer to result string.
+ * \return flag if conversion was succesfull.
+ */
+template <class T>
+static bool toString(const T& input, string* result);
 
 /**
  * \brief Cast some type to or from string. Printable object may be casted to
@@ -148,6 +187,11 @@ static bool fromString(const string& input, Any* result) {
   return false;
 }
 
+bool fromString(const string& input, string* result) {
+  *result = input;
+  return true;
+}
+
 template <class T>
 bool fromString(const string& input, vector<T>* result)  {
   vector<string> split_list;
@@ -184,55 +228,6 @@ static bool toString(const bool& input, string* result) {
   return true;
 }
 
-static bool toString(const string& input, string* result) {
-  *result = input;
-  return true;
-}
-
-static bool toString(const char*& input, string* result) {
-  *result = input;
-  return true;
-}
-
-static bool toString(const char input[], string* result) {
-  *result = input;
-  return true;
-}
-
-static bool toString(const char& input, string* result) {
-  *result = input;
-  return true;
-}
-
-static bool toString(const int& input, string* result) {
-  stringstream stream;
-  stream << input;
-  *result = stream.str();
-  return true;
-}
-
-static bool toString(const long int& input, string* result) { // NOLINT
-  stringstream stream;
-  stream << input;
-  *result = stream.str();
-  return true;
-}
-
-static bool toString(const size_t& input, string* result) {
-  stringstream stream;
-  stream << input;
-  *result = stream.str();
-  return true;
-}
-
-static bool toString(const double& input, string* result) {
-  stringstream out;
-  LexicalCastConfig::getInstance().configure(&out);
-  out << input;
-  *result = out.str();
-  return true;
-}
-
 template <class T>
 static bool toString(const vector<T>& input, string* result) {
   result->clear();
@@ -249,8 +244,12 @@ static bool toString(const vector<T>& input, string* result) {
   return true;
 }
 
-static bool toString(const Printable& input, string* result) {
-  *result = input.toString();
+template <class T>
+static bool toString(const T& input, string* result) {
+  stringstream out;
+  LexicalCastConfig::getInstance().configure(&out);
+  out << input;
+  *result = out.str();
   return true;
 }
 };

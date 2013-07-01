@@ -47,6 +47,8 @@ TEST(LexicalCastTest, TestingToStringConversion) {
   EXPECT_EQ(lexical_cast<string>(42.0000000001), "42.000000000100");
   EXPECT_EQ(lexical_cast<string>(true), "true");
   EXPECT_EQ(lexical_cast<string>("Hello,world!"), "Hello,world!");
+  EXPECT_EQ(lexical_cast<string>(""), "");
+  EXPECT_EQ(lexical_cast<string>("   a b c  "), "a b c");
 
   TestPrintable printable_object;
   EXPECT_EQ(lexical_cast<string>(printable_object), "TestPrintable");
@@ -75,6 +77,7 @@ TEST(LexicalCastTest, TestingToAnyConversion) {
   EXPECT_TRUE(DoubleEqual(any_cast<double>(lexical_cast<Any>("3.14")), 3.14));
   EXPECT_TRUE(any_cast<bool>(lexical_cast<Any>("true")));
   EXPECT_EQ(any_cast<string>(lexical_cast<Any>("Hello!")), "Hello!");
+  EXPECT_EQ(any_cast<string>(lexical_cast<Any>("aba caba  ")), "aba caba");
 
   vector<int> test1;
   test1.push_back(42);
@@ -89,6 +92,4 @@ TEST(LexicalCastTest, TestingToAnyConversion) {
             test2[0]);
   EXPECT_EQ(any_cast<vector<string> >(lexical_cast<Any>("  aaa,bbb "))[1],
             test2[1]);
-
-  EXPECT_ANY_THROW(lexical_cast<Any>("aba caba"));
 }
