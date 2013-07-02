@@ -271,13 +271,13 @@ void MultiTable<T, N>::print2DTable(int first_axis_index,
                                  vector<string>(second_size + 1));
 
   for (int second_index = 0; second_index < (int)second_size; ++second_index) {
-    output[0][second_index + 1] = lexical_cast<string>(
-        table_meta_info_[second_axis_index].axis_ticks_labels[second_index]);
+    output[0][second_index + 1] =
+        table_meta_info_[second_axis_index].axis_ticks_labels[second_index];
   }
   for (int first_index = 0; first_index < first_size; ++first_index) {
     (*multi_index)[first_axis_index] = first_index;
-    output[first_index + 1][0] = lexical_cast<string>(
-        table_meta_info_[first_axis_index].axis_ticks_labels[first_index]);
+    output[first_index + 1][0] =
+        table_meta_info_[first_axis_index].axis_ticks_labels[first_index];
     for (int second_index = 0; second_index < second_size; ++second_index) {
       (*multi_index)[second_axis_index] = second_index;
       output[first_index + 1][second_index + 1] = lexical_cast<string>(
