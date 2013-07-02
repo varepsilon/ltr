@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import (require_POST, require_GET,
                                           require_http_methods)
 from django.contrib.auth import authenticate, login, logout
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms.models import (modelform_factory, ModelChoiceField,
                                  ModelMultipleChoiceField)
 from django.db import IntegrityError
@@ -84,15 +84,21 @@ def view_create(request):
         launchable = (object_type.get_category() == 'launch')
         form_object_type = modelform_factory(object_type,
                                              exclude=('solution',))
-        form_object_parameters = form_object_type(request.POST, request.FILES)
+        solution = get_current_solution(request)
+        object_instance = object_type(solution=solution)
+        form_object_parameters = form_object_type(request.POST, request.FILES,
+                                                  instance=object_instance)
         if form_object_parameters.is_valid():
             try:
-                get_current_solution(request).save_form(form_object_parameters)
+                form_object_parameters.save()
                 if 'launch' in request.REQUEST:
                     return view_launch(request, request.POST['name'])
                 return HttpResponseRedirect('/')
-            except IntegrityError:
+            except (IntegrityError, ValidationError):
                 # TODO: show validation errors
+                object_name = form_object_parameters.data['name']
+                object_type.objects.get(name=object_name,
+                                        solution=solution).delete()
                 form_object_type = FormType(request.POST)
                 reload_type_list = False
         else:

@@ -1,12 +1,16 @@
 # Copyright 2013 Yandex
 """This file contains all the models used in LTR Site."""
 
-from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.core.validators import RegexValidator
 from django.contrib.sessions.models import Session
-from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from django.db import models
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
+from django.test.client import Client
 
 import subprocess
 import itertools
@@ -58,23 +62,43 @@ class ObjectTypeController:
 object_controller = ObjectTypeController()
 
 
-def get_current_solution(request):
-    """Returns solution belonging to current user (or anonymous)."""
-    if request.user.is_authenticated():
-        if not hasattr(request.user, 'solution'):
-            solution = Solution(user=request.user, session=None)
-            solution.save()
-            createSSCChoices(solution)
-        return request.user.solution
+def get_current_solution(request_or_client):
+    """Returns solution belonging to current user (or anonymous).
+
+    Works for Request and Client objects. Returns None if client has neither
+    login nor session."""
+    if isinstance(request_or_client, Client):
+        client = request_or_client
+        if '_auth_user_id' in client.session:
+            user = User.objects.get(pk=client.session['_auth_user_id'])
+            if not hasattr(user, 'solution'):
+                solution = Solution(user=user, session=None)
+                solution.save()
+                createSSCChoices(solution)
+            return user.solution
+        else:
+            if hasattr(client.session, 'session_key'):
+                session = Session.objects.get(pk=client.session.session_key)
+                return session.solution
+            else:
+                return None
     else:
-        if not request.session.exists(request.session.session_key):
-            request.session.create()
-        session = Session.objects.get(pk=request.session.session_key)
-        if not hasattr(session, 'solution'):
-            solution = Solution(user=None, session=session)
-            solution.save()
-            createSSCChoices(solution)
-        return session.solution
+        request = request_or_client
+        if request.user.is_authenticated():
+            if not hasattr(request.user, 'solution'):
+                solution = Solution(user=request.user, session=None)
+                solution.save()
+                createSSCChoices(solution)
+            return request.user.solution
+        else:
+            if not request.session.exists(request.session.session_key):
+                request.session.create()
+            session = Session.objects.get(pk=request.session.session_key)
+            if not hasattr(session, 'solution'):
+                solution = Solution(user=None, session=session)
+                solution.save()
+                createSSCChoices(solution)
+            return session.solution
 
 
 class Solution(models.Model):
@@ -85,13 +109,6 @@ class Solution(models.Model):
     def get_objects(self, object_type):
         """Returns objects belonging to this solution."""
         return object_type.objects.filter(solution=self)
-
-    def save_form(self, form):
-        # deprecated
-        obj = form.save(commit=False)
-        obj.solution = self
-        obj.save()
-        form.save_m2m()
 
     def get_content_filename(self, filename):
         """Creates filename for file being saved to disk."""
@@ -259,18 +276,21 @@ class BaseObject(InheritanceCastModel):
     def __unicode__(self):
         return self.name
 
+    @staticmethod
+    def __is_auxiliary_field(field):
+        return field.name in ('id', 'solution', 'real_type')
+
+    @staticmethod
+    def __is_pointer_to_base_class(field):
+        return field.name.endswith('_ptr')
+
     def get_properties(self):
         """Returns object properties that should be stored in XML config."""
-        def is_auxiliary_field(field):
-            return field.name in ('id', 'solution', 'real_type')
-
-        def is_pointer_to_base_class(field):
-            return field.name.endswith('_ptr')
 
         fields = {}
         for field in self._meta.fields:
-            if not (is_auxiliary_field(field) or
-                    is_pointer_to_base_class(field)):
+            if not (self.__is_auxiliary_field(field) or
+                    self.__is_pointer_to_base_class(field)):
                 value = getattr(self, field.name)
                 if isinstance(value, BaseObject):
                     value = value.name
@@ -281,8 +301,37 @@ class BaseObject(InheritanceCastModel):
             fields[field.name] = ','.join(names)
         return fields
 
+    def clean(self):
+        super(BaseObject, self).clean()
+
+        for field in self._meta.fields:
+            if not (self.__is_auxiliary_field(field) or
+                    self.__is_pointer_to_base_class(field)):
+                value = getattr(self, field.name)
+                if (isinstance(value, BaseObject) and
+                        value.solution != self.solution):
+                    raise ValidationError("Related object belongs to other " +
+                                          "user.")
+
     class Meta:
         unique_together = (("name", "solution"),)
+
+
+@receiver(m2m_changed)
+def check_m2m_solution_accordance(sender,
+                                  instance,
+                                  action,
+                                  reverse,
+                                  model,
+                                  pk_set,
+                                  **kwargs):
+    if action != 'pre_add' or not hasattr(instance, 'solution'):
+        return
+    objects = model.objects.filter(pk__in=pk_set)
+    for second_object in objects:
+        if (hasattr(second_object, 'solution') and
+                instance.solution != second_object.solution):
+            raise ValidationError("Related object(s) belongs to other user.")
 
 
 class LtrObject(BaseObject):
@@ -350,8 +399,8 @@ class CrossValidation(Launch):
     measures = models.ManyToManyField(Measure)
     splitter = models.ForeignKey(Splitter)
 
-## DATA FILES
 
+## DATA FILES
 
 @object_
 class File(Data):
@@ -365,14 +414,8 @@ class File(Data):
 
 ## MEASURES
 
-
 @object_
 class AbsError(Measure):
-    pass
-
-
-@object_
-class AveragePrecision(Measure):
     pass
 
 
@@ -394,7 +437,7 @@ class Accuracy(Measure):
 
 @object_
 class AveragePrecision(Measure):
-    score_for_relevant = models.DecimalField()
+    score_for_relevant = models.DecimalField(decimal_places=5, max_digits=8)
 
 
 @object_
@@ -436,8 +479,8 @@ class SquaredError(Measure):
 class TruePoint(Measure):
     pass
 
-## LEARNERS
 
+## LEARNERS
 
 @object_
 class BestFeatureLearner(Learner):
@@ -579,8 +622,8 @@ class RemoveNominalConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
-## SPLITTERS
 
+## SPLITTERS
 
 @object_
 class KFoldSimpleSplitter(Splitter):

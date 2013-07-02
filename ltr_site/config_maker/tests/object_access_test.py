@@ -1,8 +1,10 @@
 # Copyright 2013 Yandex
-from ltr_object_test_case import LTRObjectsTestCase
 from django.test.client import Client
-from django.contrib.auth.models import User
-from ..file_utility import get_unique_name
+
+from ltr_object_test_case import LTRObjectsTestCase
+from ..models import get_current_solution
+
+from os.path import join
 
 
 class UserPermissionTestCase(LTRObjectsTestCase):
@@ -13,28 +15,70 @@ class UserPermissionTestCase(LTRObjectsTestCase):
 
     """
 
-    _object_category = 'measure'
-    _object_type = 'AbsError'
-    _object_name = 'test_measure'
-
     def check_permissions(self, creator, accessor):
         """Creates data through creator and checks that accessor has no access
         to it.
 
         """
-        self.create_object(self._object_category,
-                           self._object_type,
-                           self._object_name,
-                           creator)
+        measure_id = self.create_object('measure',
+                                        'AbsError',
+                                        'test_measure',
+                                        creator)
         for client, must_have_access in ((creator, True),
                                          (accessor, False)):
             self.assertEqual(must_have_access,
-                             self.is_in_object_list(client, self._object_name))
+                             self.is_in_object_list(client, 'test_measure'))
             for test_type in ('CrossValidation', 'BestFeatureLearner'):
                 self.assertEqual(must_have_access,
                                  self.is_in_parameters(client,
-                                                       self._object_name,
+                                                       'test_measure',
                                                        test_type))
+
+            client.post('/create', {'category_': 'learner',
+                                    'type_': 'BestFeatureLearner',
+                                    'name': 'test_learner',
+                                    'approach': 'pointwise',
+                                    'measure': measure_id}, follow=True)
+            self.check_object_existence('test_learner',
+                                        must_have_access,
+                                        client)
+            if must_have_access:
+                self.delete_object('test_learner', client)
+
+            learner_id = self.create_object('learner',
+                                            'LinearLearner',
+                                            'test_learner',
+                                            client,
+                                            approach='pointwise')
+            data_id = self.create_object('data',
+                                         'File',
+                                         'test_file',
+                                         client,
+                                         approach='pointwise',
+                                         format='Yandex',
+                                         file=open(join(self._testfiles,
+                                                        'data.yandex')))
+            splitter_id = self.create_object('splitter',
+                                             'LeaveOneOutSplitter',
+                                             'test_splitter',
+                                             client,
+                                             approach='pointwise')
+            client.post('/create', {'category_': 'launch',
+                                    'type_': 'CrossValidation',
+                                    'name': 'test_launch',
+                                    'measures': measure_id,
+                                    'data': data_id,
+                                    'splitter': splitter_id,
+                                    'learners': learner_id}, follow=True)
+            self.check_object_existence('test_launch',
+                                        must_have_access,
+                                        client)
+            if must_have_access:
+                self.delete_object('test_launch', client)
+            self.delete_object('test_learner', client)
+            self.delete_object('test_file', client)
+            self.delete_object('test_splitter', client)
+        self.delete_all_objects(creator)
 
     def test_authentificated_to_authentificated(self):
         """Checks that authentificated user has no access to authentificated
