@@ -105,20 +105,27 @@ void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
        train_info->predicts.begin();
        predict_it != train_info->predicts.end();
        ++predict_it) {
-    const string& predict = *predict_it;
-    if (!configuration_->data_infos.contains(predict)) {
-      rInfo("Can't predict. Unknown data %s\n", predict.c_str());
-      return;
+    const string& predict_data_name = *predict_it;
+    if (!configuration_->data_infos.contains(predict_data_name)) {
+      rInfo("Can't predict. Unknown data %s\n", predict_data_name.c_str());
+      continue;
     }
+    DataInfo::Ptr predict_data_info =
+        configuration_->data_infos.safeAt(*predict_it);
+    const DataSet<TElement>& predict_data_set =
+        loadDataSet<TElement>(predict_data_info->file,
+                              predict_data_info->format);
     const string& predict_file_path =
       AppendTrailingPathSeparator(configuration_->root_path) +
-      learner_info->name + "." + predict + ".predicts";
+      learner_info->name + "." + predict_data_name + ".predicts";
 
-    ltr::io_utility::savePredictions(data_set, scorer, predict_file_path);
+    ltr::io_utility::savePredictions(predict_data_set,
+                                     scorer,
+                                     predict_file_path);
 
-    rInfo("\nPredictions for '%s' saved into %s\n", predict.c_str(),
+    rInfo("\nPredictions for '%s' saved into %s\n", predict_data_name.c_str(),
          predict_file_path.c_str());
-    addToReport("<p>\n\tPredictions for <i>" + predict +
+    addToReport("<p>\n\tPredictions for <i>" + predict_data_name +
                   "</i> saved to " + FileLink(predict_file_path) + ".\n</p>");
   }
   if (train_info->gen_cpp) {
