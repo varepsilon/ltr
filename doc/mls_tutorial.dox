@@ -48,7 +48,7 @@ Problem                     |   %Dataset |   %Scorer usage                      
 Binary classification       |{Point, Pair}wise  | \f$ score < \text{or} > 0 \f$       | BinaryClassificationAccuracy, AveragePrecision
 Multiclass classification   | Pointwise  | \f$ score \in \{c_1,c_2, \cdots, c_n\} \f$ | Accuracy
 Regression                  | Pointwise  | \f$ score \in \mathbb{R} \f$               | AbsError, SquaredError, TruePoint
-Ranking                     | {Point, Pair, List}wise |  sort by \f$ score \f$ | \link ltr::DCG DCG \endlink, \link ltr::NDCG NDCG \endlink, \link ltr::GMRR GMRR \endlink, PFound, ReciprocalRank
+Ranking                     | {Point, Pair, List}wise |  sort by \f$ score \f$ | \link ltr::BaseDCG BaseDCG \endlink, \link ltr::BaseNDCG BaseNDCG \endlink, \link ltr::GMRR GMRR \endlink, PFound, ReciprocalRank
 
 \section Learner Learner
 
@@ -89,8 +89,8 @@ AbsError                      |http://en.wikipedia.org/wiki/Mean_absolute_error
 Accuracy                      |http://en.wikipedia.org/wiki/Accuracy_and_precision
 AveragePrecision              |http://en.wikipedia.org/wiki/Accuracy_and_precision
 BinaryClassificationAccuracy  |http://en.wikipedia.org/wiki/Accuracy_and_precision
-\link ltr::DCG DCG \endlink   |http://en.wikipedia.org/wiki/Discounted_Cumulative_Gain
-\link ltr::NDCG NDCG \endlink |http://en.wikipedia.org/wiki/NDCG
+\link ltr::BaseDCG BaseDCG \endlink   |http://en.wikipedia.org/wiki/Discounted_Cumulative_Gain
+\link ltr::BaseNDCG BaseNDCG \endlink |http://en.wikipedia.org/wiki/NDCG
 \link ltr::GMRR GMRR \endlink |Desc
 PFound                        |http://romip.ru/romip2009/15_yandex.pdf
 ReciprocalRank                |http://en.wikipedia.org/wiki/Mean_reciprocal_rank
