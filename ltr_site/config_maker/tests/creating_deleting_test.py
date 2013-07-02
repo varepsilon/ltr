@@ -34,7 +34,9 @@ class CreatingDeletingTestCase(LTRObjectsTestCase):
         self.create_delete_object('measure', 'AbsError')
 
     def test_average_precision(self):
-        self.create_delete_object('measure', 'AveragePrecision')
+        self.create_delete_object('measure',
+                                  'AveragePrecision',
+                                  score_for_relevant=1)
 
     def test_best_feature_learner(self):
         self.create_object('measure', 'AbsError', 'test_measure')

@@ -1,9 +1,10 @@
 # Copyright 2013 Yandex
 from django.test import TestCase
-from django.test.client import Client
 from django.contrib.auth.models import User
-from ..models import BaseObject
+
+from ..models import BaseObject, get_current_solution
 from ..file_utility import get_unique_name
+
 import os
 
 
@@ -13,10 +14,6 @@ class LTRObjectsTestCase(TestCase):
 
     _testfiles = os.path.join(os.path.abspath(os.path.dirname(__file__)),
                               'testfiles')
-
-    def setUp(self):
-        """Create django client for surfing."""
-        self.client = Client()
 
     def tearDown(self):
         self.delete_all_objects()
@@ -58,11 +55,12 @@ class LTRObjectsTestCase(TestCase):
                                object_name,
                                must_exist,
                                client=None):
-        """Checks existence of object in database and through client."""
+        """Checks existence of object in database and through client.
+
+        Function returns object id if object exists."""
         if client is None:
             client = self.client
-        self.assertEqual(BaseObject.objects.filter(name=object_name).exists(),
-                         must_exist)
+
         self.assertEqual(self.is_in_object_list(client, object_name),
                          must_exist)
         response = client.get('/view/' + object_name)
@@ -71,13 +69,26 @@ class LTRObjectsTestCase(TestCase):
         else:
             self.assertEqual(response.status_code, 404)
 
+        solution = get_current_solution(client)
+        if solution is None:
+            self.assertFalse(must_exist)
+        else:
+            objects = solution.get_objects(BaseObject)
+            self.assertEqual(objects.filter(name=object_name).exists(),
+                             must_exist)
+
+        if must_exist:
+            return objects.get(name=object_name).pk
+
     def create_object(self,
                       object_category,
                       object_type,
                       object_name='test_object',
                       client=None,
                       **object_parameters):
-        """Creates object through client and checks every step."""
+        """Creates object through client and checks every step.
+
+        Function returns object id of created object."""
         if client is None:
             client = self.client
         self.check_object_existence(object_name, False, client)
@@ -92,7 +103,8 @@ class LTRObjectsTestCase(TestCase):
         self.assertEqual(response.redirect_chain,
                          [('http://testserver/', 302)])
         self.assertIn(object_name, response.content)
-        self.check_object_existence(object_name, True, client)
+        object_id = self.check_object_existence(object_name, True, client)
+        return object_id
 
     def delete_object(self, object_name, client=None):
         """Deletes object through client and checks every step."""
