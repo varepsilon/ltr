@@ -360,6 +360,9 @@ SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info
                                  ${Source_Path}/ltr/optimization/population_info/population.cc
                                  ${Source_Path}/ltr/optimization/population_info/population_info.hpp)
 
+SET(OPTIMIZATION_SOLVER ${Source_Path}/ltr/optimization/solver/solver.h
+                        ${Source_Path}/ltr/optimization/solver/solution.h)
+
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
 
@@ -410,7 +413,7 @@ SET(LTR_ALL ${LTR_PREDICTIONS_AGGREGATORS} ${LTR_DATA} ${LTR_DATA_UTILS} ${LTR_U
             ${LTR_DECISION_TREE} ${LTR_DECISION_TREE_VERTEX} ${LTR_DECISION_TREE_CONDITION}
             ${LTR_DECISION_TREE_LEAF_GENERATOR} ${LTR_DECISION_TREE_SPLIT_CRITERIA}
             ${LTR_COMPOSITION_SCORERS} ${LTR_METRICS} ${LTR_DATA_PREPROCESSORS} ${LTR_COMPOSITION}
-            ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS}
+            ${OPTIMIZATION_SETS} ${OPTIMIZATION_FUNCTIONS} ${OPTIMIZATION_SOLVER}
             ${LTR_DENSITY_ESTIMATORS_SCORERS} ${LTR_DENSITY_ESTIMATORS_LEARNERS} ${LTR_BOOST} ${GETOPTPP} ${CONTRIB_INCLUDE} ${OPTIMIZATION_TEST_PROBLEMS} ${OPTIMIZATION_POPULATION_INITERS} ${OPTIMIZATION_STOP_CRITERIA} ${OPTIMIZATION_POPULATION_INFO} ${OPTIMIZATION_POPULATION_UPDATERS})
 
 INCLUDE_DIRECTORIES(${Source_Path})
