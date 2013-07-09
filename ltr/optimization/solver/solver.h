@@ -3,6 +3,7 @@
 #ifndef LTR_OPTIMIZATION_SOLVER_SOLVER_H_
 #define LTR_OPTIMIZATION_SOLVER_SOLVER_H_
 
+#include <ctime>
 #include <limits>
 
 #include "ltr/utility/macros.h"
