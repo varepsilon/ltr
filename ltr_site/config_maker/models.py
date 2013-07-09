@@ -164,6 +164,8 @@ class Task(models.Model):
     solution = models.ForeignKey(Solution)
     config_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
                                        unique=False)
+    log_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
+                                    unique=False)
     report_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
                                        unique=True)
     working_dir = ""
@@ -178,10 +180,12 @@ class Task(models.Model):
             '/'.join([task.solution.user.username, 'task']))
 
         ensure_path_exists(task.working_dir)
-        task.config_filename = get_unique_filename(
-            task.working_dir + '/config.xml')
+        task.config_filename = get_unique_filename(task.working_dir +
+                                                   '/config.xml')
+        task.log_filename = get_unique_filename(task.working_dir + '/log.txt')
         file_config = open(task.config_filename, "w")
         file_config.write(task.make_config(launchable_name))
+        file_config.close()
         task.report_filename = get_unique_filename(
             task.working_dir + '/report.html')
         open(task.report_filename, 'w').close()
@@ -219,8 +223,10 @@ class Task(models.Model):
 
     def run(self):
         """Runs ltr_client."""
-        subprocess.Popen([settings.LTR_CLIENT_PATH, '-f',
-                          self.config_filename])
+        subprocess.Popen([settings.LTR_CLIENT_PATH,
+                          self.config_filename,
+                          '-w',
+                          '-l', self.log_filename])
 
     def is_complete(self):
         """Checks if ltr_client's launch has successfully finished."""
@@ -344,47 +350,47 @@ class LtrObject(BaseObject):
     pass
 
 
-def object_(cls):
+def type_decorator(cls):
     """Class decorator used to register objects in object hierarchy."""
     cls.get_type = staticmethod(lambda: cls.__name__)
     object_controller.register(cls.get_category(), cls.__name__)
     return cls
 
 
-def category(cls):
+def category_decorator(cls):
     """Class decorator used to register categories in object hierarchy."""
     cls.get_category = staticmethod(lambda: cls.__name__.lower())
     return cls
 
 
-@category
+@category_decorator
 class Launch(BaseObject):
     pass
 
 
-@category
+@category_decorator
 class Data(BaseObject):
     pass
 
 
-@category
+@category_decorator
 class Measure(LtrObject):
     pass
 
 
-@category
+@category_decorator
 class Learner(LtrObject):
     pass
 
 
-@category
+@category_decorator
 class Splitter(LtrObject):
     pass
 
 
 ## LAUNCHABLE OBJECTS
 
-@object_
+@type_decorator
 class Train(Launch):
     train_data = models.ForeignKey(Data, related_name='+')
     learner = models.ForeignKey(Learner)
@@ -392,7 +398,7 @@ class Train(Launch):
     generate_cpp = models.BooleanField()
 
 
-@object_
+@type_decorator
 class CrossValidation(Launch):
     data = models.ForeignKey(Data)
     learners = models.ManyToManyField(Learner)
@@ -402,7 +408,7 @@ class CrossValidation(Launch):
 
 ## DATA FILES
 
-@object_
+@type_decorator
 class File(Data):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -414,82 +420,82 @@ class File(Data):
 
 ## MEASURES
 
-@object_
+@type_decorator
 class AbsError(Measure):
     pass
 
 
-@object_
+@type_decorator
 class NDCG(Measure):
     number_of_objects_to_consider = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class DCG(Measure):
     number_of_objects_to_consider = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class Accuracy(Measure):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=choices(('pointwise', 'pairwise')))
 
 
-@object_
+@type_decorator
 class AveragePrecision(Measure):
     score_for_relevant = models.DecimalField(decimal_places=5, max_digits=8)
 
 
-@object_
+@type_decorator
 class BinaryClassificationAccuracy(Measure):
     pass
 
 
-@object_
+@type_decorator
 class GMRR(Measure):
     max_label = models.DecimalField(decimal_places=5, max_digits=8)
     number_of_objects_to_consider = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class NormalizedMeasure(Measure):
     weak_measure = models.ForeignKey(Measure, related_name='weak_measure')
     worst = models.DecimalField(decimal_places=5, max_digits=8)
     best = models.DecimalField(decimal_places=5, max_digits=8)
 
 
-@object_
+@type_decorator
 class PFound(Measure):
     p_break = models.DecimalField(decimal_places=5, max_digits=8)
     max_label = models.DecimalField(decimal_places=5, max_digits=8)
     number_of_objects_to_consider = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class ReciprocalRank(Measure):
     score_for_relevant = models.DecimalField(decimal_places=5, max_digits=8)
 
 
-@object_
+@type_decorator
 class SquaredError(Measure):
     pass
 
 
-@object_
+@type_decorator
 class TruePoint(Measure):
     pass
 
 
 ## LEARNERS
 
-@object_
+@type_decorator
 class BestFeatureLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
     measure = models.ForeignKey(Measure)
 
 
-@object_
+@type_decorator
 class GPLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -502,7 +508,7 @@ class GPLearner(Learner):
     seed = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class NNLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -517,7 +523,7 @@ class NNLearner(Learner):
     number_of_neighbors_to_process = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class LinearLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=choices(('pointwise', 'listwise')))
@@ -545,7 +551,7 @@ def createSSCChoices(solution):
     registerSSCChoice('DATA_SIZE_STOP_SPLITTING_CRITERIA', solution)
 
 
-@object_
+@type_decorator
 class DecisionTreeLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -560,31 +566,31 @@ class DecisionTreeLearner(Learner):
         StopSplittingCriteriaChoice)
 
 
-@object_
+@type_decorator
 class FisherDiscriminantLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class QuadraticDiscriminantLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class NormalNaiveBayesLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class FakeFeatureConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class FeatureNormalizerLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -592,32 +598,32 @@ class FeatureNormalizerLearner(Learner):
     max = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class FeatureSamplerLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
     indices = models.CharField(max_length=MAX_FILE_PATH_LENGTH)
 
 
-@object_
+@type_decorator
 class NanToAverageConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class NanToZeroConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class NominalToBoolConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
 
 
-@object_
+@type_decorator
 class RemoveNominalConverterLearner(Learner):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -625,14 +631,14 @@ class RemoveNominalConverterLearner(Learner):
 
 ## SPLITTERS
 
-@object_
+@type_decorator
 class KFoldSimpleSplitter(Splitter):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
     k = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class TKFoldSimpleSplitter(Splitter):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)
@@ -640,7 +646,7 @@ class TKFoldSimpleSplitter(Splitter):
     t = models.PositiveIntegerField()
 
 
-@object_
+@type_decorator
 class LeaveOneOutSplitter(Splitter):
     approach = models.CharField(max_length=MAX_STRING_LENGTH,
                                 choices=APPROACH_CHOICES)

@@ -72,7 +72,8 @@ void DependencyResolvingFactory::checkCircularDependencyAbsence() const {
 Any DependencyResolvingFactory::Create(const string& name) const {
   const Configuration::ObjectInfos& all_infos =
       configuration_->object_infos;
-  Configuration::ObjectInfos::const_iterator iter = all_infos.find(name);
+  Configuration::ObjectInfos::const_iterator iter =
+      all_infos.find(to_lower(name));
   assert(iter != all_infos.end());
   const ObjectInfo::Ptr object_info = iter->second;
   const ParametersContainer& parameters =

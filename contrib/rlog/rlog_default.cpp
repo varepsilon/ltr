@@ -1,11 +1,13 @@
+#include <string>
+
 #include "rlog_default.h"
+
+using std::string;
 
 namespace ltr {
 Log::Log() {
   cout_log_ = Destination(new rlog::StdioNode(STDOUT_FILENO, DEFAULT_FLAGS));
   cerr_log_ = Destination(new rlog::StdioNode(STDERR_FILENO, DEFAULT_FLAGS));
-  subscribeCerr("error");
-  subscribeFile("ltr.log");
 }
 
 void Log::subscribeCerr(const string& channel) {
@@ -20,7 +22,8 @@ void Log::subscribeFile(const string& filename, const string& channel) {
   if (files_.find(filename) == files_.end()) {
     files_[filename] = LogFile::Ptr(new LogFile(filename.c_str()));
   }
-  files_[filename]->file_log->subscribeTo(rlog::GetGlobalChannel(channel.c_str()));
+  files_[filename]->file_log->
+      subscribeTo(rlog::GetGlobalChannel(channel.c_str()));
 }
 
 void Log::reset() {
@@ -47,4 +50,6 @@ Log::LogFile::~LogFile() {
     close(file_descriptor);
   #endif
 }
+
+Log LOG;
 };

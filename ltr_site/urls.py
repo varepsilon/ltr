@@ -32,6 +32,7 @@ urlpatterns = patterns(
     url(r'^export$', views.view_export),
     url(r'^import$', views.view_import),
     url(r'^delete_all$', views.view_delete_all),
+    url(r'^log/(\d+)$', views.view_logfile),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
