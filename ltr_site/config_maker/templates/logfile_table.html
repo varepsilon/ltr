@@ -1,19 +1,12 @@
-{% extends "base.html" %}
-{% load object_handlers %}
-
-{% block title %} View logfile {% endblock %}
-
-<!-- TODO: add AJAX-->
-
-{% block body %}
-<p>Download plain text version <a href="{{ log_filename|path_to_url }}">here</a>.</p>
 <table>
 {% for log_entry in log%}
 <tr>
 <td style="vertical-align:top"><img src="{{ STATIC_URL }}icons/{{ log_entry.level }}.png" title="{{ log_entry.level }}" width="16" height="16"></td>
 <td style="vertical-align:top">{{ log_entry.time|date:"G:i:s" }}</td>
-<td>{{ log_entry.html|safe }}</td>
+<td style="vertical-align:top">{{ log_entry.message|safe }}</td>
 </tr>
 {% endfor %}
+{% if not is_complete %}
+<tr id="id_loading_"><td>&nbsp;</td><td>&nbsp;</td><td><img src="{{ STATIC_URL }}icons/loading.gif" title="loading..." width="64" height="64"></td></tr>
+{% endif %}
 </table>
-{% endblock %}

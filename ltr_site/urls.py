@@ -4,7 +4,6 @@ This file sets accordance between available URLs and views called for them.
 """
 
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
 from django.views import static
 from django.conf import settings
 from django.contrib import admin
@@ -15,7 +14,6 @@ from config_maker import views
 
 urlpatterns = patterns(
     '',
-    url(r'^about$', direct_to_template, {'template': 'about.html'}),
     url(r'^$', views.view_home),
     url(r'^view/(\w+)$', views.view_parameters),
     url(r'^launch/(\w+)$', views.view_launch),   # deprecated

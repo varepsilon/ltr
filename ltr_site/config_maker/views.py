@@ -21,6 +21,7 @@ from models import get_current_solution, BaseObject, Task, object_controller
 from forms import FormType
 from templatetags.object_handlers import path_to_url
 from file_utility import get_unique_name
+from log_formatter import parse_log
 
 
 @require_GET
@@ -242,7 +243,8 @@ def view_logfile(request, task_pk):
     log = logfile.read()
     logfile.close()
     return render_to_response('logfile.html',
-                              {'log': log},
+                              {'log': parse_log(log),
+                               'log_filename': task.log_filename},
                               context_instance=RequestContext(request))
 
 

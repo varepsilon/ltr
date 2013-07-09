@@ -10,18 +10,18 @@
         <table>
           <tr>
             <td>
-              <a href="/create"><img src="{{ STATIC_URL }}create.gif" alt="Create..." width="32" height="32"></a>
+              <a href="/create"><img src="{{ STATIC_URL }}icons/add.png" title="Create..." width="48" height="48"></a>
             </td>
             <td>
-              <a href="/export"><img src="{{ STATIC_URL }}save.png" alt="Export" width="32" height="32"></a>
+              <a href="/export"><img src="{{ STATIC_URL }}icons/export.png" title="Export" width="48" height="48"></a>
             </td>
             <td>
-              <a href="/import"><img src="{{ STATIC_URL }}open.jpg" alt="Import..." width="32" height="32"></a>
+              <a href="/import"><img src="{{ STATIC_URL }}icons/import.png" title="Import..." width="48" height="48"></a>
             </td>
             <td>
               <form name="delete_all" action="/delete_all" method="post">
               {% csrf_token %}
-                <a href="javascript:submit_with_confirm(document.delete_all, 'Are you sure you want to delete all the objects?');"><img src="{{ STATIC_URL }}delete.jpg" alt="Delete all" width="32" height="32"></a>
+                <a href="javascript:submit_with_confirm(document.delete_all, 'Are you sure you want to delete all the objects?');"><img src="{{ STATIC_URL }}icons/clear.png" title="Delete all" width="48" height="48"></a>
             </form>
             </td>
           </tr>
