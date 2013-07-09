@@ -98,7 +98,7 @@ private:
 /**
  * Global Log object, that provides the default logging behaviour
  */
-static Log LOG;
+extern Log LOG;
 };
 
 #endif // _rlog_default_

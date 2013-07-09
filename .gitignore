@@ -6,12 +6,12 @@ doc/build
 lib
 ltr/serialization_test/tester/tester.cc
 ltr/serialization_test/tester/tester.cc.rule
-contrib/include_openmp.h
+/ltr/utility/include_openmp.h
 LTR.h
 
 # For ltr_site
 *.pyc
 /ltr_site/db.sqlite3
 /ltr_site/config_maker/users
-/ltr_site/ltr.log
-/ltr_site/log.txt
+/ltr_site/dump.json
+/jenkins/config_maker

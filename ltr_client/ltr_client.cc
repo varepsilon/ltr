@@ -92,22 +92,22 @@ void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
   const DataSet<TElement>& data_set =
     loadDataSet<TElement>(data_info->file, data_info->format);
 
-  rInfo("\n\nTrain started\n");
+  rInfo("Train started.");
   learner->learn(data_set);
 
-  rInfo("\n\nTrain %s finished. Learner's report:%s\n", data_info->file.c_str(),
+  rInfo("Train %s finished. Learner's report: '%s'.", data_info->file.c_str(),
        learner->report().c_str());
 
   Scorer::Ptr scorer = learner->make();
 
-  rInfo("\n\nStarted predicting\n");
+  rInfo("Predicting started.");
   for (std::set<string>::const_iterator predict_it =
        train_info->predicts.begin();
        predict_it != train_info->predicts.end();
        ++predict_it) {
     const string& predict_data_name = *predict_it;
     if (!configuration_->data_infos.contains(predict_data_name)) {
-      rInfo("Can't predict. Unknown data %s\n", predict_data_name.c_str());
+      rWarning("Can't predict. Unknown data %s\n", predict_data_name.c_str());
       continue;
     }
     DataInfo::Ptr predict_data_info =
@@ -123,10 +123,10 @@ void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
                                      scorer,
                                      predict_file_path);
 
-    rInfo("\nPredictions for '%s' saved into %s\n", predict_data_name.c_str(),
-         predict_file_path.c_str());
+    rInfo("Predictions for '%s' saved into %s", predict_data_name.c_str(),
+          predict_file_path.c_str());
     addToReport("<p>\n\tPredictions for <i>" + predict_data_name +
-                  "</i> saved to " + FileLink(predict_file_path) + ".\n</p>");
+                "</i> saved to " + FileLink(predict_file_path) + ".\n</p>");
   }
   if (train_info->gen_cpp) {
     string cpp_file_path =
@@ -135,7 +135,7 @@ void LtrClient::launchTrainImpl(typename Learner<TElement>::Ptr learner,
     ofstream file_out(cpp_file_path.c_str());
     file_out << scorer->generateCppCode(learner_info->name);
     file_out.close();
-    rInfo("Cpp code saved into %s\n", cpp_file_path.c_str());
+    rInfo("Cpp code saved into %s", cpp_file_path.c_str());
     addToReport("<p>\n\tCpp code for <i>" + learner_info->name +
                 "</i> saved to " + FileLink(cpp_file_path) + ".\n</p>");
   }
@@ -240,6 +240,7 @@ void LtrClient::launchCrossvalidation() {
 }
 
 void LtrClient::launch() {
+  rInfo("Experiment started.");
   launchTrain();
   launchCrossvalidation();
 

@@ -26,17 +26,16 @@ Configuration::Ptr ConfigParser::parse(const string& file_name) {
   TiXmlElement* root = document->FirstChildElement(ROOT);
   CHECK_MSG(root, "can't find <LTR_experiment>");
 
-  rInfo(" LTR Client. Copyright 2013 Yandex");
-  rInfo(" Experiment started ");
-
   parseTags(*(root->FirstChildElement()));
 
-  rInfo("\n\nEnd of loadConfig. Collected data:\n");
-  rInfo("data_infos\n%s\n", configuration_->data_infos.toString().c_str());
-  rInfo("object_infos\n%s\n",
-        configuration_->object_infos.toString().c_str());
-  rInfo("train_infos\n%s\n", configuration_->train_infos.toString().c_str());
-  rInfo("crossvalidation_infos\n%s\n",
+  rInfo("Configuration file loaded. Collected data:\n"
+        "Data:\n%s"
+        "Objects:\n%s"
+        "Train launches:\n%s"
+        "Crossvalidation launches:\n%s",
+        configuration_->data_infos.toString().c_str(),
+        configuration_->object_infos.toString().c_str(),
+        configuration_->train_infos.toString().c_str(),
         configuration_->crossvalidation_infos.toString().c_str());
 
   for (ObjectInfo::ObjectInfos::iterator it =
