@@ -49,7 +49,7 @@ class Factory {
   }
 
   Any Create(const string& name, const ParametersContainer& parameters) const {
-    rInfo("Factory::Create: Requested creating of %s\n", name.c_str());
+    rDebug("Factory::Create: Requested creating of %s\n", name.c_str());
     NameCreatorHash::const_iterator it = name_creators_.find(name);
     if (it == name_creators_.end()) {
       throw logic_error("unable to create " + name + ": name unknown");

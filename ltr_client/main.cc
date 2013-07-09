@@ -1,6 +1,8 @@
 // Copyright 2012 Yandex
 
-#include <iostream>
+#include <iostream>  // NOLINT
+#include <string>
+#include <vector>
 
 #include "rlog/rlog_default.h"
 
@@ -16,24 +18,33 @@ using GetOpt::Option;
 using GetOpt::OptionPresent;
 using GetOpt::GetOptEx;
 using GetOpt::TooManyOptionsEx;
+using GetOpt::GlobalOption;
 
 using std::cout;
 using std::cin;
 using std::cerr;
 using std::endl;
+using std::string;
 
 using ltr::LOG;
 
 
 void show_usage() {
-  cout << "Usage: ltr_client -f <configfilename> [-v | -h]" << endl
-       << "Executes commands defined in xml config file." << endl << endl
+  cout << "Usage: ltr_client -h" << endl
+       << "       ltr_client <config_filename> [OPTIONS]" << endl
+       << "Executes commands defined in xml config file." << endl
+       << endl
        << "Options:" << endl
-       << "  -f,  filename\t\tconfig file name" << endl
-       << "  -h,  help    \t\tdisplay this help and exit" << endl
-       << "  -s,  silent  \t\tproduce no output to console"
-       << " (overrides 'verbose')" << endl
-       << "  -v,  verbose \t\tproduce additional output to console" << endl;
+       << "  -h, --help                   \t\t"
+          "display this help and exit" << endl
+       << "  -s, --silent                 \t\t"
+          "produce no output to console" << endl
+       << "  -w, --warning                \t\t"
+          "produce warnings to console" << endl
+       << "  -d, --debug                  \t\t"
+          "produce debug output to console" << endl
+       << "  -l, --logfile <log_filename> \t\t"
+          "produce output to file" << endl;
 }
 
 
@@ -47,24 +58,41 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
-    LOG.subscribeCout("error");
-    if (!(args >> OptionPresent('s', "silent"))) {
-      if (args >> OptionPresent('v', "verbose")) {
+    LOG.subscribeCerr("error");
+    if (args >> OptionPresent('l', "logfile")) {
+      string logfile;
+      args >> Option('l', "logfile", logfile);
+      LOG.subscribeFile(logfile, "error");
+      if (!(args >> OptionPresent('s', "silent"))) {
+        if (args >> OptionPresent('w', "warning")) {
+          LOG.subscribeFile(logfile, "warning");
+        }
+        LOG.subscribeFile(logfile, "info");
+      }
+    } else {
+      if (!(args >> OptionPresent('s', "silent"))) {
+        if (args >> OptionPresent('w', "warning")) {
+          LOG.subscribeCout("warning");
+        }
         LOG.subscribeCout("info");
       }
-      LOG.subscribeCout("warning");
     }
-    LOG.subscribeFile("log.txt", "info");
-    LOG.subscribeFile("log.txt", "warning");
-    LOG.subscribeFile("log.txt", "error");
+    rInfo("LTR Client. Copyright 2013 Yandex");
 
-    string filename;
-    args >> Option('f', "configfile", filename, "");
-    if (filename.empty()) {
-      cerr << "Configuration file name not specified."
-           << " Type 'ltr_client -h' for usage." << endl;
+    vector<string> config_files;
+    args >> GlobalOption(config_files);
+    if (config_files.size() == 0) {
+      cerr << "Configuration file name not specified." << endl
+           << "Type 'ltr_client -h' for usage." << endl;
       return 0;
     }
+    if (config_files.size() > 1) {
+      cerr << "You can specify only one config file." << endl
+           << "Type 'ltr_client -h' for usage." << endl;
+      return 0;
+    }
+    string filename = config_files[0];
+    rInfo("Config filename: %s", filename.c_str());
     args.end_of_options();
 
     Factory factory;
@@ -74,14 +102,15 @@ int main(int argc, char *argv[]) {
     client.initFrom(filename);
     client.launch();
   } catch (TooManyOptionsEx) {
-    cerr << "Unrecognized options specified."
-         << " Type 'ltr_client -h' for usage." << endl;
+    cerr << "Unrecognized options specified." << endl
+         << "Type 'ltr_client -h' for usage." << endl;
   } catch (const GetOptEx& err) {
-    cerr << "Invalid parameters. Type 'ltr_client -h' for usage." << endl;
+    cerr << "Invalid parameters." << endl
+         << "Type 'ltr_client -h' for usage." << endl;
   } catch (const logic_error& err) {
-    cerr << "Failed: " << err.what() << endl;
+    rError("Logic error: %s", err.what());
   } catch (const std::exception err) {
-    cerr << "Caught exception: " << err.what() << endl;
+    rError("Caught exception: %s", err.what());
   }
   return 0;
 }

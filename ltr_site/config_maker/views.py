@@ -49,11 +49,11 @@ def view_parameters(request, object_name):
                                                               instance=obj)
         if form_object_parameters.is_valid():
             try:
-                get_current_solution(request).save_form(form_object_parameters)
+                form_object_parameters.save()
                 if 'launch' in request.REQUEST:
                     return view_launch(request, object_name)
                 return HttpResponseRedirect('/')
-            except IntegrityError:
+            except (IntegrityError, ValidationError):
                 # TODO: handle IntegrityError
                 pass
     else:
@@ -231,6 +231,18 @@ def view_profile(request):
     tasks = get_current_solution(request).get_objects(Task)
     return render_to_response('profile.html',
                               {'tasks': tasks},
+                              context_instance=RequestContext(request))
+
+
+@require_GET
+def view_logfile(request, task_pk):
+    """Page with current user's profile (list of launched tasks)."""
+    task = get_current_solution(request).get_objects(Task).get(pk=task_pk)
+    logfile = open(task.log_filename, 'r')
+    log = logfile.read()
+    logfile.close()
+    return render_to_response('logfile.html',
+                              {'log': log},
                               context_instance=RequestContext(request))
 
 

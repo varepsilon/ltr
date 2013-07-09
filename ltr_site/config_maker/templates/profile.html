@@ -12,6 +12,7 @@
   <tr>
     <td>{{ forloop.counter }}</td>
     <td><a href="{{ task.config_filename|path_to_url }}">Config</a></td>
+    <td><a href="/log/{{ task.pk }}">Log</a></td>
     <td>
       {% if task.is_complete %}
         <a href="{{ task.report_filename|path_to_url }}">Report</a>
