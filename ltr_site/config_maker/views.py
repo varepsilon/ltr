@@ -242,10 +242,17 @@ def view_logfile(request, task_pk):
     logfile = open(task.log_filename, 'r')
     log = logfile.read()
     logfile.close()
-    return render_to_response('logfile.html',
-                              {'log': parse_log(log),
-                               'log_filename': task.log_filename},
-                              context_instance=RequestContext(request))
+    if request.is_ajax():
+        return render_to_response('logfile_table.html',
+                                  {'log': parse_log(log),
+                                   'is_complete': task.is_complete},
+                                  context_instance=RequestContext(request))
+    else:
+        return render_to_response('logfile.html',
+                                  {'log': parse_log(log),
+                                   'log_filename': task.log_filename,
+                                   'is_complete': task.is_complete},
+                                  context_instance=RequestContext(request))
 
 
 @require_http_methods(["GET", "POST"])
