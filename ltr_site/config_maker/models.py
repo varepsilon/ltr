@@ -13,11 +13,11 @@ from django.dispatch import receiver
 from django.test.client import Client
 
 import subprocess
+import threading
 import itertools
 import os
 
-from file_utility import (get_unique_filename, ensure_path_exists,
-                          file_not_empty)
+from file_utility import get_unique_filename, ensure_path_exists
 
 
 class cached_property(object):
@@ -168,6 +168,7 @@ class Task(models.Model):
                                     unique=False)
     report_filename = models.CharField(max_length=MAX_FILE_PATH_LENGTH,
                                        unique=True)
+    is_complete = models.BooleanField()
     working_dir = ""
 
     @staticmethod
@@ -189,6 +190,7 @@ class Task(models.Model):
         task.report_filename = get_unique_filename(
             task.working_dir + '/report.html')
         open(task.report_filename, 'w').close()
+        task.is_complete = False
         task.save()
         return task
 
@@ -220,14 +222,20 @@ class Task(models.Model):
 
     def run(self):
         """Runs ltr_client."""
-        subprocess.Popen([settings.LTR_CLIENT_PATH,
-                          self.config_filename,
-                          '-w',
-                          '-l', self.log_filename])
+        def run_in_thread(popen_args, task):
+            process = subprocess.Popen(popen_args)
+            process.wait()
+            task.is_complete = True
+            task.save()
 
-    def is_complete(self):
-        """Checks if ltr_client's launch has successfully finished."""
-        return file_not_empty(self.report_filename)
+        popen_args = [settings.LTR_CLIENT_PATH,
+                      self.config_filename,
+                      '-w',
+                      '-d',
+                      '-l', self.log_filename]
+        thread = threading.Thread(target=run_in_thread,
+                                  args=(popen_args, self))
+        thread.start()
 
 
 class InheritanceCastModel(models.Model):

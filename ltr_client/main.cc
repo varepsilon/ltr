@@ -1,5 +1,7 @@
 // Copyright 2012 Yandex
 
+#include <unistd.h>
+
 #include <iostream>  // NOLINT
 #include <string>
 #include <vector>
@@ -59,6 +61,9 @@ int main(int argc, char *argv[]) {
     }
 
     LOG.subscribeCerr("error");
+    if (args >> OptionPresent('d', "debug")) {
+      LOG.subscribeCerr("debug");
+    }
     if (args >> OptionPresent('l', "logfile")) {
       string logfile;
       args >> Option('l', "logfile", logfile);
@@ -68,6 +73,9 @@ int main(int argc, char *argv[]) {
           LOG.subscribeFile(logfile, "warning");
         }
         LOG.subscribeFile(logfile, "info");
+      }
+      if (args >> OptionPresent('d', "debug")) {
+        LOG.subscribeFile(logfile, "debug");
       }
     } else {
       if (!(args >> OptionPresent('s', "silent"))) {
