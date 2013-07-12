@@ -315,6 +315,11 @@ class BaseObject(InheritanceCastModel):
     def clean(self):
         super(BaseObject, self).clean()
 
+        names = self.solution.get_objects(BaseObject).values_list('name',
+                                                                  flat=True)
+        lowercase_names = [name.lower() for name in names]
+        if self.name.lower() in lowercase_names:
+            raise ValidationError("This name is already used.")
         for field in self._meta.fields:
             if not (self.__is_auxiliary_field(field) or
                     self.__is_pointer_to_base_class(field)):
