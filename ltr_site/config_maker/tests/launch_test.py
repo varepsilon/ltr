@@ -56,7 +56,7 @@ class launchTestCase(LTRObjectsTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.redirect_chain,
                          [('http://testserver/profile', 302)])
-        tries_left = 10
+        tries_left = 20
         while tries_left > 0 and 'In progress...' in response.content:
             tries_left -= 1
             sleep(1)

@@ -2,7 +2,7 @@
 // Uses Prototype library (MIT licence)
 
 function update_object_types() {
-    new Ajax.Request('/get_object_types', { 
+    new Ajax.Request('/get_object_types', {
     method: 'post',
     parameters: $H({'category': $('id_category_').getValue()}),
     onSuccess: function(transport) {
@@ -26,6 +26,21 @@ function update_object_parameters(mode) {
         }
     }
     }); // end new Ajax.Request
+}
+
+function update_logfile() {
+    new Ajax.Request(window.location.pathname, {
+        method: 'get',
+        onSuccess: function(transport) {
+            if (transport.responseText) {
+                var logfile_table = $('id_logfile_table_');
+                logfile_table.update(transport.responseText);
+                if ($('id_loading_') == undefined) {
+                    clearInterval(update_logfile_interval);
+                }
+            }
+        }
+    });
 }
 
 function submit_with_confirm(form, message) {

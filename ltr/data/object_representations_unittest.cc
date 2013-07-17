@@ -142,7 +142,7 @@ TEST(SelectorsTest, DataSetObjectRepresentationTest) {
 
   // Testing eigen vector
   Eigen::VectorXd eigen_vector = selector2.getEigenColumn();
-  EXPECT_EQ(eigen_vector[1], selector2.at(1));
+  EXPECT_EQ(eigen_vector[0], selector2.at(0));
 
   eigen_vector.setConstant(1);
   EXPECT_FALSE(eigen_vector.isApprox(selector2.getEigenColumn()));

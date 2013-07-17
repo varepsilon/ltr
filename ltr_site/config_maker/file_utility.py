@@ -51,14 +51,3 @@ def ensure_path_exists(path):
     """Creates path if it doesn't exist."""
     if not os.path.exists(path):
         os.makedirs(path)
-
-
-def file_not_empty(filename):
-    """Checks if file is available and not empty."""
-    if not os.path.isfile(filename):
-        return False
-    try:
-        open(filename).close()
-        return os.path.getsize(filename) > 0
-    except IOError:
-        return False

@@ -97,9 +97,8 @@ def view_create(request):
                 return HttpResponseRedirect('/')
             except (IntegrityError, ValidationError):
                 # TODO: show validation errors
-                object_name = form_object_parameters.data['name']
-                object_type.objects.get(name=object_name,
-                                        solution=solution).delete()
+                if object_instance.pk is not None:
+                    object_instance.delete()
                 form_object_type = FormType(request.POST)
                 reload_type_list = False
         else:
@@ -242,10 +241,17 @@ def view_logfile(request, task_pk):
     logfile = open(task.log_filename, 'r')
     log = logfile.read()
     logfile.close()
-    return render_to_response('logfile.html',
-                              {'log': parse_log(log),
-                               'log_filename': task.log_filename},
-                              context_instance=RequestContext(request))
+    if request.is_ajax():
+        return render_to_response('logfile_table.html',
+                                  {'log': parse_log(log),
+                                   'is_complete': task.is_complete},
+                                  context_instance=RequestContext(request))
+    else:
+        return render_to_response('logfile.html',
+                                  {'log': parse_log(log),
+                                   'log_filename': task.log_filename,
+                                   'is_complete': task.is_complete},
+                                  context_instance=RequestContext(request))
 
 
 @require_http_methods(["GET", "POST"])
@@ -314,9 +320,11 @@ def view_get_object_parameters(request):
         launchable = (object_type.get_category() == 'launch')
         form_type = modelform_factory(object_type, exclude=("solution",))
         solution = get_current_solution(request)
-        objects = solution.get_objects(object_type)
-        object_names = list(obj.name for obj in objects)
-        name = get_unique_name(type_, object_names)
+        object_names = solution.get_objects(object_type).values_list('name',
+                                                                     flat=True)
+        lowercase_object_names = [name.lower() for name in object_names]
+        name_predicate = lambda name: name.lower() in lowercase_object_names
+        name = get_unique_name(type_, existence_predicate=name_predicate)
         form = form_type(initial={'name': name})
         for field in form.fields.values():
             if type(field) in (ModelChoiceField, ModelMultipleChoiceField):
