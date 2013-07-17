@@ -133,7 +133,7 @@ TEST(SelectorsTest, DataSetObjectRepresentationTest) {
   // Testing deep copy and clear
   DataSetObjectRepresentation selector2(presentation, 1);
   selector2.deepCopyFrom(selector);
-  EXPECT_EQ(selector2.at(1), selector.at(1));
+  EXPECT_EQ(selector2.at(0), selector.at(0));
   selector.at(0) += 2.0;
   EXPECT_FALSE(selector2.at(0) == selector.at(0));
 

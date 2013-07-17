@@ -28,15 +28,15 @@ Configuration::Ptr ConfigParser::parse(const string& file_name) {
 
   parseTags(*(root->FirstChildElement()));
 
-  rInfo("Configuration file loaded. Collected data:\n"
-        "Data:\n%s"
-        "Objects:\n%s"
-        "Train launches:\n%s"
-        "Crossvalidation launches:\n%s",
-        configuration_->data_infos.toString().c_str(),
-        configuration_->object_infos.toString().c_str(),
-        configuration_->train_infos.toString().c_str(),
-        configuration_->crossvalidation_infos.toString().c_str());
+  rDebug("Configuration file loaded. Collected data:\n"
+         "Data:\n%s"
+         "Objects:\n%s"
+         "Train launches:\n%s"
+         "Crossvalidation launches:\n%s",
+         configuration_->data_infos.toString().c_str(),
+         configuration_->object_infos.toString().c_str(),
+         configuration_->train_infos.toString().c_str(),
+         configuration_->crossvalidation_infos.toString().c_str());
 
   for (ObjectInfo::ObjectInfos::iterator it =
        configuration_->object_infos.begin();

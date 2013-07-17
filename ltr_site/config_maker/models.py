@@ -194,7 +194,7 @@ class Task(models.Model):
 
     def make_config(self, launchable_name):
         """Creates XML config for ltr_client."""
-        from django.shortcuts import render_to_response
+        from django.template.loader import render_to_string
 
         db_objects = self.solution.get_objects(LtrObject)
         ltr_objects = tuple(obj.cast() for obj in db_objects)
@@ -211,15 +211,12 @@ class Task(models.Model):
         elif launchable in self.solution.get_objects(CrossValidation):
             ltr_crossvalidations = (launchable,)
 
-        response = render_to_response(
-            'config.xml',
-            {'objects': ltr_objects,
-             'datas': ltr_datas,
-             'trains': ltr_trains,
-             'crossvalidations': ltr_crossvalidations,
-             'root_directory': self.working_dir})
-        response['Content-Disposition'] = 'attachment; filename=config.xml'
-        return response.content
+        return render_to_string('config.xml',
+                                {'objects': ltr_objects,
+                                 'datas': ltr_datas,
+                                 'trains': ltr_trains,
+                                 'crossvalidations': ltr_crossvalidations,
+                                 'root_directory': self.working_dir})
 
     def run(self):
         """Runs ltr_client."""
