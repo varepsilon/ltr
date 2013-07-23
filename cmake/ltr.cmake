@@ -355,7 +355,8 @@ SET(OPTIMIZATION_POPULATION_UPDATERS ${Source_Path}/ltr/optimization/population_
                                      ${Source_Path}/ltr/optimization/population_updaters/one_point_updater.h
                                      ${Source_Path}/ltr/optimization/population_updaters/per_point_updater.hpp
                                      ${Source_Path}/ltr/optimization/population_updaters/population_updater.h
-                                     ${Source_Path}/ltr/optimization/population_updaters/bee_colony_updater.h)
+                                     ${Source_Path}/ltr/optimization/population_updaters/bee_colony_updater.h
+                                     ${Source_Path}/ltr/optimization/population_updaters/particle_swarm_updater.h)
 
 SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info/population.h
                                  ${Source_Path}/ltr/optimization/population_info/population.cc
@@ -364,7 +365,8 @@ SET(OPTIMIZATION_POPULATION_INFO ${Source_Path}/ltr/optimization/population_info
 SET(OPTIMIZATION_SOLVER ${Source_Path}/ltr/optimization/solver/solver.h
                         ${Source_Path}/ltr/optimization/solver/solution.h
                         ${Source_Path}/ltr/optimization/solver/solver_benchmark.h
-                        ${Source_Path}/ltr/optimization/solver/artificial_bee_colony.h)
+                        ${Source_Path}/ltr/optimization/solver/artificial_bee_colony.h
+                        ${Source_Path}/ltr/optimization/solver/particle_swarm_optimization.h)
 
 SET(GETOPTPP  ${Source_Path}/contrib/getopt_pp/getopt_pp.h
               ${Source_Path}/contrib/getopt_pp/getopt_pp.cc)
