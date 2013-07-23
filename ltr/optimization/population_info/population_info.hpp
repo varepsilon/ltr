@@ -100,6 +100,86 @@ template<class TInfo>
 typename TInfo::Ptr PopulationInfo<TInfo>::getInfoById(PointId point_id) {
   return infomap_[point_id];
 }
+
+/**
+ * \brief Class for store no need init information about
+ * population, for example speed, optimum point, etc.
+ *
+ * \tparam TInfo is a type of information.
+ *
+ * \see BasePopulationInfo, PopulationInfo.
+ */
+template<class TInfo>
+class NoInitPopulationInfo : public BasePopulationInfo {
+  ALLOW_SHARED_PTR_ONLY_CREATION(NoInitPopulationInfo)
+ public:
+  typedef ltr::utility::shared_ptr<TInfo> InfoPtr;
+  typedef typename map<PointId, InfoPtr>::iterator Iterator;
+  explicit NoInitPopulationInfo(Population* population,
+                                InfoPtr sample_info);
+  Iterator begin();
+  Iterator end();
+  /**
+   * Add NoInitPopulationInfo for point from population.
+   */
+  void addPoint(const Point& point, PointId point_id);
+  /**
+   * Remove NoInitPopulationInfo for point from population.
+   */
+  void removePoint(PointId point_id);
+  /**
+   * Get info for point with point_id.
+   */
+  InfoPtr getInfoById(PointId point_id);
+ private:
+  map<PointId, InfoPtr> infomap_;
+  InfoPtr sample_info_;
+};
+
+// template realization
+template<class TInfo>
+NoInitPopulationInfo<TInfo>::NoInitPopulationInfo(
+    Population* population,
+    InfoPtr sample_info)
+    : BasePopulationInfo(population),
+      sample_info_(sample_info) {
+  for (Population::Iterator it = population->begin();
+       it != population->end();
+       ++it) {
+    InfoPtr info = new TInfo(*sample_info_);
+    infomap_[it.point_id()] = info;
+  }
+}
+
+template<class TInfo>
+typename NoInitPopulationInfo<TInfo>::Iterator
+NoInitPopulationInfo<TInfo>::begin() {
+  return infomap_.begin();
+}
+
+template<class TInfo>
+typename NoInitPopulationInfo<TInfo>::Iterator
+NoInitPopulationInfo<TInfo>::end() {
+  return infomap_.end();
+}
+
+template<class TInfo>
+void NoInitPopulationInfo<TInfo>::addPoint(const Point& point,
+                                           PointId point_id) {
+  InfoPtr info = new TInfo(*sample_info_);
+  infomap_[point_id] = info;
+}
+
+template<class TInfo>
+void NoInitPopulationInfo<TInfo>::removePoint(PointId point_id) {
+  infomap_.erase(point_id);
+}
+
+template<class TInfo>
+typename NoInitPopulationInfo<TInfo>::InfoPtr
+NoInitPopulationInfo<TInfo>::getInfoById(PointId point_id) {
+  return infomap_[point_id];
+}
 }
 
 #endif  // LTR_OPTIMIZATION_POPULATION_INFO_POPULATION_INFO_HPP_
