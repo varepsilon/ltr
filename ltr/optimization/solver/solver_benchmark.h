@@ -29,7 +29,7 @@ namespace optimization {
 /**
  * \brief A class to benchmark optimization Solver
  * with different test problems.
-*/
+ */
 template<typename TFunction>
 class SolverBenchmark {
   public:
@@ -38,7 +38,7 @@ class SolverBenchmark {
 
     /**
      * \brief Remove all solvers and problems from the stand.
-    */
+     */
     void clear();
     void addProblem(typename TFunction::Ptr function, Set::Ptr set);
     void addSolver(const Solver<TFunction> &solver,
@@ -49,8 +49,8 @@ class SolverBenchmark {
      * at the moment.
      * \return A 2-dimensional table where columns and rows represent 
      * problems and solvers respectively.
-    */
-    Table run();
+     */
+    Table run() const;
 
   private:
     vector<typename TFunction::Ptr> functions;
@@ -85,7 +85,8 @@ void SolverBenchmark<TFunction>::addSolver(const Solver<TFunction> &solver,
   solver_aliases.push_back(alias);
 }
 template<typename TFunction>
-typename SolverBenchmark<TFunction>::Table SolverBenchmark<TFunction>::run() {
+typename SolverBenchmark<TFunction>::Table
+SolverBenchmark<TFunction>::run() const {
   CHECK_MSG(!functions.empty(), "No test problems specified for a benchmark");
   CHECK_MSG(!solvers.empty(), "No solvers specified for a benchmark");
 

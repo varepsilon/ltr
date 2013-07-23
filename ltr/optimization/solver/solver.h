@@ -23,8 +23,8 @@ namespace optimization {
 
 /**
  * \brief A class which solves an optimization task given a function.
-          a set, a stop criterion, a population updater and population initer.
-*/
+ *        a set, a stop criterion, a population updater and population initer.
+ */
 template<typename TFunction>
 class Solver {
   public:
@@ -36,7 +36,7 @@ class Solver {
      */
     Solution solve(typename TFunction::Ptr function,
                    Set::Ptr set,
-                   int population_size);
+                   int population_size) const;
 
   private:
     PopulationIniter::Ptr initer_;
@@ -56,7 +56,7 @@ Solver<TFunction>::Solver(PopulationIniter::Ptr population_initer,
 template<typename TFunction>
 Solution Solver<TFunction>::solve(typename TFunction::Ptr function,
                                   Set::Ptr set,
-                                  int population_size) {
+                                  int population_size) const {
   Population::Ptr population = new Population;
   initer_->populationInit(population_size, *set, population.get());
 
@@ -94,4 +94,3 @@ Solution Solver<TFunction>::solve(typename TFunction::Ptr function,
 }
 
 #endif  // LTR_OPTIMIZATION_SOLVER_SOLVER_H_
-
