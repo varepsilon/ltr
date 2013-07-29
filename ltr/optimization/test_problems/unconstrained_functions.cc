@@ -212,7 +212,7 @@ void TridFunction::computeGradientImpl(const Point& point,
   (*gradient)(dimension() - 1) = 2.0 * point(dimension() - 1) -
     2.0 - point(dimension() - 2);
 
-  for (int coordinate = 1; coordinate < dimension() - 1; ++coordinate) {
+  for (int coordinate = 1; coordinate + 1 < dimension(); ++coordinate) {
     (*gradient)(coordinate) = 2.0 * point(coordinate) - 2.0 -
       point(coordinate - 1) - point(coordinate + 1);
   }
@@ -229,9 +229,43 @@ void TridFunction::computeHessianImpl(const Point& point,
   /**
    * compute another elements
    */
-  for (int coordinate = 0; coordinate < dimension() - 1; ++coordinate) {
+  for (int coordinate = 0; coordinate + 1 < dimension(); ++coordinate) {
     (*hessian)(coordinate, coordinate + 1) = -1.0;
     (*hessian)(coordinate + 1, coordinate) = -1.0;
+  }
+}
+
+double RastriginFunction::computeValueImpl(const Point& point) const {
+  double res = 10.0 * dimension();
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    res += pow(point(coordinate), 2) - 10.0 * cos(2.0 * PI * point(coordinate));
+  }
+  return res;
+}
+
+void RastriginFunction::computeGradientImpl(const Point& point,
+                                            Vector* gradient) const {
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    (*gradient)(coordinate) = 2.0 * point(coordinate) +
+                              20.0 * PI * sin(2.0 * PI * point(coordinate));
+  }
+}
+
+void RastriginFunction::computeHessianImpl(const Point& point,
+                                           Matrix* hessian) const {
+  for (int first_coordinate = 0;
+       first_coordinate < dimension();
+       ++first_coordinate) {
+    for (int second_coordinate = 0;
+         second_coordinate < dimension();
+         ++second_coordinate) {
+      if (first_coordinate == second_coordinate) {
+        (*hessian)(first_coordinate, second_coordinate) = 2.0 +
+            40.0 * pow(PI, 2) * cos(2.0 * PI * point(first_coordinate));
+      } else {
+        (*hessian)(first_coordinate, second_coordinate) = 0.0;
+      }
+    }
   }
 }
 }
