@@ -7,6 +7,7 @@
 #include "ltr/optimization/sets/linear_inequality_set.h"
 #include "ltr/optimization/sets/sphere_set.h"
 #include "ltr/optimization/sets/polyhedron_set.h"
+#include "ltr/optimization/sets/cube_set.h"
 
 using ltr::utility::DoubleEqual;
 
@@ -17,6 +18,7 @@ using optimization::Matrix;
 using optimization::LinearInequalitySet;
 using optimization::SphereSet;
 using optimization::PolyhedronSet;
+using optimization::CubeSet;
 
 TEST(SetTest, BallSetInsideTest) {
   Point center(2);
@@ -370,4 +372,61 @@ TEST(SetTest, PolyhedronSetSampleRandomPointTest) {
     set.sampleRandomPointInside(&point);
     EXPECT_TRUE(set.isInside(point));
   }
+}
+
+TEST(SetTest, CubeSetInsideTest) {
+  CubeSet::Ptr set(new CubeSet(5.0, 2));
+
+  Point point(2);
+  point[0] = 3;
+  point[1] = 3;
+  EXPECT_TRUE(set->isInside(point));
+
+  point[0] = 4.99;
+  point[1] = -4.99;
+  EXPECT_TRUE(set->isInside(point));
+
+  point[0] = 5.01;
+  point[1] = 0;
+  EXPECT_FALSE(set->isInside(point));
+
+  Point wrong_dimension_point(1);
+  EXPECT_ANY_THROW(set->isInside(wrong_dimension_point));
+}
+TEST(SetTest, CubeSetProjectionTest) {
+  CubeSet::Ptr set(new CubeSet(10.0, 2));
+
+  Point point(2);
+  point[0] = 30.0;
+  point[1] = -40.0;
+
+  Point projected_point;
+  set->computeProjection(point, &projected_point);
+
+  Point correct_projection(2);
+  correct_projection << 10.0, -10.0;
+
+  EXPECT_TRUE(correct_projection.isApprox(projected_point, 0.01));
+  EXPECT_TRUE(set->isInside(projected_point));
+}
+TEST(SetTest, CubeSetBoundariesTest) {
+  CubeSet::Ptr set(new CubeSet(10.0, 4));
+
+  Point top(2);
+  Point bottom(1);
+
+  Point correct_top(4);
+  Point correct_bottom(4);
+  correct_top << 10.0, 10.0, 10.0, 10.0;
+  correct_bottom << -10.0, -10.0, -10.0, -10.0;
+
+  EXPECT_NO_THROW(set->getBoundaries(&top, &bottom));
+  EXPECT_TRUE(correct_top.isApprox(top, 0.01));
+  EXPECT_TRUE(correct_bottom.isApprox(bottom, 0.01));
+}
+TEST(SetTest, CubeSetRandomPointTest) {
+  CubeSet::Ptr set(new CubeSet(2.0, 3));
+  Point random_point(1);
+  EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
+  EXPECT_TRUE(set->isInside(random_point));
 }

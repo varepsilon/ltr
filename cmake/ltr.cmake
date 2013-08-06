@@ -325,7 +325,9 @@ SET(OPTIMIZATION_SETS ${Source_Path}/ltr/optimization/sets/set.h
                     ${Source_Path}/ltr/optimization/sets/linear_inequality_set.h
                     ${Source_Path}/ltr/optimization/sets/linear_inequality_set.cc
                     ${Source_Path}/ltr/optimization/sets/polyhedron_set.h
-                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc)
+                    ${Source_Path}/ltr/optimization/sets/polyhedron_set.cc
+                    ${Source_Path}/ltr/optimization/sets/cube_set.h
+                    ${Source_Path}/ltr/optimization/sets/cube_set.cc)
 
 SET(OPTIMIZATION_TEST_PROBLEMS ${Source_Path}/ltr/optimization/test_problems/constrained_functions.cc
                                ${Source_Path}/ltr/optimization/test_problems/constrained_functions.h
