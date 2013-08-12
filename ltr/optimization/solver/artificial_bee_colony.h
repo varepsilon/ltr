@@ -24,9 +24,10 @@ namespace optimization {
 template <class TFunction>
 class ArtificialBeeColony : public Solver<TFunction> {
  public:
-  explicit ArtificialBeeColony(int max_iteration = 1000) :
+  explicit ArtificialBeeColony(int max_iteration = 1000,
+                               int no_update_limit = 1000) :
       Solver<TFunction>(new NaiveIniter,
-                        new BeeColonyUpdater<TFunction>,
+                        new BeeColonyUpdater<TFunction>(no_update_limit),
                         new PerPointStopCriterion<TFunction>(
                             new IterationCountStopCriterion<TFunction>(
                                 max_iteration))) {}
