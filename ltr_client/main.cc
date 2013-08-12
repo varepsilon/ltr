@@ -1,7 +1,5 @@
 // Copyright 2012 Yandex
 
-#include <unistd.h>
-
 #include <iostream>  // NOLINT
 #include <string>
 #include <vector>
