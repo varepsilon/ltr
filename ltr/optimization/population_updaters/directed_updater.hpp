@@ -34,7 +34,9 @@ class DirectedUpdater : public OnePointUpdater<TFunction> {
   /**
    * Init data for future updates.
    */
-  virtual void init(const Point& point) { }
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * \brief Update point.
    * You need to define function and set after it.
@@ -44,8 +46,6 @@ class DirectedUpdater : public OnePointUpdater<TFunction> {
   virtual string getDefaultAlias() const {
     return "DirectedUpdater";
   }
-  virtual void set_set(Set::Ptr set) { }
-  virtual void set_function(typename TFunction::Ptr function);
   virtual typename OnePointUpdater<TFunction>::Ptr clone() const;
   GET_SET(typename StepDirectionCalculator<TFunction>::Ptr, step_direction_calculator);  // NOLINT
   GET_SET(typename StepSizeCalculator<TFunction>::Ptr, step_size_calculator);  // NOLINT
@@ -65,18 +65,21 @@ void DirectedUpdater<TFunction>::update(const Point& point,
 }
 
 template<class TFunction>
-void DirectedUpdater<TFunction>::set_function(
-    typename TFunction::Ptr function) {
-  step_direction_calculator_->set_function(function);
-  step_size_calculator_->set_function(function);
-}
-
-template<class TFunction>
 typename OnePointUpdater<TFunction>::Ptr DirectedUpdater<TFunction>::clone() const {  // NOLINT
   typename DirectedUpdater<TFunction>::Ptr cloned_direction_stepper =
     new DirectedUpdater<TFunction>(step_direction_calculator_->clone(),
                                     step_size_calculator_->clone());
   return cloned_direction_stepper;
+}
+
+template<class TFunction>
+void DirectedUpdater<TFunction>::init(const Point& point,
+                                      typename TFunction::Ptr function,
+                                      Set::Ptr set) {
+  this->set_function(function);
+  this->set_set(set);
+  step_direction_calculator_->set_function(function);
+  step_size_calculator_->set_function(function);
 }
 }
 

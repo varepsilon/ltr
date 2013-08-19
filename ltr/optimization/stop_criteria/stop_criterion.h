@@ -25,7 +25,13 @@ class StopCriterion : public ltr::Aliaser {
   /**
    * Init data for future test of population.
    */
-  virtual void init(Population* population) = 0;
+  virtual void init(Population* population,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set) = 0;
+  virtual void init(Population* population,
+                    typename TFunction::Ptr function) {
+    init(population, function, NULL);
+  }
   /**
    * Update data for future test of population.
    */
@@ -35,16 +41,16 @@ class StopCriterion : public ltr::Aliaser {
    */
   virtual bool isTrue() = 0;
 
-  virtual void set_function(typename TFunction::Ptr function) = 0;
-  virtual typename TFunction::Ptr function() {
-    return function_;
-  }
   virtual string getDefaultAlias() const {
     return "StopCriterion";
   }
-
+  GET(typename TFunction::Ptr, function)
+  GET(Set::Ptr, set)
  protected:
+  SET(typename TFunction::Ptr, function)
+  SET(Set::Ptr, set)
   typename TFunction::Ptr function_;
+  typename Set::Ptr set_;
 };
 }
 

@@ -38,8 +38,6 @@ class BeeColonyUpdater : public PopulationUpdater<TFunction> {
                     typename TFunction::Ptr function,
                     Set::Ptr set);
   virtual void update(Population* population);
-  virtual void set_function(typename TFunction::Ptr function);
-  virtual void set_set(Set::Ptr set);
   virtual string getDefaultAlias() const;
  private:
   /**
@@ -77,17 +75,6 @@ void BeeColonyUpdater<TFunction>::init(Population* population,
   this->set_set(set);
   this->set_function(function);
   no_update_count_ = new NoInitPopulationInfo<int>(population, new int(0)); //NOLINT
-}
-
-template <typename TFunction>
-void BeeColonyUpdater<TFunction>::set_function(
-    typename TFunction::Ptr function) {
-  this->function_ = function;
-}
-
-template <typename TFunction>
-void BeeColonyUpdater<TFunction>::set_set(Set::Ptr set) {
-  this->set_ = set;
 }
 
 template <typename TFunction>

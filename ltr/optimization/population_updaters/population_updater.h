@@ -35,16 +35,12 @@ class PopulationUpdater : public ltr::Aliaser {
    */
   virtual void update(Population* population) = 0;
 
-  virtual void set_function(typename TFunction::Ptr function) = 0;
-  virtual typename TFunction::Ptr function() {
-    return function_;
-  }
-  virtual void set_set(Set::Ptr set) = 0;
-  virtual Set::Ptr set() {
-    return set_;
-  }
+  GET(typename TFunction::Ptr, function)
+  GET(Set::Ptr, set)
   virtual string getDefaultAlias() const {return "PopulationUpdater"; }
  protected:
+  SET(typename TFunction::Ptr, function)
+  SET(Set::Ptr, set)
   typename TFunction::Ptr function_;
   Set::Ptr set_;
 };

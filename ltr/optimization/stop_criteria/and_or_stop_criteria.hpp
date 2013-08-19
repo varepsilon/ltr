@@ -24,6 +24,7 @@ namespace optimization {
 template<class TFunction>
 class And : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr<And> Ptr;
 
   explicit And(typename OnePointStopCriterion<TFunction>::Ptr first,
@@ -33,7 +34,9 @@ class And : public OnePointStopCriterion<TFunction> {
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -44,7 +47,6 @@ class And : public OnePointStopCriterion<TFunction> {
    * Create deep copy of this stop criterion.
    */
   typename OnePointStopCriterion<TFunction>::Ptr clone() const;
-  void set_function(typename TFunction::Ptr function);
  private:
   typename OnePointStopCriterion<TFunction>::Ptr first_;
   typename OnePointStopCriterion<TFunction>::Ptr second_;
@@ -62,6 +64,7 @@ class And : public OnePointStopCriterion<TFunction> {
 template<class TFunction>
 class Or : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr<Or> Ptr;
 
   explicit Or(typename OnePointStopCriterion<TFunction>::Ptr first,
@@ -71,7 +74,9 @@ class Or : public OnePointStopCriterion<TFunction> {
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -79,7 +84,6 @@ class Or : public OnePointStopCriterion<TFunction> {
 
   string getDefaultAlias() const;
 
-  void set_function(typename TFunction::Ptr function);
   typename OnePointStopCriterion<TFunction>::Ptr clone() const;
  private:
   typename OnePointStopCriterion<TFunction>::Ptr first_;
@@ -95,9 +99,12 @@ And<TFunction>::And(typename OnePointStopCriterion<TFunction>::Ptr first,
       second_(second) {
 }
 template<class TFunction>
-void And<TFunction>::init(const Point& point) {
-  first_->init(point);
-  second_->init(point);
+void And<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
+  first_->init(point, function, set);
+  second_->init(point, function, set);
 }
 template<class TFunction>
 void And<TFunction>::update(const Point& point) {
@@ -119,20 +126,18 @@ typename OnePointStopCriterion<TFunction>::Ptr And<TFunction>::clone() const {
   return stop_criterion;
 }
 template<class TFunction>
-void And<TFunction>::set_function(typename TFunction::Ptr function) {
-  first_->set_function(function);
-  second_->set_function(function);
-}
-template<class TFunction>
 Or<TFunction>::Or(typename OnePointStopCriterion<TFunction>::Ptr first,
                   typename OnePointStopCriterion<TFunction>::Ptr second)
     : first_(first),
       second_(second) {
 }
 template<class TFunction>
-void Or<TFunction>::init(const Point& point) {
-  first_->init(point);
-  second_->init(point);
+void Or<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
+  first_->init(point, function, set);
+  second_->init(point, function, set);
 }
 template<class TFunction>
 void Or<TFunction>::update(const Point& point) {
@@ -152,11 +157,6 @@ typename OnePointStopCriterion<TFunction>::Ptr Or<TFunction>::clone() const {
   stop_criterion->set_function(this->function());
   stop_criterion->set_is_true(this->isTrue());
   return stop_criterion;
-}
-template<class TFunction>
-void Or<TFunction>::set_function(typename TFunction::Ptr function) {
-  first_->set_function(function);
-  second_->set_function(function);
 }
 }
 #endif  // LTR_OPTIMIZATION_STOP_CRITERIA_AND_OR_STOP_CRITERIA_HPP_

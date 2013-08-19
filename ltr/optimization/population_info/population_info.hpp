@@ -65,12 +65,14 @@ PopulationInfo<TInfo>::PopulationInfo(Population* population,
                                       typename TInfo::Ptr sample_info)
     : BasePopulationInfo(population),
       sample_info_(sample_info) {
-  for (Population::Iterator it = population->begin();
-       it != population->end();
-       ++it) {
+  for (Population::Iterator individual = population->begin();
+       individual != population->end();
+       ++individual) {
     typename TInfo::Ptr info = sample_info_->clone();
-    info->init(it.point());
-    infomap_[it.point_id()] = info;
+    info->init(individual.point(),
+               sample_info_->function(),
+               sample_info_->set());
+    infomap_[individual.point_id()] = info;
   }
 }
 
@@ -87,7 +89,7 @@ typename PopulationInfo<TInfo>::Iterator PopulationInfo<TInfo>::end() {
 template<class TInfo>
 void PopulationInfo<TInfo>::addPoint(const Point& point, PointId point_id) {
   typename TInfo::Ptr info = sample_info_->clone();
-  info->init(point);
+  info->init(point, sample_info_->function(), sample_info_->set());
   infomap_[point_id] = info;
 }
 
@@ -143,11 +145,11 @@ NoInitPopulationInfo<TInfo>::NoInitPopulationInfo(
     InfoPtr sample_info)
     : BasePopulationInfo(population),
       sample_info_(sample_info) {
-  for (Population::Iterator it = population->begin();
-       it != population->end();
-       ++it) {
+  for (Population::Iterator individual = population->begin();
+       individual != population->end();
+       ++individual) {
     InfoPtr info = new TInfo(*sample_info_);
-    infomap_[it.point_id()] = info;
+    infomap_[individual.point_id()] = info;
   }
 }
 

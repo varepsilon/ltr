@@ -8,6 +8,7 @@
 #include "ltr/utility/macros.h"
 #include "ltr/interfaces/aliaser.h"
 #include "ltr/utility/boost/shared_ptr.h"
+#include "ltr/optimization/sets/set.h"
 
 namespace optimization {
 typedef Eigen::VectorXd Point;
@@ -31,20 +32,29 @@ template<class TFunction> class OnePointStopCriterion : public ltr::Aliaser {
   /**
    * Init data for future test of current point.
    */
-  virtual void init(const Point& point) = 0;
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set) = 0;
+  virtual void init(const Point& point, typename TFunction::Ptr function) {
+    init(point, function, NULL);
+  }
   /**
    * Update data for future test of current point.
    */
   virtual void update(const Point& point) = 0;
 
-  GET_SET(typename TFunction::Ptr, function);
   bool isTrue() const { return is_true_; }
   virtual typename OnePointStopCriterion<TFunction>::Ptr clone() const = 0;
 
   virtual string getDefaultAlias() const { return "OnePointStopCriterion"; }
+  GET(typename TFunction::Ptr, function)
+  GET(Set::Ptr, set)
  protected:
+  SET(typename TFunction::Ptr, function)
+  SET(Set::Ptr, set)
   typename TFunction::Ptr function_;
-  SET(bool, is_true);
+  typename Set::Ptr set_;
+  SET(bool, is_true)
  private:
   /**
    * Current is_true result for current point

@@ -32,7 +32,9 @@ class OnePointUpdater : public ltr::Aliaser {
   /**
    * Init data for future updates of current point.
    */
-  virtual void init(const Point& point) = 0;
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set) = 0;
   /**
    * \brief Update point via one of iteration methods.
    */
@@ -45,9 +47,11 @@ class OnePointUpdater : public ltr::Aliaser {
   virtual string getDefaultAlias() const {
     return "OnePointUpdater";
   }
-  virtual void set_function(typename TFunction::Ptr function) = 0;
-  virtual void set_set(Set::Ptr function) = 0;
+  GET(typename TFunction::Ptr, function)
+  GET(Set::Ptr, set)
  protected:
+  SET(typename TFunction::Ptr, function)
+  SET(Set::Ptr, set)
   typename TFunction::Ptr function_;
   Set::Ptr set_;
 };

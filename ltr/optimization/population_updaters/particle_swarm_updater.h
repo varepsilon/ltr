@@ -45,8 +45,6 @@ class ParticleSwarmUpdater : public PopulationUpdater<TFunction> {
                     typename TFunction::Ptr function,
                     Set::Ptr set);
   virtual void update(Population* population);
-  virtual void set_function(typename TFunction::Ptr function);
-  virtual void set_set(Set::Ptr set);
   virtual string getDefaultAlias() const;
  private:
   NoInitPopulationInfo<Point>::Ptr velocity_, optimum_point_;
@@ -81,17 +79,6 @@ void ParticleSwarmUpdater<TFunction>::init(Population* population,
       global_optimum_point_ = it.point();
     }
   }
-}
-
-template <typename TFunction>
-void ParticleSwarmUpdater<TFunction>::set_function(
-    typename TFunction::Ptr function) {
-  this->function_ = function;
-}
-
-template <typename TFunction>
-void ParticleSwarmUpdater<TFunction>::set_set(Set::Ptr set) {
-  this->set_ = set;
 }
 
 template <typename TFunction>

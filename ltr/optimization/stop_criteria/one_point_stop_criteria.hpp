@@ -26,6 +26,7 @@ typedef Eigen::MatrixXd Matrix;
 template<class TFunction> class IterationCountStopCriterion
   : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr< IterationCountStopCriterion<TFunction> > Ptr;  // NOLINT
 
   explicit IterationCountStopCriterion(int max_iteration = 1000)
@@ -36,7 +37,9 @@ template<class TFunction> class IterationCountStopCriterion
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -70,6 +73,7 @@ template<class TFunction> class IterationCountStopCriterion
 template<class TFunction> class DeltaFunctionStopCriterion
   : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr< DeltaFunctionStopCriterion<TFunction> > Ptr;
 
   explicit DeltaFunctionStopCriterion(double min_delta = 0.01)
@@ -80,7 +84,9 @@ template<class TFunction> class DeltaFunctionStopCriterion
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -114,6 +120,7 @@ template<class TFunction> class DeltaFunctionStopCriterion
 template<class TFunction> class DeltaArgumentStopCriterion
   : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr<DeltaArgumentStopCriterion> Ptr;
 
   explicit DeltaArgumentStopCriterion(double min_delta = 0.01)
@@ -124,7 +131,9 @@ template<class TFunction> class DeltaArgumentStopCriterion
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -157,6 +166,7 @@ template<class TFunction> class DeltaArgumentStopCriterion
 template<class TFunction> class GradientMagnitudeStopCriterion
   : public OnePointStopCriterion<TFunction> {
  public:
+  using OnePointStopCriterion<TFunction>::init;
   typedef ltr::utility::shared_ptr<GradientMagnitudeStopCriterion> Ptr;
 
   explicit GradientMagnitudeStopCriterion(double min_gradient = 0.01)
@@ -167,7 +177,9 @@ template<class TFunction> class GradientMagnitudeStopCriterion
   /**
    * Init data for future test of current point.
    */
-  void init(const Point& point);
+  virtual void init(const Point& point,
+                    typename TFunction::Ptr function,
+                    Set::Ptr set);
   /**
    * Update data for future test of current point.
    */
@@ -186,7 +198,10 @@ template<class TFunction> class GradientMagnitudeStopCriterion
 //  template realizaation
 
 template<class TFunction>
-void IterationCountStopCriterion<TFunction>::init(const Point& point) {
+void IterationCountStopCriterion<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
   current_iteration_ = 0;
 }
 template<class TFunction>
@@ -206,7 +221,12 @@ typename OnePointStopCriterion<TFunction>::Ptr
 }
 
 template<class TFunction>
-void DeltaFunctionStopCriterion<TFunction>::init(const Point& point) {
+void DeltaFunctionStopCriterion<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
+  this->set_function(function);
+  this->set_set(set);
   current_value_ = this->function_->computeValue(point);
 }
 template<class TFunction>
@@ -227,7 +247,12 @@ typename OnePointStopCriterion<TFunction>::Ptr
 }
 
 template<class TFunction>
-void DeltaArgumentStopCriterion<TFunction>::init(const Point& point) {
+void DeltaArgumentStopCriterion<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
+  this->set_function(function);
+  this->set_set(set);
   current_argument_ = point;
 }
 template<class TFunction>
@@ -247,7 +272,13 @@ typename OnePointStopCriterion<TFunction>::Ptr
 }
 
 template<class TFunction>
-void GradientMagnitudeStopCriterion<TFunction>::init(const Point& point) { }
+void GradientMagnitudeStopCriterion<TFunction>::init(
+    const Point& point,
+    typename TFunction::Ptr function,
+    Set::Ptr set) {
+  this->set_function(function);
+  this->set_set(set);
+}
 template<class TFunction>
 void GradientMagnitudeStopCriterion<TFunction>::update(const Point& point) {
   Vector gradient;

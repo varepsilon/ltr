@@ -22,8 +22,9 @@ TEST(OnePointUpdatersTest, GradientDescentUpdaterTest) {
   DirectedUpdater<DifferentiableFunction> gradient_updater(
       new GradientDirectionCalculator<DifferentiableFunction>(),
       new ConstantStepCalculator<DifferentiableFunction>(1.0));
-  gradient_updater.set_set(new BallSet(2.0, center));
-  gradient_updater.set_function(new SumSquaresFunction(2));
+  Point init_point;
+  gradient_updater.init(init_point, new SumSquaresFunction(2),
+      new BallSet(2.0, center));
   Point point(2);
   point << 1, 1;
   Point* updated_point = new Point(2);
@@ -33,8 +34,7 @@ TEST(OnePointUpdatersTest, GradientDescentUpdaterTest) {
   EXPECT_TRUE(point.isApprox(true_point, 0.01));
 
   FixedStepGradientUpdater<DifferentiableFunction> updater(1.0);
-  updater.set_set(new BallSet(2.0, center));
-  updater.set_function(new SumSquaresFunction(2));
+  updater.init(init_point, new SumSquaresFunction(2), new BallSet(2.0, center));
   point << 1, 1;
   updater.update(point, &point);
   EXPECT_TRUE(point.isApprox(true_point, 0.01));
@@ -46,8 +46,9 @@ TEST(OnePointUpdatersTest, SteepestGradientUpdaterTest) {
   DirectedUpdater<DifferentiableFunction> gradient_updater(
       new GradientDirectionCalculator<DifferentiableFunction>(),
       new BruteForceStepCalculator<DifferentiableFunction>(1.0, 0.01));
-  gradient_updater.set_set(new BallSet(2.0, center));
-  gradient_updater.set_function(new SumSquaresFunction(2));
+  Point init_point;
+  gradient_updater.init(init_point, new SumSquaresFunction(2),
+      new BallSet(2.0, center));
   Point point(2);
   point << 1, 1;
   for (int i = 0; i < 10; ++i) {
@@ -57,8 +58,7 @@ TEST(OnePointUpdatersTest, SteepestGradientUpdaterTest) {
 
   SteepestGradientUpdater<DifferentiableFunction>
     updater(1.0, 0.01);
-  updater.set_set(new BallSet(2.0, center));
-  updater.set_function(new SumSquaresFunction(2));
+  updater.init(init_point, new SumSquaresFunction(2), new BallSet(2.0, center));
   point << 1, 1;
   for (int i = 0; i < 10; ++i) {
     updater.update(point, &point);
@@ -73,8 +73,8 @@ TEST(OnePointUpdaterTest, ConjugateGradientUpdater) {
   point << 1, 1;
   ConjugateGradientUpdater<DifferentiableFunction>
     updater(1.0, 0.01);
-  updater.set_set(new BallSet(2.0, center));
-  updater.set_function(new SumSquaresFunction(2));
+  Point init_point;
+  updater.init(init_point, new SumSquaresFunction(2), new BallSet(2.0, center));
   for (int i = 0; i < 10; ++i) {
     updater.update(point, &point);
   }
@@ -139,8 +139,7 @@ TEST(PopulationUpdaterTest, SolveTest) {
   PerPointStopCriterion<DifferentiableFunction>::Ptr stop_criterion =  // NOLINT
     new PerPointStopCriterion<DifferentiableFunction>(one_point_stop_criterion);  // NOLINT
   gradient_updater->init(&population, function, set);
-  stop_criterion->set_function(function);
-  stop_criterion->init(&population);
+  stop_criterion->init(&population, function, set);
   stop_criterion->set_aggregator_threshold(1.0);
   Point a(2);
   a << 1, 1;

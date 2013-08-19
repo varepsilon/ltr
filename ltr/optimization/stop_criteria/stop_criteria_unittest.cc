@@ -36,8 +36,7 @@ TEST(OnePointStopCriterionTest, IterationStopCriterionTest) {
   IterationCountStopCriterion<Function>
     iteration_stop_criterion;
 
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   iteration_stop_criterion.set_max_iteration(2);
   iteration_stop_criterion.update(point);
 
@@ -54,8 +53,7 @@ TEST(OnePointStopCriterionTest, DeltaFunctionStopCriterionTest) {
   point.setZero();
   DeltaFunctionStopCriterion<Function>
     iteration_stop_criterion;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   iteration_stop_criterion.set_min_delta(0.01);
   iteration_stop_criterion.update(point);
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
@@ -69,8 +67,7 @@ TEST(OnePointStopCriterionTest, DeltaArgumentStopCriterionTest) {
   point.setZero();
   DeltaArgumentStopCriterion<Function>
     iteration_stop_criterion;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   iteration_stop_criterion.set_min_delta(0.01);
   iteration_stop_criterion.update(point);
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
@@ -84,8 +81,7 @@ TEST(OnePointStopCriterionTest, GradientStopCriterionTest) {
   point.setZero();
   GradientMagnitudeStopCriterion<DifferentiableFunction>
     iteration_stop_criterion;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   iteration_stop_criterion.set_min_gradient(0.01);
   iteration_stop_criterion.update(point);
   EXPECT_TRUE(iteration_stop_criterion.isTrue());
@@ -101,8 +97,7 @@ TEST(OnePointStopCriterionTest, AndStopCriterionTest) {
       new IterationCountStopCriterion<Function>(3));  // NOLINT
 
   point << 0, 0;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   point << 100, 100;
   iteration_stop_criterion.update(point);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
@@ -120,8 +115,7 @@ TEST(OnePointStopCriterionTest, OrStopCriterionTest) {
       new IterationCountStopCriterion<Function>(3));
 
   point << 0, 0;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
   point << 100, 100;
   iteration_stop_criterion.update(point);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
@@ -154,13 +148,12 @@ TEST(OnePointStopCriterionTest, CloneTest) {
   Point point(2);
   IterationCountStopCriterion<Function>
     iteration_stop_criterion;
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.set_max_iteration(2);
   OnePointStopCriterion<Function>::Ptr cloned_stop_criterion =
     iteration_stop_criterion.clone();
 
-  iteration_stop_criterion.init(point);
-  cloned_stop_criterion->init(point);
+  iteration_stop_criterion.init(point, new SumSquaresFunction(2));
+  cloned_stop_criterion->init(point, new SumSquaresFunction(2));
   iteration_stop_criterion.update(point);
   cloned_stop_criterion->update(point);
   EXPECT_FALSE(iteration_stop_criterion.isTrue());
@@ -177,9 +170,8 @@ TEST(PerPointStopCriterionTest, IterationCountTest) {
       new IterationCountStopCriterion<Function>;
   one_point_stop_criterion->set_max_iteration(3);
   PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
   iteration_stop_criterion.set_aggregator_threshold(0.5);
-  iteration_stop_criterion.init(&population);
+  iteration_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
 
@@ -201,9 +193,9 @@ TEST(PerPointStopCriterionTest, DeltaArgumentTest) {
 
   PerPointStopCriterion<Function> delta_argument_stop_criterion(one_point_stop_criterion); // NOLINT
   delta_argument_stop_criterion.set_aggregator_threshold(0.5);
-  delta_argument_stop_criterion.set_function(new SumSquaresFunction(2));
 
-  delta_argument_stop_criterion.init(&population);
+  delta_argument_stop_criterion.init(
+      &population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
 
@@ -229,10 +221,10 @@ TEST(PerPointStopCriterionTest, DeltaValueTest) {
     one_point_stop_criterion =
       new DeltaFunctionStopCriterion<Function>;
   one_point_stop_criterion->set_min_delta(0.05);
+
   PerPointStopCriterion<Function> delta_value_stop_criterion(one_point_stop_criterion); // NOLINT
   delta_value_stop_criterion.set_aggregator_threshold(0.5);
-  delta_value_stop_criterion.set_function(new SumSquaresFunction(2));
-  delta_value_stop_criterion.init(&population);
+  delta_value_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
 
@@ -261,8 +253,8 @@ TEST(PerPointStopCriterionTest, GradientMagnitudeTest) {
 
   PerPointStopCriterion<DifferentiableFunction> gradient_magnitude_stop_criterion(one_point_stop_criterion); // NOLINT
   gradient_magnitude_stop_criterion.set_aggregator_threshold(0.5);
-  gradient_magnitude_stop_criterion.set_function(new SumSquaresFunction(2));
-  gradient_magnitude_stop_criterion.init(&population);
+  gradient_magnitude_stop_criterion.init(
+      &population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
 
@@ -291,8 +283,7 @@ TEST(PerPointStopCriterionTest, UpdateTest) {
 
   PerPointStopCriterion<Function> iteration_stop_criterion(one_point_stop_criterion); // NOLINT
   iteration_stop_criterion.set_aggregator_threshold(0.3);
-  iteration_stop_criterion.set_function(new SumSquaresFunction(2));
-  iteration_stop_criterion.init(&population);
+  iteration_stop_criterion.init(&population, new SumSquaresFunction(2));
 
   PutTestPointsToPopulation(&population);
 

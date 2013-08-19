@@ -42,8 +42,6 @@ class PerPointUpdater : public PopulationUpdater<TFunction> {
    */
   virtual void update(Population* population);
 
-  virtual void set_function(typename TFunction::Ptr function);
-  virtual void set_set(Set::Ptr function);
   virtual string getDefaultAlias() const;
  private:
   /**
@@ -64,6 +62,8 @@ void PerPointUpdater<TFunction>::init(Population* population,
                                       Set::Ptr set) {
   this->set_set(set);
   this->set_function(function);
+  Point init_point;
+  one_point_updater_sample_->init(init_point, function, set);
   one_point_updaters_info_ = new OnePointUpdaterInfo(population,
                                   one_point_updater_sample_);
 }
@@ -83,19 +83,6 @@ void PerPointUpdater<TFunction>::update(Population* population) {
 template<class TFunction>
 string PerPointUpdater<TFunction>::getDefaultAlias() const {
   return "PerPointUpdater_with_" + one_point_updater_sample_->alias();
-}
-
-template<class TFunction>
-void PerPointUpdater<TFunction>::set_function(
-    typename TFunction::Ptr function) {
-  one_point_updater_sample_->set_function(function);
-  this->function_ = function;
-}
-
-template<class TFunction>
-void PerPointUpdater<TFunction>::set_set(Set::Ptr set) {
-  one_point_updater_sample_->set_set(set);
-  this->set_ = set;
 }
 }
 #endif  // LTR_OPTIMIZATION_POPULATION_UPDATERS_PER_POINT_UPDATER_HPP_

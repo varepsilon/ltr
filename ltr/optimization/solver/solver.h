@@ -60,7 +60,7 @@ Solution Solver<TFunction>::solve(typename TFunction::Ptr function,
   Population::Ptr population = new Population;
   initer_->populationInit(population_size, *set, population.get());
 
-  stop_criterion_->init(population.get());
+  stop_criterion_->init(population.get(), function, set);
 
   updater_->init(population.get(), function, set);
 
