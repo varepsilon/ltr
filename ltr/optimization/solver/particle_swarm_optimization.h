@@ -3,6 +3,8 @@
 #ifndef LTR_OPTIMIZATION_SOLVER_PARTICLE_SWARM_OPTIMIZATION_H_
 #define LTR_OPTIMIZATION_SOLVER_PARTICLE_SWARM_OPTIMIZATION_H_
 
+#include <string>
+
 #include "ltr/optimization/solver/solver.h"
 #include "ltr/optimization/population_updaters/particle_swarm_updater.h"
 #include "ltr/optimization/population_initers/naive_initer.h"
@@ -39,6 +41,9 @@ class ParticleSwarmOptimization : public Solver<TFunction> {
                               new IterationCountStopCriterion<TFunction>(
                                   max_iteration))) {}
   ~ParticleSwarmOptimization() {}
+  virtual string getDefaultAlias() const {
+    return "ParticleSwarmOptimization";
+  }
 };
 }
 

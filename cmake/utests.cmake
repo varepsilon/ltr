@@ -101,7 +101,8 @@ SET(LTR_OPTIMIZATION_TEST ${Source_Path}/ltr/optimization/sets/sets_unittest.cc
                           ${Source_Path}/ltr/optimization/solver/solver_unittest.cc
                           ${Source_Path}/ltr/optimization/solver/solver_benchmark_unittest.cc
                           ${Source_Path}/ltr/optimization/solver/artificial_bee_colony_unittest.cc
-                          ${Source_Path}/ltr/optimization/solver/particle_swarm_optimization_unittest.cc)
+                          ${Source_Path}/ltr/optimization/solver/particle_swarm_optimization_unittest.cc
+                          ${Source_Path}/ltr/optimization/population_info/population_info_unittest.cc)
 
 SET(LTR_CLIENT_TEST ${Source_Path}/ltr_client/config_parser_unittest.cc)
 

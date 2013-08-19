@@ -5,6 +5,7 @@
 
 #include <ctime>
 #include <limits>
+#include <string>
 
 #include "ltr/utility/macros.h"
 #include "ltr/optimization/functions/function.h"
@@ -26,7 +27,7 @@ namespace optimization {
  *        a set, a stop criterion, a population updater and population initer.
  */
 template<typename TFunction>
-class Solver {
+class Solver : public ltr::Aliaser {
   public:
     Solver(PopulationIniter::Ptr population_initer,
            typename PopulationUpdater<TFunction>::Ptr population_updater,
@@ -37,6 +38,10 @@ class Solver {
     Solution solve(typename TFunction::Ptr function,
                    Set::Ptr set,
                    int population_size) const;
+
+    virtual string getDefaultAlias() const {
+      return "Solver";
+    }
 
   private:
     PopulationIniter::Ptr initer_;

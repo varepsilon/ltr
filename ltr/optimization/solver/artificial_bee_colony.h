@@ -3,6 +3,8 @@
 #ifndef LTR_OPTIMIZATION_SOLVER_ARTIFICIAL_BEE_COLONY_H_
 #define LTR_OPTIMIZATION_SOLVER_ARTIFICIAL_BEE_COLONY_H_
 
+#include <string>
+
 #include "ltr/optimization/solver/solver.h"
 #include "ltr/optimization/population_updaters/bee_colony_updater.h"
 #include "ltr/optimization/population_initers/naive_initer.h"
@@ -32,6 +34,9 @@ class ArtificialBeeColony : public Solver<TFunction> {
                             new IterationCountStopCriterion<TFunction>(
                                 max_iteration))) {}
   ~ArtificialBeeColony() {}
+  virtual string getDefaultAlias() const {
+    return "ArtificialBeeColony";
+  }
 };
 }
 
