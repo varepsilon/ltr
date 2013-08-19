@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "contrib/random/Random.hpp"
+#include "random/Random.hpp"
 
 using std::swap;
 
@@ -33,7 +34,6 @@ class Randomizer {
     return rand(max_value);
   }
 
- private:
   RandomLib::Random generator_;
 } static randomizer;
 };

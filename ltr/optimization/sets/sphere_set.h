@@ -4,9 +4,10 @@
 #define LTR_OPTIMIZATION_SETS_SPHERE_SET_H_
 
 #include <string>
+
+#include "ltr/optimization/sets/set.h"
 #include "ltr/utility/macros.h"
 #include "ltr/utility/numerical.h"
-#include "ltr/optimization/sets/set.h"
 
 namespace optimization {
 /**
@@ -15,9 +16,8 @@ namespace optimization {
  * \see Set
  */
 class SphereSet : public Set {
+  ALLOW_SHARED_PTR_ONLY_CREATION(SphereSet)
  public:
-  typedef ltr::utility::shared_ptr<SphereSet> Ptr;
-
   SphereSet(double radius, const Point& center);
   /**
    * Checks, whether given point is inside this set.
@@ -32,7 +32,8 @@ class SphereSet : public Set {
    */
   virtual void getBoundaries(Point* top, Point* bottom) const;
   /**
-   * Get arbitrary point in given set.
+   * Get arbitrary point in given set.<br>
+   * Get more info on http://mathworld.wolfram.com/SpherePointPicking.html
    */
   virtual void sampleRandomPointInside(Point* point) const;
 

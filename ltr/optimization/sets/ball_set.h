@@ -14,9 +14,8 @@ namespace optimization {
  * \see Set
  */
 class BallSet : public Set {
+  ALLOW_SHARED_PTR_ONLY_CREATION(BallSet)
  public:
-  typedef ltr::utility::shared_ptr<BallSet> Ptr;
-
   BallSet(double radius, const Point& center);
   /**
    * Checks, whether given point is inside this set.
@@ -31,7 +30,8 @@ class BallSet : public Set {
     */
   virtual void getBoundaries(Point* top, Point* bottom) const;
   /**
-   * Get arbitrary point in given set.
+   * Get arbitrary point in given set.<br>
+   * Get more info on http://140.177.205.23/BallPointPicking.html
    */
   virtual void sampleRandomPointInside(Point* point) const;
 

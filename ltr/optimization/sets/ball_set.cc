@@ -2,6 +2,9 @@
 
 #include "ltr/utility/random_number_generator.h"
 #include "ltr/optimization/sets/ball_set.h"
+#include "random/ExponentialDistribution.hpp"
+#include "random/NormalDistribution.hpp"
+
 using ltr::utility::randomizer;
 
 namespace optimization {
@@ -36,9 +39,19 @@ void BallSet::getBoundaries(Point* top, Point* bottom) const {
 }
 
 void BallSet::sampleRandomPointInside(Point* random_point) const {
-  getRandomPoint(random_point);
-  *random_point = (*random_point - center()).normalized() *
-    randomizer.doubleRand(0, radius()) +
-      center();
+  random_point->resize(dimension());
+  RandomLib::Random& random = randomizer.generator_;
+  RandomLib::ExponentialDistribution<double> exponential_distribution;
+  RandomLib::NormalDistribution<double> normal_distribution;
+  double square_sum = exponential_distribution(random, 1.0);
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    double& coordinate_value = (*random_point)[coordinate];
+    coordinate_value = normal_distribution(random, 0.0, 1.0 / sqrt(2.0));
+    square_sum += pow(coordinate_value, 2);
+  }
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    (*random_point)[coordinate] /= sqrt(square_sum);
+  }
+  *random_point = *random_point * radius() + center();
 }
 }

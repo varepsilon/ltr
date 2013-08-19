@@ -25,90 +25,90 @@ TEST(SetTest, BallSetInsideTest) {
   center[0] = 0.0;
   center[1] = 0.0;
 
-  BallSet set(10.0, center);
+  BallSet::Ptr set(new BallSet(10.0, center));
 
   Point point(2);
   point[0] = 3;
   point[1] = 3;
-  EXPECT_TRUE(set.isInside(point));
+  EXPECT_TRUE(set->isInside(point));
 
   point[0] = 0;
   point[1] = -9.99;
-  EXPECT_TRUE(set.isInside(point));
+  EXPECT_TRUE(set->isInside(point));
 
   point[0] = 7.6;
   point[1] = 7.7;
-  EXPECT_FALSE(set.isInside(point));
+  EXPECT_FALSE(set->isInside(point));
 
   Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
+  EXPECT_ANY_THROW(set->isInside(wrong_dimension_point));
 }
 TEST(SetTest, BallSetProjectTest) {
   Point center(2);
   center[0] = 0.0;
   center[1] = 0.0;
 
-  BallSet set(10.0, center);
+  BallSet::Ptr set(new BallSet(10.0, center));
 
   Point point(2);
   point[0] = 30.0;
   point[1] = 40.0;
 
   Point projected_point;
-  set.computeProjection(point, &projected_point);
+  set->computeProjection(point, &projected_point);
 
   EXPECT_TRUE(DoubleEqual(projected_point[0], 6.0));
   EXPECT_TRUE(DoubleEqual(projected_point[1], 8.0));
-  EXPECT_TRUE(set.isInside(projected_point));
+  EXPECT_TRUE(set->isInside(projected_point));
 }
 TEST(SetTest, BallSetBoundariesTest) {
   Point center(4);
   center << 0.0, 0.0, 0.0, 0.0;
 
-  BallSet set(6.0, center);
+  BallSet::Ptr set(new BallSet(6.0, center));
 
   Point top(4);
   Point bottom(4);
 
-  set.getBoundaries(&top, &bottom);
+  set->getBoundaries(&top, &bottom);
 
   EXPECT_TRUE(DoubleEqual(top[0] + bottom[1], 0));
 
   Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
+  EXPECT_ANY_THROW(set->getBoundaries(&top, &wrong_dimension_point));
 }
 TEST(SetTest, BallSetRandomPointTest) {
   Point center(10);
   center << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
-  BallSet set(5.0, center);
+  BallSet::Ptr set(new BallSet(5.0, center));
 
   Point random_point(10);
-  EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
-  EXPECT_TRUE(set.isInside(random_point));
+  EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
+  EXPECT_TRUE(set->isInside(random_point));
 }
 TEST(SetTest, NonZeroBallSetInsideTest) {
   Point center(10);
   center << 1.0, 2.0, 0.0, -1.0, 3.0, -9.0, 10.0, 12.0, 6.0, 3.0;
 
-  BallSet set(5.0, center);
+  BallSet::Ptr set(new BallSet(5.0, center));
 
   Point random_point(10);
-  EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
-  EXPECT_TRUE(set.isInside(random_point));
+  EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
+  EXPECT_TRUE(set->isInside(random_point));
 }
 TEST(SetTest, NonZeroBallSetProjectionTest) {
   Point center(3);
   center << 2.0, 2.0, 2.0;
 
-  BallSet set(sqrt(3.0), center);
+  BallSet::Ptr set(new BallSet(sqrt(3.0), center));
 
   Point projected_point(3);
   projected_point.setZero();
 
   Point projection;
 
-  set.computeProjection(projected_point, &projection);
+  set->computeProjection(projected_point, &projection);
   EXPECT_DOUBLE_EQ(projection(0), 1.0);
 }
 
@@ -199,93 +199,93 @@ TEST(SetTest, LinearInequalitySetRandomPointTest) {
 TEST(SetTest, SphereSetInsideTest) {
   Point center(2);
   center << 0.0, 0.0;
-  SphereSet set(10.0, center);
+  SphereSet::Ptr set(new SphereSet(10.0, center));
 
   Point point(2);
   point[0] = 3;
   point[1] = 3;
-  EXPECT_FALSE(set.isInside(point));
+  EXPECT_FALSE(set->isInside(point));
 
   point[0] = 0;
   point[1] = -10.0;
-  EXPECT_TRUE(set.isInside(point));
+  EXPECT_TRUE(set->isInside(point));
 
   point[0] = 6.1;
   point[1] = 8.1;
-  EXPECT_FALSE(set.isInside(point));
+  EXPECT_FALSE(set->isInside(point));
 
   Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.isInside(wrong_dimension_point));
+  EXPECT_ANY_THROW(set->isInside(wrong_dimension_point));
 }
 TEST(SetTest, SphereSetProjectTest) {
   Point center(2);
   center << 0.0, 0.0;
-  SphereSet set(10.0, center);
+  SphereSet::Ptr set(new SphereSet(10.0, center));
 
   Point point(2);
   point[0] = 30.0;
   point[1] = 40.0;
 
   Point projection;
-  set.computeProjection(point, &projection);
+  set->computeProjection(point, &projection);
   EXPECT_TRUE(DoubleEqual(projection[0], 6.0));
   EXPECT_TRUE(DoubleEqual(projection[1], 8.0));
-  EXPECT_TRUE(set.isInside(projection));
+  EXPECT_TRUE(set->isInside(projection));
 }
 TEST(SetTest, SphereSetBoundariesTest) {
   Point center(4);
   center << 0.0, 0.0, 0.0, 0.0;
-  SphereSet set(6.0, center);
+  SphereSet::Ptr set(new SphereSet(6.0, center));
 
   Point top(4);
   Point bottom(4);
 
-  set.getBoundaries(&top, &bottom);
+  set->getBoundaries(&top, &bottom);
 
   EXPECT_TRUE(DoubleEqual(top[0] + bottom[1], 0));
 
   Point wrong_dimension_point(1);
-  EXPECT_ANY_THROW(set.getBoundaries(&top, &wrong_dimension_point));
+  EXPECT_NO_THROW(set->getBoundaries(&top, &wrong_dimension_point));
 }
 TEST(SetTest, SphereSetRandomPointTest) {
   Point center(2);
   center << 0.0, 0.0;
-  SphereSet set(5.0, center);
+  SphereSet::Ptr set(new SphereSet(5.0, center));
 
   Point random_point;
-  EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
-  EXPECT_TRUE(set.isInside(random_point));
+  EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
+  EXPECT_TRUE(set->isInside(random_point));
 }
 TEST(SetTest, NonZeroSphereSetInsideTest) {
   Point center(10);
   center << 1.0, 2.0, 0.0, -1.0, 3.0, -9.0, 10.0, 12.0, 6.0, 3.0;
 
-  SphereSet set(5.0, center);
+  SphereSet::Ptr set(new SphereSet(5.0, center));
 
   Point random_point(10);
-  EXPECT_NO_THROW(set.sampleRandomPointInside(&random_point));
-  EXPECT_TRUE(set.isInside(random_point));
+  EXPECT_NO_THROW(set->sampleRandomPointInside(&random_point));
+  EXPECT_TRUE(set->isInside(random_point));
 }
 TEST(SetTest, NonZeroSphereSetProjectionTest) {
   Point center(3);
   center << 2.0, 2.0, 2.0;
 
-  SphereSet set(sqrt(3.0), center);
+  SphereSet::Ptr set(new SphereSet(sqrt(3.0), center));
 
   Point projected_point(3);
   projected_point.setZero();
 
   Point projection;
 
-  set.computeProjection(projected_point, &projection);
+  set->computeProjection(projected_point, &projection);
   EXPECT_DOUBLE_EQ(projection(0), 1.0);
 
   projected_point.setConstant(sqrt(3.0) + 0.01);
-  set.computeProjection(projected_point, &projection);
+  set->computeProjection(projected_point, &projection);
   EXPECT_DOUBLE_EQ(projection(0), 1.0);
 
-  projected_point = set.center();
-  EXPECT_NO_THROW(set.computeProjection(projected_point, &projection));
+  projected_point = set->center();
+  EXPECT_NO_THROW(set->computeProjection(projected_point, &projection));
 }
 
 TEST(SetTest, PolyhedronSetInsideTest) {

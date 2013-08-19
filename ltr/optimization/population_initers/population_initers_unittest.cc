@@ -148,11 +148,11 @@ TEST(PopulationTest, PopulationSizeTest) {
 TEST(PopulationTest, PopulationIniterTest) {
   Point center(2);
   center.setZero();
-  BallSet set(2.0, center);
+  BallSet::Ptr set(new BallSet(2.0, center));
   NaiveIniter population_initer;
 
   Population population;
-  population_initer.populationInit(10, set, &population);
+  population_initer.populationInit(10, *set, &population);
 
   population.removePoint(1);
   EXPECT_EQ(9, population.size());
@@ -162,6 +162,6 @@ TEST(PopulationTest, PopulationIniterTest) {
   for (Population::Iterator it = population.begin();
        it != population.end();
        ++it) {
-    EXPECT_TRUE(set.isInside(it.point()));
+    EXPECT_TRUE(set->isInside(it.point()));
   }
 }

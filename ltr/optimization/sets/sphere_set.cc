@@ -1,6 +1,10 @@
 // Copyright 2013 Yandex
 
 #include "ltr/optimization/sets/sphere_set.h"
+#include "random/NormalDistribution.hpp"
+#include "ltr/utility/random_number_generator.h"
+
+using ltr::utility::randomizer;
 
 namespace optimization {
 bool SphereSet::isInside(const Point& point) const {
@@ -20,8 +24,8 @@ void SphereSet::computeProjection(const Point& point,
 }
 
 void SphereSet::getBoundaries(Point* top, Point* bottom) const {
-  CHECK(top->size() == dimension());
-  CHECK(bottom->size() == dimension());
+  top->resize(dimension());
+  bottom->resize(dimension());
 
   top->setConstant(radius());
   *top = *top + center();
@@ -30,9 +34,18 @@ void SphereSet::getBoundaries(Point* top, Point* bottom) const {
 }
 
 void SphereSet::sampleRandomPointInside(Point* random_point) const {
-  getRandomPoint(random_point);
-  *random_point = (*random_point - center()).normalized() * radius() +
-    center();
+  random_point->resize(dimension());
+  RandomLib::Random& random = randomizer.generator_;
+  RandomLib::NormalDistribution<double> normal_distibution;
+  double square_sum = 0;
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    (*random_point)[coordinate] = normal_distibution(random, 0.0, 1.0);
+    square_sum += pow((*random_point)[coordinate], 2);
+  }
+  for (int coordinate = 0; coordinate < dimension(); ++coordinate) {
+    (*random_point)[coordinate] /= sqrt(square_sum);
+  }
+  *random_point = *random_point * radius() + center();
 }
 
 SphereSet::SphereSet(double radius, const Point& center)
