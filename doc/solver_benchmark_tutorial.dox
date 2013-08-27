@@ -1,0 +1,196 @@
+namespace optimization {
+/** \page SolverBenchmarkTutorial Solver Benchmark Tutorial
+    \ingroup Tutorial
+
+\tableofcontents
+
+\section Introduction Introduction
+
+SolverBenchmark provides you simple way to test your Solver using different test problems and to compare quality of different solvers.
+It solves optimization task for all possible pairs of given solvers and test problems.
+
+\section HowToUseSolverBenchmark How to use SolverBenchmark
+
+Add solvers and test problems before run SolverBenchmark.
+Use \link SolverBenchmark::addSolver addSolver \endlink to add Solver and \link SolverBenchmark::addProblem addProblem \endlink
+to add test problem to the SolverBenchmark.
+Then call \link SolverBenchmark::run run \endlink to run benchmark and get table of solutions.
+
+If you want to estimate randomized Solver use \link SolverBenchmark::multiRun multiRun \endlink.
+Instead of table of answers it returns table of (mean ± standart deviation) of solutions.
+
+\section Examples Examples
+
+<table class="example1">
+<tr><td>Example: usage of \link SolverBenchmark::run run \endlink</td></tr>
+<tr><td>
+\code
+// Copyright 2013 Yandex
+
+#include <iostream>
+#include <string>
+
+#include "ltr/optimization/solver/solver_benchmark.h"
+#include "ltr/optimization/test_problems/unconstrained_functions.h"
+#include "ltr/optimization/solver/artificial_bee_colony.h"
+#include "ltr/optimization/solver/particle_swarm_optimization.h"
+#include "ltr/optimization/sets/cube_set.h"
+#include "ltr/optimization/population_updaters/per_point_updater.hpp"
+#include "ltr/optimization/population_updaters/one_point_updater.h"
+#include "ltr/optimization/sets/ball_set.h"
+#include "ltr/optimization/population_updaters/directed_updaters.hpp"
+
+using std::cout;
+using std::endl;
+using namespace optimization;
+
+int main() {
+  SolverBenchmark<DifferentiableFunction> benchmark(10);
+
+  Solver<DifferentiableFunction> solver1(new NaiveIniter,
+    new PerPointUpdater<DifferentiableFunction> (
+      new SteepestGradientUpdater<DifferentiableFunction>(1, 0.01)),
+    new PerPointStopCriterion<DifferentiableFunction> (
+      new IterationCountStopCriterion<DifferentiableFunction>));
+  solver1.set_alias("First solver");
+  benchmark.addSolver(solver1);
+
+  Solver<DifferentiableFunction> solver2(new NaiveIniter,
+    new PerPointUpdater<DifferentiableFunction> (
+      new SteepestGradientUpdater<DifferentiableFunction>(1, 0.01)),
+    new PerPointStopCriterion<DifferentiableFunction> (
+      new IterationCountStopCriterion<DifferentiableFunction>));
+  solver2.set_alias("Second solver");
+  benchmark.addSolver(solver2);
+
+  Point center(2);
+  center << 0, 0;
+
+  benchmark.addProblem(new SumSquaresFunction(2), new BallSet(2.0, center));
+  benchmark.addProblem(new SumSquaresFunction(2), new BallSet(2.0, center));
+
+  LexicalCastConfig::getInstance().restoreDefaults();
+  SolverBenchmark<DifferentiableFunction>::Table table = benchmark.run();
+
+  cout << table << endl;
+
+  return 0;
+}
+
+\endcode
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\code
+Table (row: Solvers, column: Problems)
+              #1       #2      
+First solver  0        0       
+Second solver 0        0       
+
+
+\endcode
+</td></tr>
+</table>
+
+<table class="example2">
+<tr><td>Example: usage of \link SolverBenchmark::multiRun multiRun \endlink</td></tr>
+<tr><td>
+\code
+// Copyright 2013 Yandex
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+
+#include "ltr/optimization/solver/solver_benchmark.h"
+#include "ltr/optimization/test_problems/unconstrained_functions.h"
+#include "ltr/optimization/solver/artificial_bee_colony.h"
+#include "ltr/optimization/solver/particle_swarm_optimization.h"
+#include "ltr/optimization/sets/cube_set.h"
+
+using std::cout;
+using std::endl;
+using Eigen::MatrixXd;
+using ltr::utility::randomizer;
+
+using namespace optimization;
+
+int main() {
+  SolverBenchmark<DifferentiableFunction> benchmark(125);
+
+  ArtificialBeeColony<DifferentiableFunction> artificial_bee_colony500(500);
+  artificial_bee_colony500.set_alias("abc500");
+  benchmark.addSolver(artificial_bee_colony500);
+
+  ArtificialBeeColony<DifferentiableFunction> artificial_bee_colony750(750);
+  artificial_bee_colony750.set_alias("abc750");
+  benchmark.addSolver(artificial_bee_colony750);
+
+  ArtificialBeeColony<DifferentiableFunction> artificial_bee_colony1000(1000);
+  artificial_bee_colony1000.set_alias("abc1000");
+  benchmark.addSolver(artificial_bee_colony1000);
+
+  ParticleSwarmOptimization<DifferentiableFunction>
+      particle_swarm_optimization500(500);
+  particle_swarm_optimization500.set_alias("pso500");
+  benchmark.addSolver(particle_swarm_optimization500);
+
+  ParticleSwarmOptimization<DifferentiableFunction>
+      particle_swarm_optimization750(750);
+  particle_swarm_optimization750.set_alias("pso750");
+  benchmark.addSolver(particle_swarm_optimization750);
+
+  ParticleSwarmOptimization<DifferentiableFunction>
+      particle_swarm_optimization1000(1000);
+  particle_swarm_optimization1000.set_alias("pso1000");
+  benchmark.addSolver(particle_swarm_optimization1000);
+
+  benchmark.addProblem(new GriewankFunction(10), new CubeSet(600.0, 10));
+  benchmark.addProblem(new GriewankFunction(20), new CubeSet(600.0, 20));
+  benchmark.addProblem(new GriewankFunction(30), new CubeSet(600.0, 30));
+
+  benchmark.addProblem(new RastriginFunction(10), new CubeSet(15.0, 10));
+  benchmark.addProblem(new RastriginFunction(20), new CubeSet(15.0, 20));
+  benchmark.addProblem(new RastriginFunction(30), new CubeSet(15.0, 30));
+
+  benchmark.addProblem(new RosenbrockFunction(10), new CubeSet(15.0, 10));
+  benchmark.addProblem(new RosenbrockFunction(20), new CubeSet(15.0, 20));
+  benchmark.addProblem(new RosenbrockFunction(30), new CubeSet(15.0, 30));
+
+  LexicalCastConfig::getInstance().restoreDefaults();
+  LexicalCastConfig::getInstance().setPrecision(3);
+  LexicalCastConfig::getInstance().setFixed(true);
+  SolverBenchmark<DifferentiableFunction>::Table table = benchmark.multiRun(2);
+
+  vector<int> order(2);
+  order[0] = 1;
+  order[1] = 0;
+  table.setAxisOrder(order);
+
+  cout << table << endl;
+
+  return 0;
+}
+
+\endcode
+</td></tr>
+<tr><td>Output:</td></tr>
+<tr><td>
+\code
+Table (row: Problems, column: Solvers)
+         abc500        abc750       abc1000      pso500          pso750          pso1000        
+#1       0.001+-0.002  0.000+-0.000 0.000+-0.002 0.000+-0.000    0.000+-0.000    0.000+-0.000   
+#2       0.001+-0.002  0.000+-0.000 0.000+-0.000 0.000+-0.000    0.000+-0.000    0.000+-0.000   
+#3       0.036+-0.023  0.000+-0.001 0.000+-0.000 0.000+-0.000    0.000+-0.000    0.000+-0.000   
+#4       0.000+-0.000  0.000+-0.000 0.000+-0.000 0.000+-0.000    0.000+-0.000    0.000+-0.000   
+#5       0.143+-0.366  0.000+-0.000 0.000+-0.000 0.000+-0.000    0.000+-0.000    0.000+-0.000   
+#6       6.780+-2.162  1.347+-0.986 0.117+-0.291 0.368+-1.614    0.000+-0.000    0.000+-0.000   
+#7       0.035+-0.050  0.010+-0.010 0.005+-0.004 2.645+-1.140    5.400+-25.281   0.175+-0.796   
+#8       0.823+-2.556  0.132+-0.160 0.046+-0.066 28.773+-31.739  45.433+-87.290  90.780+-306.243
+#9       9.074+-17.062 1.499+-1.663 0.694+-0.911 96.460+-303.261 95.062+-300.148 39.604+-59.469 
+\endcode
+</td></tr>
+</table>
+**/
+}
