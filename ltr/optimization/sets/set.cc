@@ -22,6 +22,10 @@ void Set::getRandomPoint(Point* random_point) const {
   }
 }
 
+void Set::project(Point* point) const {
+  computeProjection(Point(*point), point);
+}
+
 void Set::sampleRandomPointInside(Point* random_point) const {
   getRandomPoint(random_point);
   Point projected_random_point;

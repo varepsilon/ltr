@@ -25,10 +25,14 @@ class Set : public ltr::Aliaser {
    */
   virtual bool isInside(const Point& point) const = 0;
   /** 
-   * Projects given point on this set.
+   * Computes projection of given point on this set.
    */
   virtual void computeProjection(const Point& point,
                                  Point* projection) const = 0;
+  /**
+   * Projects given point on this set.
+   */
+  void project(Point* point) const;
   /**
    * Give a cubic boundaries which contain this set.
    */

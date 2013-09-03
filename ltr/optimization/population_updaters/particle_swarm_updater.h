@@ -102,6 +102,7 @@ void ParticleSwarmUpdater<TFunction>::update(Population* population) {
         (optimum_point - it.point()) +
         cooperative_learning_factor_ * randomizer.doubleRand(0, 1) *
         (global_optimum_point_ - it.point());
+    this->set_->project(&velocity);
   }
   for (Population::Iterator it = population->begin();
        it != population->end();
@@ -109,10 +110,8 @@ void ParticleSwarmUpdater<TFunction>::update(Population* population) {
     Point& velocity = *velocity_->getInfoById(it.point_id());
     Point& optimum_point = *optimum_point_->getInfoById(it.point_id());
     Point new_point = it.point() + velocity;
+    this->set_->project(&new_point);
     population->updatePoint(it.point_id(), new_point);
-    if (!this->set_->isInside(new_point)) {
-      continue;
-    }
     double new_point_value = this->function_->computeValue(new_point);
     double current_point_optimum_value = this->function_->computeValue(
                                              optimum_point);
