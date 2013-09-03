@@ -162,10 +162,12 @@ SolverBenchmark<TFunction>::multiRun(int run_count) const {
          problem_index < functions.size();
          ++problem_index) {
       multi_index[1] = problem_index;
-      stringstream cell;
-      cell << mean_matrix(solver_index, problem_index) << "+-";
-      cell << standard_deviation_matrix(solver_index, problem_index);
-      table[multi_index] = cell.str();
+      string cell = lexical_cast<string>(
+          mean_matrix(solver_index, problem_index));
+      cell += "+-";
+      cell += lexical_cast<string>(
+          standard_deviation_matrix(solver_index, problem_index));
+      table[multi_index] = cell;
     }
   }
   return table;
@@ -188,7 +190,6 @@ void SolverBenchmark<TFunction>::initTable(Table* table) const {
   table->setAxisLabel(0, "Solvers");
   table->setAxisLabel(1, "Problems");
 
-  LexicalCastConfig::getInstance().restoreDefaults();
   for (int solver_index = 0; solver_index < solvers_count; ++solver_index) {
     table->setTickLabel(0, solver_index, solvers[solver_index].alias());
   }

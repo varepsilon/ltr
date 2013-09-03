@@ -95,4 +95,16 @@ double G3Function::computePartHessian(int first_coordinate,
   }
   return part_hessian;
 }
+
+double ConstFunction::computeValueImpl(const Point& point) const {
+  return value_;
+}
+void ConstFunction::computeGradientImpl(const Point& point,
+                                        Vector* gradient) const {
+  *gradient = Vector::Zero(dimension());
+}
+void ConstFunction::computeHessianImpl(const Point& point,
+                                       Matrix* hessian) const {
+  *hessian = Matrix::Zero(dimension(), dimension());
+}
 }

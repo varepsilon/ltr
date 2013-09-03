@@ -4,6 +4,7 @@
 #define LTR_OPTIMIZATION_TEST_PROBLEMS_CONSTRAINED_FUNCTIONS_H_
 
 #include <string>
+#include "ltr/utility/macros.h"
 #include "ltr/utility/boost/shared_ptr.h"
 #include "ltr/optimization/functions/twice_differentiable_function.h"
 
@@ -72,6 +73,30 @@ class G3Function : public TwiceDifferentiableFunction {
   double computePartHessian(int first_coordinate,
                             int second_coordinate,
                             const Point& point) const;
+};
+/**
+ * Class for function \f$f(x) = const\f$ in \f$\mathbb{R}^n\f$.
+ */
+class ConstFunction : public TwiceDifferentiableFunction {
+  ALLOW_SHARED_PTR_ONLY_CREATION(ConstFunction)
+ public:
+  explicit ConstFunction(int dimension, double value)
+      : TwiceDifferentiableFunction(dimension),
+        value_(value) {}
+ private:
+  double value_;
+  /**
+    * Implementation of computeValue method.
+    */
+  double computeValueImpl(const Point& point) const;
+  /**
+    * Implementation of computeGradient method.
+    */
+  void computeGradientImpl(const Point& point, Vector* gradient) const;
+  /**
+    * Implementation of computeHessian method.
+    */
+  void computeHessianImpl(const Point& point, Matrix* hessian) const;
 };
 }
 #endif  // LTR_OPTIMIZATION_TEST_PROBLEMS_CONSTRAINED_FUNCTIONS_H_
