@@ -108,6 +108,16 @@ class MultiTable : public Printable {
   void setTickLabel(int axis_index,
                     int tick_index,
                     const string& label);
+  /**
+   * Sets order of printing axis.
+   */
+  void setAxisOrder(const vector<int>& order);
+
+  /**
+   * Sets standard order of printing axis;
+   */
+  void unsetAxisOrder();
+
   virtual string toString() const;
 
   string toHTML() const;
@@ -129,6 +139,8 @@ class MultiTable : public Printable {
    */
   Iterator end();
  private:
+  bool axis_order_is_set_;
+  vector<int> axis_order_;
   struct DimensionMetaInfo;
   MultiArray<T, N>* table_contents_;
   vector<DimensionMetaInfo> table_meta_info_;
@@ -392,7 +404,8 @@ void MultiTable<T, N>::printMultiTableInner(
 template<typename T, int N>
 MultiTable<T, N>::MultiTable(const vector<int>& table_size)
   : table_contents_(new MultiArray<T, N>())
-  , table_meta_info_() {
+  , table_meta_info_()
+  , axis_order_is_set_(false) {
   if (table_size.size() != N) {
     throw logic_error("Bad number of input sizes in multitable constructor\n");
   }
@@ -407,7 +420,8 @@ MultiTable<T, N>::MultiTable(const vector<int>& table_size)
 template<typename T, int N>
 MultiTable<T, N>::MultiTable()
   : table_contents_(new MultiArray<T, N>())
-  , table_meta_info_() {}
+  , table_meta_info_()
+  , axis_order_is_set_(false) {}
 
 template<typename T, int N>
 const T& MultiTable<T, N>::operator[] (
@@ -454,7 +468,15 @@ string MultiTable<T, N>::convertToText(Format format) const {
     DimensionSize to_push = {i, dims_size[i]};
     multi_size.push_back(to_push);
   }
-  sort(multi_size.begin(), multi_size.end());
+  if (axis_order_is_set_) {
+    vector<DimensionSize> buffer(multi_size.size());
+    for (int size_index = 0; size_index < multi_size.size(); ++size_index) {
+      buffer[size_index] = multi_size[axis_order_[size_index]];
+    }
+    multi_size = buffer;
+  } else {
+    sort(multi_size.begin(), multi_size.end());
+  }
   vector<int> multi_index(multi_size.size(), 0);
   stringstream out_stream;
   printMultiTableInner(multi_size, &multi_index, 0, &out_stream, format);
@@ -469,6 +491,17 @@ string MultiTable<T, N>::toString() const {
 template<typename T, int N>
 string MultiTable<T, N>::toHTML() const {
   return convertToText(HTML);
+}
+
+template<typename T, int N>
+void MultiTable<T, N>::setAxisOrder(const vector<int>& order) {
+  axis_order_is_set_ = true;
+  axis_order_ = order;
+}
+
+template<typename T, int N>
+void MultiTable<T, N>::unsetAxisOrder() {
+  axis_order_is_set_ = false;
 }
 
 template<typename T, int N>
