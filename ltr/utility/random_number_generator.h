@@ -8,8 +8,6 @@
 #include "contrib/random/Random.hpp"
 #include "random/Random.hpp"
 
-using std::swap;
-
 namespace ltr {
 namespace utility {
 class Randomizer {
@@ -35,7 +33,8 @@ class Randomizer {
   }
 
   RandomLib::Random generator_;
-} static randomizer;
+};
+extern Randomizer randomizer;
 };
 };
 #endif  // LTR_UTILITY_RANDOM_NUMBER_GENERATOR_H_

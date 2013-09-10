@@ -24,7 +24,7 @@ namespace optimization {
 
 /**
  * \brief A class which solves an optimization task given a function.
- *        a set, a stop criterion, a population updater and population initer.
+ * a set, a stop criterion, a population updater and population initer.
  */
 template<typename TFunction>
 class Solver : public ltr::Aliaser {
